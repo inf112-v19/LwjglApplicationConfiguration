@@ -1,0 +1,110 @@
+gitpitch.com/sivhollup/inf112/master?p=v19/planning-05
+
+(MVP)
+    Game Board
+    Player
+    GamePiece (robot)
+    Program card
+    Flag
+    Movement tile
+    Special field(Back up)
+    Laser
+    Walls
+    Holes
+    Round (= 5 phases)
+    Phase
+
+    Deal cards
+    Make a program (max 5 cards)
+    Move robots
+    Visit flags
+    Leave backup
+    Activate lasers
+    Take fire -> dmg++ nCards--
+    More damage -> Fewer cards
+    Repair damage
+    Get totaled
+    Power down (not must)
+    Only one robot per tile
+    Highest priority moves first
+
+    Multiplayer (must)
+    Singleplayer (optional)
+    Game Over
+    Difficulty
+    Board editor (nice to have)
+    Default boards
+
+
+
+Game Board
+    One robot per tile
+    Might be walls between tiles
+    Walls at the the edges of the board
+    Holes on the board
+    Lasers on the board
+    Gears/samelbånd
+    Special fields
+        Screwdriver
+            Move backup
+            Repair
+        Hammer
+            Options
+    (Merge boards)
+
+Program card
+    Movement
+        Rotate
+            90 deg L # 18 P 80 - 420 (80, 100, 120..)
+            90 deg R # 18 P 70 - 410 (70, 90, 110..)
+            180 deg  #  6 P 10 - 60  (10, 20, 30..)
+        Forward
+            1 # 18 # 490 - 650 interval 10 
+            2 # 12 # 670 - 680 ..
+            3 #  6 # 790 - 840 ..
+        Backwards
+            1 #  6 # 430 - 480 ..
+    Priority
+        Unique value
+
+Phase
+    Turn program card
+    Move robots by priority
+    Move samlebånd
+    Move gears
+    Activate lasers
+    Tally damage
+    Move Backup
+    Register flags
+
+Round (= 5 phases)
+    before the round:
+        Deal cards
+        Robots have/gets placement
+        Make program
+        Confirm program
+    during the round:
+        Program cards locked
+        Phase
+    after the round:
+        Repair damage
+        Powerdown (optional)
+        Deal option cards
+
+Nice to have:
+    Option card
+        Change game rules (Jump walls, change dir of laser etc)
+    Other entities
+        Teleporter
+    Generate Board
+    Online Multiplayer
+
+Vise brett:
+    [][][][][][]
+    [][][][][][]
+    [][][][][][]
+    [][][][][][]
+
+    BoardGUI ––– Board
+
+    mvn clean install
