@@ -7,17 +7,19 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.awt.*;
+
 public class GameScreen implements Screen {
 
     private RoboRallyGame game;
     private OrthographicCamera camera;
     private SpriteBatch batch;
-    private Robot robot;
+    private Player player;
 
     public GameScreen(RoboRallyGame game){
         this.game = game;
         camera = new OrthographicCamera();
-        robot = new Robot(0, 0);
+        player = new Player(0, 0);
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
@@ -47,10 +49,10 @@ public class GameScreen implements Screen {
         //batch.draw(Assets.robotSprite1, Assets.robotSprite1.getX(),Assets.robotSprite1.getY()); //TODO: Transparency/smaller picture?
         //batch.draw(Assets.robotSprite2, Assets.robotSprite2.getX(),Assets.robotSprite2.getY()); //TODO: Make rotation work
 
-        batch.draw(Assets.textureRobot, robot.getX(),robot.getY());
+        batch.draw(Assets.textureRobot, player.getX(),player.getY());
 
-        System.out.println("x: " + robot.getX());
-        System.out.println("y: " + robot.getY());
+        System.out.println("x: " + player.getX());
+        System.out.println("y: " + player.getY());
         batch.end();
     }
 
@@ -58,16 +60,16 @@ public class GameScreen implements Screen {
     //Does the same as robot.move(), though it is "quicker"
     public void generalUpdate(){
         if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            robot.setY(robot.getY()-150);
+            player.setY(player.getY()-150);
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            robot.setX(robot.getX()-150);
+            player.setX(player.getX()-150);
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            robot.setY(robot.getY()+150);
+            player.setY(player.getY()+150);
         }
         else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            robot.setX(robot.getX()+150);
+            player.setX(player.getX()+150);
         }
     }
 
