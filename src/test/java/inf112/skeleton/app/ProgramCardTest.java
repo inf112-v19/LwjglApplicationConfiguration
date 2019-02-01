@@ -93,7 +93,18 @@ public class ProgramCardTest {
                 int priorityJ = stackOfCards.get(j).getPriority();
                 assert(priorityI != priorityJ);
             }
+            System.out.println(stackOfCards.get(i));
         }
+        System.out.println(stackOfCards.get(stackOfCards.size()-1));
     }
 
+    @Test
+    public void everyCardHasEitherRotateOrMoveValue(){
+        for(ProgramCard pc : stackOfCards) {
+            if (pc.getMoveDistance() != 0)
+                assertEquals(0, pc.getChangeDirection());
+            if (pc.getChangeDirection() != 0)
+                assertEquals(0, pc.getMoveDistance());
+        }
+    }
 }
