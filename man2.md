@@ -56,10 +56,9 @@
     -	Deal option cards
   -	Phase
     -	Turn program card
-    -	Move 
-      -	robots by priority
-      -	conveyor belt
-      -	gears
+    -	Move robots by priority
+    -	Move conveyor belt
+    -	Move gears
     -	Activate lasers
     -	Tally damage
     -	Move backup
