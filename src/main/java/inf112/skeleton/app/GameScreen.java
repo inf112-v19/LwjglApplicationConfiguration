@@ -19,7 +19,14 @@ public class GameScreen implements Screen {
     public GameScreen(RoboRallyGame game){
         this.game = game;
         camera = new OrthographicCamera();
-        player = new Player(0, 0);
+        player = new Player("Player1", 0, 0);
+        player.changeDirection(Direction.SOUTH);
+        player.move(3);
+        player.move(2);
+        player.changeDirection(Direction.EAST);
+        player.move(2);
+        System.out.println("x: " + player.getX());
+        System.out.println("y: " + player.getY());
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
@@ -37,8 +44,8 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        generalUpdate();
-        //robot.move();
+        //generalUpdate();
+        //player.move();
 
         batch.setProjectionMatrix(camera.combined);
 
@@ -46,13 +53,10 @@ public class GameScreen implements Screen {
         //All rendering code goes here
 
         batch.draw(Assets.spriteBackground, 0, 0);
-        //batch.draw(Assets.robotSprite1, Assets.robotSprite1.getX(),Assets.robotSprite1.getY()); //TODO: Transparency/smaller picture?
-        //batch.draw(Assets.robotSprite2, Assets.robotSprite2.getX(),Assets.robotSprite2.getY()); //TODO: Make rotation work
+        //batch.draw(Assets.player1Sprite, Assets.player1Sprite.getX(),Assets.player1Sprite.getY()); //TODO: Transparency/smaller picture?
+        //batch.draw(Assets.player2Sprite, Assets.player2Sprite.getX(),Assets.player2Sprite.getY()); //TODO: Make rotation work
 
         batch.draw(Assets.textureRobot, player.getX(),player.getY());
-
-        System.out.println("x: " + player.getX());
-        System.out.println("y: " + player.getY());
         batch.end();
     }
 

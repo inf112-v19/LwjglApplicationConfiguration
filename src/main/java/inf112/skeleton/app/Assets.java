@@ -15,11 +15,11 @@ public class Assets {
     public static Texture textureBackground; //The image
     public static Sprite spriteBackground; //The game object-version of the image
 
-    public static Texture robotTexture1;
-    public static Sprite robotSprite1;
+    public static Texture player1Texture;
+    public static Sprite player1Sprite;
 
-    public static Texture robotTexture2;
-    public static Sprite robotSprite2;
+    public static Texture player2Texture;
+    public static Sprite player2Sprite;
 
     public static Texture textureRobot;
     public static Sprite spriteRobot;
@@ -31,16 +31,17 @@ public class Assets {
         textureBackground.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         spriteBackground = new Sprite(textureBackground);
 
-        robotTexture1 = new Texture(Gdx.files.internal("assets/robot/testBlock.png"));
-        robotTexture1.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        robotSprite1 = new Sprite(robotTexture1);
+        player1Texture = new Texture(Gdx.files.internal("assets/robot/testBlock.png"));
+        player1Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        player1Sprite = new Sprite(player1Texture);
 
-        robotTexture2 = new Texture(Gdx.files.internal("assets/robot/pil1.png"));
-        robotTexture2.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        robotSprite2 = new Sprite(robotTexture2);
-        robotSprite2.setY(400);
-        robotSprite2.setX(400);
-        robotSprite2.rotate(90);
+        player2Texture = new Texture(Gdx.files.internal("assets/robot/pil1.png"));
+        player2Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+
+        player2Sprite = new Sprite(player2Texture);
+        player2Sprite.setY(400);
+        player2Sprite.setX(400);
+        player2Sprite.rotate(90);
 
         textureRobot = new Texture(Gdx.files.internal("assets/robot/testBlock.png"));
         spriteRobot = new Sprite(textureRobot);
