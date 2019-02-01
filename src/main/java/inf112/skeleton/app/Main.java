@@ -8,9 +8,9 @@ public class Main {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "RoboRally";
-        cfg.width = 1080;
-        cfg.height = 1920;
+        cfg.width = 1920;
+        cfg.height = 1080;
 
-        new LwjglApplication(new Board(), cfg);
+        new LwjglApplication(new RoboRallyGame(), cfg);
     }
 }
