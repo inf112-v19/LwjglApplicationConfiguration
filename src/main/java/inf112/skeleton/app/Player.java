@@ -63,24 +63,7 @@ public class Player {
         if(direction.equals(Direction.WEST)) {
             x -= 150 * steps;
         }
-    }
-
-    /*
-     * Just for testing movement.
-     */
-    public void move(){
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            y -= 150;
-        }else if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            x -= 150;
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            y += 150;
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            x += 150;
-        }
-        //Assets.load(); //makes it laggy when trying to move
+        //Texture/sprite is updated automatically because of render method in GameScreen.java.
     }
 
     public String getName() {

@@ -6,8 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Timer;
 
-import java.awt.*;
+import java.util.EventListener;
 
 public class GameScreen implements Screen {
 
@@ -20,18 +21,13 @@ public class GameScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         player = new Player("Player1", 0, 0);
-        player.changeDirection(Direction.SOUTH);
-        player.move(3);
-        player.move(2);
-        player.changeDirection(Direction.EAST);
-        player.move(2);
-        System.out.println("x: " + player.getX());
-        System.out.println("y: " + player.getY());
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
         batch = new SpriteBatch();
     }
+
+
 
     @Override
     public void render(float delta) {
@@ -44,37 +40,30 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        //generalUpdate();
-        //player.move();
+
+        //Just for testing. If you want to move the player with given steps then use player.move(steps).
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
+            player.setX(player.getX()+150);
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
+            player.setX(player.getX()-150);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
+            player.setY(player.getY()-150);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
+            player.setY(player.getY()+150);
+        }
+
+
 
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         //All rendering code goes here
-
-        batch.draw(Assets.spriteBackground, 0, 0);
-        //batch.draw(Assets.player1Sprite, Assets.player1Sprite.getX(),Assets.player1Sprite.getY()); //TODO: Transparency/smaller picture?
-        //batch.draw(Assets.player2Sprite, Assets.player2Sprite.getX(),Assets.player2Sprite.getY()); //TODO: Make rotation work
-
-        batch.draw(Assets.textureRobot, player.getX(),player.getY());
+        batch.draw(Assets.backgroundSprite, 0, 0);
+        batch.draw(Assets.player1Texture, player.getX(),player.getY());
         batch.end();
-    }
-
-
-    //Does the same as robot.move(), though it is "quicker"
-    public void generalUpdate(){
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
-            player.setY(player.getY()-150);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            player.setX(player.getX()-150);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.S)){
-            player.setY(player.getY()+150);
-        }
-        else if(Gdx.input.isKeyPressed(Input.Keys.D)){
-            player.setX(player.getX()+150);
-        }
     }
 
     @Override
@@ -106,5 +95,9 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
