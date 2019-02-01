@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class ProgramCardTest {
     ArrayList<ProgramCard> stackOfCards;
@@ -105,6 +106,8 @@ public class ProgramCardTest {
                 assertEquals(0, pc.getChangeDirection());
             if (pc.getChangeDirection() != 0)
                 assertEquals(0, pc.getMoveDistance());
+            if (pc.getChangeDirection() == 0 && pc.getMoveDistance() == 0)
+                fail();
         }
     }
 }

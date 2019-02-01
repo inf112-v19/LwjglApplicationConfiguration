@@ -19,7 +19,7 @@ public class ProgramCard {
 
     public int getChangeDirection() { return this.changeDirection; }
 
-    public  int getPriority(){ return this.priority; }
+    public int getPriority(){ return this.priority; }
 
     public static ArrayList<ProgramCard> makeStack(){
         ArrayList<ProgramCard> list = new ArrayList<>();
