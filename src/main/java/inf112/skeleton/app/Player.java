@@ -127,8 +127,8 @@ public class Player {
 
     public void repairDamage(){
         dmg = 0;
-        for(boolean b : lockedRegisters)
-            b = false;
+        for(int i = 0; i < lockedRegisters.length; i++)
+            lockedRegisters[i] = false;
     }
 
     public void chooseCard(int cardID){

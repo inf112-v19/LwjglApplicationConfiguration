@@ -81,7 +81,7 @@ public class PlayerTest {
         player.repairDamage();
         assertEquals(0, player.getDamage());
         for(int i = 0; i < 5; i++)
-            assert(player.isLocked(i));
+            assert(!player.isLocked(i));
     }
 
     @Test
