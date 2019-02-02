@@ -95,4 +95,10 @@ public class PlayerTest {
         // TODO:
         fail();
     }
+
+    @Test
+    public void playerMoveTest(){
+        player.move(3);
+        assertEquals(3*150, player.getY());
+    }
 }

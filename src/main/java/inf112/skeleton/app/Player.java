@@ -324,4 +324,11 @@ public class Player {
     }
 
     public int getLives() { return this.lives; }
+
+    /**
+     * Every phase the player with the highest priority goes first.
+     * @param phaseNumber
+     * @return priority of the card in the register for the given phase
+     */
+    public int getPriority(int phaseNumber) { return registers[phaseNumber].getPriority(); }
 }
