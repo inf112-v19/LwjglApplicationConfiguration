@@ -21,7 +21,7 @@ public class ProgramCardCD {
 
     public int getMoveDistance(){ return this.moveDistance; }
 
-    public int getRotate() { return this.getRotate(); }
+    public Rotate getRotate() { return this.rotate; }
 
     public int getPriority(){ return this.priority; }
 
