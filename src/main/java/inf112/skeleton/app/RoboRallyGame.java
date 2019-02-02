@@ -1,8 +1,6 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 
 public class RoboRallyGame extends Game {
 

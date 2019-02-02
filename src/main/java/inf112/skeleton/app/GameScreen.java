@@ -6,9 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Timer;
 
-import java.util.EventListener;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GameScreen implements Screen {
 
@@ -16,11 +16,20 @@ public class GameScreen implements Screen {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Player player;
+    private ProgramCardCD programCards;
+    private ArrayList<ProgramCardCD> listOfAllProgramCards;
 
     public GameScreen(RoboRallyGame game){
         this.game = game;
         camera = new OrthographicCamera();
         player = new Player("Player1", 0, 0);
+        programCards = new ProgramCardCD();
+        listOfAllProgramCards = programCards.makeStack();
+
+        for(int i = 0; i < 9; i++){
+            player.receiveNewCard(listOfAllProgramCards.get(i));
+        }
+
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
@@ -28,6 +37,27 @@ public class GameScreen implements Screen {
     }
 
 
+    //Where to call the function?
+    public void chooseCardsForRound(){
+        printCards();
+
+        Scanner sc = new Scanner(System.in);
+        while(player.getChosenCards().size() < player.getChosenCardsLimit()){
+            System.out.println("Choose a card. (Choose id)");
+            int chosenCard = sc.nextInt();
+            player.chooseCard(chosenCard);
+            System.out.print("You chose card: " + chosenCard + ". "
+                    + player.getChosenCards().get(player.getChosenCards().size()-1).toString());
+        }
+        System.out.println("Loop finished");
+
+    }
+
+    public void printCards(){
+        for(int i = 0; i < player.getCardLimit(); i++){
+            System.out.println("id: " + i + ". " + player.getCardDeck().get(i).toString());
+        }
+    }
 
     @Override
     public void render(float delta) {
