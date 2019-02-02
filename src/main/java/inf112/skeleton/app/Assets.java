@@ -27,7 +27,7 @@ public class Assets {
         backgroundSprite = new Sprite(backgroundTexture);
 
 
-        player1Texture = new Texture(Gdx.files.internal("assets/robot/pil1.png"));
+        player1Texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
         player1Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         player1Sprite = new Sprite(player1Texture);
 
