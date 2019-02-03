@@ -42,7 +42,7 @@ public class GameScreen implements Screen {
         printCards();
 
         Scanner sc = new Scanner(System.in);
-        while(player.getRegisters().size() < player.getCardLimit()){
+        while(!player.isRegisterFull()){
             System.out.println("Choose a card. (Choose id)");
             int chosenCard = sc.nextInt();
             player.pickCard(chosenCard);

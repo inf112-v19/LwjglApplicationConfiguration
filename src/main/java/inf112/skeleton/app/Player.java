@@ -9,6 +9,7 @@ public class Player {
     private int y;
     private int lives;
     private int dmg;
+    private int unlockedRegisters;
 
     private Direction direction; //Which direction the player is currently facing.
     private ArrayList<ProgramCardCD> cardDeck; //All cards in the player hand.
@@ -36,6 +37,7 @@ public class Player {
 
         dmg = 0;
         lives = 3;
+        unlockedRegisters = 5;
     }
 
     /**
@@ -60,6 +62,7 @@ public class Player {
 
         dmg = 0;
         lives = 3;
+        unlockedRegisters = 5;
     }
 
     public void takeDamage(){
@@ -70,8 +73,10 @@ public class Player {
             else
                 ;// TODO: Move to last backup
 
-        } else if(dmg >= 5)
-            lockedRegisters[9-dmg] = true;
+        } else if(dmg >= 5) {
+            lockedRegisters[9 - dmg] = true;
+            unlockedRegisters--;
+        }
     }
 
     /* Registers are stored like this:
@@ -105,6 +110,7 @@ public class Player {
 
     public void repairDamage(){
         dmg = 0;
+        unlockedRegisters = 5;
         for(int i = 0; i < lockedRegisters.length; i++)
             lockedRegisters[i] = false;
     }
@@ -130,6 +136,10 @@ public class Player {
             }
             i++;
         }
+    }
+
+    public boolean isRegisterFull() {
+        return registers[unlockedRegisters] != null;
     }
 
     /**
@@ -234,6 +244,10 @@ public class Player {
      */
     public int getCardLimit(){
         return 9 - dmg;
+    }
+
+    public int getUnlockedRegisters() {
+        return this.unlockedRegisters;
     }
 
     /**
