@@ -36,13 +36,13 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
     }
 
-
+    // Todo: This might need an update after changes in player class
     //Where to call the function?
     public void chooseCardsForRound(){
         printCards();
 
         Scanner sc = new Scanner(System.in);
-        while(!player.isRegisterFull()){
+        while(!player.registerIsFull()){
             System.out.println("Choose a card. (Choose id)");
             int chosenCard = sc.nextInt();
             player.pickCard(chosenCard);

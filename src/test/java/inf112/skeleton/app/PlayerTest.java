@@ -10,8 +10,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class PlayerTest {
-    Player player;
-    ArrayList<ProgramCardCD> stack;
+    private Player player;
+    private ArrayList<ProgramCardCD> stack;
 
     @Before
     public void setup(){
@@ -31,6 +31,14 @@ public class PlayerTest {
         for(int i = 0; i < 9; i++){
             player.takeDamage();
             assertEquals(expected++, player.getDamage());
+        }
+    }
+
+    @Test
+    public void oneDamageOneLessCard(){
+        for(int i = 0; i < 10; i++) {
+            assertEquals(9 - i , player.getCardLimit());
+            player.takeDamage();
         }
     }
 
@@ -67,12 +75,22 @@ public class PlayerTest {
     }
 
     @Test
+    public void fourDmgDoesNotLocksOneRegister(){
+        for(int i = 0; i < 4; i++)
+            player.takeDamage();
+
+        //the other registers should not be locked:
+        for(int i = 0; i < 5; i++)
+            assert(!player.isLocked(i));
+    }
+
+    @Test
     public void nineDmgLocksAllRegisters(){
         for(int i = 0; i < 9; i++)
             player.takeDamage();
         //all registers should be locked:
         for(int i = 0; i < 5; i++)
-            assert(player.isLocked(4-i));
+            assert(player.isLocked(i));
     }
 
     @Test
@@ -142,10 +160,10 @@ public class PlayerTest {
         ArrayList<ProgramCardCD> cardsReturned = player.returnCards();
         assertEquals(8, cardsReturned.size());
 
-        // The first 4 registers contains program cards:
+        // The first 4 registers do not contain program cards:
         for(int i = 0; i < 4; i++)
             assert(player.getRegisters().get(i) == null);
-        // The last register does not:
+        // The last register does:
         assert(player.getRegisters().get(4) != null);
     }
 
@@ -166,7 +184,7 @@ public class PlayerTest {
         p1.pickCard(0);
         p2.pickCard(0);
         p3.pickCard(0);
-        // retrive cards from the first register:
+        // retrieve cards from the first register:
         q.add(p1.getCardInRegister(0));
         q.add(p2.getCardInRegister(0));
         q.add(p3.getCardInRegister(0));

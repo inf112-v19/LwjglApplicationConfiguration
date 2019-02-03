@@ -9,13 +9,12 @@ public class Player {
     private int y;
     private int lives;
     private int dmg;
-    private int unlockedRegisters;
 
     private Direction direction; //Which direction the player is currently facing.
     private ArrayList<ProgramCardCD> cardDeck; //All cards in the player hand.
 
     private ProgramCardCD[] registers = new ProgramCardCD[5];
-    private boolean[] lockedRegisters = new boolean[5];
+    private int unlockedRegisters;
 
     /**
      * Initialize a new player (a new robot).
@@ -68,13 +67,13 @@ public class Player {
     public void takeDamage(){
         dmg++;
         if(isDestroyed()){
-            if(lives == 0)
-                ;// TODO: GAME OVER for this player.
-            else
-                ;// TODO: Move to last backup
-
-        } else if(dmg >= 5) {
-            lockedRegisters[9 - dmg] = true;
+            if(outOfLives()) {
+                // TODO: GAME OVER for this player.
+            } else {
+//                repairDamage();
+                // TODO: Move to last backup
+            }
+        } else if (dmg >= 5) {
             unlockedRegisters--;
         }
     }
@@ -86,7 +85,7 @@ public class Player {
      * 6 dmg locks 3..
      */
     public boolean isLocked(int register){
-        return lockedRegisters[register];
+        return register >= unlockedRegisters;
     }
 
     /**
@@ -96,9 +95,8 @@ public class Player {
      * @return list of cards that are not locked in registers
      */
     public ArrayList<ProgramCardCD> returnCards(){
-        for(int register = 0; register < 5; register++) {
-            if (isLocked(register)) return cardDeck; // if one register is locked, all the registers after it
-            cardDeck.add(registers[register]);// are locked too, so we can just break the loop.
+        for(int register = 0; register < unlockedRegisters; register++) {
+            cardDeck.add(registers[register]);
             registers[register] = null;
         }
         return cardDeck;
@@ -108,11 +106,14 @@ public class Player {
         return dmg > 9;
     }
 
+
+    public boolean outOfLives() {
+        return lives == 0;
+    }
+
     public void repairDamage(){
         dmg = 0;
         unlockedRegisters = 5;
-        for(int i = 0; i < lockedRegisters.length; i++)
-            lockedRegisters[i] = false;
     }
 
     /**
@@ -129,16 +130,17 @@ public class Player {
 
     public void pickCard(int cardPos){
         int i = 0;
-        while(i < 5){
+        while(i < unlockedRegisters){
             if(registers[i] == null) {
                 registers[i] = cardDeck.remove(cardPos);
                 return;
             }
             i++;
         }
+        System.err.println("Can't pick more cards. Register is full!");
     }
 
-    public boolean isRegisterFull() {
+    public boolean registerIsFull() {
         return registers[unlockedRegisters] != null;
     }
 
@@ -316,5 +318,10 @@ public class Player {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    @Override
+    public String toString(){
+        return getName() +  " | Health: " + (10 - dmg) + " | Lives: " + lives;
     }
 }
