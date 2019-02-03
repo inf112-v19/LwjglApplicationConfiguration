@@ -5,7 +5,7 @@ import java.util.Collections;
 
 
 //ProgramCardCD using cardinal directions (North, West, South, East)
-public class ProgramCardCD {
+public class ProgramCardCD implements Comparable {
     private Rotate rotate;
     private int moveDistance;
     private int priority;
@@ -82,6 +82,17 @@ public class ProgramCardCD {
             s = "Move " + moveDistance + ",";
 
         return s + " priority: " + priority;
+    }
+
+    @Override
+    public int compareTo(Object o){
+        if(this.getClass() != o.getClass())
+            return 0;
+        ProgramCardCD other = (ProgramCardCD) o;
+        if(this.getPriority() > other.getPriority())
+            return -1;
+        return  1;
+
     }
 
 }

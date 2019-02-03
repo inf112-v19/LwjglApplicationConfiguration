@@ -42,12 +42,12 @@ public class GameScreen implements Screen {
         printCards();
 
         Scanner sc = new Scanner(System.in);
-        while(player.getChosenCards().size() < player.getChosenCardsLimit()){
+        while(player.getRegisters().size() < player.getCardLimit()){
             System.out.println("Choose a card. (Choose id)");
             int chosenCard = sc.nextInt();
-            player.chooseCard(chosenCard);
+            player.pickCard(chosenCard);
             System.out.print("You chose card: " + chosenCard + ". "
-                    + player.getChosenCards().get(player.getChosenCards().size()-1).toString());
+                    + player.getRegisters().get(player.getRegisters().size()-1).toString());
         }
         System.out.println("Loop finished");
 
