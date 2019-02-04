@@ -2,7 +2,7 @@ package inf112.skeleton.app;
 
 import java.util.ArrayList;
 
-public class Player implements IPlayer {
+public class  Player implements IPlayer {
 
 
     private String name;
