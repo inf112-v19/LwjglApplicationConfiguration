@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.ArrayList;
@@ -19,6 +21,16 @@ public class GameScreen implements Screen {
     private ProgramCardCD programCards;
     private ArrayList<ProgramCardCD> listOfAllProgramCards;
 
+    //Rotation degree at start. (Change it depending on which picture is being used to represent the player).
+    private float playerRotationDegree = 0;
+
+    //New rotation direction for the player (visual)
+    private Rotate newPlayerRotate;
+
+    private AssetsInner assetsInner;
+
+
+
     public GameScreen(RoboRallyGame game){
         this.game = game;
         camera = new OrthographicCamera();
@@ -26,8 +38,13 @@ public class GameScreen implements Screen {
         programCards = new ProgramCardCD();
         listOfAllProgramCards = programCards.makeStack();
 
+        newPlayerRotate = Rotate.NONE;
+
+        assetsInner = new AssetsInner();
+        assetsInner.load();
+
         for(int i = 0; i < 9; i++){
-            player.receiveNewCard(listOfAllProgramCards.get(i));
+            player.receiveNewCard(listOfAllProgramCards.remove(0));
         }
 
 
@@ -55,8 +72,74 @@ public class GameScreen implements Screen {
 
     public void printCards(){
         for(int i = 0; i < player.getCardLimit(); i++){
-            System.out.println("id: " + i + ". " + player.getCardDeck().get(i).toString());
+            System.out.println("id: " + i + ". " + player.getCardsInHand().get(i).toString());
         }
+    }
+
+    /**
+     * Rotates the player (visually too).
+     * Use this function when rotating.
+     *
+     * @param playerToRotate which player to rotate
+     * @param rotateDir which way to rotate
+     */
+    public void rotatePlayer(Player playerToRotate, Rotate rotateDir) {
+        if (rotateDir.equals(Rotate.RIGHT)) {
+            playerRotationDegree += 90;
+        } else if (rotateDir.equals(Rotate.LEFT)) {
+            playerRotationDegree -= 90;
+        } else if (rotateDir.equals(Rotate.UTURN)) {
+            playerRotationDegree += 180;
+        }
+
+
+        if(rotateDir.equals(Rotate.LEFT)){
+            if(playerToRotate.getDirection().equals(Direction.NORTH)){
+                playerToRotate.changeDirection(Direction.WEST);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.WEST)){
+                playerToRotate.changeDirection(Direction.SOUTH);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.SOUTH)){
+                playerToRotate.changeDirection(Direction.EAST);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.EAST)){
+                playerToRotate.changeDirection(Direction.NORTH);
+            }
+        }
+
+        else if(rotateDir.equals(Rotate.RIGHT)){
+            if(playerToRotate.getDirection().equals(Direction.NORTH)){
+                playerToRotate.changeDirection(Direction.EAST);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.EAST)){
+                playerToRotate.changeDirection(Direction.SOUTH);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.SOUTH)){
+                playerToRotate.changeDirection(Direction.WEST);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.WEST)){
+                playerToRotate.changeDirection(Direction.NORTH);
+            }
+        }
+
+        else if(rotateDir.equals(Rotate.UTURN)){
+            if(playerToRotate.getDirection().equals(Direction.NORTH)){
+                playerToRotate.changeDirection(Direction.SOUTH);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.SOUTH)){
+                playerToRotate.changeDirection(Direction.NORTH);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.WEST)){
+                playerToRotate.changeDirection(Direction.EAST);
+            }
+            else if(playerToRotate.getDirection().equals(Direction.EAST)){
+                playerToRotate.changeDirection(Direction.WEST);
+            }
+        }
+
+        assetsInner.player1Sprite.setRotation(playerRotationDegree);
+        newPlayerRotate = rotateDir;
     }
 
     @Override
@@ -71,7 +154,7 @@ public class GameScreen implements Screen {
 
         camera.update();
 
-        //Just for testing. If you want to move the player with given steps then use player.move(steps).
+        //Just for testing.
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
             player.setX(player.getX()+150);
         }
@@ -85,14 +168,14 @@ public class GameScreen implements Screen {
             player.setY(player.getY()+150);
         }
 
-
+        assetsInner.load(); //to visually update the player position
 
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         //All rendering code goes here
-        batch.draw(Assets.backgroundSprite, 0, 0);
-        batch.draw(Assets.player1Texture, player.getX(),player.getY());
+        assetsInner.backgroundSprite.draw(batch);
+        assetsInner.player1Sprite.draw(batch);
         batch.end();
     }
 
@@ -130,4 +213,35 @@ public class GameScreen implements Screen {
     public Player getPlayer() {
         return player;
     }
+
+
+    //Inner class containing assets. (Replaced Assets.java)
+    private class AssetsInner {
+
+        //A tile on the game board is 150x150 px.
+
+        private Texture backgroundTexture; //The image
+        private Sprite backgroundSprite; //The game object-version of the image
+
+        private Texture player1Texture;
+        private Sprite player1Sprite;
+
+
+        protected void load() {
+            backgroundTexture = new Texture(Gdx.files.internal("assets/gameboard/RoboRallyBoard2.png"));
+            backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            backgroundSprite = new Sprite(backgroundTexture);
+            backgroundSprite.setPosition(0, 0);
+
+            player1Texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
+            player1Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+            player1Sprite = new Sprite(player1Texture);
+            player1Sprite.setOriginCenter();
+            player1Sprite.setPosition(player.getX(), player.getY());
+            player1Sprite.setRotation(playerRotationDegree);
+        }
+
+    }
 }
+
+

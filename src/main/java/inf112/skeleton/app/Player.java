@@ -2,7 +2,8 @@ package inf112.skeleton.app;
 
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements IPlayer {
+
 
     private String name;
     private int x;
@@ -11,10 +12,12 @@ public class Player {
     private int dmg;
 
     private Direction direction; //Which direction the player is currently facing.
-    private ArrayList<ProgramCardCD> cardDeck; //All cards in the player hand.
+    private ArrayList<ProgramCardCD> cardsInHand; //All cards in the player hand.
 
     private ProgramCardCD[] registers = new ProgramCardCD[5];
     private int unlockedRegisters;
+
+
 
     /**
      * Initialize a new player (a new robot).
@@ -32,7 +35,7 @@ public class Player {
         this.x = x;
         this.y = y;
         this.direction = Direction.SOUTH;
-        this.cardDeck = new ArrayList<>();
+        this.cardsInHand = new ArrayList<>();
 
         dmg = 0;
         lives = 3;
@@ -57,7 +60,7 @@ public class Player {
         this.x = x;
         this.y = y;
         this.direction = direction;
-        this.cardDeck = new ArrayList<>();
+        this.cardsInHand = new ArrayList<>();
 
         dmg = 0;
         lives = 3;
@@ -96,10 +99,10 @@ public class Player {
      */
     public ArrayList<ProgramCardCD> returnCards(){
         for(int register = 0; register < unlockedRegisters; register++) {
-            cardDeck.add(registers[register]);
+            cardsInHand.add(registers[register]);
             registers[register] = null;
         }
-        return cardDeck;
+        return cardsInHand;
     }
 
     public boolean isDestroyed(){
@@ -121,18 +124,18 @@ public class Player {
      * A player will not receive the card if the card limit is reached.
      */
     public void receiveNewCard(ProgramCardCD programCard){
-        if(cardDeck.size() >= getCardLimit()){
+        if(cardsInHand.size() >= getCardLimit()){
             System.out.println("Card was not added because of card limit");
             return;
         }
-        cardDeck.add(programCard);
+        cardsInHand.add(programCard);
     }
 
     public void pickCard(int cardPos){
         int i = 0;
         while(i < unlockedRegisters){
             if(registers[i] == null) {
-                registers[i] = cardDeck.remove(cardPos);
+                registers[i] = cardsInHand.remove(cardPos);
                 return;
             }
             i++;
@@ -144,67 +147,13 @@ public class Player {
         return registers[unlockedRegisters] != null;
     }
 
-    /**
-     * Change the direction that the player is facing.
-     *
-     * Rotation is possible using one of the enums in Rotate.java.
-     * Program cards should use this function, not the function changeDirection(Direction direction).
-     *
-     * @param rotate
-     *              which direction the player should rotate
-     */
-    public void rotate(Rotate rotate){
-        if(rotate.equals(Rotate.LEFT)){
-            if(direction.equals(Direction.NORTH)){
-                this.direction = Direction.WEST;
-            }
-            else if(direction.equals(Direction.WEST)){
-                this.direction = Direction.SOUTH;
-            }
-            else if(direction.equals(Direction.SOUTH)){
-                this.direction = Direction.EAST;
-            }
-            else if(direction.equals(Direction.EAST)){
-                this.direction = Direction.NORTH;
-            }
-        }
-
-        else if(rotate.equals(Rotate.RIGHT)){
-            if(direction.equals(Direction.NORTH)){
-                this.direction = Direction.EAST;
-            }
-            else if(direction.equals(Direction.EAST)){
-                this.direction = Direction.SOUTH;
-            }
-            else if(direction.equals(Direction.SOUTH)){
-                this.direction = Direction.WEST;
-            }
-            else if(direction.equals(Direction.WEST)){
-                this.direction = Direction.NORTH;
-            }
-        }
-
-        else if(rotate.equals(Rotate.UTURN)){
-            if(direction.equals(Direction.NORTH)){
-                this.direction = Direction.SOUTH;
-            }
-            else if(direction.equals(Direction.SOUTH)){
-                this.direction = Direction.NORTH;
-            }
-            else if(direction.equals(Direction.WEST)){
-                this.direction = Direction.EAST;
-            }
-            else if(direction.equals(Direction.EAST)){
-                this.direction = Direction.WEST;
-            }
-        }
-    }
 
     /**
      * Change the direction the player is facing.
      * Uses enums Direction.NORTH, Direction.WEST, Direction.SOUTH and Direction.EAST
      *
-     * You should use rotate(Rotate rotate) if using program cards.
+     * You should use {@link GameScreen#rotatePlayer(Player, Rotate)} when using program cards.
+     * rotate(Rotate rotate) if using program cards.
      *
      * @param direction
      *                  new direction to face.
@@ -213,7 +162,6 @@ public class Player {
     public void changeDirection(Direction direction){
         this.direction = direction;
 
-        //TODO: update sprite to show the new direction
     }
 
     /**
@@ -234,8 +182,9 @@ public class Player {
         if(direction.equals(Direction.WEST)) {
             x -= 150 * steps;
         }
-        //Texture/sprite is updated automatically because of render method in GameScreen.java.
     }
+
+
 
     // getters and setters:
 
@@ -257,8 +206,8 @@ public class Player {
      * @return
      *          all the cards that the player currently has in hand.
      */
-    public ArrayList<ProgramCardCD> getCardDeck(){
-        return this.cardDeck;
+    public ArrayList<ProgramCardCD> getCardsInHand(){
+        return this.cardsInHand;
     }
 
 
