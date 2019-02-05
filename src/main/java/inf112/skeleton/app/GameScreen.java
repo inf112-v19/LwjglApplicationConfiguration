@@ -21,11 +21,9 @@ public class GameScreen implements Screen {
     private ProgramCardCD programCards;
     private ArrayList<ProgramCardCD> listOfAllProgramCards;
 
-    //Rotation degree at start. (Change it depending on which picture is being used to represent the player).
-    private float playerRotationDegree = 0;
 
-    //New rotation direction for the player (visual)
-    private Rotate newPlayerRotate;
+    //Rotation degree at start. (Change it depending on which picture is being used to represent the player).
+    private float playerRotationDegree;
 
     private AssetsInner assetsInner;
 
@@ -35,18 +33,16 @@ public class GameScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         player = new Player("Player1", 0, 0);
+        playerRotationDegree = player.getRotationDegree();
         programCards = new ProgramCardCD();
         listOfAllProgramCards = programCards.makeStack();
 
-        newPlayerRotate = Rotate.NONE;
-
         assetsInner = new AssetsInner();
-        assetsInner.load();
+        assetsInner.load(); //loads the sprites
 
         for(int i = 0; i < 9; i++){
             player.receiveNewCard(listOfAllProgramCards.remove(0));
         }
-
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
@@ -76,71 +72,10 @@ public class GameScreen implements Screen {
         }
     }
 
-    /**
-     * Rotates the player (visually too).
-     * Use this function when rotating.
-     *
-     * @param playerToRotate which player to rotate
-     * @param rotateDir which way to rotate
-     */
-    public void rotatePlayer(Player playerToRotate, Rotate rotateDir) {
-        if (rotateDir.equals(Rotate.RIGHT)) {
-            playerRotationDegree += 90;
-        } else if (rotateDir.equals(Rotate.LEFT)) {
-            playerRotationDegree -= 90;
-        } else if (rotateDir.equals(Rotate.UTURN)) {
-            playerRotationDegree += 180;
-        }
 
 
-        if(rotateDir.equals(Rotate.LEFT)){
-            if(playerToRotate.getDirection().equals(Direction.NORTH)){
-                playerToRotate.changeDirection(Direction.WEST);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.WEST)){
-                playerToRotate.changeDirection(Direction.SOUTH);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.SOUTH)){
-                playerToRotate.changeDirection(Direction.EAST);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.EAST)){
-                playerToRotate.changeDirection(Direction.NORTH);
-            }
-        }
 
-        else if(rotateDir.equals(Rotate.RIGHT)){
-            if(playerToRotate.getDirection().equals(Direction.NORTH)){
-                playerToRotate.changeDirection(Direction.EAST);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.EAST)){
-                playerToRotate.changeDirection(Direction.SOUTH);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.SOUTH)){
-                playerToRotate.changeDirection(Direction.WEST);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.WEST)){
-                playerToRotate.changeDirection(Direction.NORTH);
-            }
-        }
-
-        else if(rotateDir.equals(Rotate.UTURN)){
-            if(playerToRotate.getDirection().equals(Direction.NORTH)){
-                playerToRotate.changeDirection(Direction.SOUTH);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.SOUTH)){
-                playerToRotate.changeDirection(Direction.NORTH);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.WEST)){
-                playerToRotate.changeDirection(Direction.EAST);
-            }
-            else if(playerToRotate.getDirection().equals(Direction.EAST)){
-                playerToRotate.changeDirection(Direction.WEST);
-            }
-        }
-
-        assetsInner.player1Sprite.setRotation(playerRotationDegree);
-        newPlayerRotate = rotateDir;
-    }
+//assetsInner.player1Sprite.setRotation(player.getRotationDegree());
 
     @Override
     public void render(float delta) {
@@ -151,6 +86,7 @@ public class GameScreen implements Screen {
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r,g,b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         camera.update();
 
@@ -203,6 +139,7 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
+
     }
 
     @Override
@@ -238,7 +175,7 @@ public class GameScreen implements Screen {
             player1Sprite = new Sprite(player1Texture);
             player1Sprite.setOriginCenter();
             player1Sprite.setPosition(player.getX(), player.getY());
-            player1Sprite.setRotation(playerRotationDegree);
+            player1Sprite.setRotation(player.getRotationDegree());
         }
 
     }

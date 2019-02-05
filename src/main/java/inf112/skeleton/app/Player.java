@@ -17,6 +17,8 @@ public class Player implements IPlayer {
     private ProgramCardCD[] registers = new ProgramCardCD[5];
     private int unlockedRegisters;
 
+    //Current degrees rotated. (used in GameScreen to rotate the player sprite)
+    private float rotationDegree;
 
 
     /**
@@ -37,9 +39,11 @@ public class Player implements IPlayer {
         this.direction = Direction.SOUTH;
         this.cardsInHand = new ArrayList<>();
 
-        dmg = 0;
-        lives = 3;
-        unlockedRegisters = 5;
+        this.dmg = 0;
+        this.lives = 3;
+        this.unlockedRegisters = 5;
+
+        this.rotationDegree = 0;
     }
 
     /**
@@ -62,10 +66,13 @@ public class Player implements IPlayer {
         this.direction = direction;
         this.cardsInHand = new ArrayList<>();
 
-        dmg = 0;
-        lives = 3;
-        unlockedRegisters = 5;
+        this.dmg = 0;
+        this.lives = 3;
+        this.unlockedRegisters = 5;
+
+        this.rotationDegree = 0;
     }
+
 
     public void takeDamage(){
         dmg++;
@@ -140,7 +147,7 @@ public class Player implements IPlayer {
             }
             i++;
         }
-        System.err.println("Can't pick more cards. Register is full!");
+        System.err.println("Error: can't pick more cards. Register is full!");
     }
 
     public boolean registerIsFull() {
@@ -152,13 +159,8 @@ public class Player implements IPlayer {
      * Change the direction the player is facing.
      * Uses enums Direction.NORTH, Direction.WEST, Direction.SOUTH and Direction.EAST
      *
-     * You should use {@link GameScreen#rotatePlayer(Player, Rotate)} when using program cards.
-     * rotate(Rotate rotate) if using program cards.
-     *
-     * @param direction
-     *                  new direction to face.
+     * @param direction new direction to face.
      */
-    //Might want to make private
     public void changeDirection(Direction direction){
         this.direction = direction;
 
@@ -166,8 +168,7 @@ public class Player implements IPlayer {
 
     /**
      * Moves the robot forward in the direction it is facing.
-     * @param steps
-     *              how many tiles to move.
+     * @param steps how many tiles to move.
      */
     public void move(int steps){
         if(direction.equals(Direction.NORTH)) {
@@ -210,11 +211,54 @@ public class Player implements IPlayer {
         return this.cardsInHand;
     }
 
+    /**
+     * Rotates the player, visually as well.
+     *
+     * @param rotateDir Which direction the player should rotate
+     * @return the new direction the player is facing.
+     */
+    @SuppressWarnings("Duplicates")
+    public Direction rotate(Rotate rotateDir){
+        final Direction NORTH = Direction.NORTH;
+        final Direction WEST = Direction.WEST;
+        final Direction SOUTH = Direction.SOUTH;
+        final Direction EAST = Direction.EAST;
+
+
+        if(rotateDir.equals(Rotate.RIGHT)){
+            switch(this.direction){
+                case NORTH: this.direction = EAST; break;
+                case EAST: this.direction = SOUTH; break;
+                case SOUTH: this.direction = WEST; break;
+                case WEST: this. direction = NORTH; break;
+            }
+            this.rotationDegree += 90;
+        }
+        else if(rotateDir.equals(Rotate.LEFT)){
+            switch(this.direction){
+                case NORTH: this.direction = WEST; break;
+                case WEST: this.direction = SOUTH; break;
+                case SOUTH: this.direction = EAST; break;
+                case EAST: this.direction = NORTH; break;
+            }
+            this.rotationDegree -= 90;
+        }
+        else if(rotateDir.equals(Rotate.UTURN)){
+            switch(this.direction){
+                case NORTH: this.direction = SOUTH; break;
+                case SOUTH: this.direction = NORTH; break;
+                case WEST: this.direction = EAST; break;
+                case EAST: this.direction = WEST; break;
+            }
+            this.rotationDegree += 180;
+        }
+        return this.direction;
+    }
+
 
     /**
      *
-     * @return
-     *          the direction the player is facing.
+     * @return the direction the player is facing.
      */
     public Direction getDirection(){
         return this.direction;
@@ -247,6 +291,10 @@ public class Player implements IPlayer {
      */
     public int getPriority(int phaseNumber) {
         return registers[phaseNumber].getPriority();
+    }
+
+    public float getRotationDegree() {
+        return rotationDegree;
     }
 
     public String getName() {
