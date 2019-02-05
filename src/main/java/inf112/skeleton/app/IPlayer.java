@@ -1,5 +1,8 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import java.util.ArrayList;
 
 public interface IPlayer {
@@ -33,7 +36,7 @@ public interface IPlayer {
     /**
      * @return all cards dealt to the player this round.
      */
-    ArrayList<ProgramCardCD> getCardsInHand();
+    ArrayList<ProgramCard> getCardsInHand();
 
 
     /**
@@ -41,7 +44,7 @@ public interface IPlayer {
      *
      * @param programCard the card the player receives.
      */
-    void receiveNewCard(ProgramCardCD programCard);
+    void receiveNewCard(ProgramCard programCard);
 
     /**
      * @return how many cards the player is allowed to choose this round.
@@ -53,5 +56,8 @@ public interface IPlayer {
      */
     int getCardLimit();
 
+    Texture getTexture();
+
+    Sprite getSprite();
 }
 

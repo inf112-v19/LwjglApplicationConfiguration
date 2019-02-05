@@ -8,18 +8,18 @@ import java.util.ArrayList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-public class ProgramCardCDTest {
-    ArrayList<ProgramCardCD> stackOfCards;
+public class ProgramCardTest {
+    ArrayList<ProgramCard> stackOfCards;
 
     @Before
     public void setup(){
-        stackOfCards = ProgramCardCD.makeStack();
+        stackOfCards = ProgramCard.makeStack();
     }
 
     @Test
     public void stackContains18RotateLeft(){
         int result = 0;
-        for(ProgramCardCD pc : stackOfCards){
+        for(ProgramCard pc : stackOfCards){
             if(pc.getRotate() == Rotate.LEFT)
                 result++;
         }
@@ -29,7 +29,7 @@ public class ProgramCardCDTest {
     @Test
     public void stackContains18RotateRight(){
         int result = 0;
-        for(ProgramCardCD pc : stackOfCards){
+        for(ProgramCard pc : stackOfCards){
             if(pc.getRotate() == Rotate.RIGHT)
                 result++;
         }
@@ -39,7 +39,7 @@ public class ProgramCardCDTest {
     @Test
     public void stackContains6TurnAroundCards(){
         int result = 0;
-        for(ProgramCardCD pc : stackOfCards){
+        for(ProgramCard pc : stackOfCards){
             if(pc.getRotate() == Rotate.UTURN)
                 result++;
         }
@@ -49,7 +49,7 @@ public class ProgramCardCDTest {
     @Test
     public void stackContains18MoveOneCards(){
         int result = 0;
-        for(ProgramCardCD pc : stackOfCards){
+        for(ProgramCard pc : stackOfCards){
             if(pc.getMoveDistance() == 1)
                 result++;
         }
@@ -59,7 +59,7 @@ public class ProgramCardCDTest {
     @Test
     public void stackContains12MoveTwoCards(){
         int result = 0;
-        for(ProgramCardCD pc : stackOfCards){
+        for(ProgramCard pc : stackOfCards){
             if(pc.getMoveDistance() == 2)
                 result++;
         }
@@ -69,7 +69,7 @@ public class ProgramCardCDTest {
     @Test
     public void stackContains6MoveThreeCards(){
         int result = 0;
-        for(ProgramCardCD pc : stackOfCards){
+        for(ProgramCard pc : stackOfCards){
             if(pc.getMoveDistance() == 3)
                 result++;
         }
@@ -79,7 +79,7 @@ public class ProgramCardCDTest {
     @Test
     public void stackContains6MoveBackwardsCards(){
         int result = 0;
-        for(ProgramCardCD pc : stackOfCards){
+        for(ProgramCard pc : stackOfCards){
             if(pc.getMoveDistance() == -1)
                 result++;
         }
@@ -101,7 +101,7 @@ public class ProgramCardCDTest {
 
     @Test
     public void everyCardHasEitherRotateOrMoveValue(){
-        for(ProgramCardCD pc : stackOfCards) {
+        for(ProgramCard pc : stackOfCards) {
             if (pc.getMoveDistance() != 0)
                 assert(pc.getRotate() == Rotate.NONE);
             if (pc.getRotate() != Rotate.NONE)

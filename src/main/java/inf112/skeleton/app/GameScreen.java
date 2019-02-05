@@ -12,18 +12,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen { //Implements ApplicationListener? Extends Game? TODO: Decide.
 
     private RoboRallyGame game;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private Player player;
-    private ProgramCardCD programCards;
-    private ArrayList<ProgramCardCD> listOfAllProgramCards;
+    private ProgramCard programCards;
+    private ArrayList<ProgramCard> listOfAllProgramCards;
 
 
-    //Rotation degree at start. (Change it depending on which picture is being used to represent the player).
-    private float playerRotationDegree;
+    //Rotation degree at start.
+    //private float playerRotationDegree;
 
     private AssetsInner assetsInner;
 
@@ -33,16 +33,17 @@ public class GameScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         player = new Player("Player1", 0, 0);
-        playerRotationDegree = player.getRotationDegree();
-        programCards = new ProgramCardCD();
+        //playerRotationDegree = player.getRotationDegree();
+        programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
 
         assetsInner = new AssetsInner();
         assetsInner.load(); //loads the sprites
-
+        player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
             player.receiveNewCard(listOfAllProgramCards.remove(0));
         }
+
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
@@ -101,6 +102,7 @@ public class GameScreen implements Screen {
             player.setY(player.getY()+150);
         }
 
+        player.loadVisualRepresentation();
         assetsInner.load(); //to visually update the player position
 
         batch.setProjectionMatrix(camera.combined);
@@ -108,7 +110,7 @@ public class GameScreen implements Screen {
         batch.begin();
         //All rendering code goes here
         assetsInner.backgroundSprite.draw(batch);
-        assetsInner.player1Sprite.draw(batch);
+        player.getSprite().draw(batch);
         batch.end();
     }
 
@@ -136,7 +138,7 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         batch.dispose();
-
+        //...
     }
 
     @Override
@@ -157,24 +159,13 @@ public class GameScreen implements Screen {
         private Texture backgroundTexture; //The image
         private Sprite backgroundSprite; //The game object-version of the image
 
-        private Texture player1Texture;
-        private Sprite player1Sprite;
-
 
         protected void load() {
             backgroundTexture = new Texture(Gdx.files.internal("assets/gameboard/RoboRallyBoard2.png"));
             backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             backgroundSprite = new Sprite(backgroundTexture);
             backgroundSprite.setPosition(0, 0);
-
-            player1Texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
-            player1Texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            player1Sprite = new Sprite(player1Texture);
-            player1Sprite.setOriginCenter();
-            player1Sprite.setPosition(player.getX(), player.getY());
-            player1Sprite.setRotation(player.getRotationDegree());
         }
-
     }
 }
 

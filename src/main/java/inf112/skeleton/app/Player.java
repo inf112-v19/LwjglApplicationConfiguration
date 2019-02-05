@@ -1,5 +1,9 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import java.util.ArrayList;
 
 public class Player implements IPlayer {
@@ -12,27 +16,27 @@ public class Player implements IPlayer {
     private int dmg;
 
     private Direction direction; //Which direction the player is currently facing.
-    private ArrayList<ProgramCardCD> cardsInHand; //All cards in the player hand.
+    private ArrayList<ProgramCard> cardsInHand;
 
-    private ProgramCardCD[] registers = new ProgramCardCD[5];
+    private ProgramCard[] registers = new ProgramCard[5];
     private int unlockedRegisters;
 
     //Current degrees rotated. (used in GameScreen to rotate the player sprite)
     private float rotationDegree;
 
+    private Texture texture;
+    private Sprite sprite;
+
 
     /**
-     * Initialize a new player (a new robot).
+     * Initialize a new player.
      * The player is facing south by default.
      *
-     * @param name
-     *            the name of the player.
-     * @param x
-     *          x start coordinate for the player.
-     * @param y
-     *          y start coordinate for the player.
+     * @param name the name of the player.
+     * @param x    x start coordinate for the player.
+     * @param y    y start coordinate for the player.
      */
-    public Player(String name, int x, int y){
+    public Player(String name, int x, int y) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -44,22 +48,20 @@ public class Player implements IPlayer {
         this.unlockedRegisters = 5;
 
         this.rotationDegree = 0;
+
     }
 
+
     /**
-     * Initialize a new player (a new robot).
-     * Choose which direction the player is facing at spawn.
+     * Initialize a new player.
+     * Choose which direction the player is facing when created.
      *
-     * @param name
-     *              the name of the player
-     * @param x
-     *          x start coordinate for the player.
-     * @param y
-     *          y start coordinate for the player.
-     * @param direction
-     *                  which direction the player should face.
+     * @param name      the name of the player.
+     * @param x         x start coordinate for the player.
+     * @param y         y start coordinate for the player.
+     * @param direction which direction the player should face.
      */
-    public Player(String name, int x, int y, Direction direction){
+    public Player(String name, int x, int y, Direction direction) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -74,10 +76,10 @@ public class Player implements IPlayer {
     }
 
 
-    public void takeDamage(){
+    public void takeDamage() {
         dmg++;
-        if(isDestroyed()){
-            if(outOfLives()) {
+        if (isDestroyed()) {
+            if (outOfLives()) {
                 // TODO: GAME OVER for this player.
             } else {
 //                repairDamage();
@@ -94,7 +96,7 @@ public class Player implements IPlayer {
      * taking 5 dmg locks register 4.
      * 6 dmg locks 3..
      */
-    public boolean isLocked(int register){
+    public boolean isLocked(int register) {
         return register >= unlockedRegisters;
     }
 
@@ -102,17 +104,17 @@ public class Player implements IPlayer {
      * When damage is taken some registers might become locked.
      * Cards in locked registers should remain untill the register is unlocked.
      *
-     * @return list of cards that are not locked in registers
+     * @return list of cards that are not locked in registers.
      */
-    public ArrayList<ProgramCardCD> returnCards(){
-        for(int register = 0; register < unlockedRegisters; register++) {
+    public ArrayList<ProgramCard> returnCards() {
+        for (int register = 0; register < unlockedRegisters; register++) {
             cardsInHand.add(registers[register]);
             registers[register] = null;
         }
         return cardsInHand;
     }
 
-    public boolean isDestroyed(){
+    public boolean isDestroyed() {
         return dmg > 9;
     }
 
@@ -121,7 +123,7 @@ public class Player implements IPlayer {
         return lives == 0;
     }
 
-    public void repairDamage(){
+    public void repairDamage() {
         dmg = 0;
         unlockedRegisters = 5;
     }
@@ -130,18 +132,18 @@ public class Player implements IPlayer {
      * Give the player a new program card.
      * A player will not receive the card if the card limit is reached.
      */
-    public void receiveNewCard(ProgramCardCD programCard){
-        if(cardsInHand.size() >= getCardLimit()){
+    public void receiveNewCard(ProgramCard programCard) {
+        if (cardsInHand.size() >= getCardLimit()) {
             System.out.println("Card was not added because of card limit");
             return;
         }
         cardsInHand.add(programCard);
     }
 
-    public void pickCard(int cardPos){
+    public void pickCard(int cardPos) {
         int i = 0;
-        while(i < unlockedRegisters){
-            if(registers[i] == null) {
+        while (i < unlockedRegisters) {
+            if (registers[i] == null) {
                 registers[i] = cardsInHand.remove(cardPos);
                 return;
             }
@@ -157,44 +159,42 @@ public class Player implements IPlayer {
 
     /**
      * Change the direction the player is facing.
-     * Uses enums Direction.NORTH, Direction.WEST, Direction.SOUTH and Direction.EAST
+     * Uses enums Direction.NORTH, Direction.WEST, Direction.SOUTH and Direction.EAST.
      *
      * @param direction new direction to face.
      */
-    private void changeDirection(Direction direction){
+    private void changeDirection(Direction direction) {
         this.direction = direction;
 
     }
 
     /**
      * Moves the robot forward in the direction it is facing.
+     *
      * @param steps how many tiles to move.
      */
-    public void move(int steps){
-        if(direction.equals(Direction.NORTH)) {
+    public void move(int steps) {
+        if (direction.equals(Direction.NORTH)) {
             y -= 150 * steps;
         }
-        if(direction.equals(Direction.EAST)) {
+        if (direction.equals(Direction.EAST)) {
             x += 150 * steps;
         }
-        if(direction.equals(Direction.SOUTH)) {
+        if (direction.equals(Direction.SOUTH)) {
             y += 150 * steps;
         }
-        if(direction.equals(Direction.WEST)) {
+        if (direction.equals(Direction.WEST)) {
             x -= 150 * steps;
         }
     }
 
 
-
     // getters and setters:
 
     /**
-     *
-     * @return
-     *          how many cards the player is allowed to be dealt
+     * @return how many cards the player is allowed to be dealt.
      */
-    public int getCardLimit(){
+    public int getCardLimit() {
         return 9 - dmg;
     }
 
@@ -203,52 +203,84 @@ public class Player implements IPlayer {
     }
 
     /**
-     *
-     * @return
-     *          all the cards that the player currently has in hand.
+     * @return all the cards that the player currently has in hand.
      */
-    public ArrayList<ProgramCardCD> getCardsInHand(){
+    public ArrayList<ProgramCard> getCardsInHand() {
         return this.cardsInHand;
     }
 
+
+    public void loadVisualRepresentation(){
+        texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
+        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        sprite = new Sprite(texture);
+
+        sprite.setOriginCenter();
+        sprite.setPosition(this.x, this.y);
+        sprite.setRotation(this.rotationDegree);
+    }
+
+
     /**
-     * Rotates the player, visually as well.
+     * Rotates the player - visually too.
      *
-     * @param rotateDir Which direction the player should rotate
+     * @param rotateDir which direction the player should rotate.
      * @return the new direction the player is facing.
      */
     @SuppressWarnings("Duplicates")
-    public Direction rotate(Rotate rotateDir){
+    public Direction rotate(Rotate rotateDir) {
         final Direction NORTH = Direction.NORTH;
         final Direction WEST = Direction.WEST;
         final Direction SOUTH = Direction.SOUTH;
         final Direction EAST = Direction.EAST;
 
 
-        if(rotateDir.equals(Rotate.RIGHT)){
-            switch(this.direction){
-                case NORTH: this.direction = EAST; break;
-                case EAST: this.direction = SOUTH; break;
-                case SOUTH: this.direction = WEST; break;
-                case WEST: this. direction = NORTH; break;
+        if (rotateDir.equals(Rotate.RIGHT)) {
+            switch (this.direction) {
+                case NORTH:
+                    this.direction = EAST;
+                    break;
+                case EAST:
+                    this.direction = SOUTH;
+                    break;
+                case SOUTH:
+                    this.direction = WEST;
+                    break;
+                case WEST:
+                    this.direction = NORTH;
+                    break;
             }
             this.rotationDegree += 90;
-        }
-        else if(rotateDir.equals(Rotate.LEFT)){
-            switch(this.direction){
-                case NORTH: this.direction = WEST; break;
-                case WEST: this.direction = SOUTH; break;
-                case SOUTH: this.direction = EAST; break;
-                case EAST: this.direction = NORTH; break;
+        } else if (rotateDir.equals(Rotate.LEFT)) {
+            switch (this.direction) {
+                case NORTH:
+                    this.direction = WEST;
+                    break;
+                case WEST:
+                    this.direction = SOUTH;
+                    break;
+                case SOUTH:
+                    this.direction = EAST;
+                    break;
+                case EAST:
+                    this.direction = NORTH;
+                    break;
             }
             this.rotationDegree -= 90;
-        }
-        else if(rotateDir.equals(Rotate.UTURN)){
-            switch(this.direction){
-                case NORTH: this.direction = SOUTH; break;
-                case SOUTH: this.direction = NORTH; break;
-                case WEST: this.direction = EAST; break;
-                case EAST: this.direction = WEST; break;
+        } else if (rotateDir.equals(Rotate.UTURN)) {
+            switch (this.direction) {
+                case NORTH:
+                    this.direction = SOUTH;
+                    break;
+                case SOUTH:
+                    this.direction = NORTH;
+                    break;
+                case WEST:
+                    this.direction = EAST;
+                    break;
+                case EAST:
+                    this.direction = WEST;
+                    break;
             }
             this.rotationDegree += 180;
         }
@@ -257,14 +289,13 @@ public class Player implements IPlayer {
 
 
     /**
-     *
      * @return the direction the player is facing.
      */
-    public Direction getDirection(){
+    public Direction getDirection() {
         return this.direction;
     }
 
-    public int getDamage(){
+    public int getDamage() {
         return dmg;
     }
 
@@ -272,22 +303,23 @@ public class Player implements IPlayer {
         return this.lives;
     }
 
-    public ArrayList<ProgramCardCD> getRegisters(){
-        ArrayList<ProgramCardCD> list = new ArrayList<>();
-        for(ProgramCardCD pc : registers)
+    public ArrayList<ProgramCard> getRegisters() {
+        ArrayList<ProgramCard> list = new ArrayList<>();
+        for (ProgramCard pc : registers)
             list.add(pc);
 
         return list;
     }
 
-    public ProgramCardCD getCardInRegister(int register){
+    public ProgramCard getCardInRegister(int register) {
         return registers[register];
     }
 
     /**
      * Every phase the player with the highest priority goes first.
+     *
      * @param phaseNumber
-     * @return priority of the card in the register for the given phase
+     * @return priority of the card in the register for the given phase.
      */
     public int getPriority(int phaseNumber) {
         return registers[phaseNumber].getPriority();
@@ -318,7 +350,15 @@ public class Player implements IPlayer {
     }
 
     @Override
-    public String toString(){
-        return getName() +  " | Health: " + (10 - dmg) + " | Lives: " + lives;
+    public String toString() {
+        return getName() + " | Health: " + (10 - dmg) + " | Lives: " + lives;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }
