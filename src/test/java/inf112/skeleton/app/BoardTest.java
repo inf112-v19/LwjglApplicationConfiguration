@@ -37,8 +37,8 @@ public class BoardTest {
     }
 
     @Test
-    public void changeDirToEastMove1(){
-        player.changeDirection(Direction.EAST);
+    public void rotateLeftMove1(){
+        player.rotate(Rotate.LEFT);
         player.move(1);
         assertEquals(x+150, player.getX());
     }
@@ -46,21 +46,34 @@ public class BoardTest {
 
     @Test
     public void move1EastThen1West(){
-        player.changeDirection(Direction.EAST);
+        player.rotate(Rotate.LEFT);
         player.move(1);
-        player.changeDirection(Direction.WEST);
+        player.rotate(Rotate.UTURN);
         player.move(1);
         assertEquals(x,player.getX());
     }
 
     @Test
-    public void move1South2East1North(){
+    public void Move1ThenRotateLeftThenMove2ThenRotateLeftMove1(){
         player.move(1);
-        player.changeDirection(Direction.EAST);
+        player.rotate(Rotate.LEFT);
         player.move(2);
-        player.changeDirection(Direction.NORTH);
+        player.rotate(Rotate.LEFT);
         player.move(1);
         assertEquals(x+300, player.getX());
+        assertEquals(y, player.getY());
+    }
+
+    @Test
+    public void rotateLeftMove3ThenRotateRightMove2ThenRotateUturnMove2(){
+        player.rotate(Rotate.LEFT);
+        player.move(3);
+        player.rotate(Rotate.RIGHT);
+        player.move(2);
+        player.rotate(Rotate.UTURN);
+        player.move(2);
+
+        assertEquals(x+450, player.getX());
         assertEquals(y, player.getY());
     }
 

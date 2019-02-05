@@ -74,9 +74,6 @@ public class GameScreen implements Screen {
 
 
 
-
-//assetsInner.player1Sprite.setRotation(player.getRotationDegree());
-
     @Override
     public void render(float delta) {
         float r = 158/255f;

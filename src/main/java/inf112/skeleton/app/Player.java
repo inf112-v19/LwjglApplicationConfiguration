@@ -161,7 +161,7 @@ public class Player implements IPlayer {
      *
      * @param direction new direction to face.
      */
-    public void changeDirection(Direction direction){
+    private void changeDirection(Direction direction){
         this.direction = direction;
 
     }
