@@ -15,14 +15,13 @@ public class Player implements IPlayer {
     private int lives;
     private int dmg;
 
+    private float rotationDegree; //Current degrees rotated. Used in GameScreen to rotate the player sprite.
     private Direction direction; //Which direction the player is currently facing.
     private ArrayList<ProgramCard> cardsInHand;
 
     private ProgramCard[] registers = new ProgramCard[5];
     private int unlockedRegisters;
 
-    //Current degrees rotated. (used in GameScreen to rotate the player sprite)
-    private float rotationDegree;
 
     private Texture texture;
     private Sprite sprite;
@@ -145,6 +144,7 @@ public class Player implements IPlayer {
         while (i < unlockedRegisters) {
             if (registers[i] == null) {
                 registers[i] = cardsInHand.remove(cardPos);
+                //TODO: potential issue - array spots after the removed index gets shifted
                 return;
             }
             i++;
@@ -158,20 +158,9 @@ public class Player implements IPlayer {
 
 
     /**
-     * Change the direction the player is facing.
-     * Uses enums Direction.NORTH, Direction.WEST, Direction.SOUTH and Direction.EAST.
-     *
-     * @param direction new direction to face.
-     */
-    private void changeDirection(Direction direction) {
-        this.direction = direction;
-
-    }
-
-    /**
      * Moves the robot forward in the direction it is facing.
      *
-     * @param steps how many tiles to move.
+     * @param steps number of tiles to move.
      */
     public void move(int steps) {
         if (direction.equals(Direction.NORTH)) {
@@ -188,6 +177,59 @@ public class Player implements IPlayer {
         }
     }
 
+    /**
+     * Rotates the player - visually too.
+     *
+     * @param rotateDir which direction the player should rotate.
+     * @return the new direction the player is facing.
+     */
+    @SuppressWarnings("Duplicates")
+    public Direction rotate(Rotate rotateDir) {
+        final Direction NORTH = Direction.NORTH;
+        final Direction WEST = Direction.WEST;
+        final Direction SOUTH = Direction.SOUTH;
+        final Direction EAST = Direction.EAST;
+
+
+        if (rotateDir.equals(Rotate.RIGHT)) {
+            switch (this.direction) {
+                case NORTH: this.direction = EAST; break;
+                case EAST: this.direction = SOUTH; break;
+                case SOUTH: this.direction = WEST; break;
+                case WEST: this.direction = NORTH; break;
+            }
+            this.rotationDegree += 90;
+        }
+        else if (rotateDir.equals(Rotate.LEFT)) {
+            switch (this.direction) {
+                case NORTH: this.direction = WEST; break;
+                case WEST: this.direction = SOUTH; break;
+                case SOUTH: this.direction = EAST; break;
+                case EAST: this.direction = NORTH; break;
+            }
+            this.rotationDegree -= 90;
+        }
+        else if (rotateDir.equals(Rotate.UTURN)) {
+            switch (this.direction) {
+                case NORTH: this.direction = SOUTH; break;
+                case SOUTH: this.direction = NORTH; break;
+                case WEST:  this.direction = EAST;  break;
+                case EAST:  this.direction = WEST;  break;
+            }
+            this.rotationDegree += 180;
+        }
+        return this.direction;
+    }
+
+    public void loadVisualRepresentation() {
+        texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
+        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        sprite = new Sprite(texture);
+
+        sprite.setOriginCenter();
+        sprite.setPosition(this.x, this.y);
+        sprite.setRotation(this.rotationDegree);
+    }
 
     // getters and setters:
 
@@ -210,83 +252,6 @@ public class Player implements IPlayer {
     }
 
 
-    public void loadVisualRepresentation(){
-        texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
-        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        sprite = new Sprite(texture);
-
-        sprite.setOriginCenter();
-        sprite.setPosition(this.x, this.y);
-        sprite.setRotation(this.rotationDegree);
-    }
-
-
-    /**
-     * Rotates the player - visually too.
-     *
-     * @param rotateDir which direction the player should rotate.
-     * @return the new direction the player is facing.
-     */
-    @SuppressWarnings("Duplicates")
-    public Direction rotate(Rotate rotateDir) {
-        final Direction NORTH = Direction.NORTH;
-        final Direction WEST = Direction.WEST;
-        final Direction SOUTH = Direction.SOUTH;
-        final Direction EAST = Direction.EAST;
-
-
-        if (rotateDir.equals(Rotate.RIGHT)) {
-            switch (this.direction) {
-                case NORTH:
-                    this.direction = EAST;
-                    break;
-                case EAST:
-                    this.direction = SOUTH;
-                    break;
-                case SOUTH:
-                    this.direction = WEST;
-                    break;
-                case WEST:
-                    this.direction = NORTH;
-                    break;
-            }
-            this.rotationDegree += 90;
-        } else if (rotateDir.equals(Rotate.LEFT)) {
-            switch (this.direction) {
-                case NORTH:
-                    this.direction = WEST;
-                    break;
-                case WEST:
-                    this.direction = SOUTH;
-                    break;
-                case SOUTH:
-                    this.direction = EAST;
-                    break;
-                case EAST:
-                    this.direction = NORTH;
-                    break;
-            }
-            this.rotationDegree -= 90;
-        } else if (rotateDir.equals(Rotate.UTURN)) {
-            switch (this.direction) {
-                case NORTH:
-                    this.direction = SOUTH;
-                    break;
-                case SOUTH:
-                    this.direction = NORTH;
-                    break;
-                case WEST:
-                    this.direction = EAST;
-                    break;
-                case EAST:
-                    this.direction = WEST;
-                    break;
-            }
-            this.rotationDegree += 180;
-        }
-        return this.direction;
-    }
-
 
     /**
      * @return the direction the player is facing.
@@ -295,9 +260,11 @@ public class Player implements IPlayer {
         return this.direction;
     }
 
+
     public int getDamage() {
         return dmg;
     }
+
 
     public int getLives() {
         return this.lives;
