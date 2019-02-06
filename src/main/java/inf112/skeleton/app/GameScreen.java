@@ -21,10 +21,6 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
     private ProgramCard programCards;
     private ArrayList<ProgramCard> listOfAllProgramCards;
 
-
-    //Rotation degree at start.
-    //private float playerRotationDegree;
-
     private AssetsInner assetsInner;
 
 
@@ -33,12 +29,11 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
         this.game = game;
         camera = new OrthographicCamera();
         player = new Player("Player1", 0, 0);
-        //playerRotationDegree = player.getRotationDegree();
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
 
         assetsInner = new AssetsInner();
-        assetsInner.load(); //loads the sprites
+        assetsInner.load(); //loads the background
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
             player.receiveNewCard(listOfAllProgramCards.remove(0));
@@ -91,19 +86,21 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
         //Just for testing.
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
             player.setX(player.getX()+150);
+            updatePos();
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
             player.setX(player.getX()-150);
+            updatePos();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
             player.setY(player.getY()-150);
+            updatePos();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
             player.setY(player.getY()+150);
+            updatePos();
         }
 
-        player.loadVisualRepresentation();
-        assetsInner.load(); //to visually update the player position
 
         batch.setProjectionMatrix(camera.combined);
 
@@ -112,6 +109,10 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
         assetsInner.backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
         batch.end();
+    }
+
+    private void updatePos(){
+        player.loadVisualRepresentation();
     }
 
     @Override
