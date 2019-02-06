@@ -44,7 +44,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         }
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
-        camera.setToOrtho(true, 4000, 2200);
+        camera.setToOrtho(false, 4000, 2200);
         batch = new SpriteBatch();
     }
 
