@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -16,26 +22,36 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     private RoboRallyGame game;
     private OrthographicCamera camera;
+    private Viewport gamePort;
+
+    // map stuff:
+    private TmxMapLoader loader;
+    private TiledMap board;
+    private TiledMapRenderer mapRenderer;
+
     private SpriteBatch batch;
     private Player player;
     private ProgramCard programCards;
     private ArrayList<ProgramCard> listOfAllProgramCards;
-
     private AssetsInner assetsInner;
-
 
 
     public GameScreen(RoboRallyGame game){
         this.game = game;
+        //view:
         camera = new OrthographicCamera();
+        gamePort = new FitViewport(800, 480, camera);
+        //map:
+        loader = new TmxMapLoader();
+        board = loader.load("assets/gameboard/testMap.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(board);
+        //player:
         player = new Player("Player1", 0, 0);
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
-
+        //other stuff:
         assetsInner = new AssetsInner();
         assetsInner.load(); //loads the background
-
-        //player.rotate(Rotate.RIGHT);
 
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
@@ -47,9 +63,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch = new SpriteBatch();
     }
 
-    // Todo: This might need an update after changes in player class
+
     //Where to call the function?
-    public void chooseCardsForRound(){
+    public void chooseCardsForRound(){  // Todo: This might need an update after changes in player class
         printCards();
 
         Scanner sc = new Scanner(System.in);
@@ -109,6 +125,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         batch.begin();
         //All rendering code goes here
+        mapRenderer.render();
         assetsInner.backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
         batch.end();
@@ -145,7 +162,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void resize(int width, int height) {
-
+        gamePort.update(width,height);
     }
 
     public Player getPlayer() {
