@@ -15,8 +15,8 @@ public class  Player implements IPlayer {
     private int lives;
     private int dmg;
 
-    private float rotationDegree; //Current degrees rotated. Used in GameScreen to rotate the player sprite.
-    private Direction direction; //Which direction the player is currently facing.
+    private float rotationDegree;
+    private Direction direction;
     private ArrayList<ProgramCard> cardsInHand;
 
     private ProgramCard[] registers = new ProgramCard[5];
@@ -26,6 +26,7 @@ public class  Player implements IPlayer {
     private Texture texture;
     private Sprite sprite;
 
+    private static int ONE_STEP = 150;
 
     /**
      * Initialize a new player.
@@ -164,16 +165,16 @@ public class  Player implements IPlayer {
      */
     public void move(int steps) {
         if (direction.equals(Direction.NORTH)) {
-            y -= 150 * steps;
+            y -= ONE_STEP * steps;
         }
         if (direction.equals(Direction.EAST)) {
-            x += 150 * steps;
+            x += ONE_STEP * steps;
         }
         if (direction.equals(Direction.SOUTH)) {
-            y += 150 * steps;
+            y += ONE_STEP * steps;
         }
         if (direction.equals(Direction.WEST)) {
-            x -= 150 * steps;
+            x -= ONE_STEP * steps;
         }
     }
 
@@ -292,6 +293,9 @@ public class  Player implements IPlayer {
         return registers[phaseNumber].getPriority();
     }
 
+    /**
+     * @return current degrees rotated.
+     */
     public float getRotationDegree() {
         return rotationDegree;
     }
@@ -308,10 +312,12 @@ public class  Player implements IPlayer {
         return y;
     }
 
+    //Remove once we remove movement with WASD in GameScreen render method.
     public void setX(int x) {
         this.x = x;
     }
 
+    //Remove once we remove movement with WASD in GameScreen render method.
     public void setY(int y) {
         this.y = y;
     }

@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
+public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game? Something else?
 
     private RoboRallyGame game;
     private OrthographicCamera camera;
@@ -35,7 +35,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         assetsInner = new AssetsInner();
         assetsInner.load(); //loads the background
 
-        //player.rotate(Rotate.RIGHT);
 
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
@@ -48,7 +47,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     // Todo: This might need an update after changes in player class
-    //Where to call the function?
     public void chooseCardsForRound(){
         printCards();
 
@@ -140,7 +138,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     @Override
     public void dispose() {
         batch.dispose();
-        //...
+        player.getTexture().dispose();
+        assetsInner.getBackgroundTexture().dispose();
     }
 
     @Override
@@ -167,6 +166,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
             backgroundSprite = new Sprite(backgroundTexture);
             backgroundSprite.setPosition(0, 0);
+        }
+
+        public Texture getBackgroundTexture(){
+            return this.backgroundTexture;
         }
     }
 }
