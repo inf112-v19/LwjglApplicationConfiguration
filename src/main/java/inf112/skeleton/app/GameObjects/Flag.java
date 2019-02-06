@@ -10,5 +10,5 @@ public class Flag {
         this.x = x;
         this.y = y;
     }
-    
+
 }

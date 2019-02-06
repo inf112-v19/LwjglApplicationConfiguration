@@ -142,6 +142,7 @@ public class GameScreen implements Screen {
         newPlayerRotate = rotateDir;
     }
 
+
     @Override
     public void render(float delta) {
         float r = 158/255f;
@@ -177,6 +178,7 @@ public class GameScreen implements Screen {
         assetsInner.backgroundSprite.draw(batch);
         assetsInner.player1Sprite.draw(batch);
         batch.end();
+
     }
 
     @Override
