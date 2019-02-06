@@ -15,8 +15,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
@@ -38,15 +38,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     public GameScreen(RoboRallyGame game){
         this.game = game;
-        //view:
-        camera = new OrthographicCamera();
-        gamePort = new FitViewport(800, 480, camera);
-        //map:
-        loader = new TmxMapLoader();
-        board = loader.load("assets/gameboard/testMap.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(board);
+
         //player:
-        player = new Player("Player1", 0, 0);
+        player = new Player("Player1", 150, 150);
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
         //other stuff:
@@ -58,34 +52,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             player.receiveNewCard(listOfAllProgramCards.remove(0));
         }
 
-        //Set to true if you want to have an inverted x y axis with 0 at the top left.
-        camera.setToOrtho(true, 4000, 2200);
         batch = new SpriteBatch();
     }
-
-
-    //Where to call the function?
-    public void chooseCardsForRound(){  // Todo: This might need an update after changes in player class
-        printCards();
-
-        Scanner sc = new Scanner(System.in);
-        while(!player.registerIsFull()){
-            System.out.println("Choose a card. (Choose id)");
-            int chosenCard = sc.nextInt();
-            player.pickCard(chosenCard);
-            System.out.print("You chose card: " + chosenCard + ". "
-                    + player.getRegisters().get(player.getRegisters().size()-1).toString());
-        }
-        System.out.println("Loop finished");
-
-    }
-
-    public void printCards(){
-        for(int i = 0; i < player.getCardLimit(); i++){
-            System.out.println("id: " + i + ". " + player.getCardsInHand().get(i).toString());
-        }
-    }
-
 
 
 
@@ -99,8 +67,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         Gdx.gl.glClearColor(r,g,b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        mapRenderer.setView(camera);
+        mapRenderer.render();
 
-        camera.update();
 
         //Just for testing.
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
@@ -124,9 +93,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
-        //All rendering code goes here
-        mapRenderer.render();
-        assetsInner.backgroundSprite.draw(batch);
+
+        //assetsInner.backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
         batch.end();
 
@@ -135,7 +103,15 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void show() {
+        //map:
+        loader = new TmxMapLoader();
+        board = loader.load("assets/gameboard/testMap.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(board);
 
+        //view:
+        camera = new OrthographicCamera();
+        camera.setToOrtho(true, 1920, 1080);
+        gamePort = new FitViewport(1920, 1080, camera);
     }
 
 
@@ -157,12 +133,18 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     @Override
     public void dispose() {
         batch.dispose();
-        //...
+        board.dispose();
+        assetsInner.backgroundTexture.dispose();
+        player.getTexture().dispose();
     }
 
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);
+
+        camera.viewportWidth = width;
+        camera.viewportHeight = height;
+        camera.update();
     }
 
     public Player getPlayer() {
