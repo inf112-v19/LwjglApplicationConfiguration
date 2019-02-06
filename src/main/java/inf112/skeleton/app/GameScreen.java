@@ -3,9 +3,11 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -45,6 +47,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
         batch = new SpriteBatch();
+
     }
 
     // Todo: This might need an update after changes in player class
@@ -105,12 +108,22 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         }
 
 
+
+
+
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
         //All rendering code goes here
         assetsInner.backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
+
+        // Attempt to output text on screen
+        BitmapFont font = new BitmapFont();
+        font.setColor(new Color(Color.BLUE));
+        font.getData().setScale(7,7);
+        font.draw(batch, "TESTOUTPUT", 2500, 700);
+
         batch.end();
 
     }
