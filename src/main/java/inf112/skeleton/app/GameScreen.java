@@ -8,9 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game? Something else?
 
@@ -21,7 +20,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private ProgramCard programCards;
     private ArrayList<ProgramCard> listOfAllProgramCards;
 
-    private AssetsInner assetsInner;
+    private Texture backgroundTexture;
+    private Sprite backgroundSprite;
 
 
 
@@ -32,9 +32,11 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
 
-        assetsInner = new AssetsInner();
-        assetsInner.load(); //loads the background
-
+        //Load the background
+        backgroundTexture = new Texture(Gdx.files.internal("assets/gameboard/RoboRallyBoard2.png"));
+        backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        backgroundSprite = new Sprite(backgroundTexture);
+        backgroundSprite.setPosition(0, 0);
 
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
@@ -42,33 +44,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         }
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
-        camera.setToOrtho(true, 4000, 2200);
+        camera.setToOrtho(false, 4000, 2200);
         batch = new SpriteBatch();
     }
-
-    // Todo: This might need an update after changes in player class
-    public void chooseCardsForRound(){
-        printCards();
-
-        Scanner sc = new Scanner(System.in);
-        while(!player.registerIsFull()){
-            System.out.println("Choose a card. (Choose id)");
-            int chosenCard = sc.nextInt();
-            player.pickCard(chosenCard);
-            System.out.print("You chose card: " + chosenCard + ". "
-                    + player.getRegisters().get(player.getRegisters().size()-1).toString());
-        }
-        System.out.println("Loop finished");
-
-    }
-
-    public void printCards(){
-        for(int i = 0; i < player.getCardLimit(); i++){
-            System.out.println("id: " + i + ". " + player.getCardsInHand().get(i).toString());
-        }
-    }
-
-
 
 
     @Override
@@ -107,7 +85,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         batch.begin();
         //All rendering code goes here
-        assetsInner.backgroundSprite.draw(batch);
+        backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
         batch.end();
 
@@ -139,7 +117,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public void dispose() {
         batch.dispose();
         player.getTexture().dispose();
-        assetsInner.getBackgroundTexture().dispose();
+        backgroundTexture.dispose();
     }
 
     @Override
@@ -147,31 +125,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-
-    //Inner class containing asset for background.
-    private class AssetsInner {
-
-        //A tile on the game board is 150x150 px.
-
-        private Texture backgroundTexture; //The image
-        private Sprite backgroundSprite; //The game object-version of the image
-
-
-        protected void load() {
-            backgroundTexture = new Texture(Gdx.files.internal("assets/gameboard/RoboRallyBoard2.png"));
-            backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            backgroundSprite = new Sprite(backgroundTexture);
-            backgroundSprite.setPosition(0, 0);
-        }
-
-        public Texture getBackgroundTexture(){
-            return this.backgroundTexture;
-        }
-    }
 }
 
 
