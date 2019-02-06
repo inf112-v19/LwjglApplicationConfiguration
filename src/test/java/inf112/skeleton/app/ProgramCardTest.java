@@ -20,7 +20,7 @@ public class ProgramCardTest {
     public void stackContains18RotateLeft(){
         int result = 0;
         for(ProgramCard pc : stackOfCards){
-            if(pc.getChangeDirection() == -1)
+            if(pc.getRotate() == Rotate.LEFT)
                 result++;
         }
         assertEquals(18, result);
@@ -30,7 +30,7 @@ public class ProgramCardTest {
     public void stackContains18RotateRight(){
         int result = 0;
         for(ProgramCard pc : stackOfCards){
-            if(pc.getChangeDirection() == 1)
+            if(pc.getRotate() == Rotate.RIGHT)
                 result++;
         }
         assertEquals(18, result);
@@ -40,7 +40,7 @@ public class ProgramCardTest {
     public void stackContains6TurnAroundCards(){
         int result = 0;
         for(ProgramCard pc : stackOfCards){
-            if(pc.getChangeDirection() == 2)
+            if(pc.getRotate() == Rotate.UTURN)
                 result++;
         }
         assertEquals(6, result);
@@ -103,10 +103,10 @@ public class ProgramCardTest {
     public void everyCardHasEitherRotateOrMoveValue(){
         for(ProgramCard pc : stackOfCards) {
             if (pc.getMoveDistance() != 0)
-                assertEquals(0, pc.getChangeDirection());
-            if (pc.getChangeDirection() != 0)
+                assert(pc.getRotate() == Rotate.NONE);
+            if (pc.getRotate() != Rotate.NONE)
                 assertEquals(0, pc.getMoveDistance());
-            if (pc.getChangeDirection() == 0 && pc.getMoveDistance() == 0)
+            if (pc.getRotate() == Rotate.NONE && pc.getMoveDistance() == 0)
                 fail();
         }
     }

@@ -11,12 +11,12 @@ import static org.junit.Assert.fail;
 
 public class PlayerTest {
     private Player player;
-    private ArrayList<ProgramCardCD> stack;
+    private ArrayList<ProgramCard> stack;
 
     @Before
     public void setup(){
         player = new Player("testBot", 0,0, Direction.SOUTH);
-        stack = ProgramCardCD.makeStack();
+        stack = ProgramCard.makeStack();
     }
 
     @Test
@@ -113,11 +113,11 @@ public class PlayerTest {
                 player.pickCard(0);
         }
 
-        ArrayList<ProgramCardCD> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCards();
         assertEquals(9, cardsReturned.size());
 
         // All registers are empty:
-        for(ProgramCardCD register : player.getRegisters())
+        for(ProgramCard register : player.getRegisters())
             assert(register == null);
     }
 
@@ -135,11 +135,11 @@ public class PlayerTest {
             player.takeDamage();
 
         // Only cards in hand are returned:
-        ArrayList<ProgramCardCD> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCards();
         assertEquals(4, cardsReturned.size());
 
         // All registers contains program cards:
-        for(ProgramCardCD register : player.getRegisters())
+        for(ProgramCard register : player.getRegisters())
             assert(register != null);
     }
 
@@ -157,7 +157,7 @@ public class PlayerTest {
             player.takeDamage();
 
         // Cards in hand are returned + 4 from registers:
-        ArrayList<ProgramCardCD> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCards();
         assertEquals(8, cardsReturned.size());
 
         // The first 4 registers do not contain program cards:
@@ -169,7 +169,7 @@ public class PlayerTest {
 
     @Test
     public void priorityTest(){
-        PriorityQueue<ProgramCardCD> q = new PriorityQueue<>();
+        PriorityQueue<ProgramCard> q = new PriorityQueue<>();
         // create 3 players:
         Player p1 = new Player("p1", 0,0);
         Player p2 = new Player("p2", 0,1);
