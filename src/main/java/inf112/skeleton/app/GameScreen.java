@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class GameScreen implements Screen { //Implements ApplicationListener? Extends Game? TODO: Decide.
+public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
     private RoboRallyGame game;
     private OrthographicCamera camera;
@@ -34,11 +34,13 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
 
         assetsInner = new AssetsInner();
         assetsInner.load(); //loads the background
+
+        //player.rotate(Rotate.RIGHT);
+
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
             player.receiveNewCard(listOfAllProgramCards.remove(0));
         }
-
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
@@ -87,19 +89,19 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
         //Just for testing.
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
             player.setX(player.getX()+150);
-            updatePos();
+            player.loadVisualRepresentation();
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
             player.setX(player.getX()-150);
-            updatePos();
+            player.loadVisualRepresentation();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
             player.setY(player.getY()-150);
-            updatePos();
+            player.loadVisualRepresentation();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
             player.setY(player.getY()+150);
-            updatePos();
+            player.loadVisualRepresentation();
         }
 
 
@@ -113,9 +115,6 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
 
     }
 
-    private void updatePos(){
-        player.loadVisualRepresentation();
-    }
 
     @Override
     public void show() {
@@ -154,7 +153,7 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
     }
 
 
-    //Inner class containing assets. (Replaced Assets.java)
+    //Inner class containing asset for background.
     private class AssetsInner {
 
         //A tile on the game board is 150x150 px.
