@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.2" tiledversion="1.2.2" name="roborallyTextures" tilewidth="32" tileheight="32" spacing="1" tilecount="30" columns="6">
  <image source="textures.png" width="197" height="164"/>
+ <tile id="0">
+  <properties>
+   <property name="Floor" value=""/>
+  </properties>
+ </tile>
  <tile id="1">
   <properties>
    <property name="Wall" value="W"/>
