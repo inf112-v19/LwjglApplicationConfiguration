@@ -33,7 +33,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private Player player;
     private ProgramCard programCards;
     private ArrayList<ProgramCard> listOfAllProgramCards;
-    private AssetsInner assetsInner;
+
+    private Texture backgroundTexture;
+    private Sprite backgroundSprite;
 
 
     public GameScreen(RoboRallyGame game){
@@ -43,9 +45,12 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         player = new Player("Player1", 150, 150);
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
-        //other stuff:
-        assetsInner = new AssetsInner();
-        assetsInner.load(); //loads the background
+
+        //Load the background
+        backgroundTexture = new Texture(Gdx.files.internal("assets/gameboard/RoboRallyBoard2.png"));
+        backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        backgroundSprite = new Sprite(backgroundTexture);
+        backgroundSprite.setPosition(0, 0);
 
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
@@ -71,7 +76,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         mapRenderer.render();
 
 
-        //Just for testing.
+        //Just for testing
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
             player.setX(player.getX()+150);
             player.loadVisualRepresentation();
@@ -110,7 +115,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         //view:
         camera = new OrthographicCamera();
-        camera.setToOrtho(true, 1920, 1080);
+        camera.setToOrtho(true);
         gamePort = new FitViewport(1920, 1080, camera);
     }
 
@@ -134,7 +139,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public void dispose() {
         batch.dispose();
         board.dispose();
-        assetsInner.backgroundTexture.dispose();
+        backgroundTexture.dispose();
         player.getTexture().dispose();
     }
 
@@ -147,27 +152,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         camera.update();
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-
-    //Inner class containing asset for background.
-    private class AssetsInner {
-
-        //A tile on the game board is 150x150 px.
-
-        private Texture backgroundTexture; //The image
-        private Sprite backgroundSprite; //The game object-version of the image
-
-
-        protected void load() {
-            backgroundTexture = new Texture(Gdx.files.internal("assets/gameboard/RoboRallyBoard2.png"));
-            backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-            backgroundSprite = new Sprite(backgroundTexture);
-            backgroundSprite.setPosition(0, 0);
-        }
-    }
 }
 
 
