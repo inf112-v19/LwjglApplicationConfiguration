@@ -75,6 +75,7 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
 
 
 
+
     @Override
     public void render(float delta) {
         float r = 158/255f;
@@ -112,6 +113,7 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
         assetsInner.backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
         batch.end();
+
     }
 
     @Override

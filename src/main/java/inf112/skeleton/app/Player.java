@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.util.ArrayList;
 
-public class Player implements IPlayer {
+public class  Player implements IPlayer {
 
 
     private String name;
