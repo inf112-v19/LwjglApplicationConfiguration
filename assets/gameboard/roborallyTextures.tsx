@@ -51,6 +51,11 @@
    <property name="Wall" value="S, E"/>
   </properties>
  </tile>
+ <tile id="12">
+  <properties>
+   <property name="Laser" value=""/>
+  </properties>
+ </tile>
  <tile id="13">
   <properties>
    <property name="Wall" value="N, S"/>
@@ -69,6 +74,11 @@
  <tile id="16">
   <properties>
    <property name="Wall" value=""/>
+  </properties>
+ </tile>
+ <tile id="18">
+  <properties>
+   <property name="Laser" value=""/>
   </properties>
  </tile>
  <tile id="19">
@@ -93,22 +103,22 @@
  </tile>
  <tile id="25">
   <properties>
-   <property name="Belt" value="N"/>
+   <property name="Belt" value="NORTH"/>
   </properties>
  </tile>
  <tile id="26">
   <properties>
-   <property name="Belt" value="E"/>
+   <property name="Belt" value="EAST"/>
   </properties>
  </tile>
  <tile id="27">
   <properties>
-   <property name="Belt" value="S"/>
+   <property name="Belt" value="SOUTH"/>
   </properties>
  </tile>
  <tile id="28">
   <properties>
-   <property name="Belt" value="W"/>
+   <property name="Belt" value="WEST"/>
   </properties>
  </tile>
 </tileset>

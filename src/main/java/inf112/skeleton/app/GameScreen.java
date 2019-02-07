@@ -35,6 +35,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private TmxMapLoader loader;
     private TiledMap board;
     TiledMapTileLayer floorLayer;
+    TiledMapTileLayer beltLayer;
+    TiledMapTileLayer laserLayer;
+
+
     private TiledMapRenderer mapRenderer;
 
     private SpriteBatch batch;
@@ -73,39 +77,59 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     public void update(){
         //Just for testing
-        boolean updated = false;
+        boolean playerMoved = false;
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
             player.setX(player.getX()+ MOVE_DIST);
-            player.loadVisualRepresentation();
-            updated = true;
+//            player.loadVisualRepresentation();
+            playerMoved = true;
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
             player.setX(player.getX()- MOVE_DIST);
-            player.loadVisualRepresentation();
-            updated = true;
+//            player.loadVisualRepresentation();
+            playerMoved = true;
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
             player.setY(player.getY()- MOVE_DIST);
             player.loadVisualRepresentation();
-            updated = true;
+            playerMoved = true;
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
             player.setY(player.getY()+ MOVE_DIST);
+//            player.loadVisualRepresentation();
+            playerMoved = true;
+        }
+        if(playerMoved){
+            boardInteractsWithPlayer();
             player.loadVisualRepresentation();
-            updated = true;
-        }
-        if(updated){
-            updated = false;
-            int x = (player.getX()-1) / (UNIT_SCALE*TILE_WIDTH);
-            int y = (player.getY()+29) / (UNIT_SCALE*TILE_WIDTH);
-            if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor")) {
-                System.out.println("Floor");
-            } else if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Hole")){
-                System.out.println("Hole");
-            }
-
         }
 
+    }
+
+    public void boardInteractsWithPlayer(){
+        int x = (player.getX()-1) / (UNIT_SCALE*TILE_WIDTH);
+        int y = (player.getY()+29) / (UNIT_SCALE*TILE_WIDTH);
+
+        // check if player is on a belt:
+        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
+        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
+            Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
+            player.moveDir(dir, MOVE_DIST);
+        }
+        //Player might have moved so we need to acquire these again:
+        x = (player.getX()-1) / (UNIT_SCALE*TILE_WIDTH);
+        y = (player.getY()+29) / (UNIT_SCALE*TILE_WIDTH);
+
+        // check if player is standing in a laser:
+        currentCell = laserLayer.getCell(x,y);
+        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Laser"))
+            System.out.println("Ouch!");
+
+        // check if player is standing on the floor:
+        if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor")) {
+            System.out.println("Floor");
+        } else if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Hole")){
+            System.out.println("Hole");
+        }
     }
 
 
@@ -146,7 +170,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         camera.update();
         gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
 
+        beltLayer = (TiledMapTileLayer) board.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) board.getLayers().get("floor");
+        laserLayer = (TiledMapTileLayer) board.getLayers().get("lasers");
     }
 
 

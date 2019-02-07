@@ -177,6 +177,23 @@ public class  Player implements IPlayer {
         }
     }
 
+    public void moveDir(Direction dir, int dist){
+        switch (dir){
+            case NORTH:
+                y += dist;
+                break;
+            case SOUTH:
+                y -= dist;
+                break;
+            case EAST:
+                x += dist;
+                break;
+            case WEST:
+                x -= dist;
+                break;
+        }
+    }
+
     /**
      * Rotates the player - visually too.
      *
