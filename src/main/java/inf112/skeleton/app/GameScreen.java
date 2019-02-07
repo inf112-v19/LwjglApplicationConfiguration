@@ -128,7 +128,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            player.moveDir(dir);
+            if(canGo(dir)) {
+                player.moveDir(dir);
+            }
         }
         //Player might have moved so we need to acquire these again:
         x = (player.getX()) / (UNIT_SCALE*TILE_WIDTH);
@@ -152,6 +154,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     public boolean canGo(Direction dir){
+        // first check the current tile:
         int x = (player.getX()) / (UNIT_SCALE*TILE_WIDTH);
         int y = (player.getY()) / (UNIT_SCALE*TILE_WIDTH);
         TiledMapTileLayer.Cell currentCell =  wallLayer.getCell(x,y);
@@ -163,10 +166,42 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             String [] items = str.split(" ");
             walls = Arrays.asList(items);
         }
+        if (walls.contains(dir.toString())){
+            System.out.println("Blocked")
+            ;return false;
+        }
+
+        // then check target tile:
+        switch (dir){
+            case NORTH:
+                y++; break;
+            case SOUTH:
+                y--; break;
+            case WEST:
+                x--; break;
+            case EAST:
+                x++; break;
+        }
+        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(x,y);
+        if(targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
+            Iterator<Object> iterator = targetCell.getTile().getProperties().getValues();
+            String str = iterator.next().toString();
+            String [] items = str.split(" ");
+            walls = Arrays.asList(items);
+        } else
+            return true;
+
         for (String wall : walls)
             System.out.println(wall);
+        
+        dir = dir.getOppositeDirection();
 
-        return !walls.contains(dir.toString());
+        if (walls.contains(dir.toString())){
+            System.out.println("Blocked from the other side")
+            ;return false;
+        }
+
+        return true;
     }
 
 

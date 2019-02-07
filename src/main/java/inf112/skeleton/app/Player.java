@@ -159,10 +159,6 @@ public class  Player implements IPlayer {
     }
 
 
-    public void canGo(Direction dir, TiledMapTileLayer layer){
-        //TODO:
-    }
-
     /**
      * Moves the robot forward in the direction it is facing.
      *
