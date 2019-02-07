@@ -1,40 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="5" height="5" tilewidth="32" tileheight="32" infinite="0" nextlayerid="8" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="7" height="7" tilewidth="32" tileheight="32" infinite="0" nextlayerid="12" nextobjectid="1">
  <tileset firstgid="1" source="roborallyTextures.tsx"/>
- <layer id="1" name="floor" width="5" height="5" locked="1">
+ <layer id="8" name="floor" width="7" height="7">
   <data encoding="csv">
-7,7,7,7,7,
-7,1,1,1,7,
-7,1,1,1,7,
-7,1,1,1,7,
-7,7,7,7,7
+7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,
+7,7,1,1,1,7,7,
+7,7,1,1,1,7,1,
+7,7,1,1,1,7,7,
+7,7,7,7,7,7,7,
+7,7,7,7,7,7,7
 </data>
  </layer>
- <layer id="5" name="belts" width="5" height="5">
+ <layer id="9" name="belts" width="7" height="7">
   <data encoding="csv">
-0,0,0,0,0,
-0,0,27,27,0,
-0,0,0,0,0,
-0,0,0,0,0,
-0,0,0,0,0
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,27,27,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="3" name="lasers" width="5" height="5">
+ <layer id="10" name="lasers" width="7" height="7">
   <data encoding="csv">
-0,0,13,0,0,
-0,0,13,0,0,
-0,0,0,19,19,
-0,0,0,0,0,
-0,0,0,0,0
+0,0,0,13,0,0,0,
+0,0,0,13,0,0,0,
+0,0,0,13,0,0,0,
+0,0,0,0,19,19,0,
+0,0,0,0,0,0,0,
+0,0,0,13,0,0,0,
+0,0,0,13,0,0,0
 </data>
  </layer>
- <layer id="2" name="walls" width="5" height="5">
+ <layer id="11" name="walls" width="7" height="7">
   <data encoding="csv">
-0,0,0,0,0,
-0,9,0,0,0,
-0,0,16,2,0,
-0,0,26,2,0,
-0,0,0,0,0
+0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,
+0,0,9,0,0,0,0,
+0,0,0,16,2,0,2,
+0,0,0,26,2,0,0,
+0,0,0,5,0,0,0,
+0,0,0,0,0,0,0
 </data>
  </layer>
 </map>

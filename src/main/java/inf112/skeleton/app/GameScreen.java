@@ -23,6 +23,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public final int UNIT_SCALE = 2;
     public final int TILE_WIDTH = 32;
     public final int MOVE_DIST = TILE_WIDTH*UNIT_SCALE;
+    public final String MAP_PATH = "assets/gameboard/testMap.tmx";
 
     private RoboRallyGame game;
     private OrthographicCamera camera;
@@ -42,18 +43,11 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private Sprite backgroundSprite;
 
 
+
+
+
     public GameScreen(RoboRallyGame game){
         this.game = game;
-        //map:
-        loader = new TmxMapLoader();
-        board = loader.load("assets/gameboard/testMap.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(board, UNIT_SCALE);
-
-        //view:
-        camera = new OrthographicCamera();
-        camera.setToOrtho(true);
-        gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
-
 
         //player:
         player = new Player("Player1", 65, 35);
@@ -111,7 +105,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         mapRenderer.render();
 
         batch.setProjectionMatrix(camera.combined);
-
         batch.begin();
 
         //assetsInner.backgroundSprite.draw(batch);
@@ -123,6 +116,16 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void show(){
+        //map:
+        loader = new TmxMapLoader();
+        board = loader.load(MAP_PATH);
+        mapRenderer = new OrthogonalTiledMapRenderer(board, UNIT_SCALE);
+        //view:
+        camera = new OrthographicCamera();
+        camera.setToOrtho(true);
+        camera.position.set(Main.GAME_WIDTH/2,Main.GAME_HEIGHT/2,0);
+        camera.update();
+        gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
     }
 
 
