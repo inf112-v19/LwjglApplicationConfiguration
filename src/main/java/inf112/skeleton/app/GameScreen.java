@@ -18,6 +18,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
@@ -93,22 +96,25 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public void update(){
         //Just for testing
         boolean playerMoved = true;
+        Direction dir = null;
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
-            player.setX(player.getX()+ MOVE_DIST);
+            dir = Direction.EAST;
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
-            player.setX(player.getX()- MOVE_DIST);
+            dir = Direction.WEST;
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
-            player.setY(player.getY()- MOVE_DIST);
-        }
+            dir = Direction.SOUTH;        }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
-            player.setY(player.getY()+ MOVE_DIST);
-        } else {
+            dir = Direction.NORTH;
+        }
+        else {
             playerMoved = false;
         }
 
         if(playerMoved){
+            if(canGo(dir))
+                player.moveDir(dir);
             boardInteractsWithPlayer();
             player.loadVisualRepresentation();
         }
@@ -142,6 +148,25 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             System.out.println("Hole");
             //player.getsDestroyed();
         }
+
+    }
+
+    public boolean canGo(Direction dir){
+        int x = (player.getX()) / (UNIT_SCALE*TILE_WIDTH);
+        int y = (player.getY()) / (UNIT_SCALE*TILE_WIDTH);
+        TiledMapTileLayer.Cell currentCell =  wallLayer.getCell(x,y);
+        List<String> walls = new ArrayList<>();
+
+        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
+            Iterator<Object> iterator = currentCell.getTile().getProperties().getValues();
+            String str = iterator.next().toString();
+            String [] items = str.split(" ");
+            walls = Arrays.asList(items);
+        }
+        for (String wall : walls)
+            System.out.println(wall);
+
+        return !walls.contains(dir.toString());
     }
 
 
@@ -182,10 +207,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         camera.update();
         gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
 
-        beltLayer = (TiledMapTileLayer) board.getLayers().get("belts");
+        beltLayer =  (TiledMapTileLayer) board.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) board.getLayers().get("floor");
         laserLayer = (TiledMapTileLayer) board.getLayers().get("lasers");
-        wallLayer = (TiledMapTileLayer) board.getLayers().get("Walls");
+        wallLayer =  (TiledMapTileLayer) board.getLayers().get("walls");
     }
 
 
@@ -220,11 +245,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 //        camera.viewportHeight = height;
 //        camera.update(width, height);
     }
-
-    public TiledMapTileLayer getWallLayer() {
-        return wallLayer;
-    }
-
 }
 
 

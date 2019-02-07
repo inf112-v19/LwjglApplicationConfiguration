@@ -3,8 +3,10 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class  Player implements IPlayer {
 
@@ -157,6 +159,10 @@ public class  Player implements IPlayer {
     }
 
 
+    public void canGo(Direction dir, TiledMapTileLayer layer){
+        //TODO:
+    }
+
     /**
      * Moves the robot forward in the direction it is facing.
      *
@@ -165,34 +171,26 @@ public class  Player implements IPlayer {
     public void move(int steps) {
         switch (direction){
             case NORTH:
-                y += GameScreen.MOVE_DIST * steps;
-                break;
+                y += GameScreen.MOVE_DIST * steps; break;
             case SOUTH:
-                y -= GameScreen.MOVE_DIST * steps;
-                break;
+                y -= GameScreen.MOVE_DIST * steps; break;
             case EAST:
-                x += GameScreen.MOVE_DIST * steps;
-                break;
+                x += GameScreen.MOVE_DIST * steps; break;
             case WEST:
-                x -= GameScreen.MOVE_DIST * steps;
-                break;
+                x -= GameScreen.MOVE_DIST * steps; break;
         }
     }
 
     public void moveDir(Direction dir){
         switch (dir){
             case NORTH:
-                y += GameScreen.MOVE_DIST;
-                break;
+                y += GameScreen.MOVE_DIST; break;
             case SOUTH:
-                y -= GameScreen.MOVE_DIST;
-                break;
+                y -= GameScreen.MOVE_DIST; break;
             case EAST:
-                x += GameScreen.MOVE_DIST;
-                break;
+                x += GameScreen.MOVE_DIST; break;
             case WEST:
-                x -= GameScreen.MOVE_DIST;
-                break;
+                x -= GameScreen.MOVE_DIST; break;
         }
     }
 
