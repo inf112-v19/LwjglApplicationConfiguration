@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
+    public final int UNIT_SCALE = 3;
+    public final int MOVE_DIST = 32*UNIT_SCALE;
     private RoboRallyGame game;
     private OrthographicCamera camera;
     private Viewport gamePort;
@@ -42,7 +44,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.game = game;
 
         //player:
-        player = new Player("Player1", 150, 150);
+        player = new Player("Player1", 65, 35);
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
 
@@ -78,19 +80,19 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         //Just for testing
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
-            player.setX(player.getX()+150);
+            player.setX(player.getX()+ MOVE_DIST);
             player.loadVisualRepresentation();
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
-            player.setX(player.getX()-150);
+            player.setX(player.getX()- MOVE_DIST);
             player.loadVisualRepresentation();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
-            player.setY(player.getY()-150);
+            player.setY(player.getY()- MOVE_DIST);
             player.loadVisualRepresentation();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
-            player.setY(player.getY()+150);
+            player.setY(player.getY()+ MOVE_DIST);
             player.loadVisualRepresentation();
         }
 
@@ -111,7 +113,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         //map:
         loader = new TmxMapLoader();
         board = loader.load("assets/gameboard/testMap.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(board);
+        mapRenderer = new OrthogonalTiledMapRenderer(board, UNIT_SCALE);
 
         //view:
         camera = new OrthographicCamera();
