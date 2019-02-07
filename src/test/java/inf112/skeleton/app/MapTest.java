@@ -16,26 +16,22 @@ import static org.junit.Assert.fail;
 
 public class MapTest {
     public  static final String MAP_PATH = "testMap.tmx";
+        TiledMapTileLayer floorLayer;
+        TiledMapTileLayer laserLayer;
 
-    private OrthographicCamera camera;
-    private Viewport port;
-    private TmxMapLoader loader;
-    private TiledMap board;
-    private TiledMapRenderer renderer;
-    private TiledMapTileLayer layer;
+        RoboRallyGame game;
 
     @Before
     public void setup( ) {
-        camera = new OrthographicCamera(0, 0);
-//        port = new FitViewport(800, 480, camera);
-        loader = new TmxMapLoader();
-        board = loader.load("assets/testMap.tmx");
-        renderer = new OrthogonalTiledMapRenderer(board);
-        layer = (TiledMapTileLayer) board.getLayers().get("floor");
+        game = new RoboRallyGame();
+        game.gameScreen = new GameScreen(game);
+//        laserLayer = (TiledMapTileLayer) game.gameScreen.board.getLayers().get("lasers");
+//        floorLayer = (TiledMapTileLayer) game.gameScreen.board.getLayers().get("floor");
+
     }
 
     @Test
     public void sillyMapTest(){
-        assert(layer.getCell(0,0).getTile().getProperties().containsKey("Hole"));
+        assert(floorLayer.getCell(0,0).getTile().getProperties().containsKey("Hole"));
     }
 }

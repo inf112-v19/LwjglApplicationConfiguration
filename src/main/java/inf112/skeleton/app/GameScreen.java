@@ -20,8 +20,10 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
-    public final int UNIT_SCALE = 3;
-    public final int MOVE_DIST = 32*UNIT_SCALE;
+    public final int UNIT_SCALE = 2;
+    public final int TILE_WIDTH = 32;
+    public final int MOVE_DIST = TILE_WIDTH*UNIT_SCALE;
+
     private RoboRallyGame game;
     private OrthographicCamera camera;
     private Viewport gamePort;
@@ -42,17 +44,27 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     public GameScreen(RoboRallyGame game){
         this.game = game;
+        //map:
+        loader = new TmxMapLoader();
+        board = loader.load("assets/gameboard/testMap.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(board, UNIT_SCALE);
+
+        //view:
+        camera = new OrthographicCamera();
+        camera.setToOrtho(true);
+        gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
+
 
         //player:
         player = new Player("Player1", 65, 35);
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
 
-        //Load the background
-        backgroundTexture = new Texture(Gdx.files.internal("assets/gameboard/RoboRallyBoard2.png"));
-        backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        backgroundSprite = new Sprite(backgroundTexture);
-        backgroundSprite.setPosition(0, 0);
+//        //Load the background
+//        backgroundTexture = new Texture(Gdx.files.internal("assets/gameboard/RoboRallyBoard2.png"));
+//        backgroundTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+//        backgroundSprite = new Sprite(backgroundTexture);
+//        backgroundSprite.setPosition(0, 0);
 
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
@@ -62,10 +74,31 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch = new SpriteBatch();
     }
 
+    public void update(){
+        //Just for testing
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
+            player.setX(player.getX()+ MOVE_DIST);
+            player.loadVisualRepresentation();
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
+            player.setX(player.getX()- MOVE_DIST);
+            player.loadVisualRepresentation();
+
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
+            player.setY(player.getY()- MOVE_DIST);
+            player.loadVisualRepresentation();
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
+            player.setY(player.getY()+ MOVE_DIST);
+            player.loadVisualRepresentation();
+        }
+    }
 
 
     @Override
     public void render(float delta) {
+        update();
         float r = 158/255f;
         float g = 158/255f;
         float b = 158/255f;
@@ -76,26 +109,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         mapRenderer.setView(camera);
         mapRenderer.render();
-
-
-        //Just for testing
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
-            player.setX(player.getX()+ MOVE_DIST);
-            player.loadVisualRepresentation();
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
-            player.setX(player.getX()- MOVE_DIST);
-            player.loadVisualRepresentation();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
-            player.setY(player.getY()- MOVE_DIST);
-            player.loadVisualRepresentation();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
-            player.setY(player.getY()+ MOVE_DIST);
-            player.loadVisualRepresentation();
-        }
-
 
         batch.setProjectionMatrix(camera.combined);
 
@@ -109,16 +122,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
 
     @Override
-    public void show() {
-        //map:
-        loader = new TmxMapLoader();
-        board = loader.load("assets/gameboard/testMap.tmx");
-        mapRenderer = new OrthogonalTiledMapRenderer(board, UNIT_SCALE);
-
-        //view:
-        camera = new OrthographicCamera();
-        camera.setToOrtho(true);
-        gamePort = new FitViewport(1920, 1080, camera);
+    public void show(){
     }
 
 
@@ -149,9 +153,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public void resize(int width, int height) {
         gamePort.update(width,height);
 
-        camera.viewportWidth = width;
-        camera.viewportHeight = height;
-        camera.update();
+//        camera.viewportWidth = width;
+//        camera.viewportHeight = height;
+//        camera.update(width, height);
     }
 
 }
