@@ -225,7 +225,7 @@ public class  Player implements IPlayer {
         texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite = new Sprite(texture);
-
+        sprite.setSize(sprite.getWidth()/2, sprite.getHeight()/2);
         sprite.setOriginCenter();
         sprite.setPosition(this.x, this.y);
         sprite.setRotation(this.rotationDegree);

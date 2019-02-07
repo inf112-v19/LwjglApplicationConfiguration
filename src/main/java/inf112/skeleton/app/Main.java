@@ -5,6 +5,9 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 
 public class Main {
+    public static final String TEST_MAP = "assets/gameboard/testMap.tmx";
+    public static final String VAULT = "assets/gameboard/vault.tmx";
+
     public static final int GAME_WIDTH = 1536;
     public static final int GAME_HEIGHT = 864;
 

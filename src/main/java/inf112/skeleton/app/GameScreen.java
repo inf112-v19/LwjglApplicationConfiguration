@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,18 +21,20 @@ import java.util.ArrayList;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
-    public final int UNIT_SCALE = 2;
+    public static final int UNIT_SCALE = 2;
     public final int TILE_WIDTH = 32;
     public final int MOVE_DIST = TILE_WIDTH*UNIT_SCALE;
-    public final String MAP_PATH = "assets/gameboard/testMap.tmx";
+    public final String MAP_PATH = Main.TEST_MAP;
+
+
 
     private RoboRallyGame game;
     private OrthographicCamera camera;
     private Viewport gamePort;
-
     // map stuff:
     private TmxMapLoader loader;
     private TiledMap board;
+    TiledMapTileLayer floorLayer;
     private TiledMapRenderer mapRenderer;
 
     private SpriteBatch batch;
@@ -70,23 +73,39 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     public void update(){
         //Just for testing
+        boolean updated = false;
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
             player.setX(player.getX()+ MOVE_DIST);
             player.loadVisualRepresentation();
+            updated = true;
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
             player.setX(player.getX()- MOVE_DIST);
             player.loadVisualRepresentation();
-
+            updated = true;
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
             player.setY(player.getY()- MOVE_DIST);
             player.loadVisualRepresentation();
+            updated = true;
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
             player.setY(player.getY()+ MOVE_DIST);
             player.loadVisualRepresentation();
+            updated = true;
         }
+        if(updated){
+            updated = false;
+            int x = (player.getX()-1) / (UNIT_SCALE*TILE_WIDTH);
+            int y = (player.getY()+29) / (UNIT_SCALE*TILE_WIDTH);
+            if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor")) {
+                System.out.println("Floor");
+            } else if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Hole")){
+                System.out.println("Hole");
+            }
+
+        }
+
     }
 
 
@@ -126,6 +145,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         camera.position.set(Main.GAME_WIDTH/2,Main.GAME_HEIGHT/2,0);
         camera.update();
         gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
+
+        floorLayer = (TiledMapTileLayer) board.getLayers().get("floor");
     }
 
 
