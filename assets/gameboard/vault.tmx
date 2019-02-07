@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="24" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="21" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="24" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="1">
  <tileset firstgid="1" source="roborallyTextures.tsx"/>
  <layer id="14" name="floor" width="24" height="14">
   <data encoding="base64" compression="zlib">
    eJxjZ2BgYKcxZiQRD2bzsdmHTc1gdf+o+bQ1H5v8aPocWPNpiQFFsQXj
   </data>
  </layer>
- <layer id="19" name="floorItems" width="24" height="14">
+ <layer id="21" name="flags" width="24" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjZ2BgYKcxZiQRD2bzsdmHTc1gdf9Ami9EBfPZBnn4YJMfTZ/km89DBfNpiQGJdQYE
+  </data>
+ </layer>
+ <layer id="19" name="belts" width="24" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYKAvkILSkkhsdDlSgRwQS0OxFNRsBjQ2NvuoDcg1H+RuGRqaz0Ck+ZSAwWA+LA3Qynxyw1+WAZJGaWU+sYDa6VMaDVM7fdI6PKgBACptA+I=
   </data>

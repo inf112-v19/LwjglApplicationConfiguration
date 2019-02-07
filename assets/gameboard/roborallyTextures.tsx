@@ -26,6 +26,11 @@
    <property name="Wall" value="NORTH"/>
   </properties>
  </tile>
+ <tile id="5">
+  <properties>
+   <property name="Flag" value="3"/>
+  </properties>
+ </tile>
  <tile id="6">
   <properties>
    <property name="Hole" value=""/>
@@ -51,6 +56,11 @@
    <property name="Wall" value="SOUTH EAST"/>
   </properties>
  </tile>
+ <tile id="11">
+  <properties>
+   <property name="Flag" value="2"/>
+  </properties>
+ </tile>
  <tile id="12">
   <properties>
    <property name="Laser" value=""/>
@@ -74,6 +84,11 @@
  <tile id="16">
   <properties>
    <property name="Wall" value=""/>
+  </properties>
+ </tile>
+ <tile id="17">
+  <properties>
+   <property name="Flag" value="1"/>
   </properties>
  </tile>
  <tile id="18">
