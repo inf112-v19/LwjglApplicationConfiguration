@@ -14,8 +14,8 @@ public class Main {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = "RoboRally";
-        cfg.width = 1280/2;
-        cfg.height = 720/2;
+        cfg.width = 800;
+        cfg.height = 480;
 
         new LwjglApplication(new RoboRallyGame(), cfg);
     }

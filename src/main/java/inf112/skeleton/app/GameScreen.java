@@ -22,10 +22,10 @@ import java.util.ArrayList;
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
     public static final int UNIT_SCALE = 2;
-    public final int TILE_WIDTH = 32;
-    public final int MOVE_DIST = TILE_WIDTH*UNIT_SCALE;
-    public final String MAP_PATH = Main.TEST_MAP;
+    public static final int TILE_WIDTH = 32;
+    public static final int MOVE_DIST = TILE_WIDTH*UNIT_SCALE;
 
+    public static String mapPath = Main.TEST_MAP;
 
 
     private RoboRallyGame game;
@@ -34,11 +34,11 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     // map stuff:
     private TmxMapLoader loader;
     private TiledMap board;
+
     TiledMapTileLayer floorLayer;
     TiledMapTileLayer beltLayer;
     TiledMapTileLayer laserLayer;
-
-
+    TiledMapTileLayer wallLayer;
     private TiledMapRenderer mapRenderer;
 
     private SpriteBatch batch;
@@ -57,7 +57,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.game = game;
 
         //player:
-        player = new Player("Player1", 65, 35);
+        player = new Player("Player1", 0, 0);
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
 
@@ -75,60 +75,72 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch = new SpriteBatch();
     }
 
+    public GameScreen(RoboRallyGame game, String mapPath){
+        this.game = game;
+        this.mapPath = mapPath;
+        //player:
+        player = new Player("Player1", 0, 0);
+        programCards = new ProgramCard();
+        listOfAllProgramCards = programCards.makeStack();
+        player.loadVisualRepresentation();
+        for(int i = 0; i < 9; i++){
+            player.receiveNewCard(listOfAllProgramCards.remove(0));
+        }
+
+        batch = new SpriteBatch();
+    }
+
     public void update(){
         //Just for testing
-        boolean playerMoved = false;
+        boolean playerMoved = true;
         if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
             player.setX(player.getX()+ MOVE_DIST);
-//            player.loadVisualRepresentation();
-            playerMoved = true;
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
             player.setX(player.getX()- MOVE_DIST);
-//            player.loadVisualRepresentation();
-            playerMoved = true;
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
             player.setY(player.getY()- MOVE_DIST);
-            player.loadVisualRepresentation();
-            playerMoved = true;
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
             player.setY(player.getY()+ MOVE_DIST);
-//            player.loadVisualRepresentation();
-            playerMoved = true;
+        } else {
+            playerMoved = false;
         }
+
         if(playerMoved){
             boardInteractsWithPlayer();
             player.loadVisualRepresentation();
         }
-
     }
 
     public void boardInteractsWithPlayer(){
-        int x = (player.getX()-1) / (UNIT_SCALE*TILE_WIDTH);
-        int y = (player.getY()+29) / (UNIT_SCALE*TILE_WIDTH);
+        int x = (player.getX()) / (UNIT_SCALE*TILE_WIDTH);
+        int y = (player.getY()) / (UNIT_SCALE*TILE_WIDTH);
 
         // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            player.moveDir(dir, MOVE_DIST);
+            player.moveDir(dir);
         }
         //Player might have moved so we need to acquire these again:
-        x = (player.getX()-1) / (UNIT_SCALE*TILE_WIDTH);
-        y = (player.getY()+29) / (UNIT_SCALE*TILE_WIDTH);
+        x = (player.getX()) / (UNIT_SCALE*TILE_WIDTH);
+        y = (player.getY()) / (UNIT_SCALE*TILE_WIDTH);
 
         // check if player is standing in a laser:
         currentCell = laserLayer.getCell(x,y);
-        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Laser"))
+        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Laser")) {
             System.out.println("Ouch!");
+            player.takeDamage();
+        }
 
         // check if player is standing on the floor:
         if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor")) {
             System.out.println("Floor");
         } else if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Hole")){
             System.out.println("Hole");
+            //player.getsDestroyed();
         }
     }
 
@@ -161,7 +173,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public void show(){
         //map:
         loader = new TmxMapLoader();
-        board = loader.load(MAP_PATH);
+        board = loader.load(mapPath);
         mapRenderer = new OrthogonalTiledMapRenderer(board, UNIT_SCALE);
         //view:
         camera = new OrthographicCamera();
@@ -173,6 +185,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         beltLayer = (TiledMapTileLayer) board.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) board.getLayers().get("floor");
         laserLayer = (TiledMapTileLayer) board.getLayers().get("lasers");
+        wallLayer = (TiledMapTileLayer) board.getLayers().get("Walls");
     }
 
 
@@ -206,6 +219,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 //        camera.viewportWidth = width;
 //        camera.viewportHeight = height;
 //        camera.update(width, height);
+    }
+
+    public TiledMapTileLayer getWallLayer() {
+        return wallLayer;
     }
 
 }

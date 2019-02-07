@@ -163,33 +163,35 @@ public class  Player implements IPlayer {
      * @param steps number of tiles to move.
      */
     public void move(int steps) {
-        if (direction.equals(Direction.NORTH)) {
-            y -= 150 * steps;
-        }
-        if (direction.equals(Direction.EAST)) {
-            x += 150 * steps;
-        }
-        if (direction.equals(Direction.SOUTH)) {
-            y += 150 * steps;
-        }
-        if (direction.equals(Direction.WEST)) {
-            x -= 150 * steps;
+        switch (direction){
+            case NORTH:
+                y += GameScreen.MOVE_DIST * steps;
+                break;
+            case SOUTH:
+                y -= GameScreen.MOVE_DIST * steps;
+                break;
+            case EAST:
+                x += GameScreen.MOVE_DIST * steps;
+                break;
+            case WEST:
+                x -= GameScreen.MOVE_DIST * steps;
+                break;
         }
     }
 
-    public void moveDir(Direction dir, int dist){
+    public void moveDir(Direction dir){
         switch (dir){
             case NORTH:
-                y += dist;
+                y += GameScreen.MOVE_DIST;
                 break;
             case SOUTH:
-                y -= dist;
+                y -= GameScreen.MOVE_DIST;
                 break;
             case EAST:
-                x += dist;
+                x += GameScreen.MOVE_DIST;
                 break;
             case WEST:
-                x -= dist;
+                x -= GameScreen.MOVE_DIST;
                 break;
         }
     }
@@ -244,7 +246,7 @@ public class  Player implements IPlayer {
         sprite = new Sprite(texture);
         sprite.setSize(sprite.getWidth()/2, sprite.getHeight()/2);
         sprite.setOriginCenter();
-        sprite.setPosition(this.x, this.y);
+        sprite.setPosition(this.x, this.y-10);
         sprite.setRotation(this.rotationDegree);
     }
 
