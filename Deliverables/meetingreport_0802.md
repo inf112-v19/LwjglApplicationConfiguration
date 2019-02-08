@@ -1,27 +1,20 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww14200\viewh16580\viewkind0
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+# Møtereferat 8.februar
+## Mål for møtet:
+- Lage klassediagram
+- Rydde opp i unødvendige filer på GitHub-repoet vårt
+- Få oversikt over spillet sålangt
+- Få kartlagt hvordan vi ligger an, tanker om de siste ukene
 
-\f0\fs24 \cf0 # M\'f8tereferat 8.februar\
-## M\'e5l for m\'f8tet:\
-- Lage klassediagram\
-- Rydde opp i un\'f8dvendige filer p\'e5 GitHub-repoet v\'e5rt\
-- F\'e5 oversikt over spillet s\'e5langt\
-- F\'e5 kartlagt hvordan vi ligger an, tanker om de siste ukene\
-\
-### Oppm\'f8te:\
-- Morten\
-- William\
-- Simen\
-- Christian\
-\
-### Frav\'e6rende:\
-- Gunnar, pga. sykdom\
-\
-## Resultat fra m\'f8tet:\
-- Ble ferdig med klassediagram\
-- GitHub-repoet skal n\'e5 v\'e6re i samsvar med kriteriene til oblig2\
-- }
+### Oppmøte:
+- Morten
+- William
+- Simen
+- Christian
+
+### Fraværende:
+- Gunnar, pga. sykdom
+
+## Resultat fra møtet:
+- Ble ferdig med klassediagram
+- GitHub-repoet skal nå være i samsvar med kriteriene til oblig2
+- 
