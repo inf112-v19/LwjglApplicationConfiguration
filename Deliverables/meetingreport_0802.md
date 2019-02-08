@@ -17,4 +17,5 @@
 ## Resultat fra møtet:
 - Ble ferdig med klassediagram
 - GitHub-repoet skal nå være i samsvar med kriteriene til oblig2
-- 
+- Har fått diskutert status for prosjektet
+- Bestemt at vi skal møtes to til tre ganger i uken, fordele oppgaver på en bedre måte enn til nå
