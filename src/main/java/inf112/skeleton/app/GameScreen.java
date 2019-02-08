@@ -20,9 +20,6 @@ import java.util.List;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
-    public static final int UNIT_SCALE = 2;
-    public static final int TILE_WIDTH = 32;
-    public static final int MOVE_DIST = TILE_WIDTH*UNIT_SCALE;
     public static String mapPath = Main.TEST_MAP;
 
     // TODO: Better solution?
@@ -68,122 +65,26 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch = new SpriteBatch();
     }
 
-    public void update(){
-        if(mouseInputManager > 0)
-            mouseInputManager--;
-        if (mouseInputManager == 0 && Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
-            mouseInputManager += 5;
-        }
-        //Just for testing
-        boolean playerMoved = true;
-        Direction dir = null;
+    @Override
+    public void show(){
+        //map:
+        loader = new TmxMapLoader();
+        TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
+        parameters.flipY = true;
+        board = loader.load(mapPath, parameters);
+        mapRenderer = new OrthogonalTiledMapRenderer(board, Main.UNIT_SCALE);
+        //view:
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false);
+        camera.position.set(Main.GAME_WIDTH/2,Main.GAME_HEIGHT/2,0);
+        camera.update();
+        gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
-            dir = Direction.EAST;
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
-            dir = Direction.WEST;
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
-            dir = Direction.SOUTH;
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
-            dir = Direction.NORTH;
-        }
-        else {
-            playerMoved = false;
-        }
 
-        if(playerMoved){
-            if(dir != null && canGo(dir))
-                player.moveDir(dir);
-            boardInteractsWithPlayer();
-            player.loadVisualRepresentation();
-        }
-    }
-
-    public void boardInteractsWithPlayer(){
-        int x = (player.getX()) / (UNIT_SCALE*TILE_WIDTH);
-        int y = (player.getY()) / (UNIT_SCALE*TILE_WIDTH);
-
-        // check if player is on a belt:
-        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
-        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
-            Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if(canGo(dir)) {
-                player.moveDir(dir);
-            }
-        }
-        //Player might have moved so we need to acquire these again:
-        x = (player.getX()) / (UNIT_SCALE*TILE_WIDTH);
-        y = (player.getY()) / (UNIT_SCALE*TILE_WIDTH);
-
-        // check if player is standing in a laser:
-        currentCell = laserLayer.getCell(x,y);
-        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Laser")) {
-            System.out.println("Ouch!");
-            player.takeDamage();
-        }
-
-        // check if player is standing on the floor:
-        if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor")) {
-            System.out.println("Floor");
-        } else if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Hole")){
-            System.out.println("Hole");
-            //player.getsDestroyed();
-        }
-
-    }
-
-    public boolean canGo(Direction dir){
-        // first check the current tile:
-        int x = (player.getX()) / (UNIT_SCALE*TILE_WIDTH);
-        int y = (player.getY()) / (UNIT_SCALE*TILE_WIDTH);
-        TiledMapTileLayer.Cell currentCell =  wallLayer.getCell(x,y);
-        List<String> walls = new ArrayList<>();
-
-        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
-        }
-        if (walls.contains(dir.toString())){
-            System.out.println("Hits a wall!");
-            return false;
-        }
-
-        // then check target tile:
-        switch (dir){
-            case NORTH:
-                y++; break;
-            case SOUTH:
-                y--; break;
-            case WEST:
-                x--; break;
-            case EAST:
-                x++; break;
-        }
-
-        walls = new ArrayList<>();
-        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(x,y);
-
-        if(targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
-        }
-
-        dir = dir.getOppositeDirection();
-
-        if (walls.contains(dir.toString())){
-            System.out.println("Whits a wall");
-            return false;
-        }
-        return true;
-    }
-
-    public List<String> splitBySpace(String strToSplit){
-        List<String> splitList;
-        String [] items = strToSplit.split(" ");
-        splitList = Arrays.asList(items);
-        return splitList;
+        beltLayer =  (TiledMapTileLayer) board.getLayers().get("belts");
+        floorLayer = (TiledMapTileLayer) board.getLayers().get("floor");
+        laserLayer = (TiledMapTileLayer) board.getLayers().get("lasers");
+        wallLayer =  (TiledMapTileLayer) board.getLayers().get("walls");
     }
 
     @Override
@@ -209,26 +110,123 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     }
 
+    public void update(){
+        if(mouseInputManager > 0)
+            mouseInputManager--;
+        if (mouseInputManager == 0 && Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
+            mouseInputManager += 5;
+        }
+        //Just for testing
+        boolean playerMoved = true;
+        Direction dir = null;
 
-    @Override
-    public void show(){
-        //map:
-        loader = new TmxMapLoader();
-        board = loader.load(mapPath);
-        mapRenderer = new OrthogonalTiledMapRenderer(board, UNIT_SCALE);
-        //view:
-        camera = new OrthographicCamera();
-        camera.setToOrtho(true);
-        camera.position.set(Main.GAME_WIDTH/2,Main.GAME_HEIGHT/2,0);
-        camera.update();
-        gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
+            dir = Direction.EAST;
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
+            dir = Direction.WEST;
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
+            dir = Direction.NORTH;
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
+            dir = Direction.SOUTH;
+        }
+        else {
+            playerMoved = false;
+        }
 
-        beltLayer =  (TiledMapTileLayer) board.getLayers().get("belts");
-        floorLayer = (TiledMapTileLayer) board.getLayers().get("floor");
-        laserLayer = (TiledMapTileLayer) board.getLayers().get("lasers");
-         wallLayer =  (TiledMapTileLayer) board.getLayers().get("walls");
+        if(playerMoved){
+            if(dir != null && canGo(dir))
+                player.moveDir(dir);
+            boardInteractsWithPlayer();
+            player.loadVisualRepresentation();
+        }
     }
 
+    public void boardInteractsWithPlayer(){
+        int x = (player.getX()) / Main.MOVE_DIST;
+        int y = (player.getY()) / Main.MOVE_DIST;
+
+        // check if player is on a belt:
+        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
+        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
+            Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
+            if(canGo(dir)) {
+                player.moveDir(dir);
+            }
+        }
+        //Player might have moved so we need to acquire these again:
+        x = (player.getX()) / Main.MOVE_DIST;
+        y = (player.getY()) / Main.MOVE_DIST;
+
+        // check if player is standing in a laser:
+        currentCell = laserLayer.getCell(x,y);
+        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Laser")) {
+            System.out.println("Ouch!");
+            player.takeDamage();
+        }
+
+        // check if player is standing on the floor:
+        if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor")) {
+            System.out.println("Floor");
+        } else if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Hole")){
+            System.out.println("Hole");
+            //player.getsDestroyed();
+        }
+
+    }
+
+    public boolean canGo(Direction dir){
+        // first check the current tile:
+        int x = (player.getX()) / Main.MOVE_DIST;
+        int y = (player.getY()) / Main.MOVE_DIST;
+        TiledMapTileLayer.Cell currentCell =  wallLayer.getCell(x,y);
+        List<String> walls = new ArrayList<>();
+
+        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
+            walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
+        }
+        if (walls.contains(dir.toString())){
+            System.out.println("Hit a wall!(here)");
+            return false;
+        }
+
+        // then check target tile:
+        switch (dir){
+            case NORTH:
+                y++; break;
+            case SOUTH:
+                y--; break;
+            case WEST:
+                x--; break;
+            case EAST:
+                x++; break;
+        }
+
+        walls = new ArrayList<>();
+        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(x,y);
+
+        if(targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
+            walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
+        }
+
+        dir = dir.getOppositeDirection();
+
+        if (walls.contains(dir.toString())){
+            System.out.println("Hit a wall!(next)");
+            return false;
+        }
+        return true;
+    }
+
+    public List<String> splitBySpace(String strToSplit){
+        List<String> splitList;
+        String [] items = strToSplit.split(" ");
+        splitList = Arrays.asList(items);
+        return splitList;
+    }
 
     @Override
     public void pause() {

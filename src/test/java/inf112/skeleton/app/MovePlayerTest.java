@@ -9,8 +9,8 @@ import static org.junit.Assert.*;
 public class MovePlayerTest {
 
     public static Player player;
-    private int x = 300; //Starting x pos
-    private int y = 450; //Starting y pos
+    private int x = 0; //Starting x pos
+    private int y = 0; //Starting y pos
 
     @Before
     public void initialize() {
@@ -22,26 +22,26 @@ public class MovePlayerTest {
     @Test
     public void move1ForwardWorks() {
         player.move(1);
-        assertEquals(y + 150, player.getY());
+        assertEquals(y - Main.MOVE_DIST, player.getY());
     }
 
     @Test
     public void move2ForwardWorks() {
         player.move(2);
-        assertEquals(y + 300, player.getY());
+        assertEquals(y - Main.MOVE_DIST*2, player.getY());
     }
 
     @Test
     public void move3ForwardWorks() {
         player.move(3);
-        assertEquals(y + 450, player.getY());
+        assertEquals(y - Main.MOVE_DIST*3, player.getY());
     }
 
     @Test
     public void rotateLeftMove1() {
         player.rotate(Rotate.LEFT);
         player.move(1);
-        assertEquals(x + 150, player.getX());
+        assertEquals(x + Main.MOVE_DIST, player.getX());
     }
 
 
@@ -61,7 +61,7 @@ public class MovePlayerTest {
         player.move(2);
         player.rotate(Rotate.LEFT);
         player.move(1);
-        assertEquals(x + 300, player.getX());
+        assertEquals(x + Main.MOVE_DIST*2, player.getX());
         assertEquals(y, player.getY());
     }
 
@@ -74,7 +74,7 @@ public class MovePlayerTest {
         player.rotate(Rotate.UTURN);
         player.move(2);
 
-        assertEquals(x + 450, player.getX());
+        assertEquals(x + Main.MOVE_DIST*3, player.getX());
         assertEquals(y, player.getY());
     }
 

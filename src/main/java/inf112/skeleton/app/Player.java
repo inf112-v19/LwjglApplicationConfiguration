@@ -167,26 +167,26 @@ public class  Player implements IPlayer {
     public void move(int steps) {
         switch (direction){
             case NORTH:
-                y += GameScreen.MOVE_DIST * steps; break;
+                y += Main.MOVE_DIST * steps; break;
             case SOUTH:
-                y -= GameScreen.MOVE_DIST * steps; break;
+                y -= Main.MOVE_DIST * steps; break;
             case EAST:
-                x += GameScreen.MOVE_DIST * steps; break;
+                x += Main.MOVE_DIST * steps; break;
             case WEST:
-                x -= GameScreen.MOVE_DIST * steps; break;
+                x -= Main.MOVE_DIST * steps; break;
         }
     }
 
     public void moveDir(Direction dir){
         switch (dir){
             case NORTH:
-                y += GameScreen.MOVE_DIST; break;
+                y += Main.MOVE_DIST; break;
             case SOUTH:
-                y -= GameScreen.MOVE_DIST; break;
+                y -= Main.MOVE_DIST; break;
             case EAST:
-                x += GameScreen.MOVE_DIST; break;
+                x += Main.MOVE_DIST; break;
             case WEST:
-                x -= GameScreen.MOVE_DIST; break;
+                x -= Main.MOVE_DIST; break;
         }
     }
 
