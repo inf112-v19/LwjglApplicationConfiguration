@@ -20,6 +20,8 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
     private Player player;
     private ProgramCard programCards;
     private ArrayList<ProgramCard> listOfAllProgramCards;
+    private Hud hud;
+
 
 
     //Rotation degree at start.
@@ -32,22 +34,41 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
     public GameScreen(RoboRallyGame game){
         this.game = game;
         camera = new OrthographicCamera();
+
         player = new Player("Player1", 0, 0);
+
         //playerRotationDegree = player.getRotationDegree();
         programCards = new ProgramCard();
         listOfAllProgramCards = programCards.makeStack();
 
+
+
         assetsInner = new AssetsInner();
         assetsInner.load(); //loads the sprites
-        player.loadVisualRepresentation();
+
+
         for(int i = 0; i < 9; i++){
             player.receiveNewCard(listOfAllProgramCards.remove(0));
         }
 
+        useCard();
+        player.loadVisualRepresentation();
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
         camera.setToOrtho(true, 4000, 2200);
         batch = new SpriteBatch();
+        hud = new Hud(batch, player);
+    }
+
+    public void useCard(){
+
+        for (int i = 0; i<9; i++){
+            ProgramCard useCard = player.getCardsInHand().get(i);
+            player.rotate(useCard.getRotate());
+            player.move(useCard.getMoveDistance());
+            System.out.println(useCard);
+        }
+
     }
 
     // Todo: This might need an update after changes in player class
@@ -85,6 +106,8 @@ public class GameScreen implements Screen { //Implements ApplicationListener? Ex
         Gdx.gl.glClearColor(r,g,b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        game.gameScreen.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
         camera.update();
 
