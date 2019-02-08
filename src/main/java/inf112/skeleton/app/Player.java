@@ -3,10 +3,11 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
 
-public class Player implements IPlayer {
+public class  Player implements IPlayer {
 
 
     private String name;
@@ -15,8 +16,8 @@ public class Player implements IPlayer {
     private int lives;
     private int dmg;
 
-    private float rotationDegree; //Current degrees rotated. Used in GameScreen to rotate the player sprite.
-    private Direction direction; //Which direction the player is currently facing.
+    private float rotationDegree;
+    private Direction direction;
     private ArrayList<ProgramCard> cardsInHand;
 
     private ProgramCard[] registers = new ProgramCard[5];
@@ -26,6 +27,7 @@ public class Player implements IPlayer {
     private Texture texture;
     private Sprite sprite;
 
+    private static int ONE_STEP = 150;
 
     /**
      * Initialize a new player.
@@ -163,17 +165,28 @@ public class Player implements IPlayer {
      * @param steps number of tiles to move.
      */
     public void move(int steps) {
-        if (direction.equals(Direction.NORTH)) {
-            y -= 150 * steps;
+        switch (direction){
+            case NORTH:
+                y += Main.MOVE_DIST * steps; break;
+            case SOUTH:
+                y -= Main.MOVE_DIST * steps; break;
+            case EAST:
+                x += Main.MOVE_DIST * steps; break;
+            case WEST:
+                x -= Main.MOVE_DIST * steps; break;
         }
-        if (direction.equals(Direction.EAST)) {
-            x += 150 * steps;
-        }
-        if (direction.equals(Direction.SOUTH)) {
-            y += 150 * steps;
-        }
-        if (direction.equals(Direction.WEST)) {
-            x -= 150 * steps;
+    }
+
+    public void moveDir(Direction dir){
+        switch (dir){
+            case NORTH:
+                y += Main.MOVE_DIST; break;
+            case SOUTH:
+                y -= Main.MOVE_DIST; break;
+            case EAST:
+                x += Main.MOVE_DIST; break;
+            case WEST:
+                x -= Main.MOVE_DIST; break;
         }
     }
 
@@ -225,9 +238,9 @@ public class Player implements IPlayer {
         texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite = new Sprite(texture);
-
+        sprite.setSize(sprite.getWidth()/2, sprite.getHeight()/2);
         sprite.setOriginCenter();
-        sprite.setPosition(this.x, this.y);
+        sprite.setPosition(this.x, this.y-10);
         sprite.setRotation(this.rotationDegree);
     }
 
@@ -292,6 +305,9 @@ public class Player implements IPlayer {
         return registers[phaseNumber].getPriority();
     }
 
+    /**
+     * @return current degrees rotated.
+     */
     public float getRotationDegree() {
         return rotationDegree;
     }
@@ -308,10 +324,12 @@ public class Player implements IPlayer {
         return y;
     }
 
+    //Remove once we remove movement with WASD in GameScreen render method.
     public void setX(int x) {
         this.x = x;
     }
 
+    //Remove once we remove movement with WASD in GameScreen render method.
     public void setY(int y) {
         this.y = y;
     }
