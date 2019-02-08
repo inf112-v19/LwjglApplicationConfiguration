@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class  Player implements IPlayer {
 
@@ -17,8 +16,8 @@ public class  Player implements IPlayer {
     private int lives;
     private int dmg;
 
-    private float rotationDegree; //Current degrees rotated. Used in GameScreen to rotate the player sprite.
-    private Direction direction; //Which direction the player is currently facing.
+    private float rotationDegree;
+    private Direction direction;
     private ArrayList<ProgramCard> cardsInHand;
 
     private ProgramCard[] registers = new ProgramCard[5];
@@ -28,6 +27,7 @@ public class  Player implements IPlayer {
     private Texture texture;
     private Sprite sprite;
 
+    private static int ONE_STEP = 150;
 
     /**
      * Initialize a new player.
@@ -305,6 +305,9 @@ public class  Player implements IPlayer {
         return registers[phaseNumber].getPriority();
     }
 
+    /**
+     * @return current degrees rotated.
+     */
     public float getRotationDegree() {
         return rotationDegree;
     }
@@ -321,10 +324,12 @@ public class  Player implements IPlayer {
         return y;
     }
 
+    //Remove once we remove movement with WASD in GameScreen render method.
     public void setX(int x) {
         this.x = x;
     }
 
+    //Remove once we remove movement with WASD in GameScreen render method.
     public void setY(int y) {
         this.y = y;
     }

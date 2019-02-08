@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
+
+
+public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game? Something else?
 
     public static String mapPath = Main.TEST_MAP;
 
