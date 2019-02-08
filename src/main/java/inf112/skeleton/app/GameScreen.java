@@ -59,7 +59,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             player.receiveNewCard(stackOfProgramCards.remove(0));
         }
 
-        useCard();
+
         player.loadVisualRepresentation();
 
         //Set to true if you want to have an inverted x y axis with 0 at the top left.
@@ -69,6 +69,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         hud = new Hud(batch, player);
     }
 
+    /*
+    Just to test
+    Uses all the cards in hand
+     */
     public void useCard(){
 
         for (int i = 0; i<9; i++){
@@ -214,6 +218,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             System.out.println("Hole");
             //player.getsDestroyed();
         }
+
+
 
     }
 
