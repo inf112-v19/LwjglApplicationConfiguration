@@ -1,6 +1,5 @@
 package inf112.skeleton.app;
 
-import sun.java2d.xr.DirtyRegion;
 
 public enum Direction {
 
