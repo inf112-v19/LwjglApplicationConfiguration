@@ -18,9 +18,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game? Something else?
+
+    private Hud hud;
+
+
 
     public static String mapPath = Main.TEST_MAP;
 
@@ -49,10 +51,33 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.game = game;
         player = new Player("Player1", 0, 0);
         stackOfProgramCards = ProgramCard.makeStack();
+
+        camera = new OrthographicCamera();
+
+
         for(int i = 0; i < 9; i++){
             player.receiveNewCard(stackOfProgramCards.remove(0));
         }
+
+        useCard();
+        player.loadVisualRepresentation();
+
+        //Set to true if you want to have an inverted x y axis with 0 at the top left.
+        camera.setToOrtho(true, 4000, 2200);
+
         batch = new SpriteBatch();
+        hud = new Hud(batch, player);
+    }
+
+    public void useCard(){
+
+        for (int i = 0; i<9; i++){
+            ProgramCard useCard = player.getCardsInHand().get(i);
+            player.rotate(useCard.getRotate());
+            player.move(useCard.getMoveDistance());
+            System.out.println(useCard);
+        }
+
     }
 
     public GameScreen(RoboRallyGame game, String mapPath){
@@ -65,6 +90,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             player.receiveNewCard(stackOfProgramCards.remove(0));
         }
         batch = new SpriteBatch();
+        hud = new Hud(batch, player);
     }
 
     @Override
@@ -102,14 +128,24 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         mapRenderer.setView(camera);
         mapRenderer.render();
+        camera.update();
+
+
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+
+
+
         //assetsInner.backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
+
+
         batch.end();
 
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     public void update(){
@@ -145,6 +181,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             boardInteractsWithPlayer();
             player.loadVisualRepresentation();
         }
+
     }
 
     public void boardInteractsWithPlayer(){
