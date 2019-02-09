@@ -36,10 +36,10 @@ public class Hud {
         table.top();
         table.setFillParent(true);
 
-        livesLabel = new Label(Integer.toString(lives), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        damageLabel = new Label(Integer.toString(damage), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        table.add(livesLabel).width(50).padTop(10);
-        table.add(damageLabel).width(50).padTop(10);
+        livesLabel = new Label("Lives: " + lives, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        damageLabel = new Label("Damage taken: " + damage, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        table.add(livesLabel).width(100).padTop(10);
+        table.add(damageLabel).width(15).padTop(10);
 
         stage.addActor(table);
 
