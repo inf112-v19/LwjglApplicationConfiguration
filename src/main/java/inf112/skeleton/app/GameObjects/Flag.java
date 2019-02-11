@@ -11,4 +11,8 @@ public class Flag {
         this.y = y;
     }
 
+    public void loadVisualRepresentation() {
+        // TODO
+    }
+
 }
