@@ -78,7 +78,7 @@ public class  Player implements IPlayer {
 
 
     public void takeDamage() {
-        dmg++;
+        this.dmg++;
         if (isDestroyed()) {
             if (outOfLives()) {
                 // TODO: GAME OVER for this player.
