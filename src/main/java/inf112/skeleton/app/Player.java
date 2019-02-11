@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
 
@@ -77,7 +78,7 @@ public class  Player implements IPlayer {
 
 
     public void takeDamage() {
-        dmg++;
+        this.dmg++;
         if (isDestroyed()) {
             if (outOfLives()) {
                 // TODO: GAME OVER for this player.
@@ -164,17 +165,28 @@ public class  Player implements IPlayer {
      * @param steps number of tiles to move.
      */
     public void move(int steps) {
-        if (direction.equals(Direction.NORTH)) {
-            y -= ONE_STEP * steps;
+        switch (direction){
+            case NORTH:
+                y += Main.MOVE_DIST * steps; break;
+            case SOUTH:
+                y -= Main.MOVE_DIST * steps; break;
+            case EAST:
+                x += Main.MOVE_DIST * steps; break;
+            case WEST:
+                x -= Main.MOVE_DIST * steps; break;
         }
-        if (direction.equals(Direction.EAST)) {
-            x += ONE_STEP * steps;
-        }
-        if (direction.equals(Direction.SOUTH)) {
-            y += ONE_STEP * steps;
-        }
-        if (direction.equals(Direction.WEST)) {
-            x -= ONE_STEP * steps;
+    }
+
+    public void moveDir(Direction dir){
+        switch (dir){
+            case NORTH:
+                y += Main.MOVE_DIST; break;
+            case SOUTH:
+                y -= Main.MOVE_DIST; break;
+            case EAST:
+                x += Main.MOVE_DIST; break;
+            case WEST:
+                x -= Main.MOVE_DIST; break;
         }
     }
 
@@ -226,9 +238,9 @@ public class  Player implements IPlayer {
         texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite = new Sprite(texture);
-
+        sprite.setSize(sprite.getWidth()/2, sprite.getHeight()/2);
         sprite.setOriginCenter();
-        sprite.setPosition(this.x, this.y);
+        sprite.setPosition(this.x, this.y-10);
         sprite.setRotation(this.rotationDegree);
     }
 

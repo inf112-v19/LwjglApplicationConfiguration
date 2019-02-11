@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="24" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="1">
+ <tileset firstgid="1" source="roborallyTextures.tsx"/>
+ <layer id="14" name="floor" width="24" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjZ2BgYKcxZiQRD2bzsdmHTc1gdf+o+bQ1H5v8aPocWPNpiQFFsQXj
+  </data>
+ </layer>
+ <layer id="21" name="flags" width="24" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjZ2BgYKcxJhWMmj88zWcb4u4nxnxGIswXGsTup9R8nkHoflpiALqzBV8=
+  </data>
+ </layer>
+ <layer id="19" name="belts" width="24" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAvkILSkkhsdDlygDQUS0HNZkBjY7OP2oBc80HulqGh+QxEmk8JGAzmw9IArcwnN/xliVQ31NKnNBqmdvqkdXhQAwAAbIYDpg==
+  </data>
+ </layer>
+ <layer id="20" name="lasers" width="24" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFwx0Io2FS5Yc7oFf48FKgd9T8wQkAf10BZQ==
+  </data>
+ </layer>
+ <layer id="18" name="walls" width="24" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAfYEWjcYlRAzDR2CxmKEYHLFS0l1oA3f2cSGwuNDlK3I9PLzXig1bmo+vlQGJzk+AGQoDaaRwGsPmdFYd9gzF9wgAzGo1LbDABAGyvAII=
+  </data>
+ </layer>
+</map>
