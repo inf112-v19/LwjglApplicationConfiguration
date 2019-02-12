@@ -87,28 +87,28 @@ public class ProgramCardTest {
         assertEquals(6, result);
     }
 
-//    @Test
-//    public void stackContainsAllUniquePriorities(){
-//        for(int i = 0; i < stackOfCards.size()-1; i++){
-//            for(int j = i+1; j < stackOfCards.size();j++){
-//                int priorityI = stackOfCards.get(i).getPriority();
-//                int priorityJ = stackOfCards.get(j).getPriority();
-//                assert(priorityI != priorityJ);
-//            }
-//            System.out.println(stackOfCards.get(i));
-//        }
-//        System.out.println(stackOfCards.get(stackOfCards.size()-1));
-//    }
-//
-//    @Test
-//    public void everyCardHasEitherRotateOrMoveValue(){
-//        for(ProgramCard pc : stackOfCards) {
-//            if (pc.getMoveDistance() != 0)
-//                assert(pc.getRotate() == Rotate.NONE);
-//            if (pc.getRotate() != Rotate.NONE)
-//                assertEquals(0, pc.getMoveDistance());
-//            if (pc.getRotate() == Rotate.NONE && pc.getMoveDistance() == 0)
-//                fail();
-//        }
-//    }
+    @Test
+    public void stackContainsAllUniquePriorities(){
+        for(int i = 0; i < stackOfCards.size()-1; i++){
+            for(int j = i+1; j < stackOfCards.size();j++){
+                int priorityI = stackOfCards.get(i).getPriority();
+                int priorityJ = stackOfCards.get(j).getPriority();
+                assert(priorityI != priorityJ);
+            }
+            System.out.println(stackOfCards.get(i));
+        }
+        System.out.println(stackOfCards.get(stackOfCards.size()-1));
+    }
+
+    @Test
+    public void everyCardHasEitherRotateOrMoveValue(){
+        for(ProgramCard pc : stackOfCards) {
+            if (pc.getMoveDistance() != 0)
+                assert(pc.getRotate() == Rotate.NONE);
+            if (pc.getRotate() != Rotate.NONE)
+                assertEquals(0, pc.getMoveDistance());
+            if (pc.getRotate() == Rotate.NONE && pc.getMoveDistance() == 0)
+                fail();
+        }
+    }
 }

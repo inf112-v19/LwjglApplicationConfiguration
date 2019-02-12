@@ -20,8 +20,10 @@ public class Hud {
     private Integer lives;
     private Integer cards;
     private Integer damage;
+    private Integer testIncrement = 0;
     Label livesLabel;
     Label damageLabel;
+    Label testIncrementLabel;
 
     public Hud(SpriteBatch sb, Player player){
         lives = player.getLives();
@@ -38,12 +40,22 @@ public class Hud {
 
         livesLabel = new Label("Lives: " + lives, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         damageLabel = new Label("Damage taken: " + damage, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        testIncrementLabel = new Label(String.format("IncrementingValue:%d", testIncrement), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
         table.add(livesLabel).width(100).padTop(10);
         table.add(damageLabel).width(15).padTop(10);
 
         stage.addActor(table);
 
 
+    }
+
+    public void update(Player player) {
+        lives = player.getLives();
+        damage = player.getDamage();
+
+        livesLabel.setText("Lives: " + lives);
+        damageLabel.setText("Damage taken: " + damage);
     }
 
 
