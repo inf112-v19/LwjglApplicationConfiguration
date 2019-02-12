@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game? Something else?
 
@@ -45,7 +46,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     private SpriteBatch batch;
     private Player player;
-    private ArrayList<ProgramCard> stackOfProgramCards;
+    private Stack<ProgramCard> stackOfProgramCards;
 
 
     public GameScreen(RoboRallyGame game){
@@ -57,7 +58,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
 
         for(int i = 0; i < 9; i++){
-            player.receiveNewCard(stackOfProgramCards.remove(0));
+//            player.receiveNewCard(stackOfProgramCards.remove(0));
+            player.receiveNewCard(stackOfProgramCards.pop());
         }
 
 
@@ -92,7 +94,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         stackOfProgramCards = ProgramCard.makeStack();
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
-            player.receiveNewCard(stackOfProgramCards.remove(0));
+            player.receiveNewCard(stackOfProgramCards.pop());
         }
         batch = new SpriteBatch();
         hud = new Hud(batch, player);

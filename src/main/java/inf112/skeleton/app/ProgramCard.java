@@ -2,6 +2,7 @@ package inf112.skeleton.app;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Stack;
 
 
 public class ProgramCard implements Comparable {
@@ -21,40 +22,40 @@ public class ProgramCard implements Comparable {
 
     public int getPriority(){ return this.priority; }
 
-    public static ArrayList<ProgramCard> makeStack(){
-        ArrayList<ProgramCard> list = new ArrayList<>();
+    public static Stack<ProgramCard> makeStack(){
+        Stack<ProgramCard> cardStack = new Stack<>();
 
         // Adding cards that rotate:
         for (int priority = 10; priority <= 60; priority+=10) {
             // 180
-            list.add(new ProgramCard(Rotate.UTURN, 0, priority));
+            cardStack.push(new ProgramCard(Rotate.UTURN, 0, priority));
         }
         for(int priority = 80; priority <= 420; priority+=20){
             // Right
-            list.add(new ProgramCard(Rotate.RIGHT,0, priority-10));
+            cardStack.push(new ProgramCard(Rotate.RIGHT,0, priority-10));
             // Left
-            list.add(new ProgramCard(Rotate.LEFT, 0, priority));
+            cardStack.push(new ProgramCard(Rotate.LEFT, 0, priority));
         }
 
         // Adding cards that move:
         // Backwards
         for(int priority = 430; priority <= 480; priority+=10){
-            list.add(new ProgramCard(Rotate.NONE, -1, priority));
+            cardStack.push(new ProgramCard(Rotate.NONE, -1, priority));
         }
         // Forwards 1
         for(int priority = 490; priority <= 660; priority+=10){
-            list.add(new ProgramCard(Rotate.NONE, 1, priority));
+            cardStack.push(new ProgramCard(Rotate.NONE, 1, priority));
         }
         // Forwards 2
         for(int priority = 670; priority <= 780; priority+=10){
-            list.add(new ProgramCard(Rotate.NONE, 2, priority));
+            cardStack.push(new ProgramCard(Rotate.NONE, 2, priority));
         }
         // Forwards 3
         for(int priority = 790; priority <= 840; priority+=10){
-            list.add(new ProgramCard(Rotate.NONE, 3, priority));
+            cardStack.push(new ProgramCard(Rotate.NONE, 3, priority));
         }
-        Collections.shuffle(list);
-        return list;
+        Collections.shuffle(cardStack);
+        return cardStack;
     }
 
 
