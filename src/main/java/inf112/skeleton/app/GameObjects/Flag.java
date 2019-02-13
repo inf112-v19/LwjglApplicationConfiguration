@@ -1,14 +1,19 @@
 package inf112.skeleton.app.GameObjects;
 
-public class Flag {
+/**
+ * Class for a flag on the board, which extends AbstractGameObject
+ */
+public class Flag extends AbstractGameObject {
     private int flagNumber;
-    private int x;
-    private int y;
+    private String filename = "assets/gameboard/flag.png";
 
-    public Flag(int flagNumber, int x, int y) {
+    public Flag(int x, int y, int flagNumber) {
+        super(x, y);
         this.flagNumber = flagNumber;
-        this.x = x;
-        this.y = y;
+    }
+
+    public String getFilename() {
+        return filename;
     }
 
 }

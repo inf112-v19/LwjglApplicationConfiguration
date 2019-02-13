@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.skeleton.app.GameObjects.Flag;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +48,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private Player player;
     private Stack<ProgramCard> stackOfProgramCards;
 
+    // Only adding one flag as a test
+    private Flag[] flags = new Flag[4];
+
 
 
     public GameScreen(RoboRallyGame game, String mapPath){
@@ -57,6 +61,13 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
             player.receiveNewCard(stackOfProgramCards.pop());
+        }
+        // TODO Better creating of flags
+        // Atm, create 4 flags underneath eachother, just for testing to add an object to the map,
+        // other than a player.
+        // Use MOVE_DIST from main to "jump" to a position, not final at all.
+        for (int i = 0; i < flags.length; i++) {
+            flags[i] = new Flag(6*Main.MOVE_DIST, ((7-i)*Main.MOVE_DIST+15), i+1);
         }
         batch = new SpriteBatch();
         hud = new Hud(batch, player);
@@ -106,6 +117,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
 
 
+        // Attempt to draw all the flags
+        for (int i = 0; i < flags.length; i++) {
+            flags[i].getSprite().draw(batch);
+        }
 
         //assetsInner.backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
@@ -124,6 +139,12 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             System.out.println(Gdx.input.getX() + ", " + Gdx.input.getY());
             mouseInputManager += 5;
         }
+
+        // Just for testing
+        for (int i = 0; i < flags.length; i++) {
+            flags[i].loadVisualRepresentation(flags[i].getFilename());
+        }
+
         //Just for testing
         boolean playerMoved = true;
         Direction dir = null;
@@ -151,7 +172,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             hud.update(player);
             boardInteractsWithPlayer();
         }
-
 
     }
 
