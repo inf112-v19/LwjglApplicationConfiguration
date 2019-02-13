@@ -5,9 +5,9 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 
 public class Main {
-    public static final int UNIT_SCALE = 3;
-    public static final int TILE_WIDTH = 32;
-    public static final int MOVE_DIST = TILE_WIDTH*UNIT_SCALE;
+    public static final int UNIT_SCALE = 2;
+    public static final int PixelsPerTile = 32;
+    public static final int MOVE_DIST = PixelsPerTile *UNIT_SCALE;
 
     // Maps:
     public static final String TEST_MAP = "assets/gameboard/testMap.tmx";

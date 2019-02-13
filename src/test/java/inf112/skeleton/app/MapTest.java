@@ -24,7 +24,7 @@ public class MapTest {
     @Before
     public void setup( ) {
         game = new RoboRallyGame();
-        game.gameScreen = new GameScreen(game);
+//        game.gameScreen = new GameScreen(game);
 //        laserLayer = (TiledMapTileLayer) game.gameScreen.board.getLayers().get("lasers");
 //        floorLayer = (TiledMapTileLayer) game.gameScreen.board.getLayers().get("floor");
 
