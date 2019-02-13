@@ -3,7 +3,6 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
 
@@ -14,7 +13,7 @@ public class  Player implements IPlayer {
     private int x;
     private int y;
     private int lives;
-    private int dmg;
+    private int damage;
 
     private float rotationDegree;
     private Direction direction;
@@ -26,8 +25,6 @@ public class  Player implements IPlayer {
 
     private Texture texture;
     private Sprite sprite;
-
-    private static int ONE_STEP = 150;
 
     /**
      * Initialize a new player.
@@ -44,11 +41,11 @@ public class  Player implements IPlayer {
         this.direction = Direction.SOUTH;
         this.cardsInHand = new ArrayList<>();
 
-        this.dmg = 0;
+        this.damage = 0;
         this.lives = 3;
         this.unlockedRegisters = 5;
 
-        this.rotationDegree = 0;
+        this.rotationDegree = 180;
 
     }
 
@@ -69,7 +66,7 @@ public class  Player implements IPlayer {
         this.direction = direction;
         this.cardsInHand = new ArrayList<>();
 
-        this.dmg = 0;
+        this.damage = 0;
         this.lives = 3;
         this.unlockedRegisters = 5;
 
@@ -78,7 +75,7 @@ public class  Player implements IPlayer {
 
 
     public void takeDamage() {
-        this.dmg++;
+        this.damage++;
         if (isDestroyed()) {
             if (outOfLives()) {
                 // TODO: GAME OVER for this player.
@@ -86,7 +83,7 @@ public class  Player implements IPlayer {
 //                repairDamage();
                 // TODO: Move to last backup
             }
-        } else if (dmg >= 5) {
+        } else if (damage >= 5) {
             unlockedRegisters--;
         }
     }
@@ -94,8 +91,8 @@ public class  Player implements IPlayer {
     /* Registers are stored like this:
      * [0][1][2][3][4]
      *
-     * taking 5 dmg locks register 4.
-     * 6 dmg locks 3..
+     * taking 5 damage locks register 4.
+     * 6 damage locks 3..
      */
     public boolean isLocked(int register) {
         return register >= unlockedRegisters;
@@ -116,7 +113,7 @@ public class  Player implements IPlayer {
     }
 
     public boolean isDestroyed() {
-        return dmg > 9;
+        return damage > 9;
     }
 
 
@@ -125,7 +122,7 @@ public class  Player implements IPlayer {
     }
 
     public void repairDamage() {
-        dmg = 0;
+        damage = 0;
         unlockedRegisters = 5;
     }
 
@@ -177,7 +174,7 @@ public class  Player implements IPlayer {
         }
     }
 
-    public void moveDir(Direction dir){
+    public void moveInDirection(Direction dir){
         switch (dir){
             case NORTH:
                 y += Main.MOVE_DIST; break;
@@ -242,6 +239,7 @@ public class  Player implements IPlayer {
         sprite.setOriginCenter();
         sprite.setPosition(this.x, this.y-10);
         sprite.setRotation(this.rotationDegree);
+
     }
 
     // getters and setters:
@@ -250,7 +248,7 @@ public class  Player implements IPlayer {
      * @return how many cards the player is allowed to be dealt.
      */
     public int getCardLimit() {
-        return 9 - dmg;
+        return 9 - damage;
     }
 
     public int getUnlockedRegisters() {
@@ -275,7 +273,7 @@ public class  Player implements IPlayer {
 
 
     public int getDamage() {
-        return dmg;
+        return damage;
     }
 
 
@@ -336,7 +334,7 @@ public class  Player implements IPlayer {
 
     @Override
     public String toString() {
-        return getName() + " | Health: " + (10 - dmg) + " | Lives: " + lives;
+        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 
     public Texture getTexture() {

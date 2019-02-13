@@ -3,7 +3,6 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,7 +34,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private RoboRallyGame game;
     private OrthographicCamera camera;
     private Viewport gamePort;
-    // map stuff:
+    // TiledMap:
     private TmxMapLoader loader;
     private TiledMap board;
     private TiledMapTileLayer floorLayer;
@@ -49,43 +48,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private Stack<ProgramCard> stackOfProgramCards;
 
 
-    public GameScreen(RoboRallyGame game){
-        this.game = game;
-        player = new Player("Player1", 0, 0);
-        stackOfProgramCards = ProgramCard.makeStack();
-
-        camera = new OrthographicCamera();
-
-
-        for(int i = 0; i < 9; i++){
-//            player.receiveNewCard(stackOfProgramCards.remove(0));
-            player.receiveNewCard(stackOfProgramCards.pop());
-        }
-
-
-        player.loadVisualRepresentation();
-
-        //Set to true if you want to have an inverted x y axis with 0 at the top left.
-        camera.setToOrtho(true, 4000, 2200);
-
-        batch = new SpriteBatch();
-        hud = new Hud(batch, player);
-    }
-
-    /*
-    Just to test
-    Uses all the cards in hand
-     */
-    public void useCard(){
-
-        for (int i = 0; i<9; i++){
-            ProgramCard useCard = player.getCardsInHand().get(i);
-            player.rotate(useCard.getRotate());
-            player.move(useCard.getMoveDistance());
-            System.out.println(useCard);
-        }
-
-    }
 
     public GameScreen(RoboRallyGame game, String mapPath){
         this.mapPath = mapPath;
@@ -184,10 +146,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         if(playerMoved){
             if(dir != null && canGo(dir))
-                player.moveDir(dir);
-            boardInteractsWithPlayer();
+                player.moveInDirection(dir);
             player.loadVisualRepresentation();
             hud.update(player);
+            boardInteractsWithPlayer();
         }
 
 
@@ -202,7 +164,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
             if(canGo(dir)) {
-                player.moveDir(dir);
+                player.moveInDirection(dir);
             }
         }
         //Player might have moved so we need to acquire these again:

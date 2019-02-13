@@ -83,12 +83,12 @@
 -	Default boards
 ###	First iteration
 -	To have all infrastructure in place
--	To have a two dimensional grid where it’s possible to add a Game Piece on the Game Board.
+-	To have a two dimensional grid where it’s possible to move a Game Piece in all directions.
 ##	Subtask 3
--	Project method chosen: XP
+-	Project method chosen: kanban
 -	Communication outside meetings: Slack
--	Distribution of tasks: Trello
--	Work follow-up: Trello
+-	Distribution of tasks: GitHub Project Board
+-	Work follow-up: GitHub
 -	Files and storage: GitHub
 ##	Subtask 4
--	*on our GitHub repo*
+-	Code on GitHub
