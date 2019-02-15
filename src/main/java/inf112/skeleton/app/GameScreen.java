@@ -147,9 +147,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         if(playerMoved){
             if(dir != null && canGo(dir))
                 player.moveInDirection(dir);
+            boardInteractsWithPlayer();
             player.loadVisualRepresentation();
             hud.update(player);
-            boardInteractsWithPlayer();
         }
 
 
