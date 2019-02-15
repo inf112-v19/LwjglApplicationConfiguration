@@ -147,15 +147,15 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         if(playerMoved){
             if(dir != null && canGo(dir))
                 player.moveInDirection(dir);
-            boardInteractsWithPlayer();
+            conveyorBeltsMove();
+            lasersFire();
+            checkIfPlayerIsOnTheBoard();
             player.loadVisualRepresentation();
             hud.update(player);
         }
-
-
     }
 
-    public void boardInteractsWithPlayer(){
+    public void conveyorBeltsMove(){
         int x = (player.getX()) / Main.MOVE_DIST;
         int y = (player.getY()) / Main.MOVE_DIST;
 
@@ -167,17 +167,25 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
                 player.moveInDirection(dir);
             }
         }
+    }
+
+    public void lasersFire(){
         //Player might have moved so we need to acquire these again:
-        x = (player.getX()) / Main.MOVE_DIST;
-        y = (player.getY()) / Main.MOVE_DIST;
+        int x = (player.getX()) / Main.MOVE_DIST;
+        int y = (player.getY()) / Main.MOVE_DIST;
 
         // check if player is standing in a laser:
-        currentCell = laserLayer.getCell(x,y);
+        TiledMapTileLayer.Cell currentCell = laserLayer.getCell(x,y);
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Laser")) {
             System.out.println("Ouch!");
             player.takeDamage();
         }
 
+    }
+
+    private void checkIfPlayerIsOnTheBoard() {
+        int x = (player.getX()) / Main.MOVE_DIST;
+        int y = (player.getY()) / Main.MOVE_DIST;
         // check if player is standing on the floor:
         if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor")) {
             System.out.println("Floor");
@@ -185,9 +193,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             System.out.println("Hole");
             //player.getsDestroyed();
         }
-
-
-
     }
 
     public boolean canGo(Direction dir){
