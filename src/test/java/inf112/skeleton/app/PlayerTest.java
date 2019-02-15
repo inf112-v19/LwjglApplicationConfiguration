@@ -5,13 +5,14 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class PlayerTest {
     private Player player;
-    private ArrayList<ProgramCard> stack;
+    private Stack<ProgramCard> stack;
 
     @Before
     public void setup(){
@@ -107,7 +108,7 @@ public class PlayerTest {
     public void noLockedRegistersReturnsAllCards(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveNewCard(stack.remove(0));
+            player.receiveNewCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.pickCard(0);
@@ -125,7 +126,7 @@ public class PlayerTest {
     public void lockedCardsAreNotReturned(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveNewCard(stack.remove(0));
+            player.receiveNewCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.pickCard(0);
@@ -147,7 +148,7 @@ public class PlayerTest {
     public void lockedCardsAreNotReturned2(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveNewCard(stack.remove(0));
+            player.receiveNewCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.pickCard(0);
@@ -176,9 +177,9 @@ public class PlayerTest {
         Player p3 = new Player("p3", 0,2);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
-            p1.receiveNewCard(stack.remove(0));
-            p2.receiveNewCard(stack.remove(0));
-            p3.receiveNewCard(stack.remove(0));
+            p1.receiveNewCard(stack.pop());
+            p2.receiveNewCard(stack.pop());
+            p3.receiveNewCard(stack.pop());
         }
         // have them all pick the first card and place it in a register:
         p1.pickCard(0);

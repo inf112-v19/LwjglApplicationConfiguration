@@ -17,10 +17,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-
+import java.util.Stack;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game? Something else?
+
+    private Hud hud;
+
+
 
     public static String mapPath = Main.TEST_MAP;
 
@@ -31,7 +34,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private RoboRallyGame game;
     private OrthographicCamera camera;
     private Viewport gamePort;
-    // map stuff:
+    // TiledMap:
     private TmxMapLoader loader;
     private TiledMap board;
     private TiledMapTileLayer floorLayer;
@@ -42,18 +45,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     private SpriteBatch batch;
     private Player player;
-    private ArrayList<ProgramCard> stackOfProgramCards;
+    private Stack<ProgramCard> stackOfProgramCards;
 
 
-    public GameScreen(RoboRallyGame game){
-        this.game = game;
-        player = new Player("Player1", 0, 0);
-        stackOfProgramCards = ProgramCard.makeStack();
-        for(int i = 0; i < 9; i++){
-            player.receiveNewCard(stackOfProgramCards.remove(0));
-        }
-        batch = new SpriteBatch();
-    }
 
     public GameScreen(RoboRallyGame game, String mapPath){
         this.mapPath = mapPath;
@@ -62,9 +56,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         stackOfProgramCards = ProgramCard.makeStack();
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
-            player.receiveNewCard(stackOfProgramCards.remove(0));
+            player.receiveNewCard(stackOfProgramCards.pop());
         }
         batch = new SpriteBatch();
+        hud = new Hud(batch, player);
     }
 
     @Override
@@ -102,14 +97,24 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         mapRenderer.setView(camera);
         mapRenderer.render();
+        camera.update();
+
+
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+
+
+
         //assetsInner.backgroundSprite.draw(batch);
         player.getSprite().draw(batch);
+
+
         batch.end();
 
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
 
     public void update(){
@@ -141,10 +146,13 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         if(playerMoved){
             if(dir != null && canGo(dir))
-                player.moveDir(dir);
-            boardInteractsWithPlayer();
+                player.moveInDirection(dir);
             player.loadVisualRepresentation();
+            hud.update(player);
+            boardInteractsWithPlayer();
         }
+
+
     }
 
     public void boardInteractsWithPlayer(){
@@ -156,7 +164,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
             if(canGo(dir)) {
-                player.moveDir(dir);
+                player.moveInDirection(dir);
             }
         }
         //Player might have moved so we need to acquire these again:
@@ -177,6 +185,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             System.out.println("Hole");
             //player.getsDestroyed();
         }
+
+
 
     }
 
