@@ -1,6 +1,5 @@
 package inf112.skeleton.app.GameWorld;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -90,7 +89,7 @@ public class Board {
         beltsMove(player);
         lasersFire(player);
         if(playerIsOffTheBoard(player))
-            Gdx.app.log("Player", "is off the board");
+            player.getsDestroyed();
     }
 
     public void dispose(){

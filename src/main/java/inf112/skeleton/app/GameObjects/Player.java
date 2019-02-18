@@ -8,12 +8,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.skeleton.app.*;
 import inf112.skeleton.app.GameWorld.Board;
 import inf112.skeleton.app.GameWorld.Direction;
+import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class  Player implements IPlayer {
+    private static final int MAX_DAMAGE = 9;
+    private static final int MAX_LIVES = 3;
 
 
     public static boolean playerMoved;
@@ -27,7 +30,7 @@ public class  Player implements IPlayer {
     private Direction direction;
     private ArrayList<ProgramCard> cardsInHand;
 
-    private ProgramCard[] registers = new ProgramCard[5];
+    private ProgramCard[] registers;
     private int unlockedRegisters;
 
 
@@ -35,6 +38,8 @@ public class  Player implements IPlayer {
     private Sprite sprite;
 
     private Board board;
+
+    private GameObject backup;
 
 
     /**
@@ -54,12 +59,14 @@ public class  Player implements IPlayer {
         this.cardsInHand = new ArrayList<>();
 
         this.damage = 0;
-        this.lives = 3;
+        this.lives = MAX_LIVES;
         this.unlockedRegisters = 5;
 
         this.rotationDegree = 180;
 
         this.board = board;
+        this.backup = new Backup(x, y);
+        registers = new ProgramCard[5];
     }
     public void update(){
             //Just for testing
@@ -78,7 +85,7 @@ public class  Player implements IPlayer {
                 direction = Direction.SOUTH;
             }
             else if (Gdx.input.isKeyJustPressed(Input.Keys.B)){
-                board.leaveBackup(x, y);
+                backup.move(this.x, this.y);
                 playerMoved = false;
             }
             else {
@@ -143,18 +150,37 @@ public class  Player implements IPlayer {
         return splitList;
     }
 
+    public void getsDestroyed(){
+        this.lives--;
+        if (isOutOfLives()) {
+            Gdx.app.log(name , "is dead!");
+        } else {
+            Gdx.app.log(name , "gets destroyed.");
+            repairDamage();
+            moveToBackup();
+        }
+    }
+
     public void takeDamage() {
         this.damage++;
         if (isDestroyed()) {
-            if (outOfLives()) {
-                // TODO: GAME OVER for this player.
-            } else {
-//                repairDamage();
-                // TODO: Move to last backup
-            }
+            getsDestroyed();
         } else if (damage >= 5) {
             unlockedRegisters--;
         }
+    }
+
+    public boolean isDestroyed() {
+        return damage > MAX_DAMAGE;
+    }
+
+    public boolean isOutOfLives() {
+        return lives <= 0;
+    }
+
+    private void moveToBackup() {
+        this.x = (int) backup.getX();
+        this.y = (int) backup.getY();
     }
 
     /* Registers are stored like this:
@@ -179,15 +205,6 @@ public class  Player implements IPlayer {
             registers[register] = null;
         }
         return cardsInHand;
-    }
-
-    public boolean isDestroyed() {
-        return damage > 9;
-    }
-
-
-    public boolean outOfLives() {
-        return lives == 0;
     }
 
     public void repairDamage() {
@@ -412,5 +429,9 @@ public class  Player implements IPlayer {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public GameObject getBackup() {
+        return backup;
     }
 }

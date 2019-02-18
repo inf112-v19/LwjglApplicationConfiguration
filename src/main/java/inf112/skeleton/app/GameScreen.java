@@ -37,7 +37,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.mapPath = mapPath;
         this.board = new Board(Main.VAULT);
 
-        player = new Player("Player1", 0, 0, Direction.SOUTH, board);
+        player = new Player("Player1", board.getWidth()/2*Main.MOVE_DIST, board.getHeight()/2*Main.MOVE_DIST, Direction.SOUTH, board);
         stackOfProgramCards = ProgramCard.makeStack();
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
@@ -81,6 +81,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+        player.getBackup().draw(batch);
         player.getSprite().draw(batch);
 
 
