@@ -22,6 +22,10 @@ public abstract class AbstractGameObject {
         this.y = y;
     }
 
+    /**
+     * Method extracted from the player class, for now the same
+     * @param filepath A string with the filepath to the pgn file of the object
+     */
     public void loadVisualRepresentation(String filepath) {
         texture = new Texture(Gdx.files.internal(filepath));
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);

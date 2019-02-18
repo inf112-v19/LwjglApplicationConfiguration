@@ -62,7 +62,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         for(int i = 0; i < 9; i++){
             player.receiveNewCard(stackOfProgramCards.pop());
         }
-        // TODO Better creating of flags
+        // TODO Better creation of flags
         // Atm, create 4 flags underneath eachother, just for testing to add an object to the map,
         // other than a player.
         // Use MOVE_DIST from main to "jump" to a position, not final at all.
