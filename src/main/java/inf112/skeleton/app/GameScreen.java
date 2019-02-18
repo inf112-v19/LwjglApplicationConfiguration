@@ -63,9 +63,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         if(player.playerMoved){
             if(player.getDirection() != null && player.canGo(player.getDirection()))
                 player.moveInDirection(player.getDirection());
+            board.boardInteractsWithPlayer(player);
             player.loadVisualRepresentation();
             hud.update(player);
-            board.boardInteractsWithPlayer(player);
         }
 
         float r = 158/255f;
