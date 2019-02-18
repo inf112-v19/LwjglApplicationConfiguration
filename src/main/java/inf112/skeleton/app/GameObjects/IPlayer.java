@@ -1,7 +1,9 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.GameObjects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import inf112.skeleton.app.GameWorld.Direction;
+import inf112.skeleton.app.ProgramCard;
 
 import java.util.ArrayList;
 
