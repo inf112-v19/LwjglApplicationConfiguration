@@ -37,7 +37,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.mapPath = mapPath;
         this.board = new Board(Main.VAULT);
 
-        player = new Player("Player1", 0, 0, Direction.SOUTH, board);
+        player = new Player("Player1", 0, 0, Direction.SOUTH);
         stackOfProgramCards = ProgramCard.makeStack();
         player.loadVisualRepresentation();
         for(int i = 0; i < 9; i++){
@@ -58,10 +58,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void render(float delta) {
-        player.update();
+        player.update(board);
 
         if(player.playerMoved){
-            if(player.getDirection() != null && player.canGo(player.getDirection()))
+            if(player.getDirection() != null && player.canGo(player.getDirection(), board))
                 player.moveInDirection(player.getDirection());
             board.boardInteractsWithPlayer(player);
             player.loadVisualRepresentation();

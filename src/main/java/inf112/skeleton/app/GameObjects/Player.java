@@ -25,8 +25,8 @@ public class  Player implements IPlayer {
 
     private float rotationDegree;
     private Direction direction;
-    private ArrayList<ProgramCard> cardsInHand;
 
+    private ArrayList<ProgramCard> cardsInHand;
     private ProgramCard[] registers = new ProgramCard[5];
     private int unlockedRegisters;
 
@@ -34,7 +34,6 @@ public class  Player implements IPlayer {
     private Texture texture;
     private Sprite sprite;
 
-    private Board board;
 
 
     /**
@@ -46,7 +45,7 @@ public class  Player implements IPlayer {
      * @param y         y start coordinate for the player.
      * @param direction which direction the player should face.
      */
-    public Player(String name, int x, int y, Direction direction, Board board) {
+    public Player(String name, int x, int y, Direction direction) {
         this.name = name;
         this.x = x;
         this.y = y;
@@ -59,9 +58,10 @@ public class  Player implements IPlayer {
 
         this.rotationDegree = 180;
 
-        this.board = board;
     }
-    public void update(){
+
+
+    public void update(Board board){
             //Just for testing
             playerMoved = true;
 
@@ -87,7 +87,7 @@ public class  Player implements IPlayer {
         }
 
         @SuppressWarnings("Duplicates")
-    public boolean canGo(Direction dir){
+    public boolean canGo(Direction dir, Board board){
         // first check the current tile:
         int newX = (this.x) / Main.MOVE_DIST;
         int newY = (this.y) / Main.MOVE_DIST;

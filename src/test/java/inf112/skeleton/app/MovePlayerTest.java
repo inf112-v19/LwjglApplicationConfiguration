@@ -2,7 +2,6 @@ package inf112.skeleton.app;
 
 
 import inf112.skeleton.app.GameObjects.Player;
-import inf112.skeleton.app.GameWorld.Board;
 import inf112.skeleton.app.GameWorld.Direction;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +16,8 @@ public class MovePlayerTest {
 
     @Before
     public void initialize() {
-        Board board = new Board(Main.VAULT);
-        player = new Player("Player1", x, y, Direction.SOUTH, board);
+        //Board board = new Board(Main.VAULT);
+        player = new Player("Player1", x, y, Direction.SOUTH);
 
     }
 

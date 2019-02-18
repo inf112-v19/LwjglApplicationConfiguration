@@ -50,6 +50,7 @@ public class Board {
     }
 
 
+    @SuppressWarnings("Duplicates")
     private void lasersFire(Player player){
         int x = (player.getX()) / Main.MOVE_DIST;
         int y = (player.getY()) / Main.MOVE_DIST;
@@ -62,6 +63,7 @@ public class Board {
         }
     }
 
+    @SuppressWarnings("Duplicates")
     private void beltsMove(Player player){
         int x = (player.getX()) / Main.MOVE_DIST;
         int y = (player.getY()) / Main.MOVE_DIST;
@@ -70,7 +72,7 @@ public class Board {
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if(player.canGo(dir)) {
+            if(player.canGo(dir, this)) {
                 player.moveInDirection(dir);
             }
         }
