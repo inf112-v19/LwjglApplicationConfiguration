@@ -43,15 +43,15 @@ public class Board {
         TiledMapTileSet tileset = map.getTileSets().getTileSet(0);
         TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
         cell.setTile(tileset.getTile(29));
-//        backupLayer.setCell(x/Main.MOVE_DIST ,y/Main.MOVE_DIST , cell);
+//        backupLayer.setCell(x/Main.TILE_LENGTH ,y/Main.TILE_LENGTH , cell);
 
-        System.out.println(x/Main.MOVE_DIST + " " + y/Main.MOVE_DIST);
+        System.out.println(x/Main.TILE_LENGTH + " " + y/Main.TILE_LENGTH);
     }
 
 
     private void lasersFire(Player player){
-        int x = (player.getX()) / Main.MOVE_DIST;
-        int y = (player.getY()) / Main.MOVE_DIST;
+        int x = (player.getX()) / Main.TILE_LENGTH;
+        int y = (player.getY()) / Main.TILE_LENGTH;
 
         // check if player is standing in a laser:
         TiledMapTileLayer.Cell currentCell = laserLayer.getCell(x,y);
@@ -62,8 +62,8 @@ public class Board {
     }
 
     private void beltsMove(Player player){
-        int x = (player.getX()) / Main.MOVE_DIST;
-        int y = (player.getY()) / Main.MOVE_DIST;
+        int x = (player.getX()) / Main.TILE_LENGTH;
+        int y = (player.getY()) / Main.TILE_LENGTH;
 
         // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
@@ -76,8 +76,8 @@ public class Board {
     }
 
     private boolean playerIsOffTheBoard(Player player){
-        int x = (player.getX()) / Main.MOVE_DIST;
-        int y = (player.getY()) / Main.MOVE_DIST;
+        int x = (player.getX()) / Main.TILE_LENGTH;
+        int y = (player.getY()) / Main.TILE_LENGTH;
 
         // check if player is standing on the floor:
         return  !floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor");

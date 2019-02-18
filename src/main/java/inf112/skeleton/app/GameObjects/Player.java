@@ -8,7 +8,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.skeleton.app.*;
 import inf112.skeleton.app.GameWorld.Board;
 import inf112.skeleton.app.GameWorld.Direction;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,8 +95,8 @@ public class  Player implements IPlayer {
         @SuppressWarnings("Duplicates")
     public boolean canGo(Direction dir){
         // first check the current tile:
-        int newX = (this.x) / Main.MOVE_DIST;
-        int newY = (this.y) / Main.MOVE_DIST;
+        int newX = (this.x) / Main.TILE_LENGTH;
+        int newY = (this.y) / Main.TILE_LENGTH;
 
         // check this tile:
         TiledMapTileLayer.Cell currentCell =  board.getWallLayer().getCell(newX,newY);
@@ -250,26 +249,26 @@ public class  Player implements IPlayer {
     public void move(int steps) {
         switch (direction){
             case NORTH:
-                y += Main.MOVE_DIST * steps; break;
+                y += Main.TILE_LENGTH * steps; break;
             case SOUTH:
-                y -= Main.MOVE_DIST * steps; break;
+                y -= Main.TILE_LENGTH * steps; break;
             case EAST:
-                x += Main.MOVE_DIST * steps; break;
+                x += Main.TILE_LENGTH * steps; break;
             case WEST:
-                x -= Main.MOVE_DIST * steps; break;
+                x -= Main.TILE_LENGTH * steps; break;
         }
     }
 
     public void moveInDirection(Direction dir){
         switch (dir){
             case NORTH:
-                y += Main.MOVE_DIST; break;
+                y += Main.TILE_LENGTH; break;
             case SOUTH:
-                y -= Main.MOVE_DIST; break;
+                y -= Main.TILE_LENGTH; break;
             case EAST:
-                x += Main.MOVE_DIST; break;
+                x += Main.TILE_LENGTH; break;
             case WEST:
-                x -= Main.MOVE_DIST; break;
+                x -= Main.TILE_LENGTH; break;
         }
     }
 
