@@ -14,7 +14,7 @@ public class RoboRallyGame extends Game {
     @Override
     public void create() {
 
-        gameScreen = new GameScreen(this, Main.VAULT);
+        gameScreen = new GameScreen(Main.VAULT);
         setScreen(gameScreen);
     }
 
