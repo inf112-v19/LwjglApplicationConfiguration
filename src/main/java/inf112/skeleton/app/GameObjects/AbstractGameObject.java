@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public abstract class AbstractGameObject {
     private int x;
     private int y;
-    private String filename;
+    private String filepath;
 
     private Texture texture;
     private Sprite sprite;
@@ -22,8 +22,8 @@ public abstract class AbstractGameObject {
         this.y = y;
     }
 
-    public void loadVisualRepresentation(String filename) {
-        texture = new Texture(Gdx.files.internal(filename));
+    public void loadVisualRepresentation(String filepath) {
+        texture = new Texture(Gdx.files.internal(filepath));
         texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite = new Sprite(texture);
         sprite.setSize(sprite.getWidth()/2, sprite.getHeight()/2);
