@@ -77,6 +77,10 @@ public class  Player implements IPlayer {
             else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
                 direction = Direction.SOUTH;
             }
+            else if (Gdx.input.isKeyJustPressed(Input.Keys.B)){
+                board.leaveBackup(x, y);
+                playerMoved = false;
+            }
             else {
                 playerMoved = false;
             }
@@ -85,11 +89,12 @@ public class  Player implements IPlayer {
         @SuppressWarnings("Duplicates")
     public boolean canGo(Direction dir){
         // first check the current tile:
-        int x = (this.x) / Main.MOVE_DIST;
-        int y = (this.y) / Main.MOVE_DIST;
-        TiledMapTileLayer.Cell currentCell =  board.getWallLayer().getCell(x,y);
-        List<String> walls = new ArrayList<>();
+        int newX = (this.x) / Main.MOVE_DIST;
+        int newY = (this.y) / Main.MOVE_DIST;
 
+        // check this tile:
+        TiledMapTileLayer.Cell currentCell =  board.getWallLayer().getCell(newX,newY);
+        List<String> walls = new ArrayList<>();
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
             walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
         }
@@ -98,20 +103,24 @@ public class  Player implements IPlayer {
             return false;
         }
 
-        // then check target tile:
+        // move new position to target tile:
         switch (dir){
             case NORTH:
-                y++; break;
+                newY++; break;
             case SOUTH:
-                y--; break;
+                newY--; break;
             case WEST:
-                x--; break;
+                newX--; break;
             case EAST:
-                x++; break;
+                newX++; break;
         }
 
+        // check target tile:
+        if(newX < 0 || newY < 0 || board.getWidth() <= newX || board.getHeight() <= newY)
+            return false;
+
         walls = new ArrayList<>();
-        TiledMapTileLayer.Cell targetCell = board.getWallLayer().getCell(x,y);
+        TiledMapTileLayer.Cell targetCell = board.getWallLayer().getCell(newX, newY);
 
         if(targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
             walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
@@ -123,6 +132,7 @@ public class  Player implements IPlayer {
             System.out.println("Hit a wall!(next)");
             return false;
         }
+
         return true;
     }
 

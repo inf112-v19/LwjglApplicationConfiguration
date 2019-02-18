@@ -1,24 +1,24 @@
 package inf112.skeleton.app.GameWorld;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.skeleton.app.GameObjects.Player;
 import inf112.skeleton.app.Main;
 
 public class Board {
 
-    private TmxMapLoader loader;
     private TiledMap map;
+    private TmxMapLoader loader;
+    private TiledMapRenderer mapRenderer;
+
     private TiledMapTileLayer floorLayer;
     private TiledMapTileLayer beltLayer;
     private TiledMapTileLayer laserLayer;
     private TiledMapTileLayer wallLayer;
-    private TiledMapRenderer mapRenderer;
+    private TiledMapTileLayer backupLayer;
+
 
     public Board(String mapPath) {
 
@@ -28,11 +28,11 @@ public class Board {
         map = loader.load(mapPath, parameters);
         mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
 
-        beltLayer =  (TiledMapTileLayer) map.getLayers().get("belts");
+        beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
         laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");
-        wallLayer =  (TiledMapTileLayer) map.getLayers().get("walls");
-
+        wallLayer = (TiledMapTileLayer) map.getLayers().get("walls");
+        backupLayer = (TiledMapTileLayer) map.getLayers().get("backup");
     }
 
     public void render(OrthographicCamera camera) {
@@ -40,9 +40,29 @@ public class Board {
         mapRenderer.render();
     }
 
+    public void leaveBackup(int x, int y){
+        TiledMapTileSet tileset = map.getTileSets().getTileSet(0);
+        TiledMapTileLayer.Cell cell = new TiledMapTileLayer.Cell();
+        cell.setTile(tileset.getTile(29));
+//        backupLayer.setCell(x/Main.MOVE_DIST ,y/Main.MOVE_DIST , cell);
 
-    @SuppressWarnings("Duplicates")
-    public void boardInteractsWithPlayer(Player player){
+        System.out.println(x/Main.MOVE_DIST + " " + y/Main.MOVE_DIST);
+    }
+
+
+    private void lasersFire(Player player){
+        int x = (player.getX()) / Main.MOVE_DIST;
+        int y = (player.getY()) / Main.MOVE_DIST;
+
+        // check if player is standing in a laser:
+        TiledMapTileLayer.Cell currentCell = laserLayer.getCell(x,y);
+        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Laser")) {
+            System.out.println("Ouch!");
+            player.takeDamage();
+        }
+    }
+
+    private void beltsMove(Player player){
         int x = (player.getX()) / Main.MOVE_DIST;
         int y = (player.getY()) / Main.MOVE_DIST;
 
@@ -54,24 +74,23 @@ public class Board {
                 player.moveInDirection(dir);
             }
         }
-        //Player might have moved so we need to acquire these again:
-        x = (player.getX()) / Main.MOVE_DIST;
-        y = (player.getY()) / Main.MOVE_DIST;
+    }
 
-        // check if player is standing in a laser:
-        currentCell = laserLayer.getCell(x,y);
-        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Laser")) {
-            System.out.println("Ouch!");
-            player.takeDamage();
-        }
+    private boolean playerIsOffTheBoard(Player player){
+        int x = (player.getX()) / Main.MOVE_DIST;
+        int y = (player.getY()) / Main.MOVE_DIST;
 
         // check if player is standing on the floor:
-        if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor")) {
-            System.out.println("Floor");
-        } else if (floorLayer.getCell(x,y).getTile().getProperties().containsKey("Hole")){
-            System.out.println("Hole");
-            //player.getsDestroyed();
-        }
+        return  !floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor");
+    }
+
+    public void boardInteractsWithPlayer(Player player){
+        if (player == null) return;
+
+        beltsMove(player);
+        lasersFire(player);
+        if(playerIsOffTheBoard(player))
+            Gdx.app.log("Player", "is off the board");
     }
 
     public void dispose(){
@@ -81,5 +100,13 @@ public class Board {
 
     public TiledMapTileLayer getWallLayer(){
         return this.wallLayer;
+    }
+
+    public int getWidth(){
+        return this.floorLayer.getWidth();
+    }
+
+    public int getHeight(){
+        return this.floorLayer.getHeight();
     }
 }

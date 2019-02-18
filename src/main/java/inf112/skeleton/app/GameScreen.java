@@ -13,7 +13,7 @@ import inf112.skeleton.app.GameWorld.Direction;
 
 import java.util.Stack;
 
-public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game? Something else?
+public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
     private Hud hud;
 
