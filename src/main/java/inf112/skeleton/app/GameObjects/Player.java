@@ -11,18 +11,16 @@ import java.util.ArrayList;
 public class  Player {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
+    private static final int NUMBER_OF_REGISTERS = 5;
 
     private String name;
     private int lives;
     private int damage;
+    private int unlockedRegisters;
+    private ProgramCard[] registers;
     private PlayerMovement playerMovement;
     private Backup backup;
-
     private ArrayList<ProgramCard> cardsInHand;
-
-    private ProgramCard[] registers;
-    private int unlockedRegisters;
-
     private Board board;
 
 
@@ -32,8 +30,8 @@ public class  Player {
         playerMovement = new PlayerMovement(x, y, "assets/robot/tvBot.png", this);
         backup = new Backup(x, y);
 
-        registers = new ProgramCard[5];
-        unlockedRegisters = registers.length;
+        registers = new ProgramCard[NUMBER_OF_REGISTERS];
+        unlockedRegisters = NUMBER_OF_REGISTERS;
         cardsInHand = new ArrayList<>();
         damage = 0;
         lives = MAX_LIVES;
@@ -42,32 +40,13 @@ public class  Player {
 
     /** FOR TESTING ONLY */
     public Player(int x, int y){
-        registers = new ProgramCard[5];
+        registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = registers.length;
         cardsInHand = new ArrayList<>();
         damage = 0;
         lives = MAX_LIVES;
     }
 
-    public void handleInput() {
-        //Just for testing
-        playerMovement.playerMoved = true;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))) {
-            playerMovement.setDirection(Direction.EAST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))) {
-            playerMovement.setDirection(Direction.WEST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))) {
-            playerMovement.setDirection(Direction.NORTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))) {
-            playerMovement.setDirection(Direction.SOUTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            backup.move(playerMovement.getX(), playerMovement.getY());
-            playerMovement.playerMoved = false;
-        } else {
-            playerMovement.playerMoved = false;
-        }
-    }
     public void update(){
         handleInput();
         if (isDestroyed() && !outOfLives()){
@@ -86,6 +65,25 @@ public class  Player {
             if (playerMovement.canGo(playerMovement.getDirection()))
                 playerMovement.move(1);
             board.boardInteractsWithPlayer(this);
+        }
+    }
+    public void handleInput() {
+        //Just for testing
+        playerMovement.playerMoved = true;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))) {
+            playerMovement.setDirection(Direction.EAST);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))) {
+            playerMovement.setDirection(Direction.WEST);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))) {
+            playerMovement.setDirection(Direction.NORTH);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))) {
+            playerMovement.setDirection(Direction.SOUTH);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            backup.move(playerMovement.getX(), playerMovement.getY());
+            playerMovement.playerMoved = false;
+        } else {
+            playerMovement.playerMoved = false;
         }
     }
 
@@ -127,16 +125,16 @@ public class  Player {
      * @return list of cards that are not locked in registers.
      */
     public ArrayList<ProgramCard> returnCards() {
-        for (int register = 0; register < unlockedRegisters; register++) {
-            cardsInHand.add(registers[register]);
-            registers[register] = null;
+        for (int i = 0; i < unlockedRegisters; i++) {
+            cardsInHand.add(registers[i]);
+            registers[i] = null;
         }
         return cardsInHand;
     }
 
     public void repairDamage() {
         damage = 0;
-        unlockedRegisters = 5;
+        unlockedRegisters = NUMBER_OF_REGISTERS;
     }
 
     /**
