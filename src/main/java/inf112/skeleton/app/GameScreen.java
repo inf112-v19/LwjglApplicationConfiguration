@@ -15,34 +15,29 @@ import java.util.Stack;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
-    private Hud hud;
-
-
-
     public static String mapPath = Main.TEST_MAP;
 
 
     private OrthographicCamera camera;
     private Viewport gamePort;
-
-    private Board board;
-
-    private SpriteBatch batch;
+    private Hud hud;
     private Player player;
+    private Board board;
     private Stack<ProgramCard> stackOfProgramCards;
 
+    private SpriteBatch batch;
 
 
     public GameScreen(String mapPath){
         this.mapPath = mapPath;
         this.board = new Board(Main.VAULT);
 
-        player = new Player("Player1", board.getWidth()/2*Main.TILE_LENGTH, board.getHeight()/2*Main.TILE_LENGTH, Direction.SOUTH, board);
+        player = new Player("Player1",
+                board.getWidth()/2*Main.TILE_LENGTH,
+                board.getHeight()/2*Main.TILE_LENGTH,
+                Direction.SOUTH, board
+            );
         stackOfProgramCards = ProgramCard.makeStack();
-        player.loadVisualRepresentation();
-        for(int i = 0; i < 9; i++){
-            player.receiveNewCard(stackOfProgramCards.pop());
-        }
         batch = new SpriteBatch();
         hud = new Hud(batch, player);
     }
@@ -58,15 +53,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void render(float delta) {
-        player.update();
-
-        if(player.playerMoved){
-            if(player.getDirection() != null && player.canGo(player.getDirection()))
-                player.moveInDirection(player.getDirection());
-            board.boardInteractsWithPlayer(player);
-            player.loadVisualRepresentation();
-            hud.update(player);
-        }
+        update();
 
         float r = 158/255f;
         float g = 158/255f;
@@ -82,13 +69,17 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch.begin();
 
         player.getBackup().draw(batch);
-        player.getSprite().draw(batch);
-
+        player.getPlayerMovement().draw(batch);
 
         batch.end();
 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+    }
+
+    private void update() {
+        player.update();
+        hud.update(player);
     }
 
     @Override
@@ -110,7 +101,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public void dispose() {
         batch.dispose();
         board.dispose();
-        player.getTexture().dispose();
+        player.getPlayerMovement().dispose();
     }
 
     @Override

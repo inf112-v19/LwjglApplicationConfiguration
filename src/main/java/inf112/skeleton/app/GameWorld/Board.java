@@ -50,8 +50,8 @@ public class Board {
 
 
     private void lasersFire(Player player){
-        int x = (player.getX()) / Main.TILE_LENGTH;
-        int y = (player.getY()) / Main.TILE_LENGTH;
+        int x = (int) (player.getPlayerMovement().getX()) / Main.TILE_LENGTH;
+        int y = (int) (player.getPlayerMovement().getY()) / Main.TILE_LENGTH;
 
         // check if player is standing in a laser:
         TiledMapTileLayer.Cell currentCell = laserLayer.getCell(x,y);
@@ -62,22 +62,22 @@ public class Board {
     }
 
     private void beltsMove(Player player){
-        int x = (player.getX()) / Main.TILE_LENGTH;
-        int y = (player.getY()) / Main.TILE_LENGTH;
+        int x = (int) (player.getPlayerMovement().getX()) / Main.TILE_LENGTH;
+        int y = (int) (player.getPlayerMovement().getY()) / Main.TILE_LENGTH;
 
         // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if(player.canGo(dir)) {
-                player.moveInDirection(dir);
+            if(player.getPlayerMovement().canGo(dir)) {
+                player.getPlayerMovement().moveInDirection(dir);
             }
         }
     }
 
     private boolean playerIsOffTheBoard(Player player){
-        int x = (player.getX()) / Main.TILE_LENGTH;
-        int y = (player.getY()) / Main.TILE_LENGTH;
+        int x = (int) (player.getPlayerMovement().getX()) / Main.TILE_LENGTH;
+        int y = (int) (player.getPlayerMovement().getY()) / Main.TILE_LENGTH;
 
         // check if player is standing on the floor:
         return  !floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor");
@@ -89,7 +89,7 @@ public class Board {
         beltsMove(player);
         lasersFire(player);
         if(playerIsOffTheBoard(player))
-            player.getsDestroyed();
+            player.destroy();
     }
 
     public void dispose(){

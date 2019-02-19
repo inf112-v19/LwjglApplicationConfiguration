@@ -2,185 +2,113 @@ package inf112.skeleton.app.GameObjects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.skeleton.app.*;
 import inf112.skeleton.app.GameWorld.Board;
 import inf112.skeleton.app.GameWorld.Direction;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-public class  Player implements IPlayer {
+public class  Player {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
 
-
-    public static boolean playerMoved;
     private String name;
-    private int x;
-    private int y;
     private int lives;
     private int damage;
+    private PlayerMovement playerMovement;
+    private Backup backup;
 
-    private float rotationDegree;
-    private Direction direction;
     private ArrayList<ProgramCard> cardsInHand;
 
     private ProgramCard[] registers;
     private int unlockedRegisters;
 
-
-    private Texture texture;
-    private Sprite sprite;
-
     private Board board;
 
-    private GameObject backup;
 
-
-    /**
-     * Initialize a new player.
-     * Choose which direction the player is facing when created.
-     *
-     * @param name      the name of the player.
-     * @param x         x start coordinate for the player.
-     * @param y         y start coordinate for the player.
-     * @param direction which direction the player should face.
-     */
     public Player(String name, int x, int y, Direction direction, Board board) {
         this.name = name;
-        this.x = x;
-        this.y = y;
-        this.direction = direction;
-        this.cardsInHand = new ArrayList<>();
-
-        this.damage = 0;
-        this.lives = MAX_LIVES;
-        this.unlockedRegisters = 5;
-
-        this.rotationDegree = 180;
-
         this.board = board;
-        this.backup = new Backup(x, y);
+        playerMovement = new PlayerMovement(x, y, "assets/robot/tvBot.png", this);
+        backup = new Backup(x, y);
+
         registers = new ProgramCard[5];
+        unlockedRegisters = registers.length;
+        cardsInHand = new ArrayList<>();
+        damage = 0;
+        lives = MAX_LIVES;
+        playerMovement.setDirection(direction);
+    }
+
+    /** FOR TESTING ONLY */
+    public Player(int x, int y){
+        registers = new ProgramCard[5];
+        unlockedRegisters = registers.length;
+        cardsInHand = new ArrayList<>();
+        damage = 0;
+        lives = MAX_LIVES;
+    }
+
+    public void handleInput() {
+        //Just for testing
+        playerMovement.playerMoved = true;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))) {
+            playerMovement.setDirection(Direction.EAST);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))) {
+            playerMovement.setDirection(Direction.WEST);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))) {
+            playerMovement.setDirection(Direction.NORTH);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))) {
+            playerMovement.setDirection(Direction.SOUTH);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            backup.move(playerMovement.getX(), playerMovement.getY());
+            playerMovement.playerMoved = false;
+        } else {
+            playerMovement.playerMoved = false;
+        }
     }
     public void update(){
-            //Just for testing
-            playerMoved = true;
-
-            if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))){
-                direction = Direction.EAST;
-            }
-            else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))){
-                direction = Direction.WEST;
-            }
-            else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))){
-                direction = Direction.NORTH;
-            }
-            else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))){
-                direction = Direction.SOUTH;
-            }
-            else if (Gdx.input.isKeyJustPressed(Input.Keys.B)){
-                backup.move(this.x, this.y);
-                playerMoved = false;
-            }
-            else {
-                playerMoved = false;
-            }
-        }
-
-        @SuppressWarnings("Duplicates")
-    public boolean canGo(Direction dir){
-        // first check the current tile:
-        int newX = (this.x) / Main.TILE_LENGTH;
-        int newY = (this.y) / Main.TILE_LENGTH;
-
-        // check this tile:
-        TiledMapTileLayer.Cell currentCell =  board.getWallLayer().getCell(newX,newY);
-        List<String> walls = new ArrayList<>();
-        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
-        }
-        if (walls.contains(dir.toString())){
-            System.out.println("Hit a wall!(here)");
-            return false;
-        }
-
-        // move new position to target tile:
-        switch (dir){
-            case NORTH:
-                newY++; break;
-            case SOUTH:
-                newY--; break;
-            case WEST:
-                newX--; break;
-            case EAST:
-                newX++; break;
-        }
-
-        // check target tile:
-        if(newX < 0 || newY < 0 || board.getWidth() <= newX || board.getHeight() <= newY)
-            return false;
-
-        walls = new ArrayList<>();
-        TiledMapTileLayer.Cell targetCell = board.getWallLayer().getCell(newX, newY);
-
-        if(targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
-        }
-
-        dir = dir.getOppositeDirection();
-
-        if (walls.contains(dir.toString())){
-            System.out.println("Hit a wall!(next)");
-            return false;
-        }
-
-        return true;
-    }
-
-    public List<String> splitBySpace(String strToSplit){
-        List<String> splitList;
-        String [] items = strToSplit.split(" ");
-        splitList = Arrays.asList(items);
-        return splitList;
-    }
-
-    public void getsDestroyed(){
-        this.lives--;
-        if (isOutOfLives()) {
-            Gdx.app.log(name , "is dead!");
-        } else {
-            Gdx.app.log(name , "gets destroyed.");
+        handleInput();
+        if (isDestroyed() && !outOfLives()){
+            Gdx.app.log("Player", "is destroyed!");
+            lives--;
             repairDamage();
-            moveToBackup();
+            playerMovement.moveToBackup();
+            }
+        else if (isDestroyed() && outOfLives()){
+            Gdx.app.log("Player", "is dead!");
+            Gdx.app.log("GAME OVER", "");
+//            Gdx.app.exit();
+        }
+
+        if(playerMovement.playerMoved) {
+            if (playerMovement.canGo(playerMovement.getDirection()))
+                playerMovement.move(1);
+            board.boardInteractsWithPlayer(this);
         }
     }
 
     public void takeDamage() {
         this.damage++;
-        if (isDestroyed()) {
-            getsDestroyed();
-        } else if (damage >= 5) {
+        if (damage < 10 && damage >= 5) {
             unlockedRegisters--;
         }
+    }
+
+    public void destroy(){
+        damage = MAX_DAMAGE +1;
     }
 
     public boolean isDestroyed() {
         return damage > MAX_DAMAGE;
     }
 
-    public boolean isOutOfLives() {
+    public boolean outOfLives() {
         return lives <= 0;
     }
 
-    private void moveToBackup() {
-        this.x = (int) backup.getX();
-        this.y = (int) backup.getY();
-    }
+
 
     /* Registers are stored like this:
      * [0][1][2][3][4]
@@ -240,93 +168,6 @@ public class  Player implements IPlayer {
         return registers[unlockedRegisters] != null;
     }
 
-
-    /**
-     * Moves the robot forward in the direction it is facing.
-     *
-     * @param steps number of tiles to move.
-     */
-    public void move(int steps) {
-        switch (direction){
-            case NORTH:
-                y += Main.TILE_LENGTH * steps; break;
-            case SOUTH:
-                y -= Main.TILE_LENGTH * steps; break;
-            case EAST:
-                x += Main.TILE_LENGTH * steps; break;
-            case WEST:
-                x -= Main.TILE_LENGTH * steps; break;
-        }
-    }
-
-    public void moveInDirection(Direction dir){
-        switch (dir){
-            case NORTH:
-                y += Main.TILE_LENGTH; break;
-            case SOUTH:
-                y -= Main.TILE_LENGTH; break;
-            case EAST:
-                x += Main.TILE_LENGTH; break;
-            case WEST:
-                x -= Main.TILE_LENGTH; break;
-        }
-    }
-
-    /**
-     * Rotates the player - visually too.
-     *
-     * @param rotateDir which direction the player should rotate.
-     * @return the new direction the player is facing.
-     */
-    @SuppressWarnings("Duplicates")
-    public Direction rotate(Rotate rotateDir) {
-        final Direction NORTH = Direction.NORTH;
-        final Direction WEST = Direction.WEST;
-        final Direction SOUTH = Direction.SOUTH;
-        final Direction EAST = Direction.EAST;
-
-
-        if (rotateDir.equals(Rotate.RIGHT)) {
-            switch (this.direction) {
-                case NORTH: this.direction = EAST; break;
-                case EAST: this.direction = SOUTH; break;
-                case SOUTH: this.direction = WEST; break;
-                case WEST: this.direction = NORTH; break;
-            }
-            this.rotationDegree += 90;
-        }
-        else if (rotateDir.equals(Rotate.LEFT)) {
-            switch (this.direction) {
-                case NORTH: this.direction = WEST; break;
-                case WEST: this.direction = SOUTH; break;
-                case SOUTH: this.direction = EAST; break;
-                case EAST: this.direction = NORTH; break;
-            }
-            this.rotationDegree -= 90;
-        }
-        else if (rotateDir.equals(Rotate.UTURN)) {
-            switch (this.direction) {
-                case NORTH: this.direction = SOUTH; break;
-                case SOUTH: this.direction = NORTH; break;
-                case WEST:  this.direction = EAST;  break;
-                case EAST:  this.direction = WEST;  break;
-            }
-            this.rotationDegree += 180;
-        }
-        return this.direction;
-    }
-
-    public void loadVisualRepresentation() {
-        texture = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
-        texture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        sprite = new Sprite(texture);
-        sprite.setSize(sprite.getWidth()/2, sprite.getHeight()/2);
-        sprite.setOriginCenter();
-        sprite.setPosition(this.x, this.y-10);
-        sprite.setRotation(this.rotationDegree);
-
-    }
-
     // getters and setters:
 
     /**
@@ -346,16 +187,6 @@ public class  Player implements IPlayer {
     public ArrayList<ProgramCard> getCardsInHand() {
         return this.cardsInHand;
     }
-
-
-
-    /**
-     * @return the direction the player is facing.
-     */
-    public Direction getDirection() {
-        return this.direction;
-    }
-
 
     public int getDamage() {
         return damage;
@@ -388,49 +219,24 @@ public class  Player implements IPlayer {
         return registers[phaseNumber].getPriority();
     }
 
-    /**
-     * @return current degrees rotated.
-     */
-    public float getRotationDegree() {
-        return rotationDegree;
-    }
-
     public String getName() {
         return name;
     }
 
-    public int getX() {
-        return x;
+    public GameObject getBackup() {
+        return backup;
     }
 
-    public int getY() {
-        return y;
+    public Board getBoard(){
+        return this.board;
     }
 
-    //Remove once we remove movement with WASD in GameScreen render method.
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    //Remove once we remove movement with WASD in GameScreen render method.
-    public void setY(int y) {
-        this.y = y;
+    public PlayerMovement getPlayerMovement() {
+        return this.playerMovement;
     }
 
     @Override
     public String toString() {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
-    }
-
-    public Texture getTexture() {
-        return texture;
-    }
-
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    public GameObject getBackup() {
-        return backup;
     }
 }

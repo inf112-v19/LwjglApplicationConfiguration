@@ -6,8 +6,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class Main {
     public static final int UNIT_SCALE = 2;
-    public static final int PixelsPerTile = 32;
-    public static final int TILE_LENGTH = PixelsPerTile *UNIT_SCALE;
+    public static final int PIXELS_PER_TILE = 32;
+    public static final int TILE_LENGTH = PIXELS_PER_TILE *UNIT_SCALE;
 
     // Maps:
     public static final String TEST_MAP = "assets/gameboard/testMap.tmx";

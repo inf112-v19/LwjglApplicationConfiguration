@@ -1,8 +1,6 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.GameObjects.Player;
-import inf112.skeleton.app.GameWorld.Board;
-import inf112.skeleton.app.GameWorld.Direction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +9,6 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class PlayerTest {
     private Player player;
@@ -19,8 +16,7 @@ public class PlayerTest {
 
     @Before
     public void setup(){
-        Board board = new Board(Main.VAULT);
-        player = new Player("testBot", 0,0, Direction.SOUTH, board);
+        player = new Player(0,0);
         stack = ProgramCard.makeStack();
     }
 
@@ -176,10 +172,9 @@ public class PlayerTest {
     public void priorityTest(){
         PriorityQueue<ProgramCard> q = new PriorityQueue<>();
         // create 3 players:
-        Board board = new Board(Main.VAULT);
-        Player p1 = new Player("p1", 0,0, Direction.SOUTH, board);
-        Player p2 = new Player("p2", 0,1, Direction.SOUTH, board);
-        Player p3 = new Player("p3", 0,2, Direction.SOUTH, board);
+        Player p1 = new Player( 0,0);
+        Player p2 = new Player( 0,1);
+        Player p3 = new Player(0,2);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
             p1.receiveNewCard(stack.pop());

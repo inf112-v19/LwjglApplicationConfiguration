@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
 
 public abstract class GameObject{
-    private Sprite sprite;
+    protected Sprite sprite;
 
     public GameObject(float x, float y, String filePath){
         sprite = new Sprite(new Texture(filePath));
@@ -19,8 +19,20 @@ public abstract class GameObject{
         sprite.setY(y);
     }
 
+    public void moveX(float x){
+        sprite.setX(x);
+    }
+
+    public void moveY(float y){
+        sprite.setY(y);
+    }
+
+
     public void draw(SpriteBatch batch){
         sprite.draw(batch);
+    }
+    public void dispose(){
+        sprite.getTexture().dispose();
     }
 
     public float getX() {
@@ -28,5 +40,9 @@ public abstract class GameObject{
     }
     public float getY() {
         return sprite.getY();
+    }
+
+    public Sprite getSprite(){
+        return this.sprite;
     }
 }

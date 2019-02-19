@@ -10,7 +10,6 @@ public class RoboRallyGame extends Game {
 
     public GameScreen gameScreen;
 
-
     @Override
     public void create() {
 
