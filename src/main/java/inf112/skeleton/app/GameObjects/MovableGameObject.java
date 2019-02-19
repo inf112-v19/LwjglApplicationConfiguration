@@ -4,12 +4,18 @@ import inf112.skeleton.app.GameWorld.Direction;
 import inf112.skeleton.app.Main;
 import inf112.skeleton.app.Rotate;
 
-public abstract class MoveableGameObject extends GameObject {
+public abstract class MovableGameObject extends GameObject {
     public boolean moved;
     protected int rotationDegree;
     private Direction direction;
 
-    public MoveableGameObject(float x, float y) {
+    /**
+     * A GameObject that is facing a certain direction and can move in
+     * said direction. It can also rotate.
+     * @param x position x
+     * @param y position y
+     */
+    public MovableGameObject(float x, float y) {
         super(x, y);
         direction = Direction.SOUTH;
         rotationDegree = 180;

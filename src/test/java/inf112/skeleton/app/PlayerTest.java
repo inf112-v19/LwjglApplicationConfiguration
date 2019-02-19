@@ -100,7 +100,7 @@ public class PlayerTest {
     public void repairResultsInZeroDmg(){
         for(int i = 0; i < 9; i++)
             player.takeDamage();
-        player.repairDamage();
+        player.repairAllDamage();
         assertEquals(0, player.getDamage());
         for(int i = 0; i < 5; i++)
             assert(!player.isLocked(i));

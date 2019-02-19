@@ -9,7 +9,7 @@ import inf112.skeleton.app.GameWorld.Direction;
 
 import java.util.ArrayList;
 
-public class  Player extends MoveableGameObject {
+public class  Player extends MovableGameObject {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
     private static final int NUMBER_OF_REGISTERS = 5;
@@ -64,12 +64,12 @@ public class  Player extends MoveableGameObject {
     }
 
     public void update(){
-
         handleInput();
+
         if (isDestroyed() && !outOfLives()){
             Gdx.app.log("Player", "is destroyed!");
             lives--;
-            repairDamage();
+            repairAllDamage();
             backup.movePlayer(this);
             }
         else if (isDestroyed() && outOfLives()){
@@ -119,14 +119,6 @@ public class  Player extends MoveableGameObject {
         return lives <= 0;
     }
 
-
-
-    /* Registers are stored like this:
-     * [0][1][2][3][4]
-     *
-     * taking 5 damage locks register 4.
-     * 6 damage locks 3..
-     */
     public boolean isLocked(int register) {
         return register >= unlockedRegisters;
     }
@@ -145,7 +137,7 @@ public class  Player extends MoveableGameObject {
         return cardsInHand;
     }
 
-    public void repairDamage() {
+    public void repairAllDamage() {
         damage = 0;
         unlockedRegisters = NUMBER_OF_REGISTERS;
     }
@@ -176,7 +168,11 @@ public class  Player extends MoveableGameObject {
     }
 
     public boolean registerIsFull() {
-        return registers[unlockedRegisters] != null;
+        for(int i = 0; i < registers.length; i++){
+            if(registers[i] == null)
+                return  false;
+        }
+        return true;
     }
 
     // getters and setters:
@@ -240,12 +236,12 @@ public class  Player extends MoveableGameObject {
 
 
     @Override
-    public String toString() {
-        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
+    public Sprite getSprite() {
+        return sprite;
     }
 
     @Override
-    public Sprite getSprite() {
-        return sprite;
+    public String toString() {
+        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 }

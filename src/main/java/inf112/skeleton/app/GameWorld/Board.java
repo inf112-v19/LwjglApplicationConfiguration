@@ -3,7 +3,7 @@ package inf112.skeleton.app.GameWorld;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.skeleton.app.GameObjects.MoveableGameObject;
+import inf112.skeleton.app.GameObjects.MovableGameObject;
 import inf112.skeleton.app.GameObjects.Player;
 import inf112.skeleton.app.Main;
 
@@ -47,7 +47,7 @@ public class Board {
     }
 
     public void update(Player player) {
-        MoveableGameObject playerMovement = player;
+        MovableGameObject playerMovement = player;
         if(playerMovement.moved) {
             if (canGo(playerMovement))
                 playerMovement.move(1);
@@ -56,7 +56,7 @@ public class Board {
 
     }
 
-    public boolean canGo(MoveableGameObject gameObject){
+    public boolean canGo(MovableGameObject gameObject){
         Direction direction = gameObject.getDirection();
         // first check the current tile:
         int newX = (int) gameObject.getX() / Main.TILE_LENGTH;

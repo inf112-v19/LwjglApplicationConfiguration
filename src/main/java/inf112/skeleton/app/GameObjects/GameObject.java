@@ -1,16 +1,23 @@
 package inf112.skeleton.app.GameObjects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public abstract class GameObject{
     protected float x;
     protected float y;
 
+    /**
+     * An object on the game board.
+     * It only has a position and needs a sprite
+     * @param x position x
+     * @param y position y
+     */
     public GameObject(float x, float y){
         this.x = x;
         this.y = y;
     }
+
+    public abstract Sprite getSprite();
 
     public void move(float x, float y){
         this.x = x;
@@ -32,6 +39,4 @@ public abstract class GameObject{
     public float getY() {
         return y;
     }
-
-    public abstract Sprite getSprite();
 }
