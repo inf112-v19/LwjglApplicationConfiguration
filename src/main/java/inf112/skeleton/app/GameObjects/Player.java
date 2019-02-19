@@ -21,12 +21,10 @@ public class  Player {
     private PlayerMovement playerMovement;
     private Backup backup;
     private ArrayList<ProgramCard> cardsInHand;
-    private Board board;
 
 
-    public Player(String name, int x, int y, Direction direction, Board board) {
+    public Player(String name, int x, int y, Direction direction) {
         this.name = name;
-        this.board = board;
         playerMovement = new PlayerMovement(x, y, "assets/robot/tvBot.png", this);
         backup = new Backup(x, y);
 
@@ -59,10 +57,8 @@ public class  Player {
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");
         }
-         // MOVE THIS TO BOARD::::
-
-        //::::::::::::::::::::::::
     }
+
     public void handleInput() {
         //Just for testing
         playerMovement.moved = true;
@@ -219,10 +215,6 @@ public class  Player {
 
     public GameObject getBackup() {
         return backup;
-    }
-
-    public Board getBoard(){
-        return this.board;
     }
 
     public PlayerMovement getPlayerMovement() {
