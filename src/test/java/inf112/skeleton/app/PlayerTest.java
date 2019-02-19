@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.GameObjects.Player;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,6 +17,7 @@ public class PlayerTest {
 
     @Before
     public void setup(){
+
         player = new Player(0,0);
         stack = ProgramCard.makeStack();
     }
@@ -172,9 +174,9 @@ public class PlayerTest {
     public void priorityTest(){
         PriorityQueue<ProgramCard> q = new PriorityQueue<>();
         // create 3 players:
-        Player p1 = new Player( 0,0);
-        Player p2 = new Player( 0,1);
-        Player p3 = new Player(0,2);
+        Player p1 = new Player(0,0);
+        Player p2 = new Player(0,0);
+        Player p3 = new Player(0,0);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
             p1.receiveNewCard(stack.pop());

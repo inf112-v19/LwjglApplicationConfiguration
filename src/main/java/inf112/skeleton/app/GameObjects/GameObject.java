@@ -1,48 +1,37 @@
 package inf112.skeleton.app.GameObjects;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.skeleton.app.Main;
 
 public abstract class GameObject{
-    protected Sprite sprite;
+    protected float x;
+    protected float y;
 
-    public GameObject(float x, float y, String filePath){
-        sprite = new Sprite(new Texture(filePath));
-        move(x, y);
-        sprite.setSize(sprite.getWidth() * Main.UNIT_SCALE, sprite.getHeight() * Main.UNIT_SCALE);
+    public GameObject(float x, float y){
+        this.x = x;
+        this.y = y;
     }
 
     public void move(float x, float y){
-        sprite.setX(x);
-        sprite.setY(y);
+        this.x = x;
+        this.y = y;
     }
 
     public void moveX(float x){
-        sprite.setX(x);
+       this.x = x;
     }
 
     public void moveY(float y){
-        sprite.setY(y);
-    }
-
-
-    public void draw(SpriteBatch batch){
-        sprite.draw(batch);
-    }
-    public void dispose(){
-        sprite.getTexture().dispose();
+        this.y = y;
     }
 
     public float getX() {
-        return sprite.getX();
-    }
-    public float getY() {
-        return sprite.getY();
+        return x;
     }
 
-    public Sprite getSprite(){
-        return this.sprite;
+    public float getY() {
+        return y;
     }
+
+    public abstract Sprite getSprite();
 }

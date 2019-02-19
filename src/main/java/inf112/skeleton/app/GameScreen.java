@@ -67,8 +67,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        player.getBackup().draw(batch);
-        player.getPlayerMovement().draw(batch);
+        player.getBackup().getSprite().draw(batch);
+        player.getSprite().draw(batch);
 
         batch.end();
 
@@ -101,7 +101,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public void dispose() {
         batch.dispose();
         board.dispose();
-        player.getPlayerMovement().dispose();
+        player.getSprite().getTexture().dispose();
+        player.getBackup().getSprite().getTexture().dispose();
     }
 
     @Override

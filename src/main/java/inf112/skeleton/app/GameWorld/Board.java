@@ -5,7 +5,6 @@ import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.skeleton.app.GameObjects.MoveableGameObject;
 import inf112.skeleton.app.GameObjects.Player;
-import inf112.skeleton.app.GameObjects.PlayerMovement;
 import inf112.skeleton.app.Main;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public class Board {
     }
 
     public void update(Player player) {
-        MoveableGameObject playerMovement = player.getPlayerMovement();
+        MoveableGameObject playerMovement = player;
         if(playerMovement.moved) {
             if (canGo(playerMovement))
                 playerMovement.move(1);
@@ -117,12 +116,11 @@ public class Board {
     public void boardInteractsWithPlayer(Player player){
         if (player == null) return;
 
-        PlayerMovement playerMovement = player.getPlayerMovement();
 
-        beltsMove(playerMovement);
+        beltsMove(player);
 
-        int x = (int) playerMovement.getX() / Main.TILE_LENGTH;
-        int y = (int) playerMovement.getY() / Main.TILE_LENGTH;
+        int x = (int) player.getX() / Main.TILE_LENGTH;
+        int y = (int) player.getY() / Main.TILE_LENGTH;
 
         if(lasersHit(x, y)) {
             System.out.println("Ouch!");
@@ -133,16 +131,16 @@ public class Board {
         }
     }
 
-    private void beltsMove(PlayerMovement playerMovement){
-        int x = (int) playerMovement.getX() / Main.TILE_LENGTH;
-        int y = (int) playerMovement.getY() / Main.TILE_LENGTH;
+    private void beltsMove(Player player){
+        int x = (int) player.getX() / Main.TILE_LENGTH;
+        int y = (int) player.getY() / Main.TILE_LENGTH;
 
         // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if(canGo(playerMovement)) {
-                playerMovement.moveInDirection(dir);
+            if(canGo(player)) {
+                player.moveInDirection(dir);
             }
         }
     }

@@ -1,9 +1,6 @@
 package inf112.skeleton.app;
 
-
 import inf112.skeleton.app.GameObjects.Player;
-import inf112.skeleton.app.GameObjects.PlayerMovement;
-import inf112.skeleton.app.GameWorld.Board;
 import inf112.skeleton.app.GameWorld.Direction;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,116 +9,115 @@ import static junit.framework.TestCase.assertEquals;
 
 public class MovePlayerTest {
 
-    public static Player player;
     private int x = 0; //Starting x pos
     private int y = 0; //Starting y pos
-    private PlayerMovement playerMovement;
+    private Player player;
 
     @Before
     public void initialize() {
-        playerMovement = new PlayerMovement(x, y);
+        player = new Player(x, y);
     }
 
 
     @Test
     public void move1ForwardWorks() {
-        playerMovement.move(1);
-        assertEquals(y - Main.TILE_LENGTH, playerMovement.getY());
+        player.move(1);
+        assertEquals(y - Main.TILE_LENGTH,(int) player.getY());
     }
 
     @Test
     public void move2ForwardWorks() {
-        playerMovement.move(1);
-        assertEquals(y - Main.TILE_LENGTH *2f, playerMovement.getY());
+        player.move(2);
+        assertEquals(y - Main.TILE_LENGTH *2, (int) player.getY());
     }
 
     @Test
     public void move3ForwardWorks() {
-        playerMovement.move(3);
-        assertEquals(y - Main.TILE_LENGTH *3, playerMovement.getY());
+        player.move(3);
+        assertEquals(y - Main.TILE_LENGTH *3, (int) player.getY());
     }
 
     @Test
     public void rotateLeftMove1() {
-        playerMovement.rotate(Rotate.LEFT);
-        playerMovement.move(1);
-        assertEquals(x + Main.TILE_LENGTH, playerMovement.getX());
+        player.rotate(Rotate.LEFT);
+        player.move(1);
+        assertEquals(x + Main.TILE_LENGTH, (int) player.getX());
     }
 
 
     @Test
     public void move1EastThen1West() {
-        playerMovement.rotate(Rotate.LEFT);
-        playerMovement.move(1);
-        playerMovement.rotate(Rotate.UTURN);
-        playerMovement.move(1);
-        assertEquals(x, playerMovement.getX());
+        player.rotate(Rotate.LEFT);
+        player.move(1);
+        player.rotate(Rotate.UTURN);
+        player.move(1);
+        assertEquals(x, (int) player.getX());
     }
 
     @Test
     public void Move1ThenRotateLeftThenMove2ThenRotateLeftMove1() {
-        playerMovement.move(1);
-        playerMovement.rotate(Rotate.LEFT);
-        playerMovement.move(2);
-        playerMovement.rotate(Rotate.LEFT);
-        playerMovement.move(1);
-        assertEquals(x + Main.TILE_LENGTH *2, playerMovement.getX());
-        assertEquals(y, playerMovement.getY());
+        player.move(1);
+        player.rotate(Rotate.LEFT);
+        player.move(2);
+        player.rotate(Rotate.LEFT);
+        player.move(1);
+        assertEquals(x + Main.TILE_LENGTH *2, (int) player.getX());
+        assertEquals(y, (int) player.getY());
     }
 
     @Test
     public void rotateLeftMove3ThenRotateRightMove2ThenRotateUturnMove2() {
-        playerMovement.rotate(Rotate.LEFT);
-        playerMovement.move(3);
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.move(2);
-        playerMovement.rotate(Rotate.UTURN);
-        playerMovement.move(2);
+        player.rotate(Rotate.LEFT);
+        player.move(3);
+        player.rotate(Rotate.RIGHT);
+        player.move(2);
+        player.rotate(Rotate.UTURN);
+        player.move(2);
 
-        assertEquals(x + Main.TILE_LENGTH *3, playerMovement.getX());
-        assertEquals(y, playerMovement.getY());
+        assertEquals(x + Main.TILE_LENGTH *3, (int) player.getX());
+        assertEquals(y, (int) player.getY());
     }
 
     @Test
     public void RotateRightTwice() {
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        assertEquals(playerMovement.getDirection(), Direction.NORTH);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        assertEquals(player.getDirection(), Direction.NORTH);
     }
 
     @Test
     public void rotateRightThreeTimes() {
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        assertEquals(playerMovement.getDirection(), Direction.EAST);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        assertEquals(player.getDirection(), Direction.EAST);
     }
 
     @Test
     public void rotateRightFourTimes(){
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        assertEquals(playerMovement.getDirection(), Direction.SOUTH);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        assertEquals(player.getDirection(), Direction.SOUTH);
     }
 
     @Test
     public void rotateRightFiveTimes(){
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        playerMovement.rotate(Rotate.RIGHT);
-        assertEquals(playerMovement.getDirection(), Direction.WEST);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        player.rotate(Rotate.RIGHT);
+        assertEquals(player.getDirection(), Direction.WEST);
     }
 
     @Test
     public void doUturnThreeTimes(){
-        playerMovement.rotate(Rotate.UTURN);
-        playerMovement.rotate(Rotate.UTURN);
-        playerMovement.rotate(Rotate.UTURN);
-        assertEquals(playerMovement.getDirection(), Direction.NORTH);
+        player.rotate(Rotate.UTURN);
+        player.rotate(Rotate.UTURN);
+        player.rotate(Rotate.UTURN);
+        assertEquals(player.getDirection(), Direction.NORTH);
     }
     //...
 
