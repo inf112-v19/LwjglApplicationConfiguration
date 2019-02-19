@@ -58,18 +58,14 @@ public class  Player {
         else if (isDestroyed() && outOfLives()){
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");
-//            Gdx.app.exit();
         }
+         // MOVE THIS TO BOARD::::
 
-        if(playerMovement.playerMoved) {
-            if (playerMovement.canGo(playerMovement.getDirection()))
-                playerMovement.move(1);
-            board.boardInteractsWithPlayer(this);
-        }
+        //::::::::::::::::::::::::
     }
     public void handleInput() {
         //Just for testing
-        playerMovement.playerMoved = true;
+        playerMovement.moved = true;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))) {
             playerMovement.setDirection(Direction.EAST);
@@ -81,9 +77,9 @@ public class  Player {
             playerMovement.setDirection(Direction.SOUTH);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             backup.move(playerMovement.getX(), playerMovement.getY());
-            playerMovement.playerMoved = false;
+            playerMovement.moved = false;
         } else {
-            playerMovement.playerMoved = false;
+            playerMovement.moved = false;
         }
     }
 

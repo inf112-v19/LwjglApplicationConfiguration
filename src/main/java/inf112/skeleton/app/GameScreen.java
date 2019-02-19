@@ -54,7 +54,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     @Override
     public void render(float delta) {
         update();
-
         float r = 158/255f;
         float g = 158/255f;
         float b = 158/255f;
@@ -79,6 +78,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     private void update() {
         player.update();
+        board.update(player);
         hud.update(player);
     }
 
