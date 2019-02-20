@@ -5,7 +5,7 @@ package inf112.roborally.game.objects;
  */
 public class Flag extends AbstractGameObject {
     private int flagNumber;
-    private String filename = "assets/gameboard/flag.png";
+    private String filepath = "assets/gameboard/flag.png";
 
     public Flag(int x, int y, int flagNumber) {
         super(x, y);
@@ -13,7 +13,7 @@ public class Flag extends AbstractGameObject {
     }
 
     public String getFilename() {
-        return filename;
+        return filepath;
     }
 
 }

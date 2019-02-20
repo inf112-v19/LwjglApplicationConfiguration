@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
