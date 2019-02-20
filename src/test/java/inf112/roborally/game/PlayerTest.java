@@ -1,4 +1,6 @@
-package inf112.skeleton.app;
+package inf112.roborally.game;
+
+import inf112.roborally.game.objects.Player;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +10,6 @@ import java.util.PriorityQueue;
 import java.util.Stack;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class PlayerTest {
     private Player player;
@@ -16,7 +17,8 @@ public class PlayerTest {
 
     @Before
     public void setup(){
-        player = new Player("testBot", 0,0, Direction.SOUTH);
+
+        player = new Player(0,0);
         stack = ProgramCard.makeStack();
     }
 
@@ -98,7 +100,7 @@ public class PlayerTest {
     public void repairResultsInZeroDmg(){
         for(int i = 0; i < 9; i++)
             player.takeDamage();
-        player.repairDamage();
+        player.repairAllDamage();
         assertEquals(0, player.getDamage());
         for(int i = 0; i < 5; i++)
             assert(!player.isLocked(i));
@@ -118,7 +120,7 @@ public class PlayerTest {
         assertEquals(9, cardsReturned.size());
 
         // All registers are empty:
-        for(ProgramCard register : player.getRegisters())
+        for(ProgramCard register : player.getCardsInRegisters())
             assert(register == null);
     }
 
@@ -140,7 +142,7 @@ public class PlayerTest {
         assertEquals(4, cardsReturned.size());
 
         // All registers contains program cards:
-        for(ProgramCard register : player.getRegisters())
+        for(ProgramCard register : player.getCardsInRegisters())
             assert(register != null);
     }
 
@@ -163,18 +165,18 @@ public class PlayerTest {
 
         // The first 4 registers do not contain program cards:
         for(int i = 0; i < 4; i++)
-            assert(player.getRegisters().get(i) == null);
+            assert(player.getCardsInRegisters().get(i) == null);
         // The last register does:
-        assert(player.getRegisters().get(4) != null);
+        assert(player.getCardsInRegisters().get(4) != null);
     }
 
     @Test
     public void priorityTest(){
         PriorityQueue<ProgramCard> q = new PriorityQueue<>();
         // create 3 players:
-        Player p1 = new Player("p1", 0,0);
-        Player p2 = new Player("p2", 0,1);
-        Player p3 = new Player("p3", 0,2);
+        Player p1 = new Player(0,0);
+        Player p2 = new Player(0,0);
+        Player p3 = new Player(0,0);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
             p1.receiveNewCard(stack.pop());

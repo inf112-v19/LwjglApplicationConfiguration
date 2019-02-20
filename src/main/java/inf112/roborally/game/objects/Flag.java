@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
 public class Flag {
     private int flagNumber;

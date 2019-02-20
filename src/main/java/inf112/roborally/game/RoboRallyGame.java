@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.roborally.game;
 
 import com.badlogic.gdx.Game;
 
@@ -10,11 +10,10 @@ public class RoboRallyGame extends Game {
 
     public GameScreen gameScreen;
 
-
     @Override
     public void create() {
 
-        gameScreen = new GameScreen(this, Main.TEST_MAP);
+        gameScreen = new GameScreen(Main.VAULT);
         setScreen(gameScreen);
     }
 

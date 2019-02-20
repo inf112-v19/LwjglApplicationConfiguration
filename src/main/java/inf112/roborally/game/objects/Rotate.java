@@ -1,7 +1,6 @@
-package inf112.skeleton.app;
+package inf112.roborally.game.objects;
 
 
-//TODO? Rename
 public enum Rotate {
     NONE,
     LEFT,
