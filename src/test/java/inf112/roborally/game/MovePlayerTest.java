@@ -1,47 +1,49 @@
-package inf112.skeleton.app;
+package inf112.roborally.game;
 
-
+import inf112.roborally.game.Main;
+import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.objects.Rotate;
+import inf112.roborally.game.world.Direction;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertEquals;
 
 public class MovePlayerTest {
 
-    public static Player player;
     private int x = 0; //Starting x pos
     private int y = 0; //Starting y pos
+    private Player player;
 
     @Before
     public void initialize() {
-        player = new Player("Player1", x, y, Direction.SOUTH);
-
+        player = new Player(x, y);
     }
 
 
     @Test
     public void move1ForwardWorks() {
         player.move(1);
-        assertEquals(y - Main.MOVE_DIST, player.getY());
+        assertEquals(y - Main.TILE_LENGTH,(int) player.getY());
     }
 
     @Test
     public void move2ForwardWorks() {
         player.move(2);
-        assertEquals(y - Main.MOVE_DIST*2, player.getY());
+        assertEquals(y - Main.TILE_LENGTH *2, (int) player.getY());
     }
 
     @Test
     public void move3ForwardWorks() {
         player.move(3);
-        assertEquals(y - Main.MOVE_DIST*3, player.getY());
+        assertEquals(y - Main.TILE_LENGTH *3, (int) player.getY());
     }
 
     @Test
     public void rotateLeftMove1() {
         player.rotate(Rotate.LEFT);
         player.move(1);
-        assertEquals(x + Main.MOVE_DIST, player.getX());
+        assertEquals(x + Main.TILE_LENGTH, (int) player.getX());
     }
 
 
@@ -51,7 +53,7 @@ public class MovePlayerTest {
         player.move(1);
         player.rotate(Rotate.UTURN);
         player.move(1);
-        assertEquals(x, player.getX());
+        assertEquals(x, (int) player.getX());
     }
 
     @Test
@@ -61,8 +63,8 @@ public class MovePlayerTest {
         player.move(2);
         player.rotate(Rotate.LEFT);
         player.move(1);
-        assertEquals(x + Main.MOVE_DIST*2, player.getX());
-        assertEquals(y, player.getY());
+        assertEquals(x + Main.TILE_LENGTH *2, (int) player.getX());
+        assertEquals(y, (int) player.getY());
     }
 
     @Test
@@ -74,8 +76,8 @@ public class MovePlayerTest {
         player.rotate(Rotate.UTURN);
         player.move(2);
 
-        assertEquals(x + Main.MOVE_DIST*3, player.getX());
-        assertEquals(y, player.getY());
+        assertEquals(x + Main.TILE_LENGTH *3, (int) player.getX());
+        assertEquals(y, (int) player.getY());
     }
 
     @Test

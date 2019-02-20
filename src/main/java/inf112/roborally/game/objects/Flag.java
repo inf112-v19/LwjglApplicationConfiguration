@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
 /**
  * Class for a flag on the board, which extends AbstractGameObject
