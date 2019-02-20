@@ -18,14 +18,13 @@ public class Laser extends MovableGameObject{
     private int stateTimer;
 
     public Laser(int x, int y, Direction direction){
-        super(x, y);
+        super(x, y, "assets/gameboard/roborallypack.atlas");
         setDirection(direction);
         setUpAnimation();
     }
 
     private void setUpAnimation() {
-        String filePath = "assets/gameboard/roborallypack.atlas";
-        sprite = new Sprite(new TextureAtlas(filePath).findRegion("laser"));
+        makeSprite();
         sprite.setBounds(getX(), getY(), Main.TILE_LENGTH, Main.TILE_LENGTH);
         sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 
@@ -38,8 +37,8 @@ public class Laser extends MovableGameObject{
 
     @Override
     public void updateSprite(){
+        super.updateSprite();
         sprite.setRegion(animation.getKeyFrame(stateTimer++, true));
-        sprite.setRotation(rotationDegree);
     }
 
     @Override

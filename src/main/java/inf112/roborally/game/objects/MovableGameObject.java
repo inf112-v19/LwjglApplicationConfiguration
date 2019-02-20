@@ -1,5 +1,6 @@
 package inf112.roborally.game.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import inf112.roborally.game.world.Direction;
 import inf112.roborally.game.Main;
 
@@ -14,10 +15,24 @@ public abstract class MovableGameObject extends GameObject {
      * @param x position x
      * @param y position y
      */
-    public MovableGameObject(float x, float y) {
-        super(x, y);
+    public MovableGameObject(float x, float y, String filePath) {
+        super(x, y, filePath);
         direction = Direction.SOUTH;
         rotationDegree = direction.getRotationDegree();
+    }
+
+    @Override
+    public void updateSprite() {
+        sprite.setRotation(rotationDegree);
+        super.updateSprite();
+    }
+
+    public void loadVisualRepresentation() {
+        sprite.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        sprite.setSize(Main.TILE_LENGTH, Main.TILE_LENGTH);
+        sprite.setOriginCenter();
+
+        updateSprite();
     }
 
     public void moveInDirection(Direction dir){
