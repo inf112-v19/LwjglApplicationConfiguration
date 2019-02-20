@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.roborally.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -16,9 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import org.lwjgl.opengl.Drawable;
+import inf112.roborally.game.objects.Player;
 
 
 public class Hud {
@@ -43,9 +41,9 @@ public class Hud {
         viewport = new FitViewport(1920, 1080, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);
+        Table hud = new Table();
+        hud.top();
+        hud.setFillParent(true);
 
         livesLabel = new Label("Lives: " + lives, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         damageLabel = new Label("Damage taken: " + damage, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -56,13 +54,18 @@ public class Hud {
         TextureRegion buttonTexture= new TextureRegion(buttonPic);
         TextureRegionDrawable buttonTextureDrawable = new TextureRegionDrawable(buttonTexture);
         ImageButton button = new ImageButton(buttonTextureDrawable);
-        table.add(button).top().padRight(stage.getWidth()/2);
 
-        table.add(livesLabel).width(100).padTop(10);
-        table.add(damageLabel).width(15).padTop(10);
 
-        stage.addActor(table);
+        hud.add(livesLabel).width(100).padTop(10);
+        hud.add(damageLabel).width(15).padTop(10);
 
+        stage.addActor(hud);
+        Table InteractiveHud = new Table();
+        InteractiveHud.align(Align.topRight);
+        InteractiveHud.setFillParent(true);
+        InteractiveHud.add(button).top();
+
+        stage.addActor(InteractiveHud);
 
         Gdx.input.setInputProcessor(stage);
         button.addListener(new ClickListener() {
