@@ -28,8 +28,6 @@ public class  Player extends MovableGameObject {
     public Player(String name, int x, int y, Direction direction) {
         super(x, y);
         this.name = name;
-        setDirection(Direction.NORTH);
-
         backup = new Backup(x, y);
         sprite = new Sprite(new Texture("assets/robot/tvBot.png"));
 
@@ -57,7 +55,6 @@ public class  Player extends MovableGameObject {
         sprite.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite.setSize(Main.TILE_LENGTH, Main.TILE_LENGTH);
         sprite.setOriginCenter();
-        sprite.setRotation(rotationDegree);
 
         updateSprite();
     }
@@ -65,8 +62,22 @@ public class  Player extends MovableGameObject {
     @Override
     public void updateSprite() {
         sprite.setPosition(getX(), getY());
+        boolean flipSprite = false;
+        switch (getDirection()){
+            case SOUTH:
+                flipSprite = true;
+            case NORTH:
+                rotationDegree = 270; break;
+            case WEST:
+                flipSprite = true;
+            case EAST:
+                rotationDegree = 180;
+                break;
+        }
+        sprite.setFlip(flipSprite, false);
         sprite.setRotation(rotationDegree);
     }
+
 
     public void update(){
         handleInput();
@@ -189,17 +200,6 @@ public class  Player extends MovableGameObject {
         return 9 - damage;
     }
 
-    public int getUnlockedRegisters() {
-        return this.unlockedRegisters;
-    }
-
-    /**
-     * @return all the cards that the player currently has in hand.
-     */
-    public ArrayList<ProgramCard> getCardsInHand() {
-        return this.cardsInHand;
-    }
-
     public int getDamage() {
         return damage;
     }
@@ -209,7 +209,7 @@ public class  Player extends MovableGameObject {
         return this.lives;
     }
 
-    public ArrayList<ProgramCard> getRegisters() {
+    public ArrayList<ProgramCard> getCardsInRegisters() {
         ArrayList<ProgramCard> list = new ArrayList<>();
         for (ProgramCard pc : registers)
             list.add(pc);
@@ -238,7 +238,6 @@ public class  Player extends MovableGameObject {
     public GameObject getBackup() {
         return backup;
     }
-
 
     @Override
     public Sprite getSprite() {

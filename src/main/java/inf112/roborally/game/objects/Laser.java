@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.world.Direction;
 
 
 public class Laser extends MovableGameObject{
@@ -16,8 +17,9 @@ public class Laser extends MovableGameObject{
     private Animation<TextureRegion> animation;
     private int stateTimer;
 
-    public Laser(int x, int y){
+    public Laser(int x, int y, Direction direction){
         super(x, y);
+        setDirection(direction);
         setUpAnimation();
     }
 
@@ -25,6 +27,7 @@ public class Laser extends MovableGameObject{
         String filePath = "assets/gameboard/roborallypack.atlas";
         sprite = new Sprite(new TextureAtlas(filePath).findRegion("laser"));
         sprite.setBounds(getX(), getY(), Main.TILE_LENGTH, Main.TILE_LENGTH);
+        sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 
         stateTimer = 0;
         regions = new Array<>();

@@ -16,16 +16,16 @@ public enum Direction {
         WEST.opposite = EAST;
     }
 
+    public Direction getOppositeDirection() {
+        return opposite;
+    }
+
     private int rotationDegree;
     static {
         SOUTH.rotationDegree = 0;
         EAST.rotationDegree = 90;
         NORTH.rotationDegree = 180;
         WEST.rotationDegree = 270;
-    }
-
-    public Direction getOppositeDirection() {
-        return opposite;
     }
 
     public int getRotationDegree(){

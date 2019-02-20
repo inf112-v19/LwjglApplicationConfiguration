@@ -31,6 +31,10 @@ public class Board {
         map = loader.load(mapPath, parameters);
         mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
 
+        createLayers();
+    }
+
+    private void createLayers() {
         beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
         laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");

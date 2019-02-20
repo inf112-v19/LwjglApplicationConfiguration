@@ -1,6 +1,5 @@
 package inf112.roborally.game;
 
-import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.objects.Player;
 
 import org.junit.Before;
@@ -121,7 +120,7 @@ public class PlayerTest {
         assertEquals(9, cardsReturned.size());
 
         // All registers are empty:
-        for(ProgramCard register : player.getRegisters())
+        for(ProgramCard register : player.getCardsInRegisters())
             assert(register == null);
     }
 
@@ -143,7 +142,7 @@ public class PlayerTest {
         assertEquals(4, cardsReturned.size());
 
         // All registers contains program cards:
-        for(ProgramCard register : player.getRegisters())
+        for(ProgramCard register : player.getCardsInRegisters())
             assert(register != null);
     }
 
@@ -166,9 +165,9 @@ public class PlayerTest {
 
         // The first 4 registers do not contain program cards:
         for(int i = 0; i < 4; i++)
-            assert(player.getRegisters().get(i) == null);
+            assert(player.getCardsInRegisters().get(i) == null);
         // The last register does:
-        assert(player.getRegisters().get(4) != null);
+        assert(player.getCardsInRegisters().get(4) != null);
     }
 
     @Test

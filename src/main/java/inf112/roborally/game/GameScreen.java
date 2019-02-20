@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.roborally.game.objects.Laser;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 import inf112.roborally.game.world.Direction;
@@ -28,8 +27,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     private SpriteBatch batch;
 
-    private Laser testLaser;
-
 
     public GameScreen(String mapPath){
         this.mapPath = mapPath;
@@ -38,13 +35,12 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         player = new Player("Player1",
                 board.getWidth()/2*Main.TILE_LENGTH,
                 board.getHeight()/2*Main.TILE_LENGTH,
-                Direction.SOUTH
+                Direction.NORTH
             );
         stackOfProgramCards = ProgramCard.makeStack();
         batch = new SpriteBatch();
         hud = new Hud(batch, player);
 
-        testLaser = new Laser(7 * Main.TILE_LENGTH, 7 * Main.TILE_LENGTH);
     }
 
     @Override
@@ -74,7 +70,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         player.getBackup().getSprite().draw(batch);
         player.getSprite().draw(batch);
-        testLaser.getSprite().draw(batch);
 
         batch.end();
 
@@ -83,7 +78,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     private void update() {
-        testLaser.updateSprite();
         player.update();
         board.update(player);
         hud.update(player);
