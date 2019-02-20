@@ -22,28 +22,28 @@ public class  Player extends MovableGameObject {
     private ProgramCard[] registers;
     private Backup backup;
     private ArrayList<ProgramCard> cardsInHand;
-    private Sprite sprite;
 
 
     public Player(String name, int x, int y, Direction direction) {
-        super(x, y);
+        super(x, y, "assets/robot/tvBot.png");
+        setDirection(direction);
+        makeSprite();
+
         this.name = name;
         backup = new Backup(x, y);
-        sprite = new Sprite(new Texture("assets/robot/tvBot.png"));
 
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
         cardsInHand = new ArrayList<>();
         damage = 0;
         lives = MAX_LIVES;
-        setDirection(direction);
 
         loadVisualRepresentation();
     }
 
     /** FOR TESTING ONLY */
     public Player(int x, int y){
-        super(x, y);
+        super(x, y, "assets/robot/tvBot.png");
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = registers.length;
         cardsInHand = new ArrayList<>();
@@ -51,17 +51,8 @@ public class  Player extends MovableGameObject {
         lives = MAX_LIVES;
     }
 
-    public void loadVisualRepresentation() {
-        sprite.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        sprite.setSize(Main.TILE_LENGTH, Main.TILE_LENGTH);
-        sprite.setOriginCenter();
-
-        updateSprite();
-    }
-
     @Override
     public void updateSprite() {
-        sprite.setPosition(getX(), getY());
         boolean flipSprite = false;
         switch (getDirection()){
             case SOUTH:
@@ -75,7 +66,7 @@ public class  Player extends MovableGameObject {
                 break;
         }
         sprite.setFlip(flipSprite, false);
-        sprite.setRotation(rotationDegree);
+        super.updateSprite();
     }
 
 
@@ -93,7 +84,6 @@ public class  Player extends MovableGameObject {
             Gdx.app.log("GAME OVER", "");
         }
         updateSprite();
-        backup.updateSprite();
     }
 
     public void handleInput() {
@@ -110,6 +100,7 @@ public class  Player extends MovableGameObject {
             setDirection(Direction.SOUTH);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             backup.move(getX(), getY());
+            backup.updateSprite();
             moved = false;
         } else {
             moved = false;
@@ -237,11 +228,6 @@ public class  Player extends MovableGameObject {
 
     public GameObject getBackup() {
         return backup;
-    }
-
-    @Override
-    public Sprite getSprite() {
-        return sprite;
     }
 
     @Override
