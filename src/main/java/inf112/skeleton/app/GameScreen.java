@@ -6,14 +6,22 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import javafx.stage.Stage;
+import org.lwjgl.opengl.Drawable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,6 +78,13 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         batch = new SpriteBatch();
         hud = new Hud(batch, player);
+
+        Texture omg = new Texture(Gdx.files.internal("tvBot.png"));
+        TextureRegion pomg= new TextureRegion(omg);
+        TextureRegionDrawable ppomg = new TextureRegionDrawable(pomg);
+        ImageButton butt = new ImageButton(ppomg);
+
+
     }
 
     /*
