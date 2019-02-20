@@ -1,9 +1,9 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.GameWorld.Direction;
-import inf112.skeleton.app.ProgramCard;
+import inf112.roborally.game.world.Direction;
+import inf112.roborally.game.ProgramCard;
 
 import java.util.ArrayList;
 

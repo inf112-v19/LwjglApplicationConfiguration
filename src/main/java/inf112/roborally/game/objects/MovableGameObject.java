@@ -1,8 +1,7 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
-import inf112.skeleton.app.GameWorld.Direction;
-import inf112.skeleton.app.Main;
-import inf112.skeleton.app.Rotate;
+import inf112.roborally.game.world.Direction;
+import inf112.roborally.game.Main;
 
 public abstract class MovableGameObject extends GameObject {
     public boolean moved;
@@ -11,14 +10,14 @@ public abstract class MovableGameObject extends GameObject {
 
     /**
      * A GameObject that is facing a certain direction and can move in
-     * said direction. It can also rotate.
+     * said direction. It can also rotate. Facing south by default.
      * @param x position x
      * @param y position y
      */
     public MovableGameObject(float x, float y) {
         super(x, y);
         direction = Direction.SOUTH;
-        rotationDegree = 180;
+        rotationDegree = direction.getRotationDegree();
     }
 
     public void moveInDirection(Direction dir){
@@ -49,7 +48,7 @@ public abstract class MovableGameObject extends GameObject {
     }
 
     /**
-     * Rotates the player - visually too.
+     * Rotates the object - visually too.
      *
      * @param rotateDir which direction the player should rotate.
      * @return the new direction the player is facing.
@@ -68,7 +67,6 @@ public abstract class MovableGameObject extends GameObject {
                 case SOUTH: this.direction = WEST; break;
                 case WEST: this.direction = NORTH; break;
             }
-            this.rotationDegree += 90;
         }
         else if (rotateDir.equals(Rotate.LEFT)) {
             switch (this.direction) {
@@ -77,7 +75,6 @@ public abstract class MovableGameObject extends GameObject {
                 case SOUTH: this.direction = EAST; break;
                 case EAST: this.direction = NORTH; break;
             }
-            this.rotationDegree -= 90;
         }
         else if (rotateDir.equals(Rotate.UTURN)) {
             switch (this.direction) {
@@ -86,13 +83,14 @@ public abstract class MovableGameObject extends GameObject {
                 case WEST:  this.direction = EAST;  break;
                 case EAST:  this.direction = WEST;  break;
             }
-            this.rotationDegree += 180;
         }
+        rotationDegree = direction.getRotationDegree();
         return this.direction;
     }
 
     public void setDirection(Direction direction){
         this.direction = direction;
+        rotationDegree = direction.getRotationDegree();
     }
 
     public Direction getDirection(){

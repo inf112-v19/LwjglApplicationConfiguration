@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.roborally.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.skeleton.app.GameObjects.Laser;
-import inf112.skeleton.app.GameObjects.Player;
-import inf112.skeleton.app.GameWorld.Board;
-import inf112.skeleton.app.GameWorld.Direction;
+import inf112.roborally.game.objects.Laser;
+import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.world.Board;
+import inf112.roborally.game.world.Direction;
 
 import java.util.Stack;
 
@@ -83,7 +83,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     private void update() {
-        testLaser.update();
+        testLaser.updateSprite();
         player.update();
         board.update(player);
         hud.update(player);

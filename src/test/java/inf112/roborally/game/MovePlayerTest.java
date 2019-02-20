@@ -1,7 +1,9 @@
-package inf112.skeleton.app;
+package inf112.roborally.game;
 
-import inf112.skeleton.app.GameObjects.Player;
-import inf112.skeleton.app.GameWorld.Direction;
+import inf112.roborally.game.Main;
+import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.objects.Rotate;
+import inf112.roborally.game.world.Direction;
 import org.junit.Before;
 import org.junit.Test;
 

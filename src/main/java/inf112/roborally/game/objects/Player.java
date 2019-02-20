@@ -1,11 +1,12 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.*;
-import inf112.skeleton.app.GameWorld.Direction;
+import inf112.roborally.game.Main;
+import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.world.Direction;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,8 @@ public class  Player extends MovableGameObject {
     public Player(String name, int x, int y, Direction direction) {
         super(x, y);
         this.name = name;
+        setDirection(Direction.NORTH);
+
         backup = new Backup(x, y);
         sprite = new Sprite(new Texture("assets/robot/tvBot.png"));
 
@@ -59,8 +62,10 @@ public class  Player extends MovableGameObject {
         updateSprite();
     }
 
-    private void updateSprite() {
+    @Override
+    public void updateSprite() {
         sprite.setPosition(getX(), getY());
+        sprite.setRotation(rotationDegree);
     }
 
     public void update(){

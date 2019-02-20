@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -7,7 +7,7 @@ public abstract class GameObject{
     protected float y;
 
     /**
-     * An object on the game board.
+     * Objects on the board that needs to be drawn, that are not on the TiledMap
      * It only has a position and needs a sprite
      * @param x position x
      * @param y position y
@@ -16,6 +16,8 @@ public abstract class GameObject{
         this.x = x;
         this.y = y;
     }
+
+    public abstract void updateSprite();
 
     public abstract Sprite getSprite();
 

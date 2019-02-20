@@ -1,9 +1,9 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.skeleton.app.Main;
+import inf112.roborally.game.Main;
 
 public class Backup extends GameObject {
 
@@ -27,6 +27,7 @@ public class Backup extends GameObject {
         player.move(getX(), getY());
     }
 
+    @Override
     public void updateSprite(){
         sprite.setPosition(getX(), getY());
     }

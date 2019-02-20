@@ -1,14 +1,14 @@
-package inf112.skeleton.app.GameObjects;
+package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
-import inf112.skeleton.app.Main;
+import inf112.roborally.game.Main;
 
 
-public class Laser extends GameObject{
+public class Laser extends MovableGameObject{
     private static final int FRAME_DURATION = 6;
 
     private Sprite sprite;
@@ -33,9 +33,10 @@ public class Laser extends GameObject{
         animation = new Animation<>(FRAME_DURATION, regions);
     }
 
-    public void update(){
+    @Override
+    public void updateSprite(){
         sprite.setRegion(animation.getKeyFrame(stateTimer++, true));
-
+        sprite.setRotation(rotationDegree);
     }
 
     @Override

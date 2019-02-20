@@ -1,6 +1,7 @@
-package inf112.skeleton.app;
+package inf112.roborally.game;
 
-import inf112.skeleton.app.GameObjects.Player;
+import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.objects.Player;
 
 import org.junit.Before;
 import org.junit.Test;

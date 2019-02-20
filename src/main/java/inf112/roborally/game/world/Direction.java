@@ -1,4 +1,4 @@
-package inf112.skeleton.app.GameWorld;
+package inf112.roborally.game.world;
 
 
 public enum Direction {
@@ -9,7 +9,6 @@ public enum Direction {
     WEST;
 
     private Direction opposite;
-
     static {
         NORTH.opposite = SOUTH;
         SOUTH.opposite = NORTH;
@@ -17,8 +16,19 @@ public enum Direction {
         WEST.opposite = EAST;
     }
 
+    private int rotationDegree;
+    static {
+        SOUTH.rotationDegree = 0;
+        EAST.rotationDegree = 90;
+        NORTH.rotationDegree = 180;
+        WEST.rotationDegree = 270;
+    }
 
     public Direction getOppositeDirection() {
         return opposite;
+    }
+
+    public int getRotationDegree(){
+        return rotationDegree;
     }
 }

@@ -1,11 +1,11 @@
-package inf112.skeleton.app.GameWorld;
+package inf112.roborally.game.world;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.skeleton.app.GameObjects.MovableGameObject;
-import inf112.skeleton.app.GameObjects.Player;
-import inf112.skeleton.app.Main;
+import inf112.roborally.game.objects.MovableGameObject;
+import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.Main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
