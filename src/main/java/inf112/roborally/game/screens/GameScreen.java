@@ -1,4 +1,4 @@
-package inf112.roborally.game;
+package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.roborally.game.Hud;
+import inf112.roborally.game.Main;
+import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 import inf112.roborally.game.world.Direction;
@@ -84,8 +87,11 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     @Override
-    public void pause() {
-
+    public void dispose() {
+        batch.dispose();
+        board.dispose();
+        player.getSprite().getTexture().dispose();
+        player.getBackup().getSprite().getTexture().dispose();
     }
 
     @Override
@@ -99,11 +105,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     @Override
-    public void dispose() {
-        batch.dispose();
-        board.dispose();
-        player.getSprite().getTexture().dispose();
-        player.getBackup().getSprite().getTexture().dispose();
+    public void pause() {
+
     }
 
     @Override
