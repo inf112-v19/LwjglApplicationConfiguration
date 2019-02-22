@@ -19,10 +19,12 @@ public class MenuScreen implements Screen {
     private Sprite background;
     private Sprite pressEnter;
     private Viewport viewport;
+    private int stateTimer;
 
     public MenuScreen(RoboRallyGame roboRallyGame) {
         this.roboRallyGame = roboRallyGame;
         batch = new SpriteBatch();
+        batch.enableBlending();
 
         viewport = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT);
 
@@ -32,6 +34,8 @@ public class MenuScreen implements Screen {
         pressEnter = new Sprite(new Texture("assets/img/pressEnterWhite.png"));
         pressEnter.setPosition(Gdx.graphics.getWidth()/2 - pressEnter.getWidth()/2,
                 (Gdx.graphics.getHeight() - background.getHeight())/2 - pressEnter.getHeight()/2);
+
+        stateTimer = 0;
     }
 
     @Override
@@ -40,14 +44,16 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float v) {
-        float r = 10/255f;
+        float r = 0/255f;
         float g = 20/255f;
-        float b = 10/255f;
+        float b = 15/255f;
 
         Gdx.gl.glClearColor(r,g,b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
+        pressEnter.setAlpha(stateTimer/255f);
+        background.setAlpha(stateTimer/255f);
+        if (stateTimer < 255) stateTimer++;
         batch.begin();
         background.draw(batch);
         pressEnter.draw(batch);
