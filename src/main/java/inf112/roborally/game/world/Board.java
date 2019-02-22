@@ -24,7 +24,9 @@ public class Board {
     private TiledMapTileLayer wallLayer;
 
 //    private Flag[] flags;
-    private Flag testFlag;
+    private Flag testFlag1;
+    private Flag testFlag2;
+    private Flag testFlag3;
 
     public Board(String mapPath) {
 
@@ -36,8 +38,11 @@ public class Board {
 
         createLayers();
 
-        // Put down flags
-        testFlag = new Flag(getWidth()/2*Main.TILE_LENGTH,getHeight()/2*Main.TILE_LENGTH);
+        // Put down flags, but with predecided positions
+        testFlag1 = new Flag(5*Main.TILE_LENGTH,3*Main.TILE_LENGTH, 1);
+        testFlag2 = new Flag(getWidth()/2*Main.TILE_LENGTH,Main.TILE_LENGTH, 2);
+        testFlag3 = new Flag(getWidth()/2*Main.TILE_LENGTH - 2*Main.TILE_LENGTH,getHeight()/2*Main.TILE_LENGTH, 3);
+
 
     }
 
@@ -176,7 +181,11 @@ public class Board {
         return this.floorLayer.getHeight();
     }
 
-    public Flag getFlag() {
-        return testFlag;
+    public Flag[] getFlags() {
+        Flag[] flags = new Flag[3];
+        flags[0] = testFlag1;
+        flags[1] = testFlag2;
+        flags[2] = testFlag3;
+        return flags;
     }
 }
