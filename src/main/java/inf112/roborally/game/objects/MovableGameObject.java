@@ -68,8 +68,39 @@ public abstract class MovableGameObject extends GameObject {
      * @param rotateDir which direction the player should rotate.
      * @return the new direction the player is facing.
      */
-    public void rotate(Rotate rotateDir) {
-         setDirection(direction.rotate(rotateDir));
+    public Direction rotate(Rotate rotateDir) {
+        final Direction NORTH = Direction.NORTH;
+        final Direction WEST = Direction.WEST;
+        final Direction SOUTH = Direction.SOUTH;
+        final Direction EAST = Direction.EAST;
+
+
+        if (rotateDir.equals(Rotate.RIGHT)) {
+            switch (this.direction) {
+                case NORTH: this.direction = EAST; break;
+                case EAST: this.direction = SOUTH; break;
+                case SOUTH: this.direction = WEST; break;
+                case WEST: this.direction = NORTH; break;
+            }
+        }
+        else if (rotateDir.equals(Rotate.LEFT)) {
+            switch (this.direction) {
+                case NORTH: this.direction = WEST; break;
+                case WEST: this.direction = SOUTH; break;
+                case SOUTH: this.direction = EAST; break;
+                case EAST: this.direction = NORTH; break;
+            }
+        }
+        else if (rotateDir.equals(Rotate.UTURN)) {
+            switch (this.direction) {
+                case NORTH: this.direction = SOUTH; break;
+                case SOUTH: this.direction = NORTH; break;
+                case WEST:  this.direction = EAST;  break;
+                case EAST:  this.direction = WEST;  break;
+            }
+        }
+        rotationDegree = direction.getRotationDegree();
+        return this.direction;
     }
 
     public void setDirection(Direction direction){
