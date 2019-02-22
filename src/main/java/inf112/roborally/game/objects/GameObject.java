@@ -3,11 +3,12 @@ package inf112.roborally.game.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.screens.MenuScreen;
 
 public abstract class GameObject{
     protected String filePath;
-    protected float x;
-    protected float y;
+    protected int x;
+    protected int y;
     protected Sprite sprite;
 
     /**
@@ -19,14 +20,14 @@ public abstract class GameObject{
      * @param x position x
      * @param y position y
      */
-    public GameObject(float x, float y, String filePath){
+    public GameObject(int x, int y, String filePath){
         this.filePath = filePath;
         this.x = x;
         this.y = y;
     }
 
     public void updateSprite() {
-        sprite.setPosition(getX(), getY());
+        sprite.setPosition(getX() *Main.TILE_LENGTH, getY() *Main.TILE_LENGTH);
     }
 
     public void makeSprite(){
@@ -37,24 +38,24 @@ public abstract class GameObject{
         return sprite;
     }
 
-    public void move(float x, float y){
+    public void move(int x, int y){
         this.x = x;
         this.y = y;
     }
 
-    public void moveX(float x){
+    public void moveX(int x){
        this.x = x;
     }
 
-    public void moveY(float y){
+    public void moveY(int y){
         this.y = y;
     }
 
-    public float getX() {
+    public int getX() {
         return x;
     }
 
-    public float getY() {
+    public int getY() {
         return y;
     }
 }

@@ -35,11 +35,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.mapPath = mapPath;
         this.board = new Board(Main.VAULT);
 
-        player = new Player("Player1",
-                board.getWidth()/2*Main.TILE_LENGTH,
-                board.getHeight()/2*Main.TILE_LENGTH,
-                Direction.NORTH
-            );
+        player = new Player("Player1", board.getWidth()/2, board.getHeight()/2, Direction.NORTH);
         stackOfProgramCards = ProgramCard.makeStack();
         batch = new SpriteBatch();
         hud = new Hud(batch, player);

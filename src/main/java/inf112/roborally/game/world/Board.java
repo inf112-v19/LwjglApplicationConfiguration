@@ -31,9 +31,9 @@ public class Board {
 
     public Board(String mapPath) {
         flags = new Array<>();
-        flags.add(new Flag(1*Main.TILE_LENGTH,10*Main.TILE_LENGTH,1));
-        flags.add(new Flag(1*Main.TILE_LENGTH,2*Main.TILE_LENGTH,2));
-        flags.add(new Flag(6*Main.TILE_LENGTH,10*Main.TILE_LENGTH,3));
+        flags.add(new Flag(1,10,1));
+        flags.add(new Flag(1,2,2));
+        flags.add(new Flag(6,10,3));
 
 
 
@@ -64,10 +64,9 @@ public class Board {
     }
 
     public void update(Player player) {
-        MovableGameObject playerMovement = player;
-        if(playerMovement.moved) {
-            if (canGo(playerMovement))
-                playerMovement.move(1);
+        if(player.moved) {
+            if (canGo(player))
+                player.move(1);
             boardInteractsWithPlayer(player);
         }
 
@@ -76,8 +75,8 @@ public class Board {
     public boolean canGo(MovableGameObject gameObject){
         Direction direction = gameObject.getDirection();
         // first check the current tile:
-        int newX = (int) gameObject.getX() / Main.TILE_LENGTH;
-        int newY = (int) gameObject.getY() / Main.TILE_LENGTH;
+        int newX = (int) gameObject.getX();
+        int newY = (int) gameObject.getY();
 
         // check this tile:
         TiledMapTileLayer.Cell currentCell =  getWallLayer().getCell(newX,newY);
@@ -136,8 +135,8 @@ public class Board {
 
         beltsMove(player);
 
-        int x = (int) player.getX() / Main.TILE_LENGTH;
-        int y = (int) player.getY() / Main.TILE_LENGTH;
+        int x = (int) player.getX();
+        int y = (int) player.getY();
 
         if(lasersHit(x, y)) {
             System.out.println("Ouch!");
@@ -149,8 +148,8 @@ public class Board {
     }
 
     private void beltsMove(Player player){
-        int x = (int) player.getX() / Main.TILE_LENGTH;
-        int y = (int) player.getY() / Main.TILE_LENGTH;
+        int x = (int) player.getX();
+        int y = (int) player.getY();
 
         // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
