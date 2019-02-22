@@ -42,7 +42,7 @@ public class Hud {
         stage = new Stage(viewport, sb);
 
         Table hud = new Table();
-        hud.top();
+        hud.top().align(Align.topLeft);
         hud.setFillParent(true);
 
         livesLabel = new Label("Lives: " + lives, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
@@ -53,19 +53,39 @@ public class Hud {
         Texture buttonPic = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
         TextureRegion buttonTexture= new TextureRegion(buttonPic);
         TextureRegionDrawable buttonTextureDrawable = new TextureRegionDrawable(buttonTexture);
+
+        Table InteractiveHud = new Table();
+        InteractiveHud.align(Align.topRight);
+        InteractiveHud.setFillParent(true);
+
         ImageButton button = new ImageButton(buttonTextureDrawable);
+        ImageButton button1 = new ImageButton(buttonTextureDrawable);
+        ImageButton button2 = new ImageButton(buttonTextureDrawable);
+        ImageButton button3 = new ImageButton(buttonTextureDrawable);
+        ImageButton button4 = new ImageButton(buttonTextureDrawable);
+        ImageButton button5 = new ImageButton(buttonTextureDrawable);
+        ImageButton button6 = new ImageButton(buttonTextureDrawable);
+        ImageButton button7 = new ImageButton(buttonTextureDrawable);
+        ImageButton button8 = new ImageButton(buttonTextureDrawable);
 
 
         hud.add(livesLabel).width(100).padTop(10);
         hud.add(damageLabel).width(15).padTop(10);
 
         stage.addActor(hud);
-        Table InteractiveHud = new Table();
-        InteractiveHud.align(Align.topRight);
-        InteractiveHud.setFillParent(true);
-        InteractiveHud.add(button).top();
-
         stage.addActor(InteractiveHud);
+
+        InteractiveHud.add(button);
+        InteractiveHud.add(button1);
+        InteractiveHud.add(button2);
+        button.padTop(20);
+        button1.padTop(20).padRight(25);
+        button2.padTop(20).padRight(50);
+        InteractiveHud.align(Align.right);
+        InteractiveHud.add(button3);
+        button3.padTop(60);
+
+
 
         Gdx.input.setInputProcessor(stage);
         button.addListener(new ClickListener() {
