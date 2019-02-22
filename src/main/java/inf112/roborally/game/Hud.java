@@ -42,12 +42,14 @@ public class Hud {
         stage = new Stage(viewport, sb);
 
         Table hud = new Table();
-        hud.top().align(Align.topLeft);
+        hud.top().align(Align.topRight);
         hud.setFillParent(true);
+
 
         livesLabel = new Label("Lives: " + lives, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         damageLabel = new Label("Damage taken: " + damage, new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        testIncrementLabel = new Label(String.format("IncrementingValue:%d", testIncrement), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        livesLabel.setFontScale(3);
+        damageLabel.setFontScale(3);
 
 
         Texture buttonPic = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
@@ -69,8 +71,9 @@ public class Hud {
         ImageButton button8 = new ImageButton(buttonTextureDrawable);
 
 
-        hud.add(livesLabel).width(100).padTop(10);
-        hud.add(damageLabel).width(15).padTop(10);
+        hud.add(livesLabel).width(200).padRight(650);
+        hud.row();
+        hud.add(damageLabel).width(200).padRight(650);
 
         stage.addActor(hud);
         stage.addActor(InteractiveHud);
