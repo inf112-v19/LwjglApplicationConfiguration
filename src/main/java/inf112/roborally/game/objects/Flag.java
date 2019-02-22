@@ -12,6 +12,10 @@ public class Flag extends AbstractGameObject {
         this.flagNumber = flagNumber;
     }
 
+    public int getFlagNumber(){
+        return this.flagNumber;
+    }
+
     public String getFilename() {
         return filepath;
     }
