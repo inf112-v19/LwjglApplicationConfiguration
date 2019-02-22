@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
  * Abstract class for objects to be drawn on the gameboard (which is not
- *  included in the TileMap), e.g Flag and "Savepoints"
+ *  included in the TileMap), e.g Flags and "Savepoints"
  */
 
 public abstract class AbstractGameObject {
