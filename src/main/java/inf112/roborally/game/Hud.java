@@ -81,9 +81,21 @@ public class Hud {
         button.padTop(20);
         button1.padTop(20).padRight(25);
         button2.padTop(20).padRight(50);
-        InteractiveHud.align(Align.right);
+        InteractiveHud.row();
         InteractiveHud.add(button3);
+        InteractiveHud.add(button4);
+        InteractiveHud.add(button5);
         button3.padTop(60);
+        button4.padTop(60).padRight(25);
+        button5.padTop(60).padRight(50);
+        InteractiveHud.row();
+        InteractiveHud.add(button6);
+        InteractiveHud.add(button7);
+        InteractiveHud.add(button8);
+        button6.padTop(100);
+        button7.padTop(100).padRight(25);
+        button8.padTop(100).padRight(50);
+
 
 
 
@@ -92,7 +104,79 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("TEST");
+                System.out.println("Button1");
+
+            }
+
+        });
+        button1.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button2");
+
+            }
+
+        });
+        button2.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button3");
+
+            }
+
+        });
+        button3.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button4");
+
+            }
+
+        });
+        button4.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button5");
+
+            }
+
+        });
+        button5.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button6");
+
+            }
+
+        });
+        button6.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button7");
+
+            }
+
+        });
+        button7.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button8");
+
+            }
+
+        });
+        button8.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button9");
 
             }
 
