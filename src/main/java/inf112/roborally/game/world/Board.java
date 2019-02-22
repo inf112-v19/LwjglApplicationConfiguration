@@ -22,16 +22,22 @@ public class Board {
     private TiledMapTileLayer laserLayer;
     private TiledMapTileLayer wallLayer;
 
+    private ArrayList<Player> players = new ArrayList<>();
+
 
     public Board(String mapPath) {
-
         loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
         parameters.flipY = true;
         map = loader.load(mapPath, parameters);
         mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
-
         createLayers();
+
+
+        Player player1 = new Player("Player 1", getWidth()/2*Main.TILE_LENGTH,
+                getHeight()/2*Main.TILE_LENGTH, Direction.NORTH);
+
+        players.add(player1);
     }
 
     private void createLayers() {
@@ -168,4 +174,9 @@ public class Board {
     public int getHeight(){
         return this.floorLayer.getHeight();
     }
+
+    public ArrayList<Player> getPlayers(){
+        return this.players;
+    }
+
 }

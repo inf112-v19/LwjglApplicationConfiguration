@@ -7,26 +7,23 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.roborally.game.GameLogic;
 import inf112.roborally.game.Hud;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
-import inf112.roborally.game.world.Direction;
 
-import java.util.Stack;
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
     public static String mapPath = Main.TEST_MAP;
 
+    private GameLogic gameLogic;
 
     private OrthographicCamera camera;
     private Viewport gamePort;
     private Hud hud;
-    private Player player;
     private Board board;
-    private Stack<ProgramCard> stackOfProgramCards;
 
     private SpriteBatch batch;
 
@@ -35,14 +32,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.mapPath = mapPath;
         this.board = new Board(Main.VAULT);
 
-        player = new Player("Player1",
-                board.getWidth()/2*Main.TILE_LENGTH,
-                board.getHeight()/2*Main.TILE_LENGTH,
-                Direction.NORTH
-            );
-        stackOfProgramCards = ProgramCard.makeStack();
         batch = new SpriteBatch();
-        hud = new Hud(batch, player);
+        hud = new Hud(batch, board.getPlayers());
+
+        this.gameLogic = new GameLogic(board, hud);
 
     }
 
@@ -71,9 +64,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        player.getBackup().getSprite().draw(batch);
-        player.getSprite().draw(batch);
-
+        for(Player player : board.getPlayers()) {
+            player.getBackup().getSprite().draw(batch);
+            player.getSprite().draw(batch);
+        }
         batch.end();
 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
@@ -81,17 +75,21 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     private void update() {
-        player.update();
-        board.update(player);
-        hud.update(player);
+        for(Player player : board.getPlayers()) {
+            player.update();
+            board.update(player);
+            hud.update(player);
+        }
     }
 
     @Override
     public void dispose() {
         batch.dispose();
         board.dispose();
-        player.getSprite().getTexture().dispose();
-        player.getBackup().getSprite().getTexture().dispose();
+        for(Player player : board.getPlayers()) {
+            player.getSprite().getTexture().dispose();
+            player.getBackup().getSprite().getTexture().dispose();
+        }
     }
 
     @Override

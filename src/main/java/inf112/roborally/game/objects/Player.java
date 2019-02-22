@@ -2,15 +2,12 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.roborally.game.Main;
 import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.world.Direction;
 
 import java.util.ArrayList;
 
-public class  Player extends MovableGameObject {
+public class  Player extends MovableGameObject implements IPlayer{
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
     private static final int NUMBER_OF_REGISTERS = 5;
@@ -224,6 +221,11 @@ public class  Player extends MovableGameObject {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public ArrayList<ProgramCard> getCardsInHand() {
+        return cardsInHand;
     }
 
     public GameObject getBackup() {
