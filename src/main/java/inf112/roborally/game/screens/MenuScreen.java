@@ -66,6 +66,7 @@ public class MenuScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             GameScreen gameScreen = new GameScreen(Main.VAULT);
             roboRallyGame.setScreen(gameScreen);
+            dispose();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
             Gdx.app.exit();
@@ -94,6 +95,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        pressEnter.getTexture().dispose();
+        background.getTexture().dispose();
     }
 }
