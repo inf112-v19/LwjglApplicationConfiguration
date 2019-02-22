@@ -1,8 +1,6 @@
 package inf112.roborally.game;
 
 import com.badlogic.gdx.Game;
-import inf112.roborally.game.screens.GameScreen;
-import inf112.roborally.game.screens.MenuScreen;
 
 public class RoboRallyGame extends Game {
 
@@ -15,8 +13,8 @@ public class RoboRallyGame extends Game {
     @Override
     public void create() {
 
-        MenuScreen menuScreen = new MenuScreen(this);
-        setScreen(menuScreen);
+        gameScreen = new GameScreen(Main.VAULT);
+        setScreen(gameScreen);
     }
 
 }
