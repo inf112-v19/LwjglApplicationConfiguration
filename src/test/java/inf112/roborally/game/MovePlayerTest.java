@@ -1,6 +1,5 @@
 package inf112.roborally.game;
 
-import inf112.roborally.game.Main;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.objects.Rotate;
 import inf112.roborally.game.world.Direction;
@@ -17,7 +16,9 @@ public class MovePlayerTest {
 
     @Before
     public void initialize() {
+
         player = new Player(x, y);
+        player.setDirection(Direction.SOUTH);
     }
 
 
@@ -122,5 +123,10 @@ public class MovePlayerTest {
         assertEquals(player.getDirection(), Direction.NORTH);
     }
     //...
+
+    @Test
+    public void rotationTest(){
+
+    }
 
 }

@@ -41,10 +41,6 @@ public abstract class GameObject{
         this.y = y;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
     public void moveX(float x){
        this.x = x;
     }
