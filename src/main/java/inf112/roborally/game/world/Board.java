@@ -1,8 +1,12 @@
 package inf112.roborally.game.world;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.utils.Array;
+import inf112.roborally.game.objects.Flag;
+import inf112.roborally.game.objects.GameObject;
 import inf112.roborally.game.objects.MovableGameObject;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.Main;
@@ -22,8 +26,17 @@ public class Board {
     private TiledMapTileLayer laserLayer;
     private TiledMapTileLayer wallLayer;
 
+    private Array<GameObject> flags;
+
 
     public Board(String mapPath) {
+        flags = new Array<>();
+        flags.add(new Flag(1*Main.TILE_LENGTH,10*Main.TILE_LENGTH,1));
+        flags.add(new Flag(1*Main.TILE_LENGTH,2*Main.TILE_LENGTH,2));
+        flags.add(new Flag(6*Main.TILE_LENGTH,10*Main.TILE_LENGTH,3));
+
+
+
 
         loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
@@ -167,5 +180,10 @@ public class Board {
 
     public int getHeight(){
         return this.floorLayer.getHeight();
+    }
+
+    public void drawFlags(SpriteBatch batch){
+        for(GameObject o : flags)
+            o.getSprite().draw(batch);
     }
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.Hud;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.objects.Laser;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 import inf112.roborally.game.world.Direction;
@@ -29,7 +30,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private Stack<ProgramCard> stackOfProgramCards;
 
     private SpriteBatch batch;
-
 
     public GameScreen(String mapPath){
         this.mapPath = mapPath;
@@ -70,9 +70,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-
         player.getBackup().getSprite().draw(batch);
         player.getSprite().draw(batch);
+        board.drawFlags(batch);
 
         batch.end();
 
