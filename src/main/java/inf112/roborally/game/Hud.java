@@ -27,10 +27,8 @@ public class Hud {
     private Integer lives;
     private Integer cards;
     private Integer damage;
-    private Integer testIncrement = 0;
     Label livesLabel;
     Label damageLabel;
-    Label testIncrementLabel;
 
     public Hud(SpriteBatch sb, Player player){
         lives = player.getLives();
