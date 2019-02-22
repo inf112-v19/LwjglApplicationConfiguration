@@ -50,9 +50,10 @@ public class Hud {
         damageLabel.setFontScale(3);
 
 
-        Texture buttonPic = new Texture(Gdx.files.internal("assets/robot/tvBot.png"));
+        Texture buttonPic = new Texture(Gdx.files.internal("assets/objects/programcard.png"));
         TextureRegion buttonTexture= new TextureRegion(buttonPic);
         TextureRegionDrawable buttonTextureDrawable = new TextureRegionDrawable(buttonTexture);
+
 
         Table InteractiveHud = new Table();
         InteractiveHud.align(Align.topRight);
@@ -69,33 +70,64 @@ public class Hud {
         ImageButton button8 = new ImageButton(buttonTextureDrawable);
 
 
-        hud.add(livesLabel).width(200).padRight(650);
-        hud.row();
-        hud.add(damageLabel).width(200).padRight(650);
+        hud.add(livesLabel).width(200).padRight(100);
+        hud.add(damageLabel).width(200).padRight(200);
+
+        button.setWidth(50);
+        button.setHeight(100);
+        button.getImage().setFillParent(true);
+        button1.setWidth(50);
+        button1.setHeight(100);
+        button1.getImage().setFillParent(true);
+        button2.setWidth(50);
+        button2.setHeight(100);
+        button2.getImage().setFillParent(true);
+        button3.setWidth(50);
+        button3.setHeight(100);
+        button3.getImage().setFillParent(true);
+        button4.setWidth(50);
+        button4.setHeight(50);
+        button4.getImage().setFillParent(true);
+        button5.setWidth(50);
+        button5.setHeight(50);
+        button5.getImage().setFillParent(true);
+        button6.setWidth(50);
+        button6.setHeight(50);
+        button6.getImage().setFillParent(true);
+        button7.setWidth(50);
+        button7.setHeight(100);
+        button7.getImage().setFillParent(true);
+        button8.setWidth(50);
+        button8.setHeight(100);
+        button8.getImage().setFillParent(true);
+
+
+
 
         stage.addActor(hud);
         stage.addActor(InteractiveHud);
 
+        InteractiveHud.padTop(100);
         InteractiveHud.add(button);
         InteractiveHud.add(button1);
         InteractiveHud.add(button2);
-        button.padTop(20);
-        button1.padTop(20).padRight(25);
-        button2.padTop(20).padRight(50);
-        InteractiveHud.row();
+        button.padTop(100).padRight(150);
+        button1.padTop(100).padRight(150);
+        button2.padTop(100).padRight(150);
+        InteractiveHud.row().padTop(50);
         InteractiveHud.add(button3);
         InteractiveHud.add(button4);
         InteractiveHud.add(button5);
-        button3.padTop(60);
-        button4.padTop(60).padRight(25);
-        button5.padTop(60).padRight(50);
-        InteractiveHud.row();
+        button3.padTop(100).padRight(150);
+        button4.padTop(100).padRight(150);
+        button5.padTop(100).padRight(150);
+        InteractiveHud.row().padTop(50);
         InteractiveHud.add(button6);
         InteractiveHud.add(button7);
         InteractiveHud.add(button8);
-        button6.padTop(100);
-        button7.padTop(100).padRight(25);
-        button8.padTop(100).padRight(50);
+        button6.padTop(100).padRight(100);
+        button7.padTop(100).padRight(150);
+        button8.padTop(100).padRight(150);
 
 
 
