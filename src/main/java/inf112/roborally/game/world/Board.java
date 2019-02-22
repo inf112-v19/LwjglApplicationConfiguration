@@ -3,7 +3,6 @@ package inf112.roborally.game.world;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.MovableGameObject;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.Main;
@@ -23,10 +22,6 @@ public class Board {
     private TiledMapTileLayer laserLayer;
     private TiledMapTileLayer wallLayer;
 
-//    private Flag[] flags;
-    private Flag testFlag1;
-    private Flag testFlag2;
-    private Flag testFlag3;
 
     public Board(String mapPath) {
 
@@ -37,13 +32,6 @@ public class Board {
         mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
 
         createLayers();
-
-        // Put down flags, but with predecided positions
-        testFlag1 = new Flag(5*Main.TILE_LENGTH,3*Main.TILE_LENGTH, 1);
-        testFlag2 = new Flag(getWidth()/2*Main.TILE_LENGTH,Main.TILE_LENGTH, 2);
-        testFlag3 = new Flag(getWidth()/2*Main.TILE_LENGTH - 2*Main.TILE_LENGTH,getHeight()/2*Main.TILE_LENGTH, 3);
-
-
     }
 
     private void createLayers() {
@@ -179,13 +167,5 @@ public class Board {
 
     public int getHeight(){
         return this.floorLayer.getHeight();
-    }
-
-    public Flag[] getFlags() {
-        Flag[] flags = new Flag[3];
-        flags[0] = testFlag1;
-        flags[1] = testFlag2;
-        flags[2] = testFlag3;
-        return flags;
     }
 }
