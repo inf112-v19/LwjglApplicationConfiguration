@@ -23,8 +23,8 @@ public class Board {
     private TiledMapTileLayer laserLayer;
     private TiledMapTileLayer wallLayer;
 
-    private Flag[] flags;
-
+//    private Flag[] flags;
+    private Flag testFlag;
 
     public Board(String mapPath) {
 
@@ -37,8 +37,7 @@ public class Board {
         createLayers();
 
         // Put down flags
-        flags = new Flag[3];
-        map.
+        testFlag = new Flag(getWidth()/2*Main.TILE_LENGTH,getHeight()/2*Main.TILE_LENGTH);
 
     }
 
@@ -175,5 +174,9 @@ public class Board {
 
     public int getHeight(){
         return this.floorLayer.getHeight();
+    }
+
+    public Flag getFlag() {
+        return testFlag;
     }
 }

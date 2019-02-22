@@ -68,8 +68,14 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+
         player.getBackup().getSprite().draw(batch);
+
+        // Render the test flag
+        board.getFlag().getSprite().draw(batch);
+        
         player.getSprite().draw(batch);
+
 
         batch.end();
 
