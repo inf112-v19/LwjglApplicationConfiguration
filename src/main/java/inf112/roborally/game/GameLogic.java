@@ -4,19 +4,24 @@ import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Stack;
 
 
 public class GameLogic {
+
+    public static boolean canEditCards = false; // Public boolean to let players know if the can edit cards or not?
 
     private Hud hud;
     private Board board;
 
     private Stack<ProgramCard> stackOfProgramCards;
     private ArrayList<Player> players;
+    private Stack<ProgramCard> returnedProgramCards;
 
     public GameLogic(Board board, Hud hud){
         stackOfProgramCards = ProgramCard.makeStack();
+        returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
         this.board = board;
         this.hud = hud;
@@ -80,12 +85,30 @@ public class GameLogic {
     private void giveCardsToPlayer(Player player) {
         if (player.getCardsInHand().size() == 0) {
             for(int i = 0; i < player.getCardLimit(); i++){
+                if(stackOfProgramCards.isEmpty()) // in case the game drags on and we run out of cards - Morten
+                    reshuffleDeck();
+
                 player.receiveNewCard(stackOfProgramCards.pop());
             }
         } else {
             System.out.println("Error: " + player.getName() + " hasn't given away his/her cards from last round!");
+            // ALL REGISTERS MIGHT BE LOCKED - Morten
         }
     }
 
+    private void retrieveCardsFromPlayer(Player player){
+        ArrayList<ProgramCard> playerCards = player.returnCards();
+        while (!playerCards.isEmpty())
+            returnedProgramCards.push(playerCards.remove(0));
+    }
 
+    /**
+     * If the stack of cards run out of cards we need to reshuffle all the returned cards and deal them out instead
+     * Move this to ProgramCard maybe..
+     */
+    private void reshuffleDeck(){
+        while (!returnedProgramCards.empty())
+            stackOfProgramCards.push(returnedProgramCards.pop());
+        Collections.shuffle(stackOfProgramCards);
+    }
 }

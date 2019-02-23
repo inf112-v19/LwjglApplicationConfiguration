@@ -32,7 +32,7 @@ public class Hud {
     Label livesLabel;
     Label damageLabel;
 
-    public Hud(SpriteBatch sb, ArrayList<Player> players){
+    public Hud(SpriteBatch sb, final ArrayList<Player> players){
         lives = players.get(0).getLives();
         damage = players.get(0).getDamage();
         cards = 0;
@@ -149,7 +149,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button2");
-
+                //players.get(0).getRegister().pickCard(2);
             }
 
         });
