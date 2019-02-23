@@ -40,7 +40,7 @@ public class PlayerTest {
     @Test
     public void oneDamageOneLessCard(){
         for(int i = 0; i < 10; i++) {
-            assertEquals(9 - i , player.getCardLimit());
+            assertEquals(9 - i , player.getRegisters().getCardLimit(player));
             player.takeDamage();
         }
     }
@@ -51,7 +51,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void nineDmgDoesdNotDestroy(){
+    public void nineDmgDoesNotDestroy(){
         for(int i = 0; i < 9; i++){
             player.takeDamage();
         }
@@ -70,11 +70,11 @@ public class PlayerTest {
     public void fiveDmgLocksOneRegister(){
         for(int i = 0; i < 5; i++)
             player.takeDamage();
-        assert(player.isLocked(4));
+        assertEquals(true, player.getRegisters().isLocked(4));
 
         //the other registers should not be locked:
         for(int i = 0; i < 4; i++)
-            assert(!player.isLocked(i));
+            assertEquals(false, player.getRegisters().isLocked(i));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class PlayerTest {
 
         //the other registers should not be locked:
         for(int i = 0; i < 5; i++)
-            assert(!player.isLocked(i));
+            assert(!player.getRegisters().isLocked(i));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class PlayerTest {
             player.takeDamage();
         //all registers should be locked:
         for(int i = 0; i < 5; i++)
-            assert(player.isLocked(i));
+            assert(player.getRegisters().isLocked(i));
     }
 
     @Test
@@ -103,24 +103,24 @@ public class PlayerTest {
         player.repairAllDamage();
         assertEquals(0, player.getDamage());
         for(int i = 0; i < 5; i++)
-            assert(!player.isLocked(i));
+            assert(!player.getRegisters().isLocked(i));
     }
 
     @Test
     public void noLockedRegistersReturnsAllCards(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveNewCard(stack.pop());
+            player.getRegisters().receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
-                player.pickCard(0);
+                player.getRegisters().pickCard(0);
         }
 
-        ArrayList<ProgramCard> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.getRegisters().returnCards();
         assertEquals(9, cardsReturned.size());
 
         // All registers are empty:
-        for(ProgramCard register : player.getCardsInRegisters())
+        for(ProgramCard register : player.getRegisters().getCardsInRegisters())
             assert(register == null);
     }
 
@@ -128,21 +128,21 @@ public class PlayerTest {
     public void lockedCardsAreNotReturned(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveNewCard(stack.pop());
+            player.getRegisters().receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
-                player.pickCard(0);
+                player.getRegisters().pickCard(0);
         }
         // Player takes nine damage, locking all registers:
         for(int i = 0; i < 9; i++)
             player.takeDamage();
 
         // Only cards in hand are returned:
-        ArrayList<ProgramCard> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.getRegisters().returnCards();
         assertEquals(4, cardsReturned.size());
 
         // All registers contains program cards:
-        for(ProgramCard register : player.getCardsInRegisters())
+        for(ProgramCard register : player.getRegisters().getCardsInRegisters())
             assert(register != null);
     }
 
@@ -150,24 +150,24 @@ public class PlayerTest {
     public void lockedCardsAreNotReturned2(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveNewCard(stack.pop());
+            player.getRegisters().receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
-                player.pickCard(0);
+                player.getRegisters().pickCard(0);
         }
         // Player takes 5 damage, locking one register:
         for(int i = 0; i < 5; i++)
             player.takeDamage();
 
         // Cards in hand are returned + 4 from registers:
-        ArrayList<ProgramCard> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.getRegisters().returnCards();
         assertEquals(8, cardsReturned.size());
 
         // The first 4 registers do not contain program cards:
         for(int i = 0; i < 4; i++)
-            assert(player.getCardsInRegisters().get(i) == null);
+            assert(player.getRegisters().getCardsInRegisters().get(i) == null);
         // The last register does:
-        assert(player.getCardsInRegisters().get(4) != null);
+        assert(player.getRegisters().getCardsInRegisters().get(4) != null);
     }
 
     @Test
@@ -179,22 +179,30 @@ public class PlayerTest {
         Player p3 = new Player(0,0);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
-            p1.receiveNewCard(stack.pop());
-            p2.receiveNewCard(stack.pop());
-            p3.receiveNewCard(stack.pop());
+            p1.getRegisters().receiveCard(stack.pop());
+            p2.getRegisters().receiveCard(stack.pop());
+            p3.getRegisters().receiveCard(stack.pop());
         }
         // have them all pick the first card and place it in a register:
-        p1.pickCard(0);
-        p2.pickCard(0);
-        p3.pickCard(0);
+        p1.getRegisters().pickCard(0);
+        p2.getRegisters().pickCard(0);
+        p3.getRegisters().pickCard(0);
         // retrieve cards from the first register:
-        q.add(p1.getCardInRegister(0));
-        q.add(p2.getCardInRegister(0));
-        q.add(p3.getCardInRegister(0));
+        q.add(p1.getRegisters().getCardInRegister(0));
+        q.add(p2.getRegisters().getCardInRegister(0));
+        q.add(p3.getRegisters().getCardInRegister(0));
         // print in order of highest priority
         while(!q.isEmpty()) {
             System.out.println(q.poll());
         }
     }
 
+    @Test
+    public void repairUnlocksAllRegister(){
+        for(int i = 0; i < 9; i++){
+            player.takeDamage();
+        }
+        player.repairAllDamage();
+        assertEquals(5, player.getRegisters().getUnlockedRegisters());
+    }
 }
