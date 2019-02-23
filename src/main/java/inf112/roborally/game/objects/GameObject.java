@@ -14,7 +14,7 @@ public abstract class GameObject{
      * Objects on the board that needs to be drawn, that are not on the TiledMap
      * It only has a position and needs a sprite
      *
-     * Constructer doesnt create a sprite for easier use of tests. Tests get Texture nullpointer.
+     * Constructor doesn't create a sprite for easier use of tests. Tests get Texture nullpointer.
      * @param x position x
      * @param y position y
      */
