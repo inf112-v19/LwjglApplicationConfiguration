@@ -20,7 +20,7 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void testIsLockedWithNoLockedRegisters(){
+    public void test_IsLocked_WithNoLockedRegisters(){
         for(int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++){
             assertEquals(false, programRegisters.isLocked(i));
         }
@@ -28,7 +28,7 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void testIsLockedWithOneLockedRegister(){
+    public void test_IsLocked_WithOneLockedRegister(){
         programRegisters.lockRegister();
         for(int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS-1; i++){
             assertEquals(false, programRegisters.isLocked(i));
@@ -48,31 +48,31 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void receiveCardAddsOneCardToCardsInHand(){
+    public void receiveCard_AddsOneCardToCardsInHand(){
         programRegisters.receiveCard(stack.pop());
         assertEquals(1, programRegisters.getCardsInHand().size());
     }
 
     @Test
-    public void getCardLimitEqualsNine(){
+    public void getCardLimit_EqualsNine(){
         assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, programRegisters.getCardLimit(player));
     }
 
     @Test
-    public void getCardLimitEqualsEightAfterOneDamage(){
+    public void getCardLimit_EqualsEightAfterOneDamage(){
         player.takeDamage();
         assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS-1, programRegisters.getCardLimit(player));
     }
 
     @Test
-    public void getCardLimitEqualsZeroAfterNineDamage(){
+    public void getCardLimit_EqualsZeroAfterNineDamage(){
         for(int i = 0; i < ProgramRegisters.MAX_NUMBER_OF_CARDS; i++)
             player.takeDamage();
         assertEquals(0, programRegisters.getCardLimit(player));
     }
 
     @Test
-    public void returnCardsReturnsAllCards(){
+    public void returnCards_ReturnsAllCards(){
         for(int i = 0; i < 9; i++){
             programRegisters.receiveCard(stack.pop());
         }
@@ -80,7 +80,7 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void returnCardsReturnsAllCardsWhenNoRegistersAreLocked(){
+    public void returnCards_ReturnsAllCardsWhenNoRegistersAreLocked(){
         for(int i = 0; i < 9; i++){
             programRegisters.receiveCard(stack.pop());
         }
@@ -90,7 +90,7 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void returnCardsReturnsFourCardsWhenFiveRegistersAreLocked(){
+    public void returnCards_ReturnsFourCardsWhenFiveRegistersAreLocked(){
         for(int i = 0; i < 9; i++){
             programRegisters.receiveCard(stack.pop());
         }
@@ -102,7 +102,7 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void returnCardsReturns8CardsWhenOneRegistersAreLocked(){
+    public void returnCardsReturns_8CardsWhenOneRegistersAreLocked(){
         for(int i = 0; i < 9; i++)
             programRegisters.receiveCard(stack.pop());
 
@@ -114,7 +114,7 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void registerIsFullReturnsTrueWhenFull(){
+    public void registerIsFull_ReturnsTrueWhenFull(){
         for(int i = 0; i < 9; i++)
             programRegisters.receiveCard(stack.pop());
 
@@ -125,7 +125,7 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void registerIsFullReturnsFalseWhenNotFull(){
+    public void registerIsFull_ReturnsFalseWhenNotFull(){
         for(int i = 0; i < 9; i++)
             programRegisters.receiveCard(stack.pop());
 
