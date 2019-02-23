@@ -83,6 +83,15 @@ public class  Player extends MovableGameObject implements IPlayer{
         updateSprite();
     }
 
+    public void execute(ProgramCard programCard){
+        if(programCard.getRotate() == Rotate.NONE){
+            move(programCard.getMoveDistance());
+        }
+        else {
+            setDirection(getDirection().rotate(programCard.getRotate()));
+        }
+    }
+
     public void handleInput() {
         //Just for testing
         moved = true;

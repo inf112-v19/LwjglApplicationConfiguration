@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.objects.Rotate;
 
 import java.util.ArrayList;
 
@@ -140,7 +141,8 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button1");
-
+                // test:
+                players.get(0).execute(new ProgramCard(Rotate.LEFT, 0, 0));
             }
 
         });
@@ -149,7 +151,9 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button2");
-                //players.get(0).getRegister().pickCard(2);
+                //test:
+                players.get(0).execute(new ProgramCard(Rotate.NONE, 1, 0));
+
             }
 
         });
@@ -158,7 +162,8 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button3");
-
+                // test:
+                players.get(0).execute(new ProgramCard(Rotate.RIGHT, 0, 0));
             }
 
         });
@@ -176,6 +181,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button5");
+                players.get(0).execute(new ProgramCard(Rotate.UTURN, 0, 0));
 
             }
 
@@ -194,7 +200,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button7");
-
+                players.get(0).execute(new ProgramCard(Rotate.NONE, 1, 0));
             }
 
         });
@@ -203,7 +209,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button8");
-
+                players.get(0).execute(new ProgramCard(Rotate.NONE, 2, 0));
             }
 
         });
@@ -212,7 +218,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button9");
-
+                players.get(0).execute(new ProgramCard(Rotate.NONE, 3, 0));
             }
 
         });
