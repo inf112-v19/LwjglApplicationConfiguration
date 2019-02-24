@@ -83,6 +83,31 @@ public class  Player extends MovableGameObject implements IPlayer{
         updateSprite();
     }
 
+    /*
+     Takes in an int which corresponds to the spot in the register.
+     That way we don't need to remove the card from the player in another class and put it back in through
+     another method. Keep?
+    */
+    public void execute(int spotInRegister){
+        if (spotInRegister < 0 || spotInRegister >= NUMBER_OF_REGISTERS){
+            System.out.println(spotInRegister + " is not between 0 and " + (NUMBER_OF_REGISTERS-1));
+            return;
+        }
+        /*else if(!registerIsFull()){
+            System.out.println("Need to fill your register before executing!");
+            return;
+        }*/
+
+        ProgramCard cardToExecute = registers[spotInRegister];
+        System.out.println("Card in reg: " + cardToExecute.toString());
+        if(cardToExecute.getRotate() == Rotate.NONE){
+            move(cardToExecute.getMoveDistance());
+        }
+        else{
+            setDirection(getDirection().rotate(cardToExecute.getRotate()));
+        }
+    }
+
     public void execute(ProgramCard programCard){
         if(programCard.getRotate() == Rotate.NONE){
             move(programCard.getMoveDistance());
@@ -142,10 +167,12 @@ public class  Player extends MovableGameObject implements IPlayer{
      *
      * @return list of cards that are not locked in registers.
      */
-    public ArrayList<ProgramCard> returnCards() {
+    public ArrayList<ProgramCard> returnCardsToHand() {
         for (int i = 0; i < unlockedRegisters; i++) {
-            cardsInHand.add(registers[i]);
-            registers[i] = null;
+            if(registers[i] != null) {
+                cardsInHand.add(registers[i]);
+                registers[i] = null;
+            }
         }
         return cardsInHand;
     }
@@ -167,17 +194,20 @@ public class  Player extends MovableGameObject implements IPlayer{
         cardsInHand.add(programCard);
     }
 
-    public void pickCard(int cardPos) {
+    //Made it return i so that we can know which spot the newly card is inserted at. Returns -1 if not.
+    //Is there a better way?
+    public int pickCard(int cardPos) {
         int i = 0;
         while (i < unlockedRegisters) {
             if (registers[i] == null) {
                 registers[i] = cardsInHand.remove(cardPos);
                 //TODO: potential issue - array spots after the removed index gets shifted
-                return;
+                return i;
             }
             i++;
         }
         System.err.println("Error: can't pick more cards. Register is full!");
+        return -1; //TODO: Better way?
     }
 
     public boolean registerIsFull() {
@@ -194,11 +224,11 @@ public class  Player extends MovableGameObject implements IPlayer{
      * @return how many cards the player is allowed to be dealt.
      */
     public int getCardLimit() {
-        return 9 - damage;
+        return 9 - this.damage;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
 
@@ -235,6 +265,10 @@ public class  Player extends MovableGameObject implements IPlayer{
     @Override
     public ArrayList<ProgramCard> getCardsInHand() {
         return cardsInHand;
+    }
+
+    public int getNumberOfCardsInHand(){
+        return this.cardsInHand.size();
     }
 
     public GameObject getBackup() {

@@ -34,8 +34,9 @@ public class Hud {
     Label damageLabel;
 
     public Hud(SpriteBatch sb, final ArrayList<Player> players){
-        lives = players.get(0).getLives();
-        damage = players.get(0).getDamage();
+        final Player player1 = players.get(0);
+        lives = player1.getLives();
+        damage = player1.getDamage();
         cards = 0;
 
 
@@ -142,7 +143,26 @@ public class Hud {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button1");
                 // test:
-                players.get(0).execute(new ProgramCard(Rotate.LEFT, 0, 0));
+                player1.execute(new ProgramCard(Rotate.LEFT, 0, 0));
+
+                //player1.pickCard(0);
+                //ProgramCard cardFromRegister = player1.getCardInRegister(0);
+                //player1.execute(cardFromRegister);
+
+                //--
+                //printCards(player1);
+                //int posInRegister = player1.pickCard(0);
+                //player1.execute(posInRegister);
+
+                /*
+                Instead of using pickCard right away we could just save the card numbers that are picked.
+                Once all 5 numbers have been chosen and the player has locked it in - then we start using pickCard
+                and such? It would make it easier for us to unpick and pick cards since all we have to do is
+                check if the number we are picking is already in the list of picked numbers or not. If it is, then we
+                remove it (because then the player has chosen that card number earlier and wants to remove it now),
+                if not we add it to the list and make sure that the list can not be longer than 5 numbers.
+                 */
+
             }
 
         });
@@ -152,7 +172,7 @@ public class Hud {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button2");
                 //test:
-                players.get(0).execute(new ProgramCard(Rotate.NONE, 1, 0));
+                player1.execute(new ProgramCard(Rotate.NONE, 1, 0));
 
             }
 
@@ -163,7 +183,8 @@ public class Hud {
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button3");
                 // test:
-                players.get(0).execute(new ProgramCard(Rotate.RIGHT, 0, 0));
+                player1.execute(new ProgramCard(Rotate.RIGHT, 0, 0));
+
             }
 
         });
@@ -172,7 +193,6 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button4");
-
             }
 
         });
@@ -181,7 +201,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button5");
-                players.get(0).execute(new ProgramCard(Rotate.UTURN, 0, 0));
+                player1.execute(new ProgramCard(Rotate.UTURN, 0, 0));
 
             }
 
@@ -200,28 +220,31 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button7");
-                players.get(0).execute(new ProgramCard(Rotate.NONE, 1, 0));
+                player1.execute(new ProgramCard(Rotate.NONE, 1, 0));
             }
 
         });
+
         button7.addListener(new ClickListener() {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button8");
-                players.get(0).execute(new ProgramCard(Rotate.NONE, 2, 0));
+                player1.execute(new ProgramCard(Rotate.NONE, 2, 0));
             }
 
         });
+
         button8.addListener(new ClickListener() {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button9");
-                players.get(0).execute(new ProgramCard(Rotate.NONE, 3, 0));
+                player1.execute(new ProgramCard(Rotate.NONE, 3, 0));
             }
 
         });
+
 
 
     }
@@ -232,6 +255,14 @@ public class Hud {
 
         livesLabel.setText("Lives: " + lives);
         damageLabel.setText("Damage taken: " + damage);
+    }
+
+    //Just for testing
+    public void printCards(Player player) {
+            ArrayList<ProgramCard> cards = player.getCardsInHand();
+            for (int i = 0; i < cards.size(); i++) {
+                System.out.println("Card " + i + ": " + cards.get(i));
+            }
     }
 
 

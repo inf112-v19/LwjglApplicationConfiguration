@@ -3,6 +3,7 @@ package inf112.roborally.game.world;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.objects.MovableGameObject;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.Main;
@@ -22,7 +23,7 @@ public class Board {
     private TiledMapTileLayer laserLayer;
     private TiledMapTileLayer wallLayer;
 
-    private ArrayList<Player> players = new ArrayList<>();
+    private ArrayList<Player> players;
 
 
     public Board(String mapPath) {
@@ -34,11 +35,17 @@ public class Board {
         createLayers();
 
 
-        Player player1 = new Player("Player 1", getWidth()/2*Main.TILE_LENGTH,
+        Player player1 = new Player("Player1", getWidth()/2*Main.TILE_LENGTH,
                 getHeight()/2*Main.TILE_LENGTH, Direction.NORTH);
 
+        Player player2 = new Player("Player2", 0,
+                0, Direction.SOUTH);
+
+        players = new ArrayList<>();
         players.add(player1);
+        players.add(player2);
     }
+
 
     private void createLayers() {
         beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");

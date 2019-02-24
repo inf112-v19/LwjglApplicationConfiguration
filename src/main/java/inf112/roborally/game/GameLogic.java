@@ -25,15 +25,21 @@ public class GameLogic {
         this.players = board.getPlayers();
         this.board = board;
         this.hud = hud;
+
+        //TODO: Player choosing which direction to face needs to happen when the game initially starts.
+
+        doBeforeRound();
     }
 
 
-    //Player choosing which direction to face needs to happen when the game initially starts.
 
 
     public void doBeforeRound(){
-        //Receive new cards
         for(Player currentPlayer : players) {
+                //Retrieve cards from last round
+                retrieveCardsFromPlayer(currentPlayer);
+
+                //Receive new cards
                 giveCardsToPlayer(currentPlayer);
         }
 
@@ -49,7 +55,7 @@ public class GameLogic {
 
 
     /*
-     * Let the player(s) choose which direction to face.
+     * Let the players choose which direction to face.
      *
      * -- Give out cards to the players. (done)
      * Choose which cards to use.
@@ -83,11 +89,11 @@ public class GameLogic {
      * @param player which player to give program cards to.
      */
     private void giveCardsToPlayer(Player player) {
-        if (player.getCardsInHand().size() == 0) {
-            for(int i = 0; i < player.getCardLimit(); i++){
-                if(stackOfProgramCards.isEmpty()) // in case the game drags on and we run out of cards - Morten
+        if (player.getNumberOfCardsInHand() == 0) {
+            for(int i = 0; i < player.getCardLimit(); i++) {
+                if (stackOfProgramCards.isEmpty()){ // in case the game drags on and we run out of cards - Morten
                     reshuffleDeck();
-
+                }
                 player.receiveNewCard(stackOfProgramCards.pop());
             }
         } else {
@@ -97,7 +103,7 @@ public class GameLogic {
     }
 
     private void retrieveCardsFromPlayer(Player player){
-        ArrayList<ProgramCard> playerCards = player.returnCards();
+        ArrayList<ProgramCard> playerCards = player.returnCardsToHand();
         while (!playerCards.isEmpty())
             returnedProgramCards.push(playerCards.remove(0));
     }
@@ -111,4 +117,5 @@ public class GameLogic {
             stackOfProgramCards.push(returnedProgramCards.pop());
         Collections.shuffle(stackOfProgramCards);
     }
+
 }

@@ -116,7 +116,7 @@ public class PlayerTest {
                 player.pickCard(0);
         }
 
-        ArrayList<ProgramCard> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCardsToHand();
         assertEquals(9, cardsReturned.size());
 
         // All registers are empty:
@@ -138,7 +138,7 @@ public class PlayerTest {
             player.takeDamage();
 
         // Only cards in hand are returned:
-        ArrayList<ProgramCard> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCardsToHand();
         assertEquals(4, cardsReturned.size());
 
         // All registers contains program cards:
@@ -160,7 +160,7 @@ public class PlayerTest {
             player.takeDamage();
 
         // Cards in hand are returned + 4 from registers:
-        ArrayList<ProgramCard> cardsReturned = player.returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCardsToHand();
         assertEquals(8, cardsReturned.size());
 
         // The first 4 registers do not contain program cards:
