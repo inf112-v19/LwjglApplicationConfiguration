@@ -10,6 +10,9 @@ public class GameLogic {
 
     public static boolean canEditCards = false; // Public boolean to let players know if the can edit cards or not?
 
+    boolean roundOver;
+    int phase;
+
     private Hud hud;
     private Board board;
     private Hashtable<Player, ArrayList<Integer> cardsChosen;
@@ -25,13 +28,16 @@ public class GameLogic {
         this.board = board;
         this.hud = hud;
 
-        //TODO: Player choosing which direction to face needs to happen when the game initially starts.
+        roundOver = true;
+        phase = 1;
 
-        doBeforeRound();
+        //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
 
     public void doBeforeRound() {
+        phase = 1;
+
         for (Player currentPlayer : players) {
             //Retrieve cards from last round
             retrieveCardsFromPlayer(currentPlayer);
@@ -40,14 +46,35 @@ public class GameLogic {
             giveCardsToPlayer(currentPlayer);
         }
 
-
         // Show cards
         // Choose cards to use for the round
         // Validate the choice
 
-
+        roundOver = false;
     }
 
+    public void update() {
+        if (roundOver) {
+            doBeforeRound();
+        } else if (!playersReady()) {
+            // choosing cards
+        } else {
+            if(phase > 5)
+                roundOver = true;
+
+            // after phase is over :
+            phase++;
+        }
+    }
+
+    public boolean playersReady() {
+        for (Player player : players) {
+            if (!player.getRegisters().registerIsFull()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /*
      * Let the players choose which direction to face.
