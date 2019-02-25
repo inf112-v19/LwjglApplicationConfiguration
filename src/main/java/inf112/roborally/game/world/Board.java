@@ -75,8 +75,8 @@ public class Board {
     public boolean canGo(MovableGameObject gameObject){
         Direction direction = gameObject.getDirection();
         // first check the current tile:
-        int newX = (int) gameObject.getX();
-        int newY = (int) gameObject.getY();
+        int newX = gameObject.getX();
+        int newY = gameObject.getY();
 
         // check this tile:
         TiledMapTileLayer.Cell currentCell =  getWallLayer().getCell(newX,newY);
@@ -135,8 +135,8 @@ public class Board {
 
         beltsMove(player);
 
-        int x = (int) player.getX();
-        int y = (int) player.getY();
+        int x = player.getX();
+        int y = player.getY();
 
         if(lasersHit(x, y)) {
             System.out.println("Ouch!");
@@ -148,11 +148,8 @@ public class Board {
     }
 
     private void beltsMove(Player player){
-        int x = (int) player.getX();
-        int y = (int) player.getY();
-
         // check if player is on a belt:
-        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(x,y);
+        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
             if(canGo(player)) {
