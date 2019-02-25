@@ -141,9 +141,9 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Button1");
+                System.out.println(player1.getRegisters().pickCard(0));
+
                 // test:
-                player1.execute(new ProgramCard(Rotate.LEFT, 0, 0));
 
                 //player1.pickCard(0);
                 //ProgramCard cardFromRegister = player1.getCardInRegister(0);
@@ -170,9 +170,7 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Button2");
-                //test:
-                player1.execute(new ProgramCard(Rotate.NONE, 1, 0));
+                System.out.println(player1.getRegisters().pickCard(1));
 
             }
 
@@ -181,9 +179,7 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Button3");
-                // test:
-                player1.execute(new ProgramCard(Rotate.RIGHT, 0, 0));
+                System.out.println(player1.getRegisters().pickCard(2));
 
             }
 

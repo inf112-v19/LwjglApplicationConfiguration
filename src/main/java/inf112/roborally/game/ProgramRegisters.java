@@ -64,13 +64,14 @@ public class ProgramRegisters {
         unlockedRegisters = NUMBER_OF_REGISTERS;
     }
 
-    public void pickCard(int cardPosition) {
+    public int pickCard(int cardPosition) {
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {
                 registers[i] = cardsInHand.remove(cardPosition);
-                return;
+                return i;
             }
         }
+        return -1;
     }
 
     public boolean isLocked(int register) {
