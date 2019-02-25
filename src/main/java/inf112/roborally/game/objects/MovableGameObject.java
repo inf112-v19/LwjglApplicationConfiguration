@@ -15,7 +15,7 @@ public abstract class MovableGameObject extends GameObject {
      * @param x position x
      * @param y position y
      */
-    public MovableGameObject(float x, float y, String filePath) {
+    public MovableGameObject(int x, int y, String filePath) {
         super(x, y, filePath);
         direction = Direction.SOUTH;
         rotationDegree = direction.getRotationDegree();
@@ -38,28 +38,33 @@ public abstract class MovableGameObject extends GameObject {
     public void moveInDirection(Direction dir){
         switch (dir){
             case NORTH:
-                moveY(getY() + Main.TILE_LENGTH); break;
+                moveY(getY() + 1); break;
             case SOUTH:
-                moveY(getY() - Main.TILE_LENGTH); break;
+                moveY(getY() - 1); break;
             case EAST:
-                moveX(getX() + Main.TILE_LENGTH); break;
+                moveX(getX() + 1); break;
             case WEST:
-                moveX(getX() - Main.TILE_LENGTH); break;
+                moveX(getX() - 1); break;
         }
     }
 
     public void move(int steps) {
+        for(int i = 0 ; i < steps; i++)
+            move();
+    }
+
+    private void move(){
         switch (direction){
             case NORTH:
-                moveY(getY() + Main.TILE_LENGTH * steps); break;
+                moveY(getY() + 1); break;
             case SOUTH:
-                moveY(getY() - Main.TILE_LENGTH * steps); break;
+                moveY(getY() - 1); break;
             case EAST:
-                moveX(getX() + Main.TILE_LENGTH * steps); break;
+                moveX(getX() + 1); break;
             case WEST:
-                moveX(getX() - Main.TILE_LENGTH * steps); break;
-
+                moveX(getX() - 1); break;
         }
+
     }
 
     /**

@@ -2,63 +2,56 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.roborally.game.Main;
+
 import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.ProgramRegisters;
 import inf112.roborally.game.world.Direction;
 
-import java.util.ArrayList;
 
-public class  Player extends MovableGameObject {
+public class Player extends MovableGameObject {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
-    private static final int NUMBER_OF_REGISTERS = 5;
 
     private String name;
     private int lives;
     private int damage;
-    private int unlockedRegisters;
-    private ProgramCard[] registers;
     private Backup backup;
-    private ArrayList<ProgramCard> cardsInHand;
+    private ProgramRegisters registers;
 
 
     public Player(String name, int x, int y, Direction direction) {
         super(x, y, "assets/robot/tvBot.png");
+        this.name = name;
+        damage = 0;
+        lives = MAX_LIVES;
+
         setDirection(direction);
         makeSprite();
-
-        this.name = name;
-        backup = new Backup(x, y);
-
-        registers = new ProgramCard[NUMBER_OF_REGISTERS];
-        unlockedRegisters = NUMBER_OF_REGISTERS;
-        cardsInHand = new ArrayList<>();
-        damage = 0;
-        lives = MAX_LIVES;
-
         loadVisualRepresentation();
+
+        backup = new Backup(x, y);
+        registers = new ProgramRegisters();
     }
 
-    /** FOR TESTING ONLY */
-    public Player(int x, int y){
+    /**
+     * FOR TESTING ONLY
+     */
+    public Player(int x, int y) {
         super(x, y, "assets/robot/tvBot.png");
-        registers = new ProgramCard[NUMBER_OF_REGISTERS];
-        unlockedRegisters = registers.length;
-        cardsInHand = new ArrayList<>();
         damage = 0;
         lives = MAX_LIVES;
+        registers = new ProgramRegisters();
     }
 
     @Override
     public void updateSprite() {
         boolean flipSprite = false;
-        switch (getDirection()){
+        switch (getDirection()) {
             case SOUTH:
                 flipSprite = true;
             case NORTH:
-                rotationDegree = 270; break;
+                rotationDegree = 270;
+                break;
             case WEST:
                 flipSprite = true;
             case EAST:
@@ -70,21 +63,59 @@ public class  Player extends MovableGameObject {
     }
 
 
-    public void update(){
+    public void update() {
         handleInput();
 
-        if (isDestroyed() && !outOfLives()){
+        if (isDestroyed() && !outOfLives()) {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
             repairAllDamage();
             backup.movePlayer(this);
-            }
-        else if (isDestroyed() && outOfLives()){
+        } else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");
         }
         updateSprite();
     }
+
+
+    /*
+     Takes in an int which corresponds to the spot in the register.
+     That way we don't need to remove the card from the player in another class and put it back in through
+     another method. Keep?
+    */
+    public void execute(int spotInRegister) {
+        if (spotInRegister < 0 || spotInRegister >= registers.NUMBER_OF_REGISTERS) {
+            System.out.println(spotInRegister + " is not between 0 and " + (registers.NUMBER_OF_REGISTERS - 1));
+            return;
+        }
+        /*else if(!registerIsFull()){
+            System.out.println("Need to fill your register before executing!");
+            return;
+        }*/
+
+        ProgramCard cardToExecute = registers.getCardInRegister(spotInRegister);
+        System.out.println("Card in reg: " + cardToExecute.toString());
+        if (cardToExecute.getRotate() == Rotate.NONE) {
+            move(cardToExecute.getMoveDistance());
+        } else {
+            setDirection(getDirection().rotate(cardToExecute.getRotate()));
+        }
+    }
+
+    public void execute(ProgramCard programCard) {
+        if (programCard.getRotate() == Rotate.NONE) {
+            move(programCard.getMoveDistance());
+        } else {
+            setDirection(getDirection().rotate(programCard.getRotate()));
+        }
+    }
+
+    public void repairAllDamage() {
+        registers.unlockRegisters();
+        damage = 0;
+    }
+
 
     public void handleInput() {
         //Just for testing
@@ -110,12 +141,12 @@ public class  Player extends MovableGameObject {
     public void takeDamage() {
         this.damage++;
         if (damage < 10 && damage >= 5) {
-            unlockedRegisters--;
+            registers.lockRegister();
         }
     }
 
-    public void destroy(){
-        damage = MAX_DAMAGE +1;
+    public void destroy() {
+        damage = MAX_DAMAGE + 1;
     }
 
     public boolean isDestroyed() {
@@ -126,73 +157,9 @@ public class  Player extends MovableGameObject {
         return lives <= 0;
     }
 
-    public boolean isLocked(int register) {
-        return register >= unlockedRegisters;
-    }
-
-    /**
-     * When damage is taken some registers might become locked.
-     * Cards in locked registers should remain untill the register is unlocked.
-     *
-     * @return list of cards that are not locked in registers.
-     */
-    public ArrayList<ProgramCard> returnCards() {
-        for (int i = 0; i < unlockedRegisters; i++) {
-            cardsInHand.add(registers[i]);
-            registers[i] = null;
-        }
-        return cardsInHand;
-    }
-
-    public void repairAllDamage() {
-        damage = 0;
-        unlockedRegisters = NUMBER_OF_REGISTERS;
-    }
-
-    /**
-     * Give the player a new program card.
-     * A player will not receive the card if the card limit is reached.
-     */
-    public void receiveNewCard(ProgramCard programCard) {
-        if (cardsInHand.size() >= getCardLimit()) {
-            System.out.println("Card was not added because of card limit");
-            return;
-        }
-        cardsInHand.add(programCard);
-    }
-
-    public void pickCard(int cardPos) {
-        int i = 0;
-        while (i < unlockedRegisters) {
-            if (registers[i] == null) {
-                registers[i] = cardsInHand.remove(cardPos);
-                //TODO: potential issue - array spots after the removed index gets shifted
-                return;
-            }
-            i++;
-        }
-        System.err.println("Error: can't pick more cards. Register is full!");
-    }
-
-    public boolean registerIsFull() {
-        for(int i = 0; i < registers.length; i++){
-            if(registers[i] == null)
-                return  false;
-        }
-        return true;
-    }
-
-    // getters and setters:
-
-    /**
-     * @return how many cards the player is allowed to be dealt.
-     */
-    public int getCardLimit() {
-        return 9 - damage;
-    }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
 
@@ -200,34 +167,16 @@ public class  Player extends MovableGameObject {
         return this.lives;
     }
 
-    public ArrayList<ProgramCard> getCardsInRegisters() {
-        ArrayList<ProgramCard> list = new ArrayList<>();
-        for (ProgramCard pc : registers)
-            list.add(pc);
-
-        return list;
-    }
-
-    public ProgramCard getCardInRegister(int register) {
-        return registers[register];
-    }
-
-    /**
-     * Every phase the player with the highest priority goes first.
-     *
-     * @param phaseNumber
-     * @return priority of the card in the register for the given phase.
-     */
-    public int getPriority(int phaseNumber) {
-        return registers[phaseNumber].getPriority();
-    }
-
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public GameObject getBackup() {
         return backup;
+    }
+
+    public ProgramRegisters getRegisters() {
+        return registers;
     }
 
     @Override
