@@ -19,7 +19,7 @@ public class GameLogic {
     private ArrayList<Player> players;
     private Stack<ProgramCard> returnedProgramCards;
 
-    public GameLogic(Board board, Hud hud){
+    public GameLogic(Board board, Hud hud) {
         stackOfProgramCards = ProgramCard.makeStack();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
@@ -32,23 +32,19 @@ public class GameLogic {
     }
 
 
+    public void doBeforeRound() {
+        for (Player currentPlayer : players) {
+            //Retrieve cards from last round
+            retrieveCardsFromPlayer(currentPlayer);
 
-
-    public void doBeforeRound(){
-        for(Player currentPlayer : players) {
-                //Retrieve cards from last round
-                retrieveCardsFromPlayer(currentPlayer);
-
-                //Receive new cards
-                giveCardsToPlayer(currentPlayer);
+            //Receive new cards
+            giveCardsToPlayer(currentPlayer);
         }
-
 
 
         // Show cards
         // Choose cards to use for the round
         // Validate the choice
-
 
 
     }
@@ -86,24 +82,20 @@ public class GameLogic {
 
     /**
      * Gives the player as many cards as allowed from the stack of program cards.
+     *
      * @param player which player to give program cards to.
      */
     private void giveCardsToPlayer(Player player) {
-        if (player.getNumberOfCardsInHand() == 0) {
-            for(int i = 0; i < player.getCardLimit(); i++) {
-                if (stackOfProgramCards.isEmpty()){ // in case the game drags on and we run out of cards - Morten
-                    reshuffleDeck();
-                }
-                player.receiveNewCard(stackOfProgramCards.pop());
+        for (int i = 0; i < 9; i++) {
+            if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
+                reshuffleDeck();
             }
-        } else {
-            System.out.println("Error: " + player.getName() + " hasn't given away his/her cards from last round!");
-            // ALL REGISTERS MIGHT BE LOCKED - Morten
+            player.getRegisters().receiveCard(stackOfProgramCards.pop());
         }
     }
 
-    private void retrieveCardsFromPlayer(Player player){
-        ArrayList<ProgramCard> playerCards = player.returnCardsToHand();
+    private void retrieveCardsFromPlayer(Player player) {
+        ArrayList<ProgramCard> playerCards = player.getRegisters().returnCards();
         while (!playerCards.isEmpty())
             returnedProgramCards.push(playerCards.remove(0));
     }
@@ -112,7 +104,7 @@ public class GameLogic {
      * If the stack of cards run out of cards we need to reshuffle all the returned cards and deal them out instead
      * Move this to ProgramCard maybe..
      */
-    private void reshuffleDeck(){
+    private void reshuffleDeck() {
         while (!returnedProgramCards.empty())
             stackOfProgramCards.push(returnedProgramCards.pop());
         Collections.shuffle(stackOfProgramCards);

@@ -25,26 +25,26 @@ public class MovePlayerTest {
     @Test
     public void move1ForwardWorks() {
         player.move(1);
-        assertEquals(y - Main.TILE_LENGTH,(int) player.getY());
+        assertEquals(y - 1, player.getY());
     }
 
     @Test
     public void move2ForwardWorks() {
         player.move(2);
-        assertEquals(y - Main.TILE_LENGTH *2, (int) player.getY());
+        assertEquals(y - 2, player.getY());
     }
 
     @Test
     public void move3ForwardWorks() {
         player.move(3);
-        assertEquals(y - Main.TILE_LENGTH *3, (int) player.getY());
+        assertEquals(y - 3, player.getY());
     }
 
     @Test
     public void rotateLeftMove1() {
         player.rotate(Rotate.LEFT);
         player.move(1);
-        assertEquals(x + Main.TILE_LENGTH, (int) player.getX());
+        assertEquals(x +1 , player.getX());
     }
 
 
@@ -54,7 +54,7 @@ public class MovePlayerTest {
         player.move(1);
         player.rotate(Rotate.UTURN);
         player.move(1);
-        assertEquals(x, (int) player.getX());
+        assertEquals(x, player.getX());
     }
 
     @Test
@@ -64,8 +64,8 @@ public class MovePlayerTest {
         player.move(2);
         player.rotate(Rotate.LEFT);
         player.move(1);
-        assertEquals(x + Main.TILE_LENGTH *2, (int) player.getX());
-        assertEquals(y, (int) player.getY());
+        assertEquals(x + 2, player.getX());
+        assertEquals(y, player.getY());
     }
 
     @Test
@@ -77,8 +77,8 @@ public class MovePlayerTest {
         player.rotate(Rotate.UTURN);
         player.move(2);
 
-        assertEquals(x + Main.TILE_LENGTH *3, (int) player.getX());
-        assertEquals(y, (int) player.getY());
+        assertEquals(x + 3, player.getX());
+        assertEquals(y, player.getY());
     }
 
     @Test

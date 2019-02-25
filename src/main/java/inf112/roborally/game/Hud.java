@@ -259,7 +259,7 @@ public class Hud {
 
     //Just for testing
     public void printCards(Player player) {
-            ArrayList<ProgramCard> cards = player.getCardsInHand();
+            ArrayList<ProgramCard> cards = player.getRegisters().getCardsInHand();
             for (int i = 0; i < cards.size(); i++) {
                 System.out.println("Card " + i + ": " + cards.get(i));
             }
