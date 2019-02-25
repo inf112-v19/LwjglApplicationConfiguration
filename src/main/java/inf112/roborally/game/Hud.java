@@ -142,6 +142,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button1");
+
                 // test:
                 player1.execute(new ProgramCard(Rotate.LEFT, 0, 0));
 
