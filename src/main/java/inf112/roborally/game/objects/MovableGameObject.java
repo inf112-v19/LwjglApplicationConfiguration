@@ -46,25 +46,12 @@ public abstract class MovableGameObject extends GameObject {
             case WEST:
                 moveX(getX() - 1); break;
         }
+        moved = true;
     }
 
     public void move(int steps) {
         for(int i = 0 ; i < steps; i++)
-            move();
-    }
-
-    private void move(){
-        switch (direction){
-            case NORTH:
-                moveY(getY() + 1); break;
-            case SOUTH:
-                moveY(getY() - 1); break;
-            case EAST:
-                moveX(getX() + 1); break;
-            case WEST:
-                moveX(getX() - 1); break;
-        }
-
+            moveInDirection(getDirection());
     }
 
     /**
@@ -80,6 +67,7 @@ public abstract class MovableGameObject extends GameObject {
     public void setDirection(Direction direction){
         this.direction = direction;
         rotationDegree = direction.getRotationDegree();
+        moved = true;
     }
 
     public Direction getDirection(){

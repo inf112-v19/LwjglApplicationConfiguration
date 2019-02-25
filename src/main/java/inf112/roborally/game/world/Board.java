@@ -7,10 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import inf112.roborally.game.objects.Flag;
-import inf112.roborally.game.objects.GameObject;
-import inf112.roborally.game.objects.MovableGameObject;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.objects.*;
 import inf112.roborally.game.Main;
 
 import java.util.ArrayList;
@@ -73,8 +71,7 @@ public class Board {
         Player p1 = players.get(0);
         Player p2 = players.get(1);
 
-        p1.moved = true;
-        p2.moved = true;
+        p1.moved = false;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             p1.setDirection(Direction.EAST);
@@ -86,10 +83,10 @@ public class Board {
             p1.setDirection(Direction.SOUTH);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             p1.moveBackupToPlayerPosition();
-            p1.moved = false;
-        } else {
-            p1.moved = false;
         }
+
+
+        p2.moved = false;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
             p2.setDirection(Direction.EAST);
@@ -101,9 +98,6 @@ public class Board {
             p2.setDirection(Direction.SOUTH);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             p2.moveBackupToPlayerPosition();
-            p2.moved = false;
-        } else {
-            p2.moved = false;
         }
     }
 
@@ -122,6 +116,20 @@ public class Board {
             }
             player.update();
             player.updateSprite();
+        }
+    }
+
+
+    public void executeCard(Player player, ProgramCard card){
+        if(card.getRotate() != Rotate.NONE){
+            player.rotate(card.getRotate());
+        }
+        else{
+            for(int i = 0; i < card.getMoveDistance(); i++){
+                if(canGo(player)){
+                    player.move(1);
+                }
+            }
         }
     }
 

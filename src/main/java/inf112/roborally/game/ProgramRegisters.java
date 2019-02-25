@@ -3,6 +3,7 @@ package inf112.roborally.game;
 import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.PriorityQueue;
 
 public class ProgramRegisters {
@@ -19,7 +20,7 @@ public class ProgramRegisters {
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
         cardsInHand = new ArrayList<>();
-        cardsToRemove = new PriorityQueue<>();
+        cardsToRemove = new PriorityQueue<>(5, Collections.reverseOrder());
     }
 
     public void receiveCard(ProgramCard programCard) {
@@ -53,8 +54,9 @@ public class ProgramRegisters {
 
     public ArrayList<ProgramCard> returnCards(){
         for(int i = 0; i < unlockedRegisters; i++) {
-            if(registers[i] != null)
+            if(registers[i] != null) {
                 cardsInHand.add(registers[i]);
+            }
             registers[i] = null;
         }
         return cardsInHand;
@@ -71,17 +73,19 @@ public class ProgramRegisters {
     public int pickCard(int cardPosition) {
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {
-                registers[i] = cardsInHand.remove(cardPosition);
-                cardsToRemove.add(i);
+                registers[i] = cardsInHand.remove(cardPosition); //get
+                cardsToRemove.add(cardPosition);
                 return i;
             }
         }
         return -1;
     }
 
-    private void removeCardsFromHand(){
-        while (!cardsToRemove.isEmpty())
+    public void removeCardsFromHand(){
+        while (!cardsToRemove.isEmpty()) {
+            System.out.println(cardsToRemove.peek());
             cardsInHand.remove(cardsToRemove.poll());
+        }
     }
 
     public boolean isLocked(int register) {

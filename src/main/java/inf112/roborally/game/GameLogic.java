@@ -15,28 +15,32 @@ public class GameLogic {
 
     private Hud hud;
     private Board board;
-    private Hashtable<Player, ArrayList<Integer> cardsChosen;
 
     private Stack<ProgramCard> stackOfProgramCards;
     private ArrayList<Player> players;
     private Stack<ProgramCard> returnedProgramCards;
 
+    private Player player1;
+
     public GameLogic(Board board, Hud hud) {
         stackOfProgramCards = ProgramCard.makeStack();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
+        player1 = players.get(0);
         this.board = board;
         this.hud = hud;
 
         roundOver = true;
-        phase = 1;
+        phase = 0;
+
+        update();
 
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
 
     public void doBeforeRound() {
-        phase = 1;
+        phase = 0;
 
         for (Player currentPlayer : players) {
             //Retrieve cards from last round
@@ -56,15 +60,29 @@ public class GameLogic {
     public void update() {
         if (roundOver) {
             doBeforeRound();
-        } else if (!playersReady()) {
+        } else if (!playerReady(player1)) {
             // choosing cards
         } else {
-            if(phase > 5)
+            if(phase >= 5) {
                 roundOver = true;
+            }else {
+                board.executeCard(player1, player1.getRegisters().getCardInRegister(phase));
+                board.update();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
 
             // after phase is over :
             phase++;
         }
+    }
+
+    public boolean playerReady(Player player){
+        return player.getRegisters().registerIsFull();
     }
 
     public boolean playersReady() {

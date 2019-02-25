@@ -19,6 +19,7 @@ public class Player extends MovableGameObject {
     private ProgramRegisters registers;
 
 
+
     public Player(String name, int x, int y, Direction direction) {
         super(x, y, "assets/robot/tvBot.png");
         this.name = name;
@@ -82,15 +83,15 @@ public class Player extends MovableGameObject {
     }
 
 
-    public void execute(int spotInRegister) {
+   /* public void execute(int spotInRegister) {
         if (spotInRegister < 0 || spotInRegister >= registers.NUMBER_OF_REGISTERS) {
             System.out.println(spotInRegister + " is not between 0 and " + (registers.NUMBER_OF_REGISTERS - 1));
             return;
         }
-        /*else if(!registerIsFull()){
+        else if(!registerIsFull()){
             System.out.println("Need to fill your register before executing!");
             return;
-        }*/
+        }
 
         ProgramCard cardToExecute = registers.getCardInRegister(spotInRegister);
         System.out.println("Card in reg " + spotInRegister + ": "  + cardToExecute.toString());
@@ -108,7 +109,7 @@ public class Player extends MovableGameObject {
             setDirection(getDirection().rotate(programCard.getRotate()));
         }
     }
-
+*/
     public void repairAllDamage() {
         registers.unlockRegisters();
         damage = 0;
