@@ -63,9 +63,12 @@ public class Player extends MovableGameObject {
     }
 
 
-    public void update() {
-        handleInput();
+    public void moveBackupToPlayerPosition(){
+        backup.move(getX(), getY());
+        backup.updateSprite();
+    }
 
+    public void update() {
         if (isDestroyed() && !outOfLives()) {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
@@ -114,28 +117,6 @@ public class Player extends MovableGameObject {
     public void repairAllDamage() {
         registers.unlockRegisters();
         damage = 0;
-    }
-
-
-    public void handleInput() {
-        //Just for testing
-        moved = true;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))) {
-            setDirection(Direction.EAST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))) {
-            setDirection(Direction.WEST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))) {
-            setDirection(Direction.NORTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))) {
-            setDirection(Direction.SOUTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            backup.move(getX(), getY());
-            backup.updateSprite();
-            moved = false;
-        } else {
-            moved = false;
-        }
     }
 
     public void takeDamage() {

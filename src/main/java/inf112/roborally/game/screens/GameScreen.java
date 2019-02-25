@@ -64,7 +64,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        board.drawPlayers(batch);
+        board.drawObjects(batch);
         board.drawFlags(batch);
 
         batch.end();
@@ -74,11 +74,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     private void update() {
-        for(Player player : board.getPlayers()) {
-            player.update();
-            board.update(player);
-            hud.update(player);
-        }
+        board.update();
     }
 
     @Override
