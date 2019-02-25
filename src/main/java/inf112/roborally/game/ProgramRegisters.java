@@ -74,7 +74,6 @@ public class ProgramRegisters {
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {
                 registers[i] = cardsInHand.remove(cardPosition); //get
-                cardsToRemove.add(cardPosition);
                 return i;
             }
         }

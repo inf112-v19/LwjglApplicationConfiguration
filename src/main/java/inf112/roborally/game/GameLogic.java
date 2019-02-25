@@ -8,8 +8,6 @@ import java.util.*;
 
 public class GameLogic {
 
-    public static boolean canEditCards = false; // Public boolean to let players know if the can edit cards or not?
-
     boolean roundOver;
     int phase;
 
@@ -59,25 +57,30 @@ public class GameLogic {
 
     public void update() {
         if (roundOver) {
+            System.out.println("set up before round");
             doBeforeRound();
+            System.out.println("player chosing cards");
         } else if (!playerReady(player1)) {
             // choosing cards
         } else {
-            if(phase >= 5) {
-                roundOver = true;
-            }else {
+            if(phase < 5) {
+                System.out.println("executing phase " + phase);
                 board.executeCard(player1, player1.getRegisters().getCardInRegister(phase));
-                board.update();
+                board.updateBoard();
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                phase++;
+            } else {
+                roundOver = true;
+                System.out.println("round over");
             }
+            hud.update(player1);
 
 
             // after phase is over :
-            phase++;
         }
     }
 

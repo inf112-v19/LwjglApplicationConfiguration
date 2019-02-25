@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.objects.Rotate;
 
 import java.util.ArrayList;
 
@@ -142,15 +141,15 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                printCards(player);
-                System.out.println("Cards in hand: " + player.getRegisters().getCardsInHand().size());
-                System.out.println("Register size: " + player.getRegisters().getCardsInRegisters().size());
+                if(!player.getRegisters().registerIsFull()) {
+                    printCards(player);
+                    System.out.println("Cards in hand: " + player.getRegisters().getCardsInHand().size());
+                    System.out.println("Register size: " + player.getRegisters().getCardsInRegisters().size());
 
-                System.out.println(player.getRegisters().pickCard(0));
-                System.out.println(player.getRegisters().getCardsInHand().get(0));
+                    System.out.println(player.getRegisters().pickCard(0));
+                    System.out.println(player.getRegisters().getCardsInHand().get(0));
 
-                // test:
-
+                }
             }
 
         });

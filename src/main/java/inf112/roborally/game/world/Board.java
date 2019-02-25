@@ -44,9 +44,9 @@ public class Board {
         createLayers();
 
 
-        Player player1 = new Player("Player1", 2, 2, Direction.NORTH);
+        Player player1 = new Player("Player1", 6, 6, Direction.NORTH);
 
-        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH);
+        Player player2 = new Player("Player2", 5, 4, Direction.SOUTH);
 
         players = new ArrayList<>();
         players.add(player1);
@@ -103,6 +103,11 @@ public class Board {
 
     public void dispose() {
         map.dispose();
+    }
+
+    public void updateBoard(){
+        for(Player player : players)
+            boardInteractsWithPlayer(player);
     }
 
     public void update() {

@@ -1,9 +1,7 @@
 package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 
-import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.ProgramRegisters;
 import inf112.roborally.game.world.Direction;
 
