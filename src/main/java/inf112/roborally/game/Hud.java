@@ -141,7 +141,10 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                printCards(player1);
                 System.out.println(player1.getRegisters().pickCard(0));
+                System.out.println(player1.getRegisters().getCardsInHand().get(0));
+                player1.execute(0);
 
                 // test:
 

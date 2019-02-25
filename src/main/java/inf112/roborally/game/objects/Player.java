@@ -82,11 +82,6 @@ public class Player extends MovableGameObject {
     }
 
 
-    /*
-     Takes in an int which corresponds to the spot in the register.
-     That way we don't need to remove the card from the player in another class and put it back in through
-     another method. Keep?
-    */
     public void execute(int spotInRegister) {
         if (spotInRegister < 0 || spotInRegister >= registers.NUMBER_OF_REGISTERS) {
             System.out.println(spotInRegister + " is not between 0 and " + (registers.NUMBER_OF_REGISTERS - 1));
@@ -98,7 +93,7 @@ public class Player extends MovableGameObject {
         }*/
 
         ProgramCard cardToExecute = registers.getCardInRegister(spotInRegister);
-        System.out.println("Card in reg: " + cardToExecute.toString());
+        System.out.println("Card in reg " + spotInRegister + ": "  + cardToExecute.toString());
         if (cardToExecute.getRotate() == Rotate.NONE) {
             move(cardToExecute.getMoveDistance());
         } else {

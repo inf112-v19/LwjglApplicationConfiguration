@@ -3,9 +3,7 @@ package inf112.roborally.game;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Stack;
+import java.util.*;
 
 
 public class GameLogic {
@@ -14,6 +12,7 @@ public class GameLogic {
 
     private Hud hud;
     private Board board;
+    private Hashtable<Player, ArrayList<Integer> cardsChosen;
 
     private Stack<ProgramCard> stackOfProgramCards;
     private ArrayList<Player> players;
