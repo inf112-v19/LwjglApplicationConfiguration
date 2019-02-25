@@ -3,6 +3,7 @@ package inf112.roborally.game;
 import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class ProgramRegisters {
     public static final int NUMBER_OF_REGISTERS = 5;
@@ -11,12 +12,14 @@ public class ProgramRegisters {
     private int unlockedRegisters;
     private ProgramCard[] registers;
     private ArrayList<ProgramCard> cardsInHand;
+    private PriorityQueue<Integer> cardsToRemove;
 
 
     public ProgramRegisters() {
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
         cardsInHand = new ArrayList<>();
+        cardsToRemove = new PriorityQueue<>();
     }
 
     public void receiveCard(ProgramCard programCard) {
@@ -39,6 +42,7 @@ public class ProgramRegisters {
     public ProgramCard getCardInRegister(int register) {
         return registers[register];
     }
+
     public ArrayList<ProgramCard> getCardsInRegisters() {
         ArrayList<ProgramCard> list = new ArrayList<>();
         for (ProgramCard pc : registers)
@@ -68,10 +72,16 @@ public class ProgramRegisters {
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {
                 registers[i] = cardsInHand.remove(cardPosition);
+                cardsToRemove.add(i);
                 return i;
             }
         }
         return -1;
+    }
+
+    private void removeCardsFromHand(){
+        while (!cardsToRemove.isEmpty())
+            cardsInHand.remove(cardsToRemove.poll());
     }
 
     public boolean isLocked(int register) {
