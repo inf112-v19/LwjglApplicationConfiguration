@@ -138,6 +138,7 @@ public class PlayerTest {
             player.takeDamage();
 
         // Only cards in hand are returned:
+
         ArrayList<ProgramCard> cardsReturned = player.getRegisters().returnCards();
         assertEquals(4, cardsReturned.size());
 

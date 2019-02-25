@@ -49,17 +49,22 @@ public abstract class MovableGameObject extends GameObject {
     }
 
     public void move(int steps) {
+        for(int i = 0 ; i < steps; i++)
+            move();
+    }
+
+    private void move(){
         switch (direction){
             case NORTH:
-                moveY(getY() + steps); break;
+                moveY(getY() + 1); break;
             case SOUTH:
-                moveY(getY() - steps); break;
+                moveY(getY() - 1); break;
             case EAST:
-                moveX(getX() + steps); break;
+                moveX(getX() + 1); break;
             case WEST:
-                moveX(getX() - steps); break;
-
+                moveX(getX() - 1); break;
         }
+
     }
 
     /**

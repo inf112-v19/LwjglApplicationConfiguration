@@ -25,27 +25,34 @@ public class Board {
     private TiledMapTileLayer beltLayer;
     private TiledMapTileLayer laserLayer;
     private TiledMapTileLayer wallLayer;
+    private ArrayList<Player> players;
 
     private Array<GameObject> flags;
 
 
     public Board(String mapPath) {
         flags = new Array<>();
-        flags.add(new Flag(1,10,1));
-        flags.add(new Flag(1,2,2));
-        flags.add(new Flag(6,10,3));
-
-
-
+        flags.add(new Flag(1, 10, 1));
+        flags.add(new Flag(1, 2, 2));
+        flags.add(new Flag(6, 10, 3));
 
         loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
         parameters.flipY = true;
         map = loader.load(mapPath, parameters);
         mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
-
         createLayers();
+
+
+        Player player1 = new Player("Player1", 2, 2, Direction.NORTH);
+
+        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH);
+
+        players = new ArrayList<>();
+        players.add(player1);
+        players.add(player2);
     }
+
 
     private void createLayers() {
         beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
@@ -59,12 +66,12 @@ public class Board {
         mapRenderer.render();
     }
 
-    public void dispose(){
+    public void dispose() {
         map.dispose();
     }
 
     public void update(Player player) {
-        if(player.moved) {
+        if (player.moved) {
             if (canGo(player))
                 player.move(1);
             boardInteractsWithPlayer(player);
@@ -72,49 +79,53 @@ public class Board {
 
     }
 
-    public boolean canGo(MovableGameObject gameObject){
+    public boolean canGo(MovableGameObject gameObject) {
         Direction direction = gameObject.getDirection();
         // first check the current tile:
         int newX = gameObject.getX();
         int newY = gameObject.getY();
 
         // check this tile:
-        TiledMapTileLayer.Cell currentCell =  getWallLayer().getCell(newX,newY);
+        TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(newX, newY);
         List<String> walls = new ArrayList<>();
-        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
+        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
             walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
         }
-        if (walls.contains(direction.toString())){
+        if (walls.contains(direction.toString())) {
             System.out.println("Hit a wall!(here)");
             return false;
         }
 
         // move new position to target tile:
-        switch (direction){
+        switch (direction) {
             case NORTH:
-                newY++; break;
+                newY++;
+                break;
             case SOUTH:
-                newY--; break;
+                newY--;
+                break;
             case WEST:
-                newX--; break;
+                newX--;
+                break;
             case EAST:
-                newX++; break;
+                newX++;
+                break;
         }
 
         // check target tile:
-        if(newX < 0 || newY < 0 || getWidth() <= newX || getHeight() <= newY)
+        if (newX < 0 || newY < 0 || getWidth() <= newX || getHeight() <= newY)
             return false;
 
         walls = new ArrayList<>();
         TiledMapTileLayer.Cell targetCell = wallLayer.getCell(newX, newY);
 
-        if(targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
+        if (targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
             walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
         }
 
         Direction oppositeDirection = direction.getOppositeDirection();
 
-        if (walls.contains(oppositeDirection.toString())){
+        if (walls.contains(oppositeDirection.toString())) {
             System.out.println("Hit a wall!(next)");
             return false;
         }
@@ -123,13 +134,14 @@ public class Board {
     }
     // helper method for canGo()
 
-    public List<String> splitBySpace(String strToSplit){
+    public List<String> splitBySpace(String strToSplit) {
         List<String> splitList;
-        String [] items = strToSplit.split(" ");
+        String[] items = strToSplit.split(" ");
         splitList = Arrays.asList(items);
         return splitList;
     }
-    public void boardInteractsWithPlayer(Player player){
+
+    public void boardInteractsWithPlayer(Player player) {
         if (player == null) return;
 
 
@@ -138,48 +150,60 @@ public class Board {
         int x = player.getX();
         int y = player.getY();
 
-        if(lasersHit(x, y)) {
+        if (lasersHit(x, y)) {
             System.out.println("Ouch!");
             player.takeDamage();
         }
-        if(playerIsOffTheBoard(x, y)) {
+        if (playerIsOffTheBoard(x, y)) {
             player.destroy();
         }
     }
+
 
     private void beltsMove(Player player){
         // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
         if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if(canGo(player)) {
+            if (canGo(player)) {
                 player.moveInDirection(dir);
             }
         }
     }
-    private boolean lasersHit(int x, int y){
+
+    private boolean lasersHit(int x, int y) {
         TiledMapTileLayer.Cell currentCell = laserLayer.getCell(x, y);
         return currentCell != null && currentCell.getTile().getProperties().containsKey("Laser");
     }
 
-    private boolean playerIsOffTheBoard(int x, int y){
-        return  !floorLayer.getCell(x,y).getTile().getProperties().containsKey("Floor");
+    private boolean playerIsOffTheBoard(int x, int y) {
+        return !floorLayer.getCell(x, y).getTile().getProperties().containsKey("Floor");
     }
 
-    public TiledMapTileLayer getWallLayer(){
+    public TiledMapTileLayer getWallLayer() {
         return this.wallLayer;
     }
 
-    public int getWidth(){
+    public int getWidth() {
         return this.floorLayer.getWidth();
     }
 
-    public int getHeight(){
+    public int getHeight() {
         return this.floorLayer.getHeight();
     }
 
-    public void drawFlags(SpriteBatch batch){
-        for(GameObject o : flags)
+    public ArrayList<Player> getPlayers() {
+        return this.players;
+    }
+
+    public void drawFlags(SpriteBatch batch) {
+        for (GameObject o : flags)
             o.getSprite().draw(batch);
+    }
+
+    public void drawPlayers(SpriteBatch batch) {
+        for (Player player : players) {
+            player.getSprite().draw(batch);
+        }
     }
 }

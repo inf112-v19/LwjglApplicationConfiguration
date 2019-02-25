@@ -11,7 +11,7 @@ public class ProgramCard implements Comparable {
     private int moveDistance;
     private int priority;
 
-    private ProgramCard(Rotate rotate, int moveDistance, int priority){
+    public ProgramCard(Rotate rotate, int moveDistance, int priority){
         this.rotate = rotate;
         this.moveDistance = moveDistance;
         this.priority = priority;

@@ -39,7 +39,6 @@ public class ProgramRegisters {
     public ProgramCard getCardInRegister(int register) {
         return registers[register];
     }
-
     public ArrayList<ProgramCard> getCardsInRegisters() {
         ArrayList<ProgramCard> list = new ArrayList<>();
         for (ProgramCard pc : registers)

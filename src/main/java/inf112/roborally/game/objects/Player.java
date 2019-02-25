@@ -2,10 +2,13 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
+import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.ProgramRegisters;
 import inf112.roborally.game.world.Direction;
 
-public class  Player extends MovableGameObject {
+
+public class Player extends MovableGameObject {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
 
@@ -30,8 +33,10 @@ public class  Player extends MovableGameObject {
         registers = new ProgramRegisters();
     }
 
-    /** FOR TESTING ONLY */
-    public Player(int x, int y){
+    /**
+     * FOR TESTING ONLY
+     */
+    public Player(int x, int y) {
         super(x, y, "assets/robot/tvBot.png");
         damage = 0;
         lives = MAX_LIVES;
@@ -41,11 +46,12 @@ public class  Player extends MovableGameObject {
     @Override
     public void updateSprite() {
         boolean flipSprite = false;
-        switch (getDirection()){
+        switch (getDirection()) {
             case SOUTH:
                 flipSprite = true;
             case NORTH:
-                rotationDegree = 270; break;
+                rotationDegree = 270;
+                break;
             case WEST:
                 flipSprite = true;
             case EAST:
@@ -57,26 +63,59 @@ public class  Player extends MovableGameObject {
     }
 
 
-    public void update(){
+    public void update() {
         handleInput();
 
-        if (isDestroyed() && !outOfLives()){
+        if (isDestroyed() && !outOfLives()) {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
             repairAllDamage();
             backup.movePlayer(this);
-            }
-        else if (isDestroyed() && outOfLives()){
+        } else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");
         }
         updateSprite();
     }
 
+
+    /*
+     Takes in an int which corresponds to the spot in the register.
+     That way we don't need to remove the card from the player in another class and put it back in through
+     another method. Keep?
+    */
+    public void execute(int spotInRegister) {
+        if (spotInRegister < 0 || spotInRegister >= registers.NUMBER_OF_REGISTERS) {
+            System.out.println(spotInRegister + " is not between 0 and " + (registers.NUMBER_OF_REGISTERS - 1));
+            return;
+        }
+        /*else if(!registerIsFull()){
+            System.out.println("Need to fill your register before executing!");
+            return;
+        }*/
+
+        ProgramCard cardToExecute = registers.getCardInRegister(spotInRegister);
+        System.out.println("Card in reg: " + cardToExecute.toString());
+        if (cardToExecute.getRotate() == Rotate.NONE) {
+            move(cardToExecute.getMoveDistance());
+        } else {
+            setDirection(getDirection().rotate(cardToExecute.getRotate()));
+        }
+    }
+
+    public void execute(ProgramCard programCard) {
+        if (programCard.getRotate() == Rotate.NONE) {
+            move(programCard.getMoveDistance());
+        } else {
+            setDirection(getDirection().rotate(programCard.getRotate()));
+        }
+    }
+
     public void repairAllDamage() {
         registers.unlockRegisters();
         damage = 0;
     }
+
 
     public void handleInput() {
         //Just for testing
@@ -106,8 +145,8 @@ public class  Player extends MovableGameObject {
         }
     }
 
-    public void destroy(){
-        damage = MAX_DAMAGE +1;
+    public void destroy() {
+        damage = MAX_DAMAGE + 1;
     }
 
     public boolean isDestroyed() {
@@ -118,8 +157,9 @@ public class  Player extends MovableGameObject {
         return lives <= 0;
     }
 
+
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
 
@@ -128,14 +168,14 @@ public class  Player extends MovableGameObject {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public GameObject getBackup() {
         return backup;
     }
 
-    public ProgramRegisters getRegisters(){
+    public ProgramRegisters getRegisters() {
         return registers;
     }
 
