@@ -21,4 +21,6 @@ public class Flag extends GameObject {
         int size = 150;
         sprite.setRegion(new TextureRegion(sprite.getTexture(),450-flagNumber*size, 0, size, size));
     }
+
+    public int getFlagNumber() { return flagNumber; }
 }

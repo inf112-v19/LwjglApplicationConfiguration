@@ -17,13 +17,18 @@ public class Player extends MovableGameObject {
     private int damage;
     private Backup backup;
     private ProgramRegisters registers;
+    private int flagCounter;
+    private boolean flagsFound[];
 
 
-    public Player(String name, int x, int y, Direction direction) {
+    public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {
         super(x, y, "assets/robot/tvBot.png");
         this.name = name;
         damage = 0;
         lives = MAX_LIVES;
+
+        flagCounter = 0;
+        flagsFound = new boolean [numberOfFlagsOnBoards];
 
         setDirection(direction);
         makeSprite();
@@ -145,6 +150,21 @@ public class Player extends MovableGameObject {
         }
     }
 
+    public void addFlag(int flagNumber) {
+        flagsFound[flagNumber-1] = true;
+    }
+
+    // Iterates over the booleanArray which keeps track of how many  of the flags
+    // have been found. If one of the array positions is false, then
+    // this will return false
+    public boolean thisPlayerHasWon() {
+        boolean result = true;
+        for(boolean b : flagsFound) {
+            result = b;
+        }
+        return result;
+    }
+
     public void destroy() {
         damage = MAX_DAMAGE + 1;
     }
@@ -178,6 +198,8 @@ public class Player extends MovableGameObject {
     public ProgramRegisters getRegisters() {
         return registers;
     }
+
+    public void incrementFlagCounter() { flagCounter++; }
 
     @Override
     public String toString() {
