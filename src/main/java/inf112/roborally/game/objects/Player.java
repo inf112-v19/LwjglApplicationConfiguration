@@ -17,13 +17,18 @@ public class Player extends MovableGameObject {
     private int damage;
     private Backup backup;
     private ProgramRegisters registers;
+    private int flagCounter;
+    private boolean[] flagsFound;
 
 
-    public Player(String name, int x, int y, Direction direction) {
+    public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {
         super(x, y, "assets/robot/tvBot.png");
         this.name = name;
         damage = 0;
         lives = MAX_LIVES;
+
+        flagCounter = 0;
+        flagsFound = new boolean [numberOfFlagsOnBoards];
 
         setDirection(direction);
         makeSprite();
@@ -41,6 +46,10 @@ public class Player extends MovableGameObject {
         damage = 0;
         lives = MAX_LIVES;
         registers = new ProgramRegisters();
+
+        // For testing with flag behaviour, now tests with 3 flags on the board
+        flagCounter = 0;
+        flagsFound = new boolean [3];
     }
 
     @Override
@@ -145,6 +154,34 @@ public class Player extends MovableGameObject {
         }
     }
 
+    public void updateBackup() {
+        this.backup = new Backup(x,y);
+    }
+
+    // TODO Make is so you need to get the flags in order
+    public void addFlag(int flagNumber) {
+        if(flagNumber > flagsFound.length) {
+            // If the flagnumber is greater than the array length, do nothing
+            ;
+        }
+        else if(!flagsFound[flagNumber-1]) {
+            flagsFound[flagNumber-1] = true;
+            flagCounter++;
+        }
+    }
+
+    // Iterates over the booleanArray which keeps track of how many  of the flags
+    // have been found. If one of the array positions is false, then
+    // this will return false
+    public boolean thisPlayerHasWon() {
+        for(boolean b : flagsFound) {
+            if(!b) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void destroy() {
         damage = MAX_DAMAGE + 1;
     }
@@ -167,6 +204,10 @@ public class Player extends MovableGameObject {
         return this.lives;
     }
 
+    public int getFlagCounter() {
+        return this.flagCounter;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -178,6 +219,11 @@ public class Player extends MovableGameObject {
     public ProgramRegisters getRegisters() {
         return registers;
     }
+
+    public boolean[] getFlagsFound() {
+        return this.flagsFound;
+    }
+
 
     @Override
     public String toString() {
