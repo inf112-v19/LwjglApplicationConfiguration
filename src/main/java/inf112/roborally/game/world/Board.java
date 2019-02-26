@@ -9,6 +9,7 @@ import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.MovableGameObject;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.objects.RepairSite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +27,7 @@ public class Board {
     private TiledMapTileLayer wallLayer;
     private ArrayList<Player> players;
 
+    private ArrayList<RepairSite> repairSites;
     private Array<Flag> flags;
 
 
@@ -34,6 +36,9 @@ public class Board {
         flags.add(new Flag(1, 10, 1));
         flags.add(new Flag(6, 2, 2));
         flags.add(new Flag(6, 10, 3));
+
+        repairSites = new ArrayList<>();
+        repairSites.add(new RepairSite(5, 2));
 
         loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
@@ -218,9 +223,13 @@ public class Board {
         return this.players;
     }
 
-    public void drawFlags(SpriteBatch batch) {
-        for (Flag o : flags)
+    public void drawGameObjects(SpriteBatch batch) {
+        for (Flag o : flags) {
             o.getSprite().draw(batch);
+        }
+        for (RepairSite rs : repairSites) {
+            rs.getSprite().draw(batch);
+        }
     }
 
     // TODO Draw backups by itself?
