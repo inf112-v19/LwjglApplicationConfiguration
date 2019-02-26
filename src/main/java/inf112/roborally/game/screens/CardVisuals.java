@@ -20,7 +20,7 @@ public class CardVisuals extends Sprite {
         super();
         setBounds(0,0, CARD_WIDTH, CARD_HEIGHT);
         setSize(CARD_WIDTH/10, CARD_HEIGHT/10);
-        cardTextures = new Texture("assets/cards/cardTextures.png");
+        cardTextures = new Texture("assets/cards/front.png");
         move = new ArrayList<>();
         rotate = new ArrayList<>();
         addRegionsToList(move, 0,0, 4);
