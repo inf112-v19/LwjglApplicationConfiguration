@@ -1,6 +1,6 @@
-## Roborally cards
+# Roborally cards
 
-# Card Size
+## Card Size
 Width : 640px
 Height: 890px
 
