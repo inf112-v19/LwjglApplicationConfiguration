@@ -34,23 +34,32 @@ public class CardVisuals extends Sprite {
     }
 
     public void drawCard(ProgramCard programCard, int x, int y, SpriteBatch batch) {
-        switch (programCard.getRotate()){
-            case UTURN:
-                setRegion(rotate.get(0)); break;
-            case LEFT:
-                setRegion(rotate.get(1)); break;
-            case RIGHT:
-                setRegion(rotate.get(2)); break;
-            case NONE:
-                if(programCard.getMoveDistance() == -1) {
-                    setRegion(move.get(0));
-                }
-                else {
-                    setRegion(move.get(programCard.getMoveDistance()));
-                }
-        }
-        setPosition(x, y);
+        setSpriteToCard(programCard, x, y);
         draw(batch);
     }
 
+    public TextureRegion getRegion(ProgramCard programCard){
+        switch (programCard.getRotate()){
+            case UTURN:
+                return rotate.get(0);
+            case LEFT:
+                return rotate.get(1);
+            case RIGHT:
+                return rotate.get(2);
+            case NONE:
+                if(programCard.getMoveDistance() == -1) {
+                    return move.get(0);
+                }
+                else {
+                    return move.get(programCard.getMoveDistance());
+                }
+        }
+        return null;
+    }
+
+    public Sprite setSpriteToCard(ProgramCard programCard, int x, int y){
+        setRegion(getRegion(programCard));
+        setPosition(x, y);
+        return this;
+    }
 }
