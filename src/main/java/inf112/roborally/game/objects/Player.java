@@ -46,6 +46,10 @@ public class Player extends MovableGameObject {
         damage = 0;
         lives = MAX_LIVES;
         registers = new ProgramRegisters();
+
+        // For testing with flag behaviour, now tests with 3 flags on the board
+        flagCounter = 0;
+        flagsFound = new boolean [3];
     }
 
     @Override
@@ -151,7 +155,10 @@ public class Player extends MovableGameObject {
     }
 
     public void addFlag(int flagNumber) {
-        flagsFound[flagNumber-1] = true;
+        if(!flagsFound[flagNumber-1]) {
+            flagsFound[flagNumber-1] = true;
+            flagCounter++;
+        }
     }
 
     // Iterates over the booleanArray which keeps track of how many  of the flags
@@ -187,6 +194,10 @@ public class Player extends MovableGameObject {
         return this.lives;
     }
 
+    public int getFlagCounter() {
+        return this.flagCounter;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -199,7 +210,6 @@ public class Player extends MovableGameObject {
         return registers;
     }
 
-    public void incrementFlagCounter() { flagCounter++; }
 
     @Override
     public String toString() {

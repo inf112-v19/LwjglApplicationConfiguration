@@ -169,7 +169,6 @@ public class Board {
         // If flagInPlayerPos is greater than 0, it means that a flag is found, and it is
         // the flags number
         if(flagInPlayerPos > 0) {
-            player.incrementFlagCounter();
             player.addFlag(flagInPlayerPos);
             System.out.printf("%s found a flag!%n", player.getName());
         }
