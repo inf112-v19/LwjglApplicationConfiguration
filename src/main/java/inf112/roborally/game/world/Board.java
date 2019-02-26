@@ -1,13 +1,11 @@
 package inf112.roborally.game.world;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import inf112.roborally.game.objects.Flag;
-import inf112.roborally.game.objects.GameObject;
 import inf112.roborally.game.objects.MovableGameObject;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.Main;
@@ -34,7 +32,7 @@ public class Board {
     public Board(String mapPath) {
         flags = new Array<>();
         flags.add(new Flag(1, 10, 1));
-        flags.add(new Flag(1, 2, 2));
+        flags.add(new Flag(6, 2, 2));
         flags.add(new Flag(6, 10, 3));
 
         loader = new TmxMapLoader();
@@ -77,11 +75,9 @@ public class Board {
                 player.move(1);
             boardInteractsWithPlayer(player);
         }
-
-        for(Player payer : getPlayers()) {
-            if(player.thisPlayerHasWon()) {
-                System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
-            }
+        
+        if(player.thisPlayerHasWon()) {
+            System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
         }
 
     }
@@ -164,7 +160,7 @@ public class Board {
         if (playerIsOffTheBoard(x, y)) {
             player.destroy();
         }
-        int flagInPlayerPos = posHasFlagInIt(player.getX(), player.getY());
+        int flagInPlayerPos = posHasFlagOnIt(player.getX(), player.getY());
 
         // If flagInPlayerPos is greater than 0, it means that a flag is found, and it is
         // the flags number
@@ -197,7 +193,7 @@ public class Board {
 
     // Check the position if there is a flag there
     // Return the flagnumber if true, else return -1
-    public int posHasFlagInIt(int x, int y) {
+    public int posHasFlagOnIt(int x, int y) {
         for(Flag f : flags) {
             if(f.getX() == x && f.getY() == y) {
                 return f.getFlagNumber();
@@ -227,9 +223,13 @@ public class Board {
             o.getSprite().draw(batch);
     }
 
+    // TODO Draw backups by itself?
+    // Also draws backups
     public void drawPlayers(SpriteBatch batch) {
         for (Player player : players) {
+            player.getBackup().getSprite().draw(batch);
             player.getSprite().draw(batch);
         }
     }
+
 }

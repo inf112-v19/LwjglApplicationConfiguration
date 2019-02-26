@@ -154,10 +154,15 @@ public class Player extends MovableGameObject {
         }
     }
 
+    public void updateBackup() {
+        this.backup = new Backup(x,y);
+    }
+
     public void addFlag(int flagNumber) {
         if(!flagsFound[flagNumber-1]) {
             flagsFound[flagNumber-1] = true;
             flagCounter++;
+            updateBackup();
         }
     }
 
@@ -165,11 +170,12 @@ public class Player extends MovableGameObject {
     // have been found. If one of the array positions is false, then
     // this will return false
     public boolean thisPlayerHasWon() {
-        boolean result = true;
         for(boolean b : flagsFound) {
-            result = b;
+            if(!b) {
+                return false;
+            }
         }
-        return result;
+        return true;
     }
 
     public void destroy() {
@@ -208,6 +214,10 @@ public class Player extends MovableGameObject {
 
     public ProgramRegisters getRegisters() {
         return registers;
+    }
+
+    public boolean[] getFlagsFound() {
+        return this.flagsFound;
     }
 
 
