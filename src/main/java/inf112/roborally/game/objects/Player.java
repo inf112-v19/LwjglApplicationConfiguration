@@ -160,7 +160,11 @@ public class Player extends MovableGameObject {
 
     // TODO Make is so you need to get the flags in order
     public void addFlag(int flagNumber) {
-        if(!flagsFound[flagNumber-1]) {
+        if(flagNumber > flagsFound.length) {
+            // If the flagnumber is greater than the array length, do nothing
+            ;
+        }
+        else if(!flagsFound[flagNumber-1]) {
             flagsFound[flagNumber-1] = true;
             flagCounter++;
         }
