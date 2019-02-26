@@ -1,5 +1,6 @@
 package inf112.roborally.game.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
@@ -50,7 +51,7 @@ public class Board {
 
         Player player1 = new Player("Player1", 2, 2, Direction.NORTH, flags.size);
 
-//        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH);
+//        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH, flags.size);
 
         players = new ArrayList<>();
         players.add(player1);
@@ -83,6 +84,8 @@ public class Board {
         
         if(player.thisPlayerHasWon()) {
             System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
+            // Might not be necessary to exit the game when it's finished
+            Gdx.app.exit();
         }
 
     }

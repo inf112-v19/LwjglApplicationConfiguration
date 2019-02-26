@@ -69,4 +69,12 @@ public class FlagsFoundTest {
         assertFalse(player.thisPlayerHasWon());
     }
 
+    @Test
+    public void flagNumberDoesNotExceedNumberOfFlags() {
+        player.addFlag(1);
+        player.addFlag(2);
+        player.addFlag(3);
+        player.addFlag(4);
+        assertEquals(3, player.getFlagCounter());
+    }
 }
