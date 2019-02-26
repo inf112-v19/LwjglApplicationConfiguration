@@ -46,11 +46,11 @@ public class Board {
 
         Player player1 = new Player("Player1", 2, 2, Direction.NORTH);
 
-        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH);
+//        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH);
 
         players = new ArrayList<>();
         players.add(player1);
-        players.add(player2);
+//        players.add(player2);
     }
 
 
