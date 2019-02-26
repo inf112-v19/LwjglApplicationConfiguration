@@ -18,7 +18,7 @@ public class Player extends MovableGameObject {
     private Backup backup;
     private ProgramRegisters registers;
     private int flagCounter;
-    private boolean flagsFound[];
+    private boolean[] flagsFound;
 
 
     public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {
@@ -158,11 +158,11 @@ public class Player extends MovableGameObject {
         this.backup = new Backup(x,y);
     }
 
+    // TODO Make is so you need to get the flags in order
     public void addFlag(int flagNumber) {
         if(!flagsFound[flagNumber-1]) {
             flagsFound[flagNumber-1] = true;
             flagCounter++;
-            updateBackup();
         }
     }
 

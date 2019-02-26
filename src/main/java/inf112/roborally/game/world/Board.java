@@ -165,13 +165,18 @@ public class Board {
         if (playerIsOffTheBoard(x, y)) {
             player.destroy();
         }
-        int flagInPlayerPos = posHasFlagOnIt(player.getX(), player.getY());
+        int flagInPlayerPos = posHasFlagOnIt(x, y);
 
         // If flagInPlayerPos is greater than 0, it means that a flag is found, and it is
         // the flags number
         if(flagInPlayerPos > 0) {
             player.addFlag(flagInPlayerPos);
+            player.updateBackup();
             System.out.printf("%s found a flag!%n", player.getName());
+        }
+
+        if(playerIsOnRepair(x,y)) {
+            player.updateBackup();
         }
     }
 
@@ -198,7 +203,7 @@ public class Board {
 
     // Check the position if there is a flag there
     // Return the flagnumber if true, else return -1
-    public int posHasFlagOnIt(int x, int y) {
+    private int posHasFlagOnIt(int x, int y) {
         for(Flag f : flags) {
             if(f.getX() == x && f.getY() == y) {
                 return f.getFlagNumber();
@@ -206,6 +211,16 @@ public class Board {
         }
         return -1;
     }
+
+    private boolean playerIsOnRepair(int x, int y) {
+        for(RepairSite rs : repairSites) {
+            if(rs.getX() == x && rs.getY() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public TiledMapTileLayer getWallLayer() {
         return this.wallLayer;
