@@ -12,8 +12,7 @@ public class CardVisuals extends Sprite {
     final int CARD_WIDTH = 640;
     final int CARD_HEIGHT = 890;
 
-    Texture back;
-    Texture front;
+    Texture cardTextures;
     ArrayList<TextureRegion> move;
     ArrayList<TextureRegion> rotate;
 
@@ -21,8 +20,7 @@ public class CardVisuals extends Sprite {
         super();
         setBounds(0,0, CARD_WIDTH, CARD_HEIGHT);
         setSize(CARD_WIDTH/10, CARD_HEIGHT/10);
-        back = new Texture("assets/cards/back.png");
-        front = new Texture("assets/cards/front.png");
+        cardTextures = new Texture("assets/cards/cardTextures.png");
         move = new ArrayList<>();
         rotate = new ArrayList<>();
         addRegionsToList(move, 0,0, 4);
@@ -31,7 +29,7 @@ public class CardVisuals extends Sprite {
 
     public void addRegionsToList(ArrayList<TextureRegion> list, int x, int y, int nRegions){
         for(int i = 0; i < nRegions; i++){
-            list.add(new TextureRegion(front, x+CARD_WIDTH*i, CARD_HEIGHT*y, CARD_WIDTH, CARD_HEIGHT));
+            list.add(new TextureRegion(cardTextures, x+CARD_WIDTH*i, CARD_HEIGHT*y, CARD_WIDTH, CARD_HEIGHT));
         }
     }
 
