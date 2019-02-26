@@ -22,6 +22,8 @@ public class Main {
         cfg.title = "RoboRally";
         cfg.width = 1280/3*2;
         cfg.height = 720/3*2;
+//        cfg.width = 1280;
+//        cfg.height = 720;
 
         new LwjglApplication(new RoboRallyGame(), cfg);
     }

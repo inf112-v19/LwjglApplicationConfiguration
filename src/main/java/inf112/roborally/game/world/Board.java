@@ -1,15 +1,16 @@
 package inf112.roborally.game.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import inf112.roborally.game.objects.Flag;
-import inf112.roborally.game.objects.GameObject;
 import inf112.roborally.game.objects.MovableGameObject;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.objects.RepairSite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,14 +28,18 @@ public class Board {
     private TiledMapTileLayer wallLayer;
     private ArrayList<Player> players;
 
-    private Array<GameObject> flags;
+    private ArrayList<RepairSite> repairSites;
+    private Array<Flag> flags;
 
 
     public Board(String mapPath) {
         flags = new Array<>();
         flags.add(new Flag(1, 10, 1));
-        flags.add(new Flag(1, 2, 2));
+        flags.add(new Flag(6, 2, 2));
         flags.add(new Flag(6, 10, 3));
+
+        repairSites = new ArrayList<>();
+        repairSites.add(new RepairSite(5, 2));
 
         loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
@@ -44,13 +49,13 @@ public class Board {
         createLayers();
 
 
-        Player player1 = new Player("Player1", 2, 2, Direction.NORTH);
+        Player player1 = new Player("Player1", 2, 2, Direction.NORTH, flags.size);
 
-        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH);
+//        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH, flags.size);
 
         players = new ArrayList<>();
         players.add(player1);
-        players.add(player2);
+//        players.add(player2);
     }
 
 
@@ -75,6 +80,12 @@ public class Board {
             if (canGo(player))
                 player.move(1);
             boardInteractsWithPlayer(player);
+        }
+        
+        if(player.thisPlayerHasWon()) {
+            System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
+            // Might not be necessary to exit the game when it's finished
+            Gdx.app.exit();
         }
 
     }
@@ -157,6 +168,19 @@ public class Board {
         if (playerIsOffTheBoard(x, y)) {
             player.destroy();
         }
+        int flagInPlayerPos = posHasFlagOnIt(x, y);
+
+        // If flagInPlayerPos is greater than 0, it means that a flag is found, and it is
+        // the flags number
+        if(flagInPlayerPos > 0) {
+            player.addFlag(flagInPlayerPos);
+            player.updateBackup();
+            System.out.printf("%s found a flag!%n", player.getName());
+        }
+
+        if(playerIsOnRepair(x,y)) {
+            player.updateBackup();
+        }
     }
 
 
@@ -180,6 +204,27 @@ public class Board {
         return !floorLayer.getCell(x, y).getTile().getProperties().containsKey("Floor");
     }
 
+    // Check the position if there is a flag there
+    // Return the flagnumber if true, else return -1
+    private int posHasFlagOnIt(int x, int y) {
+        for(Flag f : flags) {
+            if(f.getX() == x && f.getY() == y) {
+                return f.getFlagNumber();
+            }
+        }
+        return -1;
+    }
+
+    private boolean playerIsOnRepair(int x, int y) {
+        for(RepairSite rs : repairSites) {
+            if(rs.getX() == x && rs.getY() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public TiledMapTileLayer getWallLayer() {
         return this.wallLayer;
     }
@@ -196,14 +241,22 @@ public class Board {
         return this.players;
     }
 
-    public void drawFlags(SpriteBatch batch) {
-        for (GameObject o : flags)
+    public void drawGameObjects(SpriteBatch batch) {
+        for (Flag o : flags) {
             o.getSprite().draw(batch);
+        }
+        for (RepairSite rs : repairSites) {
+            rs.getSprite().draw(batch);
+        }
     }
 
+    // TODO Draw backups by itself?
+    // Also draws backups
     public void drawPlayers(SpriteBatch batch) {
         for (Player player : players) {
+            player.getBackup().getSprite().draw(batch);
             player.getSprite().draw(batch);
         }
     }
+
 }

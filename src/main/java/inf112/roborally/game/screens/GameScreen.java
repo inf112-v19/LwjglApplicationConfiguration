@@ -10,10 +10,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.GameLogic;
 import inf112.roborally.game.Hud;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
-import inf112.roborally.game.world.Direction;
 
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
@@ -65,7 +63,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         board.drawPlayers(batch);
-        board.drawFlags(batch);
+        board.drawGameObjects(batch);
 
         batch.end();
 
