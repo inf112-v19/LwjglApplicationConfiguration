@@ -3,14 +3,13 @@ package inf112.roborally.game;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Stack;
+import java.util.*;
 
 
 public class GameLogic {
 
-    public static boolean canEditCards = false; // Public boolean to let players know if the can edit cards or not?
+    boolean roundOver;
+    int phase;
 
     private Hud hud;
     private Board board;
@@ -19,20 +18,28 @@ public class GameLogic {
     private ArrayList<Player> players;
     private Stack<ProgramCard> returnedProgramCards;
 
+    private Player player1;
+
     public GameLogic(Board board, Hud hud) {
         stackOfProgramCards = ProgramCard.makeStack();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
+        player1 = players.get(0);
         this.board = board;
         this.hud = hud;
 
-        //TODO: Player choosing which direction to face needs to happen when the game initially starts.
+        roundOver = true;
+        phase = 0;
 
-        doBeforeRound();
+        update();
+
+        //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
 
     public void doBeforeRound() {
+        phase = 0;
+
         for (Player currentPlayer : players) {
             //Retrieve cards from last round
             retrieveCardsFromPlayer(currentPlayer);
@@ -41,14 +48,54 @@ public class GameLogic {
             giveCardsToPlayer(currentPlayer);
         }
 
-
         // Show cards
         // Choose cards to use for the round
         // Validate the choice
 
-
+        roundOver = false;
     }
 
+    public void update() {
+        if (roundOver) {
+            System.out.println("set up before round");
+            doBeforeRound();
+            System.out.println("player chosing cards");
+        } else if (!playerReady(player1)) {
+            // choosing cards
+        } else {
+            if(phase < 5) {
+                System.out.println("executing phase " + phase);
+                board.executeCard(player1, player1.getRegisters().getCardInRegister(phase));
+                board.updateBoard();
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                phase++;
+            } else {
+                roundOver = true;
+                System.out.println("round over");
+            }
+            hud.update(player1);
+
+
+            // after phase is over :
+        }
+    }
+
+    public boolean playerReady(Player player){
+        return player.getRegisters().registerIsFull();
+    }
+
+    public boolean playersReady() {
+        for (Player player : players) {
+            if (!player.getRegisters().registerIsFull()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /*
      * Let the players choose which direction to face.

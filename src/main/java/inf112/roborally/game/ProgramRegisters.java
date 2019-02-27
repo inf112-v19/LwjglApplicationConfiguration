@@ -3,6 +3,8 @@ package inf112.roborally.game;
 import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
 public class ProgramRegisters {
     public static final int NUMBER_OF_REGISTERS = 5;
@@ -11,12 +13,14 @@ public class ProgramRegisters {
     private int unlockedRegisters;
     private ProgramCard[] registers;
     private ArrayList<ProgramCard> cardsInHand;
+    private PriorityQueue<Integer> cardsToRemove;
 
 
     public ProgramRegisters() {
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
         cardsInHand = new ArrayList<>();
+        cardsToRemove = new PriorityQueue<>(5, Collections.reverseOrder());
     }
 
     public void receiveCard(ProgramCard programCard) {
@@ -39,6 +43,7 @@ public class ProgramRegisters {
     public ProgramCard getCardInRegister(int register) {
         return registers[register];
     }
+
     public ArrayList<ProgramCard> getCardsInRegisters() {
         ArrayList<ProgramCard> list = new ArrayList<>();
         for (ProgramCard pc : registers)
@@ -49,8 +54,9 @@ public class ProgramRegisters {
 
     public ArrayList<ProgramCard> returnCards(){
         for(int i = 0; i < unlockedRegisters; i++) {
-            if(registers[i] != null)
+            if(registers[i] != null) {
                 cardsInHand.add(registers[i]);
+            }
             registers[i] = null;
         }
         return cardsInHand;
@@ -64,12 +70,20 @@ public class ProgramRegisters {
         unlockedRegisters = NUMBER_OF_REGISTERS;
     }
 
-    public void pickCard(int cardPosition) {
+    public int pickCard(int cardPosition) {
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {
-                registers[i] = cardsInHand.remove(cardPosition);
-                return;
+                registers[i] = cardsInHand.remove(cardPosition); //get
+                return i;
             }
+        }
+        return -1;
+    }
+
+    public void removeCardsFromHand(){
+        while (!cardsToRemove.isEmpty()) {
+            System.out.println(cardsToRemove.peek());
+            cardsInHand.remove(cardsToRemove.poll());
         }
     }
 

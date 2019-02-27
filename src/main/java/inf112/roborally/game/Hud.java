@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.objects.Rotate;
 
 import java.util.ArrayList;
 
@@ -32,11 +31,12 @@ public class Hud {
     private Integer damage;
     Label livesLabel;
     Label damageLabel;
+    final Player player;
 
-    public Hud(SpriteBatch sb, final ArrayList<Player> players){
-        final Player player1 = players.get(0);
-        lives = player1.getLives();
-        damage = player1.getDamage();
+    public Hud(SpriteBatch sb, final Player player){
+        this.player = player;
+        lives = player.getLives();
+        damage = player.getDamage();
         cards = 0;
 
 
@@ -141,29 +141,17 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(!player.getRegisters().registerIsFull()) {
+                    printCards(player);
+                    System.out.println("Cards in hand: " + player.getRegisters().getCardsInHand().size());
+                    System.out.println("Register size: " + player.getRegisters().getCardsInRegisters().size());
+
+                    System.out.println(player.getRegisters().pickCard(0));
+                    System.out.println(player.getRegisters().getCardsInHand().get(0));
                 System.out.println("Button1");
 
-                // test:
-                player1.execute(new ProgramCard(Rotate.LEFT, 0, 0));
 
-                //player1.pickCard(0);
-                //ProgramCard cardFromRegister = player1.getCardInRegister(0);
-                //player1.execute(cardFromRegister);
-
-                //--
-                //printCards(player1);
-                //int posInRegister = player1.pickCard(0);
-                //player1.execute(posInRegister);
-
-                /*
-                Instead of using pickCard right away we could just save the card numbers that are picked.
-                Once all 5 numbers have been chosen and the player has locked it in - then we start using pickCard
-                and such? It would make it easier for us to unpick and pick cards since all we have to do is
-                check if the number we are picking is already in the list of picked numbers or not. If it is, then we
-                remove it (because then the player has chosen that card number earlier and wants to remove it now),
-                if not we add it to the list and make sure that the list can not be longer than 5 numbers.
-                 */
-
+                }
             }
 
         });
@@ -171,9 +159,7 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Button2");
-                //test:
-                player1.execute(new ProgramCard(Rotate.NONE, 1, 0));
+                System.out.println(player.getRegisters().pickCard(1));
 
             }
 
@@ -182,9 +168,7 @@ public class Hud {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Button3");
-                // test:
-                player1.execute(new ProgramCard(Rotate.RIGHT, 0, 0));
+                System.out.println(player.getRegisters().pickCard(2));
 
             }
 
@@ -202,7 +186,6 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button5");
-                player1.execute(new ProgramCard(Rotate.UTURN, 0, 0));
 
             }
 
@@ -221,7 +204,6 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button7");
-                player1.execute(new ProgramCard(Rotate.NONE, 1, 0));
             }
 
         });
@@ -231,7 +213,6 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button8");
-                player1.execute(new ProgramCard(Rotate.NONE, 2, 0));
             }
 
         });
@@ -241,7 +222,6 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Button9");
-                player1.execute(new ProgramCard(Rotate.NONE, 3, 0));
             }
 
         });

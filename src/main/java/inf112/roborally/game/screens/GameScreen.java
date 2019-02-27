@@ -32,7 +32,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.board = new Board(Main.VAULT);
 
         batch = new SpriteBatch();
-        hud = new Hud(batch, board.getPlayers());
+        hud = new Hud(batch, board.getPlayers().get(0));
 
         this.gameLogic = new GameLogic(board, hud);
 
@@ -62,8 +62,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+
         board.drawPlayers(batch);
         board.drawGameObjects(batch);
+
 
         batch.end();
 
@@ -72,11 +74,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     }
 
     private void update() {
-        for(Player player : board.getPlayers()) {
-            player.update();
-            board.update(player);
-            hud.update(player);
-        }
+        board.update();
+        gameLogic.update();
     }
 
     @Override
