@@ -85,7 +85,8 @@ public class ProgramRegisterTest {
             programRegisters.receiveCard(stack.pop());
         }
         for(int i = 0; i < 5; i++)
-            programRegisters.pickCard(0);
+            programRegisters.pickCard(i);
+        programRegisters.removeCardsFromHand();
         assertEquals(9, programRegisters.returnCards().size());
     }
 

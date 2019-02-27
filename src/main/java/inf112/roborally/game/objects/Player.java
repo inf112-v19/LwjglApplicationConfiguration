@@ -1,9 +1,7 @@
 package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 
-import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.ProgramRegisters;
 import inf112.roborally.game.world.Direction;
 
@@ -72,9 +70,12 @@ public class Player extends MovableGameObject {
     }
 
 
-    public void update() {
-        handleInput();
+    public void moveBackupToPlayerPosition(){
+        backup.move(getX(), getY());
+        backup.updateSprite();
+    }
 
+    public void update() {
         if (isDestroyed() && !outOfLives()) {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
@@ -88,23 +89,18 @@ public class Player extends MovableGameObject {
     }
 
 
-    /*
-     Takes in an int which corresponds to the spot in the register.
-     That way we don't need to remove the card from the player in another class and put it back in through
-     another method. Keep?
-    */
-    public void execute(int spotInRegister) {
+   /* public void execute(int spotInRegister) {
         if (spotInRegister < 0 || spotInRegister >= registers.NUMBER_OF_REGISTERS) {
             System.out.println(spotInRegister + " is not between 0 and " + (registers.NUMBER_OF_REGISTERS - 1));
             return;
         }
-        /*else if(!registerIsFull()){
+        else if(!registerIsFull()){
             System.out.println("Need to fill your register before executing!");
             return;
-        }*/
+        }
 
         ProgramCard cardToExecute = registers.getCardInRegister(spotInRegister);
-        System.out.println("Card in reg: " + cardToExecute.toString());
+        System.out.println("Card in reg " + spotInRegister + ": "  + cardToExecute.toString());
         if (cardToExecute.getRotate() == Rotate.NONE) {
             move(cardToExecute.getMoveDistance());
         } else {
@@ -119,32 +115,10 @@ public class Player extends MovableGameObject {
             setDirection(getDirection().rotate(programCard.getRotate()));
         }
     }
-
+*/
     public void repairAllDamage() {
         registers.unlockRegisters();
         damage = 0;
-    }
-
-
-    public void handleInput() {
-        //Just for testing
-        moved = true;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))) {
-            setDirection(Direction.EAST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))) {
-            setDirection(Direction.WEST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))) {
-            setDirection(Direction.NORTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))) {
-            setDirection(Direction.SOUTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            backup.move(getX(), getY());
-            backup.updateSprite();
-            moved = false;
-        } else {
-            moved = false;
-        }
     }
 
     public void takeDamage() {
