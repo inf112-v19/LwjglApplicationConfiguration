@@ -65,8 +65,11 @@ public class Player extends MovableGameObject {
                 rotationDegree = 180;
                 break;
         }
-        sprite.setFlip(flipSprite, false);
-        super.updateSprite();
+
+        if(sprite != null) {
+            sprite.setFlip(flipSprite, false);
+            super.updateSprite();
+        }
     }
 
 
@@ -80,7 +83,8 @@ public class Player extends MovableGameObject {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
             repairAllDamage();
-            backup.movePlayer(this);
+            if(backup != null)
+                backup.movePlayer(this);
         } else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");

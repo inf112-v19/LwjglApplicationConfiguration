@@ -1,5 +1,6 @@
 package inf112.roborally.game;
 
+import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 

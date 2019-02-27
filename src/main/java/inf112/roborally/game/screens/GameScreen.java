@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.GameLogic;
-import inf112.roborally.game.Hud;
+import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
