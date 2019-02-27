@@ -62,8 +62,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r,g,b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.position.x = player.getSprite().getX();
-        camera.position.y = player.getSprite().getY();
+        camera.position.x = player.getSprite().getX() + player.getSprite().getWidth()/2;
+        camera.position.y = player.getSprite().getY() + player.getSprite().getHeight()/2;
         camera.update();
 
         board.render(camera);

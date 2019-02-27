@@ -9,6 +9,7 @@ import inf112.roborally.game.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
 
 public class RegisterVisuals {
+    private final CardVisuals cardVisual;
     private Player player;
     private ProgramRegisters registers;
     private Sprite board;
@@ -23,16 +24,17 @@ public class RegisterVisuals {
         this.player = player;
         registers = player.getRegisters();
         board = new Sprite(new Texture("assets/cards/programregistertemplate.png"));
-        lifetoken = new Sprite(new Texture("assets/cards/lifetoken.png"));
-        damagetoken = new Sprite(new Texture("assets/cards/damagetoken.png"));
-        locktoken = new Sprite(new Texture("assets/cards/locktoken.png"));
+        lifetoken = new Sprite(new Texture("assets/cards/tokens/lifetoken.png"));
+        damagetoken = new Sprite(new Texture("assets/cards/tokens/damagetoken.png"));
+        locktoken = new Sprite(new Texture("assets/cards/tokens/locktoken.png"));
         card = new Sprite(new Texture("assets/cards/testcard.png"));
 
         board.setSize(board.getWidth()*scale, board.getHeight()*scale);
         lifetoken.setSize(lifetoken.getWidth()*scale, lifetoken.getHeight()*scale);
         locktoken.setSize(locktoken.getWidth()*scale, locktoken.getHeight()*scale);
         damagetoken.setSize(damagetoken.getWidth()*scale, damagetoken.getHeight()*scale);
-        card.setSize(card.getWidth()*scale, card.getHeight()*scale);
+        card.setSize(137*1.33f*scale, 190*1.4f*scale);
+        cardVisual = new CardVisuals();
     }
 
     public void draw(SpriteBatch batch, OrthographicCamera camera, Viewport viewport) {
@@ -76,8 +78,8 @@ public class RegisterVisuals {
     private void drawCardsInRegisters(SpriteBatch batch) {
         for (int i = 0; i < 5; i++) {
             if (player.getRegisters().getCardInRegister(i) != null) {
-                card.setPosition(26*scale + 205*scale * i, 30*scale);
-//                card.setRegion(cardVisual.getRegion(registers.getCardInRegister(i)));
+                card.setPosition(20*scale + 200*scale * i, 10*scale);
+                card.setRegion(cardVisual.getRegion(registers.getCardInRegister(i)));
                 card.draw(batch);
             }
         }

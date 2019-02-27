@@ -9,8 +9,8 @@ import inf112.roborally.game.ProgramCard;
 import java.util.ArrayList;
 
 public class CardVisuals extends Sprite {
-    final int CARD_WIDTH = 640;
-    final int CARD_HEIGHT = 890;
+    final int CARD_WIDTH = 238;
+    final int CARD_HEIGHT = 300;
 
     Texture cardTextures;
     ArrayList<TextureRegion> move;
@@ -20,7 +20,7 @@ public class CardVisuals extends Sprite {
         super();
         setBounds(0,0, CARD_WIDTH, CARD_HEIGHT);
         setSize(CARD_WIDTH/10, CARD_HEIGHT/10);
-        cardTextures = new Texture("assets/cards/front.png");
+        cardTextures = new Texture("assets/cards/programchips.png");
         move = new ArrayList<>();
         rotate = new ArrayList<>();
         addRegionsToList(move, 0,0, 4);
@@ -39,6 +39,7 @@ public class CardVisuals extends Sprite {
     }
 
     public TextureRegion getRegion(ProgramCard programCard){
+
         switch (programCard.getRotate()){
             case UTURN:
                 return rotate.get(0);
