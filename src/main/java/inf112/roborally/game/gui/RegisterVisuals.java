@@ -17,8 +17,7 @@ public class RegisterVisuals {
     private Sprite locktoken;
     private Sprite card;
 
-    int lives;
-    int damage;
+    float scale = 1.66f;
 
     public RegisterVisuals(Player player) {
         this.player = player;
@@ -28,13 +27,12 @@ public class RegisterVisuals {
         damagetoken = new Sprite(new Texture("assets/cards/damagetoken.png"));
         locktoken = new Sprite(new Texture("assets/cards/locktoken.png"));
         card = new Sprite(new Texture("assets/cards/testcard.png"));
-        lives = 3;
-        damage = 8;
-        update();
-    }
 
-    public void update() {
-
+        board.setSize(board.getWidth()*scale, board.getHeight()*scale);
+        lifetoken.setSize(lifetoken.getWidth()*scale, lifetoken.getHeight()*scale);
+        locktoken.setSize(locktoken.getWidth()*scale, locktoken.getHeight()*scale);
+        damagetoken.setSize(damagetoken.getWidth()*scale, damagetoken.getHeight()*scale);
+        card.setSize(card.getWidth()*scale, card.getHeight()*scale);
     }
 
     public void draw(SpriteBatch batch, OrthographicCamera camera, FitViewport port) {
@@ -50,14 +48,14 @@ public class RegisterVisuals {
 
     private void drawLifeTokens(SpriteBatch batch) {
         for (int i = 0; i < player.getLives(); i++) {
-            lifetoken.setPosition(722 + 80.5f * i, board.getHeight() - 101);
+            lifetoken.setPosition(732*scale + 80.5f*scale * i, board.getHeight() - 101*scale);
             lifetoken.draw(batch);
         }
     }
 
     private void drawDamageTokens(SpriteBatch batch) {
         for (int i = 0; i < player.getDamage(); i++) {
-            damagetoken.setPosition(883 - 79 * i, board.getHeight() - 175);
+            damagetoken.setPosition(893*scale - 79*scale * i, board.getHeight() - 175*scale);
             damagetoken.draw(batch);
 
             if (i > 8) return;
@@ -67,7 +65,7 @@ public class RegisterVisuals {
     private void drawLocks(SpriteBatch batch) {
         for (int i = 4; i >= 0; i--) {
             if (registers.isLocked(4 - i)) {
-                locktoken.setPosition(880 - 204 * i, board.getHeight() - 290);
+                locktoken.setPosition(880*scale - 204*scale * i, board.getHeight() - 290*scale);
                 locktoken.draw(batch);
             }
         }
@@ -76,7 +74,8 @@ public class RegisterVisuals {
     private void drawCardsInRegisters(SpriteBatch batch) {
         for (int i = 0; i < 5; i++) {
             if (player.getRegisters().getCardInRegister(i) != null) {
-                card.setPosition(26 + 205*i, 30);
+                card.setPosition(26*scale + 205*scale * i, 30*scale);
+//                card.setRegion(cardVisual.getRegion(registers.getCardInRegister(i)));
                 card.draw(batch);
             }
         }
