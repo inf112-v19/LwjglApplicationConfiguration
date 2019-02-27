@@ -17,7 +17,7 @@ public class RegisterVisuals {
     private Sprite locktoken;
     private Sprite card;
 
-    float scale = 1.66f;
+    float scale = .66f;
 
     public RegisterVisuals(Player player) {
         this.player = player;
@@ -36,7 +36,7 @@ public class RegisterVisuals {
     }
 
     public void draw(SpriteBatch batch, OrthographicCamera camera, FitViewport port) {
-        camera.position.set(board.getWidth() - 1920 / 2, 1080 / 2, 0);
+        camera.position.set(board.getWidth() - 1920 / 2 + 100*scale, 1080 / 2 - 100*scale, 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         board.draw(batch);
