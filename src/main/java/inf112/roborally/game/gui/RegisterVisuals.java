@@ -19,9 +19,9 @@ public class RegisterVisuals {
     int lives;
     int damage;
 
-    public RegisterVisuals(ProgramRegisters registers, Player player){
+    public RegisterVisuals(Player player){
         this.player = player;
-        this.registers = registers;
+        registers = player.getRegisters();
         board = new Sprite(new Texture("assets/cards/programregistertemplate.png"));
         lifetoken = new Sprite(new Texture("assets/cards/lifetoken.png"));
         damagetoken = new Sprite(new Texture("assets/cards/damagetoken.png"));
@@ -56,13 +56,17 @@ public class RegisterVisuals {
         for(int i = 0; i < player.getDamage(); i++){
             damagetoken.setPosition(883 - 79*i, board.getHeight() - 175);
             damagetoken.draw(batch);
+
+            if(i > 8) return;
         }
     }
 
     private void drawLocks(SpriteBatch batch) {
-        for(int i = player.getDamage()-5; i >= 0; i--){
-            locktoken.setPosition(880 - 204*i, board.getHeight() - 290);
-            locktoken.draw(batch);
+        for(int i = 4; i >= 0; i--){
+                if(registers.isLocked(4-i)) {
+                    locktoken.setPosition(880 - 204 * i, board.getHeight() - 290);
+                    locktoken.draw(batch);
+                }
         }
 
     }

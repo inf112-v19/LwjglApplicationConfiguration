@@ -126,8 +126,8 @@ public class Player extends MovableGameObject {
     }
 
     public void takeDamage() {
-        this.damage++;
-        if (damage < 10 && damage >= 5) {
+        if(damage < 10) damage++;
+        if (damage >= 5) {
             registers.lockRegister();
         }
     }

@@ -36,7 +36,7 @@ public class TestScreen implements Screen {
 
         ProgramRegisters programRegisters= new ProgramRegisters();
         player = new Player(0,0);
-        registerVisuals = new RegisterVisuals(programRegisters, player);
+        registerVisuals = new RegisterVisuals(player);
     }
 
     @Override
