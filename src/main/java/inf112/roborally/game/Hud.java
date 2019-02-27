@@ -150,9 +150,6 @@ public class Hud {
                     System.out.println(player.getRegisters().getCardsInHand().get(0));
                 System.out.println("Button1");
 
-                // test:
-                player1.execute(new ProgramCard(Rotate.LEFT, 0, 0));
-
 
                 }
             }

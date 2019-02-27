@@ -7,11 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import inf112.roborally.game.objects.Flag;
-import inf112.roborally.game.objects.MovableGameObject;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.objects.*;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.objects.RepairSite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,11 +51,11 @@ public class Board {
 
         Player player1 = new Player("Player1", 2, 2, Direction.NORTH, flags.size);
 
-//        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH, flags.size);
+        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH, flags.size);
 
         players = new ArrayList<>();
         players.add(player1);
-//        players.add(player2);
+        players.add(player2);
     }
 
 
@@ -128,13 +126,12 @@ public class Board {
             }
             player.update();
             player.updateSprite();
-        }
 
-        
-        if(player.thisPlayerHasWon()) {
-            System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
-            // Might not be necessary to exit the game when it's finished
-            Gdx.app.exit();
+            if (player.thisPlayerHasWon()) {
+                System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
+                // Might not be necessary to exit the game when it's finished
+                Gdx.app.exit();
+            }
         }
     }
 
