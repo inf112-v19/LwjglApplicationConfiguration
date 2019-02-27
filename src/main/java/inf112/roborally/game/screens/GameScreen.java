@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.GameLogic;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.gui.RegisterVisuals;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
@@ -25,6 +26,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private Hud hud;
     private Board board;
 
+    RegisterVisuals registerVisuals;
+    Player player;
+
     private SpriteBatch batch;
 
     public GameScreen(String mapPath){
@@ -34,38 +38,43 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         batch = new SpriteBatch();
         hud = new Hud(batch, board.getPlayers().get(0));
 
-        this.gameLogic = new GameLogic(board, hud);
 
+        this.gameLogic = new GameLogic(board, hud);
+        registerVisuals = new RegisterVisuals(board.getPlayers().get(0));
+        player = board.getPlayers().get(0);
     }
 
     @Override
     public void show(){
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-        camera.position.set(Main.GAME_WIDTH/2,Main.GAME_HEIGHT/2,0);
         camera.update();
-        gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
+        gamePort = new FitViewport(1920, 1080, camera);
     }
 
     @Override
     public void render(float delta) {
         update();
-        float r = 158/255f;
-        float g = 158/255f;
-        float b = 158/255f;
+        float r = 0/255f;
+        float g = 0/255f;
+        float b = 0/255f;
 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r,g,b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        board.render(camera);
+        camera.position.x = player.getSprite().getX();
+        camera.position.y = player.getSprite().getY();
         camera.update();
+
+        board.render(camera);
+
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
         board.drawPlayers(batch);
         board.drawGameObjects(batch);
-
+        registerVisuals.draw(batch, camera, gamePort);
 
         batch.end();
 

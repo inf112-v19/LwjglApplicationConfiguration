@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
 
@@ -35,8 +35,9 @@ public class RegisterVisuals {
         card.setSize(card.getWidth()*scale, card.getHeight()*scale);
     }
 
-    public void draw(SpriteBatch batch, OrthographicCamera camera, FitViewport port) {
+    public void draw(SpriteBatch batch, OrthographicCamera camera, Viewport viewport) {
 //        camera.position.set(board.getWidth() - 1920 / 2 + 200*scale, 1080 / 2 - 100*scale, 0);
+        viewport.setCamera(camera);
         camera.position.set(board.getWidth()/ 2 , 1080 / 2 , 0); // center
         camera.update();
         batch.setProjectionMatrix(camera.combined);
