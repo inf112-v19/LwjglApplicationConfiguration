@@ -1,5 +1,6 @@
 package inf112.roborally.game.objects;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.roborally.game.Main;
@@ -7,8 +8,9 @@ import inf112.roborally.game.screens.MenuScreen;
 
 public abstract class GameObject{
     protected String filePath;
-    protected int x;
-    protected int y;
+//    protected int x;
+//    protected int y;
+    protected Position pos;
     protected Sprite sprite;
 
     /**
@@ -22,8 +24,15 @@ public abstract class GameObject{
      */
     public GameObject(int x, int y, String filePath){
         this.filePath = filePath;
-        this.x = x;
-        this.y = y;
+//        this.x = x;
+//        this.y = y;
+        this.pos = new Position(x,y);
+    }
+
+    // A second constructor for creating a new object with a given pos
+    public GameObject(Position pos, String filePath) {
+        this.pos = pos;
+        this.filePath = filePath;
     }
 
     public void updateSprite() {
@@ -39,23 +48,26 @@ public abstract class GameObject{
     }
 
     public void move(int x, int y){
-        this.x = x;
-        this.y = y;
+//        this.x = x;
+//        this.y = y;
+        this.pos = new Position(x, y);
     }
 
     public void moveX(int x){
-       this.x = x;
+       pos.moveX(x);
     }
 
     public void moveY(int y){
-        this.y = y;
+        pos.moveY(y);
     }
 
     public int getX() {
-        return x;
+        return pos.getX();
     }
 
     public int getY() {
-        return y;
+        return pos.getY();
     }
+
+    public Position getPos() { return this.pos; }
 }
