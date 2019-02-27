@@ -49,14 +49,14 @@ public class RegisterVisuals {
 
     private void drawLifeTokens(SpriteBatch batch) {
         for (int i = 0; i < player.getLives(); i++) {
-            lifetoken.setPosition(732*scale + 80.5f*scale * i, board.getHeight() - 101*scale);
+            lifetoken.setPosition(732*scale + 80.5f*scale * i, board.getHeight() - 148*scale);
             lifetoken.draw(batch);
         }
     }
 
     private void drawDamageTokens(SpriteBatch batch) {
         for (int i = 0; i < player.getDamage(); i++) {
-            damagetoken.setPosition(893*scale - 79*scale * i, board.getHeight() - 175*scale);
+            damagetoken.setPosition(893*scale - 79*scale * i, board.getHeight() - 73*scale);
             damagetoken.draw(batch);
 
             if (i > 8) return;
