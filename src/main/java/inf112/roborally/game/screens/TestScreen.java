@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.Main;
@@ -26,6 +27,7 @@ public class TestScreen implements Screen {
     private RegisterVisuals registerVisuals;
     private Player player;
 
+
     public TestScreen() {
         batch = new SpriteBatch();
         batch.enableBlending();
@@ -34,9 +36,11 @@ public class TestScreen implements Screen {
         cardVisuals = new CardVisuals();
         programCard = new ProgramCard(Rotate.NONE,3,1);
 
-        ProgramRegisters programRegisters= new ProgramRegisters();
         player = new Player(0,0);
         registerVisuals = new RegisterVisuals(player);
+        for(int i = 0; i < 9; i++){
+            player.getRegisters().receiveCard(new ProgramCard(Rotate.NONE,2,0));
+        }
     }
 
     @Override
@@ -77,6 +81,14 @@ public class TestScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
             player.takeDamage();
             player.update();
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_RIGHT)){
+            player.getRegisters().pickCard(0);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)){
+            player.getRegisters().returnCards();
         }
     }
 

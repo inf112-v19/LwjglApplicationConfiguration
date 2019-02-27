@@ -77,6 +77,7 @@ public class ProgramRegisters {
                 return i;
             }
         }
+        System.out.println("Registers are full");
         return -1;
     }
 
