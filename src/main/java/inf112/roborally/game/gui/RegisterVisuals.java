@@ -43,20 +43,20 @@ public class RegisterVisuals {
         board.draw(batch);
         drawLifeTokens(batch);
         drawDamageTokens(batch);
-        drawLocks(batch);
         drawCardsInRegisters(batch);
+        drawLocks(batch);
     }
 
     private void drawLifeTokens(SpriteBatch batch) {
-        for (int i = 0; i < player.getLives(); i++) {
-            lifetoken.setPosition(732*scale + 80.5f*scale * i, board.getHeight() - 148*scale);
+        for (int i = player.getLives(); i > 0; i--) {
+            lifetoken.setPosition(920*scale - 80.5f*scale * i, board.getHeight() - 200*scale);
             lifetoken.draw(batch);
         }
     }
 
     private void drawDamageTokens(SpriteBatch batch) {
         for (int i = 0; i < player.getDamage(); i++) {
-            damagetoken.setPosition(893*scale - 79*scale * i, board.getHeight() - 73*scale);
+            damagetoken.setPosition(790*scale - 79.5f*scale * i, board.getHeight() - 125*scale);
             damagetoken.draw(batch);
 
             if (i > 8) return;
@@ -66,7 +66,7 @@ public class RegisterVisuals {
     private void drawLocks(SpriteBatch batch) {
         for (int i = 4; i >= 0; i--) {
             if (registers.isLocked(4 - i)) {
-                locktoken.setPosition(880*scale - 204*scale * i, board.getHeight() - 290*scale);
+                locktoken.setPosition(830*scale - 204*scale * i, board.getHeight() - 365*scale);
                 locktoken.draw(batch);
             }
         }
