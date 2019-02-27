@@ -1,16 +1,15 @@
 package inf112.roborally.game.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import inf112.roborally.game.objects.Flag;
-import inf112.roborally.game.objects.MovableGameObject;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.objects.*;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.objects.RepairSite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,13 +48,14 @@ public class Board {
         createLayers();
 
 
+
         Player player1 = new Player("Player1", 2, 2, Direction.NORTH, flags.size);
 
-//        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH, flags.size);
+        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH, flags.size);
 
         players = new ArrayList<>();
         players.add(player1);
-//        players.add(player2);
+        players.add(player2);
     }
 
 
@@ -71,23 +71,81 @@ public class Board {
         mapRenderer.render();
     }
 
+    public void handleInput() {
+        //Just for testing
+        Player p1 = players.get(0);
+        Player p2 = players.get(1);
+
+        p1.moved = false;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            p1.setDirection(Direction.EAST);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            p1.setDirection(Direction.WEST);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            p1.setDirection(Direction.NORTH);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            p1.setDirection(Direction.SOUTH);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            p1.moveBackupToPlayerPosition();
+        }
+
+
+        p2.moved = false;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+            p2.setDirection(Direction.EAST);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+            p2.setDirection(Direction.WEST);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+            p2.setDirection(Direction.NORTH);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            p2.setDirection(Direction.SOUTH);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+            p2.moveBackupToPlayerPosition();
+        }
+    }
+
     public void dispose() {
         map.dispose();
     }
 
-    public void update(Player player) {
-        if (player.moved) {
-            if (canGo(player))
-                player.move(1);
+    public void updateBoard(){
+        for(Player player : players)
             boardInteractsWithPlayer(player);
-        }
-        
-        if(player.thisPlayerHasWon()) {
-            System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
-            // Might not be necessary to exit the game when it's finished
-            Gdx.app.exit();
-        }
+    }
 
+    public void update() {
+        handleInput();
+        for (Player player : players) {
+            player.updateSprite();
+            if (player.moved) {
+                if (canGo(player))
+                    player.move(1);
+                boardInteractsWithPlayer(player);
+            }
+            player.update();
+            player.updateSprite();
+
+            if (player.thisPlayerHasWon()) {
+                System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
+                // Might not be necessary to exit the game when it's finished
+                Gdx.app.exit();
+            }
+        }
+    }
+
+    public void executeCard(Player player, ProgramCard card){
+        if(card.getRotate() != Rotate.NONE){
+            player.rotate(card.getRotate());
+        }
+        else{
+            for(int i = 0; i < card.getMoveDistance(); i++){
+                if(canGo(player)){
+                    player.move(1);
+                }
+            }
+        }
     }
 
     public boolean canGo(MovableGameObject gameObject) {
@@ -184,10 +242,10 @@ public class Board {
     }
 
 
-    private void beltsMove(Player player){
+    private void beltsMove(Player player) {
         // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-        if(currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")){
+        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")) {
             Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
             if (canGo(player)) {
                 player.moveInDirection(dir);

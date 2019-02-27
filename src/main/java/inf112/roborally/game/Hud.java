@@ -32,11 +32,12 @@ public class Hud {
     private Integer damage;
     Label livesLabel;
     Label damageLabel;
+    final Player player;
 
-    public Hud(SpriteBatch sb, final ArrayList<Player> players){
-        final Player player1 = players.get(0);
-        lives = player1.getLives();
-        damage = player1.getDamage();
+    public Hud(SpriteBatch sb, final Player player){
+        this.player = player;
+        lives = player.getLives();
+        damage = player.getDamage();
         cards = 0;
 
 
@@ -85,6 +86,97 @@ public class Hud {
         hud.add(damageLabel).width(200).padRight(200);
         stage.addActor(hud);
         Gdx.input.setInputProcessor(stage);
+        button.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if(!player.getRegisters().registerIsFull()) {
+                    printCards(player);
+                    System.out.println("Cards in hand: " + player.getRegisters().getCardsInHand().size());
+                    System.out.println("Register size: " + player.getRegisters().getCardsInRegisters().size());
+
+                    System.out.println(player.getRegisters().pickCard(0));
+                    System.out.println(player.getRegisters().getCardsInHand().get(0));
+                System.out.println("Button1");
+
+
+                }
+            }
+
+        });
+        button1.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println(player.getRegisters().pickCard(1));
+
+            }
+
+        });
+        button2.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println(player.getRegisters().pickCard(2));
+
+            }
+
+        });
+        button3.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button4");
+            }
+
+        });
+        button4.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button5");
+
+            }
+
+        });
+        button5.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button6");
+
+            }
+
+        });
+        button6.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button7");
+            }
+
+        });
+
+        button7.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button8");
+            }
+
+        });
+
+        button8.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Button9");
+            }
+
+        });
+
+
+
     }
 
     public void update(Player player) {
