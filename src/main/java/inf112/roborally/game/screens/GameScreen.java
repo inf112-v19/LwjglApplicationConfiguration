@@ -55,9 +55,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     @Override
     public void render(float delta) {
         update();
-        float r = 0/255f;
-        float g = 0/255f;
-        float b = 0/255f;
+        float r = 30/255f;
+        float g = 30/255f;
+        float b = 30/255f;
 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r,g,b, 1f);
