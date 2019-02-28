@@ -19,7 +19,7 @@ public class PlayerTest {
     public void setup(){
 
         player = new Player(0,0);
-        stack = ProgramCard.makeStack();
+        stack = ProgramCard.makeProgramCardDeck();
     }
 
     @Test

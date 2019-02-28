@@ -23,7 +23,7 @@ public class ProgramCard implements Comparable {
 
     public int getPriority(){ return this.priority; }
 
-    public static Stack<ProgramCard> makeStack(){
+    public static Stack<ProgramCard> makeProgramCardDeck(){
         Stack<ProgramCard> cardStack = new Stack<>();
 
         // Adding cards that rotate:

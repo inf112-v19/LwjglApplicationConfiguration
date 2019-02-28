@@ -58,7 +58,6 @@ public class Board {
         players.add(player2);
     }
 
-
     private void createLayers() {
         beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
@@ -308,13 +307,17 @@ public class Board {
         }
     }
 
-    // TODO Draw backups by itself?
-    // Also draws backups
     public void drawPlayers(SpriteBatch batch) {
         for (Player player : players) {
-            player.getBackup().getSprite().draw(batch);
             player.getSprite().draw(batch);
         }
+    }
+
+    public void drawBackup(SpriteBatch batch){
+        for(Player player : players){
+            player.getBackup().getSprite().draw(batch);
+        }
+
     }
 
 }

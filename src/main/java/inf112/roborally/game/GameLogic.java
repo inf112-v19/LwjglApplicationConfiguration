@@ -22,7 +22,7 @@ public class GameLogic {
     private Player player1;
 
     public GameLogic(Board board, CardsInHandDisplay hud) {
-        stackOfProgramCards = ProgramCard.makeStack();
+        stackOfProgramCards = ProgramCard.makeProgramCardDeck();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
         player1 = players.get(0);
