@@ -8,8 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.GameLogic;
-import inf112.roborally.game.Hud;
+import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
@@ -20,10 +21,13 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     private GameLogic gameLogic;
 
-    private OrthographicCamera camera;
+    public OrthographicCamera camera;
     private Viewport gamePort;
-    private Hud hud;
+    private CardsInHandDisplay hud;
     private Board board;
+
+    ProgramRegisterDisplay programRegisterDisplay;
+    Player player;
 
     private SpriteBatch batch;
 
@@ -32,45 +36,50 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.board = new Board(Main.VAULT);
 
         batch = new SpriteBatch();
-        hud = new Hud(batch, board.getPlayers().get(0));
+        hud = new CardsInHandDisplay(batch, board.getPlayers().get(0));
+
 
         this.gameLogic = new GameLogic(board, hud);
-
+        programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
+        player = board.getPlayers().get(0);
     }
 
     @Override
     public void show(){
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
-        camera.position.set(Main.GAME_WIDTH/2,Main.GAME_HEIGHT/2,0);
         camera.update();
-        gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
+        gamePort = new FitViewport(1920, 1080, camera);
     }
 
     @Override
     public void render(float delta) {
         update();
-        float r = 158/255f;
-        float g = 158/255f;
-        float b = 158/255f;
+        float r = 30/255f;
+        float g = 30/255f;
+        float b = 30/255f;
 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
-        Gdx.gl.glClearColor(r,g,b, 1f);
+        Gdx.gl.glClearColor(r,g,b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        board.render(camera);
+        camera.position.x = player.getSprite().getX() + player.getSprite().getWidth()/2;
+        camera.position.y = player.getSprite().getY() + player.getSprite().getHeight()/2 - 32*Main.UNIT_SCALE;
         camera.update();
 
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        board.render(camera);
 
+
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.begin();
         board.drawPlayers(batch);
         board.drawGameObjects(batch);
-
-
+        programRegisterDisplay.draw(batch, camera);
         batch.end();
 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+
     }
 
     private void update() {

@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens;
+package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -9,20 +9,22 @@ import inf112.roborally.game.ProgramCard;
 import java.util.ArrayList;
 
 public class CardVisuals extends Sprite {
-    final int CARD_WIDTH = 640;
-    final int CARD_HEIGHT = 890;
+    final int CARD_WIDTH = 238;
+    final int CARD_HEIGHT = 300;
 
     Texture cardTextures;
     ArrayList<TextureRegion> move;
     ArrayList<TextureRegion> rotate;
+    TextureRegion back;
 
     public CardVisuals() {
         super();
         setBounds(0,0, CARD_WIDTH, CARD_HEIGHT);
         setSize(CARD_WIDTH/10, CARD_HEIGHT/10);
-        cardTextures = new Texture("assets/cards/front.png");
+        cardTextures = new Texture("assets/cards/programchips.png");
         move = new ArrayList<>();
         rotate = new ArrayList<>();
+        back = new TextureRegion(cardTextures, CARD_WIDTH*3, CARD_HEIGHT);
         addRegionsToList(move, 0,0, 4);
         addRegionsToList(rotate, 0, 1, 3);
     }
@@ -39,13 +41,16 @@ public class CardVisuals extends Sprite {
     }
 
     public TextureRegion getRegion(ProgramCard programCard){
+//        if(!programCard.flipped)
+//            return back;
+
         switch (programCard.getRotate()){
             case UTURN:
-                return rotate.get(0);
+                return rotate.get(2);
             case LEFT:
                 return rotate.get(1);
             case RIGHT:
-                return rotate.get(2);
+                return rotate.get(0);
             case NONE:
                 if(programCard.getMoveDistance() == -1) {
                     return move.get(0);

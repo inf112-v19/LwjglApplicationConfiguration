@@ -10,17 +10,23 @@ public class RoboRallyGame extends Game {
     //MenuScreen
     //EndScreen
     //etc...
+    private final boolean debugging = false;
 
     public GameScreen gameScreen;
-    public TestScreen testScreen;
+    public TestScreen registerTestScreen;
     public MenuScreen menuScreen;
 
     @Override
     public void create() {
-        testScreen = new TestScreen();
-        menuScreen = new MenuScreen(this);
-
-        setScreen(menuScreen);
+        if(debugging) {
+            registerTestScreen = new TestScreen();
+            setScreen(registerTestScreen);
+        }
+        else {
+            menuScreen = new MenuScreen(this);
+            gameScreen = new GameScreen(Main.VAULT);
+            setScreen(gameScreen);
+        }
     }
 
 }

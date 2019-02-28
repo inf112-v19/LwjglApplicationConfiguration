@@ -1,4 +1,4 @@
-package inf112.roborally.game;
+package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -14,18 +14,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.objects.Rotate;
-import inf112.roborally.game.screens.CardVisuals;
 
 import java.util.ArrayList;
 
 
-public class Hud {
+public class CardsInHandDisplay {
 
     public Stage stage;
-    private com.badlogic.gdx.utils.viewport.Viewport viewport;
-    private static int current = 0;
+    private Viewport viewport;
 
     private Integer lives;
     private Integer cards;
@@ -34,7 +34,7 @@ public class Hud {
     Label damageLabel;
     final Player player;
 
-    public Hud(SpriteBatch sb, final Player player) {
+    public CardsInHandDisplay(SpriteBatch sb, final Player player) {
         this.player = player;
         lives = player.getLives();
         damage = player.getDamage();
@@ -59,15 +59,16 @@ public class Hud {
         ImageButton button;
         TextureRegionDrawable buttonTextureDrawable;
         //Adding buttons:
-        float scale = 0.25f;
+        float scale = 0.5f;
         int j = 0;
+        int posX = 1300;
         for (int i = 0; i < 9; i++) {
             // TODO: GET TEXTURE FROM CARD AT ith POSITION:
             buttonTextureDrawable = new TextureRegionDrawable(cv.getRegion(new ProgramCard(Rotate.NONE, 1, 0)));
             button = new ImageButton(buttonTextureDrawable);
             button.setTransform(true);
             button.setScale(scale);
-            button.setPosition(1100 + 180 * (i % 3), 800 - 200 * j);
+            button.setPosition(posX + 100*(i%5), 200 - 150*j);
 
             button.addListener(new ClickListener() {
 
@@ -78,7 +79,10 @@ public class Hud {
 
             });
             stage.addActor(button);
-            if (i % 3 == 2) j++;
+            if (i % 5 == 4){
+                j++;
+                posX += 50;
+            }
 
 
         hud.add(livesLabel).width(200).padRight(100);

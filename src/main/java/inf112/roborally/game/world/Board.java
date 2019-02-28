@@ -49,9 +49,9 @@ public class Board {
 
 
 
-        Player player1 = new Player("Player1", 2, 2, Direction.NORTH, flags.size);
+        Player player1 = new Player("Player1", 6, 6, Direction.NORTH, flags.size);
 
-        Player player2 = new Player("Player2", 1, 1, Direction.SOUTH, flags.size);
+        Player player2 = new Player("Player2", 5, 7, Direction.SOUTH, flags.size);
 
         players = new ArrayList<>();
         players.add(player1);
@@ -259,7 +259,7 @@ public class Board {
     }
 
     private boolean playerIsOffTheBoard(int x, int y) {
-        return !floorLayer.getCell(x, y).getTile().getProperties().containsKey("Floor");
+        return (floorLayer.getCell(x, y) == null);
     }
 
     // Check the position if there is a flag there
