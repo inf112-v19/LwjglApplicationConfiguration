@@ -259,7 +259,7 @@ public class Board {
     }
 
     private boolean playerIsOffTheBoard(int x, int y) {
-        return !floorLayer.getCell(x, y).getTile().getProperties().containsKey("Floor");
+        return (floorLayer.getCell(x, y) == null);
     }
 
     // Check the position if there is a flag there
