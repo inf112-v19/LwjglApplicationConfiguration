@@ -15,6 +15,7 @@ public class CardVisuals extends Sprite {
     Texture cardTextures;
     ArrayList<TextureRegion> move;
     ArrayList<TextureRegion> rotate;
+    TextureRegion back;
 
     public CardVisuals() {
         super();
@@ -23,6 +24,7 @@ public class CardVisuals extends Sprite {
         cardTextures = new Texture("assets/cards/programchips.png");
         move = new ArrayList<>();
         rotate = new ArrayList<>();
+        back = new TextureRegion(cardTextures, CARD_WIDTH*3, CARD_HEIGHT);
         addRegionsToList(move, 0,0, 4);
         addRegionsToList(rotate, 0, 1, 3);
     }
@@ -39,6 +41,8 @@ public class CardVisuals extends Sprite {
     }
 
     public TextureRegion getRegion(ProgramCard programCard){
+//        if(!programCard.flipped)
+//            return back;
 
         switch (programCard.getRotate()){
             case UTURN:

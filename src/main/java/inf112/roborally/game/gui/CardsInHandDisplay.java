@@ -59,7 +59,7 @@ public class CardsInHandDisplay {
         ImageButton button;
         TextureRegionDrawable buttonTextureDrawable;
         //Adding buttons:
-        float scale = 0.33f;
+        float scale = 0.5f;
         int j = 0;
         int posX = 1300;
         for (int i = 0; i < 9; i++) {
@@ -68,7 +68,7 @@ public class CardsInHandDisplay {
             button = new ImageButton(buttonTextureDrawable);
             button.setTransform(true);
             button.setScale(scale);
-            button.setPosition(posX + 100*(i%5), 200 - 100*j);
+            button.setPosition(posX + 100*(i%5), 200 - 150*j);
 
             button.addListener(new ClickListener() {
 
