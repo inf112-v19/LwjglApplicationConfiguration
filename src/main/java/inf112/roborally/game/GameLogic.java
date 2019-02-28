@@ -1,6 +1,6 @@
 package inf112.roborally.game;
 
-import inf112.roborally.game.gui.Hud;
+import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
@@ -12,7 +12,7 @@ public class GameLogic {
     boolean roundOver;
     int phase;
 
-    private Hud hud;
+    private CardsInHandDisplay hud;
     private Board board;
 
     private Stack<ProgramCard> stackOfProgramCards;
@@ -21,7 +21,7 @@ public class GameLogic {
 
     private Player player1;
 
-    public GameLogic(Board board, Hud hud) {
+    public GameLogic(Board board, CardsInHandDisplay hud) {
         stackOfProgramCards = ProgramCard.makeStack();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();

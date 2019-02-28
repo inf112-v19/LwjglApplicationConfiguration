@@ -3,18 +3,13 @@ package inf112.roborally.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.roborally.game.Main;
 import inf112.roborally.game.ProgramCard;
-import inf112.roborally.game.ProgramRegisters;
 import inf112.roborally.game.gui.CardVisuals;
-import inf112.roborally.game.gui.RegisterVisuals;
+import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.objects.Rotate;
 
@@ -24,7 +19,7 @@ public class TestScreen implements Screen {
     private OrthographicCamera camera;
     private CardVisuals cardVisuals;
     private ProgramCard programCard;
-    private RegisterVisuals registerVisuals;
+    private ProgramRegisterDisplay programRegisterDisplay;
     private Player player;
 
 
@@ -37,7 +32,7 @@ public class TestScreen implements Screen {
         programCard = new ProgramCard(Rotate.NONE,3,1);
 
         player = new Player(0,0);
-        registerVisuals = new RegisterVisuals(player);
+        programRegisterDisplay = new ProgramRegisterDisplay(player);
         for(int i = 0; i < 9; i++){
             player.getRegisters().receiveCard(new ProgramCard(Rotate.NONE,2,0));
         }
@@ -58,7 +53,7 @@ public class TestScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        registerVisuals.draw(batch, camera, viewport);
+        programRegisterDisplay.draw(batch, camera);
 
 //        int i = 1;
 //        cardVisuals.drawCard(new ProgramCard(Rotate.NONE, 0, 0),96*i++,32, batch);

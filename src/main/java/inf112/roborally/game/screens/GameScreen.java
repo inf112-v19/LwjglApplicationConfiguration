@@ -8,9 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.GameLogic;
-import inf112.roborally.game.gui.Hud;
+import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.gui.RegisterVisuals;
+import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
@@ -21,12 +21,12 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     private GameLogic gameLogic;
 
-    private OrthographicCamera camera;
+    public OrthographicCamera camera;
     private Viewport gamePort;
-    private Hud hud;
+    private CardsInHandDisplay hud;
     private Board board;
 
-    RegisterVisuals registerVisuals;
+    ProgramRegisterDisplay programRegisterDisplay;
     Player player;
 
     private SpriteBatch batch;
@@ -36,11 +36,11 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.board = new Board(Main.VAULT);
 
         batch = new SpriteBatch();
-        hud = new Hud(batch, board.getPlayers().get(0));
+        hud = new CardsInHandDisplay(batch, board.getPlayers().get(0));
 
 
         this.gameLogic = new GameLogic(board, hud);
-        registerVisuals = new RegisterVisuals(board.getPlayers().get(0));
+        programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
         player = board.getPlayers().get(0);
     }
 
@@ -60,26 +60,26 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         float b = 30/255f;
 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
-        Gdx.gl.glClearColor(r,g,b, 1f);
+        Gdx.gl.glClearColor(r,g,b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.position.x = player.getSprite().getX() + player.getSprite().getWidth()/2;
-        camera.position.y = player.getSprite().getY() + player.getSprite().getHeight()/2;
+        camera.position.y = player.getSprite().getY() + player.getSprite().getHeight()/2 - 32*Main.UNIT_SCALE;
         camera.update();
 
         board.render(camera);
 
 
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
 
+        batch.begin();
         board.drawPlayers(batch);
         board.drawGameObjects(batch);
-        registerVisuals.draw(batch, camera, gamePort);
-
+        programRegisterDisplay.draw(batch, camera);
         batch.end();
 
         batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+
     }
 
     private void update() {

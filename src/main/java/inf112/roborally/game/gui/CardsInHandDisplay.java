@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.objects.Rotate;
@@ -21,10 +22,10 @@ import inf112.roborally.game.objects.Rotate;
 import java.util.ArrayList;
 
 
-public class Hud {
+public class CardsInHandDisplay {
 
     public Stage stage;
-    private com.badlogic.gdx.utils.viewport.Viewport viewport;
+    private Viewport viewport;
 
     private Integer lives;
     private Integer cards;
@@ -33,7 +34,7 @@ public class Hud {
     Label damageLabel;
     final Player player;
 
-    public Hud(SpriteBatch sb, final Player player) {
+    public CardsInHandDisplay(SpriteBatch sb, final Player player) {
         this.player = player;
         lives = player.getLives();
         damage = player.getDamage();
