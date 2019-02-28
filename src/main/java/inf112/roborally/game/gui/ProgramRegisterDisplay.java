@@ -41,7 +41,7 @@ public class ProgramRegisterDisplay {
         locktoken = new Sprite(new Texture("assets/cards/tokens/locktoken.png"));
         locktoken.setSize(locktoken.getWidth()*scale, locktoken.getHeight()*scale);
 
-        card = new Sprite(new Texture("assets/cards/testcard.png"));
+        card = new Sprite();
         float cardScale = 0.77f;
         card.setSize(238*cardScale*scale, 300*cardScale*scale);
 

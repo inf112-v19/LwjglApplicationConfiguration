@@ -28,7 +28,7 @@ public class RoboRallyGame extends Game {
         }
         else {
             menuScreen = new MenuScreen(this);
-            gameScreen = new GameScreen(SPIRAL_MARATHON);
+            gameScreen = new GameScreen(VAULT);
             setScreen(gameScreen);
         }
     }
