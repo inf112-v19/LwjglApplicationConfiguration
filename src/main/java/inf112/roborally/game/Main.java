@@ -11,7 +11,6 @@ public class Main {
 
     // Maps:
     public static final String TEST_MAP = "assets/gameboard/testMap.tmx";
-    public static final String VAULT = "assets/gameboard/vault.tmx";
 
 
     public static final int GAME_WIDTH = 1536;

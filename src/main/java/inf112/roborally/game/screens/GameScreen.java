@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.GameLogic;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
@@ -33,7 +34,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     public GameScreen(String mapPath){
         this.mapPath = mapPath;
-        this.board = new Board(Main.VAULT);
+        this.board = new Board(mapPath);
 
         batch = new SpriteBatch();
         hud = new CardsInHandDisplay(batch, board.getPlayers().get(0));
