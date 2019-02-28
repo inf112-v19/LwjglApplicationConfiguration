@@ -42,11 +42,11 @@ public class CardVisuals extends Sprite {
 
         switch (programCard.getRotate()){
             case UTURN:
-                return rotate.get(0);
+                return rotate.get(2);
             case LEFT:
                 return rotate.get(1);
             case RIGHT:
-                return rotate.get(2);
+                return rotate.get(0);
             case NONE:
                 if(programCard.getMoveDistance() == -1) {
                     return move.get(0);

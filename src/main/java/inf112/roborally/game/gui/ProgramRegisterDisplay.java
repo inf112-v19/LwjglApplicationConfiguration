@@ -42,8 +42,8 @@ public class ProgramRegisterDisplay {
         locktoken.setSize(locktoken.getWidth()*scale, locktoken.getHeight()*scale);
 
         card = new Sprite(new Texture("assets/cards/testcard.png"));
-        float cardScale = 1.2f;
-        card.setSize(137*cardScale*scale, 190*cardScale*scale);
+        float cardScale = 0.77f;
+        card.setSize(238*cardScale*scale, 300*cardScale*scale);
 
         cardVisual = new CardVisuals();
     }
@@ -88,7 +88,7 @@ public class ProgramRegisterDisplay {
     private void drawCardsInRegisters(SpriteBatch batch) {
         for (int i = 0; i < 5; i++) {
             if (player.getRegisters().getCardInRegister(i) != null) {
-                card.setPosition(20*scale + 200*scale * i, 10*scale);
+                card.setPosition(19*scale + 200*scale * i, 10*scale);
                 card.setRegion(cardVisual.getRegion(registers.getCardInRegister(i)));
                 card.draw(batch);
             }
