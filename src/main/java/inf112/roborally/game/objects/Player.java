@@ -47,7 +47,7 @@ public class Player extends MovableGameObject {
 
         // For testing with flag behaviour, now tests with 3 flags on the board
         flagCounter = 0;
-        backup = new Backup(x,y);
+//        backup = new Backup(x,y);
         flagsFound = new boolean [3];
     }
 

@@ -110,8 +110,13 @@ public class Board {
     }
 
     public void updateBoard(){
-        for(Player player : players)
+        for(Player player : players) {
             boardInteractsWithPlayer(player);
+            if(playerIsOnRepair(player.getX(), player.getY())) {
+                player.updateBackup();
+            }
+        }
+
     }
 
     public void update() {
