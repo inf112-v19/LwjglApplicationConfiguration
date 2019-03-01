@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.Main;
 
@@ -74,6 +75,12 @@ public class Board {
         //Just for testing
         Player p1 = players.get(0);
         Player p2 = players.get(1);
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
+            p1.getRegisters().returnCardsFromRegisters(p1.getCardsInHand());
+            // messy but it works:
+            ((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getCardsInHandDisplay().updateCardsInHandVisually();
+        }
 
         p1.moved = false;
 

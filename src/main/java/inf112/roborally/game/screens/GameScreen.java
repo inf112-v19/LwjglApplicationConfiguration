@@ -119,6 +119,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public void resize(int width, int height) {
         viewPort.update(width,height);
     }
+
+    public CardsInHandDisplay getCardsInHandDisplay(){
+        return cardsInHandDisplay;
+    }
 }
 
 
