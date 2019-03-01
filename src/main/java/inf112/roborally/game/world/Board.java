@@ -229,10 +229,6 @@ public class Board {
             player.updateBackup();
             System.out.printf("%s found a flag!%n", player.getName());
         }
-
-        if(playerIsOnRepair(x,y)) {
-            player.updateBackup();
-        }
     }
 
 
@@ -267,7 +263,7 @@ public class Board {
         return -1;
     }
 
-    private boolean playerIsOnRepair(int x, int y) {
+    public boolean playerIsOnRepair(int x, int y) {
         for(RepairSite rs : repairSites) {
             if(rs.getX() == x && rs.getY() == y) {
                 return true;

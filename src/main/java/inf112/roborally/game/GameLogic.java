@@ -89,7 +89,12 @@ public class GameLogic {
                 // Might not be necessary to exit the game when it's finished
                 Gdx.app.exit();
             }
+
+            if(board.playerIsOnRepair(pl.getX(), pl.getY())) {
+                player1.updateBackup();
+            }
         }
+
     }
 
     public boolean playerReady(Player player){
