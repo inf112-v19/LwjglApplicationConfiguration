@@ -3,11 +3,12 @@ package inf112.roborally.game;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.objects.RepairSite;
 import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BackupTest {
+public class RepairSiteTest {
     private Player player;
     private List<RepairSite> repairSites;
 
@@ -17,11 +18,6 @@ public class BackupTest {
         repairSites = new ArrayList<>();
         repairSites.add(new RepairSite(5, 2));
     }
-
-
-
-
-
 
 
 }

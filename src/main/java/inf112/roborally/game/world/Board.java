@@ -114,6 +114,7 @@ public class Board {
             boardInteractsWithPlayer(player);
             if(playerIsOnRepair(player.getX(), player.getY())) {
                 player.updateBackup();
+                player.repairOneDamage();
             }
         }
 
