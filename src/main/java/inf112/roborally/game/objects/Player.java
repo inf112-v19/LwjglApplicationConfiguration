@@ -63,6 +63,9 @@ public class Player extends MovableGameObject {
 
 
     public void receiveCard(ProgramCard programCard) {
+        if(programCard == null){
+            throw new NullPointerException("Trying to add a programCard that has value null");
+        }
         cardsInHand.add(programCard);
     }
 
@@ -71,6 +74,9 @@ public class Player extends MovableGameObject {
     }
 
     public void pickCard(int i){
+        if(i < 0 || i >= ProgramRegisters.NUMBER_OF_REGISTERS){
+            throw new IndexOutOfBoundsException();
+        }
         registers.pickCard(i);
     }
 
