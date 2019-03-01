@@ -1,5 +1,6 @@
 package inf112.roborally.game;
 
+import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
@@ -69,6 +70,7 @@ public class GameLogic {
                 System.out.println("executing phase " + phase);
                 board.executeCard(player1, player1.getRegisters().getCardInRegister(phase));
                 board.updateBoard();
+                checkIfAnyPlayersWon();
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -81,6 +83,17 @@ public class GameLogic {
             }
 
             // after phase is over :
+        }
+
+    }
+
+    private void checkIfAnyPlayersWon() {
+        for (Player pl : players) {
+            if (pl.thisPlayerHasWon()) {
+                System.out.printf("%s just won the game by collecting all the flags!!%n", pl.getName());
+                // Might not be necessary to exit the game when it's finished
+                Gdx.app.exit();
+            }
         }
     }
 

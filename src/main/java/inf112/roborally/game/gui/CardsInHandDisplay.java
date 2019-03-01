@@ -113,7 +113,6 @@ public class CardsInHandDisplay {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    //System.out.println(player.getRegisters().getCardsInHand().get(0));
                     player.getRegisters().pickCard(0);
                 }
             });
