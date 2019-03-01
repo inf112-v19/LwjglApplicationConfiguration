@@ -128,6 +128,12 @@ public class Player extends MovableGameObject {
         damage = 0;
     }
 
+    public void repairOneDamage() {
+        if(damage > 0) {
+            damage--;
+        }
+    }
+
     public void takeDamage() {
         if(damage < 10) damage++;
         if (damage >= 5) {

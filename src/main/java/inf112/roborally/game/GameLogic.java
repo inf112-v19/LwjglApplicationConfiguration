@@ -21,6 +21,7 @@ public class GameLogic {
 
     public GameLogic(Board board) {
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
+//        stackOfProgramCards = ProgramCard.makeTestProgramCardDeck();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
         player1 = players.get(0);
