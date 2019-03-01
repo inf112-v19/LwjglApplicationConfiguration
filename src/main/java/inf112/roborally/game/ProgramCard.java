@@ -59,6 +59,18 @@ public class ProgramCard implements Comparable {
         return cardStack;
     }
 
+    // FOR TESTING ONLY
+    // Create a deck of cards with only turn cards, so we can test some things happening after a round
+    public static Stack<ProgramCard> makeTestProgramCardDeck() {
+        Stack<ProgramCard> testCardStack = new Stack<>();
+        for (int i = 1; i < 27; i++) {
+            testCardStack.push(new ProgramCard(Rotate.RIGHT, 0, i));
+        }
+
+
+        return testCardStack;
+    }
+
 
     @Override
     public String toString(){
