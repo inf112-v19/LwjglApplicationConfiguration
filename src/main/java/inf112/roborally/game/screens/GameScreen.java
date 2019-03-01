@@ -34,17 +34,16 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     public GameScreen(String mapPath){
         this.mapPath = mapPath;
-        this.board = new Board(mapPath);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         camera.update();
         viewPort = new FitViewport(1920, 1080, camera);
         batch = new SpriteBatch();
-        Stage stage = new Stage(viewPort, batch);
-        cardsInHandDisplay = new CardsInHandDisplay(board.getPlayers().get(0), stage);
-        this.gameLogic = new GameLogic(board, cardsInHandDisplay);
 
+        board = new Board(mapPath);
+        cardsInHandDisplay = new CardsInHandDisplay(board.getPlayers().get(0), new Stage(viewPort, batch));
+        gameLogic = new GameLogic(board, cardsInHandDisplay);
         programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
         player = board.getPlayers().get(0);
     }
@@ -55,6 +54,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void render(float delta) {
+
         update();
         float r = 30/255f;
         float g = 30/255f;
@@ -88,7 +88,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private void update() {
         board.update();
         gameLogic.update();
-        cardsInHandDisplay.update(player);
     }
 
     @Override
