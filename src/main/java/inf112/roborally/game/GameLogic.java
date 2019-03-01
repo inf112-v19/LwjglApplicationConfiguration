@@ -15,8 +15,8 @@ public class GameLogic {
     private Stack<ProgramCard> stackOfProgramCards;
     private ArrayList<Player> players;
     private Stack<ProgramCard> returnedProgramCards;
-
     private Player player1;
+    boolean firstRound;
 
     public GameLogic(Board board) {
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
@@ -28,13 +28,13 @@ public class GameLogic {
         roundOver = true;
         phase = 0;
 
-        giveCardsToPlayer(player1);
+        firstRound = true;
+
         update();
 
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
-boolean firstRound = true;
     public void doBeforeRound() {
         phase = 0;
         if(firstRound){

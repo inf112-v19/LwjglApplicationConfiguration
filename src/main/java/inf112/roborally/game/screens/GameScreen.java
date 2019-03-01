@@ -87,6 +87,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         board.update();
         gameLogic.update();
         hud.update(player);
+        hud.testUpdate();
     }
 
     @Override
