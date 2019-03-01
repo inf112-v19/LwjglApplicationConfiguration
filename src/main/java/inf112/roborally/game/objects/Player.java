@@ -63,6 +63,9 @@ public class Player extends MovableGameObject {
 
 
     public void receiveCard(ProgramCard programCard) {
+        if(programCard == null){
+            throw new NullPointerException("Trying to add a programCard that has value null");
+        }
         cardsInHand.add(programCard);
     }
 
@@ -70,7 +73,11 @@ public class Player extends MovableGameObject {
         return cardsInHand;
     }
 
-    public void pickCard(int i){
+    public int getNumberOfCardsInHand(){
+        return cardsInHand.size();
+    }
+
+    public void pickCardInRegister(int i){
         registers.pickCard(i);
     }
 
@@ -190,8 +197,8 @@ public class Player extends MovableGameObject {
     // have been found. If one of the array positions is false, then
     // this will return false
     public boolean thisPlayerHasWon() {
-        for(boolean b : flagsFound) {
-            if(!b) {
+        for(boolean found : flagsFound) {
+            if(!found) {
                 return false;
             }
         }

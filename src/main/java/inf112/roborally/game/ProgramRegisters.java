@@ -67,7 +67,16 @@ public class ProgramRegisters {
         unlockedRegisters = NUMBER_OF_REGISTERS;
     }
 
+    /**
+     * Picks a card from from the player hand and puts it into the register.
+     * @param cardPosition the position of the card in hand
+     * @return index at which it is stored if adding a card to the register was successful, -1 if not.
+     */
     public int pickCard(int cardPosition) {
+        if(cardPosition < 0 || cardPosition >= player.getNumberOfCardsInHand()){
+            throw new IndexOutOfBoundsException("CardPosition: " + cardPosition + ". Number of cards in hand: " + player.getNumberOfCardsInHand());
+        }
+
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {
                 registers[i] = player.getCardsInHand().remove(cardPosition); //get

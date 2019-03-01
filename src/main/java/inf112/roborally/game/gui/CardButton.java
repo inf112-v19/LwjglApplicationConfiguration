@@ -21,7 +21,9 @@ public class CardButton extends ImageButton {
         addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                player.getRegisters().pickCard(i);
+                //System.out.println("i: " + i);
+                //System.out.println("Size: " + player.getNumberOfCardsInHand());
+                player.pickCardInRegister(i);
                 cardsInHandDisplay.updateCardsInHandVisually();
             }
         });

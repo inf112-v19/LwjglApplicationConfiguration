@@ -51,7 +51,7 @@ public class ProgramRegisterTest {
     @Test
     public void receiveCard_AddsOneCardToCardsInHand(){
         player.receiveCard(stack.pop());
-        assertEquals(1, player.getCardsInHand().size());
+        assertEquals(1, player.getNumberOfCardsInHand());
     }
 
     @Test
@@ -121,7 +121,7 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
-            player.pickCard(0);
+            player.pickCardInRegister(0);
 
         assertEquals(true, programRegisters.registerIsFull());
     }
@@ -132,7 +132,7 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 1; i++)
-            player.pickCard(0);
+            player.pickCardInRegister(0);
 
         assertEquals(false, programRegisters.registerIsFull());
     }
