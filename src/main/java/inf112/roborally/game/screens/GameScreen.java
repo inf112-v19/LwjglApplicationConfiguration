@@ -5,10 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.GameLogic;
-import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
@@ -23,8 +23,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private GameLogic gameLogic;
 
     public OrthographicCamera camera;
-    private Viewport gamePort;
-    private CardsInHandDisplay hud;
+    private Viewport   viewPort;
+    private CardsInHandDisplay cardsInHandDisplay;
     private Board board;
 
     ProgramRegisterDisplay programRegisterDisplay;
@@ -39,11 +39,11 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         camera = new OrthographicCamera();
         camera.setToOrtho(false);
         camera.update();
-        gamePort = new FitViewport(1920, 1080, camera);
-
+        viewPort = new FitViewport(1920, 1080, camera);
         batch = new SpriteBatch();
-        this.gameLogic = new GameLogic(board);
-        hud = new CardsInHandDisplay(batch, board.getPlayers().get(0), gamePort);
+        Stage stage = new Stage(viewPort, batch);
+        cardsInHandDisplay = new CardsInHandDisplay(board.getPlayers().get(0), stage);
+        this.gameLogic = new GameLogic(board, cardsInHandDisplay);
 
         programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
         player = board.getPlayers().get(0);
@@ -79,15 +79,16 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         programRegisterDisplay.draw(batch, camera);
         batch.end();
 
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+        batch.setProjectionMatrix(cardsInHandDisplay.stage.getCamera().combined);
+        cardsInHandDisplay.stage.draw();
+
 
     }
 
     private void update() {
         board.update();
         gameLogic.update();
-        hud.update(player);
+        cardsInHandDisplay.update(player);
     }
 
     @Override
@@ -117,7 +118,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width,height);
+        viewPort.update(width,height);
     }
 }
 

@@ -40,15 +40,15 @@ public class CardsInHandDisplay {
     ImageButton button;
     TextureRegionDrawable buttonTextureDrawable;
 
-    public CardsInHandDisplay(SpriteBatch sb, final Player player, Viewport viewport) {
+    public CardsInHandDisplay(final Player player, Stage stage) {
         this.player = player;
         lives = player.getLives();
         damage = player.getDamage();
         cards = 0;
 
-        this.viewport = viewport;
+        //this.viewport = viewport;
         //viewport = new FitViewport(1920, 1080, new OrthographicCamera());
-        stage = new Stage(viewport, sb);
+        this.stage = stage;
 
         hud = new Table();
         hud.top().align(Align.topRight);
@@ -97,10 +97,11 @@ public class CardsInHandDisplay {
         }
     }
 
-    public void testUpdate() {
+    public void updateCardsInHandVisually() {
+        System.out.println(player.getRegisters().getCardsInHand().size());
         float scale = 0.5f;
         int j = 0;
-        int posX = 1300;
+        int posX = 500;
 
         for (int i = 0; i < player.getRegisters().getCardsInHand().size(); i++) {
             // TODO: GET TEXTURE FROM CARD AT ith POSITION:

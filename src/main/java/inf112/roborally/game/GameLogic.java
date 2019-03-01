@@ -1,6 +1,7 @@
 package inf112.roborally.game;
 
 import com.badlogic.gdx.Gdx;
+import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
@@ -17,20 +18,21 @@ public class GameLogic {
     private ArrayList<Player> players;
     private Stack<ProgramCard> returnedProgramCards;
     private Player player1;
-    boolean firstRound;
 
-    public GameLogic(Board board) {
+    private CardsInHandDisplay cardsInHandDisplay;
+
+    public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay) {
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
 //        stackOfProgramCards = ProgramCard.makeTestProgramCardDeck();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
         player1 = players.get(0);
         this.board = board;
+        this.cardsInHandDisplay = cardsInHandDisplay;
 
         roundOver = true;
         phase = 0;
 
-        firstRound = true;
 
         update();
 
@@ -39,10 +41,6 @@ public class GameLogic {
 
     public void doBeforeRound() {
         phase = 0;
-        if(firstRound){
-            giveCardsToPlayer(player1);
-            firstRound = false;
-        }
 
         for (Player currentPlayer : players) {
             //Retrieve cards from last round
@@ -50,6 +48,7 @@ public class GameLogic {
 
             //Receive new cards
             giveCardsToPlayer(currentPlayer);
+            cardsInHandDisplay.updateCardsInHandVisually();
         }
 
         // Show cards
