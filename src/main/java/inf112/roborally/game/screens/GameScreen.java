@@ -37,10 +37,9 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.board = new Board(mapPath);
 
         batch = new SpriteBatch();
+        this.gameLogic = new GameLogic(board);
         hud = new CardsInHandDisplay(batch, board.getPlayers().get(0));
 
-
-        this.gameLogic = new GameLogic(board, hud);
         programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
         player = board.getPlayers().get(0);
     }
@@ -87,6 +86,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private void update() {
         board.update();
         gameLogic.update();
+        hud.update(player);
+        hud.testUpdate();
     }
 
     @Override
