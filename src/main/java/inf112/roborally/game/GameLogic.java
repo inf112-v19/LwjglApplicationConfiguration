@@ -1,6 +1,5 @@
 package inf112.roborally.game;
 
-import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.world.Board;
 
@@ -11,8 +10,6 @@ public class GameLogic {
 
     boolean roundOver;
     int phase;
-
-    private CardsInHandDisplay hud;
     private Board board;
 
     private Stack<ProgramCard> stackOfProgramCards;
@@ -21,25 +18,29 @@ public class GameLogic {
 
     private Player player1;
 
-    public GameLogic(Board board, CardsInHandDisplay hud) {
+    public GameLogic(Board board) {
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
         player1 = players.get(0);
         this.board = board;
-        this.hud = hud;
 
         roundOver = true;
         phase = 0;
 
+        giveCardsToPlayer(player1);
         update();
 
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
-
+boolean firstRound = true;
     public void doBeforeRound() {
         phase = 0;
+        if(firstRound){
+            giveCardsToPlayer(player1);
+            firstRound = false;
+        }
 
         for (Player currentPlayer : players) {
             //Retrieve cards from last round
@@ -78,8 +79,6 @@ public class GameLogic {
                 roundOver = true;
                 System.out.println("round over");
             }
-            hud.update(player1);
-
 
             // after phase is over :
         }

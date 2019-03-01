@@ -64,7 +64,7 @@ public class CardsInHandDisplay {
         int posX = 1300;
         for (int i = 0; i < 9; i++) {
             // TODO: GET TEXTURE FROM CARD AT ith POSITION:
-            buttonTextureDrawable = new TextureRegionDrawable(cv.getRegion(new ProgramCard(Rotate.NONE, 1, 0)));
+            buttonTextureDrawable = new TextureRegionDrawable(cv.getRegion(player.getRegisters().getCardsInHand().get(i)));
             button = new ImageButton(buttonTextureDrawable);
             button.setTransform(true);
             button.setScale(scale);
