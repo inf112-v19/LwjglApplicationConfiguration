@@ -150,12 +150,12 @@ public class GameLogic {
             if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
                 reshuffleDeck();
             }
-            player.getRegisters().receiveCard(stackOfProgramCards.pop());
+            player.receiveCard(stackOfProgramCards.pop());
         }
     }
 
     private void retrieveCardsFromPlayer(Player player) {
-        ArrayList<ProgramCard> playerCards = player.getRegisters().returnCards();
+        ArrayList<ProgramCard> playerCards = player.returnCards();
         while (!playerCards.isEmpty())
             returnedProgramCards.push(playerCards.remove(0));
     }

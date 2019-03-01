@@ -9,13 +9,14 @@ import java.util.Stack;
 import static junit.framework.TestCase.*;
 
 public class ProgramRegisterTest {
-    Player player = new Player(0,0);
     ProgramRegisters programRegisters;
     Stack<ProgramCard> stack;
+    private Player player;
 
     @Before
     public void setup(){
-        programRegisters = new ProgramRegisters();
+        player = new Player(0,0);
+        programRegisters = player.getRegisters();
         stack = ProgramCard.makeProgramCardDeck();
     }
 
@@ -49,8 +50,8 @@ public class ProgramRegisterTest {
 
     @Test
     public void receiveCard_AddsOneCardToCardsInHand(){
-        programRegisters.receiveCard(stack.pop());
-        assertEquals(1, programRegisters.getCardsInHand().size());
+        player.receiveCard(stack.pop());
+        assertEquals(1, player.getCardsInHand().size());
     }
 
     @Test
@@ -74,53 +75,53 @@ public class ProgramRegisterTest {
     @Test
     public void returnCards_ReturnsAllCards(){
         for(int i = 0; i < 9; i++){
-            programRegisters.receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
         }
-        assertEquals(9, programRegisters.returnCards().size());
+        assertEquals(9, player.returnCards().size());
     }
 
     @Test
     public void returnCards_ReturnsAllCardsWhenNoRegistersAreLocked(){
         for(int i = 0; i < 9; i++){
-            programRegisters.receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
         }
         for(int i = 0; i < 5; i++)
             programRegisters.pickCard(i);
-        programRegisters.removeCardsFromHand();
-        assertEquals(9, programRegisters.returnCards().size());
+        player.returnCards();
+        assertEquals(9, player.returnCards().size());
     }
 
     @Test
     public void returnCards_ReturnsFourCardsWhenFiveRegistersAreLocked(){
         for(int i = 0; i < 9; i++){
-            programRegisters.receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
         }
         for(int i = 0; i < 5; i++)
             programRegisters.pickCard(0);
         for (int i = 0; i < 5; i++)
             programRegisters.lockRegister();
-        assertEquals(4, programRegisters.returnCards().size());
+        assertEquals(4, player.returnCards().size());
     }
 
     @Test
     public void returnCardsReturns_8CardsWhenOneRegistersAreLocked(){
         for(int i = 0; i < 9; i++)
-            programRegisters.receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
             programRegisters.pickCard(0);
 
         programRegisters.lockRegister();
-        assertEquals(8, programRegisters.returnCards().size());
+        assertEquals(8, player.returnCards().size());
     }
 
     @Test
     public void registerIsFull_ReturnsTrueWhenFull(){
         for(int i = 0; i < 9; i++)
-            programRegisters.receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
-            programRegisters.pickCard(0);
+            player.pickCard(0);
 
         assertEquals(true, programRegisters.registerIsFull());
     }
@@ -128,10 +129,10 @@ public class ProgramRegisterTest {
     @Test
     public void registerIsFull_ReturnsFalseWhenNotFull(){
         for(int i = 0; i < 9; i++)
-            programRegisters.receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
 
         for(int i = 0; i < 1; i++)
-            programRegisters.pickCard(0);
+            player.pickCard(0);
 
         assertEquals(false, programRegisters.registerIsFull());
     }

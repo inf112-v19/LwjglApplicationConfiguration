@@ -9,12 +9,12 @@ public class RoboRallyGame extends Game {
 
     public static final String VAULT = "assets/gameboard/vault.tmx";
     public static final String SPIRAL_MARATHON = "assets/gameboard/spiralmarathon.tmx";
+    private static final boolean DEBUGGING = false;
 
 
     //MenuScreen
     //EndScreen
     //etc...
-    private final boolean debugging = false;
 
     public GameScreen gameScreen;
     public TestScreen registerTestScreen;
@@ -22,7 +22,7 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void create() {
-        if(debugging) {
+        if(DEBUGGING) {
             registerTestScreen = new TestScreen();
             setScreen(registerTestScreen);
         }

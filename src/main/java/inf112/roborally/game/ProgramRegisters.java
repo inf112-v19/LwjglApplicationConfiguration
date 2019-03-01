@@ -4,29 +4,26 @@ import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class ProgramRegisters {
     public static final int NUMBER_OF_REGISTERS = 5;
     public static final int MAX_NUMBER_OF_CARDS = 9;
+    private final Player player;
 
     private int unlockedRegisters;
     private ProgramCard[] registers;
-    private ArrayList<ProgramCard> cardsInHand;
     private PriorityQueue<Integer> cardsToRemove;
 
 
-    public ProgramRegisters() {
+    public ProgramRegisters(Player player) {
+        this.player = player;
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
-        cardsInHand = new ArrayList<>();
+
         cardsToRemove = new PriorityQueue<>(5, Collections.reverseOrder());
     }
-
-    public void receiveCard(ProgramCard programCard) {
-        cardsInHand.add(programCard);
-    }
-
 
     public boolean registerIsFull() {
         for (int i = 0; i < NUMBER_OF_REGISTERS; i++) {
@@ -52,7 +49,7 @@ public class ProgramRegisters {
         return list;
     }
 
-    public ArrayList<ProgramCard> returnCards(){
+    public List<ProgramCard> returnCardsFromRegisters(List<ProgramCard> cardsInHand){
         for(int i = 0; i < unlockedRegisters; i++) {
             if(registers[i] != null) {
                 cardsInHand.add(registers[i]);
@@ -73,7 +70,7 @@ public class ProgramRegisters {
     public int pickCard(int cardPosition) {
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {
-                registers[i] = cardsInHand.remove(cardPosition); //get
+                registers[i] = player.getCardsInHand().remove(cardPosition); //get
                 return i;
             }
         }
@@ -81,19 +78,8 @@ public class ProgramRegisters {
         return -1;
     }
 
-    public void removeCardsFromHand(){
-        while (!cardsToRemove.isEmpty()) {
-            System.out.println(cardsToRemove.peek());
-            cardsInHand.remove(cardsToRemove.poll());
-        }
-    }
-
     public boolean isLocked(int register) {
         return register >= unlockedRegisters;
-    }
-
-    public ArrayList<ProgramCard> getCardsInHand(){
-        return cardsInHand;
     }
 
     public int getUnlockedRegisters() {

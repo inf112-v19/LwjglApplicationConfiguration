@@ -2,8 +2,11 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 
+import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.ProgramRegisters;
 import inf112.roborally.game.world.Direction;
+
+import java.util.ArrayList;
 
 
 public class Player extends MovableGameObject {
@@ -14,6 +17,7 @@ public class Player extends MovableGameObject {
     private int lives;
     private int damage;
     private Backup backup;
+    private ArrayList<ProgramCard> cardsInHand;
     private ProgramRegisters registers;
     private int flagCounter;
     private boolean[] flagsFound;
@@ -24,6 +28,7 @@ public class Player extends MovableGameObject {
     public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {
         super(x, y, "assets/robot/tvBot.png");
         this.name = name;
+
         damage = 0;
         lives = MAX_LIVES;
 
@@ -35,7 +40,8 @@ public class Player extends MovableGameObject {
         loadVisualRepresentation();
 
         backup = new Backup(getPos());
-        registers = new ProgramRegisters();
+        registers = new ProgramRegisters(this);
+        cardsInHand = new ArrayList<>();
     }
 
     /**
@@ -45,12 +51,32 @@ public class Player extends MovableGameObject {
         super(x, y, "assets/robot/tvBot.png");
         damage = 0;
         lives = MAX_LIVES;
-        registers = new ProgramRegisters();
+        registers = new ProgramRegisters(this);
+        cardsInHand = new ArrayList<>();
+
 
         // For testing with flag behaviour, now tests with 3 flags on the board
         flagCounter = 0;
 //        backup = new Backup(x,y);
         flagsFound = new boolean [3];
+    }
+
+
+    public void receiveCard(ProgramCard programCard) {
+        cardsInHand.add(programCard);
+    }
+
+    public ArrayList<ProgramCard> getCardsInHand(){
+        return cardsInHand;
+    }
+
+    public void pickCard(int i){
+        registers.pickCard(i);
+    }
+
+    public ArrayList<ProgramCard> returnCards(){
+        registers.returnCardsFromRegisters(cardsInHand);
+        return cardsInHand;
     }
 
     @Override
@@ -181,7 +207,7 @@ public class Player extends MovableGameObject {
     }
 
     public boolean outOfLives() {
-        return lives <= 0;
+        return lives == 0;
     }
 
 

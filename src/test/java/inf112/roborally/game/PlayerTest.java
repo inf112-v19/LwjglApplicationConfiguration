@@ -110,13 +110,13 @@ public class PlayerTest {
     public void noLockedRegistersReturnsAllCards(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.getRegisters().receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.getRegisters().pickCard(0);
         }
 
-        ArrayList<ProgramCard> cardsReturned = player.getRegisters().returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCards();
         assertEquals(9, cardsReturned.size());
 
         // All registers are empty:
@@ -128,7 +128,7 @@ public class PlayerTest {
     public void lockedCardsAreNotReturned(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.getRegisters().receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.getRegisters().pickCard(0);
@@ -139,7 +139,7 @@ public class PlayerTest {
 
         // Only cards in hand are returned:
 
-        ArrayList<ProgramCard> cardsReturned = player.getRegisters().returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCards();
         assertEquals(4, cardsReturned.size());
 
         // All registers contains program cards:
@@ -151,7 +151,7 @@ public class PlayerTest {
     public void lockedCardsAreNotReturned2(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.getRegisters().receiveCard(stack.pop());
+            player.receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.getRegisters().pickCard(0);
@@ -161,7 +161,7 @@ public class PlayerTest {
             player.takeDamage();
 
         // Cards in hand are returned + 4 from registers:
-        ArrayList<ProgramCard> cardsReturned = player.getRegisters().returnCards();
+        ArrayList<ProgramCard> cardsReturned = player.returnCards();
         assertEquals(8, cardsReturned.size());
 
         // The first 4 registers do not contain program cards:
@@ -180,9 +180,9 @@ public class PlayerTest {
         Player p3 = new Player(0,0);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
-            p1.getRegisters().receiveCard(stack.pop());
-            p2.getRegisters().receiveCard(stack.pop());
-            p3.getRegisters().receiveCard(stack.pop());
+            p1.receiveCard(stack.pop());
+            p2.receiveCard(stack.pop());
+            p3.receiveCard(stack.pop());
         }
         // have them all pick the first card and place it in a register:
         p1.getRegisters().pickCard(0);
