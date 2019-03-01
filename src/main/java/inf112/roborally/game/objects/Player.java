@@ -47,6 +47,7 @@ public class Player extends MovableGameObject {
 
         // For testing with flag behaviour, now tests with 3 flags on the board
         flagCounter = 0;
+        backup = new Backup(x,y);
         flagsFound = new boolean [3];
     }
 
@@ -65,8 +66,11 @@ public class Player extends MovableGameObject {
                 rotationDegree = 180;
                 break;
         }
-        sprite.setFlip(flipSprite, false);
-        super.updateSprite();
+
+        if(sprite != null) {
+            sprite.setFlip(flipSprite, false);
+            super.updateSprite();
+        }
     }
 
 
@@ -80,7 +84,8 @@ public class Player extends MovableGameObject {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
             repairAllDamage();
-            backup.movePlayer(this);
+            if(backup != null)
+                backup.movePlayer(this);
         } else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");
@@ -122,8 +127,8 @@ public class Player extends MovableGameObject {
     }
 
     public void takeDamage() {
-        this.damage++;
-        if (damage < 10 && damage >= 5) {
+        if(damage < 10) damage++;
+        if (damage >= 5) {
             registers.lockRegister();
         }
     }

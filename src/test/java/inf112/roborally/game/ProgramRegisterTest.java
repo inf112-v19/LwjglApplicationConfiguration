@@ -16,7 +16,7 @@ public class ProgramRegisterTest {
     @Before
     public void setup(){
         programRegisters = new ProgramRegisters();
-        stack = ProgramCard.makeStack();
+        stack = ProgramCard.makeProgramCardDeck();
     }
 
     @Test

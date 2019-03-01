@@ -1,6 +1,5 @@
 package inf112.roborally.game;
 
-import inf112.roborally.game.ProgramCard;
 import inf112.roborally.game.objects.Rotate;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +13,7 @@ public class ProgramCardTest {
 
     @Before
     public void setup(){
-        stackOfCards = ProgramCard.makeStack();
+        stackOfCards = ProgramCard.makeProgramCardDeck();
     }
 
     @Test
