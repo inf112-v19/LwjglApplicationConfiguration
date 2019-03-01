@@ -1,8 +1,5 @@
-package inf112.roborally.game.world;
+package inf112.roborally.game.enums;
 
-
-import inf112.roborally.game.objects.Rotate;
-import org.omg.PortableInterceptor.DISCARDING;
 
 public enum Direction {
 

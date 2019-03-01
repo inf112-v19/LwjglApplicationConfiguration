@@ -1,4 +1,4 @@
-package inf112.roborally.game.objects;
+package inf112.roborally.game.enums;
 
 
 public enum Rotate {

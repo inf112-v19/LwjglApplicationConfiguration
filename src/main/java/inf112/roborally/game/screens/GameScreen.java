@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.roborally.game.GameLogic;
+import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.world.Board;
+import inf112.roborally.game.board.Board;
 
 
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?

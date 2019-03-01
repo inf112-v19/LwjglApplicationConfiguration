@@ -1,13 +1,8 @@
-package inf112.roborally.game;
+package inf112.roborally.game.objects;
 
-import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.world.Board;
-import inf112.roborally.game.world.Direction;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 

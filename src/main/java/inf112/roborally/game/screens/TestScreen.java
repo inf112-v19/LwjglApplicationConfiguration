@@ -7,11 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.gui.CardVisuals;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.objects.Rotate;
+import inf112.roborally.game.enums.Rotate;
 
 public class TestScreen implements Screen {
     private SpriteBatch batch;

@@ -1,6 +1,6 @@
-package inf112.roborally.game;
+package inf112.roborally.game.board;
 
-import inf112.roborally.game.objects.Rotate;
+import inf112.roborally.game.enums.Rotate;
 
 import java.util.Collections;
 import java.util.Stack;

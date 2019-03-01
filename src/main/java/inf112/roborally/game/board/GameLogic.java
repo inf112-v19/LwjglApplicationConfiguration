@@ -1,9 +1,10 @@
-package inf112.roborally.game;
+package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
+import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.world.Board;
+import inf112.roborally.game.board.Board;
 
 import java.util.*;
 

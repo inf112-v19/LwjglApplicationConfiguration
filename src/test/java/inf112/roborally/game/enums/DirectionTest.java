@@ -1,7 +1,7 @@
-package inf112.roborally.game;
+package inf112.roborally.game.enums;
 
-import inf112.roborally.game.objects.Rotate;
-import inf112.roborally.game.world.Direction;
+import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 

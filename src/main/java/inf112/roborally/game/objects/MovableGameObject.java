@@ -1,8 +1,9 @@
 package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
-import inf112.roborally.game.world.Direction;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.enums.Rotate;
 
 public abstract class MovableGameObject extends GameObject {
     public boolean moved;

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.board.ProgramCard;
 
 import java.util.ArrayList;
 

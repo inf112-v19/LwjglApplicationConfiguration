@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import inf112.roborally.game.ProgramRegisters;
+import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
 
 public class ProgramRegisterDisplay {

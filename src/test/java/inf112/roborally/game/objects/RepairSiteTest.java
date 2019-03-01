@@ -1,13 +1,8 @@
-package inf112.roborally.game;
+package inf112.roborally.game.objects;
 
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.objects.RepairSite;
-import inf112.roborally.game.world.Board;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 

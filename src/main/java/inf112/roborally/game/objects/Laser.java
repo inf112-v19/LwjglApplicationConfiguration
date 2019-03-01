@@ -1,13 +1,12 @@
 package inf112.roborally.game.objects;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.world.Direction;
+import inf112.roborally.game.enums.Direction;
 
 
 public class Laser extends MovableGameObject{

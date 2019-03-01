@@ -1,5 +1,6 @@
 package inf112.roborally.game;
 
+import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 
 import org.junit.Before;

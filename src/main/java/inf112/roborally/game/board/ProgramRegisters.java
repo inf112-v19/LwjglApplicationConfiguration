@@ -1,4 +1,4 @@
-package inf112.roborally.game;
+package inf112.roborally.game.board;
 
 import inf112.roborally.game.objects.Player;
 

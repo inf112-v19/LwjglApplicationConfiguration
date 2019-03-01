@@ -1,9 +1,7 @@
 package inf112.roborally.game.objects;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.roborally.game.world.Direction;
-import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.enums.Direction;
 
 import java.util.ArrayList;
 
