@@ -126,12 +126,6 @@ public class Board {
             }
             player.update();
             player.updateSprite();
-
-            if (player.thisPlayerHasWon()) {
-                System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
-                // Might not be necessary to exit the game when it's finished
-                Gdx.app.exit();
-            }
         }
     }
 
