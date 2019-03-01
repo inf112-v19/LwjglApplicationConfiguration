@@ -40,14 +40,14 @@ public class CardsInHandDisplay {
     ImageButton button;
     TextureRegionDrawable buttonTextureDrawable;
 
-    public CardsInHandDisplay(SpriteBatch sb, final Player player) {
+    public CardsInHandDisplay(SpriteBatch sb, final Player player, Viewport viewport) {
         this.player = player;
         lives = player.getLives();
         damage = player.getDamage();
         cards = 0;
 
-
-        viewport = new FitViewport(1920, 1080, new OrthographicCamera());
+        this.viewport = viewport;
+        //viewport = new FitViewport(1920, 1080, new OrthographicCamera());
         stage = new Stage(viewport, sb);
 
         hud = new Table();
@@ -65,7 +65,7 @@ public class CardsInHandDisplay {
         //Adding buttons:
         float scale = 0.5f;
         int j = 0;
-        int posX = 1300;
+        int posX = 500;
         for (int i = 0; i < player.getRegisters().getCardsInHand().size(); i++) {
             // TODO: GET TEXTURE FROM CARD AT ith POSITION:
             buttonTextureDrawable = new TextureRegionDrawable(cv.getRegion(player.getRegisters().getCardsInHand().get(i)));

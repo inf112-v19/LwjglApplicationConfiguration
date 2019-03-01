@@ -36,9 +36,14 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.mapPath = mapPath;
         this.board = new Board(mapPath);
 
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false);
+        camera.update();
+        gamePort = new FitViewport(1920, 1080, camera);
+
         batch = new SpriteBatch();
         this.gameLogic = new GameLogic(board);
-        hud = new CardsInHandDisplay(batch, board.getPlayers().get(0));
+        hud = new CardsInHandDisplay(batch, board.getPlayers().get(0), gamePort);
 
         programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
         player = board.getPlayers().get(0);
@@ -46,10 +51,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void show(){
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-        camera.update();
-        gamePort = new FitViewport(1920, 1080, camera);
     }
 
     @Override
@@ -87,7 +88,6 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         board.update();
         gameLogic.update();
         hud.update(player);
-        hud.testUpdate();
     }
 
     @Override

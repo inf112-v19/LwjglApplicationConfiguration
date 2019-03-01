@@ -19,6 +19,8 @@ public class Player extends MovableGameObject {
     private boolean[] flagsFound;
 
 
+
+
     public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {
         super(x, y, "assets/robot/tvBot.png");
         this.name = name;
