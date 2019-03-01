@@ -40,7 +40,6 @@ public class GameLogic {
     }
 
     public void doBeforeRound() {
-        phase = 0;
 
         for (Player currentPlayer : players) {
             //Retrieve cards from last round
@@ -62,7 +61,7 @@ public class GameLogic {
         if (roundOver) {
             System.out.println("set up before round");
             doBeforeRound();
-            System.out.println("player chosing cards");
+            System.out.println("player choosing cards");
         } else if (!playerReady(player1)) {
             // choosing cards
         } else {
@@ -78,6 +77,7 @@ public class GameLogic {
                 }
                 phase++;
             } else {
+                phase = 0;
                 roundOver = true;
                 System.out.println("round over");
             }
