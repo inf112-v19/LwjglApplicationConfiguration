@@ -125,12 +125,6 @@ public class Board {
             }
             player.update();
             player.updateSprite();
-
-            if (player.thisPlayerHasWon()) {
-                System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
-                // Might not be necessary to exit the game when it's finished
-                Gdx.app.exit();
-            }
         }
     }
 
@@ -234,10 +228,6 @@ public class Board {
             player.updateBackup();
             System.out.printf("%s found a flag!%n", player.getName());
         }
-
-        if(playerIsOnRepair(x,y)) {
-            player.updateBackup();
-        }
     }
 
 
@@ -272,7 +262,7 @@ public class Board {
         return -1;
     }
 
-    private boolean playerIsOnRepair(int x, int y) {
+    public boolean playerIsOnRepair(int x, int y) {
         for(RepairSite rs : repairSites) {
             if(rs.getX() == x && rs.getY() == y) {
                 return true;

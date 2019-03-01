@@ -32,7 +32,7 @@ public class Player extends MovableGameObject {
         makeSprite();
         loadVisualRepresentation();
 
-        backup = new Backup(x, y);
+        backup = new Backup(getPos());
         registers = new ProgramRegisters();
     }
 
@@ -134,7 +134,7 @@ public class Player extends MovableGameObject {
     }
 
     public void updateBackup() {
-        this.backup = new Backup(x,y);
+        this.backup = new Backup(getPos());
     }
 
     // TODO Make is so you need to get the flags in order
@@ -143,9 +143,12 @@ public class Player extends MovableGameObject {
             // If the flagnumber is greater than the array length, do nothing
             ;
         }
-        else if(!flagsFound[flagNumber-1]) {
+        // you need to pick up the flags in order, so first check if the flag you are standing on
+        // is your next flag
+        else if(flagNumber-1 <= flagCounter && !flagsFound[flagNumber-1]) {
             flagsFound[flagNumber-1] = true;
             flagCounter++;
+            System.out.printf("%s picked up a flag!%n", name);
         }
     }
 

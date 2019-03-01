@@ -15,8 +15,8 @@ public class Backup extends GameObject {
      * @param x position x
      * @param y position y
      */
-    public Backup(int x, int y) {
-        super(x, y, "assets/robot/backup.png");
+    public Backup(Position pos) {
+        super(pos, "assets/robot/backup.png");
         makeSprite();
         updateSprite();
         sprite.setSize(Main.TILE_LENGTH, Main.TILE_LENGTH);
