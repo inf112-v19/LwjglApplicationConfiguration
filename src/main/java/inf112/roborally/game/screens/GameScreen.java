@@ -2,6 +2,7 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -28,14 +29,21 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     private Board board;
     Player player;
-
-    public GameScreen(RoboRallyGame game, String mapPath){
+    private Music music;
+  
+  public GameScreen(RoboRallyGame game, String mapPath){
         this.mapPath = mapPath;
         this.game = game;
         board = new VaultBoard();
         hud = new Hud(board.getPlayers().get(0));
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
         player = board.getPlayers().get(0);
+
+        // Music
+        music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/testMusic1.ogg"));
+        music.setLooping(true);
+        music.setVolume(0.3f);
+        music.play();
     }
 
     @Override
@@ -85,6 +93,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
         }
+        music.dispose();
     }
 
     @Override
