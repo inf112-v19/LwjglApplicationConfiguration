@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.VaultBoard;
@@ -13,7 +16,7 @@ import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.board.Board;
 
 
-public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
+public class GameScreen implements Screen {
 
     public static String mapPath = Main.TEST_MAP;
     private final RoboRallyGame game;
@@ -23,8 +26,11 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     private Board board;
     Player player;
     private Music music;
-  
-  public GameScreen(RoboRallyGame game, String mapPath){
+
+    Sprite background;
+    SpriteBatch backgroundBatch;
+
+    public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
         this.game = game;
         board = new VaultBoard();
@@ -37,29 +43,37 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         music.setLooping(true);
         music.setVolume(0.3f);
         music.play();
+
+        background = new Sprite(new Texture("assets/img/background.png"));
+        background.setSize(background.getWidth()/Main.UNIT_SCALE, background.getHeight()/Main.UNIT_SCALE);
+        backgroundBatch = new SpriteBatch();
     }
 
     @Override
-    public void show(){
+    public void show() {
     }
 
     @Override
     public void render(float delta) {
 
         update();
-        float r = 30/255f;
-        float g = 30/255f;
-        float b = 30/255f;
+        float r = 10 / 255f;
+        float g = 10 / 255f;
+        float b = 10 / 255f;
 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
-        Gdx.gl.glClearColor(r,g,b, 0);
+        Gdx.gl.glClearColor(r, g, b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.camera.position.x = player.getSprite().getX() + player.getSprite().getWidth()/2;
-        game.camera.position.y = player.getSprite().getY() + player.getSprite().getHeight()/2 - 32*Main.UNIT_SCALE;
+
+        backgroundBatch.begin();
+        background.draw(backgroundBatch);
+        backgroundBatch.end();
+
+        game.camera.position.x = player.getSprite().getX() + player.getSprite().getWidth() / 2;
+        game.camera.position.y = player.getSprite().getY() + player.getSprite().getHeight() / 2 - 32 * Main.UNIT_SCALE;
         game.camera.update();
 
         board.render(game.camera);
-
 
         game.batch.setProjectionMatrix(game.camera.combined);
 
@@ -80,9 +94,12 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void dispose() {
+        backgroundBatch.dispose();
+        background.getTexture().dispose();
+
         game.batch.dispose();
         board.dispose();
-        for(Player player : board.getPlayers()) {
+        for (Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
         }
@@ -106,10 +123,13 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void resize(int width, int height) {
-        game.viewPort.update(width,height);
+        game.viewPort.update(width, height);
+        hud.resize(width, height);
     }
 
-    public Hud getHud() { return hud; }
+    public Hud getHud() {
+        return hud;
+    }
 }
 
 

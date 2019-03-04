@@ -39,7 +39,7 @@ public class RoboRallyGame extends Game {
         else {
             menuScreen = new MenuScreen(this);
             gameScreen = new GameScreen(this, VAULT);
-            setScreen(gameScreen);
+            setScreen(menuScreen);
         }
     }
 

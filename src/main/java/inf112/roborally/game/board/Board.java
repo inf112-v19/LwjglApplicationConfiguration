@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.utils.Array;
+
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
@@ -17,9 +18,7 @@ import java.util.List;
 
 public abstract class Board extends BoardCreator {
 
-
     protected ArrayList<Player> players;
-
     protected ArrayList<RepairSite> repairSites;
     protected Array<Flag> flags;
 
@@ -35,6 +34,10 @@ public abstract class Board extends BoardCreator {
     }
 
     public void handleInput() {
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            Gdx.app.exit();
+        }
         //Just for testing
         Player p1 = players.get(0);
         Player p2 = players.get(1);
@@ -283,7 +286,6 @@ public abstract class Board extends BoardCreator {
         for(Player player : players){
             player.getBackup().getSprite().draw(batch);
         }
-
     }
 
 }

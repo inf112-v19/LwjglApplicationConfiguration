@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.roborally.game.board.ProgramCard;
@@ -21,6 +23,7 @@ public class TestScreen implements Screen {
     private ProgramCard programCard;
     private ProgramRegisterDisplay programRegisterDisplay;
     private Player player;
+    private Sprite background;
 
 
     public TestScreen() {
@@ -36,6 +39,9 @@ public class TestScreen implements Screen {
         for(int i = 0; i < 9; i++){
             player.receiveCard(new ProgramCard(Rotate.NONE,2,0));
         }
+
+        background = new Sprite(new Texture("assets/img/testscreen.png"));
+        background.setPosition(background.getX()-705, background.getY());
     }
 
     @Override
@@ -53,6 +59,7 @@ public class TestScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+        background.draw(batch);
         programRegisterDisplay.draw(batch, camera);
         batch.end();
         handleInput();
@@ -63,16 +70,16 @@ public class TestScreen implements Screen {
             Gdx.app.exit();
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+        if(Gdx.input.isKeyJustPressed(Input.Keys.D)){
             player.takeDamage();
             player.update();
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SHIFT_RIGHT)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.S)){
             player.getRegisters().pickCard(0);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)){
             player.returnCards();
         }
     }

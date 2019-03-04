@@ -49,6 +49,7 @@ public class ProgramRegisterDisplay {
         cardVisual = new CardVisuals();
 
         camera.position.set(board.getWidth()/ 2 , 1080 / 2 , 0); // center
+        camera.update();
 
     }
 
