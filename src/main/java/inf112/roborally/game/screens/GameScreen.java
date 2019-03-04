@@ -33,7 +33,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         this.mapPath = mapPath;
         this.game = game;
         board = new VaultBoard();
-        hud = new Hud(board.getPlayers().get(0), game);
+        hud = new Hud(board.getPlayers().get(0));
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
         player = board.getPlayers().get(0);
     }
@@ -68,7 +68,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         board.drawGameObjects(game.batch);
         game.batch.end();
 
-        hud.draw(game);
+        hud.draw();
 
     }
 
@@ -107,9 +107,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         game.viewPort.update(width,height);
     }
 
-    public Hud getHud() {
-        return hud;
-    }
+    public Hud getHud() { return hud; }
 }
 
 
