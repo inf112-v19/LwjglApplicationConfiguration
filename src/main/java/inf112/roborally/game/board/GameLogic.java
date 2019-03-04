@@ -20,7 +20,7 @@ public class GameLogic {
     private Stack<ProgramCard> returnedProgramCards;
     private Player player1;
 
-    private CardsInHandDisplay cardsInHandDisplay;
+    private final CardsInHandDisplay cardsInHandDisplay;
 
     public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay) {
         state = GameState.PREROUND;
@@ -43,14 +43,13 @@ public class GameLogic {
 
     public void doBeforeRound() {
 
-        for (Player currentPlayer : players) {
             //Retrieve cards from last round
-            retrieveCardsFromPlayer(currentPlayer);
+            retrieveCardsFromPlayer(player1);
 
             //Receive new cards
-            giveCardsToPlayer(currentPlayer);
+            giveCardsToPlayer(player1);
             cardsInHandDisplay.updateCardsInHandVisually();
-        }
+
 
         // Show cards
         // Choose cards to use for the round

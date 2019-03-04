@@ -19,7 +19,7 @@ public abstract class BoardCreator {
     protected TiledMapTileLayer laserLayer;
     protected TiledMapTileLayer wallLayer;
 
-    protected void createdBoard(String mapPath) {
+    protected void createBoard(String mapPath) {
         loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
         parameters.flipY = true;

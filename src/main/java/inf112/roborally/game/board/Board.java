@@ -18,10 +18,12 @@ import java.util.List;
 public abstract class Board extends BoardCreator {
 
 
-    protected ArrayList<Player> players;
+    protected final ArrayList<Player> players;
 
     protected ArrayList<RepairSite> repairSites;
     protected Array<Flag> flags;
+
+
 
     public Board() {
         flags = new Array<>();

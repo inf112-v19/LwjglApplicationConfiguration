@@ -18,19 +18,19 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
     public static String mapPath = Main.TEST_MAP;
     private final RoboRallyGame game;
     private final Hud hud;
-    private GameLogic gameLogic;
+    private final GameLogic gameLogic;
 
-    private Board board;
-    Player player;
+    private final Board board;
+    private final Player player1;
     private Music music;
   
   public GameScreen(RoboRallyGame game, String mapPath){
-        this.mapPath = mapPath;
         this.game = game;
+        this.mapPath = mapPath;
         board = new VaultBoard();
         hud = new Hud(board.getPlayers().get(0));
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
-        player = board.getPlayers().get(0);
+        player1 = board.getPlayers().get(0);
 
         // Music
         music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/testMusic1.ogg"));
@@ -54,8 +54,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r,g,b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.camera.position.x = player.getSprite().getX() + player.getSprite().getWidth()/2;
-        game.camera.position.y = player.getSprite().getY() + player.getSprite().getHeight()/2 - 32*Main.UNIT_SCALE;
+        game.camera.position.x = player1.getSprite().getX() + player1.getSprite().getWidth()/2;
+        game.camera.position.y = player1.getSprite().getY() + player1.getSprite().getHeight()/2 - 32*Main.UNIT_SCALE;
         game.camera.update();
 
         board.render(game.camera);

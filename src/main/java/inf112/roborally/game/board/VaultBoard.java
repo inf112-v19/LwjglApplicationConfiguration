@@ -15,7 +15,7 @@ public class VaultBoard extends Board {
 
         repairSites.add(new RepairSite(5, 2));
 
-        createdBoard(RoboRallyGame.VAULT);
+        createBoard(RoboRallyGame.VAULT);
 
         Player player1 = new Player("Player1", 6, 6, Direction.NORTH, flags.size);
 

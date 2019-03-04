@@ -14,7 +14,7 @@ public class Hud {
     private FitViewport viewport;
     private SpriteBatch batch;
 
-    public Hud(Player player) {
+    public Hud(final Player player) {
         camera = new OrthographicCamera();
         viewport = new FitViewport(1920, 1080, camera);
         batch = new SpriteBatch();
