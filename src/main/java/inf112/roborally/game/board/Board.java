@@ -17,54 +17,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Board {
-
-    private TiledMap map;
-    private TmxMapLoader loader;
-    private TiledMapRenderer mapRenderer;
-
-    private TiledMapTileLayer floorLayer;
-    private TiledMapTileLayer beltLayer;
-    private TiledMapTileLayer laserLayer;
-    private TiledMapTileLayer wallLayer;
-    private ArrayList<Player> players;
-
-    private ArrayList<RepairSite> repairSites;
-    private Array<Flag> flags;
+public abstract class Board extends BoardCreator {
 
 
-    public Board(String mapPath) {
+    protected ArrayList<Player> players;
+
+    protected ArrayList<RepairSite> repairSites;
+    protected Array<Flag> flags;
+
+    public Board() {
         flags = new Array<>();
-        flags.add(new Flag(1, 10, 1));
-        flags.add(new Flag(6, 2, 2));
-        flags.add(new Flag(6, 10, 3));
-
         repairSites = new ArrayList<>();
-        repairSites.add(new RepairSite(5, 2));
-
-        loader = new TmxMapLoader();
-        TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
-        parameters.flipY = true;
-        map = loader.load(mapPath, parameters);
-        mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
-        createLayers();
-
-
-
-        Player player1 = new Player("Player1", 6, 6, Direction.NORTH, flags.size);
-
-        Player player2 = new Player("Player2", 5, 7, Direction.SOUTH, flags.size);
-
         players = new ArrayList<>();
-        players.add(player1);
-        players.add(player2);
-    }
-
-    private void createLayers() {
-        beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
-        floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
-        laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");
-        wallLayer = (TiledMapTileLayer) map.getLayers().get("walls");
     }
 
     public void render(OrthographicCamera camera) {

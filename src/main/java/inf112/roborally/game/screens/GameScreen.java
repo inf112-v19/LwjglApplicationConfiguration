@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.board.GameLogic;
+import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
@@ -41,7 +42,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         viewPort = new FitViewport(1920, 1080, camera);
         batch = new SpriteBatch();
 
-        board = new Board(mapPath);
+        board = new VaultBoard();
         cardsInHandDisplay = new CardsInHandDisplay(board.getPlayers().get(0), new Stage(viewPort, batch));
         gameLogic = new GameLogic(board, cardsInHandDisplay);
         programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
