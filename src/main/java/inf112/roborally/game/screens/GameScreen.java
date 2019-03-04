@@ -21,10 +21,10 @@ public class GameScreen implements Screen {
     public static String mapPath = Main.TEST_MAP;
     private final RoboRallyGame game;
     private final Hud hud;
-    private GameLogic gameLogic;
+    private final GameLogic gameLogic;
 
-    private Board board;
-    Player player;
+    private final Board board;
+    private final Player player;
     private Music music;
 
     Sprite background;
@@ -33,6 +33,7 @@ public class GameScreen implements Screen {
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
         this.game = game;
+        this.mapPath = mapPath;
         board = new VaultBoard();
         hud = new Hud(board.getPlayers().get(0));
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());

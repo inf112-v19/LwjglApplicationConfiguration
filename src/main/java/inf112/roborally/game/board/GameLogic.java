@@ -20,7 +20,7 @@ public class GameLogic {
     private Stack<ProgramCard> returnedProgramCards;
     private Player player1;
 
-    private CardsInHandDisplay cardsInHandDisplay;
+    private final CardsInHandDisplay cardsInHandDisplay;
 
     public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay) {
         state = GameState.PREROUND;
@@ -43,14 +43,13 @@ public class GameLogic {
 
     public void doBeforeRound() {
 
-        for (Player currentPlayer : players) {
             //Retrieve cards from last round
-            retrieveCardsFromPlayer(currentPlayer);
+            retrieveCardsFromPlayer(player1);
 
             //Receive new cards
-            giveCardsToPlayer(currentPlayer);
+            giveCardsToPlayer(player1);
             cardsInHandDisplay.updateCardsInHandVisually();
-        }
+
 
         // Show cards
         // Choose cards to use for the round
@@ -157,7 +156,7 @@ public class GameLogic {
      * @param player which player to give program cards to.
      */
     private void giveCardsToPlayer(Player player) {
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < player.getRegisters().getCardLimit(player); i++) {
             if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
                 reshuffleDeck();
             }

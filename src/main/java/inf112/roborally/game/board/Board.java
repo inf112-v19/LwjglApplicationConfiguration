@@ -22,6 +22,7 @@ public abstract class Board extends BoardCreator {
     protected ArrayList<RepairSite> repairSites;
     protected Array<Flag> flags;
 
+
     public Board() {
         flags = new Array<>();
         repairSites = new ArrayList<>();
@@ -35,17 +36,17 @@ public abstract class Board extends BoardCreator {
 
     public void handleInput() {
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
         //Just for testing
         Player p1 = players.get(0);
         Player p2 = players.get(1);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             p1.getRegisters().returnCardsFromRegisters(p1.getCardsInHand());
             // messy but it works:
-            ((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().updateCardsInHandVisually();
+            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().updateCardsInHandVisually();
         }
 
         p1.moved = false;
@@ -82,10 +83,10 @@ public abstract class Board extends BoardCreator {
         map.dispose();
     }
 
-    public void updateBoard(){
-        for(Player player : players) {
+    public void updateBoard() {
+        for (Player player : players) {
             boardInteractsWithPlayer(player);
-            if(playerIsOnRepair(player.getX(), player.getY())) {
+            if (playerIsOnRepair(player.getX(), player.getY())) {
                 player.updateBackup();
                 player.repairOneDamage();
             }
@@ -107,13 +108,12 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public void executeCard(Player player, ProgramCard card){
-        if(card.getRotate() != Rotate.NONE){
+    public void executeCard(Player player, ProgramCard card) {
+        if (card.getRotate() != Rotate.NONE) {
             player.rotate(card.getRotate());
-        }
-        else{
-            for(int i = 0; i < card.getMoveDistance(); i++){
-                if(canGo(player)){
+        } else {
+            for (int i = 0; i < card.getMoveDistance(); i++) {
+                if (canGo(player)) {
                     player.move(1);
                 }
             }
@@ -202,7 +202,7 @@ public abstract class Board extends BoardCreator {
 
         // If flagInPlayerPos is greater than 0, it means that a flag is found, and it is
         // the flags number
-        if(flagInPlayerPos > 0) {
+        if (flagInPlayerPos > 0) {
             player.addFlag(flagInPlayerPos);
             player.updateBackup();
             System.out.printf("%s found a flag!%n", player.getName());
@@ -233,8 +233,8 @@ public abstract class Board extends BoardCreator {
     // Check the position if there is a flag there
     // Return the flagnumber if true, else return -1
     private int posHasFlagOnIt(int x, int y) {
-        for(Flag f : flags) {
-            if(f.getX() == x && f.getY() == y) {
+        for (Flag f : flags) {
+            if (f.getX() == x && f.getY() == y) {
                 return f.getFlagNumber();
             }
         }
@@ -242,8 +242,8 @@ public abstract class Board extends BoardCreator {
     }
 
     public boolean playerIsOnRepair(int x, int y) {
-        for(RepairSite rs : repairSites) {
-            if(rs.getX() == x && rs.getY() == y) {
+        for (RepairSite rs : repairSites) {
+            if (rs.getX() == x && rs.getY() == y) {
                 return true;
             }
         }
@@ -282,8 +282,8 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public void drawBackup(SpriteBatch batch){
-        for(Player player : players){
+    public void drawBackup(SpriteBatch batch) {
+        for (Player player : players) {
             player.getBackup().getSprite().draw(batch);
         }
     }

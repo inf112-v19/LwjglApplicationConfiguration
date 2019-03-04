@@ -1,7 +1,5 @@
 package inf112.roborally.game.board;
 
-import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
 import org.junit.Before;
 import org.junit.Test;
@@ -123,7 +121,7 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
-            player.pickCardInRegister(0);
+            player.putCardIntoRegister(0);
 
         assertEquals(true, programRegisters.registerIsFull());
     }
@@ -134,7 +132,7 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 1; i++)
-            player.pickCardInRegister(0);
+            player.putCardIntoRegister(0);
 
         assertEquals(false, programRegisters.registerIsFull());
     }
