@@ -1,4 +1,8 @@
 # Mandatory 3 - LwjglApplicationConfiguration
+
+## About Commits
+Commits are somewhat uneven. Christian has been on holiday for a week and Morten has been stuck at home alot and had nothing else to do than work on the project.
+
 ## Part 1: Project and project structure
 - The roles in the team work fine. We don't see the need to update/change the roles within the team, neither create new ones. 
 For us; a team leader is a person that keeps us on track on deadlines and assignments, while a customer contact is a person that has a broad view over the project and a deeper understanding over how the classes work together.
