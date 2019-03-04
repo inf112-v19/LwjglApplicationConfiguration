@@ -49,4 +49,9 @@ public class CardsInHandDisplay {
         }
     }
 
+    public void dispose() {
+        System.out.println("disposing CardsInHandDisplay");
+        stage.dispose();
+        cardVisuals.dispose();
+    }
 }

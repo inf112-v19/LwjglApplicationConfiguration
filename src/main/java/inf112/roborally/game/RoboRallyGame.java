@@ -43,4 +43,15 @@ public class RoboRallyGame extends Game {
         }
     }
 
+    @Override
+    public void dispose(){
+        if (DEBUGGING){
+            registerTestScreen.dispose();
+        }
+        else {
+            gameScreen.dispose();
+            menuScreen.dispose();
+        }
+    }
+
 }

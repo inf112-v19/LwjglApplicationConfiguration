@@ -38,4 +38,11 @@ public class Hud {
     public void resize(int width, int height) {
         viewport.update(width, height);
     }
+
+    public void dispose(){
+        System.out.println("disposing hud");
+        batch.dispose();
+        cardsInHandDisplay.dispose();
+        programRegisterDisplay.dispose();
+    }
 }

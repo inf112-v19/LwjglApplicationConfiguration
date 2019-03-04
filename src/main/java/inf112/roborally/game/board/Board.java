@@ -80,6 +80,7 @@ public abstract class Board extends BoardCreator {
     }
 
     public void dispose() {
+        System.out.println("disposing board");
         map.dispose();
     }
 

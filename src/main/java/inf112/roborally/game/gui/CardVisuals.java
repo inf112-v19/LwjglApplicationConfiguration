@@ -67,4 +67,17 @@ public class CardVisuals extends Sprite {
         setPosition(x, y);
         return this;
     }
+
+    public void dispose() {
+        System.out.println("disposing CardVisuals");
+        cardTextures.dispose();
+
+        back.getTexture().dispose();
+
+        for(TextureRegion region : move)
+            region.getTexture().dispose();
+
+        for(TextureRegion region : rotate)
+            region.getTexture().dispose();
+    }
 }

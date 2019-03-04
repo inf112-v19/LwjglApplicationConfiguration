@@ -97,4 +97,12 @@ public class ProgramRegisterDisplay {
         }
     }
 
+    public void dispose() {
+        System.out.println("disposing ProgramRegisterDisplay");
+        board.getTexture().dispose();
+        lifetoken.getTexture().dispose();
+        damagetoken.getTexture().dispose();
+        locktoken.getTexture().dispose();
+        cardVisual.dispose();
+    }
 }

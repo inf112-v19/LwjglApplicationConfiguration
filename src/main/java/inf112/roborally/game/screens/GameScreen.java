@@ -95,6 +95,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
+        System.out.println("disposing game screen");
         backgroundBatch.dispose();
         background.getTexture().dispose();
 
@@ -104,6 +105,7 @@ public class GameScreen implements Screen {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
         }
+        hud.dispose();
         music.dispose();
     }
 
