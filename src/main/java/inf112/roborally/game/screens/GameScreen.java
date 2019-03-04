@@ -4,18 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.VaultBoard;
-import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.board.Board;
 

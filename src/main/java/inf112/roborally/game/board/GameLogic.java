@@ -1,11 +1,9 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
-import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.board.Board;
 
 import java.util.*;
 
@@ -27,7 +25,6 @@ public class GameLogic {
     public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay) {
         state = GameState.PREROUND;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
-//        stackOfProgramCards = ProgramCard.makeTestProgramCardDeck();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
         player1 = players.get(0);

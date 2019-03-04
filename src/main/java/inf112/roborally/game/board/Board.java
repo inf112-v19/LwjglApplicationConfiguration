@@ -5,11 +5,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.*;
-import inf112.roborally.game.Main;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
 

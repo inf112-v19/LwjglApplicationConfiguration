@@ -15,11 +15,6 @@ public class RoboRallyGame extends Game {
     public static final String SPIRAL_MARATHON = "assets/gameboard/spiralmarathon.tmx";
     private static final boolean DEBUGGING = false;
 
-
-    //MenuScreen
-    //EndScreen
-    //etc...
-
     public OrthographicCamera camera;
     public Viewport viewPort;
 

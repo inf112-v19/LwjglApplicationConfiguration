@@ -53,8 +53,6 @@ public class ProgramRegisterDisplay {
     }
 
     public void draw(SpriteBatch batch, Camera camera) {
-//        camera.position.set(board.getWidth() - 1920 / 2 + 200*scale, 1080 / 2 - 100*scale, 0);
-        camera.update();
         batch.setProjectionMatrix(camera.combined);
         board.draw(batch);
         drawLifeTokens(batch);

@@ -54,16 +54,6 @@ public class TestScreen implements Screen {
 
         batch.begin();
         programRegisterDisplay.draw(batch, camera);
-
-//        int i = 1;
-//        cardVisuals.drawCard(new ProgramCard(Rotate.NONE, 0, 0),96*i++,32, batch);
-//        cardVisuals.drawCard(new ProgramCard(Rotate.NONE, 1, 0),96*i++,32, batch);
-//        cardVisuals.drawCard(new ProgramCard(Rotate.NONE, 2, 0),96*i++,32, batch);
-//        cardVisuals.drawCard(new ProgramCard(Rotate.NONE, 3, 0),96*i++,32, batch);
-//        i = 1;
-//        cardVisuals.drawCard(new ProgramCard(Rotate.UTURN, 0, 0),96*i++,148, batch);
-//        cardVisuals.drawCard(new ProgramCard(Rotate.LEFT, 0, 0),96*i++,148, batch);
-//        cardVisuals.drawCard(new ProgramCard(Rotate.RIGHT, 0, 0),96*i++,148, batch);
         batch.end();
         handleInput();
     }
