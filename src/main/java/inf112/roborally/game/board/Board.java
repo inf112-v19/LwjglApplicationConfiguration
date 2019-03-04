@@ -32,7 +32,20 @@ public class Board {
     protected ArrayList<RepairSite> repairSites;
     protected Array<Flag> flags;
 
+    public Board() {
+        flags = new Array<>();
+        repairSites = new ArrayList<>();
+        players = new ArrayList<>();
+    }
 
+    protected void createdBoard(String mapPath) {
+        loader = new TmxMapLoader();
+        TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
+        parameters.flipY = true;
+        map = loader.load(RoboRallyGame.VAULT, parameters);
+        mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
+        createLayers();
+    }
 
     protected void createLayers() {
         beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
