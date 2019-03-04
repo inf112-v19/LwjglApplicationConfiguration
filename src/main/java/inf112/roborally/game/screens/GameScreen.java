@@ -13,6 +13,7 @@ import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.board.Board;
@@ -22,19 +23,18 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     public static String mapPath = Main.TEST_MAP;
     private final RoboRallyGame game;
+    private final Hud hud;
     private GameLogic gameLogic;
-    private CardsInHandDisplay cardsInHandDisplay;
+
     private Board board;
-    ProgramRegisterDisplay programRegisterDisplay;
     Player player;
 
     public GameScreen(RoboRallyGame game, String mapPath){
         this.mapPath = mapPath;
         this.game = game;
         board = new VaultBoard();
-        cardsInHandDisplay = new CardsInHandDisplay(board.getPlayers().get(0), new Stage(game.viewPort, game.batch));
-        gameLogic = new GameLogic(board, cardsInHandDisplay);
-        programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
+        hud = new Hud(board.getPlayers().get(0), game);
+        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
         player = board.getPlayers().get(0);
     }
 
@@ -66,11 +66,10 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         board.drawBackup(game.batch);
         board.drawPlayers(game.batch);
         board.drawGameObjects(game.batch);
-        programRegisterDisplay.draw(game.batch, game.camera);
         game.batch.end();
 
-        game.batch.setProjectionMatrix(cardsInHandDisplay.stage.getCamera().combined);
-        cardsInHandDisplay.stage.draw();
+        hud.draw(game);
+
     }
 
     private void update() {
@@ -108,8 +107,8 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         game.viewPort.update(width,height);
     }
 
-    public CardsInHandDisplay getCardsInHandDisplay(){
-        return cardsInHandDisplay;
+    public Hud getHud() {
+        return hud;
     }
 }
 
