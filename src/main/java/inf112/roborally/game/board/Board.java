@@ -44,7 +44,7 @@ public abstract class Board extends BoardCreator {
         if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
             p1.getRegisters().returnCardsFromRegisters(p1.getCardsInHand());
             // messy but it works:
-            ((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getCardsInHandDisplay().updateCardsInHandVisually();
+            ((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().updateCardsInHandVisually();
         }
 
         p1.moved = false;

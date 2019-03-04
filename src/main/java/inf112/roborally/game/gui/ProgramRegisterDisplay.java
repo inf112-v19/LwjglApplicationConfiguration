@@ -1,6 +1,7 @@
 package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,7 +26,7 @@ public class ProgramRegisterDisplay {
      * It also shows lives and damage.
      * @param player
      */
-    public ProgramRegisterDisplay(Player player) {
+    public ProgramRegisterDisplay(Player player, OrthographicCamera camera) {
         this.player = player;
         registers = player.getRegisters();
 
@@ -46,11 +47,13 @@ public class ProgramRegisterDisplay {
         card.setSize(238*cardScale*scale, 300*cardScale*scale);
 
         cardVisual = new CardVisuals();
+
+        camera.position.set(board.getWidth()/ 2 , 1080 / 2 , 0); // center
+
     }
 
     public void draw(SpriteBatch batch, Camera camera) {
 //        camera.position.set(board.getWidth() - 1920 / 2 + 200*scale, 1080 / 2 - 100*scale, 0);
-        camera.position.set(board.getWidth()/ 2 , 1080 / 2 , 0); // center
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         board.draw(batch);
