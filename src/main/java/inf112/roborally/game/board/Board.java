@@ -19,48 +19,22 @@ import java.util.List;
 
 public class Board {
 
-    private TiledMap map;
-    private TmxMapLoader loader;
-    private TiledMapRenderer mapRenderer;
+    protected TiledMap map;
+    protected TmxMapLoader loader;
+    protected TiledMapRenderer mapRenderer;
 
     private TiledMapTileLayer floorLayer;
     private TiledMapTileLayer beltLayer;
     private TiledMapTileLayer laserLayer;
     private TiledMapTileLayer wallLayer;
-    private ArrayList<Player> players;
+    protected ArrayList<Player> players;
 
-    private ArrayList<RepairSite> repairSites;
-    private Array<Flag> flags;
-
-
-    public Board(String mapPath) {
-        flags = new Array<>();
-        flags.add(new Flag(1, 10, 1));
-        flags.add(new Flag(6, 2, 2));
-        flags.add(new Flag(6, 10, 3));
-
-        repairSites = new ArrayList<>();
-        repairSites.add(new RepairSite(5, 2));
-
-        loader = new TmxMapLoader();
-        TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
-        parameters.flipY = true;
-        map = loader.load(mapPath, parameters);
-        mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
-        createLayers();
+    protected ArrayList<RepairSite> repairSites;
+    protected Array<Flag> flags;
 
 
 
-        Player player1 = new Player("Player1", 6, 6, Direction.NORTH, flags.size);
-
-        Player player2 = new Player("Player2", 5, 7, Direction.SOUTH, flags.size);
-
-        players = new ArrayList<>();
-        players.add(player1);
-        players.add(player2);
-    }
-
-    private void createLayers() {
+    protected void createLayers() {
         beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
         laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");
