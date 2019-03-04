@@ -74,12 +74,15 @@ public class ProgramRegisters {
      */
     public int pickCard(int cardPosition) {
         if(cardPosition < 0 || cardPosition >= player.getNumberOfCardsInHand()){
-            throw new IndexOutOfBoundsException("CardPosition: " + cardPosition + ". Number of cards in hand: " + player.getNumberOfCardsInHand());
+            throw new IndexOutOfBoundsException(
+                    "CardPosition: " + cardPosition + ". Number of cards in hand: "
+                    + player.getNumberOfCardsInHand() + "."
+                    + " CardPosition should be 1 less than cards in hand.");
         }
 
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {
-                registers[i] = player.getCardsInHand().remove(cardPosition); //get
+                registers[i] = player.removeCardInHand(cardPosition);
                 return i;
             }
         }

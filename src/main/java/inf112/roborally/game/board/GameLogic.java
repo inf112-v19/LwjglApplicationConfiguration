@@ -40,6 +40,7 @@ public class GameLogic {
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
+
     public void doBeforeRound() {
 
         for (Player currentPlayer : players) {

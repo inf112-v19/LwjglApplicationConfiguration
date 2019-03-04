@@ -30,12 +30,15 @@ public class CardsInHandDisplay {
         posX = 550;
         posY = 200;
 
+        int numRemoved = 0;
         for(Actor butt : stage.getActors()) {
             butt.remove();
+            numRemoved++;
         }
+        System.out.println("Removed: " + numRemoved + " and cards in hand:  " + player.getNumberOfCardsInHand());
 
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
-            cardTexture = cardVisuals.getRegion(player.getCardsInHand().get(i));
+            cardTexture = cardVisuals.getRegion(player.getCardInHand(i));
             cardButton = new CardButton(new TextureRegionDrawable(cardTexture), player, i, this);
             cardButton.setTransform(true);
             cardButton.setScale(scale);

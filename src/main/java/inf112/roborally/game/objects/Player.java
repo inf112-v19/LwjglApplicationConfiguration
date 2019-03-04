@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
-
 import java.util.ArrayList;
 
 
@@ -67,6 +66,20 @@ public class Player extends MovableGameObject {
             throw new NullPointerException("Trying to add a programCard that has value null");
         }
         cardsInHand.add(programCard);
+    }
+
+    public ProgramCard removeCardInHand(int cardPos){
+        if(cardPos < 0 || cardPos >= cardsInHand.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+       return cardsInHand.remove(cardPos);
+    }
+
+    public ProgramCard getCardInHand(int cardPos){
+        if(cardPos < 0 || cardPos >= cardsInHand.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return cardsInHand.get(cardPos);
     }
 
     public ArrayList<ProgramCard> getCardsInHand(){
