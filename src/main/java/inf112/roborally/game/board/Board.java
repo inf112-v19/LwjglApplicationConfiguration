@@ -17,16 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Board {
+public abstract class Board extends BoardCreator {
 
-    protected TiledMap map;
-    protected TmxMapLoader loader;
-    protected TiledMapRenderer mapRenderer;
 
-    private TiledMapTileLayer floorLayer;
-    private TiledMapTileLayer beltLayer;
-    private TiledMapTileLayer laserLayer;
-    private TiledMapTileLayer wallLayer;
     protected ArrayList<Player> players;
 
     protected ArrayList<RepairSite> repairSites;
@@ -36,22 +29,6 @@ public class Board {
         flags = new Array<>();
         repairSites = new ArrayList<>();
         players = new ArrayList<>();
-    }
-
-    protected void createdBoard(String mapPath) {
-        loader = new TmxMapLoader();
-        TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
-        parameters.flipY = true;
-        map = loader.load(RoboRallyGame.VAULT, parameters);
-        mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
-        createLayers();
-    }
-
-    protected void createLayers() {
-        beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
-        floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
-        laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");
-        wallLayer = (TiledMapTileLayer) map.getLayers().get("walls");
     }
 
     public void render(OrthographicCamera camera) {
