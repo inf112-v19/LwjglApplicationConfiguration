@@ -70,15 +70,13 @@ public class Player extends MovableGameObject {
 
     public ProgramCard removeCardInHand(int cardPos){
         if(cardPos < 0 || cardPos >= cardsInHand.size()) {
-            throw new IndexOutOfBoundsException();
+            throw new IndexOutOfBoundsException("Trying to remove index: " + cardPos
+                    + ", but number of cards in hand: " + getNumberOfCardsInHand());
         }
        return cardsInHand.remove(cardPos);
     }
 
     public ProgramCard getCardInHand(int cardPos){
-        if(cardPos < 0 || cardPos >= cardsInHand.size()) {
-            throw new IndexOutOfBoundsException();
-        }
         return cardsInHand.get(cardPos);
     }
 
@@ -90,8 +88,9 @@ public class Player extends MovableGameObject {
         return cardsInHand.size();
     }
 
-    public void pickCardInRegister(int i){
-        registers.pickCard(i);
+    //Remove?
+    public void putCardIntoRegister(int cardPos){
+        registers.pickCard(cardPos);
     }
 
     public ArrayList<ProgramCard> returnCards(){
@@ -169,6 +168,10 @@ public class Player extends MovableGameObject {
         }
     }
 */
+
+    /**
+     * Repairs all damage dealt to the player and unlocks all locked registers.
+     */
     public void repairAllDamage() {
         registers.unlockRegisters();
         damage = 0;
@@ -180,8 +183,13 @@ public class Player extends MovableGameObject {
         }
     }
 
+    /**
+     * Take one damage. Locks a register if damage taken is greater or equal to 5.
+     */
     public void takeDamage() {
-        if(damage < 10) damage++;
+        if(damage < 10) {
+            damage++;
+        }
         if (damage >= 5) {
             registers.lockRegister();
         }
@@ -234,7 +242,6 @@ public class Player extends MovableGameObject {
     public int getDamage() {
         return this.damage;
     }
-
 
     public int getLives() {
         return this.lives;

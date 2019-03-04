@@ -73,12 +73,12 @@ public class ProgramRegisters {
      * @return index at which it is stored if adding a card to the register was successful, -1 if not.
      */
     public int pickCard(int cardPosition) {
-        if(cardPosition < 0 || cardPosition >= player.getNumberOfCardsInHand()){
+       if(cardPosition < 0 || cardPosition >= player.getNumberOfCardsInHand()){
             throw new IndexOutOfBoundsException(
-                    "CardPosition: " + cardPosition + ". Number of cards in hand: "
-                    + player.getNumberOfCardsInHand() + "."
-                    + " CardPosition should be 1 less than cards in hand.");
-        }
+                    "Card position: " + cardPosition + ". Number of cards in hand: "
+                    + player.getNumberOfCardsInHand()
+                            + ". Card position should be one less than number of cards in hand.");
+       }
 
         for(int i = 0; i < unlockedRegisters; i++){
             if(registers[i] == null) {

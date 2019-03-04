@@ -148,7 +148,7 @@ public class GameLogic {
      * @param player which player to give program cards to.
      */
     private void giveCardsToPlayer(Player player) {
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < player.getRegisters().getCardLimit(player); i++) {
             if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
                 reshuffleDeck();
             }
