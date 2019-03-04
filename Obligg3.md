@@ -57,4 +57,6 @@ If they are, we consider the task/requirement done.
 - Since last time we have finished [INSERT HERE]
 
 ## Part 3: Code
-- 
+Tests:
+- We have a few JUnit tests that make sure we don't break existing code when implementing new features.
+- We have implemented a test screen for debugging gui. In RoborallyGame class set debugging to true to launch the test screen.
