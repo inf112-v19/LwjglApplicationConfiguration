@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.gui.CardsInHandDisplay;
@@ -20,30 +21,18 @@ import inf112.roborally.game.board.Board;
 public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
 
     public static String mapPath = Main.TEST_MAP;
-
+    private final RoboRallyGame game;
     private GameLogic gameLogic;
-
-    public OrthographicCamera camera;
-    private Viewport   viewPort;
     private CardsInHandDisplay cardsInHandDisplay;
     private Board board;
-
     ProgramRegisterDisplay programRegisterDisplay;
     Player player;
 
-    private SpriteBatch batch;
-
-    public GameScreen(String mapPath){
+    public GameScreen(RoboRallyGame game, String mapPath){
         this.mapPath = mapPath;
-
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-        camera.update();
-        viewPort = new FitViewport(1920, 1080, camera);
-        batch = new SpriteBatch();
-
+        this.game = game;
         board = new VaultBoard();
-        cardsInHandDisplay = new CardsInHandDisplay(board.getPlayers().get(0), new Stage(viewPort, batch));
+        cardsInHandDisplay = new CardsInHandDisplay(board.getPlayers().get(0), new Stage(game.viewPort, game.batch));
         gameLogic = new GameLogic(board, cardsInHandDisplay);
         programRegisterDisplay = new ProgramRegisterDisplay(board.getPlayers().get(0));
         player = board.getPlayers().get(0);
@@ -64,26 +53,24 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r,g,b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.position.x = player.getSprite().getX() + player.getSprite().getWidth()/2;
-        camera.position.y = player.getSprite().getY() + player.getSprite().getHeight()/2 - 32*Main.UNIT_SCALE;
-        camera.update();
+        game.camera.position.x = player.getSprite().getX() + player.getSprite().getWidth()/2;
+        game.camera.position.y = player.getSprite().getY() + player.getSprite().getHeight()/2 - 32*Main.UNIT_SCALE;
+        game.camera.update();
 
-        board.render(camera);
+        board.render(game.camera);
 
 
-        batch.setProjectionMatrix(camera.combined);
+        game.batch.setProjectionMatrix(game.camera.combined);
 
-        batch.begin();
-        board.drawBackup(batch);
-        board.drawPlayers(batch);
-        board.drawGameObjects(batch);
-        programRegisterDisplay.draw(batch, camera);
-        batch.end();
+        game.batch.begin();
+        board.drawBackup(game.batch);
+        board.drawPlayers(game.batch);
+        board.drawGameObjects(game.batch);
+        programRegisterDisplay.draw(game.batch, game.camera);
+        game.batch.end();
 
-        batch.setProjectionMatrix(cardsInHandDisplay.stage.getCamera().combined);
+        game.batch.setProjectionMatrix(cardsInHandDisplay.stage.getCamera().combined);
         cardsInHandDisplay.stage.draw();
-
-
     }
 
     private void update() {
@@ -93,7 +80,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void dispose() {
-        batch.dispose();
+        game.batch.dispose();
         board.dispose();
         for(Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();
@@ -118,7 +105,7 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void resize(int width, int height) {
-        viewPort.update(width,height);
+        game.viewPort.update(width,height);
     }
 
     public CardsInHandDisplay getCardsInHandDisplay(){
