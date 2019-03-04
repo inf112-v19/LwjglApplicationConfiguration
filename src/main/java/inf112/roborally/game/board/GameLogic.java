@@ -2,6 +2,7 @@ package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.board.Board;
@@ -14,6 +15,7 @@ public class GameLogic {
     boolean roundOver;
     int phase;
     private Board board;
+    private GameState state;
 
     private Stack<ProgramCard> stackOfProgramCards;
     private ArrayList<Player> players;
@@ -23,6 +25,7 @@ public class GameLogic {
     private CardsInHandDisplay cardsInHandDisplay;
 
     public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay) {
+        state = GameState.PREROUND;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
 //        stackOfProgramCards = ProgramCard.makeTestProgramCardDeck();
         returnedProgramCards = new Stack<>();
@@ -55,35 +58,44 @@ public class GameLogic {
         // Choose cards to use for the round
         // Validate the choice
 
-        roundOver = false;
+        state = GameState.PICKING_CARDS;
     }
 
     public void update() {
-        if (roundOver) {
-            System.out.println("set up before round");
-            doBeforeRound();
-            System.out.println("player choosing cards");
-        } else if (!playerReady(player1)) {
-            // choosing cards
-        } else {
-            if(phase < 5) {
-                System.out.println("executing phase " + phase);
-                board.executeCard(player1, player1.getRegisters().getCardInRegister(phase));
-                board.updateBoard();
-                checkIfAnyPlayersWon();
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        switch (state) {
+            case PREROUND:
+                System.out.println("set up before round");
+                doBeforeRound();
+                System.out.println("player choosing cards");
+                break;
+            case PICKING_CARDS:
+                if (playerReady(player1)) {
+                    state = GameState.ROUND;
                 }
-                phase++;
-            } else {
-                phase = 0;
-                roundOver = true;
-                System.out.println("round over");
-            }
+                break;
+            case ROUND:
+                if(phase < 5) {
 
-            // after phase is over :
+                    System.out.println("executing phase " + phase);
+                    board.executeCard(player1, player1.getRegisters().getCardInRegister(phase));
+                    checkIfAnyPlayersWon();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    phase++;
+                    state = GameState.BOARDMOVES;
+                } else {
+                    phase = 0;
+                    state = GameState.PREROUND;
+                    System.out.println("round over");
+                }
+                break;
+            case BOARDMOVES:
+                board.updateBoard();
+                state = GameState.ROUND;
+                break;
         }
 
     }
