@@ -195,6 +195,7 @@ public abstract class Board extends BoardCreator {
         if (lasersHit(x, y)) {
             System.out.println("Ouch!");
             player.takeDamage();
+            player.getLaserHitPlayerSound().play(0.5f);
         }
         if (playerIsOffTheBoard(x, y)) {
             player.destroy();
