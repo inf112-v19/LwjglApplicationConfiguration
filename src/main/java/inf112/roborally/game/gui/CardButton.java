@@ -23,9 +23,9 @@ public class CardButton extends ImageButton {
                 System.out.println("Size: " + player.getNumberOfCardsInHand());
                 //player.putCardIntoRegister(cardIndex);
                 player.getRegisters().pickCard(cardIndex);
-                cardsInHandDisplay.updateCardsInHandVisually();
-                cardsInHandDisplay.updateCardsInHandVisually();
-                cardsInHandDisplay.updateCardsInHandVisually();
+                cardsInHandDisplay.updateCardsInHandVisually(); // When calling this method once, sometimes, index
+                cardsInHandDisplay.updateCardsInHandVisually(); // out of bounds will occur when clicking the card
+                cardsInHandDisplay.updateCardsInHandVisually(); // button in the last location. Therefor called thrice.
             }
         });
     }
