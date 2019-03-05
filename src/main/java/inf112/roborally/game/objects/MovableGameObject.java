@@ -47,7 +47,6 @@ public abstract class MovableGameObject extends GameObject {
             case WEST:
                 moveX(getX() - 1); break;
         }
-        moved = true;
     }
 
     public void move(int steps) {

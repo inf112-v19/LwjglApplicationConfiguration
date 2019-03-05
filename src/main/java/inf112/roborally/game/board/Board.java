@@ -119,8 +119,8 @@ public abstract class Board extends BoardCreator {
             return;
         }
 
-        if (card.getMoveDistance() == -1){
-            if(canGo(player, player.getDirection().getOppositeDirection())) {
+        if (card.getMoveDistance() == -1) {
+            if (canGo(player, player.getDirection().getOppositeDirection())) {
                 player.moveInDirection(player.getDirection().getOppositeDirection());
             }
         }
@@ -132,10 +132,10 @@ public abstract class Board extends BoardCreator {
 
     }
 
-    public boolean canGo(MovableGameObject gameObject, Direction direction) {
+    public boolean canGo(MovableGameObject player, Direction direction) {
         // first check the current tile:
-        int newX = gameObject.getX();
-        int newY = gameObject.getY();
+        int newX = player.getX();
+        int newY = player.getY();
 
         // check this tile:
         TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(newX, newY);
@@ -180,6 +180,17 @@ public abstract class Board extends BoardCreator {
         if (walls.contains(oppositeDirection.toString())) {
             System.out.println("Hit a wall!(next)");
             return false;
+        }
+
+        for (Player other : players) {
+            if (other.equals(player)) continue;
+
+            if (other.getX() == newX && other.getY() == newY) {
+                if (!canGo(other, direction)){
+                    return false;
+                }
+                other.moveInDirection(direction);
+            }
         }
 
         return true;
