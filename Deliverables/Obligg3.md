@@ -54,8 +54,18 @@ We associate meetings as a time when we discuss certain issues together and plan
 - If changes are made from the requirements given by the customer, its mainly because our system depends on specific classes to work before we can do other tasks.
 - To verify that a requirement is met, we ask other members of the team if they are satisfied with the product. 
 If they are, we consider the task/requirement done.
-- Since last time we have finished [INSERT HERE]
-
+- Since last time we have finished: 
+    - [INSERT HERE]
+    - ProgramRegister
+    - Hud (display cards in player hand and display player program register)
+    - Able to play an entire round
+    - Execute program cards in program register / Connect playermovement to program cards
+    - Chose five cards(confirm/cancel selection)
+    - GameState Enum
+    - BoardLogic
+    - MenuScreen
+    - TestScreen for Gui
+    
 ## Part 3: Code
 Tests:
 - We have a few JUnit tests that make sure we don't break existing code when implementing new features.
