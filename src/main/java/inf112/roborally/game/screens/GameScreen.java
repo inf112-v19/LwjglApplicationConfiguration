@@ -70,10 +70,6 @@ public class GameScreen implements Screen {
         background.draw(backgroundBatch);
         backgroundBatch.end();
 
-        game.camera.position.x = player.getSprite().getX() + player.getSprite().getWidth() / 2;
-        game.camera.position.y = player.getSprite().getY() + player.getSprite().getHeight() / 2 - 32 * Main.UNIT_SCALE;
-        game.camera.update();
-
         board.render(game.camera);
 
         game.batch.setProjectionMatrix(game.camera.combined);
