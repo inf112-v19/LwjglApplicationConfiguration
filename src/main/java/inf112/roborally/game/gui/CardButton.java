@@ -24,6 +24,8 @@ public class CardButton extends ImageButton {
                 //player.putCardIntoRegister(cardIndex);
                 player.getRegisters().pickCard(cardIndex);
                 cardsInHandDisplay.updateCardsInHandVisually();
+                cardsInHandDisplay.updateCardsInHandVisually();
+                cardsInHandDisplay.updateCardsInHandVisually();
             }
         });
     }
