@@ -168,7 +168,7 @@ public abstract class Board extends BoardCreator {
             return false;
 
         walls = new ArrayList<>();
-        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(nextPos.getX(), nextPos.getX());
+        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(nextPos.getX(), nextPos.getY());
 
         if (targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
             walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
