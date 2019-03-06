@@ -38,7 +38,7 @@ We associate meetings as a time when we discuss certain issues together and plan
     - Able to play a full round with all phases
     - Deal new cards on a new round
 
-- Requirements we made given requirements by customer:
+- Priorities we made given requirements by customer:
     - Create ProgramRegister class to keep track on how many registers a player have available
     - Complete a HUD which shows the cards in your hand, and make them clickable
     - Add visual representations to Program Cards
