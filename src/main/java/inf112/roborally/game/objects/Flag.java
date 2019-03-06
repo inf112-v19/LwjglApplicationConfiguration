@@ -17,7 +17,7 @@ public class Flag extends GameObject {
 
     private void setupTextureAtlas(){
         sprite = new Sprite(new TextureAtlas(filePath).findRegion("flags"));
-        sprite.setBounds(getX()/Main.TILE_LENGTH, getY()/Main.TILE_LENGTH /*+Main.TILE_LENGTH/2*/, Main.TILE_LENGTH, Main.TILE_LENGTH);
+        sprite.setBounds(getX()/Main.TILE_LENGTH,getY()/Main.TILE_LENGTH /*+Main.TILE_LENGTH/2*/, Main.TILE_LENGTH, Main.TILE_LENGTH);
         int size = 150;
         sprite.setRegion(new TextureRegion(sprite.getTexture(),450-flagNumber*size, 0, size, size));
     }

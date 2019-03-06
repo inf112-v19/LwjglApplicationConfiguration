@@ -81,6 +81,15 @@ public class GameScreen implements Screen {
 
         hud.draw();
 
+        // Mute music
+        if(board.boardWantsToMuteMusic()) {
+            music.stop();
+            board.musicIsMuted();
+            for (Player p : board.getPlayers()) {
+                p.killTheSound();
+            }
+        }
+
     }
 
     private void update() {
