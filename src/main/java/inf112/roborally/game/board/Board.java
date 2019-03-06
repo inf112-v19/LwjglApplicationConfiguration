@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
-import com.badlogic.gdx.utils.Array;
-
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
@@ -21,21 +19,42 @@ public abstract class Board extends BoardCreator {
 
     protected ArrayList<Player> players;
     protected ArrayList<RepairSite> repairSites;
-    protected Array<Flag> flags;
+    protected ArrayList<Flag> flags;
+    protected ArrayList<Laser> lasers;
 
     private boolean boardWantsToMuteMusic = false;
     private boolean musicIsMuted = false;
 
 
     public Board() {
-        flags = new Array<>();
-        repairSites = new ArrayList<>();
         players = new ArrayList<>();
+        repairSites = new ArrayList<>();
+        flags = new ArrayList<>();
+        lasers = new ArrayList<>();
     }
 
     public void render(OrthographicCamera camera) {
         mapRenderer.setView(camera);
         mapRenderer.render();
+    }
+
+    public void findLasers() {
+        for (int x = 0; x < laserLayer.getWidth(); x++) {
+            for (int y = 0; y < laserLayer.getHeight(); y++) {
+                if (laserLayer.getCell(x, y) != null){
+                    Direction direction = Direction.valueOf(
+                            laserLayer.getCell(x,y).getTile().getProperties().getValues().next().toString());
+                    lasers.add(new Laser(x,y, direction));
+                }
+            }
+        }
+    }
+
+    public void drawLasers(SpriteBatch batch){
+        for(Laser laser : lasers) {
+            laser.getSprite().draw(batch);
+            laser.updateSprite();
+        }
     }
 
     public void handleInput() {
@@ -119,7 +138,7 @@ public abstract class Board extends BoardCreator {
     }
 
     public void executeCard(Player player, ProgramCard card) {
-        if(card == null){
+        if (card == null) {
             return;
         }
 
@@ -181,7 +200,7 @@ public abstract class Board extends BoardCreator {
             if (other.positionEquals(player)) continue;
 
             if (other.positionEquals(nextPos)) {
-                if (!canGo(other, direction)){
+                if (!canGo(other, direction)) {
                     return false;
                 }
                 other.moveInDirection(direction);
@@ -191,7 +210,9 @@ public abstract class Board extends BoardCreator {
         return true;
     }
 
-    /** helper method for canGo()*/
+    /**
+     * helper method for canGo()
+     */
     public List<String> splitBySpace(String strToSplit) {
         List<String> splitList;
         String[] items = strToSplit.split(" ");

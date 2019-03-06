@@ -23,7 +23,7 @@ public class Laser extends MovableGameObject{
     }
 
     private void setUpAnimation() {
-        sprite = new Sprite(new TextureAtlas(filePath).findRegion("flags"));
+        sprite = new Sprite(new TextureAtlas(filePath).findRegion("laser"));
         sprite.setBounds(getX(), getY(), Main.TILE_LENGTH, Main.TILE_LENGTH);
         sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 

@@ -17,9 +17,9 @@ public class VaultBoard extends Board {
 
         createBoard(RoboRallyGame.VAULT);
 
-        Player player1 = new Player("Player1", 6, 6, Direction.NORTH, flags.size);
+        Player player1 = new Player("Player1", 6, 6, Direction.NORTH, flags.size());
 
-        Player player2 = new Player("Player2", 5, 7, Direction.SOUTH, flags.size);
+        Player player2 = new Player("Player2", 5, 7, Direction.SOUTH, flags.size());
 
         players.add(player1);
         players.add(player2);
