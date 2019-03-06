@@ -66,8 +66,9 @@ If they are, we consider the task/requirement done.
     - TestScreen for GUI
     
 ## Part 3: Code
-#### Project:
-- The project 
-#### Tests:
-- We have a few JUnit tests that make sure we don't break existing code when implementing new features.
-- We have implemented a test screen for debugging GUI. In the RoborallyGame class, set debugging to true to launch the test screen.
+- Project:
+    - The project starts in main where it where it creates a new RoboRallyGame. RoboRallyGame is the class that unites all the visual classes. We have three visual classes GameScreen, MenuScreen and TestScreen. RoboRallyGame mainly runs GameScreen and MenuScreen, but can run TestScreen which we use for debugging of issues. MenuScreen is the screen that appears first when you run the game, where it asks you to press Enter. GameScreen is the visualization of the entire game. The GameScreen class creates the board, the players and the GUI. 
+- Tests:
+    - We have a few JUnit tests that make sure we don't break existing code when implementing new features.
+    - We have implemented a test screen for debugging GUI. In the RoborallyGame class, set debugging to true to launch the test screen.
+    
