@@ -23,11 +23,6 @@ public class Position {
         return this.y;
     }
 
-    public void move(int x, int y){
-        setX(x);
-        setY(y);
-    }
-
     public void moveInDirection(Direction dir){
         switch (dir){
             case NORTH:
@@ -39,6 +34,11 @@ public class Position {
             case WEST:
                 setX(getX() - 1); break;
         }
+    }
+
+    public void move(int x, int y){
+        setX(x);
+        setY(y);
     }
 
     public void setX(int x) {

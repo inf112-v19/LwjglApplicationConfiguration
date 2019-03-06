@@ -148,20 +148,7 @@ public abstract class Board extends BoardCreator {
         }
 
         // move new position to target tile:
-        switch (direction) {
-            case NORTH:
-                nextPos.setY(nextPos.getY() +1);
-                break;
-            case SOUTH:
-                nextPos.setY(nextPos.getY() -1);
-                break;
-            case WEST:
-                nextPos.setX(nextPos.getX() -1);
-                break;
-            case EAST:
-                nextPos.setX(nextPos.getX() +1);
-                break;
-        }
+        nextPos.moveInDirection(direction);
 
         // check target tile:
         if (nextPos.getX() < 0 || nextPos.getY() < 0 || getWidth() <= nextPos.getX() || getHeight() <= nextPos.getY())
@@ -194,8 +181,8 @@ public abstract class Board extends BoardCreator {
 
         return true;
     }
-    // helper method for canGo()
 
+    /** helper method for canGo()*/
     public List<String> splitBySpace(String strToSplit) {
         List<String> splitList;
         String[] items = strToSplit.split(" ");
