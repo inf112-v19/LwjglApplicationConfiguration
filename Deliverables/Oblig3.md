@@ -19,7 +19,7 @@ The commits to master doesnt reflect all of our works.
 - We get together every friday and wednesday, sometimes mondays aswell. But we usually just sit together and work on the project together, we wouldnt classify that as a "meeting".
 We associate meetings as a time when we discuss certain issues together and plan how to work ahead. Which means we have not had a meeting since 8th of february.
 - Follow up points:
-    - Better communication on slack
+    - Better communication on Slack
     - Get together more often if needed
     - Continue dividing tasks for each person
     - Commit better and more often
@@ -55,7 +55,6 @@ We associate meetings as a time when we discuss certain issues together and plan
 - To verify that a requirement is met, we ask other members of the team if they are satisfied with the product. 
 If they are, we consider the task/requirement done.
 - Since last time we have finished: 
-    - [INSERT HERE]
     - ProgramRegister
     - Hud (display cards in player hand and display player program register)
     - Able to play an entire round
@@ -67,6 +66,8 @@ If they are, we consider the task/requirement done.
     - TestScreen for Gui
     
 ## Part 3: Code
+Project:
+- The project 
 Tests:
 - We have a few JUnit tests that make sure we don't break existing code when implementing new features.
 - We have implemented a test screen for debugging gui. In RoborallyGame class set debugging to true to launch the test screen.
