@@ -166,8 +166,9 @@ public class GameLogic {
 
     private void retrieveCardsFromPlayer(Player player) {
         ArrayList<ProgramCard> playerCards = player.returnCards();
-        while (!playerCards.isEmpty())
+        while (!playerCards.isEmpty()) {
             returnedProgramCards.push(playerCards.remove(0));
+        }
     }
 
     /**

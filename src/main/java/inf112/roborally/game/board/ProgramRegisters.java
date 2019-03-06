@@ -45,14 +45,13 @@ public class ProgramRegisters {
         return list;
     }
 
-    public List<ProgramCard> returnCardsFromRegisters(List<ProgramCard> cardsInHand){
+    public void returnCardsFromRegisters(List<ProgramCard> cardsInHand){
         for(int i = 0; i < unlockedRegisters; i++) {
             if(registers[i] != null) {
                 cardsInHand.add(registers[i]);
             }
             registers[i] = null;
         }
-        return cardsInHand;
     }
 
     public void lockRegister(){
