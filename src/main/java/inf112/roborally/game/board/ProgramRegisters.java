@@ -27,8 +27,9 @@ public class ProgramRegisters {
 
     public boolean registerIsFull() {
         for (int i = 0; i < NUMBER_OF_REGISTERS; i++) {
-            if (registers[i] == null)
+            if (registers[i] == null) {
                 return false;
+            }
         }
         return true;
     }
@@ -39,9 +40,9 @@ public class ProgramRegisters {
 
     public ArrayList<ProgramCard> getCardsInRegisters() {
         ArrayList<ProgramCard> list = new ArrayList<>();
-        for (ProgramCard pc : registers)
+        for (ProgramCard pc : registers) {
             list.add(pc);
-
+        }
         return list;
     }
 

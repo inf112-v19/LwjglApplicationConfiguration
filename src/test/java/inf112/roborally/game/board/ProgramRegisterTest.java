@@ -121,7 +121,7 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
-            player.putCardIntoRegister(0);
+            player.getRegisters().pickCard(0);
 
         assertEquals(true, programRegisters.registerIsFull());
     }
@@ -132,7 +132,7 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 1; i++)
-            player.putCardIntoRegister(0);
+            player.getRegisters().pickCard(0);
 
         assertEquals(false, programRegisters.registerIsFull());
     }

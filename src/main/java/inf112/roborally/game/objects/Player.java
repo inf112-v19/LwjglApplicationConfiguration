@@ -90,11 +90,6 @@ public class Player extends MovableGameObject {
         return cardsInHand.size();
     }
 
-    //Remove?
-    public void putCardIntoRegister(int cardPos){
-        registers.pickCard(cardPos);
-    }
-
     public ArrayList<ProgramCard> returnCards(){
         registers.returnCardsFromRegisters(cardsInHand);
         return cardsInHand;
