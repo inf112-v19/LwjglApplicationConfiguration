@@ -143,11 +143,10 @@ public abstract class Board extends BoardCreator {
 
     public boolean canGo(MovableGameObject player, Direction direction) {
         // first check the current tile:
-        int newX = player.getX();
-        int newY = player.getY();
+        Position nextPos = new Position(player.getX(), player.getY());
 
         // check this tile:
-        TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(newX, newY);
+        TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(nextPos.getX(), nextPos.getY());
         List<String> walls = new ArrayList<>();
         if (currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
             walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
@@ -158,27 +157,14 @@ public abstract class Board extends BoardCreator {
         }
 
         // move new position to target tile:
-        switch (direction) {
-            case NORTH:
-                newY++;
-                break;
-            case SOUTH:
-                newY--;
-                break;
-            case WEST:
-                newX--;
-                break;
-            case EAST:
-                newX++;
-                break;
-        }
+        nextPos.moveInDirection(direction);
 
         // check target tile:
-        if (newX < 0 || newY < 0 || getWidth() <= newX || getHeight() <= newY)
+        if (nextPos.getX() < 0 || nextPos.getY() < 0 || getWidth() <= nextPos.getX() || getHeight() <= nextPos.getY())
             return false;
 
         walls = new ArrayList<>();
-        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(newX, newY);
+        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(nextPos.getX(), nextPos.getY());
 
         if (targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
             walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
@@ -192,9 +178,9 @@ public abstract class Board extends BoardCreator {
         }
 
         for (Player other : players) {
-            if (other.equals(player)) continue;
+            if (other.positionEquals(player)) continue;
 
-            if (other.getX() == newX && other.getY() == newY) {
+            if (other.positionEquals(nextPos)) {
                 if (!canGo(other, direction)){
                     return false;
                 }
@@ -204,8 +190,8 @@ public abstract class Board extends BoardCreator {
 
         return true;
     }
-    // helper method for canGo()
 
+    /** helper method for canGo()*/
     public List<String> splitBySpace(String strToSplit) {
         List<String> splitList;
         String[] items = strToSplit.split(" ");

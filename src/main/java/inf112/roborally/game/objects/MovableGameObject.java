@@ -36,19 +36,6 @@ public abstract class MovableGameObject extends GameObject {
         updateSprite();
     }
 
-    public void moveInDirection(Direction dir){
-        switch (dir){
-            case NORTH:
-                moveY(getY() + 1); break;
-            case SOUTH:
-                moveY(getY() - 1); break;
-            case EAST:
-                moveX(getX() + 1); break;
-            case WEST:
-                moveX(getX() - 1); break;
-        }
-    }
-
     public void move(int steps) {
         for(int i = 0 ; i < steps; i++)
             moveInDirection(getDirection());
