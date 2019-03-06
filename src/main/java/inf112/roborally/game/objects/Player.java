@@ -2,7 +2,6 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
@@ -39,7 +38,7 @@ public class Player extends MovableGameObject {
         makeSprite();
         loadVisualRepresentation();
 
-        backup = new Backup(getPos());
+        backup = new Backup(getX(), getY());
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
@@ -143,35 +142,6 @@ public class Player extends MovableGameObject {
         updateSprite();
     }
 
-
-   /* public void execute(int spotInRegister) {
-        if (spotInRegister < 0 || spotInRegister >= registers.NUMBER_OF_REGISTERS) {
-            System.out.println(spotInRegister + " is not between 0 and " + (registers.NUMBER_OF_REGISTERS - 1));
-            return;
-        }
-        else if(!registerIsFull()){
-            System.out.println("Need to fill your register before executing!");
-            return;
-        }
-
-        ProgramCard cardToExecute = registers.getCardInRegister(spotInRegister);
-        System.out.println("Card in reg " + spotInRegister + ": "  + cardToExecute.toString());
-        if (cardToExecute.getRotate() == Rotate.NONE) {
-            move(cardToExecute.getMoveDistance());
-        } else {
-            setDirection(getDirection().rotate(cardToExecute.getRotate()));
-        }
-    }
-
-    public void execute(ProgramCard programCard) {
-        if (programCard.getRotate() == Rotate.NONE) {
-            move(programCard.getMoveDistance());
-        } else {
-            setDirection(getDirection().rotate(programCard.getRotate()));
-        }
-    }
-*/
-
     /**
      * Repairs all damage dealt to the player and unlocks all locked registers.
      */
@@ -199,7 +169,7 @@ public class Player extends MovableGameObject {
     }
 
     public void updateBackup() {
-        this.backup = new Backup(getPos());
+        this.backup = new Backup(getX(), getY());
     }
 
     // TODO Make is so you need to get the flags in order
