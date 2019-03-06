@@ -202,7 +202,6 @@ public class Player extends MovableGameObject {
         this.backup = new Backup(getPos());
     }
 
-    // TODO Make is so you need to get the flags in order
     public void addFlag(int flagNumber) {
         if(flagNumber > flagsFound.length) {
             // If the flagnumber is greater than the array length, do nothing
