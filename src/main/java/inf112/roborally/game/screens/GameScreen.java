@@ -43,7 +43,6 @@ public class GameScreen implements Screen {
         music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/testMusic1.ogg"));
         music.setLooping(true);
         music.setVolume(0.3f);
-        music.play();
 
         background = new Sprite(new Texture("assets/img/background.png"));
         background.setSize(background.getWidth()/Main.UNIT_SCALE, background.getHeight()/Main.UNIT_SCALE);
@@ -52,6 +51,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        music.play();
     }
 
     @Override
