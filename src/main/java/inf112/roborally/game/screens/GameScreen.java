@@ -85,6 +85,9 @@ public class GameScreen implements Screen {
         if(board.boardWantsToMuteMusic()) {
             music.stop();
             board.musicIsMuted();
+            for (Player p : board.getPlayers()) {
+                p.killTheSound();
+            }
         }
 
     }

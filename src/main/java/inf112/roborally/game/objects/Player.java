@@ -279,4 +279,8 @@ public class Player extends MovableGameObject {
     }
 
     public Sound getLaserHitPlayerSound() { return this.laserHitPlayerSound; }
+
+    public void killTheSound() {
+        laserHitPlayerSound.dispose();
+    }
 }
