@@ -50,9 +50,6 @@ public class Position {
     }
 
     public boolean positionEquals(Object other){
-        if (!other.getClass().equals(this.getClass()))
-            return false;
-
         Position that = (Position) other;
         if (this.x == that.x && this.y == that.y)
             return true;

@@ -197,7 +197,7 @@ public abstract class Board extends BoardCreator {
         }
 
         for (Player other : players) {
-            if (other.positionEquals(player)) continue;
+            if (other.equals(player)) continue;
 
             if (other.positionEquals(nextPos)) {
                 if (!canGo(other, direction)) {

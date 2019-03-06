@@ -254,4 +254,12 @@ public class Player extends MovableGameObject {
     public void killTheSound() {
         laserHitPlayerSound.dispose();
     }
+
+    @Override
+    public boolean equals(Object other){
+        if (other.getClass() != this.getClass())
+            return false;
+
+        return this.name.equals(((Player)other).name);
+    }
 }
