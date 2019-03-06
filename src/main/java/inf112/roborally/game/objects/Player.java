@@ -2,7 +2,6 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;

@@ -33,10 +33,6 @@ public class ProgramRegisters {
         return true;
     }
 
-    public int getCardLimit(Player player) {
-        return MAX_NUMBER_OF_CARDS - player.getDamage();
-    }
-
     public ProgramCard getCardInRegister(int register) {
         return registers[register];
     }
