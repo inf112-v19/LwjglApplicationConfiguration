@@ -41,7 +41,7 @@ public class PlayerTest {
     @Test
     public void oneDamageOneLessCard(){
         for(int i = 0; i < 10; i++) {
-            assertEquals(9 - i , player.getRegisters().getCardLimit(player));
+            assertEquals(9 - i , player.getCardLimit());
             player.takeDamage();
         }
     }

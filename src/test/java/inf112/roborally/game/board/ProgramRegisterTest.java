@@ -56,20 +56,20 @@ public class ProgramRegisterTest {
 
     @Test
     public void getCardLimit_EqualsNine(){
-        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, programRegisters.getCardLimit(player));
+        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, player.getCardLimit());
     }
 
     @Test
     public void getCardLimit_EqualsEightAfterOneDamage(){
         player.takeDamage();
-        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS-1, programRegisters.getCardLimit(player));
+        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS-1, player.getCardLimit());
     }
 
     @Test
     public void getCardLimit_EqualsZeroAfterNineDamage(){
         for(int i = 0; i < ProgramRegisters.MAX_NUMBER_OF_CARDS; i++)
             player.takeDamage();
-        assertEquals(0, programRegisters.getCardLimit(player));
+        assertEquals(0, player.getCardLimit());
     }
 
     @Test

@@ -241,6 +241,10 @@ public class Player extends MovableGameObject {
     }
 
 
+    public int getCardLimit() {
+        return ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
+    }
+
     public int getDamage() {
         return this.damage;
     }
