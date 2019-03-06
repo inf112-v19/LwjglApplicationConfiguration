@@ -23,6 +23,9 @@ public abstract class Board extends BoardCreator {
     protected ArrayList<RepairSite> repairSites;
     protected Array<Flag> flags;
 
+    private boolean boardWantsToMuteMusic = false;
+    private boolean musicIsMuted = false;
+
 
     public Board() {
         flags = new Array<>();
@@ -61,6 +64,8 @@ public abstract class Board extends BoardCreator {
             p1.setDirection(Direction.SOUTH);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             p1.moveBackupToPlayerPosition();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
+            boardWantsToMuteMusic = true;
         }
 
 
@@ -313,6 +318,16 @@ public abstract class Board extends BoardCreator {
 
     public ArrayList<Player> getPlayers() {
         return this.players;
+    }
+
+    public boolean boardWantsToMuteMusic() {
+        return this.boardWantsToMuteMusic;
+    }
+
+    public void musicIsMuted() {
+        System.out.println("Music is now muted");
+        boardWantsToMuteMusic = false;
+        musicIsMuted = true;
     }
 
 }
