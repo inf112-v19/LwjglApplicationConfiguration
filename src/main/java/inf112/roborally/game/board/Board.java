@@ -114,6 +114,10 @@ public abstract class Board extends BoardCreator {
     }
 
     public void executeCard(Player player, ProgramCard card) {
+        if(card == null){
+            return;
+        }
+
         if (card.getRotate() != Rotate.NONE) {
             player.rotate(card.getRotate());
             return;
