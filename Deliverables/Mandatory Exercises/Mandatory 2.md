@@ -67,7 +67,7 @@ Discuss in the team how to organize yourselves during the project. Some Importan
 - Sharing and storing common documents, charts and the codebase. Write a brief description of how
 your team is planning to organize the programming project.
  
-## Part 4 assignment code
+## Part 4 - Assignment code
 
 Within the deadline for this task, a small part of this delivery should be code.
 
