@@ -6,17 +6,16 @@ Commits are somewhat uneven. Christian has been on holiday for a week and Morten
 ## Part 1: Project and project structure
 - The roles in the team work fine. We don't see the need to update/change the roles within the team, neither create new ones. 
 For us; a team leader is a person that keeps us on track on deadlines and assignments, while a customer contact is a person that has a broad view over the project and a deeper understanding over how the classes work together.
-- When it comes to competence between the members, we figured we're all pretty even. We are all second year students.
+- When it comes to competence between the members, we figured we're all pretty even. We are all second year students, with the same programming backgrounds.
 - We are satisfied with how the teamwork has been so far. Whenever there is time sensitive work that needs to be done, we find time to do that.
 Last week we started dividing more tasks to each of us individual. This has increased the amount of work we are able to do, since we no longer overlap with each other.
 - The group dynamics has so far been great. We have different kinds of expertise, which enables us to do certain tasks better.
-- Our group mainly communicates on Slack. There we call for meetings, let people know of changes and problems, and share relevant information to the rest of the group.
+- Our group mainly communicates on Slack. There we call for meetings, let people know of changes and problems, and share relevant information with the rest of the group.
 The communication in our group has been great aswell, we show up at meetings and help each other when we have issues. 
 - As we mentioned in our earlier presentation; at the beginning of the project we started with a "free-for-all" when doing tasks. This caused that the majority of the project to be written by a few members,
 which meant that some members didn't understand how the system worked, and had to read up on it. Last week we started dividing the tasks, and we now have better understanding of the project altogether.
 - There is a big difference in commits because of how we started the project, mainly because of the "free-for-all". But also since this is a project where it is actually exciting to work on.
-We started the project with having one branch for each person and then merging that into the "dev" branch whenever we finished a task. And then merged "dev" into master when we finished major changes and its stable.
-The commits to master doesn't reflect all of our works. 
+We started the project with having one branch for each person and then merging that into the "dev" branch whenever we finished a task. And then merged "dev" into master when we finished major changes and its stable. We no longer have one branch for each person, but rather one branch for each task. Whenever we finish a task, we merge the branch to dev. And at the end of the cycle we merge dev into master , the commits to master doesn't reflect all of our works.
 - We get together every Friday and Wednesday, sometimes Mondays aswell. But we usually just sit together and work on the project, we wouldn't classify that as a "meeting".
 We associate meetings as a time when we discuss certain issues together and plan how to work ahead. Which means we have not had a meeting since 8th of February.
 - Follow up points:
