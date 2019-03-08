@@ -1,8 +1,5 @@
 package inf112.roborally.game.objects;
 
-
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.roborally.game.Main;
 
 public class Backup extends GameObject {
