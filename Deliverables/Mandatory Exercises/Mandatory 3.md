@@ -68,7 +68,7 @@ team work throughout the semester.**
 To get the assignment approved, each team member must:
  
  
-- eet and participate actively in at least 75% of weekly meetings with their TA and oblig.2 presentation.
+- Meet and participate actively in at least 75% of weekly meetings with their TA and oblig.2 presentation.
 - Perform the assigned tasks during and between these weekly meetings, as agreed by the team.
 - Report back to the team on progress and / or problems that arise, as agreed in the team.
  
