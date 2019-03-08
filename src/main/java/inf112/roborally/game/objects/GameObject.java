@@ -13,7 +13,6 @@ public abstract class GameObject extends Position {
      * It only has a position and needs a sprite
      * <p>
      * Constructor doesn't create a sprite for easier testing. Tests get Texture null pointer.
-     *
      * @param x position x
      * @param y position y
      */
