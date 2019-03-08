@@ -2,7 +2,7 @@
 Group 5.1
 
 # INF112 roborally game
-More than a simple skeleton with libgdx. 
+Much more than a simple skeleton with libgdx. 
 
 
 ## Known bugs
