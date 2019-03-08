@@ -4,7 +4,7 @@ package inf112.roborally.game.objects;
 import inf112.roborally.game.enums.Direction;
 
 /**
- * Keep track of the positions for a game object
+ * Position is an x and a y value
  */
 public class Position {
     private int x;

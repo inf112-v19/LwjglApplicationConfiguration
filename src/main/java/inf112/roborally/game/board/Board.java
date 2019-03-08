@@ -41,17 +41,17 @@ public abstract class Board extends BoardCreator {
     public void findLasers() {
         for (int x = 0; x < laserLayer.getWidth(); x++) {
             for (int y = 0; y < laserLayer.getHeight(); y++) {
-                if (laserLayer.getCell(x, y) != null){
+                if (laserLayer.getCell(x, y) != null) {
                     Direction direction = Direction.valueOf(
-                            laserLayer.getCell(x,y).getTile().getProperties().getValues().next().toString());
-                    lasers.add(new Laser(x,y, direction));
+                            laserLayer.getCell(x, y).getTile().getProperties().getValues().next().toString());
+                    lasers.add(new Laser(x, y, direction));
                 }
             }
         }
     }
 
-    public void drawLasers(SpriteBatch batch){
-        for(Laser laser : lasers) {
+    public void drawLasers(SpriteBatch batch) {
+        for (Laser laser : lasers) {
             laser.getSprite().draw(batch);
             laser.updateSprite();
         }
@@ -75,15 +75,20 @@ public abstract class Board extends BoardCreator {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             p1.setDirection(Direction.EAST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             p1.setDirection(Direction.WEST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             p1.setDirection(Direction.NORTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             p1.setDirection(Direction.SOUTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             p1.moveBackupToPlayerPosition();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
             boardWantsToMuteMusic = true;
         }
 
@@ -92,13 +97,17 @@ public abstract class Board extends BoardCreator {
         boolean cameraMoved = true;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             camera.position.x += 10;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             camera.position.x -= 10;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             camera.position.y += 10;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             camera.position.y -= 10;
-        } else {
+        }
+        else {
             cameraMoved = false;
         }
 
@@ -179,7 +188,8 @@ public abstract class Board extends BoardCreator {
         nextPos.moveInDirection(direction);
 
         // check target tile:
-        if (nextPos.getX() < 0 || nextPos.getY() < 0 || getWidth() <= nextPos.getX() || getHeight() <= nextPos.getY())
+        if (nextPos.getX() < 0 || nextPos.getY() < 0 || getWidth() <= nextPos.getX()
+                || getHeight() <= nextPos.getY())
             return false;
 
         walls = new ArrayList<>();

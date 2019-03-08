@@ -32,20 +32,20 @@ public class RoboRallyGame extends Game {
         batch = new SpriteBatch();
 
 
-        if(DEBUGGING) {
+        if (DEBUGGING) {
             registerTestScreen = new TestScreen();
             setScreen(registerTestScreen);
         }
         else {
             menuScreen = new MenuScreen(this);
             gameScreen = new GameScreen(this, VAULT);
-            setScreen(gameScreen);
+            setScreen(menuScreen);
         }
     }
 
     @Override
-    public void dispose(){
-        if (DEBUGGING){
+    public void dispose() {
+        if (DEBUGGING) {
             registerTestScreen.dispose();
         }
         else {
