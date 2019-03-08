@@ -46,6 +46,8 @@ public class GameScreen implements Screen {
         background = new Sprite(new Texture("assets/img/background.png"));
         background.setSize(background.getWidth()/Main.UNIT_SCALE, background.getHeight()/Main.UNIT_SCALE);
         backgroundBatch = new SpriteBatch();
+
+        board.findLasers();
     }
 
     @Override
@@ -76,6 +78,7 @@ public class GameScreen implements Screen {
         game.batch.begin();
         board.drawBackup(game.batch);
         board.drawPlayers(game.batch);
+        board.drawLasers(game.batch);
         board.drawGameObjects(game.batch);
         game.batch.end();
 

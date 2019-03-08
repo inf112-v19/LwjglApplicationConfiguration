@@ -53,7 +53,7 @@
  </tile>
  <tile id="12">
   <properties>
-   <property name="Laser" value=""/>
+   <property name="Laser" value="NORTH"/>
   </properties>
  </tile>
  <tile id="13">
@@ -78,7 +78,7 @@
  </tile>
  <tile id="18">
   <properties>
-   <property name="Laser" value=""/>
+   <property name="Laser" value="EAST"/>
   </properties>
  </tile>
  <tile id="19">

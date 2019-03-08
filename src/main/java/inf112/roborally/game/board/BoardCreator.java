@@ -35,4 +35,5 @@ public abstract class BoardCreator {
         wallLayer = (TiledMapTileLayer) map.getLayers().get("walls");
     }
 
+
 }

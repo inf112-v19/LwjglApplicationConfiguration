@@ -34,4 +34,5 @@ public abstract class GameObject extends Position {
     public Sprite getSprite() {
         return sprite;
     }
+
 }
