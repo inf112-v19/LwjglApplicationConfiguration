@@ -1,121 +1,200 @@
 package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.roborally.game.Main;
-import inf112.roborally.game.ProgramCard;
-import inf112.roborally.game.world.Direction;
 
+import com.badlogic.gdx.audio.Sound;
+import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.board.ProgramRegisters;
+import inf112.roborally.game.enums.Direction;
 import java.util.ArrayList;
 
-public class  Player extends MovableGameObject {
+
+public class Player extends MovableGameObject {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
-    private static final int NUMBER_OF_REGISTERS = 5;
 
     private String name;
     private int lives;
     private int damage;
-    private int unlockedRegisters;
-    private ProgramCard[] registers;
     private Backup backup;
     private ArrayList<ProgramCard> cardsInHand;
+    private ProgramRegisters registers;
+    private int flagCounter;
+    private boolean[] flagsFound;
+    private Sound laserHitPlayerSound;
 
 
-    public Player(String name, int x, int y, Direction direction) {
+    public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {
         super(x, y, "assets/robot/tvBot.png");
+        this.name = name;
+
+        damage = 0;
+        lives = MAX_LIVES;
+
+        flagCounter = 0;
+        flagsFound = new boolean [numberOfFlagsOnBoards];
+
         setDirection(direction);
         makeSprite();
-
-        this.name = name;
-        backup = new Backup(x, y);
-
-        registers = new ProgramCard[NUMBER_OF_REGISTERS];
-        unlockedRegisters = NUMBER_OF_REGISTERS;
-        cardsInHand = new ArrayList<>();
-        damage = 0;
-        lives = MAX_LIVES;
-
         loadVisualRepresentation();
+
+        backup = new Backup(getX(), getY());
+        registers = new ProgramRegisters(this);
+        cardsInHand = new ArrayList<>();
+
+        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal("assets/music/playerLaser.wav"));
     }
 
-    /** FOR TESTING ONLY */
-    public Player(int x, int y){
+    /**
+     * FOR TESTING ONLY
+     */
+    public Player(int x, int y) {
         super(x, y, "assets/robot/tvBot.png");
-        registers = new ProgramCard[NUMBER_OF_REGISTERS];
-        unlockedRegisters = registers.length;
-        cardsInHand = new ArrayList<>();
         damage = 0;
         lives = MAX_LIVES;
+        registers = new ProgramRegisters(this);
+        cardsInHand = new ArrayList<>();
+
+
+        // For testing with flag behaviour, now tests with 3 flags on the board
+        flagCounter = 0;
+//        backup = new Backup(x,y);
+        flagsFound = new boolean [3];
+    }
+
+
+    public void receiveCard(ProgramCard programCard) {
+        if(programCard == null){
+            throw new NullPointerException("Trying to add a programCard that has value null");
+        }
+        cardsInHand.add(programCard);
+    }
+
+    public ProgramCard removeCardInHand(int cardPos){
+        if(cardPos < 0 || cardPos >= cardsInHand.size()) {
+            throw new IndexOutOfBoundsException("Trying to remove index: " + cardPos
+                    + ", but number of cards in hand: " + getNumberOfCardsInHand());
+        }
+       return cardsInHand.remove(cardPos);
+    }
+
+    public ProgramCard getCardInHand(int cardPos){
+        return cardsInHand.get(cardPos);
+    }
+
+    public ArrayList<ProgramCard> getCardsInHand(){
+        return cardsInHand;
+    }
+
+    public int getNumberOfCardsInHand(){
+        return cardsInHand.size();
+    }
+
+    public ArrayList<ProgramCard> returnCards(){
+        registers.returnCardsFromRegisters(cardsInHand);
+        return cardsInHand;
     }
 
     @Override
     public void updateSprite() {
         boolean flipSprite = false;
-        switch (getDirection()){
+        switch (getDirection()) {
             case SOUTH:
                 flipSprite = true;
             case NORTH:
-                rotationDegree = 270; break;
+                rotationDegree = 270;
+                break;
             case WEST:
                 flipSprite = true;
             case EAST:
                 rotationDegree = 180;
                 break;
         }
-        sprite.setFlip(flipSprite, false);
-        super.updateSprite();
+
+        if(sprite != null) {
+            sprite.setFlip(flipSprite, false);
+            super.updateSprite();
+        }
     }
 
 
-    public void update(){
-        handleInput();
+    public void moveBackupToPlayerPosition(){
+        backup.move(getX(), getY());
+        backup.updateSprite();
+    }
 
-        if (isDestroyed() && !outOfLives()){
+    public void update() {
+        if (isDestroyed() && !outOfLives()) {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
             repairAllDamage();
-            backup.movePlayer(this);
-            }
-        else if (isDestroyed() && outOfLives()){
+            if(backup != null)
+                backup.movePlayer(this);
+        } else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");
         }
         updateSprite();
     }
 
-    public void handleInput() {
-        //Just for testing
-        moved = true;
+    /**
+     * Repairs all damage dealt to the player and unlocks all locked registers.
+     */
+    public void repairAllDamage() {
+        registers.unlockRegisters();
+        damage = 0;
+    }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT) || (Gdx.input.isKeyJustPressed(Input.Keys.D))) {
-            setDirection(Direction.EAST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT) || (Gdx.input.isKeyJustPressed(Input.Keys.A))) {
-            setDirection(Direction.WEST);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || (Gdx.input.isKeyJustPressed(Input.Keys.W))) {
-            setDirection(Direction.NORTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || (Gdx.input.isKeyJustPressed(Input.Keys.S))) {
-            setDirection(Direction.SOUTH);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            backup.move(getX(), getY());
-            backup.updateSprite();
-            moved = false;
-        } else {
-            moved = false;
+    public void repairOneDamage() {
+        if(damage > 0) {
+            damage--;
         }
     }
 
+    /**
+     * Take one damage. Locks a register if damage taken is greater or equal to 5.
+     */
     public void takeDamage() {
-        this.damage++;
-        if (damage < 10 && damage >= 5) {
-            unlockedRegisters--;
+        if(damage < 10) {
+            damage++;
+        }
+        if (damage >= 5) {
+            registers.lockRegister();
         }
     }
 
-    public void destroy(){
-        damage = MAX_DAMAGE +1;
+    public void updateBackup() {
+        this.backup = new Backup(getX(), getY());
+    }
+
+    public void addFlag(int flagNumber) {
+        if(flagNumber > flagsFound.length) {
+            // If the flagnumber is greater than the array length, do nothing
+            ;
+        }
+        // you need to pick up the flags in order, so first check if the flag you are standing on
+        // is your next flag
+        else if(flagNumber-1 <= flagCounter && !flagsFound[flagNumber-1]) {
+            flagsFound[flagNumber-1] = true;
+            flagCounter++;
+            System.out.printf("%s picked up a flag!%n", name);
+        }
+    }
+
+    // Iterates over the booleanArray which keeps track of how many  of the flags
+    // have been found. If one of the array positions is false, then
+    // this will return false
+    public boolean thisPlayerHasWon() {
+        for(boolean found : flagsFound) {
+            if(!found) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void destroy() {
+        damage = MAX_DAMAGE + 1;
     }
 
     public boolean isDestroyed() {
@@ -123,115 +202,59 @@ public class  Player extends MovableGameObject {
     }
 
     public boolean outOfLives() {
-        return lives <= 0;
+        return lives == 0;
     }
 
-    public boolean isLocked(int register) {
-        return register >= unlockedRegisters;
-    }
 
-    /**
-     * When damage is taken some registers might become locked.
-     * Cards in locked registers should remain untill the register is unlocked.
-     *
-     * @return list of cards that are not locked in registers.
-     */
-    public ArrayList<ProgramCard> returnCards() {
-        for (int i = 0; i < unlockedRegisters; i++) {
-            cardsInHand.add(registers[i]);
-            registers[i] = null;
-        }
-        return cardsInHand;
-    }
-
-    public void repairAllDamage() {
-        damage = 0;
-        unlockedRegisters = NUMBER_OF_REGISTERS;
-    }
-
-    /**
-     * Give the player a new program card.
-     * A player will not receive the card if the card limit is reached.
-     */
-    public void receiveNewCard(ProgramCard programCard) {
-        if (cardsInHand.size() >= getCardLimit()) {
-            System.out.println("Card was not added because of card limit");
-            return;
-        }
-        cardsInHand.add(programCard);
-    }
-
-    public void pickCard(int cardPos) {
-        int i = 0;
-        while (i < unlockedRegisters) {
-            if (registers[i] == null) {
-                registers[i] = cardsInHand.remove(cardPos);
-                //TODO: potential issue - array spots after the removed index gets shifted
-                return;
-            }
-            i++;
-        }
-        System.err.println("Error: can't pick more cards. Register is full!");
-    }
-
-    public boolean registerIsFull() {
-        for(int i = 0; i < registers.length; i++){
-            if(registers[i] == null)
-                return  false;
-        }
-        return true;
-    }
-
-    // getters and setters:
-
-    /**
-     * @return how many cards the player is allowed to be dealt.
-     */
     public int getCardLimit() {
-        return 9 - damage;
+        return ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
-
 
     public int getLives() {
         return this.lives;
     }
 
-    public ArrayList<ProgramCard> getCardsInRegisters() {
-        ArrayList<ProgramCard> list = new ArrayList<>();
-        for (ProgramCard pc : registers)
-            list.add(pc);
-
-        return list;
-    }
-
-    public ProgramCard getCardInRegister(int register) {
-        return registers[register];
-    }
-
-    /**
-     * Every phase the player with the highest priority goes first.
-     *
-     * @param phaseNumber
-     * @return priority of the card in the register for the given phase.
-     */
-    public int getPriority(int phaseNumber) {
-        return registers[phaseNumber].getPriority();
+    public int getFlagCounter() {
+        return this.flagCounter;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public GameObject getBackup() {
         return backup;
     }
 
+    public ProgramRegisters getRegisters() {
+        return registers;
+    }
+
+    public boolean[] getFlagsFound() {
+        return this.flagsFound;
+    }
+
+
     @Override
     public String toString() {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
+    }
+
+    public Sound getLaserHitPlayerSound() { return this.laserHitPlayerSound; }
+
+    public void killTheSound() {
+        laserHitPlayerSound.dispose();
+    }
+
+    @Override
+    public boolean equals(Object other){
+        if (other.getClass() != this.getClass())
+            return false;
+
+        return this.name.equals(((Player)other).name);
     }
 }

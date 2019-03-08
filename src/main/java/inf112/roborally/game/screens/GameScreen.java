@@ -2,96 +2,119 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.roborally.game.Hud;
+import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.GameLogic;
+import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.world.Board;
-import inf112.roborally.game.world.Direction;
+import inf112.roborally.game.board.Board;
 
-import java.util.Stack;
 
-public class GameScreen implements Screen { //TODO: Should GameScreen implement ApplicationListener? Extends Game?
+public class GameScreen implements Screen {
 
     public static String mapPath = Main.TEST_MAP;
+    private final RoboRallyGame game;
+    private final Hud hud;
+    private final GameLogic gameLogic;
 
+    private final Board board;
+    private final Player player;
+    private Music music;
 
-    private OrthographicCamera camera;
-    private Viewport gamePort;
-    private Hud hud;
-    private Player player;
-    private Board board;
-    private Stack<ProgramCard> stackOfProgramCards;
+    Sprite background;
+    SpriteBatch backgroundBatch;
 
-    private SpriteBatch batch;
-
-
-    public GameScreen(String mapPath){
+    public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
-        this.board = new Board(Main.VAULT);
+        this.game = game;
+        board = new VaultBoard();
+        hud = new Hud(board.getPlayers().get(0));
+        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
+        player = board.getPlayers().get(0);
 
-        player = new Player("Player1",
-                board.getWidth()/2*Main.TILE_LENGTH,
-                board.getHeight()/2*Main.TILE_LENGTH,
-                Direction.NORTH
-            );
-        stackOfProgramCards = ProgramCard.makeStack();
-        batch = new SpriteBatch();
-        hud = new Hud(batch, player);
+        // Music
+        music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/testMusic1.ogg"));
+        music.setLooping(true);
+        music.setVolume(0.3f);
 
+        background = new Sprite(new Texture("assets/img/background.png"));
+        background.setSize(background.getWidth()/Main.UNIT_SCALE, background.getHeight()/Main.UNIT_SCALE);
+        backgroundBatch = new SpriteBatch();
+
+        board.findLasers();
     }
 
     @Override
-    public void show(){
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-        camera.position.set(Main.GAME_WIDTH/2,Main.GAME_HEIGHT/2,0);
-        camera.update();
-        gamePort = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT, camera);
+    public void show() {
+        music.play();
     }
 
     @Override
     public void render(float delta) {
+
         update();
-        float r = 158/255f;
-        float g = 158/255f;
-        float b = 158/255f;
+        float r = 10 / 255f;
+        float g = 10 / 255f;
+        float b = 10 / 255f;
 
         //The function glClearColor takes in values between 0 and 1. It creates the background color.
-        Gdx.gl.glClearColor(r,g,b, 1f);
+        Gdx.gl.glClearColor(r, g, b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        board.render(camera);
-        camera.update();
 
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        backgroundBatch.begin();
+        background.draw(backgroundBatch);
+        backgroundBatch.end();
 
-        player.getBackup().getSprite().draw(batch);
-        player.getSprite().draw(batch);
+        board.render(game.camera);
 
-        batch.end();
+        game.batch.setProjectionMatrix(game.camera.combined);
 
-        batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+        game.batch.begin();
+        board.drawBackup(game.batch);
+        board.drawPlayers(game.batch);
+        board.drawLasers(game.batch);
+        board.drawGameObjects(game.batch);
+        game.batch.end();
+
+        hud.draw();
+
+        // Mute music
+        if(board.boardWantsToMuteMusic()) {
+            music.stop();
+            board.musicIsMuted();
+            for (Player p : board.getPlayers()) {
+                p.killTheSound();
+            }
+        }
+
     }
 
     private void update() {
-        player.update();
-        board.update(player);
-        hud.update(player);
+        board.update();
+        gameLogic.update();
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
+        System.out.println("disposing game screen");
+        backgroundBatch.dispose();
+        background.getTexture().dispose();
+
+        game.batch.dispose();
         board.dispose();
-        player.getSprite().getTexture().dispose();
-        player.getBackup().getSprite().getTexture().dispose();
+        for (Player player : board.getPlayers()) {
+            player.getSprite().getTexture().dispose();
+            player.getBackup().getSprite().getTexture().dispose();
+            player.getLaserHitPlayerSound().dispose();
+        }
+        hud.dispose();
+        music.dispose();
     }
 
     @Override
@@ -111,7 +134,12 @@ public class GameScreen implements Screen { //TODO: Should GameScreen implement 
 
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width,height);
+        game.viewPort.update(width, height);
+        hud.resize(width, height);
+    }
+
+    public Hud getHud() {
+        return hud;
     }
 }
 

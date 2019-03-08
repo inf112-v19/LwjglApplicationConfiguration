@@ -1,9 +1,7 @@
 package inf112.roborally.game.objects;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import inf112.roborally.game.world.Direction;
-import inf112.roborally.game.ProgramCard;
+import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.enums.Direction;
 
 import java.util.ArrayList;
 
@@ -11,15 +9,6 @@ public interface IPlayer {
 
     String getName();
 
-    /**
-     * @return current x position.
-     */
-    int getX();
-
-    /**
-     * @return current y position.
-     */
-    int getY();
 
     /**
      * @return the current direction the player is facing.
@@ -48,18 +37,10 @@ public interface IPlayer {
      */
     void receiveNewCard(ProgramCard programCard);
 
-    /**
-     * @return how many cards the player is allowed to choose this round.
-     */
-    int getUnlockedRegisters();
 
     /**
      * @return how many cards the player is allowed to be dealt this round.
      */
     int getCardLimit();
-
-    Texture getTexture();
-
-    Sprite getSprite();
 }
 

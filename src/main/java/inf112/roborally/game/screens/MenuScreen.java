@@ -29,11 +29,11 @@ public class MenuScreen implements Screen {
         viewport = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT);
 
         background = new Sprite(new Texture("assets/img/titlescreen.jpg"));
-        background.setPosition(Gdx.graphics.getWidth()/2 - background.getWidth()/2,
-                               Gdx.graphics.getHeight() - background.getHeight());
+        background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2,
+                Gdx.graphics.getHeight() - background.getHeight());
         pressEnter = new Sprite(new Texture("assets/img/pressEnterWhite.png"));
-        pressEnter.setPosition(Gdx.graphics.getWidth()/2 - pressEnter.getWidth()/2,
-                (Gdx.graphics.getHeight() - background.getHeight())/2 - pressEnter.getHeight()/2);
+        pressEnter.setPosition(Gdx.graphics.getWidth() / 2 - pressEnter.getWidth() / 2,
+                (Gdx.graphics.getHeight() - background.getHeight()) / 2 - pressEnter.getHeight() / 2);
 
         stateTimer = 0;
     }
@@ -44,15 +44,15 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float v) {
-        float r = 0/255f;
-        float g = 20/255f;
-        float b = 15/255f;
+        float r = 0 / 255f;
+        float g = 20 / 255f;
+        float b = 15 / 255f;
 
-        Gdx.gl.glClearColor(r,g,b, 1f);
+        Gdx.gl.glClearColor(r, g, b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        pressEnter.setAlpha(stateTimer/255f);
-        background.setAlpha(stateTimer/255f);
+        pressEnter.setAlpha(stateTimer / 255f);
+        background.setAlpha(stateTimer / 255f);
         if (stateTimer < 255) stateTimer++;
         batch.begin();
         background.draw(batch);
@@ -63,12 +63,10 @@ public class MenuScreen implements Screen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            GameScreen gameScreen = new GameScreen(Main.VAULT);
-            roboRallyGame.setScreen(gameScreen);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            roboRallyGame.setScreen(roboRallyGame.gameScreen);
             dispose();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
     }

@@ -1,8 +1,9 @@
 package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
-import inf112.roborally.game.world.Direction;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.enums.Rotate;
 
 public abstract class MovableGameObject extends GameObject {
     public boolean moved;
@@ -15,7 +16,7 @@ public abstract class MovableGameObject extends GameObject {
      * @param x position x
      * @param y position y
      */
-    public MovableGameObject(float x, float y, String filePath) {
+    public MovableGameObject(int x, int y, String filePath) {
         super(x, y, filePath);
         direction = Direction.SOUTH;
         rotationDegree = direction.getRotationDegree();
@@ -35,31 +36,9 @@ public abstract class MovableGameObject extends GameObject {
         updateSprite();
     }
 
-    public void moveInDirection(Direction dir){
-        switch (dir){
-            case NORTH:
-                moveY(getY() + Main.TILE_LENGTH); break;
-            case SOUTH:
-                moveY(getY() - Main.TILE_LENGTH); break;
-            case EAST:
-                moveX(getX() + Main.TILE_LENGTH); break;
-            case WEST:
-                moveX(getX() - Main.TILE_LENGTH); break;
-        }
-    }
-
     public void move(int steps) {
-        switch (direction){
-            case NORTH:
-                moveY(getY() + Main.TILE_LENGTH * steps); break;
-            case SOUTH:
-                moveY(getY() - Main.TILE_LENGTH * steps); break;
-            case EAST:
-                moveX(getX() + Main.TILE_LENGTH * steps); break;
-            case WEST:
-                moveX(getX() - Main.TILE_LENGTH * steps); break;
-
-        }
+        for(int i = 0 ; i < steps; i++)
+            moveInDirection(getDirection());
     }
 
     /**
@@ -75,6 +54,7 @@ public abstract class MovableGameObject extends GameObject {
     public void setDirection(Direction direction){
         this.direction = direction;
         rotationDegree = direction.getRotationDegree();
+        moved = true;
     }
 
     public Direction getDirection(){
