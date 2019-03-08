@@ -6,7 +6,7 @@ Commits are somewhat uneven. Christian has been on holiday for a week and Morten
 ## Part 1: Project and project structure
 - The roles in the team work fine. We don't see the need to update/change the roles within the team, neither create new ones. 
 For us; a team leader is a person that keeps us on track on deadlines and assignments, while a customer contact is a person that has a broad view over the project and a deeper understanding over how the classes work together.
-- When it comes to competence between the memembers, we figured we're all pretty even. We are all second year students.
+- When it comes to competence between the members, we figured we're all pretty even. We are all second year students.
 - We are satisfied with how the teamwork has been so far. Whenever there is time sensitive work that needs to be done, we find time to do that.
 Last week we started dividing more tasks to each of us individual. This has increased the amount of work we are able to do, since we no longer overlap with each other.
 - The group dynamics has so far been great. We have different kinds of expertise, which enables us to do certain tasks better.
