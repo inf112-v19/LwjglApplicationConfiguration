@@ -17,7 +17,7 @@ public class Laser extends MovableGameObject {
     private int stateTimer;
 
     public Laser(int x, int y, Direction direction) {
-        super(x, y, "assets/gameboard/roborallypack.atlas");
+        super(x, y, "assets/gameboard/animatedlaser.atlas");
         setDirection(direction);
         setUpAnimation();
     }
