@@ -1,24 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="24" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="18" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="1">
  <tileset firstgid="1" source="roborallyTextures.tsx"/>
- <layer id="14" name="floor" width="24" height="14">
+ <layer id="26" name="floor" width="18" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYKA9YCQRD2bzsdmHTc1gdf+o+cPbfGz2YVMzWN1PC/NpCQCA1wCN
+   eJxjYKAeYKQQ09McbPLoYkPRX6PmDN94pwYAAHe3AL0=
   </data>
  </layer>
- <layer id="19" name="belts" width="24" height="14">
+ <layer id="32" name="markings" width="18" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYKAvkILSkkhsdDlygDQUS0HNZkBjY7OP2oBc80HulqGh+QxEmk8JGAzmw9IArcwnN/xliVQ31NKnNBqmdvqkdXhQAwAAbIYDpg==
+   eJxjYKAN4KCSOfyDzBygvw5QyRyqgNHwwQ+Ga/iQCwC/5ALL
   </data>
  </layer>
- <layer id="20" name="lasers" width="24" height="14">
+ <layer id="27" name="belts" width="18" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFwx0Io2FS5Yc7oFf48FKgd9T8wQkAf10BZQ==
+   eJxjYKAuUMAhLoeDjY2PzRx5KCbFHJAZijjcgw9gMwfdLehi5JiDS4wcQE9zYHEBA8TEHzZAKP6IjTts5lAj3tHFcMW7PBomZA4DDnOw6aM2AABA6gU2
   </data>
  </layer>
- <layer id="18" name="walls" width="24" height="14">
+ <layer id="28" name="lasers" width="18" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYKAfYEWjcYlRAzDR2CxmKEYHLFS0l1oA3f2cSGwuNDlK3I9PLzXig1bmo+vlQGJzk+AGQoDaaRwGsPmdFYd9gzF9wgAzGo1LbDABAGyvAII=
+   eJxjYBgFAwVk0TCp8oMVUNtfYlRy13A1hxQAANe9Aik=
+  </data>
+ </layer>
+ <layer id="29" name="walls" width="18" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYKA9YEWjcYnh0ocNMJFoPwsOPcxQjA5YSDCfHMDNgOkeLjR5ZECMe/CpweZ3VgbsYUyqOciAB4saTjR5Yu2CAXzpAB9gZsAd76T4HVv6oAZgRqNxiVETAACF4wC/
+  </data>
+ </layer>
+ <layer id="31" name="start" width="18" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYKANkKaCGSJUMINagHegHYAG2KhkDjuVzKEW4BtoB2ABolQ0S4aKZpEDABibAIk=
   </data>
  </layer>
 </map>
