@@ -22,6 +22,7 @@ public class CardsInHandDisplay {
         this.stage = stage;
         cardVisuals = new CardVisuals();
         Gdx.input.setInputProcessor(stage);
+        stage.addListener(new CameraDragListener());
     }
 
     public void updateCardsInHandVisually() {

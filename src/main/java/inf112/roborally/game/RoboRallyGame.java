@@ -34,7 +34,7 @@ public class RoboRallyGame extends Game {
         camera.update();
         viewPort = new FitViewport(1920, 1080, camera);
         batch = new SpriteBatch();
-//        handler = new CameraHandler(camera);
+//        handler = new CameraDragListener(camera);
 //        Gdx.input.setInputProcessor(handler);
 
 
