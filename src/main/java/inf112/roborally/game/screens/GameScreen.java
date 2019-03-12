@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.GameLogic;
+import inf112.roborally.game.board.TestBoard;
 import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
@@ -33,7 +34,8 @@ public class GameScreen implements Screen {
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
         this.game = game;
-        board = new VaultBoard();
+//        board = new VaultBoard();
+        board = new TestBoard();
         hud = new Hud(board.getPlayers().get(0));
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
         player = board.getPlayers().get(0);
