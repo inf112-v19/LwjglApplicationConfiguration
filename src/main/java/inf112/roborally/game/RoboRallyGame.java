@@ -1,10 +1,12 @@
 package inf112.roborally.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.roborally.game.board.CameraHandler;
 import inf112.roborally.game.screens.GameScreen;
 import inf112.roborally.game.screens.MenuScreen;
 import inf112.roborally.game.screens.TestScreen;
@@ -25,6 +27,7 @@ public class RoboRallyGame extends Game {
     public GameScreen gameScreen;
     public TestScreen registerTestScreen;
     public MenuScreen menuScreen;
+    public CameraHandler handler;
 
     @Override
     public void create() {
@@ -33,6 +36,8 @@ public class RoboRallyGame extends Game {
         camera.update();
         viewPort = new FitViewport(1920, 1080, camera);
         batch = new SpriteBatch();
+        handler = new CameraHandler(camera);
+        Gdx.input.setInputProcessor(handler);
 
 
         if (DEBUGGING) {

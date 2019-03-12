@@ -21,7 +21,7 @@ public class CardsInHandDisplay {
         this.player = player;
         this.stage = stage;
         cardVisuals = new CardVisuals();
-        Gdx.input.setInputProcessor(stage);
+//        Gdx.input.setInputProcessor(stage);
     }
 
     public void updateCardsInHandVisually() {

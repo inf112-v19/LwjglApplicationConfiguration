@@ -34,8 +34,8 @@ public class GameScreen implements Screen {
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
         this.game = game;
-//        board = new VaultBoard();
-        board = new TestBoard();
+        board = new VaultBoard();
+//        board = new TestBoard();
         hud = new Hud(board.getPlayers().get(0));
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
         player = board.getPlayers().get(0);
