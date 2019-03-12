@@ -1,10 +1,7 @@
 package inf112.roborally.game.board;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import inf112.roborally.game.RoboRallyGame;
 
 public class CameraHandler implements InputProcessor {
 
