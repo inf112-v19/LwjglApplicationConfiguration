@@ -24,7 +24,7 @@ public abstract class BoardCreator {
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
         parameters.flipY = true;
         map = loader.load(RoboRallyGame.VAULT, parameters);
-        mapRenderer = new OrthogonalTiledMapRenderer(map, Main.UNIT_SCALE);
+        mapRenderer = new OrthogonalTiledMapRenderer(map);
         createLayers();
     }
 

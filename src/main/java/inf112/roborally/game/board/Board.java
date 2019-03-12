@@ -93,6 +93,9 @@ public abstract class Board extends BoardCreator {
         }
 
 
+
+
+
         Camera camera = ((RoboRallyGame) Gdx.app.getApplicationListener()).camera;
         boolean cameraMoved = true;
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -106,6 +109,14 @@ public abstract class Board extends BoardCreator {
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             camera.position.y -= 10;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && ((OrthographicCamera) camera).zoom> 0.1){
+            ((OrthographicCamera) camera).zoom -= 0.01;
+            System.out.println("Zoom in");
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
+            ((OrthographicCamera) camera).zoom += 0.01;
+            System.out.println("Zoom out");
         }
         else {
             cameraMoved = false;

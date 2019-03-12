@@ -8,7 +8,7 @@ public class RepairSite extends GameObject {
         super(x, y, "assets/objects/repairsite.png");
         makeSprite();
         updateSprite();
-        sprite.setSize(Main.TILE_LENGTH, Main.TILE_LENGTH);
+        sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
     }
 
 }

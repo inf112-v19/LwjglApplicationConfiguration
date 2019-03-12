@@ -2,6 +2,7 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import inf112.roborally.game.Main;
 
 public abstract class GameObject extends Position {
@@ -23,7 +24,7 @@ public abstract class GameObject extends Position {
 
 
     public void updateSprite() {
-        sprite.setPosition(getX() * Main.TILE_LENGTH, getY() * Main.TILE_LENGTH);
+        sprite.setPosition(getX() * Main.PIXELS_PER_TILE, getY() * Main.PIXELS_PER_TILE);
     }
 
     public void makeSprite() {
@@ -32,6 +33,10 @@ public abstract class GameObject extends Position {
 
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public Vector3 getSpritePosition(){
+        return new Vector3(sprite.getX() + sprite.getWidth()/2, sprite.getY() + sprite.getHeight()/2, 0);
     }
 
 }

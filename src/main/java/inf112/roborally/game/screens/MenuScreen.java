@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 
 public class MenuScreen implements Screen {
@@ -26,7 +25,7 @@ public class MenuScreen implements Screen {
         batch = new SpriteBatch();
         batch.enableBlending();
 
-        viewport = new FitViewport(Main.GAME_WIDTH, Main.GAME_HEIGHT);
+        viewport = new FitViewport(1920, 1080);
 
         background = new Sprite(new Texture("assets/img/titlescreen.jpg"));
         background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2,

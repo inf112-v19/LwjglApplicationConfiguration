@@ -30,7 +30,7 @@ public abstract class MovableGameObject extends GameObject {
 
     public void loadVisualRepresentation() {
         sprite.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        sprite.setSize(Main.TILE_LENGTH, Main.TILE_LENGTH);
+        sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
         sprite.setOriginCenter();
 
         updateSprite();

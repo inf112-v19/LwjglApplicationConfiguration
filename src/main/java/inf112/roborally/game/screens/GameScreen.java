@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.VaultBoard;
-import inf112.roborally.game.Main;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.board.Board;
@@ -18,7 +18,7 @@ import inf112.roborally.game.board.Board;
 
 public class GameScreen implements Screen {
 
-    public static String mapPath = Main.TEST_MAP;
+    public static String mapPath = RoboRallyGame.TEST_MAP;
     private final RoboRallyGame game;
     private final Hud hud;
     private final GameLogic gameLogic;
@@ -44,10 +44,14 @@ public class GameScreen implements Screen {
         music.setVolume(0.3f);
 
         background = new Sprite(new Texture("assets/img/background.png"));
-        background.setSize(background.getWidth()/Main.UNIT_SCALE, background.getHeight()/Main.UNIT_SCALE);
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         backgroundBatch = new SpriteBatch();
 
         board.findLasers();
+
+        game.camera.zoom = 0.4f;
+        game.camera.position.set(board.getWidth()/2* Main.PIXELS_PER_TILE, board.getHeight()/2*Main.PIXELS_PER_TILE, 0);
+        game.camera.update();
     }
 
     @Override

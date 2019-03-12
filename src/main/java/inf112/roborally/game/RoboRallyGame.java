@@ -11,17 +11,20 @@ import inf112.roborally.game.screens.TestScreen;
 
 public class RoboRallyGame extends Game {
 
+    //MAPS:
     public static final String VAULT = "assets/gameboard/vault.tmx";
     public static final String SPIRAL_MARATHON = "assets/gameboard/spiralmarathon.tmx";
+    public static final String TEST_MAP = "assets/gameboard/testMap.tmx";
+
     private static final boolean DEBUGGING = false;
 
     public OrthographicCamera camera;
     public Viewport viewPort;
+    public SpriteBatch batch;
 
     public GameScreen gameScreen;
     public TestScreen registerTestScreen;
     public MenuScreen menuScreen;
-    public SpriteBatch batch;
 
     @Override
     public void create() {
@@ -53,5 +56,4 @@ public class RoboRallyGame extends Game {
             menuScreen.dispose();
         }
     }
-
 }
