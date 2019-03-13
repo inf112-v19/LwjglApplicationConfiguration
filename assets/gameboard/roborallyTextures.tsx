@@ -106,6 +106,11 @@
    <property name="Start" value="6"/>
   </properties>
  </tile>
+ <tile id="21">
+  <properties>
+   <property name="LaserGun" value=""/>
+  </properties>
+ </tile>
  <tile id="22">
   <properties>
    <property name="Wall" value="NORTH SOUTH EAST"/>
