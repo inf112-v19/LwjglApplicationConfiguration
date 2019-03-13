@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Player;
 
 public class CardsInHandDisplay {
@@ -22,6 +23,7 @@ public class CardsInHandDisplay {
         this.stage = stage;
         cardVisuals = new CardVisuals();
         Gdx.input.setInputProcessor(stage);
+        stage.addListener(((RoboRallyGame)Gdx.app.getApplicationListener()).cameraListener);
     }
 
     public void updateCardsInHandVisually() {
