@@ -9,9 +9,9 @@ import inf112.roborally.game.objects.RepairSite;
 public class VaultBoard extends Board {
 
     public VaultBoard() {
-        flags.add(new Flag(1, 10, 1));
-        flags.add(new Flag(6, 2, 2));
-        flags.add(new Flag(6, 10, 3));
+        flags.add(new Flag(13, 6, 1));
+        flags.add(new Flag(5, 8, 2));
+        flags.add(new Flag(11, 4, 3));
 
         repairSites.add(new RepairSite(5, 2));
 
