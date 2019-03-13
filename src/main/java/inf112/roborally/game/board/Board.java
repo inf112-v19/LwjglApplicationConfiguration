@@ -2,7 +2,6 @@ package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
@@ -64,12 +63,10 @@ public abstract class Board extends BoardCreator {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        //Just for testing
         Player p1 = players.get(0);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             p1.getRegisters().returnCardsFromRegisters(p1.getCardsInHand());
-            // messy but it works:
             ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().updateCardsInHandVisually();
         }
 
@@ -90,40 +87,6 @@ public abstract class Board extends BoardCreator {
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
             boardWantsToMuteMusic = true;
-        }
-
-
-
-
-
-        Camera camera = ((RoboRallyGame) Gdx.app.getApplicationListener()).camera;
-        boolean cameraMoved = true;
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.position.x += 10;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.position.x -= 10;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.position.y += 10;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.position.y -= 10;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && ((OrthographicCamera) camera).zoom> 0.1){
-            ((OrthographicCamera) camera).zoom -= 0.01;
-            System.out.println("Zoom in");
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
-            ((OrthographicCamera) camera).zoom += 0.01;
-            System.out.println("Zoom out");
-        }
-        else {
-            cameraMoved = false;
-        }
-
-        if (cameraMoved) {
-            camera.update();
         }
     }
 
