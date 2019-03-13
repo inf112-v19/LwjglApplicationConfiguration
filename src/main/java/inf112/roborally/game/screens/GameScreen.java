@@ -12,6 +12,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.*;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.sound.GameMusic;
 
 
 public class GameScreen implements Screen {
@@ -23,7 +24,7 @@ public class GameScreen implements Screen {
 
     private final Board board;
     private final Player player;
-    private Music music;
+    private GameMusic music;
 
     Sprite background;
     SpriteBatch backgroundBatch;
@@ -38,9 +39,7 @@ public class GameScreen implements Screen {
         player = board.getPlayers().get(0);
 
         // Music
-        music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/testMusic1.ogg"));
-        music.setLooping(true);
-        music.setVolume(0.3f);
+        music = new GameMusic("assets/music/testMusic1.ogg");
 
         background = new Sprite(new Texture("assets/img/background.png"));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -89,7 +88,7 @@ public class GameScreen implements Screen {
 
         // Mute music
         if(board.boardWantsToMuteMusic()) {
-            music.stop();
+            music.mute();
             board.musicIsMuted();
             for (Player p : board.getPlayers()) {
                 p.killTheSound();
