@@ -69,13 +69,8 @@ public abstract class Board extends BoardCreator {
         Collections.sort(startPlates);
         for(int i = 0; i < players.size(); i++){
             players.get(i).move(startPlates.get(i).getX(), startPlates.get(i).getY());
-        }
-    }
-
-    public void drawLasers(SpriteBatch batch) {
-        for (Laser laser : lasers) {
-            laser.getSprite().draw(batch);
-            laser.updateSprite();
+            players.get(i).moveBackupToPlayerPosition();
+            players.get(i).setDirection(Direction.EAST);
         }
     }
 
@@ -296,26 +291,24 @@ public abstract class Board extends BoardCreator {
         return false;
     }
 
-
-    public void drawGameObjects(SpriteBatch batch) {
-        for (Flag o : flags) {
-            o.getSprite().draw(batch);
-        }
-        for (RepairSite rs : repairSites) {
-            rs.getSprite().draw(batch);
-        }
-    }
-
-    public void drawPlayers(SpriteBatch batch) {
-        for (Player player : players) {
-            player.getSprite().draw(batch);
-        }
+    public void drawGameObjects(SpriteBatch batch){
+        drawBackup(batch);
+        drawList(flags, batch);
+        drawList(repairSites, batch);
+        drawList(lasers, batch);
+        drawList(players, batch);
     }
 
     public void drawBackup(SpriteBatch batch) {
         for (Player player : players) {
             player.getBackup().getSprite().draw(batch);
         }
+    }
+
+    private void drawList(ArrayList<? extends GameObject> list, SpriteBatch batch){
+        for(GameObject object : list)
+            object.draw(batch);
+
     }
 
     public TiledMapTileLayer getWallLayer() {

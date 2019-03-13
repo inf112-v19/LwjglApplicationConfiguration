@@ -77,9 +77,6 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.camera.combined);
 
         game.batch.begin();
-        board.drawBackup(game.batch);
-        board.drawPlayers(game.batch);
-        board.drawLasers(game.batch);
         board.drawGameObjects(game.batch);
         game.batch.end();
 

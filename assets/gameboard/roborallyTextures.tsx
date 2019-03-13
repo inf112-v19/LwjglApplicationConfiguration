@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.2" name="roborallyTextures" tilewidth="32" tileheight="32" spacing="1" tilecount="35" columns="7">
- <image source="textures.png" width="231" height="164"/>
+<tileset version="1.2" tiledversion="1.2.2" name="roborallyTextures" tilewidth="32" tileheight="32" spacing="1" tilecount="56" columns="7">
+ <image source="textures.png" width="231" height="264"/>
  <tile id="0">
   <properties>
    <property name="Floor" value=""/>
@@ -106,11 +106,6 @@
    <property name="Start" value="6"/>
   </properties>
  </tile>
- <tile id="21">
-  <properties>
-   <property name="Laser" value="NORTH"/>
-  </properties>
- </tile>
  <tile id="22">
   <properties>
    <property name="Wall" value="NORTH SOUTH EAST"/>
@@ -143,17 +138,17 @@
  </tile>
  <tile id="28">
   <properties>
-   <property name="Laser" value="EAST"/>
+   <property name="Belt" value="SOUTH"/>
   </properties>
  </tile>
  <tile id="29">
   <properties>
-   <property name="Belt" value="NORTH"/>
+   <property name="Belt" value="SOUTH"/>
   </properties>
  </tile>
  <tile id="30">
   <properties>
-   <property name="Belt" value="EAST"/>
+   <property name="Belt" value="WEST"/>
   </properties>
  </tile>
  <tile id="31">
@@ -163,17 +158,117 @@
  </tile>
  <tile id="32">
   <properties>
-   <property name="Belt" value="WEST"/>
+   <property name="Belt" value="SOUTH"/>
   </properties>
  </tile>
  <tile id="33">
   <properties>
-   <property name="Special" value="Repair"/>
+   <property name="Belt" value="WEST"/>
   </properties>
  </tile>
  <tile id="34">
   <properties>
    <property name="Special" value="Option"/>
+  </properties>
+ </tile>
+ <tile id="35">
+  <properties>
+   <property name="Belt" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="36">
+  <properties>
+   <property name="Belt" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="37">
+  <properties>
+   <property name="Belt" value="SOUTH"/>
+  </properties>
+ </tile>
+ <tile id="38">
+  <properties>
+   <property name="Belt" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="39">
+  <properties>
+   <property name="Belt" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="40">
+  <properties>
+   <property name="Belt" value="SOUTH"/>
+  </properties>
+ </tile>
+ <tile id="42">
+  <properties>
+   <property name="Belt" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="43">
+  <properties>
+   <property name="Belt" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="44">
+  <properties>
+   <property name="Belt" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="45">
+  <properties>
+   <property name="Belt" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="46">
+  <properties>
+   <property name="Belt" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="47">
+  <properties>
+   <property name="Belt" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="48">
+  <properties>
+   <property name="Laser" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="49">
+  <properties>
+   <property name="Belt" value="WEST"/>
+  </properties>
+ </tile>
+ <tile id="50">
+  <properties>
+   <property name="Belt" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="51">
+  <properties>
+   <property name="Belt" value="WEST"/>
+  </properties>
+ </tile>
+ <tile id="52">
+  <properties>
+   <property name="Belt" value="WEST"/>
+  </properties>
+ </tile>
+ <tile id="53">
+  <properties>
+   <property name="Belt" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="54">
+  <properties>
+   <property name="Belt" value="WEST"/>
+  </properties>
+ </tile>
+ <tile id="55">
+  <properties>
+   <property name="Laser" value="EAST"/>
   </properties>
  </tile>
 </tileset>
