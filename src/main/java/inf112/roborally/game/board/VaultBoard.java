@@ -23,6 +23,9 @@ public class VaultBoard extends Board {
 
         players.add(player1);
         players.add(player2);
+
+        findLasers();
+        placePlayers();
     }
 
 }

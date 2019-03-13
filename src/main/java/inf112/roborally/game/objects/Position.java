@@ -1,7 +1,6 @@
 package inf112.roborally.game.objects;
 
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import inf112.roborally.game.enums.Direction;
 
@@ -61,5 +60,10 @@ public class Position {
 
     public Vector3 getPosition(){
         return new Vector3(x, y, 0);
+    }
+
+    public void setPosition(Position position){
+        x = position.getX();
+        y = position.getY();
     }
 }

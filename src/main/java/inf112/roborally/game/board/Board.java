@@ -12,6 +12,7 @@ import inf112.roborally.game.enums.Rotate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Board extends BoardCreator {
@@ -20,6 +21,7 @@ public abstract class Board extends BoardCreator {
     protected ArrayList<RepairSite> repairSites;
     protected ArrayList<Flag> flags;
     protected ArrayList<Laser> lasers;
+    protected ArrayList<StartPosition> startPlates;
 
     private boolean boardWantsToMuteMusic = false;
     private boolean musicIsMuted = false;
@@ -30,6 +32,7 @@ public abstract class Board extends BoardCreator {
         repairSites = new ArrayList<>();
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
+        startPlates = new ArrayList<>();
     }
 
     public void render(OrthographicCamera camera) {
@@ -46,6 +49,26 @@ public abstract class Board extends BoardCreator {
                     lasers.add(new Laser(x, y, direction));
                 }
             }
+        }
+    }
+
+    public void findStartPlates(){
+        for (int x = 0; x < startLayer.getWidth(); x++) {
+            for (int y = 0; y < startLayer.getHeight(); y++) {
+                TiledMapTileLayer.Cell cell = startLayer.getCell(x,y);
+                if(cell != null){
+                    int value = Integer.parseInt(cell.getTile().getProperties().getValues().next().toString());
+                    startPlates.add(new StartPosition(x, y, value));
+                }
+            }
+        }
+    }
+
+    public void placePlayers(){
+        findStartPlates();
+        Collections.sort(startPlates);
+        for(int i = 0; i < players.size(); i++){
+            players.get(i).move(startPlates.get(i).getX(), startPlates.get(i).getY());
         }
     }
 

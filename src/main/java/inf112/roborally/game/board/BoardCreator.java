@@ -18,6 +18,7 @@ public abstract class BoardCreator {
     protected TiledMapTileLayer beltLayer;
     protected TiledMapTileLayer laserLayer;
     protected TiledMapTileLayer wallLayer;
+    protected TiledMapTileLayer startLayer;
 
     protected void createBoard(String mapPath) {
         loader = new TmxMapLoader();
@@ -33,6 +34,7 @@ public abstract class BoardCreator {
         floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
         laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("walls");
+        startLayer = (TiledMapTileLayer) map.getLayers().get("start");
     }
 
 

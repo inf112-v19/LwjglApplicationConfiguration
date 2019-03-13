@@ -46,8 +46,6 @@ public class GameScreen implements Screen {
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         backgroundBatch = new SpriteBatch();
 
-        board.findLasers();
-
         game.camera.zoom = 0.4f;
         game.camera.position.set(board.getWidth()/2* Main.PIXELS_PER_TILE, board.getHeight()/2*Main.PIXELS_PER_TILE, 0);
         game.camera.update();
