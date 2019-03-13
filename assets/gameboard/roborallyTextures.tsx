@@ -38,7 +38,7 @@
  </tile>
  <tile id="7">
   <properties>
-   <property name="Floor" value="Marking"/>
+   <property name="Floor" value="MARKING"/>
   </properties>
  </tile>
  <tile id="8">
@@ -73,7 +73,7 @@
  </tile>
  <tile id="14">
   <properties>
-   <property name="Floor" value="Marking"/>
+   <property name="Floor" value="MARKING"/>
   </properties>
  </tile>
  <tile id="15">
@@ -108,7 +108,7 @@
  </tile>
  <tile id="21">
   <properties>
-   <property name="LaserGun" value=""/>
+   <property name="Floor" value="MARKING"/>
   </properties>
  </tile>
  <tile id="22">
@@ -149,11 +149,13 @@
  <tile id="29">
   <properties>
    <property name="Belt" value="SOUTH"/>
+   <property name="Turn" value="LEFT"/>
   </properties>
  </tile>
  <tile id="30">
   <properties>
    <property name="Belt" value="WEST"/>
+   <property name="Turn" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="31">
@@ -164,16 +166,18 @@
  <tile id="32">
   <properties>
    <property name="Belt" value="SOUTH"/>
+   <property name="Turn" value="LEFT"/>
   </properties>
  </tile>
  <tile id="33">
   <properties>
    <property name="Belt" value="WEST"/>
+   <property name="Turn" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="34">
   <properties>
-   <property name="Special" value="Option"/>
+   <property name="Special" value="REPAIR"/>
   </properties>
  </tile>
  <tile id="35">
@@ -184,11 +188,13 @@
  <tile id="36">
   <properties>
    <property name="Belt" value="EAST"/>
+   <property name="Turn" value="LEFT"/>
   </properties>
  </tile>
  <tile id="37">
   <properties>
    <property name="Belt" value="SOUTH"/>
+   <property name="Turn" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="38">
@@ -199,11 +205,18 @@
  <tile id="39">
   <properties>
    <property name="Belt" value="EAST"/>
+   <property name="Turn" value="LEFT"/>
   </properties>
  </tile>
  <tile id="40">
   <properties>
    <property name="Belt" value="SOUTH"/>
+   <property name="Turn" value="RIGHT"/>
+  </properties>
+ </tile>
+ <tile id="41">
+  <properties>
+   <property name="Special" value="OPTION"/>
   </properties>
  </tile>
  <tile id="42">
@@ -214,11 +227,13 @@
  <tile id="43">
   <properties>
    <property name="Belt" value="EAST"/>
+   <property name="Turn" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="44">
   <properties>
    <property name="Belt" value="NORTH"/>
+   <property name="Turn" value="LEFT"/>
   </properties>
  </tile>
  <tile id="45">
@@ -229,11 +244,13 @@
  <tile id="46">
   <properties>
    <property name="Belt" value="EAST"/>
+   <property name="Turn" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="47">
   <properties>
    <property name="Belt" value="NORTH"/>
+   <property name="Turn" value="LEFT"/>
   </properties>
  </tile>
  <tile id="48">
@@ -249,11 +266,13 @@
  <tile id="50">
   <properties>
    <property name="Belt" value="NORTH"/>
+   <property name="Turn" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="51">
   <properties>
    <property name="Belt" value="WEST"/>
+   <property name="Turn" value="LEFT"/>
   </properties>
  </tile>
  <tile id="52">
@@ -264,11 +283,13 @@
  <tile id="53">
   <properties>
    <property name="Belt" value="NORTH"/>
+   <property name="Turn" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="54">
   <properties>
    <property name="Belt" value="WEST"/>
+   <property name="Turn" value="LEFT"/>
   </properties>
  </tile>
  <tile id="55">
