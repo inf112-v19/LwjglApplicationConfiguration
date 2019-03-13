@@ -17,6 +17,7 @@ public class GameMusic implements IGameMusic {
         musicIsMuted = false;
     }
 
+    @Override
     public void play() {
         music.play();
     }
@@ -30,5 +31,9 @@ public class GameMusic implements IGameMusic {
     @Override
     public void dispose() {
         music.dispose();
+    }
+
+    public Music getMusic() {
+        return this.music;
     }
 }

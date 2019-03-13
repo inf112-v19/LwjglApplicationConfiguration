@@ -9,6 +9,11 @@ package inf112.roborally.game.sound;
 public interface IGameMusic {
 
     /**
+     * Play the music
+     */
+    public void play();
+
+    /**
      * Mute the music
      */
     public void mute();
