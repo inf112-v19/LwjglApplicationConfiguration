@@ -246,7 +246,7 @@ public class Player extends MovableGameObject {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 
-    public Sound getLaserHitPlayerSound() { return this.laserHitPlayerSound.getSound(); }
+    public GameSound getLaserHitPlayerSound() { return this.laserHitPlayerSound; }
 
     public void killTheSound() {
         laserHitPlayerSound.mute();
