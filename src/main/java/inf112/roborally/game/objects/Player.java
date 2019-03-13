@@ -6,6 +6,8 @@ import com.badlogic.gdx.audio.Sound;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.sound.GameSound;
+
 import java.util.ArrayList;
 
 
@@ -21,7 +23,7 @@ public class Player extends MovableGameObject {
     private ProgramRegisters registers;
     private int flagCounter;
     private boolean[] flagsFound;
-    private Sound laserHitPlayerSound;
+    private GameSound laserHitPlayerSound;
 
 
     public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {
@@ -42,7 +44,7 @@ public class Player extends MovableGameObject {
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
-        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal("assets/music/playerLaser.wav"));
+        laserHitPlayerSound = new GameSound("assets/music/playerLaser.wav");
     }
 
     /**
@@ -244,10 +246,10 @@ public class Player extends MovableGameObject {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 
-    public Sound getLaserHitPlayerSound() { return this.laserHitPlayerSound; }
+    public Sound getLaserHitPlayerSound() { return this.laserHitPlayerSound.getSound(); }
 
     public void killTheSound() {
-        laserHitPlayerSound.dispose();
+        laserHitPlayerSound.mute();
     }
 
     @Override

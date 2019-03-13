@@ -3,7 +3,7 @@ package inf112.roborally.game.sound;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
-public class GameMusic {
+public class GameMusic implements IGameMusic {
     private Music music;
     private boolean musicIsMuted;
     private String filepath; // save the filepath for this instance of music
@@ -21,11 +21,13 @@ public class GameMusic {
         music.play();
     }
 
+    @Override
     public void mute() {
         music.stop();
         musicIsMuted = true;
     }
 
+    @Override
     public void dispose() {
         music.dispose();
     }
