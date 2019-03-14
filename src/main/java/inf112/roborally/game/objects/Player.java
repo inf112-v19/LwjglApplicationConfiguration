@@ -3,6 +3,7 @@ package inf112.roborally.game.objects;
 import com.badlogic.gdx.Gdx;
 
 import com.badlogic.gdx.audio.Sound;
+import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
@@ -22,6 +23,7 @@ public class Player extends MovableGameObject {
     private int flagCounter;
     private boolean[] flagsFound;
     private Sound laserHitPlayerSound;
+
 
 
     public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {

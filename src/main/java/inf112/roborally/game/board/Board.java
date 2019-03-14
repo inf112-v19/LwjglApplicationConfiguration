@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 public abstract class Board extends BoardCreator {
 
     protected ArrayList<Player> players;
@@ -72,20 +73,15 @@ public abstract class Board extends BoardCreator {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             p1.setDirection(Direction.EAST);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             p1.setDirection(Direction.WEST);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             p1.setDirection(Direction.NORTH);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             p1.setDirection(Direction.SOUTH);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             p1.moveBackupToPlayerPosition();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
             boardWantsToMuteMusic = true;
         }
     }
@@ -321,4 +317,78 @@ public abstract class Board extends BoardCreator {
         musicIsMuted = true;
     }
 
+    public void fireLaser() {
+        for (Player play :
+                players) {
+
+            Direction dir = play.getDirection();
+            int x = play.getX();
+            int y = play.getY();
+            boolean blocked = false;
+
+            switch (dir) {
+                case NORTH:
+                    LaserShot shotNorth = new LaserShot(dir, x, y);
+                    while(!shotBlocked(play, dir, x, y)){
+                        y++;
+                    }
+                case SOUTH:
+                    LaserShot shotSouth = new LaserShot(dir, x, y);
+                    while(!shotBlocked(play, dir, x, y)){
+                        y--;
+                    }
+                case EAST:
+                    LaserShot shotEast = new LaserShot(dir, x, y);
+                    while(!shotBlocked(play, dir, x, y)){
+                        x++;
+                    }
+                case WEST:
+                    LaserShot shotWest = new LaserShot(dir, x, y);
+                    while(!shotBlocked(play, dir, x, y)){
+                        x--;
+                    }
+            }
+        }
+    }
+
+    public boolean shotBlocked(MovableGameObject player, Direction direction, int x , int y) {
+        // first check the current tile:
+        Position nextPos = new Position(x, y);
+
+        // check this tile:
+        TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(nextPos.getX(), nextPos.getY());
+        List<String> walls = new ArrayList<>();
+        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
+            walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
+        }
+        if (walls.contains(direction.toString())) {
+            System.out.println("Hit a wall!(here)");
+            return true;
+        }
+
+        // move new position to target tile:
+        nextPos.moveInDirection(direction);
+
+        // check target tile:
+        if (nextPos.getX() < 0 || nextPos.getY() < 0 || getWidth() <= nextPos.getX()
+                || getHeight() <= nextPos.getY())
+            return false;
+
+        walls = new ArrayList<>();
+        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(nextPos.getX(), nextPos.getY());
+
+        if (targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
+            walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
+
+        }
+
+
+        Direction oppositeDirection = direction.getOppositeDirection();
+
+        if (walls.contains(oppositeDirection.toString())) {
+            System.out.println("Hit a wall!(next)");
+            return true;
+        }
+        return false;
+    }
 }
