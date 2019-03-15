@@ -1,10 +1,8 @@
 package inf112.roborally.game.board;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.CardsInHandDisplay;

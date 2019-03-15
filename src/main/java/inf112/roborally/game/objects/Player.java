@@ -24,7 +24,6 @@ public class Player extends MovableGameObject {
     private ProgramRegisters registers;
     private int flagCounter;
     private boolean[] flagsFound;
-    private Sound laserHitPlayerSound;
     private Board board;
 
 
@@ -32,6 +31,9 @@ public class Player extends MovableGameObject {
         super(0, 0, "assets/robot/tvBot.png");
         this.name = name;
         this.board = board;
+        setDirection(direction);
+        makeSprite();
+        loadVisualRepresentation();
 
         damage = 0;
         lives = MAX_LIVES;
@@ -39,15 +41,10 @@ public class Player extends MovableGameObject {
         flagCounter = 0;
         flagsFound = new boolean[board.getFlags().size()];
 
-        setDirection(direction);
-        makeSprite();
-        loadVisualRepresentation();
 
         backup = new Backup(getX(), getY(), this);
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
-
-        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal("assets/music/playerLaser.wav"));
     }
 
     /**
@@ -269,14 +266,6 @@ public class Player extends MovableGameObject {
     @Override
     public String toString() {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
-    }
-
-    public Sound getLaserHitPlayerSound() {
-        return this.laserHitPlayerSound;
-    }
-
-    public void killTheSound() {
-        laserHitPlayerSound.dispose();
     }
 
     @Override

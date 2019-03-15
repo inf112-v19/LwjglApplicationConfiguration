@@ -1,5 +1,7 @@
 package inf112.roborally.game.board;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
@@ -18,6 +20,7 @@ public abstract class Board extends BoardCreator {
 
     public boolean boardWantsToMuteMusic = false;
     private boolean musicIsMuted = false;
+    private Sound laserHitPlayerSound;
 
 
     public Board() {
@@ -26,6 +29,8 @@ public abstract class Board extends BoardCreator {
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
         startPlates = new ArrayList<>();
+
+        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal("assets/music/playerLaser.wav"));
     }
 
     public void render(OrthographicCamera camera) {
@@ -111,6 +116,7 @@ public abstract class Board extends BoardCreator {
         for(Player player : players){
             if(lasersHit(player)) {
                 player.takeDamage();
+                laserHitPlayerSound.play();
             }
         }
     }
@@ -238,6 +244,8 @@ public abstract class Board extends BoardCreator {
     public void dispose() {
         System.out.println("disposing board");
         map.dispose();
+        laserHitPlayerSound.dispose();
+
     }
 
     public TiledMapTileLayer getWallLayer() {
