@@ -14,8 +14,6 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
-import java.util.ArrayList;
-
 
 public class GameScreen implements Screen {
 
@@ -37,8 +35,8 @@ public class GameScreen implements Screen {
 
         board = new VaultBoard();
 
-        board.addPlayer(new Player("Player1", 6, 6, Direction.NORTH, board));
-        board.addPlayer(new Player("Player2", 5, 7, Direction.SOUTH, board));
+        board.addPlayer(new Player("Player1", Direction.NORTH, board));
+        board.addPlayer(new Player("Player2", Direction.SOUTH, board));
         board.placePlayers();
 
         hud = new Hud(board.getPlayers().get(0));
@@ -55,7 +53,8 @@ public class GameScreen implements Screen {
         backgroundBatch = new SpriteBatch();
 
         game.camera.zoom = 0.4f;
-        game.camera.position.set(board.getWidth()/2* Main.PIXELS_PER_TILE, board.getHeight()/2*Main.PIXELS_PER_TILE, 0);
+        game.camera.position.set(board.getWidth() / 2 * Main.PIXELS_PER_TILE,
+                board.getHeight() / 2 * Main.PIXELS_PER_TILE, 0);
         game.camera.update();
     }
 
@@ -91,7 +90,7 @@ public class GameScreen implements Screen {
         hud.draw();
 
         // Mute music
-        if(board.boardWantsToMuteMusic()) {
+        if (board.boardWantsToMuteMusic()) {
             music.stop();
             board.musicIsMuted();
             for (Player p : board.getPlayers()) {

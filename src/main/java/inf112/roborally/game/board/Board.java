@@ -1,11 +1,8 @@
 package inf112.roborally.game.board;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
-import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
 
@@ -19,7 +16,7 @@ public abstract class Board extends BoardCreator {
     protected ArrayList<Laser> lasers;
     protected ArrayList<StartPosition> startPlates;
 
-    private boolean boardWantsToMuteMusic = false;
+    public boolean boardWantsToMuteMusic = false;
     private boolean musicIsMuted = false;
 
 
@@ -70,21 +67,6 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.M)){
-            boardWantsToMuteMusic = true;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.R)){
-            players.get(0).getRegisters().returnCardsFromRegisters(players.get(0).getCardsInHand());
-            // messy but it works:
-            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
-                    updateCardsInHandVisually();
-        }
-    }
-
     public void dispose() {
         System.out.println("disposing board");
         map.dispose();
@@ -93,16 +75,16 @@ public abstract class Board extends BoardCreator {
     public void updateBoard() {
         for (Player player : players) {
             boardInteractsWithPlayer(player);
-            if (playerIsOnRepair(player.getX(), player.getY())) {
+            if (playerIsOnRepair(player)) {
                 player.updateBackup();
                 player.repairOneDamage();
+                System.out.println("Special field");
             }
         }
 
     }
 
     public void update() {
-        handleInput();
         for (Player player : players) {
             player.updateSprite();
             player.update();
@@ -233,13 +215,9 @@ public abstract class Board extends BoardCreator {
         return -1;
     }
 
-    public boolean playerIsOnRepair(int x, int y) {
-        for (RepairSite rs : repairSites) {
-            if (rs.getX() == x && rs.getY() == y) {
-                return true;
-            }
-        }
-        return false;
+    public boolean playerIsOnRepair(Player player) {
+        return !(playerIsOffTheBoard(player.getX(), player.getY()))
+            && (floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().containsKey("Special"));
     }
 
     public void drawGameObjects(SpriteBatch batch){

@@ -28,8 +28,8 @@ public class Player extends MovableGameObject {
     private Board board;
 
 
-    public Player(String name, int x, int y, Direction direction, Board board) {
-        super(x, y, "assets/robot/tvBot.png");
+    public Player(String name, Direction direction, Board board) {
+        super(0, 0, "assets/robot/tvBot.png");
         this.name = name;
         this.board = board;
 
