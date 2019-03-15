@@ -58,6 +58,9 @@ public class ProgramRegisters {
     public void lockRegister(){
         unlockedRegisters--;
     }
+    public void unlockRegister() {
+        unlockedRegisters++;
+    }
 
     public void unlockRegisters(){
         unlockedRegisters = NUMBER_OF_REGISTERS;

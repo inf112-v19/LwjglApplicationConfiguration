@@ -1,7 +1,10 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
+import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
 
@@ -10,8 +13,8 @@ import java.util.*;
 
 public class GameLogic {
 
-    boolean roundOver;
-    int phase;
+    private boolean roundOver;
+    private int phase;
     private Board board;
     private GameState state;
 
@@ -34,31 +37,25 @@ public class GameLogic {
         roundOver = true;
         phase = 0;
 
-
         update();
-
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
-
+    /**
+     * Retrieve cards from last round
+     * Receive new cards
+     */
     public void doBeforeRound() {
-
-            //Retrieve cards from last round
-            retrieveCardsFromPlayer(player1);
-
-            //Receive new cards
-            giveCardsToPlayer(player1);
-            cardsInHandDisplay.updateCardsInHandVisually();
-
-
-        // Show cards
-        // Choose cards to use for the round
-        // Validate the choice
-
+        retrieveCardsFromPlayer(player1);
+        giveCardsToPlayer(player1);
+        cardsInHandDisplay.updateCardsInHandVisually();
         state = GameState.PICKING_CARDS;
     }
 
     public void update() {
+        handleInput();
+        board.updatePlayers();
+
         switch (state) {
             case PREROUND:
                 System.out.println("set up before round");
@@ -71,30 +68,67 @@ public class GameLogic {
                 }
                 break;
             case ROUND:
-                if(phase < 5) {
+                if (phase < 5) {
 
                     System.out.println("executing phase " + phase);
-                    board.executeCard(player1, player1.getRegisters().getCardInRegister(phase));
+                    player1.executeCard(player1.getRegisters().getCardInRegister(phase));
                     checkIfAnyPlayersWon();
                     try {
                         Thread.sleep(500);
-                    } catch (InterruptedException e) {
+                    }
+                    catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     phase++;
                     state = GameState.BOARDMOVES;
-                } else {
+                }
+                else {
                     phase = 0;
                     state = GameState.PREROUND;
                     System.out.println("round over");
                 }
                 break;
             case BOARDMOVES:
-                board.updateBoard();
+                board.boardMoves();
+                // todo: check if a player has won
                 state = GameState.ROUND;
                 break;
         }
 
+    }
+
+    public void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
+            board.boardWantsToMuteMusic = true;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0));
+            board.boardMoves();
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            player1.executeCard(new ProgramCard(Rotate.UTURN, 0, 0));
+            board.boardMoves();
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            player1.executeCard(new ProgramCard(Rotate.RIGHT, 0, 0));
+            board.boardMoves();
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            player1.executeCard(new ProgramCard(Rotate.LEFT, 0, 0));
+            board.boardMoves();
+        }
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+            players.get(0).getRegisters().returnCardsFromRegisters(players.get(0).getCardsInHand());
+            // messy but it works:
+            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
+                    updateCardsInHandVisually();
+        }
     }
 
     private void checkIfAnyPlayersWon() {
@@ -107,7 +141,7 @@ public class GameLogic {
         }
     }
 
-    public boolean playerReady(Player player){
+    public boolean playerReady(Player player) {
         return player.getRegisters().registerIsFull();
     }
 
@@ -120,38 +154,8 @@ public class GameLogic {
         return true;
     }
 
-    /*
-     * Let the players choose which direction to face.
-     *
-     * -- Give out cards to the players. (done)
-     * Choose which cards to use.
-     * Validate the choice.
-     * Lock the program cards.
-     * Set a 30 second timer once there is only one person left that hasn't locked
-     *
-     * Start the round once all players have their cards locked.
-     *
-     * Round:
-     * Turn around the first card (all players)
-     * Highest priority goes first.
-     * Once all cards in a phase has been used:
-     *  Move belts
-     *  Activate lasers
-     *  Check for damage
-     *  Move backup
-     *  Check if someone is standing on their next flag at the end of the phase.
-     *
-     * After a round:
-     *  Repair damage
-     *  Be able to choose powerdown
-     *  Hand out options-cards
-     *  Take back all cards from players
-     *
-     *
-     */
-
     /**
-     * Gives the player as many cards as allowed from the stack of program cards.
+     * Gives the player as many cards as allowed from the stack of program cards.*
      *
      * @param player which player to give program cards to.
      */
@@ -180,5 +184,4 @@ public class GameLogic {
             stackOfProgramCards.push(returnedProgramCards.pop());
         Collections.shuffle(stackOfProgramCards);
     }
-
 }

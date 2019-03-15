@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.*;
+import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
@@ -33,6 +34,11 @@ public class GameScreen implements Screen {
         this.game = game;
 
         board = new VaultBoard();
+
+        board.addPlayer(new Player("Player1", Direction.NORTH, board));
+        board.addPlayer(new Player("Player2", Direction.SOUTH, board));
+        board.placePlayers();
+
         hud = new Hud(board.getPlayers().get(0));
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
         player = board.getPlayers().get(0);
@@ -47,7 +53,8 @@ public class GameScreen implements Screen {
         backgroundBatch = new SpriteBatch();
 
         game.camera.zoom = 0.4f;
-        game.camera.position.set(board.getWidth()/2* Main.PIXELS_PER_TILE, board.getHeight()/2*Main.PIXELS_PER_TILE, 0);
+        game.camera.position.set(board.getWidth() / 2 * Main.PIXELS_PER_TILE,
+                board.getHeight() / 2 * Main.PIXELS_PER_TILE, 0);
         game.camera.update();
     }
 
@@ -83,18 +90,15 @@ public class GameScreen implements Screen {
         hud.draw();
 
         // Mute music
-        if(board.boardWantsToMuteMusic()) {
+        if (board.boardWantsToMuteMusic()) {
             music.stop();
             board.musicIsMuted();
-            for (Player p : board.getPlayers()) {
-                p.killTheSound();
-            }
+            board.killTheSound();
         }
 
     }
 
     private void update() {
-        board.update();
         gameLogic.update();
         game.cameraListener.update();
     }
@@ -111,7 +115,6 @@ public class GameScreen implements Screen {
         for (Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
-            player.getLaserHitPlayerSound().dispose();
         }
         hud.dispose();
         music.dispose();

@@ -1,6 +1,5 @@
 package inf112.roborally.game.objects;
 
-import inf112.roborally.game.objects.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,46 +29,46 @@ public class FlagsFoundTest {
 
     @Test
     public void playerFindsOneFlag() {
-        player.addFlag(1);
+        player.visitFlag(1);
         assertEquals(1, player.getFlagCounter());
     }
 
     @Test
     public void playerFindsTwoFlags() {
-        player.addFlag(1);
-        player.addFlag(2);
+        player.visitFlag(1);
+        player.visitFlag(2);
         assertEquals(2, player.getFlagCounter());
     }
 
     @Test
     public void playerFindsTheSameFlagTwice() {
         int flagnumber = 1;
-        player.addFlag(flagnumber);
-        player.addFlag(flagnumber);
+        player.visitFlag(flagnumber);
+        player.visitFlag(flagnumber);
         assertEquals(1, player.getFlagCounter());
     }
 
     @Test
     public void playerHasWon() {
         for (int i = 1; i < 4; i++) {
-            player.addFlag(i);
+            player.visitFlag(i);
         }
         assertTrue(player.thisPlayerHasWon());
     }
 
     @Test
     public void playerDoesNotWinWith2Flags() {
-        player.addFlag(1);
-        player.addFlag(2);
+        player.visitFlag(1);
+        player.visitFlag(2);
         assertFalse(player.thisPlayerHasWon());
     }
 
     @Test
     public void flagNumberDoesNotExceedNumberOfFlags() {
-        player.addFlag(1);
-        player.addFlag(2);
-        player.addFlag(3);
-        player.addFlag(4);
+        player.visitFlag(1);
+        player.visitFlag(2);
+        player.visitFlag(3);
+        player.visitFlag(4);
         assertEquals(3, player.getFlagCounter());
     }
 }
