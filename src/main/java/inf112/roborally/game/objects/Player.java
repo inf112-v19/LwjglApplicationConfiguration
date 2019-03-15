@@ -84,7 +84,17 @@ public class Player extends MovableGameObject {
                 move(1);
             }
         }
+    }
 
+    @Override
+    public void move(int steps) {
+        for (int i = 0; i < steps; i++) {
+            moveInDirection(getDirection());
+        }
+        // every time a player moves we need to check if it is off the board or not
+        if (board.playerIsOffTheBoard(getX(), getY())) {
+            this.destroy();
+        }
     }
 
 
@@ -172,7 +182,7 @@ public class Player extends MovableGameObject {
     }
 
     public void repairOneDamage() {
-        if (damage >= 5){
+        if (damage >= 5) {
             registers.unlockRegister();
         }
         if (damage > 0) {

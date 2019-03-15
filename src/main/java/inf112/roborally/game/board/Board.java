@@ -108,7 +108,7 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    private boolean playerIsOffTheBoard(int x, int y) {
+    public boolean playerIsOffTheBoard(int x, int y) {
         return (floorLayer.getCell(x, y) == null);
     }
 
