@@ -3,9 +3,12 @@ package inf112.roborally.game.objects;
 import com.badlogic.gdx.Gdx;
 
 import com.badlogic.gdx.audio.Sound;
+import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.enums.Rotate;
+
 import java.util.ArrayList;
 
 
@@ -22,17 +25,19 @@ public class Player extends MovableGameObject {
     private int flagCounter;
     private boolean[] flagsFound;
     private Sound laserHitPlayerSound;
+    private Board board;
 
 
-    public Player(String name, int x, int y, Direction direction, int numberOfFlagsOnBoards) {
+    public Player(String name, int x, int y, Direction direction, Board board) {
         super(x, y, "assets/robot/tvBot.png");
         this.name = name;
+        this.board = board;
 
         damage = 0;
         lives = MAX_LIVES;
 
         flagCounter = 0;
-        flagsFound = new boolean [numberOfFlagsOnBoards];
+        flagsFound = new boolean [board.getFlags().size()];
 
         setDirection(direction);
         makeSprite();
@@ -60,6 +65,30 @@ public class Player extends MovableGameObject {
         flagCounter = 0;
 //        backup = new Backup(x,y);
         flagsFound = new boolean [3];
+    }
+
+    public void executeCard(int phase) {
+        ProgramCard programCard = registers.getCardInRegister(phase);
+        if (programCard == null) {
+            return;
+        }
+
+        if (programCard.getRotate() != Rotate.NONE) {
+            rotate(programCard.getRotate());
+            return;
+        }
+
+        if (programCard.getMoveDistance() == -1) {
+            if (board.canGo(this, getDirection().getOppositeDirection())) {
+                moveInDirection(getDirection().getOppositeDirection());
+            }
+        }
+        for (int i = 0; i < programCard.getMoveDistance(); i++) {
+            if (board.canGo(this, getDirection())) {
+                move(1);
+            }
+        }
+
     }
 
 

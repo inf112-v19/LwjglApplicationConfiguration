@@ -8,12 +8,8 @@ import com.badlogic.gdx.maps.tiled.*;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
-import inf112.roborally.game.enums.Rotate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public abstract class Board extends BoardCreator {
 
@@ -75,36 +71,17 @@ public abstract class Board extends BoardCreator {
     }
 
     public void handleInput() {
-        for (Player p : players)
-            p.moved = false;
-
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        Player p1 = players.get(0);
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            p1.getRegisters().returnCardsFromRegisters(p1.getCardsInHand());
-            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().updateCardsInHandVisually();
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            p1.setDirection(Direction.EAST);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            p1.setDirection(Direction.WEST);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            p1.setDirection(Direction.NORTH);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            p1.setDirection(Direction.SOUTH);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            p1.moveBackupToPlayerPosition();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
+        else if (Gdx.input.isKeyPressed(Input.Keys.M)){
             boardWantsToMuteMusic = true;
+        }
+        else if (Gdx.input.isKeyPressed(Input.Keys.R)){
+            players.get(0).getRegisters().returnCardsFromRegisters(players.get(0).getCardsInHand());
+            // messy but it works:
+            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
+                    updateCardsInHandVisually();
         }
     }
 
@@ -128,37 +105,9 @@ public abstract class Board extends BoardCreator {
         handleInput();
         for (Player player : players) {
             player.updateSprite();
-            if (player.moved) {
-                if (canGo(player, player.getDirection()))
-                    player.move(1);
-                boardInteractsWithPlayer(player);
-            }
             player.update();
             player.updateSprite();
         }
-    }
-
-    public void executeCard(Player player, ProgramCard card) {
-        if (card == null) {
-            return;
-        }
-
-        if (card.getRotate() != Rotate.NONE) {
-            player.rotate(card.getRotate());
-            return;
-        }
-
-        if (card.getMoveDistance() == -1) {
-            if (canGo(player, player.getDirection().getOppositeDirection())) {
-                player.moveInDirection(player.getDirection().getOppositeDirection());
-            }
-        }
-        for (int i = 0; i < card.getMoveDistance(); i++) {
-            if (canGo(player, player.getDirection())) {
-                player.move(1);
-            }
-        }
-
     }
 
     public boolean canGo(MovableGameObject player, Direction direction) {
@@ -169,7 +118,7 @@ public abstract class Board extends BoardCreator {
         TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(nextPos.getX(), nextPos.getY());
         List<String> walls = new ArrayList<>();
         if (currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
+            walls = getProperties(currentCell.getTile().getProperties().getValues().next().toString());
         }
         if (walls.contains(direction.toString())) {
             System.out.println("Hit a wall!(here)");
@@ -188,7 +137,7 @@ public abstract class Board extends BoardCreator {
         TiledMapTileLayer.Cell targetCell = wallLayer.getCell(nextPos.getX(), nextPos.getY());
 
         if (targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
+            walls = getProperties(targetCell.getTile().getProperties().getValues().next().toString());
         }
 
         Direction oppositeDirection = direction.getOppositeDirection();
@@ -215,10 +164,12 @@ public abstract class Board extends BoardCreator {
     /**
      * helper method for canGo()
      */
-    public List<String> splitBySpace(String strToSplit) {
-        List<String> splitList;
-        String[] items = strToSplit.split(" ");
-        splitList = Arrays.asList(items);
+    public List<String> getProperties(String properties) {
+        List<String> splitList = new ArrayList<>();
+        StringTokenizer st = new StringTokenizer(properties);
+        while(st.hasMoreTokens()){
+            splitList.add(st.nextToken());
+        }
         return splitList;
     }
 
@@ -337,4 +288,11 @@ public abstract class Board extends BoardCreator {
         musicIsMuted = true;
     }
 
+    public ArrayList<Flag> getFlags(){
+        return flags;
+    }
+
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
 }

@@ -10,8 +10,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.*;
+import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
+
+import java.util.ArrayList;
 
 
 public class GameScreen implements Screen {
@@ -33,6 +36,11 @@ public class GameScreen implements Screen {
         this.game = game;
 
         board = new VaultBoard();
+
+        board.addPlayer(new Player("Player1", 6, 6, Direction.NORTH, board));
+        board.addPlayer(new Player("Player2", 5, 7, Direction.SOUTH, board));
+        board.placePlayers();
+
         hud = new Hud(board.getPlayers().get(0));
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
         player = board.getPlayers().get(0);

@@ -74,7 +74,7 @@ public class GameLogic {
                 if(phase < 5) {
 
                     System.out.println("executing phase " + phase);
-                    board.executeCard(player1, player1.getRegisters().getCardInRegister(phase));
+                    player1.executeCard(phase);
                     checkIfAnyPlayersWon();
                     try {
                         Thread.sleep(500);
