@@ -40,11 +40,12 @@ public class GameLogic {
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
-
+    /**
+     * Retrieve cards from last round
+     * Receive new cards
+     */
     public void doBeforeRound() {
-        //Retrieve cards from last round
         retrieveCardsFromPlayer(player1);
-        //Receive new cards
         giveCardsToPlayer(player1);
         cardsInHandDisplay.updateCardsInHandVisually();
         state = GameState.PICKING_CARDS;
@@ -52,6 +53,7 @@ public class GameLogic {
 
     public void update() {
         handleInput();
+        board.updatePlayers();
 
         switch (state) {
             case PREROUND:
@@ -86,7 +88,10 @@ public class GameLogic {
                 }
                 break;
             case BOARDMOVES:
-                board.updateBoard();
+                board.beltsMove();
+                board.lasersFire();
+                board.visitFlags();
+                board.visitSpecialFields();
                 state = GameState.ROUND;
                 break;
         }
@@ -97,10 +102,10 @@ public class GameLogic {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        else if (Gdx.input.isKeyPressed(Input.Keys.M)){
+        else if (Gdx.input.isKeyPressed(Input.Keys.M)) {
             board.boardWantsToMuteMusic = true;
         }
-        else if (Gdx.input.isKeyPressed(Input.Keys.R)){
+        else if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCardsFromRegisters(players.get(0).getCardsInHand());
             // messy but it works:
             ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().

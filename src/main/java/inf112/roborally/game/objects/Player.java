@@ -43,7 +43,7 @@ public class Player extends MovableGameObject {
         makeSprite();
         loadVisualRepresentation();
 
-        backup = new Backup(getX(), getY());
+        backup = new Backup(getX(), getY(), this);
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
@@ -158,7 +158,7 @@ public class Player extends MovableGameObject {
             lives--;
             repairAllDamage();
             if(backup != null)
-                backup.movePlayer(this);
+                backup.movePlayer();
         } else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");
@@ -192,18 +192,13 @@ public class Player extends MovableGameObject {
         }
     }
 
-    public void updateBackup() {
-        this.backup = new Backup(getX(), getY());
-    }
 
-    public void addFlag(int flagNumber) {
-        if(flagNumber > flagsFound.length) {
-            // If the flagnumber is greater than the array length, do nothing
-            ;
-        }
+    public void visitFlag(int flagNumber) {
+        if(flagNumber > flagsFound.length) return;
+
         // you need to pick up the flags in order, so first check if the flag you are standing on
         // is your next flag
-        else if(flagNumber-1 <= flagCounter && !flagsFound[flagNumber-1]) {
+        if(flagNumber-1 <= flagCounter && !flagsFound[flagNumber-1]) {
             flagsFound[flagNumber-1] = true;
             flagCounter++;
             System.out.printf("%s picked up a flag!%n", name);
@@ -255,7 +250,7 @@ public class Player extends MovableGameObject {
         return this.name;
     }
 
-    public GameObject getBackup() {
+    public Backup getBackup() {
         return backup;
     }
 

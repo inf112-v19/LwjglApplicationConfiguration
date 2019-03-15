@@ -101,7 +101,6 @@ public class GameScreen implements Screen {
     }
 
     private void update() {
-        board.update();
         gameLogic.update();
         game.cameraListener.update();
     }

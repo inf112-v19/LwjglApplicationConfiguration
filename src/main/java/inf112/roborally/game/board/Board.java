@@ -72,23 +72,76 @@ public abstract class Board extends BoardCreator {
         map.dispose();
     }
 
-    public void updateBoard() {
+    public void beltsMove() {
         for (Player player : players) {
-            boardInteractsWithPlayer(player);
-            if (playerIsOnRepair(player)) {
-                player.updateBackup();
-                player.repairOneDamage();
-                System.out.println("Special field");
+            if (player == null) continue;
+
+            beltsMove(player);
+
+            if (playerIsOffTheBoard(player.getX(), player.getY())) {
+                player.destroy();
             }
         }
 
     }
 
-    public void update() {
+    private void beltsMove(Player player) {
+        // check if player is on a belt:
+        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
+
+        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")) {
+            Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
+            if (canGo(player, player.getDirection())) {
+                player.moveInDirection(dir);
+            }
+        }
+    }
+
+    private boolean playerIsOffTheBoard(int x, int y) {
+        return (floorLayer.getCell(x, y) == null);
+    }
+
+    public void lasersFire(){
+        for(Player player : players){
+            if(lasersHit(player)) {
+                player.takeDamage();
+            }
+        }
+    }
+
+    private boolean lasersHit(Player player) {
+        TiledMapTileLayer.Cell currentCell = laserLayer.getCell(player.getX(), player.getY());
+        return currentCell != null && currentCell.getTile().getProperties().containsKey("Laser");
+    }
+
+    public void visitFlags(){
         for (Player player : players) {
-            player.updateSprite();
+            for(Flag f : flags){
+                if(player.positionEquals(f)){
+                    player.visitFlag(f.getFlagNumber());
+                    player.moveBackupToPlayerPosition();
+                }
+            }
+        }
+    }
+
+    public void visitSpecialFields() {
+        for (Player player : players){
+            if(playerIsOnRepair(player)){
+                player.repairOneDamage();
+                player.getBackup().moveToPlayerPosition();
+            }
+        }
+    }
+
+    public boolean playerIsOnRepair(Player player) {
+        return !(playerIsOffTheBoard(player.getX(), player.getY()))
+                && (floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().containsKey("Special"));
+    }
+
+    public void updatePlayers() {
+        for (Player player : players) {
             player.update();
-            player.updateSprite();
         }
     }
 
@@ -155,71 +208,6 @@ public abstract class Board extends BoardCreator {
         return splitList;
     }
 
-    public void boardInteractsWithPlayer(Player player) {
-        if (player == null) return;
-
-
-        beltsMove(player);
-
-        int x = player.getX();
-        int y = player.getY();
-
-        if (lasersHit(x, y)) {
-            System.out.println("Ouch!");
-            player.takeDamage();
-            player.getLaserHitPlayerSound().play(0.05f);
-        }
-        if (playerIsOffTheBoard(x, y)) {
-            player.destroy();
-        }
-        int flagInPlayerPos = posHasFlagOnIt(x, y);
-
-        // If flagInPlayerPos is greater than 0, it means that a flag is found, and it is
-        // the flags number
-        if (flagInPlayerPos > 0) {
-            player.addFlag(flagInPlayerPos);
-            player.updateBackup();
-            System.out.printf("%s found a flag!%n", player.getName());
-        }
-    }
-
-
-    private void beltsMove(Player player) {
-        // check if player is on a belt:
-        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")) {
-            Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if (canGo(player, player.getDirection())) {
-                player.moveInDirection(dir);
-            }
-        }
-    }
-
-    private boolean lasersHit(int x, int y) {
-        TiledMapTileLayer.Cell currentCell = laserLayer.getCell(x, y);
-        return currentCell != null && currentCell.getTile().getProperties().containsKey("Laser");
-    }
-
-    private boolean playerIsOffTheBoard(int x, int y) {
-        return (floorLayer.getCell(x, y) == null);
-    }
-
-    // Check the position if there is a flag there
-    // Return the flagnumber if true, else return -1
-    private int posHasFlagOnIt(int x, int y) {
-        for (Flag f : flags) {
-            if (f.getX() == x && f.getY() == y) {
-                return f.getFlagNumber();
-            }
-        }
-        return -1;
-    }
-
-    public boolean playerIsOnRepair(Player player) {
-        return !(playerIsOffTheBoard(player.getX(), player.getY()))
-            && (floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().containsKey("Special"));
-    }
-
     public void drawGameObjects(SpriteBatch batch){
         drawBackup(batch);
         drawList(flags, batch);
@@ -273,4 +261,6 @@ public abstract class Board extends BoardCreator {
     public void addPlayer(Player player) {
         players.add(player);
     }
+
+
 }
