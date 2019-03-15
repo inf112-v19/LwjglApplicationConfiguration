@@ -248,6 +248,10 @@ public abstract class Board extends BoardCreator {
 
     }
 
+    public void killTheSound(){
+        laserHitPlayerSound.dispose();
+    }
+
     public TiledMapTileLayer getWallLayer() {
         return this.wallLayer;
     }

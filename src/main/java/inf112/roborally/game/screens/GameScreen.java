@@ -93,9 +93,7 @@ public class GameScreen implements Screen {
         if (board.boardWantsToMuteMusic()) {
             music.stop();
             board.musicIsMuted();
-            for (Player p : board.getPlayers()) {
-                p.killTheSound();
-            }
+            board.killTheSound();
         }
 
     }
@@ -117,7 +115,6 @@ public class GameScreen implements Screen {
         for (Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
-            player.getLaserHitPlayerSound().dispose();
         }
         hud.dispose();
         music.dispose();
