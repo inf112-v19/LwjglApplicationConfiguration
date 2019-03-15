@@ -37,7 +37,7 @@ public class Player extends MovableGameObject {
         lives = MAX_LIVES;
 
         flagCounter = 0;
-        flagsFound = new boolean [board.getFlags().size()];
+        flagsFound = new boolean[board.getFlags().size()];
 
         setDirection(direction);
         makeSprite();
@@ -64,11 +64,10 @@ public class Player extends MovableGameObject {
         // For testing with flag behaviour, now tests with 3 flags on the board
         flagCounter = 0;
 //        backup = new Backup(x,y);
-        flagsFound = new boolean [3];
+        flagsFound = new boolean[3];
     }
 
-    public void executeCard(int phase) {
-        ProgramCard programCard = registers.getCardInRegister(phase);
+    public void executeCard(ProgramCard programCard) {
         if (programCard == null) {
             return;
         }
@@ -93,33 +92,33 @@ public class Player extends MovableGameObject {
 
 
     public void receiveCard(ProgramCard programCard) {
-        if(programCard == null){
+        if (programCard == null) {
             throw new NullPointerException("Trying to add a programCard that has value null");
         }
         cardsInHand.add(programCard);
     }
 
-    public ProgramCard removeCardInHand(int cardPos){
-        if(cardPos < 0 || cardPos >= cardsInHand.size()) {
+    public ProgramCard removeCardInHand(int cardPos) {
+        if (cardPos < 0 || cardPos >= cardsInHand.size()) {
             throw new IndexOutOfBoundsException("Trying to remove index: " + cardPos
                     + ", but number of cards in hand: " + getNumberOfCardsInHand());
         }
-       return cardsInHand.remove(cardPos);
+        return cardsInHand.remove(cardPos);
     }
 
-    public ProgramCard getCardInHand(int cardPos){
+    public ProgramCard getCardInHand(int cardPos) {
         return cardsInHand.get(cardPos);
     }
 
-    public ArrayList<ProgramCard> getCardsInHand(){
+    public ArrayList<ProgramCard> getCardsInHand() {
         return cardsInHand;
     }
 
-    public int getNumberOfCardsInHand(){
+    public int getNumberOfCardsInHand() {
         return cardsInHand.size();
     }
 
-    public ArrayList<ProgramCard> returnCards(){
+    public ArrayList<ProgramCard> returnCards() {
         registers.returnCardsFromRegisters(cardsInHand);
         return cardsInHand;
     }
@@ -140,14 +139,14 @@ public class Player extends MovableGameObject {
                 break;
         }
 
-        if(sprite != null) {
+        if (sprite != null) {
             sprite.setFlip(flipSprite, false);
             super.updateSprite();
         }
     }
 
 
-    public void moveBackupToPlayerPosition(){
+    public void moveBackupToPlayerPosition() {
         backup.move(getX(), getY());
         backup.updateSprite();
     }
@@ -157,9 +156,10 @@ public class Player extends MovableGameObject {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
             repairAllDamage();
-            if(backup != null)
+            if (backup != null)
                 backup.movePlayer();
-        } else if (isDestroyed() && outOfLives()) {
+        }
+        else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");
             Gdx.app.log("GAME OVER", "");
         }
@@ -175,7 +175,10 @@ public class Player extends MovableGameObject {
     }
 
     public void repairOneDamage() {
-        if(damage > 0) {
+        if (damage >= 5){
+            registers.unlockRegister();
+        }
+        if (damage > 0) {
             damage--;
         }
     }
@@ -184,7 +187,7 @@ public class Player extends MovableGameObject {
      * Take one damage. Locks a register if damage taken is greater or equal to 5.
      */
     public void takeDamage() {
-        if(damage < 10) {
+        if (damage < 10) {
             damage++;
         }
         if (damage >= 5) {
@@ -194,12 +197,12 @@ public class Player extends MovableGameObject {
 
 
     public void visitFlag(int flagNumber) {
-        if(flagNumber > flagsFound.length) return;
+        if (flagNumber > flagsFound.length) return;
 
         // you need to pick up the flags in order, so first check if the flag you are standing on
         // is your next flag
-        if(flagNumber-1 <= flagCounter && !flagsFound[flagNumber-1]) {
-            flagsFound[flagNumber-1] = true;
+        if (flagNumber - 1 <= flagCounter && !flagsFound[flagNumber - 1]) {
+            flagsFound[flagNumber - 1] = true;
             flagCounter++;
             System.out.printf("%s picked up a flag!%n", name);
         }
@@ -209,8 +212,8 @@ public class Player extends MovableGameObject {
     // have been found. If one of the array positions is false, then
     // this will return false
     public boolean thisPlayerHasWon() {
-        for(boolean found : flagsFound) {
-            if(!found) {
+        for (boolean found : flagsFound) {
+            if (!found) {
                 return false;
             }
         }
@@ -268,17 +271,19 @@ public class Player extends MovableGameObject {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 
-    public Sound getLaserHitPlayerSound() { return this.laserHitPlayerSound; }
+    public Sound getLaserHitPlayerSound() {
+        return this.laserHitPlayerSound;
+    }
 
     public void killTheSound() {
         laserHitPlayerSound.dispose();
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other.getClass() != this.getClass())
             return false;
 
-        return this.name.equals(((Player)other).name);
+        return this.name.equals(((Player) other).name);
     }
 }

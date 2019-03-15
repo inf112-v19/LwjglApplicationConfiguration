@@ -57,6 +57,10 @@ public abstract class Board extends BoardCreator {
         }
     }
 
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
     public void placePlayers(){
         findStartPlates();
         Collections.sort(startPlates);
@@ -67,12 +71,14 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public void dispose() {
-        System.out.println("disposing board");
-        map.dispose();
+    public void boardMoves(){
+        beltsMovePlayers();
+        lasersFire();
+        visitFlags();
+        visitSpecialFields();
     }
 
-    public void beltsMove() {
+    private void beltsMovePlayers() {
         for (Player player : players) {
             if (player == null) continue;
 
@@ -101,7 +107,7 @@ public abstract class Board extends BoardCreator {
         return (floorLayer.getCell(x, y) == null);
     }
 
-    public void lasersFire(){
+    private void lasersFire(){
         for(Player player : players){
             if(lasersHit(player)) {
                 player.takeDamage();
@@ -114,7 +120,7 @@ public abstract class Board extends BoardCreator {
         return currentCell != null && currentCell.getTile().getProperties().containsKey("Laser");
     }
 
-    public void visitFlags(){
+    private void visitFlags(){
         for (Player player : players) {
             for(Flag f : flags){
                 if(player.positionEquals(f)){
@@ -125,7 +131,7 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public void visitSpecialFields() {
+    private void visitSpecialFields() {
         for (Player player : players){
             if(playerIsOnRepair(player)){
                 player.repairOneDamage();
@@ -134,7 +140,7 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public boolean playerIsOnRepair(Player player) {
+    private boolean playerIsOnRepair(Player player) {
         return !(playerIsOffTheBoard(player.getX(), player.getY()))
                 && (floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().containsKey("Special"));
     }
@@ -196,8 +202,9 @@ public abstract class Board extends BoardCreator {
         return true;
     }
 
+
     /**
-     * helper method for canGo()
+     * gets the properties from a cell in a tiled layer.
      */
     public List<String> getProperties(String properties) {
         List<String> splitList = new ArrayList<>();
@@ -226,6 +233,11 @@ public abstract class Board extends BoardCreator {
         for(GameObject object : list)
             object.draw(batch);
 
+    }
+
+    public void dispose() {
+        System.out.println("disposing board");
+        map.dispose();
     }
 
     public TiledMapTileLayer getWallLayer() {
@@ -257,10 +269,5 @@ public abstract class Board extends BoardCreator {
     public ArrayList<Flag> getFlags(){
         return flags;
     }
-
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
-
 
 }

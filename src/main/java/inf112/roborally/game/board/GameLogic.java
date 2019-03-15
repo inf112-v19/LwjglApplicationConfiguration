@@ -1,9 +1,12 @@
 package inf112.roborally.game.board;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.GameState;
+import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
 
@@ -70,7 +73,7 @@ public class GameLogic {
                 if (phase < 5) {
 
                     System.out.println("executing phase " + phase);
-                    player1.executeCard(phase);
+                    player1.executeCard(player1.getRegisters().getCardInRegister(phase));
                     checkIfAnyPlayersWon();
                     try {
                         Thread.sleep(500);
@@ -88,10 +91,7 @@ public class GameLogic {
                 }
                 break;
             case BOARDMOVES:
-                board.beltsMove();
-                board.lasersFire();
-                board.visitFlags();
-                board.visitSpecialFields();
+                board.boardMoves();
                 state = GameState.ROUND;
                 break;
         }
@@ -102,10 +102,29 @@ public class GameLogic {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        else if (Gdx.input.isKeyPressed(Input.Keys.M)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
             board.boardWantsToMuteMusic = true;
         }
-        else if (Gdx.input.isKeyPressed(Input.Keys.R)) {
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0));
+            board.boardMoves();
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            player1.executeCard(new ProgramCard(Rotate.UTURN, 0, 0));
+            board.boardMoves();
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            player1.executeCard(new ProgramCard(Rotate.RIGHT, 0, 0));
+            board.boardMoves();
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            player1.executeCard(new ProgramCard(Rotate.LEFT, 0, 0));
+            board.boardMoves();
+        }
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCardsFromRegisters(players.get(0).getCardsInHand());
             // messy but it works:
             ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
