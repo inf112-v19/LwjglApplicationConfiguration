@@ -90,6 +90,7 @@ public class GameLogic {
                 break;
             case BOARDMOVES:
                 board.boardMoves();
+                // todo: check if a player has won
                 state = GameState.ROUND;
                 break;
         }
