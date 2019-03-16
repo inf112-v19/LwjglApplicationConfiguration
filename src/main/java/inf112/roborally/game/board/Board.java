@@ -101,14 +101,14 @@ public abstract class Board extends BoardCreator {
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
         if (currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")) {
             Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-
-            if (currentCell.getTile().getProperties().containsKey("Rotate")) {
-                Iterator<Object> i = currentCell.getTile().getProperties().getValues();
-                i.next();
-                player.rotate(Rotate.valueOf(i.next().toString()));
-            }
             if (canGo(player, beltDir)) {
                 player.moveInDirection(beltDir);
+                currentCell = beltLayer.getCell(player.getX(), player.getY());
+                if (currentCell != null && currentCell.getTile().getProperties().containsKey("Rotate")) {
+                    Iterator<Object> i = currentCell.getTile().getProperties().getValues();
+                    i.next();
+                    player.rotate(Rotate.valueOf(i.next().toString()));
+                }
             }
         }
     }
@@ -147,6 +147,10 @@ public abstract class Board extends BoardCreator {
             if (playerIsOnRepair(player)) {
                 player.repairOneDamage();
                 player.getBackup().moveToPlayerPosition();
+                if (playerIsOnOption(player)){
+//                    player.recieveOptionCard(optionCards.deque());
+                    System.out.println("Give option card to player!");
+                }
             }
         }
     }
@@ -154,6 +158,11 @@ public abstract class Board extends BoardCreator {
     private boolean playerIsOnRepair(Player player) {
         return !(playerIsOffTheBoard(player.getX(), player.getY()))
                 && (floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().containsKey("Special"));
+    }
+
+    private boolean playerIsOnOption(Player player) {
+        return floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().getValues().next().
+                equals("OPTION");
     }
 
     public void updatePlayers() {
