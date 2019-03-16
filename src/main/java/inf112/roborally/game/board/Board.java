@@ -237,10 +237,10 @@ public abstract class Board extends BoardCreator {
 
     public void drawGameObjects(SpriteBatch batch) {
         drawBackup(batch);
-        drawList(flags, batch);
         drawList(repairSites, batch);
-        drawList(lasers, batch);
         drawList(players, batch);
+        drawList(lasers, batch);
+        drawList(flags, batch);
     }
 
     public void drawBackup(SpriteBatch batch) {

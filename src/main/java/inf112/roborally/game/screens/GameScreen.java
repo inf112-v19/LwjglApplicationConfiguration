@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.*;
@@ -26,8 +23,8 @@ public class GameScreen implements Screen {
     private final Player player;
     private Music music;
 
-    Sprite background;
-    SpriteBatch backgroundBatch;
+
+    Background bg;
 
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
@@ -35,7 +32,7 @@ public class GameScreen implements Screen {
 
         board = new VaultBoard();
 
-        board.addPlayer(new Player("Player1", "assets/robot/buttlerclaptrap.png", Direction.NORTH, board));
+        board.addPlayer(new Player("Player1", "assets/robot/butlerclaptrap.png", Direction.NORTH, board));
         board.addPlayer(new Player("Player2", "assets/robot/claptrap.png", Direction.SOUTH, board));
         board.placePlayers();
 
@@ -48,9 +45,7 @@ public class GameScreen implements Screen {
         music.setLooping(true);
         music.setVolume(0.3f);
 
-        background = new Sprite(new Texture("assets/img/background.png"));
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        backgroundBatch = new SpriteBatch();
+        bg = new Background();
 
         game.camera.zoom = 0.4f;
         game.camera.position.set(board.getWidth() / 2 * Main.PIXELS_PER_TILE,
@@ -75,9 +70,7 @@ public class GameScreen implements Screen {
         Gdx.gl.glClearColor(r, g, b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        backgroundBatch.begin();
-        background.draw(backgroundBatch);
-        backgroundBatch.end();
+        bg.draw();
 
         board.render(game.camera);
 
@@ -101,14 +94,14 @@ public class GameScreen implements Screen {
     private void update() {
         gameLogic.update();
         game.cameraListener.update();
+        bg.update(game.camera);
     }
 
 
     @Override
     public void dispose() {
         System.out.println("disposing game screen");
-        backgroundBatch.dispose();
-        background.getTexture().dispose();
+        bg.dispose();
 
         game.batch.dispose();
         board.dispose();
