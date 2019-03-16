@@ -18,13 +18,10 @@ public class GameScreen implements Screen {
     private final RoboRallyGame game;
     private final Hud hud;
     private final GameLogic gameLogic;
-
     private final Board board;
     private final Player player;
     private Music music;
-
-
-    Background bg;
+    private Background background;
 
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
@@ -45,7 +42,7 @@ public class GameScreen implements Screen {
         music.setLooping(true);
         music.setVolume(0.3f);
 
-        bg = new Background();
+        background = new Background();
 
         game.camera.zoom = 0.4f;
         game.camera.position.set(board.getWidth() / 2 * Main.PIXELS_PER_TILE,
@@ -60,27 +57,30 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         update();
+
         float r = 10 / 255f;
         float g = 10 / 255f;
         float b = 10 / 255f;
-
-        //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r, g, b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        bg.draw();
+        background.draw();
 
         board.render(game.camera);
 
         game.batch.setProjectionMatrix(game.camera.combined);
-
         game.batch.begin();
         board.drawGameObjects(game.batch);
         game.batch.end();
 
         hud.draw();
+    }
+
+    private void update() {
+        gameLogic.update();
+        game.cameraListener.update();
+        background.update(game.camera);
 
         // Mute music
         if (board.boardWantsToMuteMusic()) {
@@ -88,20 +88,13 @@ public class GameScreen implements Screen {
             board.musicIsMuted();
             board.killTheSound();
         }
-
-    }
-
-    private void update() {
-        gameLogic.update();
-        game.cameraListener.update();
-        bg.update(game.camera);
     }
 
 
     @Override
     public void dispose() {
         System.out.println("disposing game screen");
-        bg.dispose();
+        background.dispose();
 
         game.batch.dispose();
         board.dispose();

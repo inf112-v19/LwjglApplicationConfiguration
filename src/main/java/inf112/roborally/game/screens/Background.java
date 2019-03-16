@@ -15,11 +15,11 @@ public class Background {
     public Background() {
         grid = new Sprite(new Texture("assets/img/grid2.png"));
         background = new Sprite(new Texture("assets/img/background2.png"));
-        grid.setSize(Gdx.graphics.getWidth()*1.4f, Gdx.graphics.getHeight()*1.4f);
+        grid.setSize(Gdx.graphics.getWidth() * 1.4f, Gdx.graphics.getHeight() * 1.4f);
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         backgroundBatch = new SpriteBatch();
-        x = -grid.getWidth()/10;
-        y = -grid.getHeight()/10;
+        x = -grid.getWidth() / 10;
+        y = -grid.getHeight() / 10;
     }
 
 
@@ -37,6 +37,6 @@ public class Background {
     }
 
     public void update(Camera camera) {
-        grid.setPosition(x - camera.position.x/3, y - camera.position.y/3);
+        grid.setPosition(x - camera.position.x / 3, y - camera.position.y / 3);
     }
 }
