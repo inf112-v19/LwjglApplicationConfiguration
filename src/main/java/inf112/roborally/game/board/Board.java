@@ -121,7 +121,7 @@ public abstract class Board extends BoardCreator {
         for (Player player : players) {
             if (lasersHit(player)) {
                 player.takeDamage();
-                laserHitPlayerSound.play();
+                laserHitPlayerSound.play(0.1f);
             }
         }
     }
