@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
+import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
 
@@ -50,11 +51,11 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public void findStartPlates(){
+    public void findStartPlates() {
         for (int x = 0; x < startLayer.getWidth(); x++) {
             for (int y = 0; y < startLayer.getHeight(); y++) {
-                TiledMapTileLayer.Cell cell = startLayer.getCell(x,y);
-                if(cell != null){
+                TiledMapTileLayer.Cell cell = startLayer.getCell(x, y);
+                if (cell != null) {
                     int value = Integer.parseInt(cell.getTile().getProperties().getValues().next().toString());
                     startPlates.add(new StartPosition(x, y, value));
                 }
@@ -66,17 +67,17 @@ public abstract class Board extends BoardCreator {
         players.add(player);
     }
 
-    public void placePlayers(){
+    public void placePlayers() {
         findStartPlates();
         Collections.sort(startPlates);
-        for(int i = 0; i < players.size(); i++){
+        for (int i = 0; i < players.size(); i++) {
             players.get(i).move(startPlates.get(i).getX(), startPlates.get(i).getY());
             players.get(i).moveBackupToPlayerPosition();
             players.get(i).setDirection(Direction.EAST);
         }
     }
 
-    public void boardMoves(){
+    public void boardMoves() {
         beltsMovePlayers();
         lasersFire();
         visitFlags();
@@ -97,13 +98,17 @@ public abstract class Board extends BoardCreator {
     }
 
     private void beltsMove(Player player) {
-        // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-
         if (currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")) {
-            Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if (canGo(player, player.getDirection())) {
-                player.moveInDirection(dir);
+            Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
+            if (canGo(player, beltDir)) {
+                player.moveInDirection(beltDir);
+                currentCell = beltLayer.getCell(player.getX(), player.getY());
+                if (currentCell != null && currentCell.getTile().getProperties().containsKey("Rotate")) {
+                    Iterator<Object> i = currentCell.getTile().getProperties().getValues();
+                    i.next();
+                    player.rotate(Rotate.valueOf(i.next().toString()));
+                }
             }
         }
     }
@@ -112,11 +117,11 @@ public abstract class Board extends BoardCreator {
         return (floorLayer.getCell(x, y) == null);
     }
 
-    private void lasersFire(){
-        for(Player player : players){
-            if(lasersHit(player)) {
+    private void lasersFire() {
+        for (Player player : players) {
+            if (lasersHit(player)) {
                 player.takeDamage();
-                laserHitPlayerSound.play();
+                laserHitPlayerSound.play(0.1f);
             }
         }
     }
@@ -126,10 +131,10 @@ public abstract class Board extends BoardCreator {
         return currentCell != null && currentCell.getTile().getProperties().containsKey("Laser");
     }
 
-    private void visitFlags(){
+    private void visitFlags() {
         for (Player player : players) {
-            for(Flag f : flags){
-                if(player.positionEquals(f)){
+            for (Flag f : flags) {
+                if (player.positionEquals(f)) {
                     player.visitFlag(f.getFlagNumber());
                     player.moveBackupToPlayerPosition();
                 }
@@ -138,10 +143,14 @@ public abstract class Board extends BoardCreator {
     }
 
     private void visitSpecialFields() {
-        for (Player player : players){
-            if(playerIsOnRepair(player)){
+        for (Player player : players) {
+            if (playerIsOnRepair(player)) {
                 player.repairOneDamage();
                 player.getBackup().moveToPlayerPosition();
+                if (playerIsOnOption(player)){
+//                    player.recieveOptionCard(optionCards.deque());
+                    System.out.println("Give option card to player!");
+                }
             }
         }
     }
@@ -149,6 +158,11 @@ public abstract class Board extends BoardCreator {
     private boolean playerIsOnRepair(Player player) {
         return !(playerIsOffTheBoard(player.getX(), player.getY()))
                 && (floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().containsKey("Special"));
+    }
+
+    private boolean playerIsOnOption(Player player) {
+        return floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().getValues().next().
+                equals("OPTION");
     }
 
     public void updatePlayers() {
@@ -215,13 +229,13 @@ public abstract class Board extends BoardCreator {
     public List<String> getProperties(String properties) {
         List<String> splitList = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(properties);
-        while(st.hasMoreTokens()){
+        while (st.hasMoreTokens()) {
             splitList.add(st.nextToken());
         }
         return splitList;
     }
 
-    public void drawGameObjects(SpriteBatch batch){
+    public void drawGameObjects(SpriteBatch batch) {
         drawBackup(batch);
         drawList(flags, batch);
         drawList(repairSites, batch);
@@ -235,8 +249,8 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    private void drawList(ArrayList<? extends GameObject> list, SpriteBatch batch){
-        for(GameObject object : list)
+    private void drawList(ArrayList<? extends GameObject> list, SpriteBatch batch) {
+        for (GameObject object : list)
             object.draw(batch);
 
     }
@@ -248,7 +262,7 @@ public abstract class Board extends BoardCreator {
 
     }
 
-    public void killTheSound(){
+    public void killTheSound() {
         laserHitPlayerSound.dispose();
     }
 
@@ -278,7 +292,7 @@ public abstract class Board extends BoardCreator {
         musicIsMuted = true;
     }
 
-    public ArrayList<Flag> getFlags(){
+    public ArrayList<Flag> getFlags() {
         return flags;
     }
 

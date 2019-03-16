@@ -121,6 +121,10 @@ public class GameLogic {
             player1.executeCard(new ProgramCard(Rotate.LEFT, 0, 0));
             board.boardMoves();
         }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            player1.executeCard(new ProgramCard(Rotate.NONE, 0, 0));
+            board.boardMoves();
+        }
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
