@@ -106,8 +106,8 @@ public class Player extends MovableGameObject {
             moveInDirection(getDirection());
         }
         // every time a player moves we need to check if it is off the board or not
-        if (board.playerIsOffTheBoard(getX(), getY())) {
-            this.destroy();
+        if (board != null && board.playerIsOffTheBoard(getX(), getY())) { // need to check if board is null for tests
+            this.destroy();                                              // to work..
         }
     }
 
