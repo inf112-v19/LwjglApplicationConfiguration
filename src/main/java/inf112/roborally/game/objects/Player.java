@@ -2,10 +2,8 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
@@ -148,15 +146,21 @@ public class Player extends MovableGameObject {
     public void updateSprite() {
         switch (getDirection()) {
             case SOUTH:
+                sprite.setRegion(regions.get(0));
+                break;
             case NORTH:
+                sprite.setRegion(regions.get(1));
                 break;
             case WEST:
+                sprite.setRegion(regions.get(3));
+                break;
             case EAST:
+                sprite.setRegion(regions.get(2));
                 break;
         }
 
         if (sprite != null) {
-            super.updateSprite();
+            sprite.setPosition(getX() * Main.PIXELS_PER_TILE, getY() * Main.PIXELS_PER_TILE);
         }
     }
 
