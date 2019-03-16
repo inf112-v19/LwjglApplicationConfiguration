@@ -54,7 +54,7 @@ public class Player extends MovableGameObject {
         super.makeSprite();
         regions = new ArrayList<>();
         for(int i = 0; i < 4; i++){
-            regions.add(new TextureRegion(getSprite().getTexture(), 32*i, 0, 32, 40));
+            regions.add(new TextureRegion(getSprite().getTexture(), 32*i, 0, 32, 48));
         }
         sprite.setRegion(regions.get(0));
     }
