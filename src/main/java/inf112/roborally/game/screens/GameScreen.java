@@ -35,8 +35,8 @@ public class GameScreen implements Screen {
 
         board = new VaultBoard();
 
-        board.addPlayer(new Player("Player1", Direction.NORTH, board));
-        board.addPlayer(new Player("Player2", Direction.SOUTH, board));
+        board.addPlayer(new Player("Player1", "assets/robot/redbot.png", Direction.NORTH, board));
+        board.addPlayer(new Player("Player2", "assets/robot/greenbot.png", Direction.SOUTH, board));
         board.placePlayers();
 
         hud = new Hud(board.getPlayers().get(0));

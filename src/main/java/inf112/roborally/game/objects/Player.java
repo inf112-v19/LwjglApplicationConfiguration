@@ -29,8 +29,8 @@ public class Player extends MovableGameObject {
     private ArrayList<TextureRegion> regions;
 
 
-    public Player(String name, Direction direction, Board board) {
-        super(0, 0, "assets/robot/greenbot.png");
+    public Player(String name, String filepath, Direction direction, Board board) {
+        super(0, 0, filepath);
         this.name = name;
         this.board = board;
         setDirection(direction);
