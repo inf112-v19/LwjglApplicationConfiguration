@@ -54,7 +54,7 @@ public class Player extends MovableGameObject {
         super.makeSprite();
         regions = new ArrayList<>();
         for(int i = 0; i < 4; i++){
-            regions.add(new TextureRegion(getSprite().getTexture(), 32*i, 0, 32, 48));
+            regions.add(new TextureRegion(getSprite().getTexture(), 32*8*i, 0, 32*8, 48*8));
         }
         sprite.setRegion(regions.get(0));
     }
@@ -145,22 +145,22 @@ public class Player extends MovableGameObject {
     @Override
     public void updateSprite() {
         switch (getDirection()) {
-            case SOUTH:
+            case NORTH:
                 sprite.setRegion(regions.get(0));
                 break;
-            case NORTH:
+            case EAST:
                 sprite.setRegion(regions.get(1));
+                break;
+            case SOUTH:
+                sprite.setRegion(regions.get(2));
                 break;
             case WEST:
                 sprite.setRegion(regions.get(3));
                 break;
-            case EAST:
-                sprite.setRegion(regions.get(2));
-                break;
         }
 
         if (sprite != null) {
-            sprite.setPosition(getX() * Main.PIXELS_PER_TILE, getY() * Main.PIXELS_PER_TILE);
+            sprite.setPosition(getX() * Main.PIXELS_PER_TILE, getY() * Main.PIXELS_PER_TILE + 5);
         }
     }
 
