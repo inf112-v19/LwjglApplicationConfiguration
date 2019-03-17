@@ -16,8 +16,10 @@ public class RoboRallyGame extends Game {
     public static final String VAULT = "assets/gameboard/vault.tmx";
     public static final String SPIRAL_MARATHON = "assets/gameboard/spiralmarathon.tmx";
     public static final String TEST_MAP = "assets/gameboard/testMap.tmx";
+    //Music:
     public static final String MAIN_THEME = "assets/music/Zander Noriega - Perpetual Tension.wav";
     public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
+
 
     private static final boolean DEBUGGING = false;
 

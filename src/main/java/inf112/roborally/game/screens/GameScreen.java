@@ -42,12 +42,12 @@ public class GameScreen implements Screen {
         music.setLooping(true);
         music.setVolume(0.3f);
 
-        background = new Background();
 
         game.camera.zoom = 0.4f;
         game.camera.position.set(board.getWidth() / 2 * Main.PIXELS_PER_TILE,
                 board.getHeight() / 2 * Main.PIXELS_PER_TILE, 0);
         game.camera.update();
+        background = new Background(game.camera);
     }
 
     @Override
@@ -72,6 +72,7 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.camera.combined);
         game.batch.begin();
         board.drawGameObjects(game.batch);
+        background.drawClouds();
         game.batch.end();
 
         hud.draw();
