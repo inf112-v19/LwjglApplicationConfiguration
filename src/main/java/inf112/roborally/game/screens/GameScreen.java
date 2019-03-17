@@ -38,7 +38,7 @@ public class GameScreen implements Screen {
         player = board.getPlayers().get(0);
 
         // Music
-        music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/testMusic1.ogg"));
+        music = Gdx.audio.newMusic(Gdx.files.internal(RoboRallyGame.MAIN_THEME));
         music.setLooping(true);
         music.setVolume(0.3f);
 
