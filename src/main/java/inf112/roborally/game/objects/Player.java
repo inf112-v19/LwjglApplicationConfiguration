@@ -144,21 +144,7 @@ public class Player extends MovableGameObject {
 
     @Override
     public void updateSprite() {
-        switch (getDirection()) {
-            case NORTH:
-                sprite.setRegion(regions.get(0));
-                break;
-            case EAST:
-                sprite.setRegion(regions.get(1));
-                break;
-            case SOUTH:
-                sprite.setRegion(regions.get(2));
-                break;
-            case WEST:
-                sprite.setRegion(regions.get(3));
-                break;
-        }
-
+        sprite.setRegion(regions.get(getDirection().toInt()));
         if (sprite != null) {
             sprite.setPosition(getX() * Main.PIXELS_PER_TILE, getY() * Main.PIXELS_PER_TILE + 5);
         }

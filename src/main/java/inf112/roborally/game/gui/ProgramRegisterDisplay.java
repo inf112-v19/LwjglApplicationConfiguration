@@ -30,7 +30,7 @@ public class ProgramRegisterDisplay {
         this.player = player;
         registers = player.getRegisters();
 
-        board = new Sprite(new Texture("assets/cards/programregistertemplate.png"));
+        board = new Sprite(new Texture("assets/cards/programregisters.png"));
         board.setSize(board.getWidth()*scale, board.getHeight()*scale);
 
         lifetoken = new Sprite(new Texture("assets/cards/tokens/lifetoken.png"));
