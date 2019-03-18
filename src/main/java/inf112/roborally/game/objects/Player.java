@@ -144,8 +144,8 @@ public class Player extends MovableGameObject {
 
     @Override
     public void updateSprite() {
-        sprite.setRegion(regions.get(getDirection().toInt()));
         if (sprite != null) {
+            sprite.setRegion(regions.get(getDirection().toInt()));
             sprite.setPosition(getX() * Main.PIXELS_PER_TILE, getY() * Main.PIXELS_PER_TILE + 5);
         }
     }
