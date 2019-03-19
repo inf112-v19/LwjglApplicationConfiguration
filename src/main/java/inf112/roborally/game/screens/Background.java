@@ -52,11 +52,6 @@ public class Background {
         this.batch.begin();
         background.draw(this.batch);
         grid.draw(this.batch);
-        batch.end();
-    }
-
-    public void drawClouds() {
-        batch.begin();
         clouds.draw(batch);
         batch.end();
     }

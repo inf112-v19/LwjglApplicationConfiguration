@@ -25,7 +25,7 @@ public class CameraListener extends DragListener {
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && camera.zoom > 0.1) {
             camera.zoom -= 0.01;
         }
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
+        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) && camera.zoom < 0.6f) {
             camera.zoom += 0.01;
         }
         else {

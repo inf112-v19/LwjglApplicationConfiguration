@@ -38,7 +38,7 @@ public class RoboRallyGame extends Game {
         camera.setToOrtho(false);
         camera.update();
         viewPort = new FitViewport(1920, 1080, camera);
-        batch = new SpriteBatch();
+        batch = new SpriteBatch(11);
         cameraListener = new CameraListener(camera);
 
 
