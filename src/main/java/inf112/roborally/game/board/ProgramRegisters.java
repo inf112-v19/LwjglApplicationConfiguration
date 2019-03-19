@@ -56,10 +56,13 @@ public class ProgramRegisters {
     }
 
     public void lockRegister(){
+        if(unlockedRegisters > 0 && unlockedRegisters <= NUMBER_OF_REGISTERS)
         unlockedRegisters--;
     }
     public void unlockRegister() {
-        unlockedRegisters++;
+        if(unlockedRegisters >= 0 && unlockedRegisters < NUMBER_OF_REGISTERS) {
+            unlockedRegisters++;
+        }
     }
 
     public void unlockRegisters(){
