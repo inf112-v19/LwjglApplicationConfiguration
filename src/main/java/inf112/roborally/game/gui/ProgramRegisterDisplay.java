@@ -13,7 +13,7 @@ public class ProgramRegisterDisplay {
     private final CardVisuals cardVisual;
     private Player player;
     private ProgramRegisters registers;
-    private Sprite board;
+    private Sprite programBoard;
     private Sprite lifeToken;
     private Sprite damageToken;
     private Sprite lockToken;
@@ -34,15 +34,14 @@ public class ProgramRegisterDisplay {
         this.player = player;
         registers = player.getRegisters();
 
-
-        board = new Sprite(new Texture("assets/cards/programregisters.png"));
-        board.setSize(board.getWidth() * scale, board.getHeight() * scale);
-        board.setOriginCenter();
-        board.setOriginBasedPosition(1920 / 2, board.getHeight() / 2);
+        programBoard = new Sprite(new Texture("assets/cards/programregisters.png"));
+        programBoard.setSize(programBoard.getWidth() * scale, programBoard.getHeight() * scale);
+        programBoard.setOriginCenter();
+        programBoard.setOriginBasedPosition(1920 / 2, programBoard.getHeight() / 2);
 
         wires = new Sprite(new Texture("assets/cards/wires.png"));
-        wires.setSize(board.getWidth(), board.getHeight());
-        wires.setPosition(board.getX(), board.getY());
+        wires.setSize(programBoard.getWidth(), programBoard.getHeight());
+        wires.setPosition(programBoard.getX(), programBoard.getY());
 
         wireTextures = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
@@ -67,7 +66,7 @@ public class ProgramRegisterDisplay {
 
     public void draw(SpriteBatch batch) {
         updateWires();
-        board.draw(batch);
+        programBoard.draw(batch);
         wires.draw(batch);
         drawLifeTokens(batch);
         drawDamageTokens(batch);
@@ -86,7 +85,7 @@ public class ProgramRegisterDisplay {
         final float startX = 1920 / 2 + 515 * scale; // start x
         final float space = 105 * scale; // space from one token to the next
         for (int i = player.getLives(); i > 0; i--) {
-            lifeToken.setOriginBasedPosition(startX - space * i, board.getHeight() - 140 * scale);
+            lifeToken.setOriginBasedPosition(startX - space * i, programBoard.getHeight() - 140 * scale);
             lifeToken.draw(batch);
         }
     }
@@ -96,7 +95,7 @@ public class ProgramRegisterDisplay {
         final float startX = 1920 / 2 + 415 * scale; // start x
         final float space = 70 * scale; // space from one token to the next
         for (int i = 0; i < player.getDamage(); i++) {
-            damageToken.setOriginBasedPosition(startX - space * i, board.getHeight() - 53 * scale);
+            damageToken.setOriginBasedPosition(startX - space * i, programBoard.getHeight() - 53 * scale);
             damageToken.draw(batch);
 
             if (i > 8) return;
@@ -109,7 +108,7 @@ public class ProgramRegisterDisplay {
         float space = 200 * scale;
         for (int i = 4; i >= 0; i--) {
             if (registers.isLocked(4 - i)) {
-                lockToken.setOriginBasedPosition(startX - space * i, board.getHeight() - 235 * scale);
+                lockToken.setOriginBasedPosition(startX - space * i, programBoard.getHeight() - 235 * scale);
                 lockToken.draw(batch);
             }
         }
@@ -117,8 +116,8 @@ public class ProgramRegisterDisplay {
 
     private void drawCardsInRegisters(SpriteBatch batch) {
         for (int i = 0; i < 5; i++) {
-            if (player.getRegisters().getCardInRegister(i) != null) {
-                card.setPosition(board.getX() + 19 * scale + 200 * scale * i, 10 * scale);
+            if (registers.getCardInRegister(i) != null) {
+                card.setPosition(programBoard.getX() + 19 * scale + 200 * scale * i, 10 * scale);
                 card.setRegion(cardVisual.getRegion(registers.getCardInRegister(i)));
                 card.draw(batch);
             }
@@ -127,7 +126,7 @@ public class ProgramRegisterDisplay {
 
     public void dispose() {
         System.out.println("disposing ProgramRegisterDisplay");
-        board.getTexture().dispose();
+        programBoard.getTexture().dispose();
         wires.getTexture().dispose();
         lifeToken.getTexture().dispose();
         damageToken.getTexture().dispose();

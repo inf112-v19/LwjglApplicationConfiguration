@@ -8,15 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.gui.CardVisuals;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
 
 public class TestScreen implements Screen {
     private final RoboRallyGame game;
-    private CardVisuals cardVisuals;
-    private ProgramCard programCard;
     private ProgramRegisterDisplay programRegisterDisplay;
     private Player player;
     private Sprite background;
@@ -24,9 +21,6 @@ public class TestScreen implements Screen {
 
     public TestScreen(RoboRallyGame game) {
         this.game = game;
-        cardVisuals = new CardVisuals();
-        programCard = new ProgramCard(Rotate.NONE,3,1);
-
         player = new Player(0,0);
         programRegisterDisplay = new ProgramRegisterDisplay(player);
         for(int i = 0; i < 9; i++){
@@ -80,6 +74,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void resize(int w, int h) {
+        game.fixedViewPort.update(w,h);
     }
 
     @Override
