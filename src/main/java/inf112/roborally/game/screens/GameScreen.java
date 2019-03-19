@@ -34,6 +34,7 @@ public class GameScreen implements Screen {
         board.placePlayers();
 
         hud = new Hud(board.getPlayers().get(0), game);
+        System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
 
         music = Gdx.audio.newMusic(Gdx.files.internal(RoboRallyGame.MAIN_THEME));
@@ -48,6 +49,7 @@ public class GameScreen implements Screen {
         game.dynamicCamera.update();
 
         background = new Background(game.dynamicCamera);
+
     }
 
     @Override
@@ -58,22 +60,23 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         update();
-
         float r = 10 / 255f;
         float g = 10 / 255f;
         float b = 10 / 255f;
         Gdx.gl.glClearColor(r, g, b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.setProjectionMatrix(game.dynamicCamera.combined);
+        game.batch.setProjectionMatrix(game.fixedCamera.combined);
         background.draw();
 
         board.render(game.dynamicCamera);
 
+        game.batch.setProjectionMatrix(game.dynamicCamera.combined);
         game.batch.begin();
         board.drawGameObjects(game.batch);
         game.batch.end();
 
+        game.batch.setProjectionMatrix(game.fixedCamera.combined);
         hud.draw(game.batch);
     }
 
@@ -96,7 +99,6 @@ public class GameScreen implements Screen {
         System.out.println("disposing game screen");
         background.dispose();
 
-        game.batch.dispose();
         board.dispose();
         for (Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();

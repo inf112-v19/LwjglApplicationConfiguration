@@ -12,6 +12,8 @@ import inf112.roborally.game.screens.TestScreen;
 
 public class RoboRallyGame extends Game {
 
+    private static final boolean DEBUGGING = true;
+
     //MAPS:
     public static final String VAULT = "assets/maps/vault.tmx";
     public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
@@ -20,7 +22,6 @@ public class RoboRallyGame extends Game {
     public static final String MAIN_THEME = "assets/music/Zander Noriega - Perpetual Tension.wav";
     public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
 
-    private static final boolean DEBUGGING = false;
 
     public OrthographicCamera dynamicCamera;
     public Viewport dynamicViewPort;
@@ -47,11 +48,13 @@ public class RoboRallyGame extends Game {
         fixedCamera = new OrthographicCamera();
         fixedCamera.update();
         fixedViewPort = new FitViewport(1920, 1080, fixedCamera);
+        System.out.println(fixedCamera.position);
+
 
         batch = new SpriteBatch(11);
 
         if (DEBUGGING) {
-            registerTestScreen = new TestScreen();
+            registerTestScreen = new TestScreen(this);
             setScreen(registerTestScreen);
         }
         else {
@@ -63,6 +66,7 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void dispose() {
+        batch.dispose();
         if (DEBUGGING) {
             registerTestScreen.dispose();
         }

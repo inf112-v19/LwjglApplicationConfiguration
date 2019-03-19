@@ -4,11 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.gui.CardVisuals;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
@@ -16,9 +14,7 @@ import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
 
 public class TestScreen implements Screen {
-    private SpriteBatch batch;
-    private FitViewport viewport;
-    private OrthographicCamera camera;
+    private final RoboRallyGame game;
     private CardVisuals cardVisuals;
     private ProgramCard programCard;
     private ProgramRegisterDisplay programRegisterDisplay;
@@ -26,22 +22,19 @@ public class TestScreen implements Screen {
     private Sprite background;
 
 
-    public TestScreen() {
-        batch = new SpriteBatch();
-        batch.enableBlending();
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(1920, 1080, camera);
+    public TestScreen(RoboRallyGame game) {
+        this.game = game;
         cardVisuals = new CardVisuals();
         programCard = new ProgramCard(Rotate.NONE,3,1);
 
         player = new Player(0,0);
-        programRegisterDisplay = new ProgramRegisterDisplay(player, camera);
+        programRegisterDisplay = new ProgramRegisterDisplay(player);
         for(int i = 0; i < 9; i++){
             player.receiveCard(new ProgramCard(Rotate.NONE,2,0));
         }
 
         background = new Sprite(new Texture("assets/img/testscreen.png"));
-        background.setPosition(background.getX()-705, background.getY());
+        game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 
     @Override
@@ -58,10 +51,11 @@ public class TestScreen implements Screen {
         Gdx.gl.glClearColor(r,g,b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.begin();
-        background.draw(batch);
-        programRegisterDisplay.draw(batch, camera);
-        batch.end();
+        game.batch.setProjectionMatrix(game.fixedCamera.combined);
+        game.batch.begin();
+        background.draw(game.batch);
+        programRegisterDisplay.draw(game.batch);
+        game.batch.end();
         handleInput();
     }
 
@@ -86,7 +80,6 @@ public class TestScreen implements Screen {
 
     @Override
     public void resize(int w, int h) {
-        viewport.update(w, h);
     }
 
     @Override
@@ -106,6 +99,5 @@ public class TestScreen implements Screen {
 
     @Override
     public void dispose() {
-        batch.dispose();
     }
 }

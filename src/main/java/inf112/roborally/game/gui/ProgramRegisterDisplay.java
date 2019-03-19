@@ -1,7 +1,5 @@
 package inf112.roborally.game.gui;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,16 +30,19 @@ public class ProgramRegisterDisplay {
      *
      * @param player
      */
-    public ProgramRegisterDisplay(Player player, OrthographicCamera camera) {
+    public ProgramRegisterDisplay(Player player) {
         this.player = player;
         registers = player.getRegisters();
 
 
         board = new Sprite(new Texture("assets/cards/programregisters.png"));
         board.setSize(board.getWidth() * scale, board.getHeight() * scale);
+        board.setOriginCenter();
+        board.setOriginBasedPosition(1920/2,board.getHeight()/2);
 
         wires = new Sprite(new Texture("assets/cards/wires.png"));
         wires.setSize(board.getWidth(), board.getHeight());
+        wires.setPosition(board.getX(), board.getY());
 
         wireTextures = new ArrayList<>();
         for(int i = 0; i < 6; i++){
@@ -62,16 +63,10 @@ public class ProgramRegisterDisplay {
         card.setSize(238 * cardScale * scale, 300 * cardScale * scale);
 
         cardVisual = new CardVisuals();
-
-        camera.position.set(board.getWidth() / 2, 1080 / 2, 0); // center
-        camera.update();
-
     }
 
-    public void draw(SpriteBatch batch, Camera camera) {
+    public void draw(SpriteBatch batch) {
         updateWires();
-
-        batch.setProjectionMatrix(camera.combined);
         board.draw(batch);
         wires.draw(batch);
         drawLifeTokens(batch);
@@ -87,8 +82,8 @@ public class ProgramRegisterDisplay {
     }
 
     private void drawLifeTokens(SpriteBatch batch) {
-        final int start = 935; // start x
-        final int space = 100; // space from one token to the next
+        final float start = board.getX(); // start x
+        final float space = 100; // space from one token to the next
         for (int i = player.getLives(); i > 0; i--) {
             lifeToken.setPosition(start * scale - space * scale * i, board.getHeight() - 215 * scale);
             lifeToken.draw(batch);
@@ -107,9 +102,10 @@ public class ProgramRegisterDisplay {
     }
 
     private void drawLocks(SpriteBatch batch) {
+        float startX = 830;
         for (int i = 4; i >= 0; i--) {
             if (registers.isLocked(4 - i)) {
-                lockToken.setPosition(830 * scale - 204 * scale * i, board.getHeight() - 365 * scale);
+                lockToken.setPosition(startX * scale - 204 * scale * i, board.getHeight() - 365 * scale);
                 lockToken.draw(batch);
             }
         }
@@ -118,7 +114,7 @@ public class ProgramRegisterDisplay {
     private void drawCardsInRegisters(SpriteBatch batch) {
         for (int i = 0; i < 5; i++) {
             if (player.getRegisters().getCardInRegister(i) != null) {
-                card.setPosition(19 * scale + 200 * scale * i, 10 * scale);
+                card.setPosition(board.getX() + 19 * scale + 200 * scale * i, 10 * scale);
                 card.setRegion(cardVisual.getRegion(registers.getCardInRegister(i)));
                 card.draw(batch);
             }

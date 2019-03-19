@@ -9,18 +9,15 @@ public class Hud {
 
     private CardsInHandDisplay cardsInHandDisplay;
     private ProgramRegisterDisplay programRegisterDisplay;
-    private RoboRallyGame game;
 
     public Hud(final Player player, RoboRallyGame game) {
-        this.game = game;
         cardsInHandDisplay = new CardsInHandDisplay(player, new Stage(game.fixedViewPort, game.batch));
-        programRegisterDisplay = new ProgramRegisterDisplay(player, game.fixedCamera);
+        programRegisterDisplay = new ProgramRegisterDisplay(player);
     }
 
     public void draw(SpriteBatch batch) {
-        batch.setProjectionMatrix(game.fixedCamera.combined);
         batch.begin();
-        programRegisterDisplay.draw(batch, game.fixedCamera);
+        programRegisterDisplay.draw(batch);
         batch.end();
         cardsInHandDisplay.stage.draw();
     }
