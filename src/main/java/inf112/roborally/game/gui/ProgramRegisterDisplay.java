@@ -76,7 +76,7 @@ public class ProgramRegisterDisplay {
 
     private void updateWires() {
         int wireIndex = 5 - registers.getUnlockedRegisters();
-        wires.setRegion(wireTextures.get(wireIndex));
+        wires.setRegion(wireTextures.get(wireIndex % wireTextures.size()));
 
     }
 
@@ -104,7 +104,7 @@ public class ProgramRegisterDisplay {
 
     private void drawLocks(SpriteBatch batch) {
         lockToken.setOriginCenter();
-        float startX = 1920/2 + 400 * scale;
+        float startX = 1920 / 2 + 400 * scale;
         float space = 200 * scale;
         for (int i = 4; i >= 0; i--) {
             if (registers.isLocked(4 - i)) {
