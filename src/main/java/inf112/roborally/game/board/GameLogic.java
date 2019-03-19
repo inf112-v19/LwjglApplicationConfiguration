@@ -84,6 +84,7 @@ public class GameLogic {
                     phase++;
                     state = GameState.BOARDMOVES;
                 } else {
+                    board.fireLaser();
                     phase = 0;
                     state = GameState.PREROUND;
                     System.out.println("round over");

@@ -372,7 +372,7 @@ public abstract class Board extends BoardCreator {
         // check target tile:
         if (nextPos.getX() < 0 || nextPos.getY() < 0 || getWidth() <= nextPos.getX()
                 || getHeight() <= nextPos.getY())
-            return false;
+            return true;
 
         walls = new ArrayList<>();
         TiledMapTileLayer.Cell targetCell = wallLayer.getCell(nextPos.getX(), nextPos.getY());
@@ -382,12 +382,21 @@ public abstract class Board extends BoardCreator {
 
         }
 
-
         Direction oppositeDirection = direction.getOppositeDirection();
 
         if (walls.contains(oppositeDirection.toString())) {
             System.out.println("Hit a wall!(next)");
             return true;
+        }
+        if(targetCell != null && targetCell.getTile().getProperties().containsKey("Player")){
+            for (Player target :
+                    players) {
+                Position targetPos = new Position(target.getX(), target.getY());
+                if(targetPos.equals(nextPos)){
+                    target.takeDamage();
+                    System.out.println("Damage");
+                }
+            }
         }
         return false;
     }
