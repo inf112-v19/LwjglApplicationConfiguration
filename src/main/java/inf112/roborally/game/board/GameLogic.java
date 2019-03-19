@@ -98,10 +98,10 @@ public class GameLogic {
     }
 
     public void handleInput() {
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.M)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             board.boardWantsToMuteMusic = true;
         }
 

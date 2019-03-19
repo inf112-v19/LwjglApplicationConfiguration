@@ -2,7 +2,8 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
@@ -25,10 +26,11 @@ public class Player extends MovableGameObject {
     private int flagCounter;
     private boolean[] flagsFound;
     private Board board;
+    private ArrayList<TextureRegion> regions;
 
 
-    public Player(String name, Direction direction, Board board) {
-        super(0, 0, "assets/robot/tvBot.png");
+    public Player(String name, String filepath, Direction direction, Board board) {
+        super(0, 0, filepath);
         this.name = name;
         this.board = board;
         setDirection(direction);
@@ -45,6 +47,16 @@ public class Player extends MovableGameObject {
         backup = new Backup(getX(), getY(), this);
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
+    }
+
+    @Override
+    public void makeSprite() {
+        super.makeSprite();
+        regions = new ArrayList<>();
+        for(int i = 0; i < 4; i++){
+            regions.add(new TextureRegion(getSprite().getTexture(), 32*8*i, 0, 32*8, 48*8));
+        }
+        sprite.setRegion(regions.get(0));
     }
 
     /**
@@ -132,23 +144,9 @@ public class Player extends MovableGameObject {
 
     @Override
     public void updateSprite() {
-        boolean flipSprite = false;
-        switch (getDirection()) {
-            case SOUTH:
-                flipSprite = true;
-            case NORTH:
-                rotationDegree = 270;
-                break;
-            case WEST:
-                flipSprite = true;
-            case EAST:
-                rotationDegree = 180;
-                break;
-        }
-
         if (sprite != null) {
-            sprite.setFlip(flipSprite, false);
-            super.updateSprite();
+            sprite.setRegion(regions.get(getDirection().toInt()));
+            sprite.setPosition(getX() * Main.PIXELS_PER_TILE, getY() * Main.PIXELS_PER_TILE + 5);
         }
     }
 

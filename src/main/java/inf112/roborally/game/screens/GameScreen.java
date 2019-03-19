@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.*;
@@ -21,13 +18,9 @@ public class GameScreen implements Screen {
     private final RoboRallyGame game;
     private final Hud hud;
     private final GameLogic gameLogic;
-
     private final Board board;
-    private final Player player;
     private Music music;
-
-    Sprite background;
-    SpriteBatch backgroundBatch;
+    private Background background;
 
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
@@ -35,27 +28,28 @@ public class GameScreen implements Screen {
 
         board = new VaultBoard();
 
-        board.addPlayer(new Player("Player1", Direction.NORTH, board));
-        board.addPlayer(new Player("Player2", Direction.SOUTH, board));
+        board.addPlayer(new Player("Player1", "assets/robot/claptrap3000.png", Direction.NORTH, board));
+        board.addPlayer(new Player("Player2", "assets/robot/claptrapRefined.png", Direction.SOUTH, board));
+        board.addPlayer(new Player("Player3", "assets/robot/butlerRefined.png", Direction.SOUTH, board));
         board.placePlayers();
 
-        hud = new Hud(board.getPlayers().get(0));
+        hud = new Hud(board.getPlayers().get(0), game);
+        System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
-        player = board.getPlayers().get(0);
 
-        // Music
-        music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/testMusic1.ogg"));
+        music = Gdx.audio.newMusic(Gdx.files.internal(RoboRallyGame.MAIN_THEME));
         music.setLooping(true);
         music.setVolume(0.3f);
 
-        background = new Sprite(new Texture("assets/img/background.png"));
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        backgroundBatch = new SpriteBatch();
+        // Move dynamicCamera to center of board:
+        int x = board.getWidth() / 2 * Main.PIXELS_PER_TILE;
+        int y = board.getHeight() / 2 * Main.PIXELS_PER_TILE;
+        game.dynamicCamera.position.set(x, y, 0);
+        game.dynamicCamera.zoom = 0.4f;
+        game.dynamicCamera.update();
 
-        game.camera.zoom = 0.4f;
-        game.camera.position.set(board.getWidth() / 2 * Main.PIXELS_PER_TILE,
-                board.getHeight() / 2 * Main.PIXELS_PER_TILE, 0);
-        game.camera.update();
+        background = new Background(game.dynamicCamera);
+
     }
 
     @Override
@@ -65,29 +59,33 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         update();
         float r = 10 / 255f;
         float g = 10 / 255f;
         float b = 10 / 255f;
-
-        //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r, g, b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        backgroundBatch.begin();
-        background.draw(backgroundBatch);
-        backgroundBatch.end();
+        game.batch.setProjectionMatrix(game.fixedCamera.combined);
+        game.batch.begin();
+        background.draw(game.batch);
+        game.batch.end();
 
-        board.render(game.camera);
+        board.render(game.dynamicCamera);
 
-        game.batch.setProjectionMatrix(game.camera.combined);
-
+        game.batch.setProjectionMatrix(game.dynamicCamera.combined);
         game.batch.begin();
         board.drawGameObjects(game.batch);
         game.batch.end();
 
-        hud.draw();
+        game.batch.setProjectionMatrix(game.fixedCamera.combined);
+        hud.draw(game.batch);
+    }
+
+    private void update() {
+        gameLogic.update();
+        game.cameraListener.update();
+        background.update(game.dynamicCamera);
 
         // Mute music
         if (board.boardWantsToMuteMusic()) {
@@ -95,22 +93,14 @@ public class GameScreen implements Screen {
             board.musicIsMuted();
             board.killTheSound();
         }
-
-    }
-
-    private void update() {
-        gameLogic.update();
-        game.cameraListener.update();
     }
 
 
     @Override
     public void dispose() {
         System.out.println("disposing game screen");
-        backgroundBatch.dispose();
-        background.getTexture().dispose();
+        background.dispose();
 
-        game.batch.dispose();
         board.dispose();
         for (Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();
@@ -137,8 +127,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        game.viewPort.update(width, height);
-        hud.resize(width, height);
+        game.dynamicViewPort.update(width, height);
+        game.fixedViewPort.update(width, height);
+
     }
 
     public Hud getHud() {
