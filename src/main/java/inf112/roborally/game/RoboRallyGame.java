@@ -48,8 +48,6 @@ public class RoboRallyGame extends Game {
         fixedCamera = new OrthographicCamera();
         fixedCamera.update();
         fixedViewPort = new FitViewport(1920, 1080, fixedCamera);
-        System.out.println(fixedCamera.position);
-
 
         batch = new SpriteBatch(11);
 

@@ -21,7 +21,7 @@ public class ProgramRegisterDisplay {
     private Sprite wires;
     private ArrayList<TextureRegion> wireTextures;
 
-    float scale = 0.51f;
+    float scale = .5f;
 
     /**
      * Draws the program register of a given player.
@@ -38,15 +38,15 @@ public class ProgramRegisterDisplay {
         board = new Sprite(new Texture("assets/cards/programregisters.png"));
         board.setSize(board.getWidth() * scale, board.getHeight() * scale);
         board.setOriginCenter();
-        board.setOriginBasedPosition(1920/2,board.getHeight()/2);
+        board.setOriginBasedPosition(1920 / 2, board.getHeight() / 2);
 
         wires = new Sprite(new Texture("assets/cards/wires.png"));
         wires.setSize(board.getWidth(), board.getHeight());
         wires.setPosition(board.getX(), board.getY());
 
         wireTextures = new ArrayList<>();
-        for(int i = 0; i < 6; i++){
-            wireTextures.add(new TextureRegion(wires.getTexture(), 0,481*i,1024,481));
+        for (int i = 0; i < 6; i++) {
+            wireTextures.add(new TextureRegion(wires.getTexture(), 0, 481 * i, 1024, 481));
         }
 
         lifeToken = new Sprite(new Texture("assets/cards/tokens/lifeToken.png"));
@@ -82,19 +82,21 @@ public class ProgramRegisterDisplay {
     }
 
     private void drawLifeTokens(SpriteBatch batch) {
-        final float start = board.getX(); // start x
-        final float space = 100; // space from one token to the next
+        lifeToken.setOriginCenter();
+        final float startX = 1920 / 2 + 515 * scale; // start x
+        final float space = 105 * scale; // space from one token to the next
         for (int i = player.getLives(); i > 0; i--) {
-            lifeToken.setPosition(start * scale - space * scale * i, board.getHeight() - 215 * scale);
+            lifeToken.setOriginBasedPosition(startX - space * i, board.getHeight() - 140 * scale);
             lifeToken.draw(batch);
         }
     }
 
     private void drawDamageTokens(SpriteBatch batch) {
-        final int start = 850; // start x
-        final int space = 70; // space from one token to the next
+        damageToken.setOriginCenter();
+        final float startX = 1920 / 2 + 415 * scale; // start x
+        final float space = 70 * scale; // space from one token to the next
         for (int i = 0; i < player.getDamage(); i++) {
-            damageToken.setPosition(start * scale - space * scale * i, board.getHeight() - 125 * scale);
+            damageToken.setOriginBasedPosition(startX - space * i, board.getHeight() - 53 * scale);
             damageToken.draw(batch);
 
             if (i > 8) return;
@@ -102,10 +104,12 @@ public class ProgramRegisterDisplay {
     }
 
     private void drawLocks(SpriteBatch batch) {
-        float startX = 830;
+        lockToken.setOriginCenter();
+        float startX = 1920/2 + 400 * scale;
+        float space = 200 * scale;
         for (int i = 4; i >= 0; i--) {
             if (registers.isLocked(4 - i)) {
-                lockToken.setPosition(startX * scale - 204 * scale * i, board.getHeight() - 365 * scale);
+                lockToken.setOriginBasedPosition(startX - space * i, board.getHeight() - 235 * scale);
                 lockToken.draw(batch);
             }
         }
