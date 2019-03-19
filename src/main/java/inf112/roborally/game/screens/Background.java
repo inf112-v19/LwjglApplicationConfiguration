@@ -8,14 +8,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Background {
-    Sprite clouds;
-    Sprite grid;
-    Sprite background;
-    SpriteBatch batch;
-    float originalCameraX, originalCameraY;
-    float gridX, gridY;
-    float cloudX, cloudY;
-    float cloudW, cloudH;
+    private Sprite clouds;
+    private Sprite grid;
+    private Sprite background;
+    private SpriteBatch batch;
+    private float originalCameraX, originalCameraY;
+    private float gridX, gridY;
+    private float cloudX, cloudY;
+    private float cloudW, cloudH;
 
     public Background(Camera camera) {
         originalCameraX = camera.position.x;

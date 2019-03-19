@@ -20,27 +20,35 @@ public class RoboRallyGame extends Game {
     public static final String MAIN_THEME = "assets/music/Zander Noriega - Perpetual Tension.wav";
     public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
 
-
     private static final boolean DEBUGGING = false;
 
-    public OrthographicCamera camera;
-    public Viewport viewPort;
+    public OrthographicCamera dynamicCamera;
+    public Viewport dynamicViewPort;
+    public CameraListener cameraListener;
+
+    public OrthographicCamera fixedCamera; //the position of this camera should never change!
+    public FitViewport fixedViewPort;
+
     public SpriteBatch batch;
 
     public GameScreen gameScreen;
     public TestScreen registerTestScreen;
     public MenuScreen menuScreen;
-    public CameraListener cameraListener;
 
     @Override
     public void create() {
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-        camera.update();
-        viewPort = new FitViewport(1920, 1080, camera);
-        batch = new SpriteBatch(11);
-        cameraListener = new CameraListener(camera);
 
+        dynamicCamera = new OrthographicCamera();
+        dynamicCamera.setToOrtho(false);
+        dynamicCamera.update();
+        dynamicViewPort = new FitViewport(1920, 1080, dynamicCamera);
+        cameraListener = new CameraListener(dynamicCamera);
+
+        fixedCamera = new OrthographicCamera();
+        fixedCamera.update();
+        fixedViewPort = new FitViewport(1920, 1080, fixedCamera);
+
+        batch = new SpriteBatch(11);
 
         if (DEBUGGING) {
             registerTestScreen = new TestScreen();
