@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
 
@@ -18,14 +19,14 @@ public class Hud {
     private ProgramRegisterDisplay programRegisterDisplay;
     private Stage stage;
     private Player player;
-    public ImageButton submitButton;
-    public ImageButton greySubmitButton;
-    public ImageButton clearButton;
+    private ImageButton submitButton;
+    private ImageButton greySubmitButton;
+    private ImageButton clearButton;
 
     public Hud(final Player player, RoboRallyGame game) {
         this.player = player;
         stage = new Stage(game.fixedViewPort, game.batch);
-        cardsInHandDisplay = new CardsInHandDisplay(this, player, stage);
+        cardsInHandDisplay = new CardsInHandDisplay(player, stage);
         programRegisterDisplay = new ProgramRegisterDisplay(player);
 
         float scale = 0.4f;
@@ -73,7 +74,10 @@ public class Hud {
         batch.begin();
         programRegisterDisplay.draw(batch);
         batch.end();
-        stage.draw();
+
+        if(((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getGameLogic().getState() == GameState.PICKING_CARDS){
+            stage.draw();
+        }
     }
 
     public CardsInHandDisplay getCardsInHandDisplay() {

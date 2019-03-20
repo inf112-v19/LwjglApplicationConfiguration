@@ -195,4 +195,8 @@ public class GameLogic {
             stackOfProgramCards.push(returnedProgramCards.pop());
         Collections.shuffle(stackOfProgramCards);
     }
+
+    public GameState getState(){
+        return state;
+    }
 }

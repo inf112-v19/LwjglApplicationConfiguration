@@ -16,11 +16,9 @@ public class CardsInHandDisplay {
     private CardButton cardButton;
     private TextureRegion cardTexture;
     private int posX, posY;
-    private Hud hud;
 
 
-    public CardsInHandDisplay(Hud hud, final Player player, Stage stage) {
-        this.hud = hud;
+    public CardsInHandDisplay(final Player player, Stage stage) {
         this.player = player;
         this.stage = stage;
         cardVisuals = new CardVisuals();
@@ -35,11 +33,8 @@ public class CardsInHandDisplay {
         posY = 200;
 
         for (Actor button : stage.getActors()) {
-            if (button.equals(hud.submitButton)) continue;
-            if (button.equals(hud.greySubmitButton)) continue;
-            if (button.equals(hud.clearButton)) continue;
-
-            button.remove();
+            if (button instanceof CardButton)
+                button.remove();
         }
 
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
