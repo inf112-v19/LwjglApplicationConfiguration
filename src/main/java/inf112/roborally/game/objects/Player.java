@@ -1,8 +1,8 @@
 package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
@@ -57,8 +57,8 @@ public class Player extends MovableGameObject {
     public void makeSprite() {
         super.makeSprite();
         regions = new ArrayList<>();
-        for(int i = 0; i < 4; i++){
-            regions.add(new TextureRegion(getSprite().getTexture(), 32*8*i, 0, 32*8, 48*8));
+        for (int i = 0; i < 4; i++) {
+            regions.add(new TextureRegion(getSprite().getTexture(), 32 * 8 * i, 0, 32 * 8, 48 * 8));
         }
         sprite.setRegion(regions.get(0));
     }
