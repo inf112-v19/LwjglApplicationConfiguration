@@ -78,7 +78,6 @@ public abstract class Board extends BoardCreator {
     }
 
     public void boardMoves() {
-//      TODO: expressBeltsMovePlayers();
         beltsMovePlayers();
         lasersFire();
         visitFlags();
@@ -88,29 +87,55 @@ public abstract class Board extends BoardCreator {
     private void beltsMovePlayers() {
         for (Player player : players) {
             if (player == null) continue;
-
-            beltsMove(player);
-
+            expressBeltsMove(player);
             if (isOffTheBoard(player)) {
                 player.destroy();
             }
         }
 
+        for (Player player : players) {
+            if (player == null) continue;
+            beltsMove(player);
+            if (isOffTheBoard(player)) {
+                player.destroy();
+            }
+        }
+    }
+
+    private void expressBeltsMove(Player player) {
+        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
+        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Express")) {
+
+            Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
+            if (!canGo(player, beltDir)) return;
+
+            player.moveInDirection(beltDir);
+            currentCell = beltLayer.getCell(player.getX(), player.getY());
+            if (currentCell == null || !currentCell.getTile().getProperties().containsKey("Rotate")) return;
+
+            Iterator<Object> i = currentCell.getTile().getProperties().getValues();
+            i.next();
+            player.rotate(Rotate.valueOf(i.next().toString()));
+
+        }
     }
 
     private void beltsMove(Player player) {
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")) {
+        if (currentCell != null && (currentCell.getTile().getProperties().containsKey("Normal")
+                || currentCell.getTile().getProperties().containsKey("Express"))) {
+
             Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if (canGo(player, beltDir)) {
-                player.moveInDirection(beltDir);
-                currentCell = beltLayer.getCell(player.getX(), player.getY());
-                if (currentCell != null && currentCell.getTile().getProperties().containsKey("Rotate")) {
-                    Iterator<Object> i = currentCell.getTile().getProperties().getValues();
-                    i.next();
-                    player.rotate(Rotate.valueOf(i.next().toString()));
-                }
-            }
+            if (!canGo(player, beltDir)) return;
+
+            player.moveInDirection(beltDir);
+            currentCell = beltLayer.getCell(player.getX(), player.getY());
+            if (currentCell == null || !currentCell.getTile().getProperties().containsKey("Rotate")) return;
+
+            Iterator<Object> i = currentCell.getTile().getProperties().getValues();
+            i.next();
+            player.rotate(Rotate.valueOf(i.next().toString()));
+
         }
     }
 
@@ -168,6 +193,7 @@ public abstract class Board extends BoardCreator {
                 player.repairOneDamage();
                 System.out.println("repair player");
                 //play repair animation
+
             }
             if (isOnOption(player)) {
                 System.out.println("Give option card to player!");
