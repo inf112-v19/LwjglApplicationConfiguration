@@ -33,7 +33,6 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 player.playerState = PlayerState.READY;
-                System.out.println("test");
             }
         });
         stage.addActor(submitButton);
@@ -45,9 +44,9 @@ public class Hud {
         programRegisterDisplay.draw(batch);
         batch.end();
         cardsInHandDisplay.stage.draw();
-        stage.draw();
         if(player.getRegisters().isFull()) {
             Gdx.input.setInputProcessor(stage);
+            stage.draw();
         } else {
             Gdx.input.setInputProcessor(cardsInHandDisplay.stage);
         }
