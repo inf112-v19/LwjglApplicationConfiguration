@@ -91,7 +91,7 @@ public abstract class Board extends BoardCreator {
 
             beltsMove(player);
 
-            if (playerIsOffTheBoard(player.getX(), player.getY())) {
+            if (isOffTheBoard(player)) {
                 player.destroy();
             }
         }
@@ -112,10 +112,6 @@ public abstract class Board extends BoardCreator {
                 }
             }
         }
-    }
-
-    public boolean playerIsOffTheBoard(int x, int y) {
-        return (floorLayer.getCell(x, y) == null);
     }
 
     private void lasersFire() {
@@ -145,25 +141,38 @@ public abstract class Board extends BoardCreator {
 
     private void visitSpecialFields() {
         for (Player player : players) {
-            if (playerIsOnRepair(player)) {
-                player.repairOneDamage();
+            if (isOnRepair(player) || isOnOption(player)) {
+                System.out.println("move backup");
                 player.getBackup().moveToPlayerPosition();
-                if (playerIsOnOption(player)){
-//                    player.recieveOptionCard(optionCards.deque());
-                    System.out.println("Give option card to player!");
-                }
             }
         }
     }
 
-    private boolean playerIsOnRepair(Player player) {
-        return !(playerIsOffTheBoard(player.getX(), player.getY()))
+    public boolean isOffTheBoard(GameObject object) {
+        return (floorLayer.getCell(object.getX(), object.getY()) == null);
+    }
+
+    private boolean isOnRepair(Player player) {
+        return !isOffTheBoard(player)
                 && (floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().containsKey("Special"));
     }
 
-    private boolean playerIsOnOption(Player player) {
-        return floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().getValues().next().
-                equals("OPTION");
+    private boolean isOnOption(Player player) {
+        return !isOffTheBoard(player) && floorLayer.getCell(player.getX(), player.getY()).getTile().
+                getProperties().getValues().next().equals("OPTION");
+    }
+
+    public void cleanBoard() {
+        for (Player player : players) {
+            if (isOnRepair(player) || isOnOption(player)) {
+                player.repairOneDamage();
+                System.out.println("repair player");
+                //play repair animation
+            }
+            if (isOnOption(player)) {
+                System.out.println("Give option card to player!");
+            }
+        }
     }
 
     public void updatePlayers() {

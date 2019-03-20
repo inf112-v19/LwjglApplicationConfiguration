@@ -28,5 +28,6 @@ public class Backup extends GameObject {
 
     public void moveToPlayerPosition(){
         move(player.getX(), player.getY());
+        updateSprite();
     }
 }

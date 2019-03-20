@@ -50,6 +50,7 @@ public class GameLogic {
         giveCardsToPlayer(player1);
         cardsInHandDisplay.updateCardsInHandVisually();
         state = GameState.PICKING_CARDS;
+        board.cleanBoard();
     }
 
     public void update() {
