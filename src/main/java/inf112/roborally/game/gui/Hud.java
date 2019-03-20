@@ -28,10 +28,11 @@ public class Hud {
         cardsInHandDisplay = new CardsInHandDisplay(this, player, stage);
         programRegisterDisplay = new ProgramRegisterDisplay(player);
 
+        float scale = 0.4f;
         submitButton = new ImageButton(new TextureRegionDrawable(new Texture(
                 "assets/cards/buttonSubmit.png")));
-        submitButton.setSize(submitButton.getWidth()/2, submitButton.getHeight()/2);
-        submitButton.setPosition((1920/2), 260);
+        submitButton.setSize(submitButton.getWidth() * scale, submitButton.getHeight() * scale);
+        submitButton.setPosition((1920 / 2) + 7, 260);
         submitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -41,14 +42,14 @@ public class Hud {
 
         greySubmitButton = new ImageButton(new TextureRegionDrawable(new Texture(
                 "assets/cards/buttonSubmitGrey.png")));
-        greySubmitButton.setSize(greySubmitButton.getWidth()/2, greySubmitButton.getHeight()/2);
-        greySubmitButton.setPosition((1920/2), 260);
+        greySubmitButton.setSize(submitButton.getWidth(), submitButton.getHeight());
+        greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
         greySubmitButton.addListener(new ClickListener());
 
         clearButton = new ImageButton(new TextureRegionDrawable(new Texture(
                 "assets/cards/buttonClear.png")));
-        clearButton.setSize(clearButton.getWidth()/2, clearButton.getHeight()/2);
-        clearButton.setPosition((1920/2)-(clearButton.getWidth()), 260);
+        clearButton.setSize(clearButton.getWidth() * scale, clearButton.getHeight() * scale);
+        clearButton.setPosition((1920 / 2) - (clearButton.getWidth()) - 7, 260);
         clearButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -75,11 +76,11 @@ public class Hud {
         stage.draw();
     }
 
-    public CardsInHandDisplay getCardsInHandDisplay(){
+    public CardsInHandDisplay getCardsInHandDisplay() {
         return cardsInHandDisplay;
     }
 
-    public void dispose(){
+    public void dispose() {
         System.out.println("disposing hud");
         cardsInHandDisplay.dispose();
         programRegisterDisplay.dispose();
