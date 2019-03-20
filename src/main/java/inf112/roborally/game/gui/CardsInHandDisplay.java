@@ -29,7 +29,7 @@ public class CardsInHandDisplay {
     public void updateCardsInHandVisually() {
         float scale = 0.5f;
         int j = 0;
-        posX = 550;
+        posX = 1250;
         posY = 200;
 
         for(Actor butt : stage.getActors()) {

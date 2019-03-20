@@ -1,22 +1,25 @@
 package inf112.roborally.game.gui;
 
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
+
+import java.util.ArrayList;
 
 public class ProgramRegisterDisplay {
     private final CardVisuals cardVisual;
     private Player player;
     private ProgramRegisters registers;
-    private Sprite board;
-    private Sprite lifetoken;
-    private Sprite damagetoken;
-    private Sprite locktoken;
+    private Sprite programBoard;
+    private Sprite lifeToken;
+    private Sprite damageToken;
+    private Sprite lockToken;
     private Sprite card;
+    private Sprite wires;
+    private ArrayList<TextureRegion> wireTextures;
 
     float scale = .5f;
 
@@ -24,74 +27,98 @@ public class ProgramRegisterDisplay {
      * Draws the program register of a given player.
      * Shows cards in the players register slots. If a register is locked a small lock icon will appear.
      * It also shows lives and damage.
+     *
      * @param player
      */
-    public ProgramRegisterDisplay(Player player, OrthographicCamera camera) {
+    public ProgramRegisterDisplay(Player player) {
         this.player = player;
         registers = player.getRegisters();
 
-        board = new Sprite(new Texture("assets/cards/programregistertemplate.png"));
-        board.setSize(board.getWidth()*scale, board.getHeight()*scale);
+        programBoard = new Sprite(new Texture("assets/cards/programregisters.png"));
+        programBoard.setSize(programBoard.getWidth() * scale, programBoard.getHeight() * scale);
+        programBoard.setOriginCenter();
+        programBoard.setOriginBasedPosition(1920 / 2, programBoard.getHeight() / 2);
 
-        lifetoken = new Sprite(new Texture("assets/cards/tokens/lifetoken.png"));
-        lifetoken.setSize(lifetoken.getWidth()*scale, lifetoken.getHeight()*scale);
+        wires = new Sprite(new Texture("assets/cards/wires.png"));
+        wires.setSize(programBoard.getWidth(), programBoard.getHeight());
+        wires.setPosition(programBoard.getX(), programBoard.getY());
 
-        damagetoken = new Sprite(new Texture("assets/cards/tokens/damagetoken.png"));
-        damagetoken.setSize(damagetoken.getWidth()*scale, damagetoken.getHeight()*scale);
+        wireTextures = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            wireTextures.add(new TextureRegion(wires.getTexture(), 0, 481 * i, 1024, 481));
+        }
 
-        locktoken = new Sprite(new Texture("assets/cards/tokens/locktoken.png"));
-        locktoken.setSize(locktoken.getWidth()*scale, locktoken.getHeight()*scale);
+        lifeToken = new Sprite(new Texture("assets/cards/tokens/lifeToken.png"));
+        lifeToken.setSize(80 * scale, 80 * scale);
+
+        damageToken = new Sprite(new Texture("assets/cards/tokens/damageToken.png"));
+        damageToken.setSize(damageToken.getWidth() * scale, damageToken.getHeight() * scale);
+
+        lockToken = new Sprite(new Texture("assets/cards/tokens/lockToken.png"));
+        lockToken.setSize(lockToken.getWidth() * scale, lockToken.getHeight() * scale);
 
         card = new Sprite();
         float cardScale = 0.77f;
-        card.setSize(238*cardScale*scale, 300*cardScale*scale);
+        card.setSize(238 * cardScale * scale, 300 * cardScale * scale);
 
         cardVisual = new CardVisuals();
-
-        camera.position.set(board.getWidth()/ 2 , 1080 / 2 , 0); // center
-        camera.update();
-
     }
 
-    public void draw(SpriteBatch batch, Camera camera) {
-        batch.setProjectionMatrix(camera.combined);
-        board.draw(batch);
+    public void draw(SpriteBatch batch) {
+        updateWires();
+        programBoard.draw(batch);
+        wires.draw(batch);
         drawLifeTokens(batch);
         drawDamageTokens(batch);
         drawCardsInRegisters(batch);
         drawLocks(batch);
     }
 
+    private void updateWires() {
+        int wireIndex = 5 - registers.getUnlockedRegisters();
+        wires.setRegion(wireTextures.get(wireIndex % wireTextures.size()));
+
+    }
+
     private void drawLifeTokens(SpriteBatch batch) {
+        lifeToken.setOriginCenter();
+        final float startX = 1920 / 2 + 515 * scale; // start x
+        final float space = 105 * scale; // space from one token to the next
         for (int i = player.getLives(); i > 0; i--) {
-            lifetoken.setPosition(920*scale - 80.5f*scale * i, board.getHeight() - 200*scale);
-            lifetoken.draw(batch);
+            lifeToken.setOriginBasedPosition(startX - space * i, programBoard.getHeight() - 140 * scale);
+            lifeToken.draw(batch);
         }
     }
 
     private void drawDamageTokens(SpriteBatch batch) {
+        damageToken.setOriginCenter();
+        final float startX = 1920 / 2 + 415 * scale; // start x
+        final float space = 70 * scale; // space from one token to the next
         for (int i = 0; i < player.getDamage(); i++) {
-            damagetoken.setPosition(790*scale - 79.5f*scale * i, board.getHeight() - 125*scale);
-            damagetoken.draw(batch);
+            damageToken.setOriginBasedPosition(startX - space * i, programBoard.getHeight() - 53 * scale);
+            damageToken.draw(batch);
 
             if (i > 8) return;
         }
     }
 
     private void drawLocks(SpriteBatch batch) {
+        lockToken.setOriginCenter();
+        float startX = 1920 / 2 + 400 * scale;
+        float space = 200 * scale;
         for (int i = 4; i >= 0; i--) {
             if (registers.isLocked(4 - i)) {
-                locktoken.setPosition(830*scale - 204*scale * i, board.getHeight() - 365*scale);
-                locktoken.draw(batch);
+                lockToken.setOriginBasedPosition(startX - space * i, programBoard.getHeight() - 235 * scale);
+                lockToken.draw(batch);
             }
         }
     }
 
     private void drawCardsInRegisters(SpriteBatch batch) {
         for (int i = 0; i < 5; i++) {
-            if (player.getRegisters().getCardInRegister(i) != null) {
-                card.setPosition(19*scale + 200*scale * i, 10*scale);
-                card.setRegion(cardVisual.getRegion(registers.getCardInRegister(i)));
+            if (registers.getCard(i) != null) {
+                card.setPosition(programBoard.getX() + 19 * scale + 200 * scale * i, 10 * scale);
+                card.setRegion(cardVisual.getRegion(registers.getCard(i)));
                 card.draw(batch);
             }
         }
@@ -99,10 +126,11 @@ public class ProgramRegisterDisplay {
 
     public void dispose() {
         System.out.println("disposing ProgramRegisterDisplay");
-        board.getTexture().dispose();
-        lifetoken.getTexture().dispose();
-        damagetoken.getTexture().dispose();
-        locktoken.getTexture().dispose();
+        programBoard.getTexture().dispose();
+        wires.getTexture().dispose();
+        lifeToken.getTexture().dispose();
+        damageToken.getTexture().dispose();
+        lockToken.getTexture().dispose();
         cardVisual.dispose();
     }
 }

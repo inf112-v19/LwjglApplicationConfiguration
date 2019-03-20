@@ -114,14 +114,14 @@ public class PlayerTest {
             player.receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
-                player.getRegisters().pickCard(0);
+                player.getRegisters().placeCard(0);
         }
 
         ArrayList<ProgramCard> cardsReturned = player.returnCards();
         assertEquals(9, cardsReturned.size());
 
         // All registers are empty:
-        for(ProgramCard register : player.getRegisters().getCardsInRegisters())
+        for(ProgramCard register : player.getRegisters().getAllCards())
             assert(register == null);
     }
 
@@ -132,7 +132,7 @@ public class PlayerTest {
             player.receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
-                player.getRegisters().pickCard(0);
+                player.getRegisters().placeCard(0);
         }
         // Player takes nine damage, locking all registers:
         for(int i = 0; i < 9; i++)
@@ -144,7 +144,7 @@ public class PlayerTest {
         assertEquals(4, cardsReturned.size());
 
         // All registers contains program cards:
-        for(ProgramCard register : player.getRegisters().getCardsInRegisters())
+        for(ProgramCard register : player.getRegisters().getAllCards())
             assert(register != null);
     }
 
@@ -155,7 +155,7 @@ public class PlayerTest {
             player.receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
-                player.getRegisters().pickCard(0);
+                player.getRegisters().placeCard(0);
         }
         // Player takes 5 damage, locking one register:
         for(int i = 0; i < 5; i++)
@@ -167,9 +167,9 @@ public class PlayerTest {
 
         // The first 4 registers do not contain program cards:
         for(int i = 0; i < 4; i++)
-            assert(player.getRegisters().getCardsInRegisters().get(i) == null);
+            assert(player.getRegisters().getAllCards().get(i) == null);
         // The last register does:
-        assert(player.getRegisters().getCardsInRegisters().get(4) != null);
+        assert(player.getRegisters().getAllCards().get(4) != null);
     }
 
     @Test
@@ -186,13 +186,13 @@ public class PlayerTest {
             p3.receiveCard(stack.pop());
         }
         // have them all pick the first card and place it in a register:
-        p1.getRegisters().pickCard(0);
-        p2.getRegisters().pickCard(0);
-        p3.getRegisters().pickCard(0);
+        p1.getRegisters().placeCard(0);
+        p2.getRegisters().placeCard(0);
+        p3.getRegisters().placeCard(0);
         // retrieve cards from the first register:
-        q.add(p1.getRegisters().getCardInRegister(0));
-        q.add(p2.getRegisters().getCardInRegister(0));
-        q.add(p3.getRegisters().getCardInRegister(0));
+        q.add(p1.getRegisters().getCard(0));
+        q.add(p2.getRegisters().getCard(0));
+        q.add(p3.getRegisters().getCard(0));
         // print in order of highest priority
         while(!q.isEmpty()) {
             System.out.println(q.poll());

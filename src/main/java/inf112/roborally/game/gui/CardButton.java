@@ -19,8 +19,7 @@ public class CardButton extends ImageButton {
         addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //player.putCardIntoRegister(cardIndex);
-                player.getRegisters().pickCard(cardIndex);
+                player.getRegisters().placeCard(cardIndex);
                 cardsInHandDisplay.updateCardsInHandVisually(); // When calling this method once, sometimes, index out
                 cardsInHandDisplay.updateCardsInHandVisually(); // of bounds will occur when clicking the card button
                 cardsInHandDisplay.updateCardsInHandVisually(); // in the last location. Therefor called thrice.

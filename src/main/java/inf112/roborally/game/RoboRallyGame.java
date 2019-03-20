@@ -12,34 +12,47 @@ import inf112.roborally.game.screens.TestScreen;
 
 public class RoboRallyGame extends Game {
 
-    //MAPS:
-    public static final String VAULT = "assets/gameboard/vault.tmx";
-    public static final String SPIRAL_MARATHON = "assets/gameboard/spiralmarathon.tmx";
-    public static final String TEST_MAP = "assets/gameboard/testMap.tmx";
-
     private static final boolean DEBUGGING = false;
 
-    public OrthographicCamera camera;
-    public Viewport viewPort;
+    //MAPS:
+    public static final String VAULT = "assets/maps/vault.tmx";
+    public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
+    public static final String TEST_MAP = "assets/maps/testMap.tmx";
+    //Music:
+    public static final String MAIN_THEME = "assets/music/Zander Noriega - Perpetual Tension.wav";
+    public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
+
+
+    public OrthographicCamera dynamicCamera;
+    public Viewport dynamicViewPort;
+    public CameraListener cameraListener;
+
+    public OrthographicCamera fixedCamera; //the position of this camera should never change!
+    public FitViewport fixedViewPort;
+
     public SpriteBatch batch;
 
     public GameScreen gameScreen;
     public TestScreen registerTestScreen;
     public MenuScreen menuScreen;
-    public CameraListener cameraListener;
 
     @Override
     public void create() {
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false);
-        camera.update();
-        viewPort = new FitViewport(1920, 1080, camera);
-        batch = new SpriteBatch();
-        cameraListener = new CameraListener(camera);
 
+        dynamicCamera = new OrthographicCamera();
+        dynamicCamera.setToOrtho(false);
+        dynamicCamera.update();
+        dynamicViewPort = new FitViewport(1920, 1080, dynamicCamera);
+        cameraListener = new CameraListener(dynamicCamera);
+
+        fixedCamera = new OrthographicCamera();
+        fixedCamera.update();
+        fixedViewPort = new FitViewport(1920, 1080, fixedCamera);
+
+        batch = new SpriteBatch();
 
         if (DEBUGGING) {
-            registerTestScreen = new TestScreen();
+            registerTestScreen = new TestScreen(this);
             setScreen(registerTestScreen);
         }
         else {
@@ -51,6 +64,7 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void dispose() {
+        batch.dispose();
         if (DEBUGGING) {
             registerTestScreen.dispose();
         }
