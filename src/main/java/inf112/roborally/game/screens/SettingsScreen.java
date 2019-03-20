@@ -28,6 +28,7 @@ public class SettingsScreen implements Screen {
         background = new Sprite(new Texture("assets/img/background2.png"));
         background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2,
                 Gdx.graphics.getHeight() - background.getHeight());
+        
 
     }
 
