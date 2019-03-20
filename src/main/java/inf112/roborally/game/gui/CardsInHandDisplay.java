@@ -2,7 +2,6 @@ package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
@@ -32,9 +31,6 @@ public class CardsInHandDisplay {
         posX = 1250;
         posY = 200;
 
-        for(Actor butt : stage.getActors()) {
-            butt.remove();
-        }
 
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
             cardTexture = cardVisuals.getRegion(player.getCardInHand(i));
