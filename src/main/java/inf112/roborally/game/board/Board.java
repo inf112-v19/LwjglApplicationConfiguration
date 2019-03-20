@@ -324,28 +324,59 @@ public abstract class Board extends BoardCreator {
             Direction dir = play.getDirection();
             int x = play.getX();
             int y = play.getY();
-            boolean blocked = false;
 
             switch (dir) {
                 case NORTH:
                     LaserShot shotNorth = new LaserShot(dir, x, y);
-                    while(!shotBlocked(play, dir, x, y)){
-                        y++;
-                    }
+                    shootRobot(dir, x, y);
                 case SOUTH:
                     LaserShot shotSouth = new LaserShot(dir, x, y);
-                    while(!shotBlocked(play, dir, x, y)){
-                        y--;
-                    }
+                    shootRobot(dir, x, y);
                 case EAST:
                     LaserShot shotEast = new LaserShot(dir, x, y);
-                    while(!shotBlocked(play, dir, x, y)){
-                        x++;
-                    }
+                    shootRobot(dir, x, y);
                 case WEST:
                     LaserShot shotWest = new LaserShot(dir, x, y);
-                    while(!shotBlocked(play, dir, x, y)){
-                        x--;
+                    shootRobot(dir, x, y);
+            }
+        }
+    }
+    public void shootRobot(Direction dir, int x, int y) {
+
+        for (Player target :
+                players) {
+            Position targetPos = new Position(target.getX(), target.getY());
+            Position currentPos = new Position(x,y);
+            System.out.println("PLAYERS : " + players.size());
+            if (targetPos.positionEquals(currentPos)){
+                continue;
+            }
+            System.out.println("TargetPos " + targetPos.getX() + " <- X " + targetPos.getY() + " <- Y");
+            System.out.println("CurrentPos " + currentPos.getX() + " <- X " + currentPos.getY() + " <- Y");
+            switch (dir) {
+                case NORTH:
+                    if(targetPos.getX() == currentPos.getX() && targetPos.getY() > currentPos.getY() && !targetPos.positionEquals(currentPos)){
+                        System.out.println(target.getDamage() + " BEFORE");
+                        target.takeDamage();
+                        System.out.println(target.getDamage() + " AFTER ");
+                    }
+                case SOUTH:
+                    if(targetPos.getX() == currentPos.getX() && targetPos.getY() < currentPos.getY()  && !targetPos.positionEquals(currentPos)){
+                        System.out.println(target.getDamage() + " BEFORE");
+                        target.takeDamage();
+                        System.out.println(target.getDamage() + " AFTER ");
+                    }
+                case EAST:
+                    if(targetPos.getX() > currentPos.getX() && targetPos.getY() == currentPos.getY()  && !targetPos.positionEquals(currentPos)){
+                        System.out.println(target.getDamage() + " BEFORE");
+                        target.takeDamage();
+                        System.out.println(target.getDamage() + " AFTER ");
+                    }
+                case WEST:
+                    if(targetPos.getX() < currentPos.getX() && targetPos.getY() == currentPos.getY()  && !targetPos.positionEquals(currentPos)){
+                        System.out.println(target.getDamage() + " BEFORE");
+                        target.takeDamage();
+                        System.out.println(target.getDamage() + " AFTER ");
                     }
             }
         }
@@ -353,8 +384,8 @@ public abstract class Board extends BoardCreator {
 
     public boolean shotBlocked(MovableGameObject player, Direction direction, int x , int y) {
         // first check the current tile:
-        Position nextPos = new Position(x, y);
 
+        Position nextPos = new Position(x, y);
         // check this tile:
         TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(nextPos.getX(), nextPos.getY());
         List<String> walls = new ArrayList<>();
@@ -362,7 +393,7 @@ public abstract class Board extends BoardCreator {
             walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
         }
         if (walls.contains(direction.toString())) {
-            System.out.println("Hit a wall!(here)");
+            System.out.println("Laser blocked");
             return true;
         }
 
@@ -385,16 +416,19 @@ public abstract class Board extends BoardCreator {
         Direction oppositeDirection = direction.getOppositeDirection();
 
         if (walls.contains(oppositeDirection.toString())) {
-            System.out.println("Hit a wall!(next)");
+            System.out.println("Laser blocked");
             return true;
         }
-        if(targetCell != null && targetCell.getTile().getProperties().containsKey("Player")){
+
+        if(targetCell != null){
             for (Player target :
                     players) {
                 Position targetPos = new Position(target.getX(), target.getY());
                 if(targetPos.equals(nextPos)){
-                    target.takeDamage();
-                    System.out.println("Damage");
+//                    target.takeDamage();
+//                    System.out.println("Laser hit");
+                    System.out.println(target.getDamage());
+                    return true;
                 }
             }
         }
