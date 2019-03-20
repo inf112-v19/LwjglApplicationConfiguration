@@ -25,17 +25,36 @@ public class Hud {
         stage = new Stage(game.fixedViewPort, game.batch);
         cardsInHandDisplay = new CardsInHandDisplay(player, new Stage(game.fixedViewPort, game.batch));
         programRegisterDisplay = new ProgramRegisterDisplay(player);
+
         ImageButton submitButton = new ImageButton(new TextureRegionDrawable(new Texture(
-                "assets/cards/buttons.png")));
+                "assets/cards/buttonSubmit.png")));
         submitButton.setSize(submitButton.getWidth()/2, submitButton.getHeight()/2);
-        submitButton.setPosition((1920/2)-(submitButton.getWidth()/2), 260);
+        submitButton.setPosition((1920/2), 260);
         submitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 player.playerState = PlayerState.READY;
             }
         });
+
+        ImageButton clearButton = new ImageButton(new TextureRegionDrawable(new Texture(
+                "assets/cards/buttonClear.png")));
+        clearButton.setSize(clearButton.getWidth()/2, clearButton.getHeight()/2);
+        clearButton.setPosition((1920/2)-(clearButton.getWidth()), 260);
+        clearButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                player.getRegisters().returnCards(player.getCardsInHand());
+                // messy but it works:
+                ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
+                        updateCardsInHandVisually();
+            }
+        });
+
+
+
         stage.addActor(submitButton);
+        stage.addActor(clearButton);
 
     }
 
