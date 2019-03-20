@@ -2,6 +2,7 @@ package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
@@ -15,14 +16,16 @@ public class CardsInHandDisplay {
     private CardButton cardButton;
     private TextureRegion cardTexture;
     private int posX, posY;
+    private Hud hud;
 
 
-    public CardsInHandDisplay(final Player player, Stage stage) {
+    public CardsInHandDisplay(Hud hud, final Player player, Stage stage) {
+        this.hud = hud;
         this.player = player;
         this.stage = stage;
         cardVisuals = new CardVisuals();
         Gdx.input.setInputProcessor(stage);
-        stage.addListener(((RoboRallyGame)Gdx.app.getApplicationListener()).cameraListener);
+        stage.addListener(((RoboRallyGame) Gdx.app.getApplicationListener()).cameraListener);
     }
 
     public void updateCardsInHandVisually() {
@@ -31,6 +34,13 @@ public class CardsInHandDisplay {
         posX = 1250;
         posY = 200;
 
+        for (Actor button : stage.getActors()) {
+            if (button.equals(hud.submitButton)) continue;
+            if (button.equals(hud.greySubmitButton)) continue;
+            if (button.equals(hud.clearButton)) continue;
+
+            button.remove();
+        }
 
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
             cardTexture = cardVisuals.getRegion(player.getCardInHand(i));

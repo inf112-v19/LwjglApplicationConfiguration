@@ -1,7 +1,6 @@
 package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,14 +18,17 @@ public class Hud {
     private ProgramRegisterDisplay programRegisterDisplay;
     private Stage stage;
     private Player player;
+    public ImageButton submitButton;
+    public ImageButton greySubmitButton;
+    public ImageButton clearButton;
 
     public Hud(final Player player, RoboRallyGame game) {
         this.player = player;
         stage = new Stage(game.fixedViewPort, game.batch);
-        cardsInHandDisplay = new CardsInHandDisplay(player, new Stage(game.fixedViewPort, game.batch));
+        cardsInHandDisplay = new CardsInHandDisplay(this, player, stage);
         programRegisterDisplay = new ProgramRegisterDisplay(player);
 
-        ImageButton submitButton = new ImageButton(new TextureRegionDrawable(new Texture(
+        submitButton = new ImageButton(new TextureRegionDrawable(new Texture(
                 "assets/cards/buttonSubmit.png")));
         submitButton.setSize(submitButton.getWidth()/2, submitButton.getHeight()/2);
         submitButton.setPosition((1920/2), 260);
@@ -37,7 +39,13 @@ public class Hud {
             }
         });
 
-        ImageButton clearButton = new ImageButton(new TextureRegionDrawable(new Texture(
+        greySubmitButton = new ImageButton(new TextureRegionDrawable(new Texture(
+                "assets/cards/buttonSubmitGrey.png")));
+        greySubmitButton.setSize(greySubmitButton.getWidth()/2, greySubmitButton.getHeight()/2);
+        greySubmitButton.setPosition((1920/2), 260);
+        greySubmitButton.addListener(new ClickListener());
+
+        clearButton = new ImageButton(new TextureRegionDrawable(new Texture(
                 "assets/cards/buttonClear.png")));
         clearButton.setSize(clearButton.getWidth()/2, clearButton.getHeight()/2);
         clearButton.setPosition((1920/2)-(clearButton.getWidth()), 260);
@@ -52,23 +60,19 @@ public class Hud {
         });
 
 
-
+        stage.addActor(greySubmitButton);
         stage.addActor(submitButton);
         stage.addActor(clearButton);
 
     }
 
     public void draw(SpriteBatch batch) {
+        submitButton.setVisible(player.getRegisters().isFull());
+        greySubmitButton.setVisible(!submitButton.isVisible());
         batch.begin();
         programRegisterDisplay.draw(batch);
         batch.end();
-        cardsInHandDisplay.stage.draw();
-        if(player.getRegisters().isFull()) {
-            Gdx.input.setInputProcessor(stage);
-            stage.draw();
-        } else {
-            Gdx.input.setInputProcessor(cardsInHandDisplay.stage);
-        }
+        stage.draw();
     }
 
     public CardsInHandDisplay getCardsInHandDisplay(){
