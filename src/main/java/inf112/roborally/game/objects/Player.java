@@ -8,6 +8,7 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 
 import java.util.ArrayList;
@@ -27,6 +28,7 @@ public class Player extends MovableGameObject {
     private boolean[] flagsFound;
     private Board board;
     private ArrayList<TextureRegion> regions;
+    public PlayerState playerState;
 
 
     public Player(String name, String filepath, Direction direction, Board board) {
@@ -47,6 +49,8 @@ public class Player extends MovableGameObject {
         backup = new Backup(getX(), getY(), this);
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
+
+        playerState = PlayerState.PICKING_CARDS;
     }
 
     @Override
