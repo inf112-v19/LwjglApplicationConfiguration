@@ -53,18 +53,16 @@ public class SettingsScreen implements Screen {
     }
 
     private void handleInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            System.out.println("KEY M IS PRESSED");
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.G)) {
-            System.out.println("KEY G IS PRESSED, EXITING");
-            Gdx.app.exit();
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+       if(Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Key B is pressed, going back to the GameScreen");
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
             dispose();
         }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            dispose();
+            roboRallyGame.newGame();
+        }
+
     }
 
     @Override

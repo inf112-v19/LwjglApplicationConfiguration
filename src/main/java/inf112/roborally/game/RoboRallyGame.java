@@ -65,6 +65,11 @@ public class RoboRallyGame extends Game {
         }
     }
 
+    public void newGame() {
+        dispose();
+        create();
+    }
+
     @Override
     public void dispose() {
         batch.dispose();
