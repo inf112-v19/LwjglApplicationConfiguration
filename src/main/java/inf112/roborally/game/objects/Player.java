@@ -8,6 +8,7 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 
 import inf112.roborally.game.sound.GameSound;
@@ -28,6 +29,7 @@ public class Player extends MovableGameObject {
     private boolean[] flagsFound;
     private Board board;
     private ArrayList<TextureRegion> regions;
+    public PlayerState playerState;
     private GameSound laserHitPlayerSound;
 
 
@@ -49,6 +51,8 @@ public class Player extends MovableGameObject {
         backup = new Backup(getX(), getY(), this);
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
+
+        playerState = PlayerState.PICKING_CARDS;
     }
 
     @Override
@@ -90,12 +94,13 @@ public class Player extends MovableGameObject {
         }
 
         if (programCard.getMoveDistance() == -1) {
-            if (board.canGo(this, getDirection().getOppositeDirection())) {
+            if (board.canGo(this, getDirection().getOppositeDirection())
+                    && board.canPush(this, getDirection().getOppositeDirection())) {
                 moveInDirection(getDirection().getOppositeDirection());
             }
         }
         for (int i = 0; i < programCard.getMoveDistance(); i++) {
-            if (board.canGo(this, getDirection())) {
+            if (board.canGo(this, getDirection()) && board.canPush(this, getDirection())) {
                 move(1);
             }
         }
@@ -107,8 +112,8 @@ public class Player extends MovableGameObject {
             moveInDirection(getDirection());
         }
         // every time a player moves we need to check if it is off the board or not
-        if (board != null && board.playerIsOffTheBoard(getX(), getY())) { // need to check if board is null for tests
-            this.destroy();                                              // to work..
+        if (board != null && board.isOffTheBoard(this)) { // need to check if board is null for tests to work
+            this.destroy();
         }
     }
 

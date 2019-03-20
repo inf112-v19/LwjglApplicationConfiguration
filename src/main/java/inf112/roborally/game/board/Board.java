@@ -78,7 +78,6 @@ public abstract class Board extends BoardCreator {
     }
 
     public void boardMoves() {
-//      TODO: expressBeltsMovePlayers();
         beltsMovePlayers();
         lasersFire();
         visitFlags();
@@ -88,34 +87,56 @@ public abstract class Board extends BoardCreator {
     private void beltsMovePlayers() {
         for (Player player : players) {
             if (player == null) continue;
-
-            beltsMove(player);
-
-            if (playerIsOffTheBoard(player.getX(), player.getY())) {
+            expressBeltsMove(player);
+            if (isOffTheBoard(player)) {
                 player.destroy();
             }
         }
 
-    }
-
-    private void beltsMove(Player player) {
-        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")) {
-            Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if (canGo(player, beltDir)) {
-                player.moveInDirection(beltDir);
-                currentCell = beltLayer.getCell(player.getX(), player.getY());
-                if (currentCell != null && currentCell.getTile().getProperties().containsKey("Rotate")) {
-                    Iterator<Object> i = currentCell.getTile().getProperties().getValues();
-                    i.next();
-                    player.rotate(Rotate.valueOf(i.next().toString()));
-                }
+        for (Player player : players) {
+            if (player == null) continue;
+            beltsMove(player);
+            if (isOffTheBoard(player)) {
+                player.destroy();
             }
         }
     }
 
-    public boolean playerIsOffTheBoard(int x, int y) {
-        return (floorLayer.getCell(x, y) == null);
+    private void expressBeltsMove(Player player) {
+        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
+        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Express")) {
+
+            Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
+            if (!canGo(player, beltDir) || crashWithRobot(player, beltDir)) return;
+
+            player.moveInDirection(beltDir);
+            currentCell = beltLayer.getCell(player.getX(), player.getY());
+            if (currentCell == null || !currentCell.getTile().getProperties().containsKey("Rotate")) return;
+
+            Iterator<Object> i = currentCell.getTile().getProperties().getValues();
+            i.next();
+            player.rotate(Rotate.valueOf(i.next().toString()));
+
+        }
+    }
+
+    private void beltsMove(Player player) {
+        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
+        if (currentCell != null && (currentCell.getTile().getProperties().containsKey("Normal")
+                || currentCell.getTile().getProperties().containsKey("Express"))) {
+
+            Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
+            if (!canGo(player, beltDir) || crashWithRobot(player, beltDir)) return;
+
+            player.moveInDirection(beltDir);
+            currentCell = beltLayer.getCell(player.getX(), player.getY());
+            if (currentCell == null || !currentCell.getTile().getProperties().containsKey("Rotate")) return;
+
+            Iterator<Object> i = currentCell.getTile().getProperties().getValues();
+            i.next();
+            player.rotate(Rotate.valueOf(i.next().toString()));
+
+        }
     }
 
     private void lasersFire() {
@@ -145,25 +166,39 @@ public abstract class Board extends BoardCreator {
 
     private void visitSpecialFields() {
         for (Player player : players) {
-            if (playerIsOnRepair(player)) {
-                player.repairOneDamage();
+            if (isOnRepair(player) || isOnOption(player)) {
+                System.out.println("move backup");
                 player.getBackup().moveToPlayerPosition();
-                if (playerIsOnOption(player)){
-//                    player.recieveOptionCard(optionCards.deque());
-                    System.out.println("Give option card to player!");
-                }
             }
         }
     }
 
-    private boolean playerIsOnRepair(Player player) {
-        return !(playerIsOffTheBoard(player.getX(), player.getY()))
+    public boolean isOffTheBoard(GameObject object) {
+        return (floorLayer.getCell(object.getX(), object.getY()) == null);
+    }
+
+    private boolean isOnRepair(Player player) {
+        return !isOffTheBoard(player)
                 && (floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().containsKey("Special"));
     }
 
-    private boolean playerIsOnOption(Player player) {
-        return floorLayer.getCell(player.getX(), player.getY()).getTile().getProperties().getValues().next().
-                equals("OPTION");
+    private boolean isOnOption(Player player) {
+        return !isOffTheBoard(player) && floorLayer.getCell(player.getX(), player.getY()).getTile().
+                getProperties().getValues().next().equals("OPTION");
+    }
+
+    public void cleanBoard() {
+        for (Player player : players) {
+            if (isOnRepair(player) || isOnOption(player)) {
+                player.repairOneDamage();
+                System.out.println("repair player");
+                //play repair animation
+
+            }
+            if (isOnOption(player)) {
+                System.out.println("Give option card to player!");
+            }
+        }
     }
 
     public void updatePlayers() {
@@ -208,7 +243,25 @@ public abstract class Board extends BoardCreator {
             System.out.println("Hit a wall!(next)");
             return false;
         }
+        return true;
+    }
 
+    public boolean crashWithRobot(MovableGameObject player, Direction direction) {
+        Position nextPos = new Position(player.getX(), player.getY());
+        nextPos.moveInDirection(direction);
+        for (Player other : players) {
+            if (other.equals(player)) continue;
+
+            if (other.positionEquals(nextPos)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canPush(MovableGameObject player, Direction direction) {
+        Position nextPos = new Position(player.getX(), player.getY());
+        nextPos.moveInDirection(direction);
         for (Player other : players) {
             if (other.equals(player)) continue;
 
@@ -219,7 +272,6 @@ public abstract class Board extends BoardCreator {
                 other.moveInDirection(direction);
             }
         }
-
         return true;
     }
 

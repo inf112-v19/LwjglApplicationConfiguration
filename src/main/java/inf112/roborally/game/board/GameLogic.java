@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.CardsInHandDisplay;
 import inf112.roborally.game.objects.Player;
@@ -52,6 +53,7 @@ public class GameLogic {
         giveCardsToPlayer(player1);
         cardsInHandDisplay.updateCardsInHandVisually();
         state = GameState.PICKING_CARDS;
+        board.cleanBoard();
     }
 
     public void update() {
@@ -63,6 +65,9 @@ public class GameLogic {
                 System.out.println("set up before round");
                 doBeforeRound();
                 System.out.println("player choosing cards");
+                for(Player player : players) {
+                    player.playerState = PlayerState.PICKING_CARDS;
+                }
                 //if player is on repair, repair!
                 //if player is on option, draw a card.
                 break;
@@ -152,7 +157,8 @@ public class GameLogic {
     }
 
     public boolean playerReady(Player player) {
-        return player.getRegisters().isFull();
+        return player.getRegisters().isFull() &&
+                player.playerState == PlayerState.READY;
     }
 
     public boolean playersReady() {
@@ -193,5 +199,9 @@ public class GameLogic {
         while (!returnedProgramCards.empty())
             stackOfProgramCards.push(returnedProgramCards.pop());
         Collections.shuffle(stackOfProgramCards);
+    }
+
+    public GameState getState(){
+        return state;
     }
 }

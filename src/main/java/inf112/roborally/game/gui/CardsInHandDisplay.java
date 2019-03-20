@@ -23,7 +23,7 @@ public class CardsInHandDisplay {
         this.stage = stage;
         cardVisuals = new CardVisuals();
         Gdx.input.setInputProcessor(stage);
-        stage.addListener(((RoboRallyGame)Gdx.app.getApplicationListener()).cameraListener);
+        stage.addListener(((RoboRallyGame) Gdx.app.getApplicationListener()).cameraListener);
     }
 
     public void updateCardsInHandVisually() {
@@ -32,8 +32,9 @@ public class CardsInHandDisplay {
         posX = 1250;
         posY = 200;
 
-        for(Actor butt : stage.getActors()) {
-            butt.remove();
+        for (Actor button : stage.getActors()) {
+            if (button instanceof CardButton)
+                button.remove();
         }
 
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {

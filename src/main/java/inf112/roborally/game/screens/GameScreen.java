@@ -3,6 +3,7 @@ package inf112.roborally.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.*;
@@ -133,6 +134,10 @@ public class GameScreen implements Screen {
 
     public Hud getHud() {
         return hud;
+    }
+
+    public GameLogic getGameLogic(){
+        return gameLogic;
     }
 }
 

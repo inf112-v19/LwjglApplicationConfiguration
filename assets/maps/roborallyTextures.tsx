@@ -143,35 +143,35 @@
  </tile>
  <tile id="28">
   <properties>
-   <property name="Belt" value="SOUTH"/>
+   <property name="Normal" value="SOUTH"/>
   </properties>
  </tile>
  <tile id="29">
   <properties>
-   <property name="Belt" value="SOUTH"/>
+   <property name="Normal" value="SOUTH"/>
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
  <tile id="30">
   <properties>
-   <property name="Belt" value="WEST"/>
+   <property name="Normal" value="WEST"/>
    <property name="Rotate" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="31">
   <properties>
-   <property name="Belt" value="SOUTH"/>
+   <property name="Express" value="SOUTH"/>
   </properties>
  </tile>
  <tile id="32">
   <properties>
-   <property name="Belt" value="SOUTH"/>
+   <property name="Express" value="SOUTH"/>
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
  <tile id="33">
   <properties>
-   <property name="Belt" value="WEST"/>
+   <property name="Express" value="WEST"/>
    <property name="Rotate" value="RIGHT"/>
   </properties>
  </tile>
@@ -182,35 +182,35 @@
  </tile>
  <tile id="35">
   <properties>
-   <property name="Belt" value="EAST"/>
+   <property name="Normal" value="EAST"/>
   </properties>
  </tile>
  <tile id="36">
   <properties>
-   <property name="Belt" value="EAST"/>
+   <property name="Normal" value="EAST"/>
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
  <tile id="37">
   <properties>
-   <property name="Belt" value="SOUTH"/>
+   <property name="Normal" value="SOUTH"/>
    <property name="Rotate" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="38">
   <properties>
-   <property name="Belt" value="EAST"/>
+   <property name="Express" value="EAST"/>
   </properties>
  </tile>
  <tile id="39">
   <properties>
-   <property name="Belt" value="EAST"/>
+   <property name="Express" value="EAST"/>
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
  <tile id="40">
   <properties>
-   <property name="Belt" value="SOUTH"/>
+   <property name="Express" value="SOUTH"/>
    <property name="Rotate" value="RIGHT"/>
   </properties>
  </tile>
@@ -221,35 +221,35 @@
  </tile>
  <tile id="42">
   <properties>
-   <property name="Belt" value="NORTH"/>
+   <property name="Normal" value="NORTH"/>
   </properties>
  </tile>
  <tile id="43">
   <properties>
-   <property name="Belt" value="EAST"/>
+   <property name="Normal" value="EAST"/>
    <property name="Rotate" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="44">
   <properties>
-   <property name="Belt" value="NORTH"/>
+   <property name="Normal" value="NORTH"/>
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
  <tile id="45">
   <properties>
-   <property name="Belt" value="NORTH"/>
+   <property name="Express" value="NORTH"/>
   </properties>
  </tile>
  <tile id="46">
   <properties>
-   <property name="Belt" value="EAST"/>
+   <property name="Express" value="EAST"/>
    <property name="Rotate" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="47">
   <properties>
-   <property name="Belt" value="NORTH"/>
+   <property name="Express" value="NORTH"/>
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
@@ -260,35 +260,35 @@
  </tile>
  <tile id="49">
   <properties>
-   <property name="Belt" value="WEST"/>
+   <property name="Normal" value="WEST"/>
   </properties>
  </tile>
  <tile id="50">
   <properties>
-   <property name="Belt" value="NORTH"/>
+   <property name="Normal" value="NORTH"/>
    <property name="Rotate" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="51">
   <properties>
-   <property name="Belt" value="WEST"/>
+   <property name="Normal" value="WEST"/>
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
  <tile id="52">
   <properties>
-   <property name="Belt" value="WEST"/>
+   <property name="Express" value="WEST"/>
   </properties>
  </tile>
  <tile id="53">
   <properties>
-   <property name="Belt" value="NORTH"/>
+   <property name="Express" value="NORTH"/>
    <property name="Rotate" value="RIGHT"/>
   </properties>
  </tile>
  <tile id="54">
   <properties>
-   <property name="Belt" value="WEST"/>
+   <property name="Express" value="WEST"/>
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
