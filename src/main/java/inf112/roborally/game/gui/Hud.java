@@ -1,7 +1,12 @@
 package inf112.roborally.game.gui;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Player;
 
@@ -11,10 +16,12 @@ public class Hud {
     private ProgramRegisterDisplay programRegisterDisplay;
     private SoundSettings muteBtn;
 
+
     public Hud(final Player player, RoboRallyGame game) {
         cardsInHandDisplay = new CardsInHandDisplay(player, new Stage(game.fixedViewPort, game.batch));
         programRegisterDisplay = new ProgramRegisterDisplay(player);
 //        muteBtn = new SoundSettings(new Stage(viewport, batch), 1000, 950);
+
     }
 
     public void draw(SpriteBatch batch) {
