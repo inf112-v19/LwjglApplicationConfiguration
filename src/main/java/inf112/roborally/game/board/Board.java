@@ -107,7 +107,7 @@ public abstract class Board extends BoardCreator {
         if (currentCell != null && currentCell.getTile().getProperties().containsKey("Express")) {
 
             Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if (!canGo(player, beltDir)) return;
+            if (!canGo(player, beltDir) || crashWithRobot(player, beltDir)) return;
 
             player.moveInDirection(beltDir);
             currentCell = beltLayer.getCell(player.getX(), player.getY());
@@ -126,7 +126,7 @@ public abstract class Board extends BoardCreator {
                 || currentCell.getTile().getProperties().containsKey("Express"))) {
 
             Direction beltDir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if (!canGo(player, beltDir)) return;
+            if (!canGo(player, beltDir) || crashWithRobot(player, beltDir)) return;
 
             player.moveInDirection(beltDir);
             currentCell = beltLayer.getCell(player.getX(), player.getY());
@@ -243,7 +243,25 @@ public abstract class Board extends BoardCreator {
             System.out.println("Hit a wall!(next)");
             return false;
         }
+        return true;
+    }
 
+    public boolean crashWithRobot(MovableGameObject player, Direction direction) {
+        Position nextPos = new Position(player.getX(), player.getY());
+        nextPos.moveInDirection(direction);
+        for (Player other : players) {
+            if (other.equals(player)) continue;
+
+            if (other.positionEquals(nextPos)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean canPush(MovableGameObject player, Direction direction) {
+        Position nextPos = new Position(player.getX(), player.getY());
+        nextPos.moveInDirection(direction);
         for (Player other : players) {
             if (other.equals(player)) continue;
 
@@ -254,7 +272,6 @@ public abstract class Board extends BoardCreator {
                 other.moveInDirection(direction);
             }
         }
-
         return true;
     }
 
