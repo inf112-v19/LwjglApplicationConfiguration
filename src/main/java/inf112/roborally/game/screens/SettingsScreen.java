@@ -11,27 +11,23 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
 
-import java.awt.event.InputEvent;
-
 public class SettingsScreen implements Screen {
 
     private RoboRallyGame roboRallyGame;
     private SpriteBatch batch;
     private Sprite background;
-    private Viewport viewport;
+//    private Viewport viewport;
 
     public SettingsScreen(RoboRallyGame roborallygame) {
         this.roboRallyGame = roborallygame;
         batch = new SpriteBatch();
-        viewport = new FitViewport(1920, 1080);
+//        viewport = new FitViewport(1920, 1080);
 
-        background = new Sprite(new Texture("assets/img/background2.png"));
-        background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2,
-                Gdx.graphics.getHeight() - background.getHeight());
-        
+        background = new Sprite(new Texture("assets/img/settingsbackground.png"));
+//        background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2, Gdx.graphics.getHeight() - background.getHeight());
+        roborallygame.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
     }
-
 
     @Override
     public void show() {
@@ -46,6 +42,8 @@ public class SettingsScreen implements Screen {
 
         Gdx.gl.glClearColor(r, g, b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        batch.setProjectionMatrix(roboRallyGame.fixedCamera.combined);
         batch.begin();
         background.draw(batch);
         batch.end();
@@ -71,8 +69,8 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void resize(int w, int h) {
-        viewport.update(w, h);
-
+//        viewport.update(w, h);
+        roboRallyGame.fixedViewPort.update(w, h);
     }
 
     @Override
