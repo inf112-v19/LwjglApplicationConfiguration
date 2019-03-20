@@ -64,7 +64,7 @@ public class TestScreen implements Screen {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)){
-            player.getRegisters().pickCard(0);
+            player.getRegisters().placeCard(0);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)){

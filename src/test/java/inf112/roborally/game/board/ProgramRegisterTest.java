@@ -30,7 +30,7 @@ public class ProgramRegisterTest {
 
     @Test
     public void test_IsLocked_WithOneLockedRegister(){
-        programRegisters.lockRegister();
+        programRegisters.lock();
         for(int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS-1; i++){
             assertEquals(false, programRegisters.isLocked(i));
         }
@@ -40,7 +40,7 @@ public class ProgramRegisterTest {
     @Test
     public void lockingAllRegistersLocksAllRegisters(){
         for(int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++){
-            programRegisters.lockRegister();
+            programRegisters.lock();
         }
 
         for(int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++){
@@ -86,7 +86,7 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
         }
         for(int i = 0; i < 5; i++)
-            programRegisters.pickCard(i);
+            programRegisters.placeCard(i);
         player.returnCards();
         assertEquals(9, player.returnCards().size());
     }
@@ -97,9 +97,9 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
         }
         for(int i = 0; i < 5; i++)
-            programRegisters.pickCard(0);
+            programRegisters.placeCard(0);
         for (int i = 0; i < 5; i++)
-            programRegisters.lockRegister();
+            programRegisters.lock();
         assertEquals(4, player.returnCards().size());
     }
 
@@ -109,9 +109,9 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
-            programRegisters.pickCard(0);
+            programRegisters.placeCard(0);
 
-        programRegisters.lockRegister();
+        programRegisters.lock();
         assertEquals(8, player.returnCards().size());
     }
 
@@ -121,9 +121,9 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
-            player.getRegisters().pickCard(0);
+            player.getRegisters().placeCard(0);
 
-        assertEquals(true, programRegisters.registerIsFull());
+        assertEquals(true, programRegisters.isFull());
     }
 
     @Test
@@ -132,8 +132,8 @@ public class ProgramRegisterTest {
             player.receiveCard(stack.pop());
 
         for(int i = 0; i < 1; i++)
-            player.getRegisters().pickCard(0);
+            player.getRegisters().placeCard(0);
 
-        assertEquals(false, programRegisters.registerIsFull());
+        assertEquals(false, programRegisters.isFull());
     }
 }

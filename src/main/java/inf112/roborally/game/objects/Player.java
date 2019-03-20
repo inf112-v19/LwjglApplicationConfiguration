@@ -138,7 +138,7 @@ public class Player extends MovableGameObject {
     }
 
     public ArrayList<ProgramCard> returnCards() {
-        registers.returnCardsFromRegisters(cardsInHand);
+        registers.returnCards(cardsInHand);
         return cardsInHand;
     }
 
@@ -175,13 +175,13 @@ public class Player extends MovableGameObject {
      * Repairs all damage dealt to the player and unlocks all locked registers.
      */
     public void repairAllDamage() {
-        registers.unlockRegisters();
+        registers.unlockAll();
         damage = 0;
     }
 
     public void repairOneDamage() {
         if (damage >= 5) {
-            registers.unlockRegister();
+            registers.unlock();
         }
         if (damage > 0) {
             damage--;
@@ -196,7 +196,7 @@ public class Player extends MovableGameObject {
             damage++;
         }
         if (damage >= 5) {
-            registers.lockRegister();
+            registers.lock();
         }
     }
 

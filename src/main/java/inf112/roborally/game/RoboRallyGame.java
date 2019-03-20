@@ -49,7 +49,7 @@ public class RoboRallyGame extends Game {
         fixedCamera.update();
         fixedViewPort = new FitViewport(1920, 1080, fixedCamera);
 
-        batch = new SpriteBatch(11);
+        batch = new SpriteBatch();
 
         if (DEBUGGING) {
             registerTestScreen = new TestScreen(this);

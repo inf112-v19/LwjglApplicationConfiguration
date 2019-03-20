@@ -61,6 +61,8 @@ public class GameLogic {
                 System.out.println("set up before round");
                 doBeforeRound();
                 System.out.println("player choosing cards");
+                //if player is on repair, repair!
+                //if player is on option, draw a card.
                 break;
             case PICKING_CARDS:
                 if (playerReady(player1)) {
@@ -71,7 +73,7 @@ public class GameLogic {
                 if (phase < 5) {
 
                     System.out.println("executing phase " + phase);
-                    player1.executeCard(player1.getRegisters().getCardInRegister(phase));
+                    player1.executeCard(player1.getRegisters().getCard(phase));
                     checkIfAnyPlayersWon();
                     try {
                         Thread.sleep(500);
@@ -128,7 +130,7 @@ public class GameLogic {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            players.get(0).getRegisters().returnCardsFromRegisters(players.get(0).getCardsInHand());
+            players.get(0).getRegisters().returnCards(players.get(0).getCardsInHand());
             // messy but it works:
             ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
                     updateCardsInHandVisually();
@@ -146,12 +148,12 @@ public class GameLogic {
     }
 
     public boolean playerReady(Player player) {
-        return player.getRegisters().registerIsFull();
+        return player.getRegisters().isFull();
     }
 
     public boolean playersReady() {
         for (Player player : players) {
-            if (!player.getRegisters().registerIsFull()) {
+            if (!player.getRegisters().isFull()) {
                 return false;
             }
         }

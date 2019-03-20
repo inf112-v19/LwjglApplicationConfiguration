@@ -49,7 +49,7 @@ public class ProgramRegisterDisplay {
         }
 
         lifeToken = new Sprite(new Texture("assets/cards/tokens/lifeToken.png"));
-        lifeToken.setSize(lifeToken.getWidth() * scale, lifeToken.getHeight() * scale);
+        lifeToken.setSize(80 * scale, 80 * scale);
 
         damageToken = new Sprite(new Texture("assets/cards/tokens/damageToken.png"));
         damageToken.setSize(damageToken.getWidth() * scale, damageToken.getHeight() * scale);
@@ -116,9 +116,9 @@ public class ProgramRegisterDisplay {
 
     private void drawCardsInRegisters(SpriteBatch batch) {
         for (int i = 0; i < 5; i++) {
-            if (registers.getCardInRegister(i) != null) {
+            if (registers.getCard(i) != null) {
                 card.setPosition(programBoard.getX() + 19 * scale + 200 * scale * i, 10 * scale);
-                card.setRegion(cardVisual.getRegion(registers.getCardInRegister(i)));
+                card.setRegion(cardVisual.getRegion(registers.getCard(i)));
                 card.draw(batch);
             }
         }

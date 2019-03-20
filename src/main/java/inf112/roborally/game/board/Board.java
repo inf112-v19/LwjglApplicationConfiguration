@@ -78,6 +78,7 @@ public abstract class Board extends BoardCreator {
     }
 
     public void boardMoves() {
+//      TODO: expressBeltsMovePlayers();
         beltsMovePlayers();
         lasersFire();
         visitFlags();
