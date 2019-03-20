@@ -21,7 +21,6 @@ public class GameScreen implements Screen {
     private final Board board;
     private Background background;
     private GameMusic music;
-    private Music music;
 
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
@@ -36,13 +35,10 @@ public class GameScreen implements Screen {
 
         hud = new Hud(board.getPlayers().get(0), game);
         System.out.println(game.fixedCamera.position);
-        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
+        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay(), game);
 
-        music = Gdx.audio.newMusic(Gdx.files.internal(RoboRallyGame.MAIN_THEME));
-        music.setLooping(true);
-        music.setVolume(0.3f);
         // Music
-        music = new GameMusic("assets/music/testMusic1.ogg");
+        music = new GameMusic(RoboRallyGame.MAIN_THEME);
 
         // Move dynamicCamera to center of board:
         int x = board.getWidth() / 2 * Main.PIXELS_PER_TILE;

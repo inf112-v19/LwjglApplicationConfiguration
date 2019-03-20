@@ -14,14 +14,14 @@ public class Hud {
     public Hud(final Player player, RoboRallyGame game) {
         cardsInHandDisplay = new CardsInHandDisplay(player, new Stage(game.fixedViewPort, game.batch));
         programRegisterDisplay = new ProgramRegisterDisplay(player);
-        muteBtn = new SoundSettings(new Stage(viewport, batch), 1000, 950);
+//        muteBtn = new SoundSettings(new Stage(viewport, batch), 1000, 950);
     }
 
     public void draw(SpriteBatch batch) {
         batch.begin();
         programRegisterDisplay.draw(batch);
         batch.end();
-        muteBtn.stage.draw();
+//        muteBtn.stage.draw();
         cardsInHandDisplay.stage.draw();
     }
 
@@ -33,6 +33,6 @@ public class Hud {
         System.out.println("disposing hud");
         cardsInHandDisplay.dispose();
         programRegisterDisplay.dispose();
-        muteBtn.dispose();
+//        muteBtn.dispose();
     }
 }
