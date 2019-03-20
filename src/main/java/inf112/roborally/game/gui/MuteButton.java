@@ -13,7 +13,6 @@ public class MuteButton extends ImageButton {
         addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                System.out.println("MuteButton clicked - 1");
                 soundsettings.testCallThisWhenClicked();
             }
         });

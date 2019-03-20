@@ -22,10 +22,10 @@ public class Hud {
         camera.update();
         viewport = new FitViewport(1920, 1080, camera);
         batch = new SpriteBatch();
-        muteBtn = new SoundSettings(new Stage(viewport, batch));
+        muteBtn = new SoundSettings(new Stage(viewport, batch), 1000, 950);
         cardsInHandDisplay = new CardsInHandDisplay(player, new Stage(viewport, batch));
         programRegisterDisplay = new ProgramRegisterDisplay(player, camera);
-        batch.setProjectionMatrix(cardsInHandDisplay.stage.getCamera().combined);
+//        batch.setProjectionMatrix(cardsInHandDisplay.stage.getCamera().combined);
 
         // Use this next line?
 //        batch.setProjectionMatrix(muteBtn.stage.getCamera().combined);

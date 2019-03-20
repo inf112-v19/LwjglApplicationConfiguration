@@ -16,10 +16,14 @@ public class SoundSettings {
     public Stage stage;
     private MuteButton muteBtn;
     private SoundSettingsVisuals muteBtnVisuals;
+//    private int x;
+//    private int y;
 
-    public SoundSettings(Stage stage) {
+    public SoundSettings(Stage stage, int x, int y) {
         this.stage = stage;
         muteBtnVisuals = new SoundSettingsVisuals();
+//        this.x = x;
+//        this.y = y;
 
         Gdx.input.setInputProcessor(stage);
         stage.addListener(((RoboRallyGame)Gdx.app.getApplicationListener()).cameraListener);
@@ -27,14 +31,14 @@ public class SoundSettings {
         muteBtn = new MuteButton(new TextureRegionDrawable((muteBtnVisuals.muteBtnTexture)), this);
 
 //        muteBtn.setScale(2.f);
-        muteBtn.setPosition(950, 900);
+        muteBtn.setPosition(x, y);
         stage.addActor(muteBtn);
 
 
     }
 
     public void testCallThisWhenClicked() {
-        System.out.println("MuteButton clicked, method called - 2");
+        System.out.println("MuteButton clicked, method called");
     }
 
     public void dispose() {
