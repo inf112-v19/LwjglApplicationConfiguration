@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static inf112.roborally.game.enums.Direction.*;
+
 @SuppressWarnings("Duplicates")
 public abstract class Board extends BoardCreator {
 
@@ -24,6 +26,7 @@ public abstract class Board extends BoardCreator {
 
     private boolean boardWantsToMuteMusic = false;
     private boolean musicIsMuted = false;
+    private int counter = 0;
 
 
     public Board() {
@@ -72,13 +75,13 @@ public abstract class Board extends BoardCreator {
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            p1.setDirection(Direction.EAST);
+            p1.setDirection(EAST);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            p1.setDirection(Direction.WEST);
+            p1.setDirection(WEST);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             p1.setDirection(Direction.NORTH);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            p1.setDirection(Direction.SOUTH);
+            p1.setDirection(SOUTH);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             p1.moveBackupToPlayerPosition();
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
@@ -324,21 +327,7 @@ public abstract class Board extends BoardCreator {
             Direction dir = play.getDirection();
             int x = play.getX();
             int y = play.getY();
-
-            switch (dir) {
-                case NORTH:
-                    LaserShot shotNorth = new LaserShot(dir, x, y);
-                    shootRobot(dir, x, y);
-                case SOUTH:
-                    LaserShot shotSouth = new LaserShot(dir, x, y);
-                    shootRobot(dir, x, y);
-                case EAST:
-                    LaserShot shotEast = new LaserShot(dir, x, y);
-                    shootRobot(dir, x, y);
-                case WEST:
-                    LaserShot shotWest = new LaserShot(dir, x, y);
-                    shootRobot(dir, x, y);
-            }
+            shootRobot(dir,x,y);
         }
     }
     public void shootRobot(Direction dir, int x, int y) {
@@ -346,40 +335,49 @@ public abstract class Board extends BoardCreator {
         for (Player target :
                 players) {
             Position targetPos = new Position(target.getX(), target.getY());
-            Position currentPos = new Position(x,y);
-            System.out.println("PLAYERS : " + players.size());
-            if (targetPos.positionEquals(currentPos)){
+            Position currentPos = new Position(x, y);
+            if (targetPos.positionEquals(currentPos)) {
                 continue;
             }
-            System.out.println("TargetPos " + targetPos.getX() + " <- X " + targetPos.getY() + " <- Y");
-            System.out.println("CurrentPos " + currentPos.getX() + " <- X " + currentPos.getY() + " <- Y");
-            switch (dir) {
-                case NORTH:
-                    if(targetPos.getX() == currentPos.getX() && targetPos.getY() > currentPos.getY() && !targetPos.positionEquals(currentPos)){
-                        System.out.println(target.getDamage() + " BEFORE");
-                        target.takeDamage();
-                        System.out.println(target.getDamage() + " AFTER ");
-                    }
-                case SOUTH:
-                    if(targetPos.getX() == currentPos.getX() && targetPos.getY() < currentPos.getY()  && !targetPos.positionEquals(currentPos)){
-                        System.out.println(target.getDamage() + " BEFORE");
-                        target.takeDamage();
-                        System.out.println(target.getDamage() + " AFTER ");
-                    }
-                case EAST:
-                    if(targetPos.getX() > currentPos.getX() && targetPos.getY() == currentPos.getY()  && !targetPos.positionEquals(currentPos)){
-                        System.out.println(target.getDamage() + " BEFORE");
-                        target.takeDamage();
-                        System.out.println(target.getDamage() + " AFTER ");
-                    }
-                case WEST:
-                    if(targetPos.getX() < currentPos.getX() && targetPos.getY() == currentPos.getY()  && !targetPos.positionEquals(currentPos)){
-                        System.out.println(target.getDamage() + " BEFORE");
-                        target.takeDamage();
-                        System.out.println(target.getDamage() + " AFTER ");
-                    }
+            System.out.println("TargetPos " + targetPos.getX() + " <- X " + targetPos.getY() + " <- Y " + target.getDirection() + " <- Dir");
+            System.out.println("CurrentPos " + currentPos.getX() + " <- X " + currentPos.getY() + " <- Y " + dir + " <- Dir");
+            counter++;
+
+            if (dir == NORTH){
+                if (targetPos.getX() == currentPos.getX() && targetPos.getY() > currentPos.getY() && !targetPos.positionEquals(currentPos)) {
+                    System.out.println(target.getDamage() + " BEFORE");
+                    target.takeDamage();
+                    System.out.println(target.getDamage() + " AFTER ");
+                    System.out.println("NORTH");
+                }
+            }
+            else if (dir == SOUTH) {
+                if (targetPos.getX() == currentPos.getX() && targetPos.getY() < currentPos.getY() && !targetPos.positionEquals(currentPos)) {
+                    System.out.println(target.getDamage() + " BEFORE");
+                    target.takeDamage();
+                    System.out.println(target.getDamage() + " AFTER ");
+                    System.out.println("SOUTH");
+                }
+            }
+            else if (dir == EAST) {
+                if (targetPos.getX() > currentPos.getX() && targetPos.getY() == currentPos.getY() && !targetPos.positionEquals(currentPos)) {
+                    System.out.println(target.getDamage() + " BEFORE");
+                    target.takeDamage();
+                    System.out.println(target.getDamage() + " AFTER ");
+                    System.out.println("EAST");
+                }
+            }
+            else if (dir == WEST) {
+                if (targetPos.getX() < currentPos.getX() && targetPos.getY() == currentPos.getY() && !targetPos.positionEquals(currentPos)) {
+                    System.out.println(target.getDamage() + " BEFORE");
+                    target.takeDamage();
+                    System.out.println(target.getDamage() + " AFTER ");
+                    System.out.println("WEST");
+                }
             }
         }
+
+        System.out.println("COUNTER " + counter);
     }
 
     public boolean shotBlocked(MovableGameObject player, Direction direction, int x , int y) {
