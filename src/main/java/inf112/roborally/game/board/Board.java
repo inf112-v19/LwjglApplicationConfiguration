@@ -74,6 +74,8 @@ public abstract class Board extends BoardCreator {
             players.get(i).move(startPlates.get(i).getX(), startPlates.get(i).getY());
             players.get(i).moveBackupToPlayerPosition();
             players.get(i).setDirection(Direction.EAST);
+            players.get(i).updateSprite();
+            players.get(i).getBackup().moveToPlayerPosition();
         }
     }
 
