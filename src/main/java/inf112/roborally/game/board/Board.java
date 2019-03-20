@@ -26,7 +26,6 @@ public abstract class Board extends BoardCreator {
 
     private boolean boardWantsToMuteMusic = false;
     private boolean musicIsMuted = false;
-    private int counter = 0;
 
 
     public Board() {
@@ -339,16 +338,12 @@ public abstract class Board extends BoardCreator {
             if (targetPos.positionEquals(currentPos)) {
                 continue;
             }
-            System.out.println("TargetPos " + targetPos.getX() + " <- X " + targetPos.getY() + " <- Y " + target.getDirection() + " <- Dir");
-            System.out.println("CurrentPos " + currentPos.getX() + " <- X " + currentPos.getY() + " <- Y " + dir + " <- Dir");
-            counter++;
 
             if (dir == NORTH){
                 if (targetPos.getX() == currentPos.getX() && targetPos.getY() > currentPos.getY() && !targetPos.positionEquals(currentPos)) {
                     System.out.println(target.getDamage() + " BEFORE");
                     target.takeDamage();
                     System.out.println(target.getDamage() + " AFTER ");
-                    System.out.println("NORTH");
                 }
             }
             else if (dir == SOUTH) {
@@ -356,7 +351,6 @@ public abstract class Board extends BoardCreator {
                     System.out.println(target.getDamage() + " BEFORE");
                     target.takeDamage();
                     System.out.println(target.getDamage() + " AFTER ");
-                    System.out.println("SOUTH");
                 }
             }
             else if (dir == EAST) {
@@ -364,7 +358,6 @@ public abstract class Board extends BoardCreator {
                     System.out.println(target.getDamage() + " BEFORE");
                     target.takeDamage();
                     System.out.println(target.getDamage() + " AFTER ");
-                    System.out.println("EAST");
                 }
             }
             else if (dir == WEST) {
@@ -372,12 +365,9 @@ public abstract class Board extends BoardCreator {
                     System.out.println(target.getDamage() + " BEFORE");
                     target.takeDamage();
                     System.out.println(target.getDamage() + " AFTER ");
-                    System.out.println("WEST");
                 }
             }
         }
-
-        System.out.println("COUNTER " + counter);
     }
 
     public boolean shotBlocked(MovableGameObject player, Direction direction, int x , int y) {
