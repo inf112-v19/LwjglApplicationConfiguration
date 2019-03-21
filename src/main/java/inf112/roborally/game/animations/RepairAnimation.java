@@ -1,6 +1,7 @@
 package inf112.roborally.game.animations;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.roborally.game.objects.Position;
 
 import java.util.List;
 
@@ -9,8 +10,8 @@ public class RepairAnimation extends Animation {
     int rotation;
     int direction;
 
-    public RepairAnimation(int x, int y, List<Animation> animations) {
-        super(x, y, "assets/animations/wrench.png");
+    public RepairAnimation(Position position, List<Animation> animations) {
+        super(position, "assets/animations/wrench.png");
         this.animations = animations;
         sprite.setSize(100, 100);
         sprite.setOriginCenter();

@@ -14,6 +14,7 @@ import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.objects.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +90,7 @@ public class TestScreen implements Screen {
             player.returnCards();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
-            testAnimation.add(new RepairAnimation(8,8, testAnimation));
+            testAnimation.add(new RepairAnimation(new Position(8,8), testAnimation));
         }
     }
 

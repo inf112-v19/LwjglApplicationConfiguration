@@ -27,6 +27,11 @@ public abstract class GameObject {
         position = new Position(x, y);
     }
 
+    public GameObject(Position position, String filePath) {
+        this.filePath = filePath;
+        this.position = position;
+    }
+
 
     public void updateSprite() {
         sprite.setPosition(position.getX() * Main.PIXELS_PER_TILE, position.getY() * Main.PIXELS_PER_TILE);
