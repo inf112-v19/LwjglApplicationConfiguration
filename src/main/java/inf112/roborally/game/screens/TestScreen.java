@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.animations.Animation;
+import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;

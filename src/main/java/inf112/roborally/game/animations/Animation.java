@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens;
+package inf112.roborally.game.animations;
 
 import inf112.roborally.game.objects.GameObject;
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 
+import inf112.roborally.game.animations.LaserAnimation;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
@@ -17,7 +18,7 @@ public abstract class Board extends BoardCreator {
     protected ArrayList<Player> players;
     protected ArrayList<RepairSite> repairSites;
     protected ArrayList<Flag> flags;
-    protected ArrayList<Laser> lasers;
+    protected ArrayList<LaserAnimation> lasers;
     protected ArrayList<StartPosition> startPlates;
 
     public boolean boardWantsToMuteMusic = false;
@@ -46,7 +47,7 @@ public abstract class Board extends BoardCreator {
                 if (laserLayer.getCell(x, y) != null) {
                     Direction direction = Direction.valueOf(
                             laserLayer.getCell(x, y).getTile().getProperties().getValues().next().toString());
-                    lasers.add(new Laser(x, y, direction));
+                    lasers.add(new LaserAnimation(x, y, direction));
                 }
             }
         }

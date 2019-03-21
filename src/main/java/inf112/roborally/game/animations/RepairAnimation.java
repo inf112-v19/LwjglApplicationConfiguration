@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens;
+package inf112.roborally.game.animations;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
