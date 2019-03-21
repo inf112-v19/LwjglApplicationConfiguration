@@ -16,14 +16,6 @@ public class Position {
         this.y = y;
     }
 
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-
     public void moveInDirection(Direction dir){
         switch (dir){
             case NORTH:
@@ -50,20 +42,25 @@ public class Position {
         this.y = y;
     }
 
-    public boolean positionEquals(Object other){
-        Position that = (Position) other;
-        if (this.x == that.x && this.y == that.y)
-            return true;
-
-        return false;
+    public int getX() {
+        return this.x;
     }
 
-    public Vector3 getPosition(){
-        return new Vector3(x, y, 0);
+    public int getY() {
+        return this.y;
     }
 
     public void setPosition(Position position){
         x = position.getX();
         y = position.getY();
+    }
+
+    @Override
+    public boolean equals(Object other){
+        Position that = (Position) other;
+        if (this.x == that.x && this.y == that.y)
+            return true;
+
+        return false;
     }
 }

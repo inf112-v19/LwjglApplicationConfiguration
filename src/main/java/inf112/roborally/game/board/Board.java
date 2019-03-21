@@ -160,7 +160,7 @@ public abstract class Board extends BoardCreator {
     private void visitFlags() {
         for (Player player : players) {
             for (Flag f : flags) {
-                if (player.positionEquals(f)) {
+                if (player.position.equals(f.position)) {
                     player.visitFlag(f.getFlagNumber());
                     player.moveBackupToPlayerPosition();
                 }
@@ -256,7 +256,7 @@ public abstract class Board extends BoardCreator {
         for (Player other : players) {
             if (other.equals(player)) continue;
 
-            if (other.positionEquals(nextPos)) {
+            if (other.position.equals(nextPos)) {
                 return true;
             }
         }
@@ -269,7 +269,7 @@ public abstract class Board extends BoardCreator {
         for (Player other : players) {
             if (other.equals(player)) continue;
 
-            if (other.positionEquals(nextPos)) {
+            if (other.position.equals(nextPos)) {
                 if (!canGo(other, direction)) {
                     return false;
                 }
