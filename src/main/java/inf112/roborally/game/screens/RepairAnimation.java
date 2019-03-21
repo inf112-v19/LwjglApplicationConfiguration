@@ -22,6 +22,6 @@ public class RepairAnimation extends Animation {
     @Override
     protected void update() {
         updateSprite();
-        sprite.rotate(0.1f * stateTimer++);
+        sprite.setRotation(90 + 5 * stateTimer++);
     }
 }
