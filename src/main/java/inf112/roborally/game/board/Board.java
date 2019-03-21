@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.LaserAnimation;
+import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
@@ -195,8 +197,8 @@ public abstract class Board extends BoardCreator {
         for (Player player : players) {
             if (isOnRepair(player) || isOnOption(player)) {
                 player.repairOneDamage();
-                System.out.println("repair player");
-                //play repair animation
+                ((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.animations.
+                        add(new RepairAnimation(player.position));
 
             }
             if (isOnOption(player)) {

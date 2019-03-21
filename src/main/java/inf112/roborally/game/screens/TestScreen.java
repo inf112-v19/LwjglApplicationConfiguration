@@ -90,7 +90,7 @@ public class TestScreen implements Screen {
             player.returnCards();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
-            testAnimation.add(new RepairAnimation(new Position(8,8), testAnimation));
+            testAnimation.add(new RepairAnimation(new Position(8,8)));
         }
     }
 

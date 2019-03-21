@@ -3,6 +3,7 @@ package inf112.roborally.game.board;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
@@ -139,6 +140,9 @@ public class GameLogic {
             // messy but it works:
             ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
                     updateCardsInHandVisually();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.animations.add(new RepairAnimation(player1.position));
         }
     }
 

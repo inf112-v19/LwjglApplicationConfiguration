@@ -3,17 +3,14 @@ package inf112.roborally.game.animations;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.objects.Position;
 
-import java.util.List;
 
 public class RepairAnimation extends Animation {
-    List<Animation> animations;
     int rotation;
     int direction;
 
-    public RepairAnimation(Position position, List<Animation> animations) {
+    public RepairAnimation(Position position) {
         super(position, "assets/animations/wrench.png");
-        this.animations = animations;
-        sprite.setSize(100, 100);
+        sprite.setSize(32, 32);
         sprite.setOriginCenter();
 
         stateTimer = 0;
@@ -23,7 +20,7 @@ public class RepairAnimation extends Animation {
     }
 
     public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
+        super.draw(batch);
         update();
     }
 
@@ -42,5 +39,11 @@ public class RepairAnimation extends Animation {
         sprite.setRotation(rotation);
 
         stateTimer++;
+    }
+
+    @Override
+    public void updateSprite(){
+        super.updateSprite();
+        sprite.setPosition(sprite.getX()-3, sprite.getY() + 7);
     }
 }

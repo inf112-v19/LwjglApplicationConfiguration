@@ -7,10 +7,14 @@ import com.badlogic.gdx.graphics.GL20;
 
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.*;
 import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
+
+import java.util.ArrayList;
 
 
 public class GameScreen implements Screen {
@@ -20,8 +24,10 @@ public class GameScreen implements Screen {
     private final Hud hud;
     private final GameLogic gameLogic;
     private final Board board;
-    private Music music;
-    private Background background;
+    private final Music music;
+    private final Background background;
+
+    public ArrayList<Animation> animations;
 
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
@@ -52,6 +58,7 @@ public class GameScreen implements Screen {
 
         background = new Background(game.dynamicCamera);
 
+        animations = new ArrayList<>();
     }
 
     @Override
@@ -78,6 +85,11 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.dynamicCamera.combined);
         game.batch.begin();
         board.drawGameObjects(game.batch);
+        for(int i = 0; i < animations.size(); i++) {
+            animations.get(i).draw(game.batch);
+            if(animations.get(i).hasFinished())
+                animations.remove(i--); // need to decrement i when removing an element?
+        }
         game.batch.end();
 
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
