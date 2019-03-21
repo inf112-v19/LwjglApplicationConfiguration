@@ -17,6 +17,7 @@ public class TestScreen implements Screen {
     private ProgramRegisterDisplay programRegisterDisplay;
     private Player player;
     private Sprite background;
+    private Animation testAnimation;
 
 
     public TestScreen(RoboRallyGame game) {
@@ -29,6 +30,8 @@ public class TestScreen implements Screen {
 
         background = new Sprite(new Texture("assets/img/testscreen.png"));
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+
+        testAnimation = new RepairAnimation(8,8);
     }
 
     @Override
@@ -48,6 +51,7 @@ public class TestScreen implements Screen {
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
         game.batch.begin();
         background.draw(game.batch);
+        testAnimation.draw(game.batch);
         programRegisterDisplay.draw(game.batch);
         game.batch.end();
         handleInput();
