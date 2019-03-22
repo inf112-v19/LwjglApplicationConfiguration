@@ -2,92 +2,49 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
 
-public class SettingsScreen implements Screen {
+public class SettingsScreen extends AbstractScreen {
 
-    private RoboRallyGame roboRallyGame;
-    private SpriteBatch batch;
-    private Sprite background;
-//    private Viewport viewport;
+//    private RoboRallyGame game;
+//    private SpriteBatch batch;
+//    private Sprite background;
 
     public SettingsScreen(RoboRallyGame roborallygame) {
-        this.roboRallyGame = roborallygame;
-        batch = new SpriteBatch();
-//        viewport = new FitViewport(1920, 1080);
+//        this.game = roborallygame;
+//        batch = new SpriteBatch();
 
-        background = new Sprite(new Texture("assets/img/settingsbackground.png"));
+        super(roborallygame, "assets/img/settingsbackground.png");
 //        background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2, Gdx.graphics.getHeight() - background.getHeight());
-        roborallygame.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+//        game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
     }
 
-    @Override
-    public void show() {
-
-    }
-
+    /**
+     * In this case, we first want to run the shared render method on the superclass, but after that we
+     * want to call the handleinput method from this spesific class. If we put the handleInput() method in the
+     * superclass, then we wouldn't get the "SettiingsScreen" implementation of it
+     */
     @Override
     public void render(float v) {
-        float r = 0 / 255f;
-        float g = 20 / 255f;
-        float b = 15 / 255f;
-
-        Gdx.gl.glClearColor(r, g, b, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        batch.setProjectionMatrix(roboRallyGame.fixedCamera.combined);
-        batch.begin();
-        background.draw(batch);
-        batch.end();
-
+        super.render(v);
         handleInput();
-
     }
 
     private void handleInput() {
-       if(Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("Key B is pressed, going back to the GameScreen");
-            roboRallyGame.setScreen(roboRallyGame.gameScreen);
+        if(Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            System.out.println("Key B or Escape is pressed, going back to the GameScreen");
+            getGame().setScreen(getGame().gameScreen);
             dispose();
         }
         else if(Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             dispose();
-            roboRallyGame.newGame();
+            getGame().newGame();
         }
-
     }
 
-    @Override
-    public void resize(int w, int h) {
-//        viewport.update(w, h);
-        roboRallyGame.fixedViewPort.update(w, h);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-//        background.getTexture().dispose();
-    }
 }

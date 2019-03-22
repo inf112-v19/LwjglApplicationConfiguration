@@ -82,8 +82,6 @@ public class Hud {
         stage.addActor(clearButton);
         stage.addActor(settingsButton);
 
-//        muteBtn = new SoundSettings(new Stage(viewport, batch), 1000, 950);
-
     }
 
     public void draw(SpriteBatch batch) {
@@ -106,6 +104,5 @@ public class Hud {
         System.out.println("disposing hud");
         cardsInHandDisplay.dispose();
         programRegisterDisplay.dispose();
-//        muteBtn.dispose();
     }
 }
