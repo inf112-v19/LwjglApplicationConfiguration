@@ -22,12 +22,12 @@ public class Backup extends GameObject {
         sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
     }
 
-    public void movePlayer() {
-        player.move(getX(), getY());
+    public void movePlayerToBackup() {
+        player.moveToPosition(this.position);
     }
 
     public void moveToPlayerPosition(){
-        move(player.getX(), player.getY());
+        moveToPosition(player.position);
         updateSprite();
     }
 }

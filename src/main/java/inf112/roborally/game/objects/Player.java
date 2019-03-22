@@ -155,19 +155,13 @@ public class Player extends MovableGameObject {
         }
     }
 
-
-    public void moveBackupToPlayerPosition() {
-        backup.move(getX(), getY());
-        backup.updateSprite();
-    }
-
     public void update() {
         if (isDestroyed() && !outOfLives()) {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
             repairAllDamage();
             if (backup != null)
-                backup.movePlayer();
+                backup.movePlayerToBackup();
         }
         else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");

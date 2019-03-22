@@ -16,17 +16,18 @@ public class Position {
         this.y = y;
     }
 
-    public void moveInDirection(Direction dir){
+    public Position moveInDirection(Direction dir){
         switch (dir){
             case NORTH:
-                setY(getY() +1); break;
+                setY(getY() +1); return this;
             case SOUTH:
-                setY(getY() - 1); break;
+                setY(getY() - 1); return this;
             case EAST:
-                setX(getX() + 1); break;
+                setX(getX() + 1); return this;
             case WEST:
-                setX(getX() - 1); break;
+                setX(getX() - 1); return this;
         }
+        return this;
     }
 
     public void move(int x, int y){

@@ -41,14 +41,6 @@ public abstract class GameObject {
         sprite = new Sprite(new Texture(filePath));
     }
 
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    public Vector3 getSpritePosition() {
-        return new Vector3(sprite.getX() + sprite.getWidth() / 2, sprite.getY() + sprite.getHeight() / 2, 0);
-    }
-
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }
@@ -56,6 +48,10 @@ public abstract class GameObject {
 
     public void move(int x, int y) {
         position.move(x, y);
+    }
+
+    public void moveToPosition(Position position){
+        this.position.move(position.getX(), position.getY());
     }
 
     public int getX() {
@@ -66,8 +62,12 @@ public abstract class GameObject {
         return position.getY();
     }
 
-    public void moveInDirection(Direction dir) {
-        position.moveInDirection(dir);
+    public Sprite getSprite() {
+        return sprite;
+    }
+
+    public Vector3 getSpritePosition() {
+        return new Vector3(sprite.getX() + sprite.getWidth() / 2, sprite.getY() + sprite.getHeight() / 2, 0);
     }
 
 }

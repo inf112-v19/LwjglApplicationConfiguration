@@ -2,13 +2,14 @@ package inf112.roborally.game.objects;
 
 import org.jetbrains.annotations.NotNull;
 
-public class StartPosition extends Position implements Comparable{
+public class StartPosition  implements Comparable{
 
+    public Position position;
     public Integer startNumber;
 
     public StartPosition(int x, int y, int startNumber){
-        super(x,y);
         this.startNumber = startNumber;
+        position = new Position(x, y);
     }
 
     @Override

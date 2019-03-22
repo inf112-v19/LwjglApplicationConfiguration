@@ -3,7 +3,6 @@ package inf112.roborally.game.board;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
@@ -48,11 +47,12 @@ public class GameLogic {
      * Receive new cards
      */
     public void doBeforeRound() {
+        // todo: check if a player has won
         retrieveCardsFromPlayer(player1);
+        board.cleanBoard();
         giveCardsToPlayer(player1);
         cardsInHandDisplay.updateCardsInHandVisually();
         state = GameState.PICKING_CARDS;
-        board.cleanBoard();
     }
 
     public void update() {
@@ -67,8 +67,6 @@ public class GameLogic {
                 for(Player player : players) {
                     player.playerState = PlayerState.PICKING_CARDS;
                 }
-                //if player is on repair, repair!
-                //if player is on option, draw a card.
                 break;
             case PICKING_CARDS:
                 if (playerReady(player1)) {
@@ -98,7 +96,6 @@ public class GameLogic {
                 break;
             case BOARDMOVES:
                 board.boardMoves();
-                // todo: check if a player has won
                 state = GameState.ROUND;
                 break;
         }
@@ -140,9 +137,6 @@ public class GameLogic {
             // messy but it works:
             ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
                     updateCardsInHandVisually();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.animations.add(new RepairAnimation(player1.position));
         }
     }
 
