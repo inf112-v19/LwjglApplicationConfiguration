@@ -5,8 +5,8 @@ import inf112.roborally.game.objects.Position;
 
 
 public class RepairAnimation extends Animation {
-    int rotation;
-    int direction;
+    float rotation;
+    float direction;
 
     public RepairAnimation(Position position) {
         super(position, "assets/animations/wrench.png");
@@ -38,6 +38,7 @@ public class RepairAnimation extends Animation {
         rotation = rotation + 5 * direction;
         sprite.setRotation(rotation);
 
+        direction+= 0.052f;
         stateTimer++;
     }
 
