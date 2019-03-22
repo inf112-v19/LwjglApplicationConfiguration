@@ -30,7 +30,10 @@ public class Player extends MovableGameObject {
     private Board board;
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
+
     private GameSound laserHitPlayerSound;
+    private GameSound repairSound;
+    private ArrayList<GameSound> allPlayerSounds;
 
 
     public Player(String name, String filepath, Direction direction, Board board) {
@@ -54,6 +57,16 @@ public class Player extends MovableGameObject {
         cardsInHand = new ArrayList<>();
 
         playerState = PlayerState.PICKING_CARDS;
+
+        allPlayerSounds = new ArrayList<>();
+        createSounds();
+    }
+
+    public void createSounds () {
+        laserHitPlayerSound = new GameSound("assets/music/playerLaser.wav");
+        repairSound = new GameSound("assets/music/playerRepair.wav");
+        allPlayerSounds.add(laserHitPlayerSound);
+        allPlayerSounds.add(repairSound);
     }
 
     @Override
@@ -64,7 +77,6 @@ public class Player extends MovableGameObject {
             regions.add(new TextureRegion(getSprite().getTexture(), 32 * 8 * i, 0, 32 * 8, 48 * 8));
         }
         sprite.setRegion(regions.get(0));
-        laserHitPlayerSound = new GameSound("assets/music/playerLaser.wav");
     }
 
     /**
@@ -279,10 +291,14 @@ public class Player extends MovableGameObject {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 
-    public GameSound getLaserHitPlayerSound() { return this.laserHitPlayerSound; }
+    public GameSound getLaserHitPlayerSound() { return laserHitPlayerSound; }
+    public GameSound getRepairSound() { return repairSound; }
 
     public void killTheSound() {
-        laserHitPlayerSound.mute();
+        for (GameSound s : allPlayerSounds) {
+            s.mute();
+        }
+        allPlayerSounds = new ArrayList<>();
     }
 
     @Override
