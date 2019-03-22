@@ -40,6 +40,10 @@ public abstract class MovableGameObject extends GameObject {
             moveInDirection(getDirection());
     }
 
+    public void moveInDirection(Direction dir) {
+        position.moveInDirection(dir);
+    }
+
     /**
      * Rotates the object - visually too.
      *
