@@ -22,6 +22,8 @@ public class Hud {
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
+    private ImageButton settingsButton;
+
 
     public Hud(final Player player, RoboRallyGame game) {
         this.player = player;
@@ -40,6 +42,7 @@ public class Hud {
                 player.playerState = PlayerState.READY;
             }
         });
+
 
         greySubmitButton = new ImageButton(new TextureRegionDrawable(new Texture(
                 "assets/cards/buttonSubmitGrey.png")));
@@ -62,9 +65,22 @@ public class Hud {
         });
 
 
+        settingsButton = new ImageButton(new TextureRegionDrawable(new Texture("assets/img/settingsbtn.png")));
+//        settingsButton.setSize(settingsButton.getWidth() * 3, settingsButton.getHeight() * 3);
+        settingsButton.setPosition(60, 60);
+        settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Also kind of messy
+                ((RoboRallyGame) Gdx.app.getApplicationListener()).setScreen(
+                        ((RoboRallyGame) Gdx.app.getApplicationListener()).settingsScreen);
+            }
+        });
+
         stage.addActor(greySubmitButton);
         stage.addActor(submitButton);
         stage.addActor(clearButton);
+        stage.addActor(settingsButton);
 
     }
 

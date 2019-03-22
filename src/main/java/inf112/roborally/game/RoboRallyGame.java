@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.screens.GameScreen;
 import inf112.roborally.game.screens.MenuScreen;
+import inf112.roborally.game.screens.SettingsScreen;
 import inf112.roborally.game.screens.TestScreen;
 
 public class RoboRallyGame extends Game {
@@ -36,6 +37,7 @@ public class RoboRallyGame extends Game {
     public GameScreen gameScreen;
     public TestScreen registerTestScreen;
     public MenuScreen menuScreen;
+    public SettingsScreen settingsScreen;
 
     @Override
     public void create() {
@@ -59,8 +61,14 @@ public class RoboRallyGame extends Game {
         else {
             menuScreen = new MenuScreen(this);
             gameScreen = new GameScreen(this, VAULT);
+            settingsScreen = new SettingsScreen(this);
             setScreen(menuScreen);
         }
+    }
+
+    public void newGame() {
+        dispose();
+        create();
     }
 
     @Override

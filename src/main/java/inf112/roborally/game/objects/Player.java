@@ -11,6 +11,7 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 
+import inf112.roborally.game.sound.GameSound;
 import java.util.ArrayList;
 
 
@@ -29,10 +30,12 @@ public class Player extends MovableGameObject {
     private Board board;
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
+    private GameSound laserHitPlayerSound;
 
 
     public Player(String name, String filepath, Direction direction, Board board) {
         super(0, 0, filepath);
+
         this.name = name;
         this.board = board;
         setDirection(direction);
@@ -61,6 +64,7 @@ public class Player extends MovableGameObject {
             regions.add(new TextureRegion(getSprite().getTexture(), 32 * 8 * i, 0, 32 * 8, 48 * 8));
         }
         sprite.setRegion(regions.get(0));
+        laserHitPlayerSound = new GameSound("assets/music/playerLaser.wav");
     }
 
     /**
@@ -273,6 +277,12 @@ public class Player extends MovableGameObject {
     @Override
     public String toString() {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
+    }
+
+    public GameSound getLaserHitPlayerSound() { return this.laserHitPlayerSound; }
+
+    public void killTheSound() {
+        laserHitPlayerSound.mute();
     }
 
     @Override
