@@ -110,6 +110,11 @@ public class GameLogic {
             game.setScreen(game.settingsScreen);
 
         }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.E))  {
+            System.out.println("Switched to EndGame screen");
+            game.endGameScreen.addWinner(player1);
+            game.setScreen(game.endGameScreen);
+        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0));
