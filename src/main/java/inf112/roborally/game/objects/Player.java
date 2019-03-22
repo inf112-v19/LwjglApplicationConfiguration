@@ -31,9 +31,8 @@ public class Player extends MovableGameObject {
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
 
-    private GameSound laserHitPlayerSound;
-    private GameSound repairSound;
-    private ArrayList<GameSound> allPlayerSounds;
+    private int nSounds;
+    private GameSound[] allPlayerSounds;
 
 
     public Player(String name, String filepath, Direction direction, Board board) {
@@ -58,15 +57,16 @@ public class Player extends MovableGameObject {
 
         playerState = PlayerState.PICKING_CARDS;
 
-        allPlayerSounds = new ArrayList<>();
+        // As for now, we have 3 sounds
+        nSounds = 3;
+        allPlayerSounds = new GameSound[nSounds];
         createSounds();
     }
 
     public void createSounds () {
-        laserHitPlayerSound = new GameSound("assets/music/playerLaser.wav");
-        repairSound = new GameSound("assets/music/playerRepair.wav");
-        allPlayerSounds.add(laserHitPlayerSound);
-        allPlayerSounds.add(repairSound);
+        allPlayerSounds[0] = new GameSound("assets/music/playerLaser.wav");
+        allPlayerSounds[1] = new GameSound("assets/music/playerRepair.wav");
+        allPlayerSounds[2] = new GameSound("assets/music/playerWilhelmScream.wav");
     }
 
     @Override
@@ -291,14 +291,15 @@ public class Player extends MovableGameObject {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 
-    public GameSound getLaserHitPlayerSound() { return laserHitPlayerSound; }
-    public GameSound getRepairSound() { return repairSound; }
+    public GameSound getSoundFromPlayer(int index) {
+        return allPlayerSounds[index];
+    }
 
     public void killTheSound() {
         for (GameSound s : allPlayerSounds) {
             s.mute();
         }
-        allPlayerSounds = new ArrayList<>();
+        allPlayerSounds = new GameSound[nSounds];
     }
 
     @Override

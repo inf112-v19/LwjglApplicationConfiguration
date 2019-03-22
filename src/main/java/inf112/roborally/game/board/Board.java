@@ -28,6 +28,9 @@ public abstract class Board extends BoardCreator {
     protected ArrayList<LaserAnimation> lasers;
     protected ArrayList<StartPosition> startPlates;
 
+    // Need this one so we don't check for non existing music when sounds are muted/disposed
+    private boolean soundIsMuted;
+
 
     public Board() {
         players = new ArrayList<>();
@@ -35,6 +38,7 @@ public abstract class Board extends BoardCreator {
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
         startPlates = new ArrayList<>();
+        soundIsMuted = false;
     }
 
     public void render(OrthographicCamera camera) {
@@ -94,6 +98,9 @@ public abstract class Board extends BoardCreator {
             if (player == null) continue;
             expressBeltsMove(player);
             if (isOffTheBoard(player)) {
+                if(!soundIsMuted) {
+                    player.getSoundFromPlayer(2).play();
+                }
                 player.destroy();
             }
         }
@@ -145,8 +152,10 @@ public abstract class Board extends BoardCreator {
     private void lasersFire() {
         for (Player player : players) {
             if (lasersHit(laserLayer.getCell(player.getX(), player.getY()))) {
+                if(!soundIsMuted) {
+                    player.getSoundFromPlayer(0).play();
+                }
                 player.takeDamage();
-                player.getLaserHitPlayerSound().play();
             }
         }
         laserFire();
@@ -191,7 +200,9 @@ public abstract class Board extends BoardCreator {
         for (Player player : players) {
             if (isOnRepair(player) || isOnOption(player)) {
                 player.repairOneDamage();
-                player.getRepairSound().play();
+                if(!soundIsMuted) {
+                    player.getSoundFromPlayer(1).play();
+                }
                 addAnimation(new RepairAnimation(player.position));
             }
             if (isOnOption(player)) {
@@ -316,12 +327,14 @@ public abstract class Board extends BoardCreator {
         for (Player p : players) {
             p.killTheSound();
         }
+        soundIsMuted = true;
     }
 
     public void restartTheSound() {
         for (Player p : players) {
             p.createSounds();
         }
+        soundIsMuted = false;
     }
 
     public TiledMapTileLayer getWallLayer() {
