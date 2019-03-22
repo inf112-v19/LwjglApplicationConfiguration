@@ -19,9 +19,8 @@ public abstract class Board extends BoardCreator {
     protected ArrayList<Laser> lasers;
     protected ArrayList<StartPosition> startPlates;
 
-    public boolean boardWantsToMuteMusic = false;
-    private boolean musicIsMuted = false;
     private Sound laserHitPlayerSound;
+    private String laserSoundFilePath = "assets/music/playerLaser.wav";
 
 
     public Board() {
@@ -31,7 +30,7 @@ public abstract class Board extends BoardCreator {
         lasers = new ArrayList<>();
         startPlates = new ArrayList<>();
 
-        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal("assets/music/playerLaser.wav"));
+        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal(laserSoundFilePath));
     }
 
     public void render(OrthographicCamera camera) {
@@ -319,6 +318,10 @@ public abstract class Board extends BoardCreator {
         laserHitPlayerSound.dispose();
     }
 
+    public void restartTheSound() {
+        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal(laserSoundFilePath));
+    }
+
     public TiledMapTileLayer getWallLayer() {
         return this.wallLayer;
     }
@@ -335,15 +338,6 @@ public abstract class Board extends BoardCreator {
         return this.players;
     }
 
-    public boolean boardWantsToMuteMusic() {
-        return this.boardWantsToMuteMusic;
-    }
-
-    public void musicIsMuted() {
-        System.out.println("Music is now muted");
-        boardWantsToMuteMusic = false;
-        musicIsMuted = true;
-    }
 
     public ArrayList<Flag> getFlags() {
         return flags;

@@ -112,9 +112,6 @@ public class GameLogic {
             game.setScreen(game.settingsScreen);
 
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            board.boardWantsToMuteMusic = true;
-        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0));

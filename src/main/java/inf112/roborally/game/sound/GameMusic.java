@@ -2,10 +2,11 @@ package inf112.roborally.game.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class GameMusic implements IGameMusic {
     private Music music;
-    private boolean musicIsMuted;
     private String filepath; // save the filepath for this instance of music
 
 
@@ -14,7 +15,6 @@ public class GameMusic implements IGameMusic {
         filepath = filepath;
         music.setLooping(true);
         music.setVolume(0.3f);
-        musicIsMuted = false;
     }
 
     @Override
@@ -25,7 +25,6 @@ public class GameMusic implements IGameMusic {
     @Override
     public void mute() {
         music.stop();
-        musicIsMuted = true;
     }
 
     @Override

@@ -86,13 +86,6 @@ public class GameScreen implements Screen {
         gameLogic.update();
         game.cameraListener.update();
         background.update(game.dynamicCamera);
-
-        // Mute music
-        if(board.boardWantsToMuteMusic()) {
-            music.mute();
-            board.musicIsMuted();
-            board.killTheSound();
-        }
     }
 
 
@@ -142,6 +135,10 @@ public class GameScreen implements Screen {
 
     public GameMusic getMusic() {
         return music;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
 
