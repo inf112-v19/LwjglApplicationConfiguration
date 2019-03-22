@@ -112,13 +112,8 @@ public class GameLogic {
             game.setScreen(game.settingsScreen);
         }
 
-<<<<<<< HEAD
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0));
-=======
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0, ""));
->>>>>>> 95043c8a4fb09ebc520f407901f5b117f00db9a8
             board.boardMoves();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
