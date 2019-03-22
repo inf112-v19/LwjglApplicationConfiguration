@@ -13,6 +13,7 @@ import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.sound.GameSound;
 
 import java.util.*;
 
@@ -27,9 +28,6 @@ public abstract class Board extends BoardCreator {
     protected ArrayList<LaserAnimation> lasers;
     protected ArrayList<StartPosition> startPlates;
 
-    private Sound laserHitPlayerSound;
-    private String laserSoundFilePath = "assets/music/playerLaser.wav";
-
 
     public Board() {
         players = new ArrayList<>();
@@ -37,8 +35,6 @@ public abstract class Board extends BoardCreator {
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
         startPlates = new ArrayList<>();
-
-        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal(laserSoundFilePath));
     }
 
     public void render(OrthographicCamera camera) {
@@ -80,7 +76,7 @@ public abstract class Board extends BoardCreator {
         int startNumber = 0;
         for (Player currentPlayer : players) {
             currentPlayer.moveToPosition(startPlates.get(startNumber++).position);
-            currentPlayer.setDirection(Direction.EAST);
+            currentPlayer.setDirection(Direction.WEST);
             currentPlayer.updateSprite();
             currentPlayer.getBackup().moveToPlayerPosition();
         }
@@ -150,7 +146,7 @@ public abstract class Board extends BoardCreator {
         for (Player player : players) {
             if (lasersHit(laserLayer.getCell(player.getX(), player.getY()))) {
                 player.takeDamage();
-                laserHitPlayerSound.play(0.1f);
+                player.getLaserHitPlayerSound().play();
             }
         }
         laserFire();
@@ -195,6 +191,7 @@ public abstract class Board extends BoardCreator {
         for (Player player : players) {
             if (isOnRepair(player) || isOnOption(player)) {
                 player.repairOneDamage();
+                player.getRepairSound().play();
                 addAnimation(new RepairAnimation(player.position));
             }
             if (isOnOption(player)) {
@@ -312,16 +309,19 @@ public abstract class Board extends BoardCreator {
     public void dispose() {
         System.out.println("disposing board");
         map.dispose();
-        laserHitPlayerSound.dispose();
 
     }
 
     public void killTheSound() {
-        laserHitPlayerSound.dispose();
+        for (Player p : players) {
+            p.killTheSound();
+        }
     }
 
     public void restartTheSound() {
-        laserHitPlayerSound = Gdx.audio.newSound(Gdx.files.internal(laserSoundFilePath));
+        for (Player p : players) {
+            p.createSounds();
+        }
     }
 
     public TiledMapTileLayer getWallLayer() {
