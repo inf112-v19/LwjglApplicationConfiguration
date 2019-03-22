@@ -14,7 +14,7 @@ public class GameSound implements IGameMusic{
 
     @Override
     public void play() {
-        sound.play(0.05f);
+        sound.play(0.5f);
     }
 
     @Override
