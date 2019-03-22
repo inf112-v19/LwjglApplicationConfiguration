@@ -7,12 +7,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.RoboRallyGame;
+import org.lwjgl.Sys;
 
 public class SettingsScreen extends AbstractScreen {
 
+    // Just a local variable to let the settings screen keep track of whether or
+    // not the music is muted
+    private boolean musicIsMuted;
+
     public SettingsScreen(RoboRallyGame roborallygame) {
         super(roborallygame, "assets/img/settingsbackground.png");
-
+        musicIsMuted = false;
     }
 
     /**
@@ -32,7 +37,19 @@ public class SettingsScreen extends AbstractScreen {
             game.setScreen(game.gameScreen);
             dispose();
         }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            if (!musicIsMuted) {
+                game.gameScreen.getMusic().mute();
+                musicIsMuted = true;
+                System.out.println("Muted the music from the settings screen");
+            }
+            else {
+                game.gameScreen.getMusic().play();
+                musicIsMuted = false;
+                System.out.println("Started the music from the settings screen");
+            }
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             dispose();
             game.newGame();
         }

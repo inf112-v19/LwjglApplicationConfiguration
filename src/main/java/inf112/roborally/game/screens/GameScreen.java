@@ -139,6 +139,10 @@ public class GameScreen implements Screen {
     public GameLogic getGameLogic(){
         return gameLogic;
     }
+
+    public GameMusic getMusic() {
+        return music;
+    }
 }
 
 
