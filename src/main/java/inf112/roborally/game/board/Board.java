@@ -16,6 +16,9 @@ import inf112.roborally.game.enums.Direction;
 
 import java.util.*;
 
+import static inf112.roborally.game.enums.Direction.*;
+
+@SuppressWarnings("Duplicates")
 public abstract class Board extends BoardCreator {
 
     protected ArrayList<Player> players;
@@ -150,6 +153,7 @@ public abstract class Board extends BoardCreator {
                 laserHitPlayerSound.play(0.1f);
             }
         }
+        laserFire();
     }
 
     private boolean lasersHit(TiledMapTileLayer.Cell currentCell) {
@@ -210,8 +214,8 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public boolean canGo(MovableGameObject player, Direction direction) {
-        return canLeaveCell(player, direction) && canEnter(player, direction);
+    public boolean canGo(MovableGameObject object, Direction direction) {
+        return canLeaveCell(object, direction) && canEnter(object, direction);
     }
 
     private boolean canLeaveCell(MovableGameObject object, Direction direction) {
@@ -336,6 +340,39 @@ public abstract class Board extends BoardCreator {
         return this.players;
     }
 
+
+    public void laserFire(){
+        for (Player player :
+                players) {
+            robotFire(player);
+        }
+    }
+
+    public void robotFire(Player player){
+
+        LaserShot laserShot = new LaserShot(player.getDirection(), player.getX(), player.getY());
+        while(true){
+            if(!canGo(laserShot, laserShot.getDirection()))
+                return;
+            laserShot.moveInDirection(laserShot.getDirection());
+
+            for (Player target :
+                    players) {
+                if(laserShot.position.equals(target.position)){
+                    target.takeDamage();
+                    System.out.println(player.getName() +  " shoots  " + target.getName());
+                    return;
+                }
+
+            }
+
+            if(laserShot.getX()< 0 || laserShot.getX() > getWidth()
+                    || laserShot.getY() < 0 || laserShot.getY() > getHeight()){
+                return;
+            }
+        }
+
+    }
 
     public ArrayList<Flag> getFlags() {
         return flags;
