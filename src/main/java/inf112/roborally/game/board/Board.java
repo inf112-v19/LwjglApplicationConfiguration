@@ -111,14 +111,14 @@ public abstract class Board extends BoardCreator {
 
     private void expressBeltsMove(Player player) {
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-        if (currentCell != null && cellContainsKey(currentCell, "Express")) {
+        if (cellContainsKey(currentCell, "Express")) {
 
             Direction beltDir = Direction.valueOf(getValue(currentCell));
             if (!canGo(player, beltDir) || crashWithRobot(player, beltDir)) return;
 
             player.moveInDirection(beltDir);
             currentCell = beltLayer.getCell(player.getX(), player.getY());
-            if (currentCell == null || !currentCell.getTile().getProperties().containsKey("Rotate")) return;
+            if (!cellContainsKey(currentCell, "Rotate")) return;
 
             Iterator<Object> i = currentCell.getTile().getProperties().getValues();
             i.next();
