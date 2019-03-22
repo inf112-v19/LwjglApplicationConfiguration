@@ -6,7 +6,6 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
 
 public abstract class MovableGameObject extends GameObject {
-    public boolean moved;
     protected int rotationDegree;
     private Direction direction;
 
@@ -41,6 +40,10 @@ public abstract class MovableGameObject extends GameObject {
             moveInDirection(getDirection());
     }
 
+    public void moveInDirection(Direction dir) {
+        position.moveInDirection(dir);
+    }
+
     /**
      * Rotates the object - visually too.
      *
@@ -54,7 +57,6 @@ public abstract class MovableGameObject extends GameObject {
     public void setDirection(Direction direction){
         this.direction = direction;
         rotationDegree = direction.getRotationDegree();
-        moved = true;
     }
 
     public Direction getDirection(){

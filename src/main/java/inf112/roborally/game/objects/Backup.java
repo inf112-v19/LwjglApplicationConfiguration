@@ -4,6 +4,8 @@ import inf112.roborally.game.Main;
 
 public class Backup extends GameObject {
 
+    private final Player player;
+
     /**
      * A Backup is an object with a sprite, an x and a y value
      * it servers as a checkpoint, intended uses is when a player gets destroyed the
@@ -12,14 +14,20 @@ public class Backup extends GameObject {
      * @param x position x
      * @param y position y
      */
-    public Backup(int x, int y) {
+    public Backup(int x, int y, Player player) {
         super(x, y, "assets/objects/backup.png");
+        this.player = player;
         makeSprite();
         updateSprite();
         sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
     }
 
-    public void movePlayer(Player player) {
-        player.move(getX(), getY());
+    public void movePlayerToBackup() {
+        player.moveToPosition(this.position);
+    }
+
+    public void moveToPlayerPosition(){
+        moveToPosition(player.position);
+        updateSprite();
     }
 }

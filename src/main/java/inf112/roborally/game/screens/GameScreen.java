@@ -4,14 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.*;
+import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
+
+import java.util.ArrayList;
+
+import static inf112.roborally.game.enums.Direction.NORTH;
 
 
 public class GameScreen implements Screen {
@@ -20,37 +24,42 @@ public class GameScreen implements Screen {
     private final RoboRallyGame game;
     private final Hud hud;
     private final GameLogic gameLogic;
-
     private final Board board;
-    private final Player player;
-    private Music music;
+    private final Music music;
+    private final Background background;
 
-    Sprite background;
-    SpriteBatch backgroundBatch;
+    public ArrayList<Animation> animations;
 
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
         this.game = game;
 
         board = new VaultBoard();
-        hud = new Hud(board.getPlayers().get(0));
-        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
-        player = board.getPlayers().get(0);
 
-        // Music
-        music = Gdx.audio.newMusic(Gdx.files.internal("assets/music/testMusic1.ogg"));
+        board.addPlayer(new Player("Player1", "assets/robot/bartenderclaptrap.png", NORTH, board));
+        board.addPlayer(new Player("Player2", "assets/robot/claptrapRefined.png", NORTH, board));
+        board.addPlayer(new Player("Player3", "assets/robot/butlerRefined.png", NORTH, board));
+        board.addPlayer(new Player("Player1", "assets/robot/claptrap3000.png", NORTH, board));
+        board.placePlayers();
+
+        hud = new Hud(board.getPlayers().get(0), game);
+        System.out.println(game.fixedCamera.position);
+        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
+
+        music = Gdx.audio.newMusic(Gdx.files.internal(RoboRallyGame.MAIN_THEME));
         music.setLooping(true);
         music.setVolume(0.3f);
 
-        background = new Sprite(new Texture("assets/img/background.png"));
-        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        backgroundBatch = new SpriteBatch();
+        // Move dynamicCamera to center of board:
+        int x = board.getWidth() / 2 * Main.PIXELS_PER_TILE;
+        int y = board.getHeight() / 2 * Main.PIXELS_PER_TILE;
+        game.dynamicCamera.position.set(x, y, 0);
+        game.dynamicCamera.zoom = 0.4f;
+        game.dynamicCamera.update();
 
-        board.findLasers();
+        background = new Background(game.dynamicCamera);
 
-        game.camera.zoom = 0.4f;
-        game.camera.position.set(board.getWidth()/2* Main.PIXELS_PER_TILE, board.getHeight()/2*Main.PIXELS_PER_TILE, 0);
-        game.camera.update();
+        animations = new ArrayList<>();
     }
 
     @Override
@@ -60,63 +69,57 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
         update();
         float r = 10 / 255f;
         float g = 10 / 255f;
         float b = 10 / 255f;
-
-        //The function glClearColor takes in values between 0 and 1. It creates the background color.
         Gdx.gl.glClearColor(r, g, b, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        backgroundBatch.begin();
-        background.draw(backgroundBatch);
-        backgroundBatch.end();
-
-        board.render(game.camera);
-
-        game.batch.setProjectionMatrix(game.camera.combined);
-
+        game.batch.setProjectionMatrix(game.fixedCamera.combined);
         game.batch.begin();
-        board.drawBackup(game.batch);
-        board.drawPlayers(game.batch);
-        board.drawLasers(game.batch);
-        board.drawGameObjects(game.batch);
+        background.draw(game.batch);
         game.batch.end();
 
-        hud.draw();
+        board.render(game.dynamicCamera);
 
-        // Mute music
-        if(board.boardWantsToMuteMusic()) {
-            music.stop();
-            board.musicIsMuted();
-            for (Player p : board.getPlayers()) {
-                p.killTheSound();
-            }
+        game.batch.setProjectionMatrix(game.dynamicCamera.combined);
+        game.batch.begin();
+        board.drawGameObjects(game.batch);
+        for (int i = 0; i < animations.size(); i++) {
+            animations.get(i).draw(game.batch);
+            if (animations.get(i).hasFinished())
+                animations.remove(i--); // need to decrement i when removing an element?
         }
+        game.batch.end();
 
+        game.batch.setProjectionMatrix(game.fixedCamera.combined);
+        hud.draw(game.batch);
     }
 
     private void update() {
-        board.update();
         gameLogic.update();
         game.cameraListener.update();
+        background.update(game.dynamicCamera);
+
+        // Mute music
+        if (board.boardWantsToMuteMusic()) {
+            music.stop();
+            board.musicIsMuted();
+            board.killTheSound();
+        }
     }
 
 
     @Override
     public void dispose() {
         System.out.println("disposing game screen");
-        backgroundBatch.dispose();
-        background.getTexture().dispose();
+        background.dispose();
 
-        game.batch.dispose();
         board.dispose();
         for (Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
-            player.getLaserHitPlayerSound().dispose();
         }
         hud.dispose();
         music.dispose();
@@ -139,12 +142,17 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        game.viewPort.update(width, height);
-        hud.resize(width, height);
+        game.dynamicViewPort.update(width, height);
+        game.fixedViewPort.update(width, height);
+
     }
 
     public Hud getHud() {
         return hud;
+    }
+
+    public GameLogic getGameLogic() {
+        return gameLogic;
     }
 }
 
