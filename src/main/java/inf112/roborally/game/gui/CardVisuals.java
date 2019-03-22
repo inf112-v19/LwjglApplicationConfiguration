@@ -3,7 +3,9 @@ package inf112.roborally.game.gui;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.roborally.game.board.ProgramCard;
 
 import java.util.ArrayList;
@@ -33,6 +35,13 @@ public class CardVisuals extends Sprite {
         for(int i = 0; i < nRegions; i++){
             list.add(new TextureRegion(cardTextures, x+CARD_WIDTH*i, CARD_HEIGHT*y, CARD_WIDTH, CARD_HEIGHT));
         }
+    }
+
+    public void test(){
+        TextureAtlas atlas = new TextureAtlas("assets/cards/tokens/imagebutton.atlas");
+        Skin skin = new Skin(atlas);
+        skin.addRegions(atlas);
+
     }
 
     public void drawCard(ProgramCard programCard, int x, int y, SpriteBatch batch) {
