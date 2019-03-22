@@ -48,6 +48,7 @@ public class GameScreen implements Screen {
 
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
+        music.play();
 
         // Move dynamicCamera to center of board:
         int x = board.getWidth() / 2 * Main.PIXELS_PER_TILE;
@@ -63,7 +64,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        music.play();
     }
 
     @Override
