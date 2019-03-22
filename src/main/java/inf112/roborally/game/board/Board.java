@@ -370,56 +370,45 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public boolean shotBlocked(MovableGameObject player, Direction direction, int x , int y) {
+    public boolean shotBlocked(Position to, Position from,  Direction direction) {
         // first check the current tile:
+        Position currentPos = new Position(from.getX(), from.getY());
+        Position toPos = new Position(to.getX(),to.getY());
 
-        Position nextPos = new Position(x, y);
-        // check this tile:
-        TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(nextPos.getX(), nextPos.getY());
-        List<String> walls = new ArrayList<>();
-        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
-        }
-        if (walls.contains(direction.toString())) {
-            System.out.println("Laser blocked");
-            return true;
-        }
-
-        // move new position to target tile:
-        nextPos.moveInDirection(direction);
-
-        // check target tile:
-        if (nextPos.getX() < 0 || nextPos.getY() < 0 || getWidth() <= nextPos.getX()
-                || getHeight() <= nextPos.getY())
-            return true;
-
-        walls = new ArrayList<>();
-        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(nextPos.getX(), nextPos.getY());
-
-        if (targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
-
-        }
-
-        Direction oppositeDirection = direction.getOppositeDirection();
-
-        if (walls.contains(oppositeDirection.toString())) {
-            System.out.println("Laser blocked");
-            return true;
-        }
-
-        if(targetCell != null){
-            for (Player target :
-                    players) {
-                Position targetPos = new Position(target.getX(), target.getY());
-                if(targetPos.equals(nextPos)){
-//                    target.takeDamage();
-//                    System.out.println("Laser hit");
-                    System.out.println(target.getDamage());
-                    return true;
-                }
+        while (true) {
+            // check this tile:
+            TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(currentPos.getX(), currentPos.getY());
+            List<String> walls = new ArrayList<>();
+            if (currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
+                walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
             }
+            if (walls.contains(direction.toString())) {
+                System.out.println("Laser blocked");
+                return true;
+            }
+            // move new position to target tile:
+            currentPos.moveInDirection(direction);
+
+            // check target tile:
+            if (currentPos.getX() < 0 || currentPos.getY() < 0 || getWidth() <= currentPos.getX()
+                    || getHeight() <= currentPos.getY())
+                return true;
+
+            walls = new ArrayList<>();
+            TiledMapTileLayer.Cell targetCell = wallLayer.getCell(currentPos.getX(), currentPos.getY());
+
+            if (targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
+                walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
+
+            }
+            Direction oppositeDirection = direction.getOppositeDirection();
+
+            if (walls.contains(oppositeDirection.toString())) {
+                System.out.println("Laser blocked");
+                return true;
+            }
+
+            return false;
         }
-        return false;
     }
 }
