@@ -11,13 +11,14 @@ import inf112.roborally.game.RoboRallyGame;
 
 public abstract class AbstractScreen implements Screen {
 
-    private RoboRallyGame game;
-    private SpriteBatch batch;
-    private Sprite background;
+    protected RoboRallyGame game;
+    protected SpriteBatch batch;
+    protected Sprite background;
 
     public AbstractScreen (RoboRallyGame game, String filepath) {
         this.game = game;
-        batch = new SpriteBatch();
+//        batch = new SpriteBatch();
+        batch = game.batch;
         background = new Sprite(new Texture(filepath));
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
@@ -73,7 +74,5 @@ public abstract class AbstractScreen implements Screen {
     public void dispose() {
 
     }
-
-    public RoboRallyGame getGame() { return this.game; }
 
 }
