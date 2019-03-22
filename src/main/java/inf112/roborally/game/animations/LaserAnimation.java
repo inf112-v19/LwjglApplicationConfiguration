@@ -1,19 +1,22 @@
-package inf112.roborally.game.objects;
+package inf112.roborally.game.animations;
 
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
+
 import inf112.roborally.game.Main;
 import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.objects.MovableGameObject;
 
 
-public class Laser extends MovableGameObject {
+public class LaserAnimation extends MovableGameObject {
     private static final int FRAME_DURATION = 6;
 
     private Array<TextureRegion> regions;
-    private Animation<TextureRegion> animation;
+    private com.badlogic.gdx.graphics.g2d.Animation<TextureRegion> animation;
     private int stateTimer;
 
-    public Laser(int x, int y, Direction direction) {
+    public LaserAnimation(int x, int y, Direction direction) {
         super(x, y, "assets/objects/animatedlaser.atlas");
         setDirection(direction);
         setUpAnimation();

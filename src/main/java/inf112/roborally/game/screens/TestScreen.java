@@ -6,17 +6,25 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.animations.Animation;
+import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.objects.Position;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestScreen implements Screen {
     private final RoboRallyGame game;
     private ProgramRegisterDisplay programRegisterDisplay;
     private Player player;
     private Sprite background;
+    private List<Animation> testAnimation;
 
 
     public TestScreen(RoboRallyGame game) {
@@ -29,6 +37,8 @@ public class TestScreen implements Screen {
 
         background = new Sprite(new Texture("assets/img/testscreen.png"));
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+
+        testAnimation = new ArrayList<>();
     }
 
     @Override
@@ -48,6 +58,15 @@ public class TestScreen implements Screen {
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
         game.batch.begin();
         background.draw(game.batch);
+
+        for(Animation a : testAnimation){
+            if(a.hasFinished()){
+                //do nothing
+            }
+            else
+                a.draw(game.batch);
+        }
+
         programRegisterDisplay.draw(game.batch);
         game.batch.end();
         handleInput();
@@ -69,6 +88,9 @@ public class TestScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)){
             player.returnCards();
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)){
+            testAnimation.add(new RepairAnimation(new Position(8,8)));
         }
     }
 

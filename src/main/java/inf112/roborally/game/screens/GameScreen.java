@@ -6,11 +6,16 @@ import com.badlogic.gdx.graphics.GL20;
 
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.*;
-import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.sound.GameMusic;
+
+import java.util.ArrayList;
+
+import static inf112.roborally.game.enums.Direction.NORTH;
 
 
 public class GameScreen implements Screen {
@@ -23,15 +28,18 @@ public class GameScreen implements Screen {
     private Background background;
     private GameMusic music;
 
+    public ArrayList<Animation> animations;
+
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
         this.game = game;
 
         board = new VaultBoard();
 
-        board.addPlayer(new Player("Player1", "assets/robot/claptrap3000.png", Direction.NORTH, board));
-        board.addPlayer(new Player("Player2", "assets/robot/claptrapRefined.png", Direction.SOUTH, board));
-        board.addPlayer(new Player("Player3", "assets/robot/butlerRefined.png", Direction.SOUTH, board));
+        board.addPlayer(new Player("Player1", "assets/robot/bartenderclaptrap.png", NORTH, board));
+        board.addPlayer(new Player("Player2", "assets/robot/claptrapRefined.png", NORTH, board));
+        board.addPlayer(new Player("Player3", "assets/robot/butlerRefined.png", NORTH, board));
+        board.addPlayer(new Player("Player1", "assets/robot/claptrap3000.png", NORTH, board));
         board.placePlayers();
 
         hud = new Hud(board.getPlayers().get(0), game);
@@ -50,6 +58,7 @@ public class GameScreen implements Screen {
 
         background = new Background(game.dynamicCamera);
 
+        animations = new ArrayList<>();
     }
 
     @Override
@@ -76,6 +85,11 @@ public class GameScreen implements Screen {
         game.batch.setProjectionMatrix(game.dynamicCamera.combined);
         game.batch.begin();
         board.drawGameObjects(game.batch);
+        for (int i = 0; i < animations.size(); i++) {
+            animations.get(i).draw(game.batch);
+            if (animations.get(i).hasFinished())
+                animations.remove(i--); // need to decrement i when removing an element?
+        }
         game.batch.end();
 
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
@@ -129,7 +143,7 @@ public class GameScreen implements Screen {
         return hud;
     }
 
-    public GameLogic getGameLogic(){
+    public GameLogic getGameLogic() {
         return gameLogic;
     }
 

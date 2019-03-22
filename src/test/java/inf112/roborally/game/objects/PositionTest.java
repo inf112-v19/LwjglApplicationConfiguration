@@ -13,7 +13,7 @@ public class PositionTest {
         Position b = new Position(1,1);
         Position c = new Position(0,0);
 
-        assertTrue(a.positionEquals(b));
-        assertFalse(a.positionEquals(c));
+        assertTrue(a.equals(b));
+        assertFalse(a.equals(c));
     }
 }

@@ -1,8 +1,8 @@
 package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
@@ -59,8 +59,8 @@ public class Player extends MovableGameObject {
     public void makeSprite() {
         super.makeSprite();
         regions = new ArrayList<>();
-        for(int i = 0; i < 4; i++){
-            regions.add(new TextureRegion(getSprite().getTexture(), 32*8*i, 0, 32*8, 48*8));
+        for (int i = 0; i < 4; i++) {
+            regions.add(new TextureRegion(getSprite().getTexture(), 32 * 8 * i, 0, 32 * 8, 48 * 8));
         }
         sprite.setRegion(regions.get(0));
         laserHitPlayerSound = new GameSound("assets/music/playerLaser.wav");
@@ -158,19 +158,13 @@ public class Player extends MovableGameObject {
         }
     }
 
-
-    public void moveBackupToPlayerPosition() {
-        backup.move(getX(), getY());
-        backup.updateSprite();
-    }
-
     public void update() {
         if (isDestroyed() && !outOfLives()) {
             Gdx.app.log("Player", "is destroyed!");
             lives--;
             repairAllDamage();
             if (backup != null)
-                backup.movePlayer();
+                backup.movePlayerToBackup();
         }
         else if (isDestroyed() && outOfLives()) {
             Gdx.app.log("Player", "is dead!");

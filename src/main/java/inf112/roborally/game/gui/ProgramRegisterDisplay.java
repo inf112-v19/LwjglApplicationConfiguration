@@ -52,7 +52,7 @@ public class ProgramRegisterDisplay {
         lifeToken.setSize(80 * scale, 80 * scale);
 
         damageToken = new Sprite(new Texture("assets/cards/tokens/damageToken.png"));
-        damageToken.setSize(damageToken.getWidth() * scale, damageToken.getHeight() * scale);
+        damageToken.setSize(50 * scale, 50 * scale);
 
         lockToken = new Sprite(new Texture("assets/cards/tokens/lockToken.png"));
         lockToken.setSize(lockToken.getWidth() * scale, lockToken.getHeight() * scale);
