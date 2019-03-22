@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.animations.RepairAnimation;
@@ -25,6 +27,7 @@ public class TestScreen implements Screen {
     private Player player;
     private Sprite background;
     private List<Animation> testAnimation;
+    private ImageTextButton textButton;
 
 
     public TestScreen(RoboRallyGame game) {
