@@ -2,7 +2,6 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 
 import inf112.roborally.game.Main;
@@ -12,6 +11,7 @@ import inf112.roborally.game.board.*;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.sound.GameMusic;
 
 import java.util.ArrayList;
 
@@ -25,8 +25,8 @@ public class GameScreen implements Screen {
     private final Hud hud;
     private final GameLogic gameLogic;
     private final Board board;
-    private final Music music;
-    private final Background background;
+    private Background background;
+    private GameMusic music;
 
     public ArrayList<Animation> animations;
 
@@ -44,11 +44,10 @@ public class GameScreen implements Screen {
 
         hud = new Hud(board.getPlayers().get(0), game);
         System.out.println(game.fixedCamera.position);
-        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay());
+        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay(), game);
 
-        music = Gdx.audio.newMusic(Gdx.files.internal(RoboRallyGame.MAIN_THEME));
-        music.setLooping(true);
-        music.setVolume(0.3f);
+        // Music
+        music = new GameMusic(RoboRallyGame.MAIN_THEME);
 
         // Move dynamicCamera to center of board:
         int x = board.getWidth() / 2 * Main.PIXELS_PER_TILE;
@@ -101,13 +100,6 @@ public class GameScreen implements Screen {
         gameLogic.update();
         game.cameraListener.update();
         background.update(game.dynamicCamera);
-
-        // Mute music
-        if (board.boardWantsToMuteMusic()) {
-            music.stop();
-            board.musicIsMuted();
-            board.killTheSound();
-        }
     }
 
 
@@ -153,6 +145,14 @@ public class GameScreen implements Screen {
 
     public GameLogic getGameLogic() {
         return gameLogic;
+    }
+
+    public GameMusic getMusic() {
+        return music;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }
 

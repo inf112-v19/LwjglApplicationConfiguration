@@ -18,6 +18,7 @@ public class GameLogic {
     private int phase;
     private Board board;
     private GameState state;
+    private RoboRallyGame game;
 
     private Stack<ProgramCard> stackOfProgramCards;
     private ArrayList<Player> players;
@@ -26,8 +27,9 @@ public class GameLogic {
 
     private final CardsInHandDisplay cardsInHandDisplay;
 
-    public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay) {
+    public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay, RoboRallyGame game) {
         state = GameState.PREROUND;
+        this.game = game;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
@@ -104,10 +106,9 @@ public class GameLogic {
 
     public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            board.boardWantsToMuteMusic = true;
+//            Gdx.app.exit();
+            game.setScreen(game.settingsScreen);
+
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
