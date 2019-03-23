@@ -23,7 +23,9 @@ public class CardButton extends ImageButton {
                 //cardsInHandDisplay.updateCardsInHandVisually(); // When calling this method once, sometimes, index out
                 //cardsInHandDisplay.updateCardsInHandVisually(); // of bounds will occur when clicking the card button
                 //cardsInHandDisplay.updateCardsInHandVisually(); // in the last location. Therefor called thrice.
-                cardsInHandDisplay.updateCardsV();
+                //cardsInHandDisplay.updateCardsV();
+
+
             }
         });
     }

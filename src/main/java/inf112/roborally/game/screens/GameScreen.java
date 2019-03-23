@@ -44,8 +44,7 @@ public class GameScreen implements Screen {
 
         hud = new Hud(board.getPlayers().get(0), game);
         System.out.println(game.fixedCamera.position);
-        gameLogic = new GameLogic(board, hud.getCardsInHandDisplay(), game);
-
+        gameLogic = new GameLogic(board, hud.getCardDisplay(), game);
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
         music.play();

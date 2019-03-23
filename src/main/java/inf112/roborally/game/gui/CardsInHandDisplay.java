@@ -3,8 +3,10 @@ package inf112.roborally.game.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Player;
@@ -64,7 +66,7 @@ public class CardsInHandDisplay {
         posY = 200;
 
         for (Actor button : stage.getActors()) {
-            if (button instanceof CardButton)
+            if (button instanceof ImageTextButton)
                 button.remove();
         }
 
@@ -73,6 +75,21 @@ public class CardsInHandDisplay {
             btn.setTransform(true);
             btn.setScale(scale);
             btn.setPosition(posX + 130 * (i % 5), posY - 170 * j);
+
+            final int index = i;
+            btn.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    player.getRegisters().placeCard(index);
+                    //cardsInHandDisplay.updateCardsInHandVisually(); // When calling this method once, sometimes, index out
+                    //cardsInHandDisplay.updateCardsInHandVisually(); // of bounds will occur when clicking the card button
+                    //cardsInHandDisplay.updateCardsInHandVisually(); // in the last location. Therefor called thrice.
+                    //updateCardsV();
+                    //updateCardsV();
+                    //updateCardsV();
+                }
+            });
+
             stage.addActor(btn);
 
             if (i % 5 == 4) {
@@ -80,6 +97,10 @@ public class CardsInHandDisplay {
                 posX += 50;
             }
         }
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
     public void dispose() {

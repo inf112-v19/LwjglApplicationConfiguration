@@ -6,7 +6,9 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.gui.CardDisplay;
 import inf112.roborally.game.gui.CardsInHandDisplay;
+import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 
 import java.util.*;
@@ -25,9 +27,9 @@ public class GameLogic {
     private Stack<ProgramCard> returnedProgramCards;
     private Player player1;
 
-    private final CardsInHandDisplay cardsInHandDisplay;
+    private final CardDisplay cardDisplay;
 
-    public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay, RoboRallyGame game) {
+    public GameLogic(Board board, CardDisplay cardDisplay, RoboRallyGame game) {
         state = GameState.PREROUND;
         this.game = game;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
@@ -35,7 +37,7 @@ public class GameLogic {
         this.players = board.getPlayers();
         player1 = players.get(0);
         this.board = board;
-        this.cardsInHandDisplay = cardsInHandDisplay;
+        this.cardDisplay = cardDisplay;
 
         roundOver = true;
         phase = 0;
@@ -54,7 +56,10 @@ public class GameLogic {
         board.cleanBoard();
         giveCardsToPlayer(player1);
         //cardsInHandDisplay.updateCardsInHandVisually();
-        cardsInHandDisplay.updateCardsV();
+        //cardsInHandDisplay.updateCardsV();
+        //programRegisterDisplay.updateCardsVis();
+        cardDisplay.update();
+
         state = GameState.PICKING_CARDS;
     }
 
@@ -138,8 +143,13 @@ public class GameLogic {
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0).getCardsInHand());
             // messy but it works:
-            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
-                    updateCardsInHandVisually();
+            /*((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
+                    updateCardsInHandVisually();*/
+
+  /*          ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
+                    updateCardsV(); */
+
+            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().update();
         }
     }
 

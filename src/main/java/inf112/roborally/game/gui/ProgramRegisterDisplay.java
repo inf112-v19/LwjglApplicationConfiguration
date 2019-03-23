@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
 
@@ -12,6 +16,7 @@ import java.util.ArrayList;
 public class ProgramRegisterDisplay {
     private final CardVisuals cardVisual;
     private Player player;
+    public Stage stage;
     private ProgramRegisters registers;
     private Sprite programBoard;
     private Sprite lifeToken;
@@ -30,8 +35,9 @@ public class ProgramRegisterDisplay {
      *
      * @param player
      */
-    public ProgramRegisterDisplay(Player player) {
+    public ProgramRegisterDisplay(Player player, Stage stage) {
         this.player = player;
+        this.stage = stage;
         registers = player.getRegisters();
 
         programBoard = new Sprite(new Texture("assets/cards/programregisters.png"));
@@ -70,7 +76,7 @@ public class ProgramRegisterDisplay {
         wires.draw(batch);
         drawLifeTokens(batch);
         drawDamageTokens(batch);
-        drawCardsInRegisters(batch);
+        //drawCardsInRegisters(batch);
         drawLocks(batch);
     }
 
@@ -114,6 +120,7 @@ public class ProgramRegisterDisplay {
         }
     }
 
+    //Not in use anymore
     private void drawCardsInRegisters(SpriteBatch batch) {
         for (int i = 0; i < 5; i++) {
             if (registers.getCard(i) != null) {
@@ -122,6 +129,31 @@ public class ProgramRegisterDisplay {
                 card.draw(batch);
             }
         }
+    }
+
+    public void drawCardsInRegisters() {
+        for (int i = 0; i < 5; i++) {
+            ProgramCard card = player.getRegisters().getCard(i);
+            if(card != null) {
+                ImageTextButton btn = new ProgramCardButton().makeImageTextButton(card);
+                btn.setTransform(true);
+                btn.setScale(scale * 0.8f);
+                btn.setPosition(programBoard.getX() + 19 * scale + 200 * scale * i, 10 * scale);
+                stage.addActor(btn);
+            }
+            //else update cards, remove old ones
+        }
+    }
+
+    public void updateCardsVis() {
+        for (Actor button : stage.getActors()) {
+            if (button instanceof ImageTextButton)
+                button.remove();
+        }
+    }
+
+    public Sprite getProgramBoard(){
+        return programBoard;
     }
 
     public void dispose() {
