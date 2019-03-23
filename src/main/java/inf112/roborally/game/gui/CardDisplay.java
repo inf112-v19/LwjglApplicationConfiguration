@@ -2,11 +2,8 @@ package inf112.roborally.game.gui;
 
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 
 public class CardDisplay {
@@ -16,7 +13,6 @@ public class CardDisplay {
     private Stage stage;
     private Player player;
 
-    private int posX, posY;
 
     public CardDisplay(ProgramRegisterDisplay programRegisterDisplay, CardsInHandDisplay cardsInHandDisplay) {
         this.programRegisterDisplay = programRegisterDisplay;
@@ -28,7 +24,7 @@ public class CardDisplay {
     /**
      * Remove all program card buttons.
      */
-    public void clearAllCards(){
+    public void clearAllCards() {
         for (Actor button : stage.getActors()) {
             if (button instanceof ImageTextButton) {
                 button.remove();
@@ -42,9 +38,7 @@ public class CardDisplay {
     @SuppressWarnings("Duplicates")
     public void updateCards() {
         clearAllCards();
-
-       cardsInHandDisplay.updateCardsInHand(this);
-
+        cardsInHandDisplay.updateCardsInHand(this);
         programRegisterDisplay.drawCardsInProgramRegister();
     }
 }

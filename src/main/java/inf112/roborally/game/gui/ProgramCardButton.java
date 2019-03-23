@@ -13,8 +13,7 @@ public class ProgramCardButton {
     private ImageTextButton btn;
 
 
-    public ProgramCardButton(){
-    }
+    public ProgramCardButton(){}
 
 
     public ImageTextButton makeImageTextButton(ProgramCard card){

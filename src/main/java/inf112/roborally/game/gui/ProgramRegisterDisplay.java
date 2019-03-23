@@ -117,7 +117,7 @@ public class ProgramRegisterDisplay {
     }
 
     public void drawCardsInProgramRegister(){
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
             if(card != null) {
                 ImageTextButton cardInRegisterButton = new ProgramCardButton().makeImageTextButton(card);
@@ -130,10 +130,6 @@ public class ProgramRegisterDisplay {
         }
     }
 
-
-    public Sprite getProgramBoard(){
-        return programBoard;
-    }
 
     public void dispose() {
         System.out.println("disposing ProgramRegisterDisplay");

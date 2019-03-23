@@ -63,9 +63,10 @@ public class GameLogic {
         state = GameState.PICKING_CARDS;
     }
 
+
     public void update() {
         handleInput();
-        board.updatePlayers();
+        updatePlayers();
 
         switch (state) {
             case PREROUND:
@@ -155,6 +156,12 @@ public class GameLogic {
                 // Might not be necessary to exit the game when it's finished
                 Gdx.app.exit();
             }
+        }
+    }
+
+    public void updatePlayers(){
+        for (Player pl : players){
+            pl.update();
         }
     }
 
