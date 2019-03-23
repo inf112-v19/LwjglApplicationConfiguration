@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import inf112.roborally.game.board.ProgramCard;
@@ -14,7 +13,6 @@ import inf112.roborally.game.objects.Player;
 import java.util.ArrayList;
 
 public class ProgramRegisterDisplay {
-    private final CardVisuals cardVisual;
     private Player player;
     public Stage stage;
     private ProgramRegisters registers;
@@ -26,7 +24,6 @@ public class ProgramRegisterDisplay {
     private Sprite wires;
     private ArrayList<TextureRegion> wireTextures;
 
-    private ArrayList<ImageTextButton> allCards;
 
     float scale = .5f;
 
@@ -41,7 +38,6 @@ public class ProgramRegisterDisplay {
         this.player = player;
         this.stage = stage;
         registers = player.getRegisters();
-        allCards = new ArrayList<>();
 
         programBoard = new Sprite(new Texture("assets/cards/programregisters.png"));
         programBoard.setSize(programBoard.getWidth() * scale, programBoard.getHeight() * scale);
@@ -69,8 +65,6 @@ public class ProgramRegisterDisplay {
         card = new Sprite();
         float cardScale = 0.77f;
         card.setSize(238 * cardScale * scale, 300 * cardScale * scale);
-
-        cardVisual = new CardVisuals();
     }
 
     public void draw(SpriteBatch batch) {
@@ -122,8 +116,7 @@ public class ProgramRegisterDisplay {
         }
     }
 
-    public void drawCardsInProgramRegister(CardDisplay cardDisplay){
-        allCards.clear();
+    public void drawCardsInProgramRegister(){
         for (int i = 0; i < 5; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
             if(card != null) {
@@ -132,22 +125,11 @@ public class ProgramRegisterDisplay {
                 cardInRegisterButton.setScale(scale * 0.8f);
                 cardInRegisterButton.setPosition(programBoard.getX() +
                         19 * scale + 200 * scale * i, 10 * scale);
-                allCards.add(cardInRegisterButton);
                 stage.addActor(cardInRegisterButton);
             }
-            //else updateCards cards, remove old ones
         }
     }
 
-    public void removeAllCardsFromRegister(){
-        for(Actor button : stage.getActors()){
-            for(int i = 0; i < allCards.size(); i++){
-                if(button == allCards.get(i)){
-                    button.remove();
-                }
-            }
-        }
-    }
 
     public Sprite getProgramBoard(){
         return programBoard;
@@ -160,6 +142,5 @@ public class ProgramRegisterDisplay {
         lifeToken.getTexture().dispose();
         damageToken.getTexture().dispose();
         lockToken.getTexture().dispose();
-        cardVisual.dispose();
     }
 }

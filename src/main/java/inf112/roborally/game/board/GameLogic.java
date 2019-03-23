@@ -54,12 +54,11 @@ public class GameLogic {
         board.cleanBoard();
         giveCardsToPlayer(player1);
 
-        //cardsInHandDisplay.updateCardsInHandVisually();
-        //cardsInHandDisplay.updateCardsV();
-        //programRegisterDisplay.updateCardsVis();
+        //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
+        cardDisplay.clearAllCards();
+        cardDisplay.clearAllCards();
+        cardDisplay.clearAllCards();
         cardDisplay.updateCards();
-        //cardDisplay.updateCards();
-        //cardDisplay.updateCards();
 
         state = GameState.PICKING_CARDS;
     }
@@ -84,7 +83,6 @@ public class GameLogic {
                 break;
             case ROUND:
                 if (phase < 5) {
-
                     System.out.println("executing phase " + phase);
                     player1.executeCard(player1.getRegisters().getCard(phase));
                     checkIfAnyPlayersWon();
@@ -143,6 +141,9 @@ public class GameLogic {
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0));
+            cardDisplay.clearAllCards();
+            cardDisplay.clearAllCards();
+            cardDisplay.clearAllCards();
             cardDisplay.updateCards();
         }
     }

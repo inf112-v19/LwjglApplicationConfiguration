@@ -60,20 +60,11 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 player.getRegisters().returnCards(player);
+                cardDisplay.clearAllCards();
+                cardDisplay.clearAllCards();
+                cardDisplay.clearAllCards();
+                cardDisplay.clearAllCards();
                 cardDisplay.updateCards();
-
-                // messy but it works:
-               /* ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
-                        updateCardsInHandVisually();*/
-
-                /*((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
-                        updateCardsV();
-*/
-                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().updateCards();
-                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().updateCards();
-                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().updateCards();
-
-
             }
         });
 

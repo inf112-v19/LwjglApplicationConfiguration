@@ -45,6 +45,6 @@ public class CardDisplay {
 
        cardsInHandDisplay.updateCardsInHand(this);
 
-        programRegisterDisplay.drawCardsInProgramRegister(this);
+        programRegisterDisplay.drawCardsInProgramRegister();
     }
 }

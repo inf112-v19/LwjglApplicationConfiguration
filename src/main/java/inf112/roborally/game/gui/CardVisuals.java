@@ -37,13 +37,6 @@ public class CardVisuals extends Sprite {
         }
     }
 
-    public void test(){
-        TextureAtlas atlas = new TextureAtlas("assets/cards/tokens/imagebutton.atlas");
-        Skin skin = new Skin(atlas);
-        skin.addRegions(atlas);
-
-    }
-
     public void drawCard(ProgramCard programCard, int x, int y, SpriteBatch batch) {
         setSpriteToCard(programCard, x, y);
         draw(batch);
