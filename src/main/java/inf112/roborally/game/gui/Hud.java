@@ -62,9 +62,9 @@ public class Hud {
         clearButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Before: " + player.getNumberOfCardsInHand());
-                player.getRegisters().returnCards(player.getCardsInHand());
-                System.out.println("Num cards in hand: " + player.getNumberOfCardsInHand());
+                player.getRegisters().returnCards(player);
+                cardDisplay.update();
+
                 // messy but it works:
                /* ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
                         updateCardsInHandVisually();*/
@@ -72,7 +72,9 @@ public class Hud {
                 /*((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
                         updateCardsV();
 */
-                ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().clearAllCards();
+                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().update();
+                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().update();
+                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().update();
 
 
             }

@@ -81,7 +81,7 @@ public class ProgramRegisterDisplay {
     }
 
     private void updateWires() {
-        int wireIndex = 5 - registers.getUnlockedRegisters();
+        int wireIndex = 5 - registers.getNumUnlockedRegisters();
         wires.setRegion(wireTextures.get(wireIndex % wireTextures.size()));
 
     }

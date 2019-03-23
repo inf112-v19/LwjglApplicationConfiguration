@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.objects.Player;
 
+
+//Not in use
 public class CardButton extends ImageButton {
 
     private final Player player;

@@ -4,7 +4,6 @@ import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.PriorityQueue;
 
 public class ProgramRegisters implements IProgramRegisters {
@@ -41,16 +40,17 @@ public class ProgramRegisters implements IProgramRegisters {
     public ArrayList<ProgramCard> getAllCards() {
         ArrayList<ProgramCard> list = new ArrayList<>();
         for (ProgramCard pc : registers) {
-            list.add(pc);
+            if(pc != null) {
+                list.add(pc);
+            }
         }
         return list;
     }
 
-    @Override
-    public void returnCards(List<ProgramCard> cardsInHand) {
-        for (int i = 0; i < unlockedRegisters; i++) {
+    public void returnCards(Player player) {
+        for (int i = 0; i < player.getRegisters().getNumUnlockedRegisters(); i++) {
             if (registers[i] != null) {
-                cardsInHand.add(registers[i]);
+                player.receiveCard(registers[i]);
             }
             registers[i] = null;
         }
@@ -104,7 +104,7 @@ public class ProgramRegisters implements IProgramRegisters {
         return -1;
     }
 
-    public int getUnlockedRegisters() {
+    public int getNumUnlockedRegisters() {
         return unlockedRegisters;
     }
 }

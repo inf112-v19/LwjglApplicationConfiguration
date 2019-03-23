@@ -32,6 +32,7 @@ public class CardsInHandDisplay {
         stage.addListener(((RoboRallyGame) Gdx.app.getApplicationListener()).cameraListener);
     }
 
+    //Not in use
     public void updateCardsInHandVisually() {
         float scale = 0.5f;
         int j = 0;
@@ -48,7 +49,7 @@ public class CardsInHandDisplay {
             cardButton = new CardButton(new TextureRegionDrawable(cardTexture), player, i, this);
             cardButton.setTransform(true);
             cardButton.setScale(scale);
-                cardButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
+            cardButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
             stage.addActor(cardButton);
 
             if (i % 5 == 4) {
@@ -58,6 +59,7 @@ public class CardsInHandDisplay {
         }
     }
 
+    //Not in use
     @SuppressWarnings("Duplicates")
     public void updateCardsV(){
         float scale = 0.5f;

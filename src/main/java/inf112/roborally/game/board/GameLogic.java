@@ -55,10 +55,13 @@ public class GameLogic {
         retrieveCardsFromPlayer(player1);
         board.cleanBoard();
         giveCardsToPlayer(player1);
+
         //cardsInHandDisplay.updateCardsInHandVisually();
         //cardsInHandDisplay.updateCardsV();
         //programRegisterDisplay.updateCardsVis();
         cardDisplay.update();
+        //cardDisplay.update();
+        //cardDisplay.update();
 
         state = GameState.PICKING_CARDS;
     }
@@ -141,7 +144,7 @@ public class GameLogic {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            players.get(0).getRegisters().returnCards(players.get(0).getCardsInHand());
+            players.get(0).getRegisters().returnCards(players.get(0));
             // messy but it works:
             /*((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
                     updateCardsInHandVisually();*/

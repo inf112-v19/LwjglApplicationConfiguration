@@ -77,11 +77,13 @@ public class CardDisplay {
         for (int i = 0; i < 5; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
             if(card != null) {
-                ImageTextButton btn = new ProgramCardButton().makeImageTextButton(card);
-                btn.setTransform(true);
-                btn.setScale(scale * 0.8f);
-                btn.setPosition(programRegisterDisplay.getProgramBoard().getX() + 19 * scale + 200 * scale * i, 10 * scale);
-                stage.addActor(btn);
+                System.out.println("Size: " + player.getRegisters().getAllCards().size());
+                ImageTextButton cardInRegisterButton = new ProgramCardButton().makeImageTextButton(card);
+                cardInRegisterButton.setTransform(true);
+                cardInRegisterButton.setScale(scale * 0.8f);
+                cardInRegisterButton.setPosition(programRegisterDisplay.getProgramBoard().getX() +
+                        19 * scale + 200 * scale * i, 10 * scale);
+                stage.addActor(cardInRegisterButton);
             }
             //else update cards, remove old ones
         }
