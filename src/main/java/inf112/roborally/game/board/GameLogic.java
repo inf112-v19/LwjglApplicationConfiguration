@@ -53,7 +53,8 @@ public class GameLogic {
         retrieveCardsFromPlayer(player1);
         board.cleanBoard();
         giveCardsToPlayer(player1);
-        cardsInHandDisplay.updateCardsInHandVisually();
+        //cardsInHandDisplay.updateCardsInHandVisually();
+        cardsInHandDisplay.updateCardsV();
         state = GameState.PICKING_CARDS;
     }
 

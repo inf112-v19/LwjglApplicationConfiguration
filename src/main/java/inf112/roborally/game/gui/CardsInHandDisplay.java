@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Player;
@@ -14,6 +15,9 @@ public class CardsInHandDisplay {
     private final Player player;
     private CardVisuals cardVisuals;
     private CardButton cardButton;
+
+    private ImageTextButton btn;
+
     private TextureRegion cardTexture;
     private int posX, posY;
 
@@ -42,8 +46,34 @@ public class CardsInHandDisplay {
             cardButton = new CardButton(new TextureRegionDrawable(cardTexture), player, i, this);
             cardButton.setTransform(true);
             cardButton.setScale(scale);
-            cardButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
+                cardButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
             stage.addActor(cardButton);
+
+            if (i % 5 == 4) {
+                j++;
+                posX += 50;
+            }
+        }
+    }
+
+    @SuppressWarnings("Duplicates")
+    public void updateCardsV(){
+        float scale = 0.5f;
+        int j = 0;
+        posX = 1250;
+        posY = 200;
+
+        for (Actor button : stage.getActors()) {
+            if (button instanceof CardButton)
+                button.remove();
+        }
+
+        for(int i = 0; i < player.getNumberOfCardsInHand(); i++){
+            btn = new ProgramCardButton().makeImageTextButton(player.getCardInHand(i));
+            btn.setTransform(true);
+            btn.setScale(scale);
+            btn.setPosition(posX + 130 * (i % 5), posY - 170 * j);
+            stage.addActor(btn);
 
             if (i % 5 == 4) {
                 j++;
