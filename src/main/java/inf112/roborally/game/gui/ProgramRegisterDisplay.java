@@ -26,6 +26,8 @@ public class ProgramRegisterDisplay {
     private Sprite wires;
     private ArrayList<TextureRegion> wireTextures;
 
+    private ArrayList<ImageTextButton> allCards;
+
     float scale = .5f;
 
     /**
@@ -39,6 +41,7 @@ public class ProgramRegisterDisplay {
         this.player = player;
         this.stage = stage;
         registers = player.getRegisters();
+        allCards = new ArrayList<>();
 
         programBoard = new Sprite(new Texture("assets/cards/programregisters.png"));
         programBoard.setSize(programBoard.getWidth() * scale, programBoard.getHeight() * scale);
@@ -76,7 +79,6 @@ public class ProgramRegisterDisplay {
         wires.draw(batch);
         drawLifeTokens(batch);
         drawDamageTokens(batch);
-        //drawCardsInRegisters(batch);
         drawLocks(batch);
     }
 
@@ -120,35 +122,30 @@ public class ProgramRegisterDisplay {
         }
     }
 
-    //Not in use anymore
-    private void drawCardsInRegisters(SpriteBatch batch) {
-        for (int i = 0; i < 5; i++) {
-            if (registers.getCard(i) != null) {
-                card.setPosition(programBoard.getX() + 19 * scale + 200 * scale * i, 10 * scale);
-                card.setRegion(cardVisual.getRegion(registers.getCard(i)));
-                card.draw(batch);
-            }
-        }
-    }
-
-    public void drawCardsInRegisters() {
+    public void drawCardsInProgramRegister(CardDisplay cardDisplay){
+        allCards.clear();
         for (int i = 0; i < 5; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
             if(card != null) {
-                ImageTextButton btn = new ProgramCardButton().makeImageTextButton(card);
-                btn.setTransform(true);
-                btn.setScale(scale * 0.8f);
-                btn.setPosition(programBoard.getX() + 19 * scale + 200 * scale * i, 10 * scale);
-                stage.addActor(btn);
+                ImageTextButton cardInRegisterButton = new ProgramCardButton().makeImageTextButton(card);
+                cardInRegisterButton.setTransform(true);
+                cardInRegisterButton.setScale(scale * 0.8f);
+                cardInRegisterButton.setPosition(programBoard.getX() +
+                        19 * scale + 200 * scale * i, 10 * scale);
+                allCards.add(cardInRegisterButton);
+                stage.addActor(cardInRegisterButton);
             }
-            //else update cards, remove old ones
+            //else updateCards cards, remove old ones
         }
     }
 
-    public void updateCardsVis() {
-        for (Actor button : stage.getActors()) {
-            if (button instanceof ImageTextButton)
-                button.remove();
+    public void removeAllCardsFromRegister(){
+        for(Actor button : stage.getActors()){
+            for(int i = 0; i < allCards.size(); i++){
+                if(button == allCards.get(i)){
+                    button.remove();
+                }
+            }
         }
     }
 

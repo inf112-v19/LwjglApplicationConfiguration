@@ -25,6 +25,9 @@ public class CardDisplay {
         player = cardsInHandDisplay.getPlayer();
     }
 
+    /**
+     * Remove all program card buttons.
+     */
     public void clearAllCards(){
         for (Actor button : stage.getActors()) {
             if (button instanceof ImageTextButton) {
@@ -37,55 +40,11 @@ public class CardDisplay {
      * Updates program cards in hand and program cards in register visually.
      */
     @SuppressWarnings("Duplicates")
-    public void update() {
-        //Remove all buttons, AKA. program cards
-        for (Actor button : stage.getActors()) {
-            if (button instanceof ImageTextButton) {
-                button.remove();
-            }
-        }
+    public void updateCards() {
+        clearAllCards();
 
-        //Draw cards in hand
-        float scale = 0.5f;
-        int j = 0;
-        posX = 1250;
-        posY = 200;
+       cardsInHandDisplay.updateCardsInHand(this);
 
-        for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
-            ImageTextButton cardInHandButton = new ProgramCardButton().makeImageTextButton(player.getCardInHand(i));
-            cardInHandButton.setTransform(true);
-            cardInHandButton.setScale(scale);
-            cardInHandButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
-
-            final int index = i;
-            cardInHandButton.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    player.getRegisters().placeCard(index);
-                    update();
-                }
-            });
-            stage.addActor(cardInHandButton);
-
-            if (i % 5 == 4) {
-                j++;
-                posX += 50;
-            }
-        }
-
-        //Draw cards in register
-        for (int i = 0; i < 5; i++) {
-            ProgramCard card = player.getRegisters().getCard(i);
-            if(card != null) {
-                System.out.println("Size: " + player.getRegisters().getAllCards().size());
-                ImageTextButton cardInRegisterButton = new ProgramCardButton().makeImageTextButton(card);
-                cardInRegisterButton.setTransform(true);
-                cardInRegisterButton.setScale(scale * 0.8f);
-                cardInRegisterButton.setPosition(programRegisterDisplay.getProgramBoard().getX() +
-                        19 * scale + 200 * scale * i, 10 * scale);
-                stage.addActor(cardInRegisterButton);
-            }
-            //else update cards, remove old ones
-        }
+        programRegisterDisplay.drawCardsInProgramRegister(this);
     }
 }

@@ -3,15 +3,12 @@ package inf112.roborally.game.gui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
@@ -63,7 +60,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 player.getRegisters().returnCards(player);
-                cardDisplay.update();
+                cardDisplay.updateCards();
 
                 // messy but it works:
                /* ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
@@ -72,9 +69,9 @@ public class Hud {
                 /*((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
                         updateCardsV();
 */
-                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().update();
-                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().update();
-                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().update();
+                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().updateCards();
+                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().updateCards();
+                //((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().updateCards();
 
 
             }
@@ -103,11 +100,9 @@ public class Hud {
     public void draw(SpriteBatch batch) {
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
-        //cardDisplay.update();
         batch.begin();
         programRegisterDisplay.draw(batch);
         batch.end();
-        //cardDisplay.update();
 
         if(((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getGameLogic().getState() == GameState.PICKING_CARDS){
             stage.draw();
@@ -125,6 +120,7 @@ public class Hud {
     public CardDisplay getCardDisplay(){
         return cardDisplay;
     }
+
     public void dispose() {
         System.out.println("disposing hud");
         cardsInHandDisplay.dispose();

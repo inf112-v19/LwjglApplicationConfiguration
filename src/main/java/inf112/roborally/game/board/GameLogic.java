@@ -7,8 +7,6 @@ import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.CardDisplay;
-import inf112.roborally.game.gui.CardsInHandDisplay;
-import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 
 import java.util.*;
@@ -59,9 +57,9 @@ public class GameLogic {
         //cardsInHandDisplay.updateCardsInHandVisually();
         //cardsInHandDisplay.updateCardsV();
         //programRegisterDisplay.updateCardsVis();
-        cardDisplay.update();
-        //cardDisplay.update();
-        //cardDisplay.update();
+        cardDisplay.updateCards();
+        //cardDisplay.updateCards();
+        //cardDisplay.updateCards();
 
         state = GameState.PICKING_CARDS;
     }
@@ -145,14 +143,7 @@ public class GameLogic {
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0));
-            // messy but it works:
-            /*((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
-                    updateCardsInHandVisually();*/
-
-  /*          ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
-                    updateCardsV(); */
-
-            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardDisplay().update();
+            cardDisplay.updateCards();
         }
     }
 
