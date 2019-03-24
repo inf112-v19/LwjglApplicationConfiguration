@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
@@ -116,7 +118,7 @@ public class ProgramRegisterDisplay {
         }
     }
 
-    public void drawCardsInProgramRegister(){
+    public void drawCardsInProgramRegister(final CardDisplay cardDisplay){
         for (int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
             if(card != null) {
@@ -125,6 +127,21 @@ public class ProgramRegisterDisplay {
                 cardInRegisterButton.setScale(scale * 0.8f);
                 cardInRegisterButton.setPosition(programBoard.getX() +
                         19 * scale + 200 * scale * i, 10 * scale);
+
+                final int index = i;
+                cardInRegisterButton.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        if(!registers.isLocked(index)) {
+                            registers.returnCard(player, index);
+                            cardDisplay.clearAllCards();
+                            cardDisplay.clearAllCards();
+                            cardDisplay.clearAllCards();
+                            cardDisplay.clearAllCards();
+                            cardDisplay.updateCards();
+                        }
+                    }
+                });
                 stage.addActor(cardInRegisterButton);
             }
         }

@@ -39,6 +39,6 @@ public class CardDisplay {
     public void updateCards() {
         clearAllCards();
         cardsInHandDisplay.updateCardsInHand(this);
-        programRegisterDisplay.drawCardsInProgramRegister();
+        programRegisterDisplay.drawCardsInProgramRegister(this);
     }
 }

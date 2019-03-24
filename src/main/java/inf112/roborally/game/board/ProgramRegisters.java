@@ -55,6 +55,16 @@ public class ProgramRegisters implements IProgramRegisters {
         }
     }
 
+    public ProgramCard returnCard(Player player, int index){
+        if(index < 0 || index > registers.length) {
+            throw new IndexOutOfBoundsException();
+        }
+        ProgramCard card = registers[index];
+        player.receiveCard(card);
+        registers[index] = null;
+        return card;
+    }
+
     @Override
     public void lock() {
         if (unlockedRegisters > 0 && unlockedRegisters <= NUMBER_OF_REGISTERS)
