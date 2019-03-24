@@ -17,13 +17,13 @@ public class Hud {
 
     private CardsInHandDisplay cardsInHandDisplay;
     private ProgramRegisterDisplay programRegisterDisplay;
-    private Stage stage;
     private Player player;
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
     private ImageButton settingsButton;
 
+    public Stage stage;
 
     public Hud(final Player player, RoboRallyGame game) {
         this.player = player;
@@ -85,15 +85,21 @@ public class Hud {
     }
 
     public void draw(SpriteBatch batch) {
+        update();
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
         batch.begin();
         programRegisterDisplay.draw(batch);
         batch.end();
 
-        if(((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getGameLogic().getState() == GameState.PICKING_CARDS){
+//        if(((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getGameLogic().getState() == GameState.PICKING_CARDS){
             stage.draw();
-        }
+//        }
+    }
+
+    private void update() {
+//        programRegisterDisplay.update();
+        cardsInHandDisplay.updateCardsInHandVisually();
     }
 
     public CardsInHandDisplay getCardsInHandDisplay() {
