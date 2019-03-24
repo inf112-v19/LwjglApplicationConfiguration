@@ -2,31 +2,25 @@ package inf112.roborally.game.gui;
 
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import inf112.roborally.game.objects.Player;
 
 public class CardDisplay {
 
     private ProgramRegisterDisplay programRegisterDisplay;
     private CardsInHandDisplay cardsInHandDisplay;
-    private Stage stage;
-    private Player player;
 
 
     public CardDisplay(ProgramRegisterDisplay programRegisterDisplay, CardsInHandDisplay cardsInHandDisplay) {
         this.programRegisterDisplay = programRegisterDisplay;
         this.cardsInHandDisplay = cardsInHandDisplay;
-        stage = cardsInHandDisplay.stage;
-        player = cardsInHandDisplay.getPlayer();
     }
 
     /**
      * Remove all program card buttons.
+     * Might need to call this function several times to actually remove all buttons. (Weird bug)
      */
     public void clearAllCards() {
-        for (Actor button : stage.getActors()) {
-            if (button instanceof ImageTextButton) {
+        for (Actor button : cardsInHandDisplay.stage.getActors()) {
+            if (button instanceof ProgramCardButton) {
                 button.remove();
             }
         }

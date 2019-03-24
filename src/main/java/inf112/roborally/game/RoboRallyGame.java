@@ -71,6 +71,10 @@ public class RoboRallyGame extends Game {
         create();
     }
 
+    public GameScreen getGameScreen(){
+        return this.gameScreen;
+    }
+
     @Override
     public void dispose() {
         batch.dispose();

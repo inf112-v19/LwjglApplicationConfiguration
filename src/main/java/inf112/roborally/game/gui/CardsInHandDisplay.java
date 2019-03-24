@@ -8,6 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Player;
 
+/**
+ * A class for drawing all the cards that are in the player hand.
+ */
 public class CardsInHandDisplay {
 
     public Stage stage;
@@ -30,7 +33,7 @@ public class CardsInHandDisplay {
         posY = 200;
 
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
-            ImageTextButton cardInHandButton = new ProgramCardButton().makeImageTextButton(player.getCardInHand(i));
+            ImageTextButton cardInHandButton = new ProgramCardButton(player.getCardInHand(i));
             cardInHandButton.setTransform(true);
             cardInHandButton.setScale(scale);
             cardInHandButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
@@ -55,11 +58,6 @@ public class CardsInHandDisplay {
                 posX += 50;
             }
         }
-    }
-
-
-    public Player getPlayer(){
-        return player;
     }
 
     public void dispose() {

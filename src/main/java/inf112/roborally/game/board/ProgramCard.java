@@ -1,5 +1,9 @@
 package inf112.roborally.game.board;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.roborally.game.enums.Rotate;
 
 import java.util.Collections;
@@ -12,11 +16,34 @@ public class ProgramCard implements Comparable {
     private int priority;
     private String type;
 
+    private ImageTextButton.ImageTextButtonStyle style;
+    private TextureAtlas atlas;
+    private Skin skin;
+
     public ProgramCard(Rotate rotate, int moveDistance, int priority, String type) {
         this.rotate = rotate;
         this.moveDistance = moveDistance;
         this.priority = priority;
         this.type = type;
+
+        atlas = new TextureAtlas("assets/cards/imageButton.atlas");
+        skin = new Skin();
+        skin.addRegions(atlas);
+        style = new ImageTextButton.ImageTextButtonStyle();
+        style.font = new BitmapFont();
+        style.up = skin.getDrawable(type);
+    }
+
+    public ImageTextButton.ImageTextButtonStyle getStyle(){
+        return this.style;
+    }
+
+    public TextureAtlas getAtlas(){
+        return this.atlas;
+    }
+
+    public Skin getSkin(){
+        return this.skin;
     }
 
     public int getMoveDistance() {

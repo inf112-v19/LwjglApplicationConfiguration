@@ -14,7 +14,6 @@ import java.util.*;
 
 public class GameLogic {
 
-    private boolean roundOver;
     private int phase;
     private Board board;
     private GameState state;
@@ -37,7 +36,6 @@ public class GameLogic {
         this.board = board;
         this.cardDisplay = cardDisplay;
 
-        roundOver = true;
         phase = 0;
 
         update();
@@ -138,7 +136,6 @@ public class GameLogic {
             player1.executeCard(new ProgramCard(Rotate.NONE, 0, 0, ""));
             board.boardMoves();
         }
-
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0));

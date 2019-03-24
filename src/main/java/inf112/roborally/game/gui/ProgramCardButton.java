@@ -1,35 +1,20 @@
 package inf112.roborally.game.gui;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.roborally.game.board.ProgramCard;
 
-public class ProgramCardButton {
+public class ProgramCardButton extends ImageTextButton {
 
-    private ImageTextButton btn;
+    ProgramCard card;
+    private Label label;
 
-
-    public ProgramCardButton(){}
-
-
-    public ImageTextButton makeImageTextButton(ProgramCard card){
-        TextureAtlas atlas = new TextureAtlas("assets/cards/imageButton.atlas");
-        Skin skin = new Skin();
-        skin.addRegions(atlas);
-        ImageTextButton.ImageTextButtonStyle style = new ImageTextButton.ImageTextButtonStyle();
-        style.font = new BitmapFont();
-        style.up = skin.getDrawable(card.getType());
-        btn = new ImageTextButton("", style);
-
-        Label label = new Label(card.getPriority() + "", new Label.LabelStyle(new BitmapFont(), new Color(1, 1, 1, 1)));
+    public ProgramCardButton(ProgramCard card){
+        super("", card.getStyle());
+        this.card = card;
+        label = getLabel();
+        label.setText(card.getPriority() + "");
         label.setFontScale(2.7f);
-        btn.setLabel(label);
-        btn.getCell(label).padRight(160).padBottom(250);
-
-        return btn;
+        setLabel(label);
+        getCell(label).padRight(160).padBottom(250);
     }
 }
