@@ -18,7 +18,6 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.gui.ProgramRegisterDisplay;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
@@ -34,7 +33,7 @@ public class TestScreen implements Screen {
     private Sprite background;
     private List<Animation> testAnimation;
     private ImageTextButton btn;
-    private Hud hud;
+    private Stage stage;
 
 
     public TestScreen(RoboRallyGame game) {
@@ -48,7 +47,6 @@ public class TestScreen implements Screen {
         background = new Sprite(new Texture("assets/img/testscreen.png"));
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
-        hud = new Hud(player, game);
         ProgramCard card = new ProgramCard(Rotate.NONE, 1, 100, "move1");
 
         testAnimation = new ArrayList<>();
@@ -62,16 +60,15 @@ public class TestScreen implements Screen {
 //        style.checked = skin.getDrawable("back");
         btn = new ImageTextButton("", style);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(new BitmapFont(), new Color(1, 1, 1, 1));
-        Label label = new Label(card.getPriority() + "", labelStyle);
+        Label label = new Label(card.getPriority() + "", new Label.LabelStyle(new BitmapFont(), new Color(1, 1, 1, 1)));
         label.setFontScale(2.7f);
         btn.setLabel(label);
         btn.getCell(label).padRight(160).padBottom(250);
 
+        stage = new Stage(game.fixedViewPort, game.batch);
 
-        hud.stage.addActor(btn);
-        Gdx.input.setInputProcessor(hud.stage);
-        hud.getCardsInHandDisplay().updateCardsInHandVisually();
+        stage.addActor(btn);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -102,7 +99,7 @@ public class TestScreen implements Screen {
 
         programRegisterDisplay.draw(game.batch);
         game.batch.end();
-        hud.draw(game.batch);
+        stage.draw();
         handleInput();
     }
 
