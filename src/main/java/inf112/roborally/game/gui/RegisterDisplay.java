@@ -1,7 +1,6 @@
 package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -120,7 +119,7 @@ public class RegisterDisplay {
             lockGui.addActor(lockImage);
         }
     }
-    public void draw(SpriteBatch batch) {
+    public void update() {
         updateWires();
         updateLocks();
         updateDamageTokens();
@@ -176,7 +175,7 @@ public class RegisterDisplay {
                         }
                     }
                 });
-                hud.cardsGui.addActor(cardInRegisterButton);
+                hud.registerGui.addActor(cardInRegisterButton);
             }
         }
     }

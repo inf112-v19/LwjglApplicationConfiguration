@@ -2,7 +2,6 @@ package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -18,9 +17,9 @@ import inf112.roborally.game.objects.Player;
 public class Hud {
 
     public Stage stage;
-    public Group registerGui;
-    public Group lockGui;
-    public Group cardsGui;
+    public Group registerGui; // All register elements except locks
+    public Group lockGui; // Lock are register elements, but need a separate group so the can be drawn on top of cards
+    public Group handGui; // Cards in player hand. Needs a separate so the cards can be hidden during phases.
 
     private HandDisplay handDisplay;
     private RegisterDisplay registerDisplay;
@@ -42,12 +41,12 @@ public class Hud {
         stage.addListener(game.cameraListener);
 
         registerGui = new Group();
-        cardsGui = new Group();
         lockGui = new Group();
+        handGui = new Group();
 
         stage.addActor(registerGui);
-        stage.addActor(cardsGui);
         stage.addActor(lockGui);
+        stage.addActor(handGui);
 
 
 
@@ -106,24 +105,14 @@ public class Hud {
         stage.addActor(settingsButton);
     }
 
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
-        batch.begin();
-        registerDisplay.draw(batch);
-        batch.end();
+        registerDisplay.update();
+
+        handGui.setVisible(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS);
 
         stage.draw();
-
-        if(!(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS)){
-            clearAllCards();
-            clearAllCards();
-            clearAllCards();
-            registerDisplay.drawCardsInProgramRegister(this);
-            stage.draw();
-        }else{
-            stage.draw();
-        }
     }
 
 
@@ -132,9 +121,15 @@ public class Hud {
      * Might need to call this function several times to actually remove all buttons. (Weird bug)
      */
     public void clearAllCards() {
-        for (Actor button : cardsGui.getChildren()) {
+        for (Actor button : registerGui.getChildren()) {
             if (button instanceof ProgramCardButton) {
                 button.remove();
+            }
+        }
+        for (Actor button : handGui.getChildren()){
+            if (button instanceof ProgramCardButton) {
+                button.remove();
+
             }
         }
     }

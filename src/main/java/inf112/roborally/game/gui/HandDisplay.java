@@ -49,7 +49,7 @@ public class HandDisplay {
                 }
             });
 
-            hud.cardsGui.addActor(cardInHandButton);
+            hud.handGui.addActor(cardInHandButton);
 
             if (i % 5 == 4) {
                 j++;

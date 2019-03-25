@@ -43,7 +43,6 @@ public class GameScreen implements Screen {
         board.placePlayers();
 
         hud = new Hud(board.getPlayers().get(0), game);
-        System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud, game);
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
@@ -92,7 +91,7 @@ public class GameScreen implements Screen {
         game.batch.end();
 
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
-        hud.draw(game.batch);
+        hud.draw();
     }
 
     private void update() {
