@@ -1,7 +1,10 @@
 package inf112.roborally.game.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -14,15 +17,19 @@ import inf112.roborally.game.objects.Player;
 
 public class Hud {
 
+    public Stage stage;
+    public Group registerGui;
+    public Group lockGui;
+    public Group cardsGui;
+
     private CardsInHandDisplay cardsInHandDisplay;
     private ProgramRegisterDisplay programRegisterDisplay;
-    private CardDisplay cardDisplay;
-    private Stage stage;
     private Player player;
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
     private ImageButton settingsButton;
+
 
     private final RoboRallyGame game;
 
@@ -31,9 +38,21 @@ public class Hud {
         this.player = player;
         this.game = game;
         stage = new Stage(game.fixedViewPort, game.batch);
-        cardsInHandDisplay = new CardsInHandDisplay(player, stage);
-        programRegisterDisplay = new ProgramRegisterDisplay(player, stage);
-        cardDisplay = new CardDisplay(programRegisterDisplay, cardsInHandDisplay);
+        Gdx.input.setInputProcessor(stage);
+        stage.addListener(game.cameraListener);
+
+        registerGui = new Group();
+        cardsGui = new Group();
+        lockGui = new Group();
+
+        stage.addActor(registerGui);
+        stage.addActor(cardsGui);
+        stage.addActor(lockGui);
+
+
+
+        cardsInHandDisplay = new CardsInHandDisplay(player, this);
+        programRegisterDisplay = new ProgramRegisterDisplay(player, registerGui, lockGui);
 
         float scale = 0.4f;
         submitButton = new ImageButton(new TextureRegionDrawable(new Texture(
@@ -62,11 +81,11 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 player.getRegisters().returnCards(player);
-                cardDisplay.clearAllCards();
-                cardDisplay.clearAllCards();
-                cardDisplay.clearAllCards();
-                cardDisplay.clearAllCards();
-                cardDisplay.updateCards();
+                clearAllCards();
+                clearAllCards();
+                clearAllCards();
+                clearAllCards();
+                updateCards();
             }
         });
 
@@ -97,23 +116,36 @@ public class Hud {
         stage.draw();
 
         if(!(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS)){
-            cardDisplay.clearAllCards();
-            cardDisplay.clearAllCards();
-            cardDisplay.clearAllCards();
-            programRegisterDisplay.drawCardsInProgramRegister(cardDisplay);
+            clearAllCards();
+            clearAllCards();
+            clearAllCards();
+            programRegisterDisplay.drawCardsInProgramRegister(this);
             stage.draw();
         }else{
             stage.draw();
         }
     }
 
-    public CardDisplay getCardDisplay(){
-        return cardDisplay;
+
+    /**
+     * Remove all program card buttons.
+     * Might need to call this function several times to actually remove all buttons. (Weird bug)
+     */
+    public void clearAllCards() {
+        for (Actor button : cardsGui.getChildren()) {
+            if (button instanceof ProgramCardButton) {
+                button.remove();
+            }
+        }
     }
 
-    public void dispose() {
-        System.out.println("disposing hud");
-        cardsInHandDisplay.dispose();
-        programRegisterDisplay.dispose();
+    /**
+     * Updates program cards in hand and program cards in register visually.
+     */
+    @SuppressWarnings("Duplicates")
+    public void updateCards() {
+        clearAllCards();
+        cardsInHandDisplay.updateCardsInHand(this);
+        programRegisterDisplay.drawCardsInProgramRegister(this);
     }
 }

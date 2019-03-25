@@ -44,7 +44,7 @@ public class GameScreen implements Screen {
 
         hud = new Hud(board.getPlayers().get(0), game);
         System.out.println(game.fixedCamera.position);
-        gameLogic = new GameLogic(board, hud.getCardDisplay(), game);
+        gameLogic = new GameLogic(board, hud, game);
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
         music.play();
@@ -112,7 +112,6 @@ public class GameScreen implements Screen {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
         }
-        hud.dispose();
         music.dispose();
     }
 
