@@ -46,6 +46,8 @@ public class RoboRallyGame extends Game {
     @Override
     public void create() {
         assMan = new AssMan();
+        assMan.load();
+        assMan.manager.finishLoading();
 
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);

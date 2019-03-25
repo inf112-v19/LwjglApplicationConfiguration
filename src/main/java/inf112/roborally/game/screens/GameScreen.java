@@ -38,18 +38,17 @@ public class GameScreen implements Screen {
         this.game = game;
         assMan = game.getAssMan();
 
+
         board = new VaultBoard();
 
-        board.addPlayer(new Player("Player1", "assets/robot/bartenderclaptrap.png", NORTH, board));
-        board.addPlayer(new Player("Player2", "assets/robot/claptrapRefined.png", NORTH, board));
-        board.addPlayer(new Player("Player3", "assets/robot/butlerRefined.png", NORTH, board));
-        board.addPlayer(new Player("Player1", "assets/robot/claptrap3000.png", NORTH, board));
+        board.addPlayer(new Player("Player1", AssMan.playerBartenderClaptrap.fileName, NORTH, board));
+        board.addPlayer(new Player("Player2", AssMan.playerClaptrapRefined.fileName, NORTH, board));
+        board.addPlayer(new Player("Player3", AssMan.playerButlerRefined.fileName, NORTH, board));
+        board.addPlayer(new Player("Player1", AssMan.playerClaptrap3000.fileName, NORTH, board));
         board.placePlayers();
 
         hud = new Hud(board.getPlayers().get(0), game, assMan);
 
-        hud.getAssMan().load();
-        hud.getAssMan().manager.finishLoading();
         hud.createButtons();
 
         System.out.println(game.fixedCamera.position);
@@ -124,6 +123,7 @@ public class GameScreen implements Screen {
         }
         hud.dispose();
         music.dispose();
+
     }
 
     @Override
