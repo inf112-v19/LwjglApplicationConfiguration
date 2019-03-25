@@ -58,7 +58,7 @@ public class Player extends MovableGameObject {
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
-        playerState = PlayerState.NOT_READY;
+        playerState = PlayerState.OPERATIONAL;
 
         // As for now, we have 3 sounds
         nSounds = 3;
@@ -103,7 +103,7 @@ public class Player extends MovableGameObject {
         if (programCard == null) {
             return;
         }
-        if (playerState == PlayerState.DEAD) return;
+        if (playerState == PlayerState.DESTROYED) return;
 
         if (programCard.getRotate() != Rotate.NONE) {
             rotate(programCard.getRotate());
@@ -176,18 +176,20 @@ public class Player extends MovableGameObject {
     }
 
     public void update() {
-        if (playerState == PlayerState.DEAD) return; // Player needs to respawn before it receives updates.
+        if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
 
         if (isDestroyed() && !outOfLives()) {
-            playerState = PlayerState.DEAD;
-            move(-1, -1);
+            playerState = PlayerState.DESTROYED;
+            if (backup != null) {
+                move(-1, -1);
+            }
             Gdx.app.log(name, "is destroyed!");
         }
         updateSprite();
     }
 
     public void respawn() {
-        if (playerState != PlayerState.DEAD) return; // Can only respawn dead robots
+        if (playerState != PlayerState.DESTROYED) return; // Can only respawn dead robots
 
         lives--;
         if (outOfLives()) {
@@ -199,6 +201,7 @@ public class Player extends MovableGameObject {
             if (backup != null) {
                 backup.movePlayerToBackup();
             }
+            playerState = PlayerState.OPERATIONAL;
         }
     }
 
@@ -210,7 +213,7 @@ public class Player extends MovableGameObject {
 
     public void powerUp() {
         repairAllDamage();
-        playerState = PlayerState.NOT_READY;
+        playerState = PlayerState.OPERATIONAL;
         System.out.println(name + " powers up");
     }
 

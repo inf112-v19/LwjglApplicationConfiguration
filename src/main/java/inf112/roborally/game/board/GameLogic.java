@@ -89,16 +89,16 @@ public class GameLogic {
         switch (state) {
             case PREROUND:
                 doBeforeRound();
-                for (Player player : players) {
-                    if (player.playerState == PlayerState.GAME_OVER || player.playerState == PlayerState.POWERED_DOWN)
-                        continue;
-                    player.playerState = PlayerState.NOT_READY;
-                }
+//                for (Player player : players) {
+//                    if (player.playerState == PlayerState.GAME_OVER || player.playerState == PlayerState.POWERED_DOWN)
+//                        continue;
+//                    player.playerState = PlayerState.NOT_READY;
+//                }
                 break;
             case PICKING_CARDS:
                 if (player1.isReady()) {
                     if (player1.playerState == PlayerState.READY) {
-                        player1.playerState = PlayerState.PLAYING;
+                        player1.playerState = PlayerState.OPERATIONAL;
                     }
                     state = GameState.ROUND;
                 }
@@ -106,7 +106,7 @@ public class GameLogic {
             case ROUND:
                 if (phase < 5) {
                     System.out.println("executing phase " + phase);
-                    if (player1.playerState == PlayerState.PLAYING)
+                    if (player1.playerState == PlayerState.OPERATIONAL)
                         player1.executeCard(player1.getRegisters().getCard(phase));
                     checkIfAnyPlayersWon();
                     try {

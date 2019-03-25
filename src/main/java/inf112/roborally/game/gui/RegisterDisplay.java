@@ -69,7 +69,7 @@ public class RegisterDisplay {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 GameLogic logic = ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getGameLogic();
-                if (logic.getState() == GameState.PICKING_CARDS && player.playerState == PlayerState.NOT_READY) {
+                if (logic.getState() == GameState.PICKING_CARDS && player.playerState == PlayerState.OPERATIONAL) {
                     System.out.println(player.getName() + " wants to power down");
                     player.wantsToPowerDown = true;
                 }
