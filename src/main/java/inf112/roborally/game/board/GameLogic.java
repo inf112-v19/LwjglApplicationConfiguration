@@ -26,6 +26,7 @@ public class GameLogic {
 
     private final Hud hud;
 
+
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
         state = GameState.BETWEEN_ROUNDS;
         this.game = game;
@@ -60,6 +61,8 @@ public class GameLogic {
                 board.boardMoves();
                 state = GameState.ROUND;
                 break;
+            case GAME_OVER:
+                game.setScreen(game.endGameScreen);
         }
 
     }
@@ -105,7 +108,7 @@ public class GameLogic {
                 e.printStackTrace();
             }
             state = GameState.BOARD_MOVES;
-            checkIfAnyPlayersWon();
+            checkIfAPlayerHasWon();
             phase++;
         }
         else {
@@ -170,12 +173,13 @@ public class GameLogic {
         }
     }
 
-    private void checkIfAnyPlayersWon() {
-        for (Player pl : players) {
-            if (pl.hasWon()) {
-                System.out.printf("%s just won the game by collecting all the flags!!%n", pl.getName());
-                // Might not be necessary to exit the game when it's finished
-                Gdx.app.exit();
+    private void checkIfAPlayerHasWon() {
+        for (Player player : players) {
+            if (player.hasWon()) {
+                System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
+                state = GameState.GAME_OVER;
+                game.endGameScreen.addWinner(player);
+                break;
             }
         }
     }
