@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 
 /**
@@ -33,7 +34,9 @@ public class CardsInHandDisplay {
         posY = 200;
 
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
-            ImageTextButton cardInHandButton = new ProgramCardButton(player.getCardInHand(i));
+            ProgramCard card = player.getCardInHand(i);
+            card.setUpSkin();
+            ImageTextButton cardInHandButton = new ProgramCardButton(card);
             cardInHandButton.setTransform(true);
             cardInHandButton.setScale(scale);
             cardInHandButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);

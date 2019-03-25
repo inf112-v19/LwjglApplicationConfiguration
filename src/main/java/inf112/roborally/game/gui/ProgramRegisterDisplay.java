@@ -122,6 +122,7 @@ public class ProgramRegisterDisplay {
         for (int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
             if(card != null) {
+                card.setUpSkin();
                 ImageTextButton cardInRegisterButton = new ProgramCardButton(card);
                 cardInRegisterButton.setTransform(true);
                 cardInRegisterButton.setScale(scale * 0.8f);

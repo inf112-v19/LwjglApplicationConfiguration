@@ -25,7 +25,9 @@ public class ProgramCard implements Comparable {
         this.moveDistance = moveDistance;
         this.priority = priority;
         this.type = type;
+    }
 
+    public void setUpSkin() {
         atlas = new TextureAtlas("assets/cards/imageButton.atlas");
         skin = new Skin();
         skin.addRegions(atlas);
@@ -142,5 +144,4 @@ public class ProgramCard implements Comparable {
         return 1;
 
     }
-
 }
