@@ -1,5 +1,6 @@
 package inf112.roborally.game.board;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
@@ -25,7 +26,9 @@ public class ProgramCard implements Comparable {
         this.moveDistance = moveDistance;
         this.priority = priority;
         this.type = type;
+    }
 
+    public void setUpSkin(){
         atlas = new TextureAtlas("assets/cards/imageButton.atlas");
         skin = new Skin();
         skin.addRegions(atlas);
