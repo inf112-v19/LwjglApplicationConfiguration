@@ -8,17 +8,17 @@
  </layer>
  <layer id="2" name="belts" width="17" height="17">
   <data encoding="base64" compression="zlib">
-   eJxjYBieQJpILIPHDCki7aKVGTCxUTMGlxkwMJjMkCUSD0YAAP7iBSs=
+   eJxjYBieQIVILIvHDG0i7aKVGTCxUTMGlxkwMJjMMCISD0YAAHjWByM=
   </data>
  </layer>
  <layer id="3" name="lasers" width="17" height="17">
   <data encoding="base64" compression="zlib">
-   eJxjYBhcgBeIhUnE2Mwg1U5cYsS4hxgzcAEJAurQ5bC5h5Bd2MyA2Y1PnhgzCNH0MoOQOnxyuOKVFDMIAXxmEJvO8ZlBLJDAwic1v+HLe+QAAGgeBwA=
+   eJxjYBhcwBCILUjE2Mwg1U5cYsS4hxgzcAEJAurQ5bC5h5Bd2MyA2Y1PnhgzCNH0MoOQOnxyuOKVFDMIAXxmEJvO8ZlBLJDAwic1v+HLe+QAAPLLFfs=
   </data>
  </layer>
  <layer id="4" name="walls" width="17" height="17">
   <data encoding="base64" compression="zlib">
-   eJxjYMAEoiTyQYATixgLAT42gGwOM5ocNj4XEWbi0g8DTFBaBI2P7h5qAWLCARdAdw82/7NSYD4ygIUHPvdSwy4OKM1NQB2x4YaujpAbOXCIw9yDL32QC5DdiMt+XO7BBViRaGxsbICZBPtpBQB+6QFQ
+   eJxjYMAEoiTyQYATixgLAT42wIXEZkaTw8bnJsJMXPphgAlKi6Dx0d1DLUBMOOAC6O7B5n9WCsxHBrDwwOdeatjFjEbjAsSGG7o6Qm7ElnZBgAdK40sf5AJkN+KyH5d7cAFWJBobGxtgJsF+WgEAex0BTQ==
   </data>
  </layer>
 </map>

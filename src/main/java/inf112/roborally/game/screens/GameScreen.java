@@ -8,6 +8,7 @@ import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.*;
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
@@ -30,20 +31,32 @@ public class GameScreen implements Screen {
 
     public ArrayList<Animation> animations;
 
+    private AssMan assMan;
+
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
         this.game = game;
+        assMan = game.getAssMan();
+
 
         board = new VaultBoard();
 
-        board.addPlayer(new Player("Player", "assets/robot/bartenderclaptrap.png", NORTH, board));
-        board.addPlayer(new Player("testBot1", "assets/robot/claptrapRefined.png", NORTH, board));
-        board.addPlayer(new Player("testBot2", "assets/robot/butlerRefined.png", NORTH, board));
-        board.addPlayer(new Player("testBot3", "assets/robot/claptrap3000.png", NORTH, board));
+
+        board.addPlayer(new Player("Player1", AssMan.playerBartenderClaptrap.fileName, NORTH, board));
+        board.addPlayer(new Player("testBo1", AssMan.playerClaptrapRefined.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot2", AssMan.playerButlerRefined.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot3", AssMan.playerClaptrap3000.fileName, NORTH, board));
+
         board.placePlayers();
 
+
         hud = new Hud(board.getPlayers().get(0), game);
+
+        hud.createButtons();
+
+        System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud, game);
+
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
         music.play();
@@ -62,6 +75,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+
     }
 
     @Override
@@ -112,6 +126,7 @@ public class GameScreen implements Screen {
             player.getBackup().getSprite().getTexture().dispose();
         }
         music.dispose();
+
     }
 
     @Override

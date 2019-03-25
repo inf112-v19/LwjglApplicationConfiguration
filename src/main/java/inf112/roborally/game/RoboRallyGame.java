@@ -1,11 +1,13 @@
 package inf112.roborally.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.screens.*;
 
@@ -34,8 +36,13 @@ public class RoboRallyGame extends Game {
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
 
+    private AssMan assMan;
+
     @Override
     public void create() {
+        assMan = new AssMan();
+        assMan.load();
+        assMan.manager.finishLoading();
 
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);
@@ -65,6 +72,11 @@ public class RoboRallyGame extends Game {
 
     public GameScreen getGameScreen() {
         return this.gameScreen;
+    }
+
+
+    public AssMan getAssMan(){
+        return assMan;
     }
 
     @Override

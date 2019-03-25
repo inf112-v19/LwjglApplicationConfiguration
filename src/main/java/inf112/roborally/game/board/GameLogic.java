@@ -77,6 +77,7 @@ public class GameLogic {
             retrieveCardsFromPlayer(player1);
         giveCardsToPlayer(player1);
 
+
         //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
         hud.clearAllCards();
         hud.clearAllCards();
