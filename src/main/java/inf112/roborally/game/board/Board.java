@@ -95,7 +95,7 @@ public abstract class Board extends BoardCreator {
             if (player == null) continue;
             expressBeltsMove(player);
             if (isOffTheBoard(player)) {
-                if(!soundIsMuted) {
+                if (!soundIsMuted) {
                     player.getSoundFromPlayer(2).play();
                 }
                 player.destroy();
@@ -144,12 +144,17 @@ public abstract class Board extends BoardCreator {
             i.next();
             player.rotate(Rotate.valueOf(i.next().toString()));
         }
+
+        // Gyros rotate
+        if (cellContainsKey(currentCell, "Gyro")) {
+            player.rotate(Rotate.valueOf(getValue(currentCell)));
+        }
     }
 
     private void lasersFire() {
         for (Player player : players) {
             if (lasersHit(laserLayer.getCell(player.getX(), player.getY()))) {
-                if(!soundIsMuted) {
+                if (!soundIsMuted) {
                     player.getSoundFromPlayer(0).play();
                 }
                 player.takeDamage();
@@ -197,7 +202,7 @@ public abstract class Board extends BoardCreator {
         for (Player player : players) {
             if (isOnRepair(player) || isOnOption(player)) {
                 player.repairOneDamage();
-                if(!soundIsMuted) {
+                if (!soundIsMuted) {
                     player.getSoundFromPlayer(1).play();
                 }
                 addAnimation(new RepairAnimation(player.position));
@@ -236,7 +241,7 @@ public abstract class Board extends BoardCreator {
     }
 
 
-    private boolean blockedByWall(TiledMapTileLayer.Cell cell, Direction direction){
+    private boolean blockedByWall(TiledMapTileLayer.Cell cell, Direction direction) {
         return splitValuesBySpace(getValue(cell)).contains(direction.toString());
     }
 
@@ -344,33 +349,33 @@ public abstract class Board extends BoardCreator {
     }
 
 
-    public void laserFire(){
+    public void laserFire() {
         for (Player player :
                 players) {
             robotFire(player);
         }
     }
 
-    public void robotFire(Player player){
+    public void robotFire(Player player) {
 
         LaserShot laserShot = new LaserShot(player.getDirection(), player.getX(), player.getY());
-        while(true){
-            if(!canGo(laserShot, laserShot.getDirection()))
+        while (true) {
+            if (!canGo(laserShot, laserShot.getDirection()))
                 return;
             laserShot.moveInDirection(laserShot.getDirection());
 
             for (Player target :
                     players) {
-                if(laserShot.position.equals(target.position)){
+                if (laserShot.position.equals(target.position)) {
                     target.takeDamage();
-                    System.out.println(player.getName() +  " shoots  " + target.getName());
+                    System.out.println(player.getName() + " shoots  " + target.getName());
                     return;
                 }
 
             }
 
-            if(laserShot.getX()< 0 || laserShot.getX() > getWidth()
-                    || laserShot.getY() < 0 || laserShot.getY() > getHeight()){
+            if (laserShot.getX() < 0 || laserShot.getX() > getWidth()
+                    || laserShot.getY() < 0 || laserShot.getY() > getHeight()) {
                 return;
             }
         }
