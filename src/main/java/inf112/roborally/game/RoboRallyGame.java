@@ -56,7 +56,7 @@ public class RoboRallyGame extends Game {
 
         if (DEBUGGING) {
             registerTestScreen = new TestScreen(this);
-            setScreen(registerTestScreen);
+//            setScreen(registerTestScreen);
         }
         else {
             menuScreen = new MenuScreen(this);
@@ -79,7 +79,7 @@ public class RoboRallyGame extends Game {
     public void dispose() {
         batch.dispose();
         if (DEBUGGING) {
-            registerTestScreen.dispose();
+//            registerTestScreen.dispose();
         }
         else {
             gameScreen.dispose();

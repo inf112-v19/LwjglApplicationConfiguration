@@ -27,7 +27,7 @@ public class CardsInHandDisplay {
         stage.addListener(((RoboRallyGame) Gdx.app.getApplicationListener()).cameraListener);
     }
 
-    public void updateCardsInHand(final CardDisplay cardDisplay){
+    public void updateCardsInHand(final Hud hud){
         float scale = 0.5f;
         int j = 0;
         posX = 1250;
@@ -46,11 +46,11 @@ public class CardsInHandDisplay {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().placeCard(index);
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.updateCards();
+                    hud.clearAllCards();
+                    hud.clearAllCards();
+                    hud.clearAllCards();
+                    hud.clearAllCards();
+                    hud.updateCards();
                 }
             });
 
