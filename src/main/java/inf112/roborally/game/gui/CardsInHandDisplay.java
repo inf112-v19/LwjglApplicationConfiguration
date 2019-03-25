@@ -34,9 +34,9 @@ public class CardsInHandDisplay {
         posY = 200;
 
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
-            ProgramCard currentCard = player.getCardInHand(i);
-            currentCard.setUpSkin();
-            ImageTextButton cardInHandButton = new ProgramCardButton(currentCard);
+            ProgramCard card = player.getCardInHand(i);
+            card.setUpSkin();
+            ImageTextButton cardInHandButton = new ProgramCardButton(card);
             cardInHandButton.setTransform(true);
             cardInHandButton.setScale(scale);
             cardInHandButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);

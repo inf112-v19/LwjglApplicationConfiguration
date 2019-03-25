@@ -121,8 +121,8 @@ public class ProgramRegisterDisplay {
     public void drawCardsInProgramRegister(final CardDisplay cardDisplay){
         for (int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
-            card.setUpSkin();
             if(card != null) {
+                card.setUpSkin();
                 ImageTextButton cardInRegisterButton = new ProgramCardButton(card);
                 cardInRegisterButton.setTransform(true);
                 cardInRegisterButton.setScale(scale * 0.8f);
