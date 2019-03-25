@@ -204,7 +204,7 @@ public class Player extends MovableGameObject {
     }
 
     public void powerDown() {
-        if (!wantsToPowerDown && isOperational()) return;
+        if (!wantsToPowerDown || !isOperational()) return;
 
         playerState = PlayerState.POWERED_DOWN;
         System.out.println(name + " powers down");
