@@ -4,14 +4,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
 
 public class ProgramRegisterDisplay {
-    private final CardVisuals cardVisual;
     private Player player;
+    public Stage stage;
     private ProgramRegisters registers;
     private Sprite programBoard;
     private Sprite lifeToken;
@@ -20,6 +25,7 @@ public class ProgramRegisterDisplay {
     private Sprite card;
     private Sprite wires;
     private ArrayList<TextureRegion> wireTextures;
+
 
     float scale = .5f;
 
@@ -30,8 +36,9 @@ public class ProgramRegisterDisplay {
      *
      * @param player
      */
-    public ProgramRegisterDisplay(Player player) {
+    public ProgramRegisterDisplay(Player player, Stage stage) {
         this.player = player;
+        this.stage = stage;
         registers = player.getRegisters();
 
         programBoard = new Sprite(new Texture("assets/cards/programregisters.png"));
@@ -60,8 +67,6 @@ public class ProgramRegisterDisplay {
         card = new Sprite();
         float cardScale = 0.77f;
         card.setSize(238 * cardScale * scale, 300 * cardScale * scale);
-
-        cardVisual = new CardVisuals();
     }
 
     public void draw(SpriteBatch batch) {
@@ -70,12 +75,11 @@ public class ProgramRegisterDisplay {
         wires.draw(batch);
         drawLifeTokens(batch);
         drawDamageTokens(batch);
-        drawCardsInRegisters(batch);
         drawLocks(batch);
     }
 
     private void updateWires() {
-        int wireIndex = 5 - registers.getUnlockedRegisters();
+        int wireIndex = 5 - registers.getNumUnlockedRegisters();
         wires.setRegion(wireTextures.get(wireIndex % wireTextures.size()));
 
     }
@@ -114,15 +118,36 @@ public class ProgramRegisterDisplay {
         }
     }
 
-    private void drawCardsInRegisters(SpriteBatch batch) {
-        for (int i = 0; i < 5; i++) {
-            if (registers.getCard(i) != null) {
-                card.setPosition(programBoard.getX() + 19 * scale + 200 * scale * i, 10 * scale);
-                card.setRegion(cardVisual.getRegion(registers.getCard(i)));
-                card.draw(batch);
+    public void drawCardsInProgramRegister(final CardDisplay cardDisplay){
+        for (int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++) {
+            ProgramCard card = player.getRegisters().getCard(i);
+            if(card != null) {
+                card.setUpSkin();
+                ImageTextButton cardInRegisterButton = new ProgramCardButton(card);
+                cardInRegisterButton.setTransform(true);
+                cardInRegisterButton.setScale(scale * 0.8f);
+                cardInRegisterButton.setPosition(programBoard.getX() +
+                        19 * scale + 200 * scale * i, 10 * scale);
+
+                final int index = i;
+                cardInRegisterButton.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        if(!registers.isLocked(index)) {
+                            registers.returnCard(player, index);
+                            cardDisplay.clearAllCards();
+                            cardDisplay.clearAllCards();
+                            cardDisplay.clearAllCards();
+                            cardDisplay.clearAllCards();
+                            cardDisplay.updateCards();
+                        }
+                    }
+                });
+                stage.addActor(cardInRegisterButton);
             }
         }
     }
+
 
     public void dispose() {
         System.out.println("disposing ProgramRegisterDisplay");
@@ -131,6 +156,5 @@ public class ProgramRegisterDisplay {
         lifeToken.getTexture().dispose();
         damageToken.getTexture().dispose();
         lockToken.getTexture().dispose();
-        cardVisual.dispose();
     }
 }

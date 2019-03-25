@@ -12,7 +12,7 @@ public class CameraListener extends DragListener {
     private float cameraX, cameraY;
 
     /**
-     * Handles all dynamicCamera movement. Needs constant calls to update for zoom to work
+     * Handles all dynamicCamera movement. Needs constant calls to updateCards for zoom to work
      */
     public CameraListener(OrthographicCamera camera) {
         this.camera = camera;

@@ -6,7 +6,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.gui.CardsInHandDisplay;
+import inf112.roborally.game.gui.CardDisplay;
 import inf112.roborally.game.objects.Player;
 
 import java.util.*;
@@ -14,7 +14,6 @@ import java.util.*;
 
 public class GameLogic {
 
-    private boolean roundOver;
     private int phase;
     private Board board;
     private GameState state;
@@ -25,9 +24,9 @@ public class GameLogic {
     private Stack<ProgramCard> returnedProgramCards;
     private Player player1;
 
-    private final CardsInHandDisplay cardsInHandDisplay;
+    private final CardDisplay cardDisplay;
 
-    public GameLogic(Board board, CardsInHandDisplay cardsInHandDisplay, RoboRallyGame game) {
+    public GameLogic(Board board, CardDisplay cardDisplay, RoboRallyGame game) {
         state = GameState.PREROUND;
         this.game = game;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
@@ -35,9 +34,8 @@ public class GameLogic {
         this.players = board.getPlayers();
         player1 = players.get(0);
         this.board = board;
-        this.cardsInHandDisplay = cardsInHandDisplay;
+        this.cardDisplay = cardDisplay;
 
-        roundOver = true;
         phase = 0;
 
         update();
@@ -53,13 +51,20 @@ public class GameLogic {
         retrieveCardsFromPlayer(player1);
         board.cleanBoard();
         giveCardsToPlayer(player1);
-        cardsInHandDisplay.updateCardsInHandVisually();
+
+        //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
+        cardDisplay.clearAllCards();
+        cardDisplay.clearAllCards();
+        cardDisplay.clearAllCards();
+        cardDisplay.updateCards();
+
         state = GameState.PICKING_CARDS;
     }
 
+
     public void update() {
         handleInput();
-        board.updatePlayers();
+        updatePlayers();
 
         switch (state) {
             case PREROUND:
@@ -77,7 +82,6 @@ public class GameLogic {
                 break;
             case ROUND:
                 if (phase < 5) {
-
                     System.out.println("executing phase " + phase);
                     player1.executeCard(player1.getRegisters().getCard(phase));
                     checkIfAnyPlayersWon();
@@ -133,12 +137,12 @@ public class GameLogic {
             board.boardMoves();
         }
 
-
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            players.get(0).getRegisters().returnCards(players.get(0).getCardsInHand());
-            // messy but it works:
-            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
-                    updateCardsInHandVisually();
+            players.get(0).getRegisters().returnCards(players.get(0));
+            cardDisplay.clearAllCards();
+            cardDisplay.clearAllCards();
+            cardDisplay.clearAllCards();
+            cardDisplay.updateCards();
         }
     }
 
@@ -149,6 +153,12 @@ public class GameLogic {
                 // Might not be necessary to exit the game when it's finished
                 Gdx.app.exit();
             }
+        }
+    }
+
+    public void updatePlayers(){
+        for (Player pl : players){
+            pl.update();
         }
     }
 

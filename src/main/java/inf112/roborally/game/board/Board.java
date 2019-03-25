@@ -215,13 +215,6 @@ public abstract class Board extends BoardCreator {
         ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.animations.add(animation);
     }
 
-    // TODO: move this to game logic:
-    public void updatePlayers() {
-        for (Player player : players) {
-            player.update();
-        }
-    }
-
     public boolean canGo(MovableGameObject object, Direction direction) {
         return canLeaveCell(object, direction) && canEnter(object, direction);
     }

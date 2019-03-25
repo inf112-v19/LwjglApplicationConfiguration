@@ -21,7 +21,7 @@ public interface IProgramRegisters {
      * Remove and return all unlocked cards
      * @return
      */
-    public void returnCards(List<ProgramCard> list);
+   // public void returnCards(List<ProgramCard> list);
 
     /**
      * @return false if any slot contains null, else true

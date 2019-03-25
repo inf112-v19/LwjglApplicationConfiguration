@@ -14,7 +14,7 @@ import inf112.roborally.game.screens.TestScreen;
 
 public class RoboRallyGame extends Game {
 
-    private static final boolean DEBUGGING = true;
+    private static final boolean DEBUGGING = false;
 
     //MAPS:
     public static final String VAULT = "assets/maps/vault.tmx";
@@ -69,6 +69,10 @@ public class RoboRallyGame extends Game {
     public void newGame() {
         dispose();
         create();
+    }
+
+    public GameScreen getGameScreen(){
+        return this.gameScreen;
     }
 
     @Override

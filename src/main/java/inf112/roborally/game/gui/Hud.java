@@ -1,6 +1,5 @@
 package inf112.roborally.game.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -17,6 +16,7 @@ public class Hud {
 
     private CardsInHandDisplay cardsInHandDisplay;
     private ProgramRegisterDisplay programRegisterDisplay;
+    private CardDisplay cardDisplay;
     private Stage stage;
     private Player player;
     private ImageButton submitButton;
@@ -24,12 +24,16 @@ public class Hud {
     private ImageButton clearButton;
     private ImageButton settingsButton;
 
+    private final RoboRallyGame game;
 
-    public Hud(final Player player, RoboRallyGame game) {
+
+    public Hud(final Player player, final RoboRallyGame game) {
         this.player = player;
+        this.game = game;
         stage = new Stage(game.fixedViewPort, game.batch);
         cardsInHandDisplay = new CardsInHandDisplay(player, stage);
-        programRegisterDisplay = new ProgramRegisterDisplay(player);
+        programRegisterDisplay = new ProgramRegisterDisplay(player, stage);
+        cardDisplay = new CardDisplay(programRegisterDisplay, cardsInHandDisplay);
 
         float scale = 0.4f;
         submitButton = new ImageButton(new TextureRegionDrawable(new Texture(
@@ -57,10 +61,12 @@ public class Hud {
         clearButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                player.getRegisters().returnCards(player.getCardsInHand());
-                // messy but it works:
-                ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().
-                        updateCardsInHandVisually();
+                player.getRegisters().returnCards(player);
+                cardDisplay.clearAllCards();
+                cardDisplay.clearAllCards();
+                cardDisplay.clearAllCards();
+                cardDisplay.clearAllCards();
+                cardDisplay.updateCards();
             }
         });
 
@@ -71,9 +77,7 @@ public class Hud {
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Also kind of messy
-                ((RoboRallyGame) Gdx.app.getApplicationListener()).setScreen(
-                        ((RoboRallyGame) Gdx.app.getApplicationListener()).settingsScreen);
+                game.setScreen(game.settingsScreen);
             }
         });
 
@@ -81,7 +85,6 @@ public class Hud {
         stage.addActor(submitButton);
         stage.addActor(clearButton);
         stage.addActor(settingsButton);
-
     }
 
     public void draw(SpriteBatch batch) {
@@ -91,13 +94,21 @@ public class Hud {
         programRegisterDisplay.draw(batch);
         batch.end();
 
-        if(((RoboRallyGame)Gdx.app.getApplicationListener()).gameScreen.getGameLogic().getState() == GameState.PICKING_CARDS){
+        stage.draw();
+
+        if(!(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS)){
+            cardDisplay.clearAllCards();
+            cardDisplay.clearAllCards();
+            cardDisplay.clearAllCards();
+            programRegisterDisplay.drawCardsInProgramRegister(cardDisplay);
+            stage.draw();
+        }else{
             stage.draw();
         }
     }
 
-    public CardsInHandDisplay getCardsInHandDisplay() {
-        return cardsInHandDisplay;
+    public CardDisplay getCardDisplay(){
+        return cardDisplay;
     }
 
     public void dispose() {

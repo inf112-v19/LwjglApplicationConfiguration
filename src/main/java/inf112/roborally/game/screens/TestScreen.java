@@ -39,7 +39,7 @@ public class TestScreen implements Screen {
     public TestScreen(RoboRallyGame game) {
         this.game = game;
         player = new Player(0, 0);
-        programRegisterDisplay = new ProgramRegisterDisplay(player);
+        programRegisterDisplay = new ProgramRegisterDisplay(player, stage);
         for (int i = 0; i < 9; i++) {
             player.receiveCard(new ProgramCard(Rotate.NONE, 2, 0, "testCard"));
         }
