@@ -32,6 +32,8 @@ public class Player extends MovableGameObject {
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
 
+    public boolean wantsToPowerDown;
+
     private int nSounds;
     private GameSound[] allPlayerSounds;
 
@@ -56,7 +58,7 @@ public class Player extends MovableGameObject {
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
-        playerState = PlayerState.PICKING_CARDS;
+        playerState = PlayerState.NOT_READY;
 
         // As for now, we have 3 sounds
         nSounds = 3;
@@ -179,22 +181,37 @@ public class Player extends MovableGameObject {
         if (isDestroyed() && !outOfLives()) {
             playerState = PlayerState.DEAD;
             move(-1, -1);
-            Gdx.app.log("Player", "is destroyed!");
+            Gdx.app.log(name, "is destroyed!");
         }
         updateSprite();
     }
 
     public void respawn() {
+        if (playerState != PlayerState.DEAD) return; // Can only respawn dead robots
+
         lives--;
         if (outOfLives()) {
             System.out.println(name + " is out of the game");
-            return;
+            playerState = PlayerState.GAME_OVER;
         }
+        else {
+            repairAllDamage();
+            if (backup != null) {
+                backup.movePlayerToBackup();
+            }
+        }
+    }
 
+    public void powerDown(){
+        playerState = PlayerState.POWERED_DOWN;
+        System.out.println(name + " powers down");
+        wantsToPowerDown = false;
+    }
+
+    public void powerUp(){
         repairAllDamage();
-        if (backup != null) {
-            backup.movePlayerToBackup();
-        }
+        playerState = PlayerState.NOT_READY;
+        System.out.println(name + " powers up");
     }
 
 

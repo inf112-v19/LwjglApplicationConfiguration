@@ -50,6 +50,8 @@ public class GameLogic {
         // todo: check if a player has won
         board.cleanBoard();
         retrieveCardsFromPlayer(player1);
+        powerUpRobots();
+        powerDownRobots();
         giveCardsToPlayer(player1);
 
         //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
@@ -59,6 +61,22 @@ public class GameLogic {
         hud.updateCards();
 
         state = GameState.PICKING_CARDS;
+    }
+
+    private void powerUpRobots() {
+        for (Player player : players) {
+            if (player.playerState == PlayerState.POWERED_DOWN) player.powerUp();
+        }
+    }
+
+    private void powerDownRobots() {
+        for (Player player : players) {
+            if (player.wantsToPowerDown)
+//                player.getRegisters().returnCards(player);
+//                ArrayList<ProgramCard> cardsFromPlayer = player.returnCards();
+//                returnedProgramCards.addAll(cardsFromPlayer);
+                player.powerDown();
+        }
     }
 
 
@@ -71,8 +89,10 @@ public class GameLogic {
                 System.out.println("set up before round");
                 doBeforeRound();
                 System.out.println("player choosing cards");
-                for(Player player : players) {
-                    player.playerState = PlayerState.PICKING_CARDS;
+                for (Player player : players) {
+                    if (player.playerState == PlayerState.GAME_OVER || player.playerState == PlayerState.POWERED_DOWN)
+                        continue;
+                    player.playerState = PlayerState.NOT_READY;
                 }
                 break;
             case PICKING_CARDS:
@@ -83,7 +103,8 @@ public class GameLogic {
             case ROUND:
                 if (phase < 5) {
                     System.out.println("executing phase " + phase);
-                    player1.executeCard(player1.getRegisters().getCard(phase));
+                    if (player1.playerState == PlayerState.PLAYING)
+                        player1.executeCard(player1.getRegisters().getCard(phase));
                     checkIfAnyPlayersWon();
                     try {
                         Thread.sleep(500);
@@ -112,10 +133,10 @@ public class GameLogic {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
         }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.E))  {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             System.out.println("Switched to EndGame screen");
             game.endGameScreen.addWinner(player1);
             game.setScreen(game.endGameScreen);
@@ -161,15 +182,15 @@ public class GameLogic {
         }
     }
 
-    public void updatePlayers(){
-        for (Player pl : players){
+    public void updatePlayers() {
+        for (Player pl : players) {
             pl.update();
         }
     }
 
     public boolean playerReady(Player player) {
-        return player.getRegisters().isFull() &&
-                player.playerState == PlayerState.READY;
+        return player.playerState == PlayerState.POWERED_DOWN
+                || (player.getRegisters().isFull() && player.playerState == PlayerState.READY);
     }
 
     public boolean playersReady() {
@@ -212,7 +233,7 @@ public class GameLogic {
         Collections.shuffle(stackOfProgramCards);
     }
 
-    public GameState getState(){
+    public GameState getState() {
         return state;
     }
 }

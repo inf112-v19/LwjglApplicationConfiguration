@@ -1,9 +1,10 @@
 package inf112.roborally.game.enums;
 
 public enum PlayerState {
-    PICKING_CARDS,
+    NOT_READY,
     READY,
     POWERED_DOWN,
     PLAYING,
-    DEAD
+    DEAD,
+    GAME_OVER
 }

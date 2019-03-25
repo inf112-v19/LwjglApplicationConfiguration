@@ -211,7 +211,7 @@ public abstract class Board extends BoardCreator {
             if (isOnOption(player)) {
                 System.out.println("Give option card to player!");
             }
-            if (player.playerState == PlayerState.DEAD) player.respawn();
+            player.respawn();
         }
     }
 
