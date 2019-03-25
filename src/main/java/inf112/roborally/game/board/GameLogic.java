@@ -42,6 +42,28 @@ public class GameLogic {
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
+    public void update() {
+        handleInput();
+        updatePlayers();
+
+        switch (state) {
+            case PREROUND:
+                doBeforeRound();
+                break;
+            case PICKING_CARDS:
+                checkIfReady();
+                break;
+            case ROUND:
+                handlePhase();
+                break;
+            case BOARDMOVES:
+                board.boardMoves();
+                state = GameState.ROUND;
+                break;
+        }
+
+    }
+
     /**
      * Retrieve cards from last round
      * Receive new cards
@@ -65,6 +87,37 @@ public class GameLogic {
         state = GameState.PICKING_CARDS;
     }
 
+    private void checkIfReady() {
+        if (player1.isReady()) {
+            if (player1.playerState == PlayerState.READY) {
+                player1.playerState = PlayerState.OPERATIONAL;
+            }
+            state = GameState.ROUND;
+        }
+    }
+
+    private void handlePhase() {
+        if (phase < 5) {
+            System.out.println("executing phase " + phase);
+            if (player1.playerState == PlayerState.OPERATIONAL)
+                player1.executeCard(player1.getRegisters().getCard(phase));
+            checkIfAnyPlayersWon();
+            try {
+                Thread.sleep(500);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            state = GameState.BOARDMOVES;
+            phase++;
+        }
+        else {
+            phase = 0;
+            state = GameState.PREROUND;
+            System.out.println("round over");
+        }
+    }
+
     private void powerUpRobots() {
         for (Player player : players) {
             if (player.playerState == PlayerState.POWERED_DOWN) {
@@ -79,57 +132,6 @@ public class GameLogic {
             if (player.wantsToPowerDown)
                 player.powerDown();
         }
-    }
-
-
-    public void update() {
-        handleInput();
-        updatePlayers();
-
-        switch (state) {
-            case PREROUND:
-                doBeforeRound();
-//                for (Player player : players) {
-//                    if (player.playerState == PlayerState.GAME_OVER || player.playerState == PlayerState.POWERED_DOWN)
-//                        continue;
-//                    player.playerState = PlayerState.NOT_READY;
-//                }
-                break;
-            case PICKING_CARDS:
-                if (player1.isReady()) {
-                    if (player1.playerState == PlayerState.READY) {
-                        player1.playerState = PlayerState.OPERATIONAL;
-                    }
-                    state = GameState.ROUND;
-                }
-                break;
-            case ROUND:
-                if (phase < 5) {
-                    System.out.println("executing phase " + phase);
-                    if (player1.playerState == PlayerState.OPERATIONAL)
-                        player1.executeCard(player1.getRegisters().getCard(phase));
-                    checkIfAnyPlayersWon();
-                    try {
-                        Thread.sleep(500);
-                    }
-                    catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    state = GameState.BOARDMOVES;
-                    phase++;
-                }
-                else {
-                    phase = 0;
-                    state = GameState.PREROUND;
-                    System.out.println("round over");
-                }
-                break;
-            case BOARDMOVES:
-                board.boardMoves();
-                state = GameState.ROUND;
-                break;
-        }
-
     }
 
     public void handleInput() {
