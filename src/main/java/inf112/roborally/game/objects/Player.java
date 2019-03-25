@@ -10,7 +10,6 @@ import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
-
 import inf112.roborally.game.sound.GameSound;
 
 import java.util.ArrayList;
