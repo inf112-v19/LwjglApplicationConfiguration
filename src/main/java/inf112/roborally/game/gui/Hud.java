@@ -22,8 +22,8 @@ public class Hud {
     public Group lockGui;
     public Group cardsGui;
 
-    private CardsInHandDisplay cardsInHandDisplay;
-    private ProgramRegisterDisplay programRegisterDisplay;
+    private HandDisplay cardsInHandDisplay;
+    private RegisterDisplay programRegisterDisplay;
     private Player player;
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
@@ -51,8 +51,8 @@ public class Hud {
 
 
 
-        cardsInHandDisplay = new CardsInHandDisplay(player, this);
-        programRegisterDisplay = new ProgramRegisterDisplay(player, registerGui, lockGui);
+        cardsInHandDisplay = new HandDisplay(player, this);
+        programRegisterDisplay = new RegisterDisplay(player, registerGui, lockGui);
 
         float scale = 0.4f;
         submitButton = new ImageButton(new TextureRegionDrawable(new Texture(

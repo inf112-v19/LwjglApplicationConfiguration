@@ -9,7 +9,7 @@ import inf112.roborally.game.objects.Player;
 /**
  * A class for drawing all the cards that are in the player hand.
  */
-public class CardsInHandDisplay {
+public class HandDisplay {
 
     public Hud hud;
     private final Player player;
@@ -17,7 +17,7 @@ public class CardsInHandDisplay {
     private int posX, posY;
 
 
-    public CardsInHandDisplay(final Player player, Hud hud) {
+    public HandDisplay(final Player player, Hud hud) {
         this.player = player;
         this.hud = hud;
     }

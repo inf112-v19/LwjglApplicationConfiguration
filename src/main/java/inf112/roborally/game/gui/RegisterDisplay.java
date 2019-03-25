@@ -18,7 +18,7 @@ import inf112.roborally.game.objects.Player;
 import java.util.ArrayList;
 
 
-public class ProgramRegisterDisplay {
+public class RegisterDisplay {
     private Player player;
     public Group registerGui;
     private ProgramRegisters registers;
@@ -41,7 +41,7 @@ public class ProgramRegisterDisplay {
      *
      * @param player
      */
-    public ProgramRegisterDisplay(Player player, Group registerGui, Group lockGui) {
+    public RegisterDisplay(Player player, Group registerGui, Group lockGui) {
         this.player = player;
         this.registerGui = registerGui;
         registers = player.getRegisters();

@@ -1,34 +1,10 @@
 package inf112.roborally.game.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.animations.Animation;
-import inf112.roborally.game.animations.RepairAnimation;
-import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.gui.ProgramRegisterDisplay;
-import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.objects.Position;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TestScreen /*implements Screen */{
 //    private final RoboRallyGame game;
-//    private ProgramRegisterDisplay programRegisterDisplay;
+//    private RegisterDisplay programRegisterDisplay;
 //    private Player player;
 //    private Sprite background;
 //    private List<Animation> testAnimation;
@@ -39,7 +15,7 @@ public class TestScreen /*implements Screen */{
     public TestScreen(RoboRallyGame game) {
 //        this.game = game;
 //        player = new Player(0, 0);
-//        programRegisterDisplay = new ProgramRegisterDisplay(player, hud);
+//        programRegisterDisplay = new RegisterDisplay(player, hud);
 //        for (int i = 0; i < 9; i++) {
 //            player.receiveCard(new ProgramCard(Rotate.NONE, 2, 0, "testCard"));
 //        }
