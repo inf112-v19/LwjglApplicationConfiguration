@@ -111,6 +111,7 @@ public class Hud {
         registerDisplay.update();
 
         handGui.setVisible(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS);
+
         stage.draw();
     }
 
@@ -128,6 +129,7 @@ public class Hud {
         for (Actor button : handGui.getChildren()){
             if (button instanceof ProgramCardButton) {
                 button.remove();
+
             }
         }
     }
