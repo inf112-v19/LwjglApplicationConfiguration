@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.2" tiledversion="1.2.2" name="roborallyTextures" tilewidth="32" tileheight="32" spacing="1" tilecount="56" columns="7">
- <image source="textures.png" width="231" height="264"/>
+<tileset version="1.2" tiledversion="1.2.2" name="roborallyTextures" tilewidth="32" tileheight="32" spacing="1" tilecount="63" columns="7">
+ <image source="textures.png" width="231" height="297"/>
  <tile id="0">
   <properties>
    <property name="Floor" value=""/>
@@ -295,6 +295,16 @@
  <tile id="55">
   <properties>
    <property name="Laser" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="56">
+  <properties>
+   <property name="Gyro" value="RIGHT"/>
+  </properties>
+ </tile>
+ <tile id="57">
+  <properties>
+   <property name="Gyro" value="LEFT"/>
   </properties>
  </tile>
 </tileset>

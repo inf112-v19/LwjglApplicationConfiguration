@@ -9,15 +9,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.CameraListener;
-import inf112.roborally.game.screens.GameScreen;
-import inf112.roborally.game.screens.MenuScreen;
-import inf112.roborally.game.screens.SettingsScreen;
-import inf112.roborally.game.screens.TestScreen;
+import inf112.roborally.game.screens.*;
 
 public class RoboRallyGame extends Game {
-
-    private static final boolean DEBUGGING = false;
-
     //MAPS:
     public static final String VAULT = "assets/maps/vault.tmx";
     public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
@@ -37,9 +31,10 @@ public class RoboRallyGame extends Game {
     public SpriteBatch batch;
 
     public GameScreen gameScreen;
-    public TestScreen registerTestScreen;
+    public TestScreen testScreen;
     public MenuScreen menuScreen;
     public SettingsScreen settingsScreen;
+    public EndGameScreen endGameScreen;
 
     private AssMan assMan;
 
@@ -61,16 +56,13 @@ public class RoboRallyGame extends Game {
 
         batch = new SpriteBatch();
 
-        if (DEBUGGING) {
-            registerTestScreen = new TestScreen(this);
-            setScreen(registerTestScreen);
-        }
-        else {
-            menuScreen = new MenuScreen(this);
-            gameScreen = new GameScreen(this, VAULT);
-            settingsScreen = new SettingsScreen(this);
-            setScreen(menuScreen);
-        }
+        testScreen = new TestScreen(this);
+        menuScreen = new MenuScreen(this);
+        gameScreen = new GameScreen(this, VAULT);
+        settingsScreen = new SettingsScreen(this);
+        endGameScreen = new EndGameScreen(this);
+        setScreen(menuScreen);
+
     }
 
     public void newGame() {
@@ -78,7 +70,7 @@ public class RoboRallyGame extends Game {
         create();
     }
 
-    public GameScreen getGameScreen(){
+    public GameScreen getGameScreen() {
         return this.gameScreen;
     }
 
@@ -90,13 +82,8 @@ public class RoboRallyGame extends Game {
     @Override
     public void dispose() {
         batch.dispose();
-        if (DEBUGGING) {
-            registerTestScreen.dispose();
-        }
-        else {
-            gameScreen.dispose();
-            menuScreen.dispose();
-            assMan.dispose();
-        }
+        testScreen.dispose();
+        gameScreen.dispose();
+        menuScreen.dispose();
     }
 }

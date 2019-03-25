@@ -47,12 +47,14 @@ public class GameScreen implements Screen {
         board.addPlayer(new Player("Player1", AssMan.playerClaptrap3000.fileName, NORTH, board));
         board.placePlayers();
 
-        hud = new Hud(board.getPlayers().get(0), game, assMan);
+
+        hud = new Hud(board.getPlayers().get(0), game);
 
         hud.createButtons();
 
         System.out.println(game.fixedCamera.position);
-        gameLogic = new GameLogic(board, hud.getCardDisplay(), game);
+        gameLogic = new GameLogic(board, hud, game);
+
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
         music.play();
@@ -101,7 +103,7 @@ public class GameScreen implements Screen {
         game.batch.end();
 
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
-        hud.draw(game.batch);
+        hud.draw();
     }
 
     private void update() {
@@ -121,7 +123,6 @@ public class GameScreen implements Screen {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
         }
-        hud.dispose();
         music.dispose();
 
     }

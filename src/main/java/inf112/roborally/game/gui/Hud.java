@@ -1,7 +1,9 @@
 package inf112.roborally.game.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -14,29 +16,45 @@ import inf112.roborally.game.objects.Player;
 
 public class Hud {
 
-    private CardsInHandDisplay cardsInHandDisplay;
-    private ProgramRegisterDisplay programRegisterDisplay;
-    private CardDisplay cardDisplay;
-    private Stage stage;
+    public Stage stage;
+    public Group registerGui; // All register elements except locks
+    public Group lockGui; // Lock are register elements, but need a separate group so the can be drawn on top of cards
+    public Group handGui; // Cards in player hand. Needs a separate so the cards can be hidden during phases.
+
+    private HandDisplay handDisplay;
+    private RegisterDisplay registerDisplay;
     private Player player;
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
     private ImageButton settingsButton;
 
+
     private final RoboRallyGame game;
 
     private AssMan assMan;
     private float scale = 0.4f;
 
-    public Hud(final Player player, final RoboRallyGame game, AssMan assMan) {
+    public Hud(final Player player, final RoboRallyGame game) {
         this.player = player;
         this.game = game;
-        this.assMan = assMan;
+        this.assMan = game.getAssMan();
         stage = new Stage(game.fixedViewPort, game.batch);
-        cardsInHandDisplay = new CardsInHandDisplay(player, stage);
-        programRegisterDisplay = new ProgramRegisterDisplay(player, stage);
-        cardDisplay = new CardDisplay(programRegisterDisplay, cardsInHandDisplay);
+        Gdx.input.setInputProcessor(stage);
+        stage.addListener(game.cameraListener);
+
+        registerGui = new Group();
+        lockGui = new Group();
+        handGui = new Group();
+
+        stage.addActor(registerGui);
+        stage.addActor(lockGui);
+        stage.addActor(handGui);
+
+
+
+        handDisplay = new HandDisplay(player, this);
+        registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
 
 
     }
@@ -83,11 +101,11 @@ public class Hud {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().returnCards(player);
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.updateCards();
+                    clearAllCards();
+                    clearAllCards();
+                    clearAllCards();
+                    clearAllCards();
+                    updateCards();
                 }
             });
             return true;
@@ -130,23 +148,30 @@ public class Hud {
 
     }
 
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
-        batch.begin();
-        programRegisterDisplay.draw(batch);
-        batch.end();
+        registerDisplay.update();
+
+        handGui.setVisible(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS);
 
         stage.draw();
+    }
 
-        if (!(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS)) {
-            cardDisplay.clearAllCards();
-            cardDisplay.clearAllCards();
-            cardDisplay.clearAllCards();
-            programRegisterDisplay.drawCardsInProgramRegister(cardDisplay);
-            stage.draw();
-        } else {
-            stage.draw();
+    /**
+     * Remove all program card buttons.
+     * Might need to call this function several times to actually remove all buttons. (Weird bug)
+     */
+    public void clearAllCards() {
+        for (Actor button : registerGui.getChildren()) {
+            if (button instanceof ProgramCardButton) {
+                button.remove();
+            }
+        }
+        for (Actor button : handGui.getChildren()) {
+            if (button instanceof ProgramCardButton) {
+                button.remove();
+            }
         }
     }
 
@@ -154,14 +179,14 @@ public class Hud {
         return assMan;
     }
 
-    public CardDisplay getCardDisplay() {
-        return cardDisplay;
-    }
 
-    public void dispose() {
-        System.out.println("disposing hud");
-        cardsInHandDisplay.dispose();
-        programRegisterDisplay.dispose();
-        assMan.dispose();
+    /**
+     * Updates program cards in hand and program cards in register visually.
+     */
+    @SuppressWarnings("Duplicates")
+    public void updateCards() {
+        clearAllCards();
+        handDisplay.updateCardsInHand(this);
+        registerDisplay.drawCardsInProgramRegister(this);
     }
 }

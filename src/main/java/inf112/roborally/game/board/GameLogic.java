@@ -6,7 +6,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.gui.CardDisplay;
+import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
 import java.util.*;
@@ -24,9 +24,9 @@ public class GameLogic {
     private Stack<ProgramCard> returnedProgramCards;
     private Player player1;
 
-    private final CardDisplay cardDisplay;
+    private final Hud hud;
 
-    public GameLogic(Board board, CardDisplay cardDisplay, RoboRallyGame game) {
+    public GameLogic(Board board, Hud hud, RoboRallyGame game) {
         state = GameState.PREROUND;
         this.game = game;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
@@ -34,7 +34,7 @@ public class GameLogic {
         this.players = board.getPlayers();
         player1 = players.get(0);
         this.board = board;
-        this.cardDisplay = cardDisplay;
+        this.hud = hud;
 
         phase = 0;
 
@@ -52,11 +52,12 @@ public class GameLogic {
         board.cleanBoard();
         giveCardsToPlayer(player1);
 
-        //Need to call clearAllCards() several times to fix bug where cards in register won't go away after submitting.
-        cardDisplay.clearAllCards();
-        cardDisplay.clearAllCards();
-        cardDisplay.clearAllCards();
-        cardDisplay.updateCards();
+
+        //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
+        hud.clearAllCards();
+        hud.clearAllCards();
+        hud.clearAllCards();
+        hud.updateCards();
 
         state = GameState.PICKING_CARDS;
     }
@@ -115,6 +116,11 @@ public class GameLogic {
         else if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
         }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.E))  {
+            System.out.println("Switched to EndGame screen");
+            game.endGameScreen.addWinner(player1);
+            game.setScreen(game.endGameScreen);
+        }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0, ""));
@@ -139,10 +145,10 @@ public class GameLogic {
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0));
-            cardDisplay.clearAllCards();
-            cardDisplay.clearAllCards();
-            cardDisplay.clearAllCards();
-            cardDisplay.updateCards();
+            hud.clearAllCards();
+            hud.clearAllCards();
+            hud.clearAllCards();
+            hud.updateCards();
         }
     }
 
