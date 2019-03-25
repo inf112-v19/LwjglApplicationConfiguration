@@ -1,7 +1,6 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
@@ -13,11 +12,9 @@ import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
-import inf112.roborally.game.sound.GameSound;
 
 import java.util.*;
 
-import static inf112.roborally.game.enums.Direction.*;
 
 @SuppressWarnings("Duplicates")
 public abstract class Board extends BoardCreator {

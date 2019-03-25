@@ -63,19 +63,19 @@ public class TestScreen /*implements Screen */{
 //
 //        game.batch.setProjectionMatrix(game.fixedCamera.combined);
 //        game.batch.begin();
-//        background.draw(game.batch);
+//        background.update(game.batch);
 //
 //        for (Animation a : testAnimation) {
 //            if (a.hasFinished()) {
 //                //do nothing
 //            }
 //            else
-//                a.draw(game.batch);
+//                a.update(game.batch);
 //        }
 //
-//        programRegisterDisplay.draw(game.batch);
+//        programRegisterDisplay.update(game.batch);
 //        game.batch.end();
-//        hud.draw();
+//        hud.update();
 //        handleInput();
 //    }
 //
