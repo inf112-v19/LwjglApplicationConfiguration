@@ -202,13 +202,13 @@ public class Player extends MovableGameObject {
         }
     }
 
-    public void powerDown(){
+    public void powerDown() {
         playerState = PlayerState.POWERED_DOWN;
         System.out.println(name + " powers down");
         wantsToPowerDown = false;
     }
 
-    public void powerUp(){
+    public void powerUp() {
         repairAllDamage();
         playerState = PlayerState.NOT_READY;
         System.out.println(name + " powers up");
@@ -275,6 +275,10 @@ public class Player extends MovableGameObject {
 
     public boolean isDestroyed() {
         return damage > MAX_DAMAGE;
+    }
+
+    public boolean isReady() {
+        return playerState == PlayerState.POWERED_DOWN || playerState == PlayerState.READY;
     }
 
     public boolean outOfLives() {

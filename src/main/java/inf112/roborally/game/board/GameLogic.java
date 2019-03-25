@@ -47,7 +47,7 @@ public class GameLogic {
      * Receive new cards
      */
     public void doBeforeRound() {
-        // todo: check if a player has won
+        System.out.println("set up before round");
         board.cleanBoard();
         powerUpRobots();
         powerDownRobots();
@@ -61,6 +61,7 @@ public class GameLogic {
         hud.clearAllCards();
         hud.updateCards();
 
+        System.out.println("players choosing cards");
         state = GameState.PICKING_CARDS;
     }
 
@@ -76,9 +77,6 @@ public class GameLogic {
     private void powerDownRobots() {
         for (Player player : players) {
             if (player.wantsToPowerDown)
-//                player.getRegisters().returnCards(player);
-//                ArrayList<ProgramCard> cardsFromPlayer = player.returnCards();
-//                returnedProgramCards.addAll(cardsFromPlayer);
                 player.powerDown();
         }
     }
@@ -90,9 +88,7 @@ public class GameLogic {
 
         switch (state) {
             case PREROUND:
-                System.out.println("set up before round");
                 doBeforeRound();
-                System.out.println("player choosing cards");
                 for (Player player : players) {
                     if (player.playerState == PlayerState.GAME_OVER || player.playerState == PlayerState.POWERED_DOWN)
                         continue;
@@ -100,7 +96,7 @@ public class GameLogic {
                 }
                 break;
             case PICKING_CARDS:
-                if (playerReady(player1)) {
+                if (player1.isReady()) {
                     if (player1.playerState == PlayerState.READY) {
                         player1.playerState = PlayerState.PLAYING;
                     }
@@ -195,10 +191,7 @@ public class GameLogic {
         }
     }
 
-    public boolean playerReady(Player player) {
-        return player.playerState == PlayerState.POWERED_DOWN
-                || (player.getRegisters().isFull() && player.playerState == PlayerState.READY);
-    }
+
 
     public boolean playersReady() {
         for (Player player : players) {
