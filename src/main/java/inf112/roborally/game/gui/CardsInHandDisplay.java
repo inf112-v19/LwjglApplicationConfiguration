@@ -1,49 +1,60 @@
 package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 
+/**
+ * A class for drawing all the cards that are in the player hand.
+ */
 public class CardsInHandDisplay {
 
     public Stage stage;
     private final Player player;
-    private CardVisuals cardVisuals;
-    private CardButton cardButton;
-    private TextureRegion cardTexture;
+
     private int posX, posY;
 
 
     public CardsInHandDisplay(final Player player, Stage stage) {
         this.player = player;
         this.stage = stage;
-        cardVisuals = new CardVisuals();
         Gdx.input.setInputProcessor(stage);
         stage.addListener(((RoboRallyGame) Gdx.app.getApplicationListener()).cameraListener);
     }
 
-    public void updateCardsInHandVisually() {
+    public void updateCardsInHand(final CardDisplay cardDisplay){
         float scale = 0.5f;
         int j = 0;
         posX = 1250;
         posY = 200;
 
-        for (Actor button : stage.getActors()) {
-            if (button instanceof CardButton)
-                button.remove();
-        }
-
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
-            cardTexture = cardVisuals.getRegion(player.getCardInHand(i));
-            cardButton = new CardButton(new TextureRegionDrawable(cardTexture), player, i, this);
-            cardButton.setTransform(true);
-            cardButton.setScale(scale);
-            cardButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
-            stage.addActor(cardButton);
+            ProgramCard card = player.getCardInHand(i);
+            card.setUpSkin();
+            ImageTextButton cardInHandButton = new ProgramCardButton(card);
+            cardInHandButton.setTransform(true);
+            cardInHandButton.setScale(scale);
+            cardInHandButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
+
+            final int index = i;
+            cardInHandButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    player.getRegisters().placeCard(index);
+                    cardDisplay.clearAllCards();
+                    cardDisplay.clearAllCards();
+                    cardDisplay.clearAllCards();
+                    cardDisplay.clearAllCards();
+                    cardDisplay.updateCards();
+                }
+            });
+
+            stage.addActor(cardInHandButton);
 
             if (i % 5 == 4) {
                 j++;
@@ -55,6 +66,5 @@ public class CardsInHandDisplay {
     public void dispose() {
         System.out.println("disposing CardsInHandDisplay");
         stage.dispose();
-        cardVisuals.dispose();
     }
 }

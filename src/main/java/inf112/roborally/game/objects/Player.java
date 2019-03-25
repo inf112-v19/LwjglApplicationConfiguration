@@ -159,7 +159,7 @@ public class Player extends MovableGameObject {
     }
 
     public ArrayList<ProgramCard> returnCards() {
-        registers.returnCards(cardsInHand);
+        registers.returnCards(this);
         return cardsInHand;
     }
 

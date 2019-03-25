@@ -205,6 +205,6 @@ public class PlayerTest {
             player.takeDamage();
         }
         player.repairAllDamage();
-        assertEquals(5, player.getRegisters().getUnlockedRegisters());
+        assertEquals(5, player.getRegisters().getNumUnlockedRegisters());
     }
 }

@@ -29,7 +29,7 @@ public class CardExecuteTest {
 
     @Test
     public void playerMovesOneForward() {
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority));
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority,""));
         movePlayerAllCardsInDeck();
         assertEquals(0, player.getX()); // Check X pos
         assertEquals(1, player.getY()); // Check Y pos
@@ -37,7 +37,7 @@ public class CardExecuteTest {
 
     @Test
     public void playerMovesTwoForwards() {
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 2, standardPriority));
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 2, standardPriority,""));
         movePlayerAllCardsInDeck();
         assertEquals(0, player.getX());
         assertEquals(2, player.getY());
@@ -45,8 +45,8 @@ public class CardExecuteTest {
 
     @Test
     public void RotateRightThenOneForward() {
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority));
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority,""));
         movePlayerAllCardsInDeck();
         assertEquals(1, player.getX());
         assertEquals(0, player.getY());
@@ -54,11 +54,11 @@ public class CardExecuteTest {
 
     @Test
     public void PlayerMovesFiveCards() {
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 3, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.LEFT, 3, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.UTURN, 0, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 2, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority));
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 3, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.LEFT, 3, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.UTURN, 0, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 2, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority,""));
         movePlayerAllCardsInDeck();
         assertEquals(2, player.getX());
         assertEquals(-3, player.getY());

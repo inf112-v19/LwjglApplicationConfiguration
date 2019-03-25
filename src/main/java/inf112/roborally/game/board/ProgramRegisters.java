@@ -4,7 +4,6 @@ import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.PriorityQueue;
 
 public class ProgramRegisters implements IProgramRegisters {
@@ -14,15 +13,12 @@ public class ProgramRegisters implements IProgramRegisters {
 
     private int unlockedRegisters;
     private ProgramCard[] registers;
-    private PriorityQueue<Integer> cardsToRemove;
 
 
     public ProgramRegisters(Player player) {
         this.player = player;
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
-
-        cardsToRemove = new PriorityQueue<>(5, Collections.reverseOrder());
     }
 
     public boolean isFull() {
@@ -41,19 +37,32 @@ public class ProgramRegisters implements IProgramRegisters {
     public ArrayList<ProgramCard> getAllCards() {
         ArrayList<ProgramCard> list = new ArrayList<>();
         for (ProgramCard pc : registers) {
-            list.add(pc);
+                list.add(pc);
         }
         return list;
     }
 
-    @Override
-    public void returnCards(List<ProgramCard> cardsInHand) {
-        for (int i = 0; i < unlockedRegisters; i++) {
+    /**
+     * Return cards from registers into player hand. Only returns the cards from unlocked registers.
+     * @param player the player who is returning cards.
+     */
+    public void returnCards(Player player) {
+        for (int i = 0; i < player.getRegisters().getNumUnlockedRegisters(); i++) {
             if (registers[i] != null) {
-                cardsInHand.add(registers[i]);
+                player.receiveCard(registers[i]);
             }
             registers[i] = null;
         }
+    }
+
+    public ProgramCard returnCard(Player player, int index){
+        if(index < 0 || index > registers.length) {
+            throw new IndexOutOfBoundsException();
+        }
+        ProgramCard card = registers[index];
+        player.receiveCard(card);
+        registers[index] = null;
+        return card;
     }
 
     @Override
@@ -104,7 +113,7 @@ public class ProgramRegisters implements IProgramRegisters {
         return -1;
     }
 
-    public int getUnlockedRegisters() {
+    public int getNumUnlockedRegisters() {
         return unlockedRegisters;
     }
 }
