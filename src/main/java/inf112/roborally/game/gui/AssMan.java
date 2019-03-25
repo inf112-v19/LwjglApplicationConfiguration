@@ -4,7 +4,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 
-public class AssMan{
+public class AssMan{g
 
     public static final AssetManager manager = new AssetManager();
     public static final AssetDescriptor<Texture>  buttonSubmit
