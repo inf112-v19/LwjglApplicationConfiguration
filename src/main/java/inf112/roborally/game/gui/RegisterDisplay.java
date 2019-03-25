@@ -1,5 +1,6 @@
 package inf112.roborally.game.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -11,8 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
+import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
+import inf112.roborally.game.enums.GameState;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
@@ -63,7 +68,10 @@ public class RegisterDisplay {
         powerDown.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println(player.getName() + " powers down!");
+                GameLogic logic = ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getGameLogic();
+                if (logic.getState() == GameState.PICKING_CARDS && player.playerState == PlayerState.PICKING_CARDS) {
+                    System.out.println(player.getName() + " wants to power down");
+                }
             }
         });
         registerGui.addActor(powerDown);
