@@ -45,12 +45,14 @@ public class CardsInHandDisplay {
             cardInHandButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    player.getRegisters().placeCard(index);
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.clearAllCards();
-                    cardDisplay.updateCards();
+                    if(!player.getRegisters().isFull()) {
+                        player.getRegisters().placeCard(index);
+                        cardDisplay.clearAllCards();
+                        cardDisplay.clearAllCards();
+                        cardDisplay.clearAllCards();
+                        cardDisplay.clearAllCards();
+                        cardDisplay.updateCards();
+                    }
                 }
             });
 

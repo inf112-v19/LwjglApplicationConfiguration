@@ -52,7 +52,7 @@ public class GameLogic {
         board.cleanBoard();
         giveCardsToPlayer(player1);
 
-        //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
+        //Need to call clearAllCards() several times to fix bug where cards in register won't go away after submitting.
         cardDisplay.clearAllCards();
         cardDisplay.clearAllCards();
         cardDisplay.clearAllCards();

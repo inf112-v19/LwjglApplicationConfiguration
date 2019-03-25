@@ -8,6 +8,7 @@ import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.*;
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
@@ -30,9 +31,12 @@ public class GameScreen implements Screen {
 
     public ArrayList<Animation> animations;
 
+    private AssMan assMan;
+
     public GameScreen(RoboRallyGame game, String mapPath) {
         this.mapPath = mapPath;
         this.game = game;
+        assMan = game.getAssMan();
 
         board = new VaultBoard();
 
@@ -42,7 +46,12 @@ public class GameScreen implements Screen {
         board.addPlayer(new Player("Player1", "assets/robot/claptrap3000.png", NORTH, board));
         board.placePlayers();
 
-        hud = new Hud(board.getPlayers().get(0), game);
+        hud = new Hud(board.getPlayers().get(0), game, assMan);
+
+        hud.getAssMan().load();
+        hud.getAssMan().manager.finishLoading();
+        hud.createButtons();
+
         System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud.getCardDisplay(), game);
         // Music
@@ -63,6 +72,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+
     }
 
     @Override

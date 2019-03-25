@@ -1,6 +1,7 @@
 package inf112.roborally.game.gui;
 
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class CardDisplay {
@@ -13,6 +14,7 @@ public class CardDisplay {
         this.programRegisterDisplay = programRegisterDisplay;
         this.cardsInHandDisplay = cardsInHandDisplay;
     }
+
 
     /**
      * Remove all program card buttons.
