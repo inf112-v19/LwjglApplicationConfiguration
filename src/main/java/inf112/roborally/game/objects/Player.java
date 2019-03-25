@@ -12,6 +12,7 @@ import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 
 import inf112.roborally.game.sound.GameSound;
+
 import java.util.ArrayList;
 
 
@@ -30,6 +31,8 @@ public class Player extends MovableGameObject {
     private Board board;
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
+
+    public boolean wantsToPowerDown;
 
     private int nSounds;
     private GameSound[] allPlayerSounds;
@@ -55,7 +58,7 @@ public class Player extends MovableGameObject {
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
-        playerState = PlayerState.PICKING_CARDS;
+        playerState = PlayerState.OPERATIONAL;
 
         // As for now, we have 3 sounds
         nSounds = 3;
@@ -63,7 +66,7 @@ public class Player extends MovableGameObject {
         createSounds();
     }
 
-    public void createSounds () {
+    public void createSounds() {
         allPlayerSounds[0] = new GameSound("assets/music/playerLaser.wav");
         allPlayerSounds[1] = new GameSound("assets/music/playerRepair.wav");
         allPlayerSounds[2] = new GameSound("assets/music/playerWilhelmScream.wav");
@@ -100,6 +103,7 @@ public class Player extends MovableGameObject {
         if (programCard == null) {
             return;
         }
+        if (playerState == PlayerState.DESTROYED) return;
 
         if (programCard.getRotate() != Rotate.NONE) {
             rotate(programCard.getRotate());
@@ -172,19 +176,47 @@ public class Player extends MovableGameObject {
     }
 
     public void update() {
+        if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
+
         if (isDestroyed() && !outOfLives()) {
-            Gdx.app.log("Player", "is destroyed!");
-            lives--;
-            repairAllDamage();
-            if (backup != null)
-                backup.movePlayerToBackup();
-        }
-        else if (isDestroyed() && outOfLives()) {
-            Gdx.app.log("Player", "is dead!");
-            Gdx.app.log("GAME OVER", "");
+            playerState = PlayerState.DESTROYED;
+            if (backup != null) {
+                move(-1, -1);
+            }
+            Gdx.app.log(name, "is destroyed!");
         }
         updateSprite();
     }
+
+    public void respawn() {
+        if (playerState != PlayerState.DESTROYED) return; // Can only respawn dead robots
+
+        lives--;
+        if (outOfLives()) {
+            System.out.println(name + " is out of the game");
+            playerState = PlayerState.GAME_OVER;
+        }
+        else {
+            repairAllDamage();
+            if (backup != null) {
+                backup.movePlayerToBackup();
+            }
+            playerState = PlayerState.OPERATIONAL;
+        }
+    }
+
+    public void powerDown() {
+        playerState = PlayerState.POWERED_DOWN;
+        System.out.println(name + " powers down");
+        wantsToPowerDown = false;
+    }
+
+    public void powerUp() {
+        repairAllDamage();
+        playerState = PlayerState.OPERATIONAL;
+        System.out.println(name + " powers up");
+    }
+
 
     /**
      * Repairs all damage dealt to the player and unlocks all locked registers.
@@ -248,8 +280,12 @@ public class Player extends MovableGameObject {
         return damage > MAX_DAMAGE;
     }
 
+    public boolean isReady() {
+        return playerState == PlayerState.POWERED_DOWN || playerState == PlayerState.READY;
+    }
+
     public boolean outOfLives() {
-        return lives == 0;
+        return lives < 1;
     }
 
 

@@ -41,10 +41,12 @@ public class GameScreen implements Screen {
 
         board = new VaultBoard();
 
+
         board.addPlayer(new Player("Player1", AssMan.playerBartenderClaptrap.fileName, NORTH, board));
-        board.addPlayer(new Player("Player2", AssMan.playerClaptrapRefined.fileName, NORTH, board));
-        board.addPlayer(new Player("Player3", AssMan.playerButlerRefined.fileName, NORTH, board));
-        board.addPlayer(new Player("Player1", AssMan.playerClaptrap3000.fileName, NORTH, board));
+        board.addPlayer(new Player("testBo1", AssMan.playerClaptrapRefined.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot2", AssMan.playerButlerRefined.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot3", AssMan.playerClaptrap3000.fileName, NORTH, board));
+
         board.placePlayers();
 
 
