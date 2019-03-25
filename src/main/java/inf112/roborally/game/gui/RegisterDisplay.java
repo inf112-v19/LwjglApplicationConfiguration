@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -52,6 +53,20 @@ public class RegisterDisplay {
         addWires();
         addLockTokens(lockGui); // Locks needs to be update on top of the cards
 
+        addPowerDown();
+    }
+
+    private void addPowerDown() {
+        ImageButton powerDown = new ImageButton(new TextureRegionDrawable(new Texture("assets/cards/powerDown.png")));
+        powerDown.setSize(powerDown.getWidth() * scale, powerDown.getHeight() * scale);
+        powerDown.setPosition(programBoard.getX() + 180 * scale, 370 * scale, Align.center);
+        powerDown.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println(player.getName() + " powers down!");
+            }
+        });
+        registerGui.addActor(powerDown);
     }
 
     private void addProgramBoard() {
@@ -119,6 +134,7 @@ public class RegisterDisplay {
             lockGui.addActor(lockImage);
         }
     }
+
     public void update() {
         updateWires();
         updateLocks();
@@ -150,10 +166,10 @@ public class RegisterDisplay {
     }
 
 
-    public void drawCardsInProgramRegister(final Hud hud){
+    public void drawCardsInProgramRegister(final Hud hud) {
         for (int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
-            if(card != null) {
+            if (card != null) {
                 card.setUpSkin();
                 ImageTextButton cardInRegisterButton = new ProgramCardButton(card);
                 cardInRegisterButton.setTransform(true);
@@ -165,7 +181,7 @@ public class RegisterDisplay {
                 cardInRegisterButton.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        if(!registers.isLocked(index)) {
+                        if (!registers.isLocked(index)) {
                             registers.returnCard(player, index);
                             hud.clearAllCards();
                             hud.clearAllCards();
