@@ -9,7 +9,6 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.animations.LaserAnimation;
 import inf112.roborally.game.animations.RepairAnimation;
-import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
@@ -199,7 +198,7 @@ public abstract class Board extends BoardCreator {
         return !isOffTheBoard(p) && getValue(floorLayer.getCell(p.getX(), p.getY())).equals("OPTION");
     }
 
-    public void cleanBoard() {
+    public void cleanUp() {
         for (Player player : players) {
             if (isOnRepair(player) || isOnOption(player)) {
                 player.repairOneDamage();

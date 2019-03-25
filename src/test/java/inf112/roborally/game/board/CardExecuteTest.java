@@ -22,7 +22,7 @@ public class CardExecuteTest {
 
     @Before
     public void setup() {
-        player = new Player(0, 0); // Player will by default face south
+        player = new Player(0, 0, 1); // Player will by default face south
         player.rotate(Rotate.UTURN); // Rotate player so it faces North
         manualTestDeck = new Stack<>();
     }

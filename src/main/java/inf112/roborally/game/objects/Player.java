@@ -26,8 +26,6 @@ public class Player extends MovableGameObject {
     private Backup backup;
     private ArrayList<ProgramCard> cardsInHand;
     private ProgramRegisters registers;
-    private int flagCounter;
-    private boolean[] flagsFound;
     private Board board;
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
@@ -36,6 +34,10 @@ public class Player extends MovableGameObject {
 
     private int nSounds;
     private GameSound[] allPlayerSounds;
+
+    //flags:
+    private int targetFlag;
+    private int nFlags;
 
 
     public Player(String name, String filepath, Direction direction, Board board) {
@@ -50,9 +52,8 @@ public class Player extends MovableGameObject {
         damage = 0;
         lives = MAX_LIVES;
 
-        flagCounter = 0;
-        flagsFound = new boolean[board.getFlags().size()];
-
+        targetFlag = 1;
+        nFlags = board.getFlags().size();
 
         backup = new Backup(getX(), getY(), this);
         registers = new ProgramRegisters(this);
@@ -85,7 +86,7 @@ public class Player extends MovableGameObject {
     /**
      * FOR TESTING ONLY
      */
-    public Player(int x, int y) {
+    public Player(int x, int y, int nFlags) {
         super(x, y, "assets/robot/tvBot.png");
         damage = 0;
         lives = MAX_LIVES;
@@ -94,16 +95,13 @@ public class Player extends MovableGameObject {
 
 
         // For testing with flag behaviour, now tests with 3 flags on the board
-        flagCounter = 0;
-//        backup = new Backup(x,y);
-        flagsFound = new boolean[3];
+        targetFlag = 1;
+        this.nFlags = nFlags;
+
     }
 
     public void executeCard(ProgramCard programCard) {
-        if (programCard == null) {
-            return;
-        }
-        if (playerState == PlayerState.DESTROYED) return;
+        if (programCard == null || !isOperational()) return;
 
         if (programCard.getRotate() != Rotate.NONE) {
             rotate(programCard.getRotate());
@@ -189,7 +187,7 @@ public class Player extends MovableGameObject {
     }
 
     public void respawn() {
-        if (playerState != PlayerState.DESTROYED) return; // Can only respawn dead robots
+        if (!isDestroyed()) return; // Can only respawn dead robots
 
         lives--;
         if (outOfLives()) {
@@ -206,12 +204,16 @@ public class Player extends MovableGameObject {
     }
 
     public void powerDown() {
+        if (!wantsToPowerDown && isOperational()) return;
+
         playerState = PlayerState.POWERED_DOWN;
         System.out.println(name + " powers down");
         wantsToPowerDown = false;
     }
 
     public void powerUp() {
+        if(!isPoweredDown()) return;
+
         repairAllDamage();
         playerState = PlayerState.OPERATIONAL;
         System.out.println(name + " powers up");
@@ -249,27 +251,16 @@ public class Player extends MovableGameObject {
 
 
     public void visitFlag(int flagNumber) {
-        if (flagNumber > flagsFound.length) return;
+        if(flagNumber > nFlags) return;
 
-        // you need to pick up the flags in order, so first check if the flag you are standing on
-        // is your next flag
-        if (flagNumber - 1 <= flagCounter && !flagsFound[flagNumber - 1]) {
-            flagsFound[flagNumber - 1] = true;
-            flagCounter++;
+        if (flagNumber == targetFlag) {
+            targetFlag++;
             System.out.printf("%s picked up a flag!%n", name);
         }
     }
 
-    // Iterates over the booleanArray which keeps track of how many  of the flags
-    // have been found. If one of the array positions is false, then
-    // this will return false
-    public boolean thisPlayerHasWon() {
-        for (boolean found : flagsFound) {
-            if (!found) {
-                return false;
-            }
-        }
-        return true;
+    public boolean hasWon() {
+        return targetFlag > nFlags;
     }
 
     public void destroy() {
@@ -282,6 +273,14 @@ public class Player extends MovableGameObject {
 
     public boolean isReady() {
         return playerState == PlayerState.POWERED_DOWN || playerState == PlayerState.READY;
+    }
+
+    public boolean isOperational(){
+        return playerState == PlayerState.OPERATIONAL;
+    }
+
+    public boolean isPoweredDown(){
+        return playerState == PlayerState.POWERED_DOWN;
     }
 
     public boolean outOfLives() {
@@ -301,8 +300,8 @@ public class Player extends MovableGameObject {
         return this.lives;
     }
 
-    public int getFlagCounter() {
-        return this.flagCounter;
+    public int getTargetFlag() {
+        return targetFlag;
     }
 
     public String getName() {
@@ -315,10 +314,6 @@ public class Player extends MovableGameObject {
 
     public ProgramRegisters getRegisters() {
         return registers;
-    }
-
-    public boolean[] getFlagsFound() {
-        return this.flagsFound;
     }
 
 

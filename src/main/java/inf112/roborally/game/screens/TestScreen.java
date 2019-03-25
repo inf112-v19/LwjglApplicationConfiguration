@@ -26,7 +26,7 @@ public class TestScreen implements Screen {
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         background = new Sprite(new Texture("assets/img/testscreen.png"));
 
-        player = new Player(0, 0);
+        player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
         for(int i = 0; i < 9; i++){
             player.receiveCard(stack.pop());

@@ -14,7 +14,7 @@ public class RepairSiteTest {
 
     @Before
     public void setup() {
-        player = new Player(0, 0);
+        player = new Player(0, 0, 1);
 //        repairSites = new ArrayList<>();
 //        repairSites.add(new RepairSite(0, 0));
         // Oof, player takes one damage before each test

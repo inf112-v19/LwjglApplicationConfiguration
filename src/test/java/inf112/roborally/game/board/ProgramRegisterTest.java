@@ -15,7 +15,7 @@ public class ProgramRegisterTest {
 
     @Before
     public void setup(){
-        player = new Player(0,0);
+        player = new Player(0,0, 1);
         programRegisters = player.getRegisters();
         stack = ProgramCard.makeProgramCardDeck();
     }

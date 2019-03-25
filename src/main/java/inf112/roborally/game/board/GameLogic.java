@@ -27,7 +27,7 @@ public class GameLogic {
     private final Hud hud;
 
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
-        state = GameState.PREROUND;
+        state = GameState.BETWEEN_ROUNDS;
         this.game = game;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
         returnedProgramCards = new Stack<>();
@@ -47,7 +47,7 @@ public class GameLogic {
         updatePlayers();
 
         switch (state) {
-            case PREROUND:
+            case BETWEEN_ROUNDS:
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
@@ -56,7 +56,7 @@ public class GameLogic {
             case ROUND:
                 handlePhase();
                 break;
-            case BOARDMOVES:
+            case BOARD_MOVES:
                 board.boardMoves();
                 state = GameState.ROUND;
                 break;
@@ -64,17 +64,14 @@ public class GameLogic {
 
     }
 
-    /**
-     * Retrieve cards from last round
-     * Receive new cards
-     */
     public void doBeforeRound() {
         System.out.println("set up before round");
-        board.cleanBoard();
+        board.cleanUp();
         powerUpRobots();
         powerDownRobots();
-        if (player1.playerState != PlayerState.POWERED_DOWN)
+        if (!player1.isPoweredDown()) {
             retrieveCardsFromPlayer(player1);
+        }
         giveCardsToPlayer(player1);
 
 
@@ -89,7 +86,7 @@ public class GameLogic {
     }
 
     private void checkIfReady() {
-        if (player1.isReady()) {
+        if (player1.isReady()) { // Player is ready if it has clicked submit or is powered down
             if (player1.playerState == PlayerState.READY) {
                 player1.playerState = PlayerState.OPERATIONAL;
             }
@@ -100,38 +97,33 @@ public class GameLogic {
     private void handlePhase() {
         if (phase < 5) {
             System.out.println("executing phase " + phase);
-            if (player1.playerState == PlayerState.OPERATIONAL)
-                player1.executeCard(player1.getRegisters().getCard(phase));
-            checkIfAnyPlayersWon();
+            player1.executeCard(player1.getRegisters().getCard(phase));
             try {
                 Thread.sleep(500);
             }
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            state = GameState.BOARDMOVES;
+            state = GameState.BOARD_MOVES;
+            checkIfAnyPlayersWon();
             phase++;
         }
         else {
             phase = 0;
-            state = GameState.PREROUND;
+            state = GameState.BETWEEN_ROUNDS;
             System.out.println("round over");
         }
     }
 
     private void powerUpRobots() {
         for (Player player : players) {
-            if (player.playerState == PlayerState.POWERED_DOWN) {
-                player.powerUp();
-                retrieveCardsFromPlayer(player);
-            }
+            player.powerUp();
         }
     }
 
     private void powerDownRobots() {
         for (Player player : players) {
-            if (player.wantsToPowerDown)
-                player.powerDown();
+            player.powerDown();
         }
     }
 
@@ -180,7 +172,7 @@ public class GameLogic {
 
     private void checkIfAnyPlayersWon() {
         for (Player pl : players) {
-            if (pl.thisPlayerHasWon()) {
+            if (pl.hasWon()) {
                 System.out.printf("%s just won the game by collecting all the flags!!%n", pl.getName());
                 // Might not be necessary to exit the game when it's finished
                 Gdx.app.exit();
@@ -193,7 +185,6 @@ public class GameLogic {
             pl.update();
         }
     }
-
 
 
     public boolean playersReady() {
