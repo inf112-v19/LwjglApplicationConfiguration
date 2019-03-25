@@ -49,9 +49,10 @@ public class GameLogic {
     public void doBeforeRound() {
         // todo: check if a player has won
         board.cleanBoard();
-        retrieveCardsFromPlayer(player1);
         powerUpRobots();
         powerDownRobots();
+        if (player1.playerState != PlayerState.POWERED_DOWN)
+            retrieveCardsFromPlayer(player1);
         giveCardsToPlayer(player1);
 
         //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
@@ -65,7 +66,10 @@ public class GameLogic {
 
     private void powerUpRobots() {
         for (Player player : players) {
-            if (player.playerState == PlayerState.POWERED_DOWN) player.powerUp();
+            if (player.playerState == PlayerState.POWERED_DOWN) {
+                player.powerUp();
+                retrieveCardsFromPlayer(player);
+            }
         }
     }
 
@@ -97,6 +101,9 @@ public class GameLogic {
                 break;
             case PICKING_CARDS:
                 if (playerReady(player1)) {
+                    if (player1.playerState == PlayerState.READY) {
+                        player1.playerState = PlayerState.PLAYING;
+                    }
                     state = GameState.ROUND;
                 }
                 break;
