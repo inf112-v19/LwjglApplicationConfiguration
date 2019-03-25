@@ -10,11 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
+
 
 public class ProgramRegisterDisplay {
     private Player player;
@@ -62,13 +64,14 @@ public class ProgramRegisterDisplay {
     }
 
     private void addDamageTokens() {
-        float startX = 1920 / 2 + 415 * scale; // start x
+        float startX = 1920 / 2 + 397 * scale; // start x
+        float startY = h - 70 * scale;
         float space = 70 * scale; // space from one token to the next
 
         damageTokens = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             Image damageImage = new Image(new Texture("assets/cards/tokens/damageToken.png"));
-            damageImage.setPosition(startX - space * i, h - 53 * scale, Align.center);
+            damageImage.setPosition(startX - space * i, startY, Align.center);
             damageImage.setSize(50 * scale, 50 * scale);
             registerGui.addActor(damageImage);
             damageTokens.add(damageImage);
@@ -76,13 +79,14 @@ public class ProgramRegisterDisplay {
     }
 
     private void addLifeTokens() {
-        float startX = 1920 / 2 + 515 * scale;
+        float startX = 1920 / 2 + 488 * scale;
+        float startY = h - 170 * scale;
         float space = 105 * scale;
 
         lifeTokens = new ArrayList<>();
         for (int i = player.getLives(); i > 0; i--) {
             Image lifeImage = new Image(new Texture("assets/cards/tokens/lifeToken.png"));
-            lifeImage.setPosition(startX - space * i, h - 140 * scale, Align.center);
+            lifeImage.setPosition(startX - space * i, startY, Align.center);
             lifeImage.setSize(80 * scale, 80 * scale);
             lifeTokens.add(lifeImage);
             registerGui.addActor(lifeImage);
@@ -105,12 +109,13 @@ public class ProgramRegisterDisplay {
 
     private void addLockTokens(Group lockGui) {
         float startX = 1920 / 2 + 400 * scale;
+        float startY = h - 235 * scale;
         float space = 200 * scale;
         lockTokens = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             Image lockImage = new Image(new Texture("assets/cards/tokens/lockToken.png"));
             lockImage.setSize(lockImage.getWidth() * scale, lockImage.getHeight() * scale);
-            lockImage.setPosition(startX - space * i, h - 235 * scale, Align.center);
+            lockImage.setPosition(startX - space * i, startY, Align.center);
             lockTokens.add(lockImage);
             lockGui.addActor(lockImage);
         }
@@ -171,7 +176,7 @@ public class ProgramRegisterDisplay {
                         }
                     }
                 });
-                registerGui.addActor(cardInRegisterButton);
+                hud.cardsGui.addActor(cardInRegisterButton);
             }
         }
     }

@@ -33,13 +33,13 @@ public class TestScreen /*implements Screen */{
 //    private Sprite background;
 //    private List<Animation> testAnimation;
 //    private ImageTextButton btn;
-//    private Stage stage;
+//    private Stage hud;
 
 
     public TestScreen(RoboRallyGame game) {
 //        this.game = game;
 //        player = new Player(0, 0);
-//        programRegisterDisplay = new ProgramRegisterDisplay(player, stage);
+//        programRegisterDisplay = new ProgramRegisterDisplay(player, hud);
 //        for (int i = 0; i < 9; i++) {
 //            player.receiveCard(new ProgramCard(Rotate.NONE, 2, 0, "testCard"));
 //        }
@@ -65,10 +65,10 @@ public class TestScreen /*implements Screen */{
 //        btn.setLabel(label);
 //        btn.getCell(label).padRight(160).padBottom(250);
 //
-//        stage = new Stage(game.fixedViewPort, game.batch);
+//        hud = new Stage(game.fixedViewPort, game.batch);
 //
-//        stage.addActor(btn);
-//        Gdx.input.setInputProcessor(stage);
+//        hud.addActor(btn);
+//        Gdx.input.setInputProcessor(hud);
     }
 //
 //    @Override
@@ -99,7 +99,7 @@ public class TestScreen /*implements Screen */{
 //
 //        programRegisterDisplay.draw(game.batch);
 //        game.batch.end();
-//        stage.draw();
+//        hud.draw();
 //        handleInput();
 //    }
 //

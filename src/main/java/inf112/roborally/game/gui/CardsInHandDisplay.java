@@ -1,11 +1,8 @@
 package inf112.roborally.game.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 
@@ -14,17 +11,15 @@ import inf112.roborally.game.objects.Player;
  */
 public class CardsInHandDisplay {
 
-    public Stage stage;
+    public Hud hud;
     private final Player player;
 
     private int posX, posY;
 
 
-    public CardsInHandDisplay(final Player player, Stage stage) {
+    public CardsInHandDisplay(final Player player, Hud hud) {
         this.player = player;
-        this.stage = stage;
-        Gdx.input.setInputProcessor(stage);
-        stage.addListener(((RoboRallyGame) Gdx.app.getApplicationListener()).cameraListener);
+        this.hud = hud;
     }
 
     public void updateCardsInHand(final Hud hud){
@@ -54,7 +49,7 @@ public class CardsInHandDisplay {
                 }
             });
 
-            stage.addActor(cardInHandButton);
+            hud.cardsGui.addActor(cardInHandButton);
 
             if (i % 5 == 4) {
                 j++;
@@ -63,8 +58,4 @@ public class CardsInHandDisplay {
         }
     }
 
-    public void dispose() {
-        System.out.println("disposing CardsInHandDisplay");
-        stage.dispose();
-    }
 }

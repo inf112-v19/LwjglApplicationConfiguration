@@ -112,7 +112,6 @@ public class GameScreen implements Screen {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
         }
-        hud.dispose();
         music.dispose();
     }
 

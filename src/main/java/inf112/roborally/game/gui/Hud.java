@@ -1,5 +1,6 @@
 package inf112.roborally.game.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -16,17 +17,19 @@ import inf112.roborally.game.objects.Player;
 
 public class Hud {
 
+    public Stage stage;
+    public Group registerGui;
+    public Group lockGui;
+    public Group cardsGui;
+
     private CardsInHandDisplay cardsInHandDisplay;
     private ProgramRegisterDisplay programRegisterDisplay;
-    private Stage stage;
     private Player player;
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
     private ImageButton settingsButton;
 
-    public Group registerGui;
-    public Group lockGui;
 
     private final RoboRallyGame game;
 
@@ -35,15 +38,20 @@ public class Hud {
         this.player = player;
         this.game = game;
         stage = new Stage(game.fixedViewPort, game.batch);
+        Gdx.input.setInputProcessor(stage);
+        stage.addListener(game.cameraListener);
+
         registerGui = new Group();
+        cardsGui = new Group();
         lockGui = new Group();
 
         stage.addActor(registerGui);
+        stage.addActor(cardsGui);
         stage.addActor(lockGui);
 
 
 
-        cardsInHandDisplay = new CardsInHandDisplay(player, stage);
+        cardsInHandDisplay = new CardsInHandDisplay(player, this);
         programRegisterDisplay = new ProgramRegisterDisplay(player, registerGui, lockGui);
 
         float scale = 0.4f;
@@ -119,17 +127,12 @@ public class Hud {
     }
 
 
-    public void dispose() {
-        System.out.println("disposing hud");
-        cardsInHandDisplay.dispose();
-    }
-
     /**
      * Remove all program card buttons.
      * Might need to call this function several times to actually remove all buttons. (Weird bug)
      */
     public void clearAllCards() {
-        for (Actor button : cardsInHandDisplay.stage.getActors()) {
+        for (Actor button : cardsGui.getChildren()) {
             if (button instanceof ProgramCardButton) {
                 button.remove();
             }
