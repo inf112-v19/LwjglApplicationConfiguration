@@ -22,8 +22,8 @@ public class Hud {
     public Group lockGui;
     public Group cardsGui;
 
-    private HandDisplay cardsInHandDisplay;
-    private RegisterDisplay programRegisterDisplay;
+    private HandDisplay handDisplay;
+    private RegisterDisplay registerDisplay;
     private Player player;
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
@@ -51,8 +51,8 @@ public class Hud {
 
 
 
-        cardsInHandDisplay = new HandDisplay(player, this);
-        programRegisterDisplay = new RegisterDisplay(player, registerGui, lockGui);
+        handDisplay = new HandDisplay(player, this);
+        registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
 
         float scale = 0.4f;
         submitButton = new ImageButton(new TextureRegionDrawable(new Texture(
@@ -110,7 +110,7 @@ public class Hud {
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
         batch.begin();
-        programRegisterDisplay.draw(batch);
+        registerDisplay.draw(batch);
         batch.end();
 
         stage.draw();
@@ -119,7 +119,7 @@ public class Hud {
             clearAllCards();
             clearAllCards();
             clearAllCards();
-            programRegisterDisplay.drawCardsInProgramRegister(this);
+            registerDisplay.drawCardsInProgramRegister(this);
             stage.draw();
         }else{
             stage.draw();
@@ -145,7 +145,7 @@ public class Hud {
     @SuppressWarnings("Duplicates")
     public void updateCards() {
         clearAllCards();
-        cardsInHandDisplay.updateCardsInHand(this);
-        programRegisterDisplay.drawCardsInProgramRegister(this);
+        handDisplay.updateCardsInHand(this);
+        registerDisplay.drawCardsInProgramRegister(this);
     }
 }
