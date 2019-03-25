@@ -62,6 +62,8 @@ public abstract class GameObject {
         return position.getY();
     }
 
+    public String getFilePath() { return filePath; }
+
     public Sprite getSprite() {
         return sprite;
     }
