@@ -9,6 +9,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.animations.LaserAnimation;
 import inf112.roborally.game.animations.RepairAnimation;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
@@ -210,6 +211,7 @@ public abstract class Board extends BoardCreator {
             if (isOnOption(player)) {
                 System.out.println("Give option card to player!");
             }
+            if (player.playerState == PlayerState.DEAD) player.respawn();
         }
     }
 

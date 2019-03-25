@@ -48,8 +48,8 @@ public class GameLogic {
      */
     public void doBeforeRound() {
         // todo: check if a player has won
-        retrieveCardsFromPlayer(player1);
         board.cleanBoard();
+        retrieveCardsFromPlayer(player1);
         giveCardsToPlayer(player1);
 
         //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
@@ -91,8 +91,8 @@ public class GameLogic {
                     catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    phase++;
                     state = GameState.BOARDMOVES;
+                    phase++;
                 }
                 else {
                     phase = 0;
