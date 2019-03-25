@@ -37,13 +37,10 @@ public abstract class AbstractScreen implements Screen {
         Gdx.gl.glClearColor(r, g, b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.setProjectionMatrix(game.fixedCamera.combined);
-        batch.begin();
-        background.draw(batch);
-        batch.end();
+        // Moved the drawing with the batch to each subclass, because its often used
+        // differently
 
         // Moved the handleInput() call to the subclass
-
     }
 
     private void handleInput() {

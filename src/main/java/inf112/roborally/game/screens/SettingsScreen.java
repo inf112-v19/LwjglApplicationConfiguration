@@ -28,6 +28,11 @@ public class SettingsScreen extends AbstractScreen {
     @Override
     public void render(float v) {
         super.render(v);
+
+        batch.setProjectionMatrix(game.fixedCamera.combined);
+        batch.begin();
+        background.draw(batch);
+        batch.end();
         handleInput();
     }
 

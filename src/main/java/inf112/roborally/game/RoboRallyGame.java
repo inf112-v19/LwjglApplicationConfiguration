@@ -28,9 +28,10 @@ public class RoboRallyGame extends Game {
 
     public SpriteBatch batch;
 
-    public GameScreen gameScreen;
     public TestScreen testScreen;
     public MenuScreen menuScreen;
+    public SetupScreen setupScreen;
+    public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
 
@@ -50,6 +51,7 @@ public class RoboRallyGame extends Game {
         batch = new SpriteBatch();
 
         testScreen = new TestScreen(this);
+        setupScreen = new SetupScreen(this);
         menuScreen = new MenuScreen(this);
         gameScreen = new GameScreen(this, VAULT);
         settingsScreen = new SettingsScreen(this);
