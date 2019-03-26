@@ -36,7 +36,7 @@ public class GameLogic {
         players = board.getPlayers();
         player1 = players.get(0);
         airobots = new ArrayList<>();
-        for(int i = 1; i < players.size(); i++)
+        for (int i = 1; i < players.size(); i++)
             airobots.add(players.get(i));
 
         state = GameState.BETWEEN_ROUNDS;
@@ -78,7 +78,7 @@ public class GameLogic {
         powerUpRobots();
         powerDownRobots();
 
-        for(Player player : players) {
+        for (Player player : players) {
             if (!player.isPoweredDown()) {
                 retrieveCardsFromPlayer(player);
             }
@@ -86,7 +86,6 @@ public class GameLogic {
 
         dealCards();
         chooseCardsForAIRobots();
-
 
 
         //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
@@ -111,7 +110,8 @@ public class GameLogic {
     private void handlePhase() {
         if (phase < 5) {
             System.out.println("executing phase " + phase);
-            for(Player player : players) {
+            for (Player player : players) {
+                System.out.println(player.getName() + ": " + player.getRegisters().getCard(phase));
                 player.executeCard(player.getRegisters().getCard(phase));
             }
             try {
@@ -228,16 +228,17 @@ public class GameLogic {
     }
 
     private void chooseCardsForAIRobots() {
-        for(Player robot : airobots) {
-            robot.getRegisters().placeCard(0);
+        for (Player robot : airobots) {
+            while (!robot.getRegisters().isFull())
+                robot.getRegisters().placeCard(0);
             robot.playerState = PlayerState.READY;
         }
     }
 
-    private void dealCards(){
-        for(Player player : players){
+    private void dealCards() {
+        for (Player player : players) {
             while (!player.handIsFull()) {
-                if(stackOfProgramCards.isEmpty()) reshuffleDeck();
+                if (stackOfProgramCards.isEmpty()) reshuffleDeck();
                 player.receiveCard(stackOfProgramCards.pop());
             }
         }
