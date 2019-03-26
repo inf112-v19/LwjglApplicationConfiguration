@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.gui.AssMan;
 
 import java.awt.event.InputEvent;
 
@@ -29,10 +30,10 @@ public class MenuScreen implements Screen {
 
         viewport = new FitViewport(1920, 1080);
 
-        background = new Sprite(new Texture("assets/img/titlescreen.jpg"));
+        background = new Sprite(new Texture(AssMan.MENUSCREEN_TITLESCREEN.fileName));
         background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2,
                 Gdx.graphics.getHeight() - background.getHeight());
-        pressEnter = new Sprite(new Texture("assets/img/pressEnterWhite.png"));
+        pressEnter = new Sprite(new Texture(AssMan.MENUSCREEN_PRESS_ENTER_WHITE.fileName));
         pressEnter.setPosition(Gdx.graphics.getWidth() / 2 - pressEnter.getWidth() / 2,
                 (Gdx.graphics.getHeight() - background.getHeight()) / 2 - pressEnter.getHeight() / 2);
 

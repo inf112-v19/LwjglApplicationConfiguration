@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
@@ -24,7 +25,7 @@ public class TestScreen implements Screen {
     public TestScreen(RoboRallyGame game) {
         this.game = game;
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        background = new Sprite(new Texture("assets/img/testscreen.png"));
+        background = new Sprite(new Texture(AssMan.TESTSCREEN.fileName));
 
         player = new Player(0, 0);
         stack = ProgramCard.makeProgramCardDeck();

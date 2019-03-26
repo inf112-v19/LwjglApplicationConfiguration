@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.gui.AssMan;
 import org.lwjgl.Sys;
 
 public class SettingsScreen extends AbstractScreen {
@@ -16,7 +17,7 @@ public class SettingsScreen extends AbstractScreen {
     private boolean musicIsMuted;
 
     public SettingsScreen(RoboRallyGame roborallygame) {
-        super(roborallygame, "assets/img/settingsbackground.png");
+        super(roborallygame, AssMan.BACKGROUND_SETTINGS.fileName);
         musicIsMuted = false;
     }
 
