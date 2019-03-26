@@ -78,12 +78,15 @@ public class GameLogic {
         powerUpRobots();
         powerDownRobots();
 
-        for(Player robot : players) {
-            if (!robot.isPoweredDown()) {
-                retrieveCardsFromPlayer(robot);
+        for(Player player : players) {
+            if (!player.isPoweredDown()) {
+                retrieveCardsFromPlayer(player);
             }
         }
+
         dealCards();
+        chooseCardsForAIRobots();
+
 
 
         //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
@@ -108,9 +111,8 @@ public class GameLogic {
     private void handlePhase() {
         if (phase < 5) {
             System.out.println("executing phase " + phase);
-            player1.executeCard(player1.getRegisters().getCard(phase));
-            for(Player robot : airobots) {
-                robot.executeCard(robot.getRegisters().getCard(phase));
+            for(Player player : players) {
+                player.executeCard(player.getRegisters().getCard(phase));
             }
             try {
                 Thread.sleep(500);
@@ -222,6 +224,13 @@ public class GameLogic {
                 reshuffleDeck();
             }
             player.receiveCard(stackOfProgramCards.pop());
+        }
+    }
+
+    private void chooseCardsForAIRobots() {
+        for(Player robot : airobots) {
+            robot.getRegisters().placeCard(0);
+            robot.playerState = PlayerState.READY;
         }
     }
 
