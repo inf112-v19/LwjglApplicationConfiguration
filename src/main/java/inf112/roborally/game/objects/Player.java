@@ -40,6 +40,8 @@ public class Player extends MovableGameObject {
     private int targetFlag;
     private int nFlags;
 
+    //Whether or not the player has screamed from falling off the map this round.
+    private boolean screamed;
 
     public Player(String name, String filepath, Direction direction, Board board) {
         super(0, 0, filepath);
@@ -127,6 +129,8 @@ public class Player extends MovableGameObject {
 
     @Override
     public void move(int steps) {
+        screamed = false;
+
         for (int i = 0; i < steps; i++) {
             moveInDirection(getDirection());
         }
@@ -327,6 +331,9 @@ public class Player extends MovableGameObject {
     }
 
     public GameSound getSoundFromPlayer(int index) {
+        if(index == 2){
+            screamed = true;
+        }
         return allPlayerSounds[index];
     }
 
@@ -337,6 +344,9 @@ public class Player extends MovableGameObject {
         allPlayerSounds = new GameSound[nSounds];
     }
 
+    public boolean hasScreamed(){
+        return this.screamed;
+    }
     @Override
     public boolean equals(Object other) {
         if (other.getClass() != this.getClass())

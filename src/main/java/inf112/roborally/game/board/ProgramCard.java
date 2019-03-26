@@ -41,7 +41,6 @@ public class ProgramCard implements Comparable {
     }
 
     public void dispose(){
-        System.out.println("disposing programcard");
         atlas.dispose();
         skin.dispose();
         style.font.dispose();

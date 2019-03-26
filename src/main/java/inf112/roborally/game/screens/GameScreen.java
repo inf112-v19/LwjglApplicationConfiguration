@@ -125,8 +125,6 @@ public class GameScreen implements Screen {
             player.getBackup().getSprite().getTexture().dispose();
         }
         music.dispose();
-        assMan.dispose();
-
     }
 
     @Override
