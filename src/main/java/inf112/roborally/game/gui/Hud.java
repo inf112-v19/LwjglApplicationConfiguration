@@ -105,9 +105,6 @@ public class Hud {
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().returnCards(player);
                     clearAllCards();
-                    clearAllCards();
-                    clearAllCards();
-                    clearAllCards();
                     updateCards();
                 }
             });
@@ -165,17 +162,18 @@ public class Hud {
 
     /**
      * Remove all program card buttons.
-     * Might need to call this function several times to actually remove all buttons. (Weird bug)
      */
     public void clearAllCards() {
-        for (Actor button : registerGui.getChildren()) {
-            if (button instanceof ProgramCardButton) {
-                button.remove();
+        for(int i = 0; i < 4; i++) {
+            for (Actor button : registerGui.getChildren()) {
+                if (button instanceof ProgramCardButton) {
+                    button.remove();
+                }
             }
-        }
-        for (Actor button : handGui.getChildren()) {
-            if (button instanceof ProgramCardButton) {
-                button.remove();
+            for (Actor button : handGui.getChildren()) {
+                if (button instanceof ProgramCardButton) {
+                    button.remove();
+                }
             }
         }
     }

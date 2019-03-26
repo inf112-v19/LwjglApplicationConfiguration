@@ -29,13 +29,11 @@ public class TestScreen implements Screen {
 
         player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < player.getCardLimit(); i++){
             player.receiveCard(stack.pop());
         }
 
         hud = new Hud(player, game);
-        hud.clearAllCards();
-        hud.clearAllCards();
         hud.clearAllCards();
         hud.updateCards();
 
@@ -81,15 +79,11 @@ public class TestScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             player.getRegisters().placeCard(0);
             hud.clearAllCards();
-            hud.clearAllCards();
-            hud.clearAllCards();
             hud.updateCards();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             player.returnCards();
-            hud.clearAllCards();
-            hud.clearAllCards();
             hud.clearAllCards();
             hud.updateCards();
         }

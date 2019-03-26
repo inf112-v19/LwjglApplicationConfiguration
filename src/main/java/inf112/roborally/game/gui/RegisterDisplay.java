@@ -193,9 +193,6 @@ public class RegisterDisplay {
                         if (!registers.isLocked(index)) {
                             registers.returnCard(player, index);
                             hud.clearAllCards();
-                            hud.clearAllCards();
-                            hud.clearAllCards();
-                            hud.clearAllCards();
                             hud.updateCards();
                         }
                     }

@@ -24,7 +24,7 @@ public class SettingsScreen extends AbstractScreen {
     /**
      * In this case, we first want to run the shared render method on the superclass, but after that we
      * want to call the handleInput method from this specific class. If we put the handleInput() method in the
-     * superclass, then we wouldn't get the "SettingsScreen" implementation of it
+     * superclass, then we wouldn't get the "SettingsScreen" implementation of it.
      */
     @Override
     public void render(float v) {

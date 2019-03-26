@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.gui.AssMan;
 
 import java.util.Collections;
 import java.util.Stack;

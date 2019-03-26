@@ -119,7 +119,7 @@ public class AssMan{
 
 
 
-    //Testscreen class
+    //TestScreen class
     public static final AssetDescriptor<Texture> TESTSCREEN
             = new AssetDescriptor<>("assets/img/testscreen.png", Texture.class);
 

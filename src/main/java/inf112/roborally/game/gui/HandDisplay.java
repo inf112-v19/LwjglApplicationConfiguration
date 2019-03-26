@@ -42,9 +42,6 @@ public class HandDisplay {
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().placeCard(index);
                     hud.clearAllCards();
-                    hud.clearAllCards();
-                    hud.clearAllCards();
-                    hud.clearAllCards();
                     hud.updateCards();
                 }
             });

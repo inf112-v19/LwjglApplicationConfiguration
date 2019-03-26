@@ -1,7 +1,6 @@
 package inf112.roborally.game.objects;
 
 
-import com.badlogic.gdx.math.Vector3;
 import inf112.roborally.game.enums.Direction;
 
 /**
