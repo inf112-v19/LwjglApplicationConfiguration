@@ -29,17 +29,19 @@ public class GameLogic {
 
 
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
-        state = GameState.BETWEEN_ROUNDS;
-        this.game = game;
-        stackOfProgramCards = ProgramCard.makeProgramCardDeck();
-        returnedProgramCards = new Stack<>();
-        this.players = board.getPlayers();
-        player1 = players.get(0);
-        this.airobots = board.getPlayers();
-        airobots.remove(0);
         this.board = board;
         this.hud = hud;
+        this.game = game;
 
+        players = board.getPlayers();
+        player1 = players.get(0);
+        airobots = new ArrayList<>();
+        for(int i = 1; i < players.size(); i++)
+            airobots.add(players.get(i));
+
+        state = GameState.BETWEEN_ROUNDS;
+        stackOfProgramCards = ProgramCard.makeProgramCardDeck();
+        returnedProgramCards = new Stack<>();
         phase = 0;
 
         update();
