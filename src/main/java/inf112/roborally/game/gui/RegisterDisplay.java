@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -34,6 +33,7 @@ public class RegisterDisplay {
     private ArrayList<Image> lifeTokens;
     private ArrayList<Image> lockTokens;
     private ArrayList<TextureRegionDrawable> wireTextures;
+
 
 
     float scale = .5f;
@@ -180,12 +180,11 @@ public class RegisterDisplay {
             ProgramCard card = player.getRegisters().getCard(i);
             if (card != null) {
                 card.setUpSkin();
-                ImageTextButton cardInRegisterButton = new ProgramCardButton(card);
+                final ProgramCardButton cardInRegisterButton = new ProgramCardButton(card);
                 cardInRegisterButton.setTransform(true);
                 cardInRegisterButton.setScale(scale * 0.8f);
                 cardInRegisterButton.setPosition(programBoard.getX() +
                         19 * scale + 200 * scale * i, 10 * scale);
-
                 final int index = i;
                 cardInRegisterButton.addListener(new ClickListener() {
                     @Override
@@ -197,6 +196,7 @@ public class RegisterDisplay {
                         }
                     }
                 });
+
                 hud.registerGui.addActor(cardInRegisterButton);
             }
         }

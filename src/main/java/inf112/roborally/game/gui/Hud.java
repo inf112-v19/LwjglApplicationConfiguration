@@ -167,12 +167,13 @@ public class Hud {
         for(int i = 0; i < 4; i++) {
             for (Actor button : registerGui.getChildren()) {
                 if (button instanceof ProgramCardButton) {
-                    ((ProgramCardButton) button).card.dispose();
+                    ((ProgramCardButton) button).dispose();
                     button.remove();
                 }
             }
             for (Actor button : handGui.getChildren()) {
                 if (button instanceof ProgramCardButton) {
+                    ((ProgramCardButton) button).dispose();
                     button.remove();
                 }
             }

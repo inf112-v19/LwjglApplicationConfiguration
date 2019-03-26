@@ -17,4 +17,7 @@ public class ProgramCardButton extends ImageTextButton {
         setLabel(label);
         getCell(label).padRight(160).padBottom(250);
     }
+    public void dispose(){
+        card.dispose();
+    }
 }
