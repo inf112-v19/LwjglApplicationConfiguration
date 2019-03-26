@@ -77,7 +77,7 @@ public abstract class Board extends BoardCreator {
         int startNumber = 0;
         for (Player currentPlayer : players) {
             currentPlayer.moveToPosition(startPlates.get(startNumber++).position);
-            currentPlayer.setDirection(Direction.WEST);
+            currentPlayer.setDirection(Direction.EAST);
             currentPlayer.updateSprite();
             currentPlayer.getBackup().moveToPlayerPosition();
         }
