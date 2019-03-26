@@ -35,7 +35,8 @@ public class GameLogic {
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
         player1 = players.get(0);
-        for(int i = 1; i < players.size(); i++) airobots.add(players.get(i));
+        this.airobots = board.getPlayers();
+        airobots.remove(0);
         this.board = board;
         this.hud = hud;
 
@@ -75,7 +76,6 @@ public class GameLogic {
         powerUpRobots();
         powerDownRobots();
 
-
         for(Player robot : airobots) {
             if (!robot.isPoweredDown()) {
                 retrieveCardsFromPlayer(robot);
@@ -87,7 +87,6 @@ public class GameLogic {
             retrieveCardsFromPlayer(player1);
         }
         giveCardsToPlayer(player1);
-
 
         //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
         hud.clearAllCards();
@@ -112,6 +111,9 @@ public class GameLogic {
         if (phase < 5) {
             System.out.println("executing phase " + phase);
             player1.executeCard(player1.getRegisters().getCard(phase));
+            for(Player robot : airobots) {
+                robot.executeCard(robot.getRegisters().getCard(phase));
+            }
             try {
                 Thread.sleep(500);
             }
