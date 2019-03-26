@@ -1,6 +1,5 @@
 package inf112.roborally.game.animations;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.objects.GameObject;
 import inf112.roborally.game.objects.Position;
 
