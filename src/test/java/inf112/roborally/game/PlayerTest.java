@@ -19,7 +19,7 @@ public class PlayerTest {
     @Before
     public void setup(){
 
-        player = new Player(0,0);
+        player = new Player(0,0, 1);
         stack = ProgramCard.makeProgramCardDeck();
     }
 
@@ -176,9 +176,9 @@ public class PlayerTest {
     public void priorityTest(){
         PriorityQueue<ProgramCard> q = new PriorityQueue<>();
         // create 3 players:
-        Player p1 = new Player(0,0);
-        Player p2 = new Player(0,0);
-        Player p3 = new Player(0,0);
+        Player p1 = new Player(0,0,1);
+        Player p2 = new Player(0,0, 1);
+        Player p3 = new Player(0,0, 1);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
             p1.receiveCard(stack.pop());

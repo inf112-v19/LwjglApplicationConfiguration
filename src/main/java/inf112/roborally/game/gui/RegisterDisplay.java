@@ -1,17 +1,23 @@
 package inf112.roborally.game.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
+import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
+import inf112.roborally.game.enums.GameState;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
@@ -52,6 +58,24 @@ public class RegisterDisplay {
         addWires();
         addLockTokens(lockGui); // Locks needs to be update on top of the cards
 
+        addPowerDown();
+    }
+
+    private void addPowerDown() {
+        ImageButton powerDown = new ImageButton(new TextureRegionDrawable(new Texture("assets/cards/powerDown.png")));
+        powerDown.setSize(powerDown.getWidth() * scale, powerDown.getHeight() * scale);
+        powerDown.setPosition(programBoard.getX() + 180 * scale, 370 * scale, Align.center);
+        powerDown.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                GameLogic logic = ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getGameLogic();
+                if (logic.getState() == GameState.PICKING_CARDS && player.playerState == PlayerState.OPERATIONAL) {
+                    System.out.println(player.getName() + " wants to power down");
+                    player.wantsToPowerDown = true;
+                }
+            }
+        });
+        registerGui.addActor(powerDown);
     }
 
     private void addProgramBoard() {
@@ -119,6 +143,7 @@ public class RegisterDisplay {
             lockGui.addActor(lockImage);
         }
     }
+
     public void update() {
         updateWires();
         updateLocks();
@@ -150,10 +175,10 @@ public class RegisterDisplay {
     }
 
 
-    public void drawCardsInProgramRegister(final Hud hud){
+    public void drawCardsInProgramRegister(final Hud hud) {
         for (int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
-            if(card != null) {
+            if (card != null) {
                 card.setUpSkin();
                 ImageTextButton cardInRegisterButton = new ProgramCardButton(card);
                 cardInRegisterButton.setTransform(true);
@@ -165,7 +190,7 @@ public class RegisterDisplay {
                 cardInRegisterButton.addListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
-                        if(!registers.isLocked(index)) {
+                        if (!registers.isLocked(index)) {
                             registers.returnCard(player, index);
                             hud.clearAllCards();
                             hud.clearAllCards();

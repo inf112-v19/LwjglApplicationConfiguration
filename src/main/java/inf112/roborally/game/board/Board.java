@@ -198,7 +198,7 @@ public abstract class Board extends BoardCreator {
         return !isOffTheBoard(p) && getValue(floorLayer.getCell(p.getX(), p.getY())).equals("OPTION");
     }
 
-    public void cleanBoard() {
+    public void cleanUp() {
         for (Player player : players) {
             if (isOnRepair(player) || isOnOption(player)) {
                 player.repairOneDamage();
@@ -210,6 +210,7 @@ public abstract class Board extends BoardCreator {
             if (isOnOption(player)) {
                 System.out.println("Give option card to player!");
             }
+            player.respawn();
         }
     }
 

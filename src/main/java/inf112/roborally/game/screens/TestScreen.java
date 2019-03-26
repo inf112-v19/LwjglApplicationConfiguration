@@ -27,7 +27,7 @@ public class TestScreen implements Screen {
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         background = new Sprite(new Texture(AssMan.TESTSCREEN.fileName));
 
-        player = new Player(0, 0);
+        player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
         for(int i = 0; i < 9; i++){
             player.receiveCard(stack.pop());
@@ -74,6 +74,8 @@ public class TestScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             player.takeDamage();
             player.update();
+            System.out.println(player.playerState);
+            player.respawn();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {

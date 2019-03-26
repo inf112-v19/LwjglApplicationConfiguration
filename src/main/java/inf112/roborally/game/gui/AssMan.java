@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 /**
  * Contains assets used by the game.
- * Able to load as well as dispose all of them at the same time.
+ * With AssMan you are able to load as well as dispose all of them at the same time.
  *
  * .atlas files can not go here.
  */

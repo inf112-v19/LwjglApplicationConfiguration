@@ -52,10 +52,8 @@ public class Hud {
         stage.addActor(handGui);
 
 
-
         handDisplay = new HandDisplay(player, this);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
-
 
     }
 
@@ -69,14 +67,18 @@ public class Hud {
             submitButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    player.playerState = PlayerState.READY;
+                    if (player.getRegisters().isFull()) {
+                        player.playerState = PlayerState.READY;
+                    }
                 }
             });
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
+
 
     public boolean createSubmitButtonGrey() {
         if (assMan.manager.isLoaded(AssMan.BUTTON_SUBMIT_GREY.fileName)) {
@@ -86,7 +88,8 @@ public class Hud {
             greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
             greySubmitButton.addListener(new ClickListener());
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -109,7 +112,8 @@ public class Hud {
                 }
             });
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -125,15 +129,16 @@ public class Hud {
                 game.setScreen(game.settingsScreen);
             }
         });
-        if(settingsButton != null) {
+        if (settingsButton != null) {
             return true;
-        }else{
+        }
+        else {
             return false;
         }
     }
 
     public void createButtons() {
-        if(createSubmitButton() && createSubmitButtonGrey() && createButtonClear() && createSettingsButton()){
+        if (createSubmitButton() && createSubmitButtonGrey() && createButtonClear() && createSettingsButton()) {
             addButtonsToStage();
         }
     }

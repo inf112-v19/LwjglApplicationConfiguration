@@ -17,7 +17,7 @@ public class MovePlayerTest {
     @Before
     public void initialize() {
 
-        player = new Player(x, y);
+        player = new Player(x, y, 1);
         player.setDirection(Direction.SOUTH);
     }
 
