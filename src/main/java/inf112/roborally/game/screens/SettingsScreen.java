@@ -36,7 +36,6 @@ public class SettingsScreen extends AbstractScreen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Key B or Escape is pressed, going back to the GameScreen");
             game.setScreen(game.gameScreen);
-            dispose();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             if (!musicIsMuted) {
@@ -53,9 +52,12 @@ public class SettingsScreen extends AbstractScreen {
             }
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            dispose();
             game.newGame();
         }
+    }
+
+    public void dispose(){
+
     }
 
 }
