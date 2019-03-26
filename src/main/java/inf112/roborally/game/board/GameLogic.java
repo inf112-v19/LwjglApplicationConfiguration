@@ -23,6 +23,7 @@ public class GameLogic {
     private ArrayList<Player> players;
     private Stack<ProgramCard> returnedProgramCards;
     private Player player1;
+    private ArrayList<Player> airobots;
 
     private final Hud hud;
 
@@ -34,6 +35,7 @@ public class GameLogic {
         returnedProgramCards = new Stack<>();
         this.players = board.getPlayers();
         player1 = players.get(0);
+        for(int i = 1; i < players.size(); i++) airobots.add(players.get(i));
         this.board = board;
         this.hud = hud;
 
@@ -72,6 +74,15 @@ public class GameLogic {
         board.cleanUp();
         powerUpRobots();
         powerDownRobots();
+
+
+        for(Player robot : airobots) {
+            if (!robot.isPoweredDown()) {
+                retrieveCardsFromPlayer(robot);
+            }
+            giveCardsToPlayer(robot);
+        }
+
         if (!player1.isPoweredDown()) {
             retrieveCardsFromPlayer(player1);
         }
