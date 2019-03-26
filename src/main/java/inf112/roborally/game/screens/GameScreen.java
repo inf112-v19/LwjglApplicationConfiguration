@@ -30,16 +30,14 @@ public class GameScreen implements Screen {
 
     public ArrayList<Animation> animations;
 
-    public GameScreen(RoboRallyGame game, String mapPath) {
+    public GameScreen(RoboRallyGame game, String mapPath, int robotChoiceIndex) {
         this.mapPath = mapPath;
         this.game = game;
 
         board = new VaultBoard();
 
-        board.addPlayer(new Player("Player1", "assets/robot/bartenderclaptrap.png", NORTH, board));
-        board.addPlayer(new Player("Player2", "assets/robot/claptrapRefined.png", NORTH, board));
-        board.addPlayer(new Player("Player3", "assets/robot/butlerRefined.png", NORTH, board));
-        board.addPlayer(new Player("Player1", "assets/robot/claptrap3000.png", NORTH, board));
+        addPlayersToBoard(robotChoiceIndex);
+
         board.placePlayers();
 
         hud = new Hud(board.getPlayers().get(0), game);
@@ -58,6 +56,23 @@ public class GameScreen implements Screen {
         background = new Background(game.dynamicCamera);
 
         animations = new ArrayList<>();
+    }
+
+    private void addPlayersToBoard(int robotChoiceIndex) {
+        String[] filepaths = game.possibleRobotSkinFilepaths;
+        StringBuilder namebuilder = new StringBuilder();
+        namebuilder.append("Player");
+        int index = robotChoiceIndex;
+        int n = game.nSkins;
+        for (int i = 0; i < n; i++) {
+            if(index >= n) {
+                index = 0;
+            }
+            namebuilder.append(Integer.toString(i));
+            board.addPlayer(new Player(namebuilder.toString(), filepaths[index], NORTH, board));
+            namebuilder.deleteCharAt(5); // Delete the last character, which is the player number
+            index++;
+        }
     }
 
     @Override

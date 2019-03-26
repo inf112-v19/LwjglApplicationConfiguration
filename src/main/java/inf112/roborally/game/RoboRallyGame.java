@@ -35,6 +35,9 @@ public class RoboRallyGame extends Game {
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
 
+    public int nSkins;
+    public String[] possibleRobotSkinFilepaths;
+
     @Override
     public void create() {
 
@@ -50,8 +53,15 @@ public class RoboRallyGame extends Game {
 
         batch = new SpriteBatch();
 
+        nSkins = 4;
+        possibleRobotSkinFilepaths = new String[nSkins];
+        possibleRobotSkinFilepaths[0] = "assets/robot/bartenderclaptrap.png";
+        possibleRobotSkinFilepaths[1] = "assets/robot/claptrapRefined.png";
+        possibleRobotSkinFilepaths[2] = "assets/robot/butlerRefined.png";
+        possibleRobotSkinFilepaths[3] = "assets/robot/claptrap3000.png";
+
 //        testScreen = new TestScreen(this);
-        setupScreen = new SetupScreen(this);
+        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
         menuScreen = new MenuScreen(this);
 //        gameScreen = new GameScreen(this, VAULT);
         settingsScreen = new SettingsScreen(this);
@@ -65,8 +75,8 @@ public class RoboRallyGame extends Game {
         create();
     }
 
-    public void createGameScreen() {
-        gameScreen = new GameScreen(this, VAULT);
+    public void createGameScreen(int robotChoiceIndex) {
+        gameScreen = new GameScreen(this, VAULT, robotChoiceIndex);
     }
 
     public GameScreen getGameScreen() {

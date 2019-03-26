@@ -12,35 +12,33 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 
 public class SetupScreen extends AbstractScreen {
-
     private Stage stage;
-    private String robotChoice;
-    private Sprite selectSkinText;
     private ImageButton[] skins;
+    private Sprite selectSkinText;
+    private int robotChoiceIndex;
 
-    public SetupScreen(RoboRallyGame game) {
+    public SetupScreen(RoboRallyGame game, String[] possibleFilepaths) {
         super(game, "assets/backgrounds/setupscreen.png");
 
         stage = new Stage(game.fixedViewPort, game.batch);
         Gdx.input.setInputProcessor(stage);
 //        stage.addListener(game.cameraListener);
 
+        int nSkins = possibleFilepaths.length;
         selectSkinText = new Sprite(new Texture("assets/img/selectskintext.png"));
         selectSkinText.setPosition(Gdx.graphics.getWidth() / 2 + 125, 500);
 
-        skins = new ImageButton[4];
-        skins[0] = new ImageButton(new TextureRegionDrawable(new Texture("assets/robot/bartenderclaptrap.png")));
-        skins[1] = new ImageButton(new TextureRegionDrawable(new Texture("assets/robot/claptrapRefined.png")));
-        skins[2] = new ImageButton(new TextureRegionDrawable(new Texture("assets/robot/butlerRefined.png")));
-        skins[3] = new ImageButton(new TextureRegionDrawable(new Texture("assets/robot/claptrap3000.png")));
+        skins = new ImageButton[nSkins];
 
         float scale = 0.4f;
         int x1 = 450; // The left x value
         int x2 = 1050; // The right x value
-        int y = 350; // Starting Y value, this will change after 2 buttons are added to get them on different levels
+        // Starting Y value, this will change after 2 buttons are added to get the next to below the first two
+        int y = 350;
         for (int i = 1; i < skins.length+1; i++) {
-            ImageButton skin = skins[i-1];
-
+            int index = i-1;
+            skins[index] = new ImageButton(new TextureRegionDrawable(new Texture(possibleFilepaths[index])));
+            ImageButton skin = skins[index];
             skin.setSize(skin.getWidth() * scale, skin.getHeight() * scale);
 
             // If i is odd, place it on the left side
@@ -52,17 +50,17 @@ public class SetupScreen extends AbstractScreen {
                 y = y/2 - 100; // next time, add below
             }
 
-            final int finalI = i;
+            final int finalIndex = index;
             skin.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    System.out.printf("Clicked skin %d%n", finalI);
+                    System.out.printf("Clicked skin %d%n", finalIndex+1);
+                    setRobotChoice(finalIndex);
                 }
             });
 
             stage.addActor(skin);
         }
-
     }
 
     @Override
@@ -83,7 +81,7 @@ public class SetupScreen extends AbstractScreen {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             System.out.println("Key T pressed in SetupScreen, moving further");
-            game.createGameScreen();
+            game.createGameScreen(0); // Choose the standard skin index
             game.setScreen(game.gameScreen);
             dispose();
         }
@@ -96,5 +94,12 @@ public class SetupScreen extends AbstractScreen {
         stage.dispose();
     }
 
+    private void setRobotChoice(int index) {
+        robotChoiceIndex = index;
+        System.out.println("The robot choice is robot at index " + index + "!");
+        game.createGameScreen(robotChoiceIndex);
+        game.setScreen(game.gameScreen);
+        dispose();
+    }
 
 }
