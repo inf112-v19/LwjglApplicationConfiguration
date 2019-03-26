@@ -115,7 +115,7 @@ public class Hud {
         }
     }
 
-    //Weird bug... Checking if the AssMan has loaded the file didn't work properly so it's not done here.
+    //Weird bug... Checking if AssMan has loaded the file didn't work properly so it's not done here.
     public boolean createSettingsButton() {
         settingsButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
                 (AssMan.BUTTON_SETTINGS.fileName, Texture.class)));

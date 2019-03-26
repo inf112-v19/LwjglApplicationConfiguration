@@ -85,5 +85,6 @@ public class RoboRallyGame extends Game {
         testScreen.dispose();
         gameScreen.dispose();
         menuScreen.dispose();
+        assMan.dispose();
     }
 }
