@@ -78,17 +78,13 @@ public class GameLogic {
         powerUpRobots();
         powerDownRobots();
 
-        for(Player robot : airobots) {
+        for(Player robot : players) {
             if (!robot.isPoweredDown()) {
                 retrieveCardsFromPlayer(robot);
             }
-            giveCardsToPlayer(robot);
         }
+        dealCards();
 
-        if (!player1.isPoweredDown()) {
-            retrieveCardsFromPlayer(player1);
-        }
-        giveCardsToPlayer(player1);
 
         //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
         hud.clearAllCards();
@@ -226,6 +222,15 @@ public class GameLogic {
                 reshuffleDeck();
             }
             player.receiveCard(stackOfProgramCards.pop());
+        }
+    }
+
+    private void dealCards(){
+        for(Player player : players){
+            while (!player.handIsFull()) {
+                if(stackOfProgramCards.isEmpty()) reshuffleDeck();
+                player.receiveCard(stackOfProgramCards.pop());
+            }
         }
     }
 
