@@ -53,20 +53,24 @@ public class RoboRallyGame extends Game {
 
         batch = new SpriteBatch();
 
+        createPossibleFilepaths();
+
+//        testScreen = new TestScreen(this);
+        menuScreen = new MenuScreen(this);
+        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
+//        gameScreen = new GameScreen(this, VAULT);
+        endGameScreen = new EndGameScreen(this);
+        setScreen(menuScreen);
+
+    }
+
+    private void createPossibleFilepaths() {
         nSkins = 4;
         possibleRobotSkinFilepaths = new String[nSkins];
         possibleRobotSkinFilepaths[0] = "assets/robot/bartenderclaptrap.png";
         possibleRobotSkinFilepaths[1] = "assets/robot/claptrapRefined.png";
         possibleRobotSkinFilepaths[2] = "assets/robot/butlerRefined.png";
         possibleRobotSkinFilepaths[3] = "assets/robot/claptrap3000.png";
-
-//        testScreen = new TestScreen(this);
-        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
-        menuScreen = new MenuScreen(this);
-//        gameScreen = new GameScreen(this, VAULT);
-        settingsScreen = new SettingsScreen(this);
-        endGameScreen = new EndGameScreen(this);
-        setScreen(menuScreen);
 
     }
 
@@ -79,6 +83,7 @@ public class RoboRallyGame extends Game {
         gameScreen = new GameScreen(this, VAULT, robotChoiceIndex);
     }
 
+
     public GameScreen getGameScreen() {
         return this.gameScreen;
     }
@@ -87,10 +92,15 @@ public class RoboRallyGame extends Game {
     public void dispose() {
         batch.dispose();
 //        testScreen.dispose();
+        menuScreen.dispose();
         // It might not been made yet
+        if (setupScreen != null) {
+            setupScreen.dispose();
+        }
+
         if(gameScreen != null) {
             gameScreen.dispose();
         }
-        menuScreen.dispose();
+
     }
 }

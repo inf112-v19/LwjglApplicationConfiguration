@@ -10,11 +10,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.enums.SetupState;
+
+import java.util.ArrayList;
 
 public class SetupScreen extends AbstractScreen {
     private Stage stage;
+    private String[] possibleFilepaths;
     private ImageButton[] skins;
-    private Sprite selectSkinText;
+    private SetupState state;
+
+    private ArrayList<Sprite> information;
+
+    // Player choices to be added to the game screen
     private int robotChoiceIndex;
 
     public SetupScreen(RoboRallyGame game, String[] possibleFilepaths) {
@@ -24,12 +32,23 @@ public class SetupScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(stage);
 //        stage.addListener(game.cameraListener);
 
+        information = new ArrayList<>();
+        this.possibleFilepaths = possibleFilepaths;
+        
+        createSkinButtons();
+        state = SetupState.PICKINGSKIN;
+
+    }
+
+
+    private void createSkinButtons() {
         int nSkins = possibleFilepaths.length;
-        selectSkinText = new Sprite(new Texture("assets/img/selectskintext.png"));
+        Sprite selectSkinText = new Sprite(new Texture("assets/img/selectskintext.png"));
         selectSkinText.setPosition(Gdx.graphics.getWidth() / 2 + 125, 500);
+        information.add(selectSkinText);
 
         skins = new ImageButton[nSkins];
-
+        // Add all the buttons for the skins to the stage
         float scale = 0.4f;
         int x1 = 450; // The left x value
         int x2 = 1050; // The right x value
@@ -54,13 +73,24 @@ public class SetupScreen extends AbstractScreen {
             skin.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    System.out.printf("Clicked skin %d%n", finalIndex+1);
+                    System.out.printf("You selected skin number %d!%n", finalIndex+1);
                     setRobotChoice(finalIndex);
                 }
             });
-
             stage.addActor(skin);
         }
+
+    }
+
+    private void createMapForPlacingFlags() {
+        state = SetupState.PLACINGFLAGS;
+        Sprite map = new Sprite(new Texture("assets/maps/vault.png"));
+        map.scale(1.0f);
+        // The positioning is a little bit off
+        map.setPosition(Gdx.graphics.getWidth() / 2 + map.getWidth()/2, Gdx.graphics.getHeight() / 2);
+        information.add(map);
+
+
     }
 
     @Override
@@ -70,14 +100,18 @@ public class SetupScreen extends AbstractScreen {
         batch.setProjectionMatrix(game.fixedCamera.combined);
         batch.begin();
         background.draw(batch);
-        selectSkinText.draw(batch);
+        for (Sprite sprite : information) {
+            sprite.draw(batch);
+        }
         batch.end();
         handleInput();
 
         stage.draw();
+
     }
 
     private void handleInput() {
+
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             System.out.println("Key T pressed in SetupScreen, moving further");
@@ -86,6 +120,38 @@ public class SetupScreen extends AbstractScreen {
             dispose();
         }
 
+        switch (state) {
+            case PLACINGFLAGS:
+                if(Gdx.input.justTouched()) {
+                    System.out.printf("Mouse just pressed, at coordinates x = %d and y = %d",
+                            Gdx.input.getX(), Gdx.input.getY());
+                    System.out.print("\n");
+                }
+        }
+    }
+
+
+    private void setRobotChoice(int index) {
+        robotChoiceIndex = index;
+        System.out.println("The robot choice is robot at index " + index + "!");
+
+        // Remove the text and buttons:
+        // Currently only one information in the arraylist
+        information.remove(0);
+        for(ImageButton btn : skins) {
+            btn.remove();
+        }
+
+        // Now it's time to place the flags:
+        createMapForPlacingFlags();
+        
+    }
+
+    
+    private void createGameScreen() {
+        game.createGameScreen(robotChoiceIndex);
+        game.setScreen(game.gameScreen);
+        dispose();
     }
 
     @Override
@@ -93,13 +159,4 @@ public class SetupScreen extends AbstractScreen {
         super.dispose();
         stage.dispose();
     }
-
-    private void setRobotChoice(int index) {
-        robotChoiceIndex = index;
-        System.out.println("The robot choice is robot at index " + index + "!");
-        game.createGameScreen(robotChoiceIndex);
-        game.setScreen(game.gameScreen);
-        dispose();
-    }
-
 }
