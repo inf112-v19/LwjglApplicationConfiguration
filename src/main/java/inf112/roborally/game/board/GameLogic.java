@@ -100,8 +100,10 @@ public class GameLogic {
 
     private void checkIfReady() {
         if (player1.isReady()) { // Player is ready if it has clicked submit or is powered down
-            if (player1.playerState == PlayerState.READY) {
-                player1.playerState = PlayerState.OPERATIONAL;
+            for (Player player : players) {
+                if (player.playerState == PlayerState.READY) {
+                    player.playerState = PlayerState.OPERATIONAL;
+                }
             }
             state = GameState.ROUND;
         }
