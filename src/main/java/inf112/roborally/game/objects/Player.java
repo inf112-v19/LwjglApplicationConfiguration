@@ -288,7 +288,7 @@ public class Player extends MovableGameObject {
     }
 
     public boolean handIsFull(){
-        return cardsInHand.size() >= damage;
+        return cardsInHand.size() >= ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
     }
 
     public int getCardLimit() {
