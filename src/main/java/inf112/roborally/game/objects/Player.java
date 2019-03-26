@@ -11,6 +11,7 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.sound.GameSound;
 import java.util.ArrayList;
 
@@ -64,9 +65,9 @@ public class Player extends MovableGameObject {
     }
 
     public void createSounds () {
-        allPlayerSounds[0] = new GameSound("assets/music/playerLaser.wav");
-        allPlayerSounds[1] = new GameSound("assets/music/playerRepair.wav");
-        allPlayerSounds[2] = new GameSound("assets/music/playerWilhelmScream.wav");
+        allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
+        allPlayerSounds[1] = new GameSound(AssMan.MUSIC_PLAYER_REPAIR.fileName);
+        allPlayerSounds[2] = new GameSound( AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class Player extends MovableGameObject {
      * FOR TESTING ONLY
      */
     public Player(int x, int y) {
-        super(x, y, "assets/robot/tvBot.png");
+        super(x, y, AssMan.PLAYER_TVBOT.fileName);
         damage = 0;
         lives = MAX_LIVES;
         registers = new ProgramRegisters(this);
@@ -92,7 +93,7 @@ public class Player extends MovableGameObject {
 
         // For testing with flag behaviour, now tests with 3 flags on the board
         flagCounter = 0;
-//        backup = new Backup(x,y);
+//        backup = new BACKUP(x,y);
         flagsFound = new boolean[3];
     }
 

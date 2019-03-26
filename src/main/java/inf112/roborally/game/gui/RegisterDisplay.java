@@ -55,7 +55,7 @@ public class RegisterDisplay {
     }
 
     private void addProgramBoard() {
-        programBoard = new Image(new Texture("assets/cards/programregisters.png"));
+        programBoard = new Image(new Texture(AssMan.REGISTER_PROGRAM_REGISTER.fileName));
         programBoard.setSize(programBoard.getWidth() * scale, programBoard.getHeight() * scale);
         programBoard.setPosition(1920 / 2, programBoard.getHeight() / 2, Align.center);
         registerGui.addActor(programBoard);
@@ -69,7 +69,7 @@ public class RegisterDisplay {
 
         damageTokens = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            Image damageImage = new Image(new Texture("assets/cards/tokens/damageToken.png"));
+            Image damageImage = new Image(new Texture(AssMan.REGISTER_DAMAGE_TOKEN.fileName));
             damageImage.setPosition(startX - space * i, startY, Align.center);
             damageImage.setSize(50 * scale, 50 * scale);
             registerGui.addActor(damageImage);
@@ -84,7 +84,7 @@ public class RegisterDisplay {
 
         lifeTokens = new ArrayList<>();
         for (int i = player.getLives(); i > 0; i--) {
-            Image lifeImage = new Image(new Texture("assets/cards/tokens/lifeToken.png"));
+            Image lifeImage = new Image(new Texture(AssMan.REGISTER_LIFE_TOKEN.fileName));
             lifeImage.setPosition(startX - space * i, startY, Align.center);
             lifeImage.setSize(80 * scale, 80 * scale);
             lifeTokens.add(lifeImage);
@@ -98,7 +98,7 @@ public class RegisterDisplay {
         wires.setPosition(programBoard.getX(), programBoard.getY());
         registerGui.addActor(wires);
 
-        Texture texture = new Texture("assets/cards/wires.png");
+        Texture texture = new Texture(AssMan.REGISTER_WIRES.fileName);
         wireTextures = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             wireTextures.add(new TextureRegionDrawable(new TextureRegion(texture, 0, 481 * i, 1024, 481)));
@@ -112,7 +112,7 @@ public class RegisterDisplay {
         float space = 200 * scale;
         lockTokens = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
-            Image lockImage = new Image(new Texture("assets/cards/tokens/lockToken.png"));
+            Image lockImage = new Image(new Texture(AssMan.REGISTER_LOCK_TOKEN.fileName));
             lockImage.setSize(lockImage.getWidth() * scale, lockImage.getHeight() * scale);
             lockImage.setPosition(startX - space * i, startY, Align.center);
             lockTokens.add(lockImage);

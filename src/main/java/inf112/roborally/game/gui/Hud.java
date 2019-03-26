@@ -61,9 +61,9 @@ public class Hud {
 
 
     public boolean createSubmitButton() {
-        if (assMan.manager.isLoaded(AssMan.buttonSubmit.fileName)) {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_SUBMIT.fileName)) {
             submitButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
-                    (AssMan.buttonSubmit.fileName, Texture.class)));
+                    (AssMan.BUTTON_SUBMIT.fileName, Texture.class)));
             submitButton.setSize(submitButton.getWidth() * scale, submitButton.getHeight() * scale);
             submitButton.setPosition((1920 / 2) + 7, 260);
             submitButton.addListener(new ClickListener() {
@@ -79,9 +79,9 @@ public class Hud {
     }
 
     public boolean createSubmitButtonGrey() {
-        if (assMan.manager.isLoaded(AssMan.buttonSubmitGrey.fileName)) {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_SUBMIT_GREY.fileName)) {
             greySubmitButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
-                    (AssMan.buttonSubmitGrey.fileName, Texture.class)));
+                    (AssMan.BUTTON_SUBMIT_GREY.fileName, Texture.class)));
             greySubmitButton.setSize(submitButton.getWidth(), submitButton.getHeight());
             greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
             greySubmitButton.addListener(new ClickListener());
@@ -92,9 +92,9 @@ public class Hud {
     }
 
     public boolean createButtonClear() {
-        if (assMan.manager.isLoaded(AssMan.buttonClear.fileName)) {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_CLEAR.fileName)) {
             clearButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get(
-                    AssMan.buttonClear.fileName, Texture.class)));
+                    AssMan.BUTTON_CLEAR.fileName, Texture.class)));
             clearButton.setSize(clearButton.getWidth() * scale, clearButton.getHeight() * scale);
             clearButton.setPosition((1920 / 2) - (clearButton.getWidth()) - 7, 260);
             clearButton.addListener(new ClickListener() {
@@ -117,7 +117,7 @@ public class Hud {
     //Weird bug... Checking if the AssMan has loaded the file didn't work properly so it's not done here.
     public boolean createSettingsButton() {
         settingsButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
-                (AssMan.settingsButton.fileName, Texture.class)));
+                (AssMan.BUTTON_SETTINGS.fileName, Texture.class)));
         settingsButton.setPosition(60, 60);
         settingsButton.addListener(new ClickListener() {
             @Override

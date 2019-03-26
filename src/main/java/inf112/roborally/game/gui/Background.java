@@ -1,6 +1,5 @@
 package inf112.roborally.game.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,14 +18,14 @@ public class Background {
         originalCameraX = camera.position.x;
         originalCameraY = camera.position.y;
 
-        background = new Sprite(new Texture("assets/img/background2.png"));
+        background = new Sprite(new Texture(AssMan.BACKGROUND_BACKGROUND_2.fileName));
 
-        grid = new Sprite(new Texture("assets/img/grid2.png"));
+        grid = new Sprite(new Texture(AssMan.BACKGROUND_GRID_2.fileName));
         grid.setSize(background.getWidth() * 1.4f, background.getHeight() * 1.4f);
         gridX = -grid.getWidth() / 10;
         gridY = -grid.getHeight() / 10;
 
-        clouds = new Sprite(new Texture("assets/img/clouds.png"));
+        clouds = new Sprite(new Texture(AssMan.BACKGROUND_CLOUDS.fileName));
         clouds.setSize(background.getWidth() * 1.4f, background.getHeight() * 1.4f);
         clouds.setOriginCenter();
         cloudX = clouds.getOriginX() - 200;
