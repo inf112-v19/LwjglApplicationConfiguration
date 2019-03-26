@@ -50,10 +50,10 @@ public class RoboRallyGame extends Game {
 
         batch = new SpriteBatch();
 
-        testScreen = new TestScreen(this);
+//        testScreen = new TestScreen(this);
         setupScreen = new SetupScreen(this);
         menuScreen = new MenuScreen(this);
-        gameScreen = new GameScreen(this, VAULT);
+//        gameScreen = new GameScreen(this, VAULT);
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
         setScreen(menuScreen);
@@ -65,6 +65,10 @@ public class RoboRallyGame extends Game {
         create();
     }
 
+    public void createGameScreen() {
+        gameScreen = new GameScreen(this, VAULT);
+    }
+
     public GameScreen getGameScreen() {
         return this.gameScreen;
     }
@@ -72,8 +76,11 @@ public class RoboRallyGame extends Game {
     @Override
     public void dispose() {
         batch.dispose();
-        testScreen.dispose();
-        gameScreen.dispose();
+//        testScreen.dispose();
+        // It might not been made yet
+        if(gameScreen != null) {
+            gameScreen.dispose();
+        }
         menuScreen.dispose();
     }
 }
