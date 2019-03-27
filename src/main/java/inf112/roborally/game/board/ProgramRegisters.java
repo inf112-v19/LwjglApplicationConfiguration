@@ -3,8 +3,6 @@ package inf112.roborally.game.board;
 import inf112.roborally.game.objects.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.PriorityQueue;
 
 public class ProgramRegisters implements IProgramRegisters {
     public static final int NUMBER_OF_REGISTERS = 5;

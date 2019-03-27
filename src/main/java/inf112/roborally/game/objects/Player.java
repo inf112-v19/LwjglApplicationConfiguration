@@ -3,6 +3,7 @@ package inf112.roborally.game.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
@@ -15,6 +16,8 @@ import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.sound.GameSound;
 
 import java.util.ArrayList;
+
+import static inf112.roborally.game.board.TiledTools.cellContainsKey;
 
 
 public class Player extends MovableGameObject {
@@ -135,7 +138,7 @@ public class Player extends MovableGameObject {
             moveInDirection(getDirection());
         }
         // every time a player moves we need to check if it is off the board or not
-        if (board != null && board.isOffTheBoard(this)) { // need to check if board is null for tests to work
+        if (board != null && isOffTheBoard(board.getFloorLayer())) { // need to check if board is null for tests to work
             this.destroy();
         }
     }
@@ -258,6 +261,23 @@ public class Player extends MovableGameObject {
     }
 
 
+    public void fireLaser(Board board) {
+        LaserShot laserShot = new LaserShot(getDirection(), getX(), getY());
+        while (laserShot.canGo(laserShot.getDirection(), board.getWallLayer())) {
+            laserShot.moveInDirection(laserShot.getDirection());
+            for (Player target : board.getPlayers()) {
+                if (laserShot.position.equals(target.position)) {
+                    target.takeDamage();
+                    System.out.println(getName() + " shoots  " + target.getName());
+                    return;
+                }
+            }
+            if (laserShot.outOfBounds(board)) {
+                return;
+            }
+        }
+    }
+
     public void visitFlag(int flagNumber) {
         if (flagNumber > nFlags) return;
 
@@ -267,12 +287,17 @@ public class Player extends MovableGameObject {
         }
     }
 
+    public void destroy() {
+        damage = MAX_DAMAGE + 1;
+    }
+
     public boolean hasWon() {
         return targetFlag > nFlags;
     }
 
-    public void destroy() {
-        damage = MAX_DAMAGE + 1;
+    public boolean hitByLaser(TiledMapTileLayer laserLayer) {
+        return cellContainsKey(laserLayer.getCell(getX(),getY()), "Laser");
+
     }
 
     public boolean isDestroyed() {
@@ -293,23 +318,6 @@ public class Player extends MovableGameObject {
 
     public boolean outOfLives() {
         return lives < 1;
-    }
-
-    public void fireLaser(Board board) {
-        LaserShot laserShot = new LaserShot(getDirection(), getX(), getY());
-        while (laserShot.canGo(laserShot.getDirection(), board.getWallLayer())) {
-            laserShot.moveInDirection(laserShot.getDirection());
-            for (Player target : board.getPlayers()) {
-                if (laserShot.position.equals(target.position)) {
-                    target.takeDamage();
-                    System.out.println(getName() + " shoots  " + target.getName());
-                    return;
-                }
-            }
-            if (laserShot.outOfBounds(board)) {
-                return;
-            }
-        }
     }
 
     public int getCardLimit() {

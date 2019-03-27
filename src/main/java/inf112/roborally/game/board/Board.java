@@ -1,7 +1,6 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.*;
 
@@ -19,7 +18,7 @@ import static inf112.roborally.game.board.TiledTools.*;
 
 
 @SuppressWarnings("Duplicates")
-public abstract class Board extends BoardCreator {
+public abstract class Board extends TiledBoard {
 
     protected ArrayList<Player> players;
     protected ArrayList<RepairSite> repairSites;
@@ -38,11 +37,6 @@ public abstract class Board extends BoardCreator {
         lasers = new ArrayList<>();
         startPlates = new ArrayList<>();
         soundIsMuted = false;
-    }
-
-    public void render(OrthographicCamera camera) {
-        mapRenderer.setView(camera);
-        mapRenderer.render();
     }
 
     public void findLasers() {
@@ -86,28 +80,35 @@ public abstract class Board extends BoardCreator {
     }
 
     public void boardMoves() {
+        expressBeltsMovePlayers();
         beltsMovePlayers();
         lasersFire();
+        robotLasersFire();
         visitFlags();
         visitSpecialFields();
     }
 
-    private void beltsMovePlayers() {
+    private void expressBeltsMovePlayers() {
         for (Player player : players) {
             if (player == null) continue;
             expressBeltsMove(player);
-            if (isOffTheBoard(player)) {
+            if (player.isOffTheBoard(floorLayer)) {
                 if (!soundIsMuted && !player.hasScreamed()) {
                     player.getSoundFromPlayer(2).play();
                 }
                 player.destroy();
             }
         }
+    }
 
+    private void beltsMovePlayers() {
         for (Player player : players) {
             if (player == null) continue;
             beltsMove(player);
-            if (isOffTheBoard(player)) {
+            if (player.isOffTheBoard(floorLayer)) {
+                if (!soundIsMuted && !player.hasScreamed()) {
+                    player.getSoundFromPlayer(2).play();
+                }
                 player.destroy();
             }
         }
@@ -154,18 +155,13 @@ public abstract class Board extends BoardCreator {
 
     private void lasersFire() {
         for (Player player : players) {
-            if (lasersHit(laserLayer.getCell(player.getX(), player.getY()))) {
+            if (player.hitByLaser(laserLayer)) {
                 if (!soundIsMuted) {
                     player.getSoundFromPlayer(0).play();
                 }
                 player.takeDamage();
             }
         }
-        robotLasersFire();
-    }
-
-    private boolean lasersHit(TiledMapTileLayer.Cell currentCell) {
-        return cellContainsKey(currentCell, "Laser");
     }
 
     private void visitFlags() {
@@ -187,9 +183,6 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public boolean isOffTheBoard(GameObject object) {
-        return (floorLayer.getCell(object.getX(), object.getY()) == null);
-    }
 
     public void cleanUp() {
         for (Player player : players) {
@@ -228,13 +221,6 @@ public abstract class Board extends BoardCreator {
     private void drawList(ArrayList<? extends GameObject> list, SpriteBatch batch) {
         for (GameObject object : list)
             object.draw(batch);
-
-    }
-
-    public void dispose() {
-        System.out.println("disposing board");
-        map.dispose();
-
     }
 
     public void killTheSound() {
@@ -251,18 +237,6 @@ public abstract class Board extends BoardCreator {
         soundIsMuted = false;
     }
 
-    public TiledMapTileLayer getWallLayer() {
-        return this.wallLayer;
-    }
-
-    public int getWidth() {
-        return this.floorLayer.getWidth();
-    }
-
-    public int getHeight() {
-        return this.floorLayer.getHeight();
-    }
-
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
@@ -277,5 +251,4 @@ public abstract class Board extends BoardCreator {
     public ArrayList<Flag> getFlags() {
         return flags;
     }
-
 }
