@@ -1,6 +1,5 @@
 package inf112.roborally.game.board;
 
-import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
 import org.junit.Before;
