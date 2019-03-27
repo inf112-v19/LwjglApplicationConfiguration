@@ -60,6 +60,8 @@ public class TestScreen implements Screen {
         game.batch.begin();
         background.draw(game.batch);
         game.batch.end();
+
+        hud.createButtons();
         hud.draw();
 
     }

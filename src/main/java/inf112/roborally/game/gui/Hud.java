@@ -140,7 +140,7 @@ public class Hud {
         }
     }
 
-    public void addButtonsToStage() {
+    private void addButtonsToStage() {
         if (greySubmitButton != null && submitButton != null && clearButton != null && settingsButton != null) {
             stage.addActor(greySubmitButton);
             stage.addActor(submitButton);
