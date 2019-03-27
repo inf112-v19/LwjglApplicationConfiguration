@@ -7,7 +7,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import inf112.roborally.game.gui.CameraListener;
+import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.*;
+
+import java.util.ArrayList;
 
 public class RoboRallyGame extends Game {
     //MAPS:
@@ -82,8 +85,13 @@ public class RoboRallyGame extends Game {
         setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
     }
 
-    public void createGameScreen(int robotChoiceIndex) {
-        gameScreen = new GameScreen(this, VAULT, robotChoiceIndex);
+    // Create GameScreen with preset skins and flag positions
+    public void createGameScreen() {
+        gameScreen = new GameScreen(this, VAULT, 0, null);
+    }
+
+    public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions) {
+        gameScreen = new GameScreen(this, VAULT, robotChoiceIndex, flagPositions);
     }
 
 

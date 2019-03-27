@@ -26,9 +26,8 @@ public class SetupScreen extends AbstractScreen {
     private ArrayList<Sprite> flags;
     private boolean placeFlags;
 
-    // One til tile, when width is 1920, is 90 pixels
+    // One tile, when width is 1920, is 90 pixels
     // That makes it 1 of 23,333 parts of the screen
-    private final float NUMBERS_OF_TILES_IN_WIDTH = 21.333f;
     private final int TILE_SIZE_IN_FULLSCRREEN = 90;
     private final int N_TILES = 12; //12x12 tiles
 
@@ -40,6 +39,7 @@ public class SetupScreen extends AbstractScreen {
 
     // Player choices to be added to the game screen
     private int robotChoiceIndex;
+    private ArrayList<Position> flagPositions;
 
     public SetupScreen(RoboRallyGame game, String[] possibleFilepaths) {
         super(game, "assets/backgrounds/setupscreen.png");
@@ -51,6 +51,8 @@ public class SetupScreen extends AbstractScreen {
         information = new ArrayList<>();
         this.possibleFilepaths = possibleFilepaths;
         placeFlags = false;
+
+        flagPositions = new ArrayList<>();
 
 
         createSkinButtons();
@@ -149,7 +151,7 @@ public class SetupScreen extends AbstractScreen {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             System.out.println("Key T pressed in SetupScreen, moving further");
-            game.createGameScreen(0); // Choose the standard skin index
+            game.createGameScreen(); // Choose the standard skin index
             game.setScreen(game.gameScreen);
             dispose();
         }
@@ -166,12 +168,19 @@ public class SetupScreen extends AbstractScreen {
                     System.out.print("\n");
 
 
-                    System.out.printf("Current TileSize = %.2f, Current MapSize = %.2f%nWidth minus map should be %.2f%n",
-                            currentTileSize, currentMapSize, mapStartX);
                     if(mouseX >= mapStartX) {
                         Position clickedPos = convertMouseClickIntoMapPosition(mouseX, mouseY);
                         System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
                                 clickedPos.getX(), clickedPos.getY());
+
+                        // Because the map we use has 4 more tiles to the left (where we find the starting positions,
+                        // we have to add 4 to the clicked x value
+                        Position properPos = new Position(clickedPos.getX() + 4, clickedPos.getY());
+                        flagPositions.add(properPos);
+                        if(flagPositions.size() == 3) {
+                            createGameScreenFromSetup();
+                        }
+
                     }
                     else {
                         System.out.println("Mouse clicked OUTSIDE the map");
@@ -184,7 +193,7 @@ public class SetupScreen extends AbstractScreen {
     }
 
     private Position convertMouseClickIntoMapPosition(float mouseX, float mouseY) {
-        // How many tiles there are on the startingposition part of the map,
+        // How many tiles there are on the starting position part of the map,
         // where we cant place flags
         int nStarterMapTiles = 4;
 
@@ -216,6 +225,7 @@ public class SetupScreen extends AbstractScreen {
 
     private void updateMapNumbers() {
         float screenWidth = Gdx.graphics.getWidth();
+        final float NUMBERS_OF_TILES_IN_WIDTH = 21.333f;
         currentTileSize = screenWidth /NUMBERS_OF_TILES_IN_WIDTH;
         currentMapSize = currentTileSize * N_TILES;
         // Map starts at left, so we need to find the map starting x value:
@@ -240,7 +250,7 @@ public class SetupScreen extends AbstractScreen {
 
     
     private void createGameScreenFromSetup() {
-        game.createGameScreen(robotChoiceIndex);
+        game.createGameScreen(robotChoiceIndex, flagPositions);
         game.setScreen(game.gameScreen);
         dispose();
     }

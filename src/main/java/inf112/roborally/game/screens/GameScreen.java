@@ -11,6 +11,7 @@ import inf112.roborally.game.board.*;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.sound.GameMusic;
 
 import java.util.ArrayList;
@@ -30,11 +31,16 @@ public class GameScreen implements Screen {
 
     public ArrayList<Animation> animations;
 
-    public GameScreen(RoboRallyGame game, String mapPath, int robotChoiceIndex) {
+    public GameScreen(RoboRallyGame game, String mapPath, int robotChoiceIndex, ArrayList<Position> flagPositions) {
         this.mapPath = mapPath;
         this.game = game;
 
-        board = new VaultBoard();
+        if (flagPositions != null) {
+            board = new VaultBoard(flagPositions);
+        }
+        else {
+            board = new VaultBoard();
+        }
 
         addPlayersToBoard(robotChoiceIndex);
 
