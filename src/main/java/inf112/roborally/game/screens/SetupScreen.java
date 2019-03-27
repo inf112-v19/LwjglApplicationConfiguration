@@ -4,19 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.SetupState;
-import inf112.roborally.game.objects.Flag;
-import org.lwjgl.Sys;
+import inf112.roborally.game.objects.Position;
 
 import java.util.ArrayList;
 
@@ -37,7 +33,7 @@ public class SetupScreen extends AbstractScreen {
     private final int N_TILES = 12; //12x12 tiles
 
     // Information about current map size
-    private float mapWidth;
+//    private float screenWidth;
     private float currentTileSize;
     private float currentMapSize;
     private float mapStartX;
@@ -173,8 +169,9 @@ public class SetupScreen extends AbstractScreen {
                     System.out.printf("Current TileSize = %.2f, Current MapSize = %.2f%nWidth minus map should be %.2f%n",
                             currentTileSize, currentMapSize, mapStartX);
                     if(mouseX >= mapStartX) {
-                        System.out.println("Mouse clicked INSIDE the map");
-                        convertMouseClickIntoMapPosition(mouseX, mouseY);
+                        Position clickedPos = convertMouseClickIntoMapPosition(mouseX, mouseY);
+                        System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
+                                clickedPos.getX(), clickedPos.getY());
                     }
                     else {
                         System.out.println("Mouse clicked OUTSIDE the map");
@@ -186,16 +183,43 @@ public class SetupScreen extends AbstractScreen {
         }
     }
 
-    private void convertMouseClickIntoMapPosition(float mouseX, float mouseY) {
+    private Position convertMouseClickIntoMapPosition(float mouseX, float mouseY) {
+        // How many tiles there are on the startingposition part of the map,
+        // where we cant place flags
+        int nStarterMapTiles = 4;
 
+        float mapMouseX = mouseX - mapStartX;
+        float mapMouseY = mouseY;
+
+        int x = 1;
+        int y = 1;
+
+        // Do the math for the x value;
+        for(int i = 1; i <= N_TILES; i++) {
+            float compareX = i * currentTileSize;
+            if(compareX > mapMouseX) {
+                x = i;
+                break;
+            }
+        }
+
+        for (int i = N_TILES; i >= 0; i--) {
+            float compareY = i * currentTileSize;
+            if(compareY < mapMouseY) {
+                y = N_TILES - i;
+                break;
+            }
+        }
+
+        return new Position(x, y);
     }
 
     private void updateMapNumbers() {
-        mapWidth = Gdx.graphics.getWidth();
-        currentTileSize = mapWidth/NUMBERS_OF_TILES_IN_WIDTH;
+        float screenWidth = Gdx.graphics.getWidth();
+        currentTileSize = screenWidth /NUMBERS_OF_TILES_IN_WIDTH;
         currentMapSize = currentTileSize * N_TILES;
         // Map starts at left, so we need to find the map starting x value:
-        mapStartX = mapWidth - currentMapSize;
+        mapStartX = screenWidth - currentMapSize;
     }
 
     private void setRobotChoice(int index) {
