@@ -124,6 +124,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(game.settingsScreen);
+                Gdx.input.setInputProcessor(game.settingsScreen.getStage());
             }
         });
         if (settingsButton != null) {

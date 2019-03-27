@@ -140,6 +140,8 @@ public class GameLogic {
             //then clear, submit and settings button is gone because of the dispose call beneath.
             game.getAssMan().dispose();
             game.setScreen(game.endGameScreen);
+            Gdx.input.setInputProcessor(game.endGameScreen.getStage());
+
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {

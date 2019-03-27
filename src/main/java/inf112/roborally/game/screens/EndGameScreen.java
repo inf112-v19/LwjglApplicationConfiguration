@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.AssMan;
@@ -16,9 +18,14 @@ public class EndGameScreen extends AbstractScreen {
     private Sprite winnerSprite;
     private int rotateTimer;
 
-    public EndGameScreen(RoboRallyGame roborallygame) {
-        super(roborallygame, AssMan.BACKGROUND_ENDGAME.fileName);
+    //EndGameScreen has its own Stage for holding actors, buttons etc.
+    //Need to set Gdx.input.setInputProcessor(stage);
+    private Stage stage;
+
+    public EndGameScreen(RoboRallyGame game) {
+        super(game, AssMan.BACKGROUND_ENDGAME.fileName);
         rotateTimer = 0;
+        stage = new Stage(game.fixedViewPort, game.batch);
     }
 
     @Override
@@ -68,5 +75,16 @@ public class EndGameScreen extends AbstractScreen {
         winner.moveToPosition(new Position(22, 15));
         winnerSprite = winner.getSprite();
         winnerSprite.setSize(500, 500);
+    }
+
+    public void addActorToStage(Actor actor){
+        if(actor == null){
+            return;
+        }
+        stage.addActor(actor);
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 }

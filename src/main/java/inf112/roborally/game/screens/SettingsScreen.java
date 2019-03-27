@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.gui.AssMan;
 import org.lwjgl.Sys;
@@ -17,10 +19,14 @@ public class SettingsScreen extends AbstractScreen {
     private boolean musicIsMuted;
     private RoboRallyGame game;
 
+    //SettingsScreen has its own Stage for holding actors, buttons etc.
+    private Stage stage;
+
     public SettingsScreen(RoboRallyGame game) {
         super(game, AssMan.BACKGROUND_SETTINGS.fileName);
         this.game = game;
         musicIsMuted = false;
+        stage = new Stage(game.fixedViewPort, game.batch);
     }
 
     /**
@@ -39,6 +45,7 @@ public class SettingsScreen extends AbstractScreen {
             System.out.println("Key B or Escape is pressed, going back to the GameScreen");
             game.settingsScreen.dispose();
             game.setScreen(game.gameScreen);
+            Gdx.input.setInputProcessor(game.gameScreen.getHud().stage);
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             if (!musicIsMuted) {
@@ -57,6 +64,17 @@ public class SettingsScreen extends AbstractScreen {
         else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             game.newGame();
         }
+    }
+
+    public void addActorToStage(Actor actor){
+        if(actor == null) {
+            return;
+        }
+        stage.addActor(actor);
+    }
+
+    public Stage getStage(){
+        return stage;
     }
 
     public void dispose(){
