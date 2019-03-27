@@ -115,7 +115,6 @@ public class Hud {
         }
     }
 
-    //Weird bug... Checking if AssMan has loaded the file didn't work properly so it's not done here.
     public boolean createSettingsButton() {
         settingsButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
                 (AssMan.BUTTON_SETTINGS.fileName, Texture.class)));
@@ -124,7 +123,7 @@ public class Hud {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(game.settingsScreen);
-                Gdx.input.setInputProcessor(game.settingsScreen.getStage());
+                Gdx.input.setInputProcessor(game.settingsScreen.stage);
             }
         });
         if (settingsButton != null) {

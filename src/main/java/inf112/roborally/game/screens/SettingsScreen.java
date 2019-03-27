@@ -2,12 +2,14 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.gui.AssMan;
 import org.lwjgl.Sys;
@@ -20,7 +22,9 @@ public class SettingsScreen extends AbstractScreen {
     private RoboRallyGame game;
 
     //SettingsScreen has its own Stage for holding actors, buttons etc.
-    private Stage stage;
+    public Stage stage;
+
+    private Screen screenBefore;
 
     public SettingsScreen(RoboRallyGame game) {
         super(game, AssMan.BACKGROUND_SETTINGS.fileName);
@@ -45,14 +49,15 @@ public class SettingsScreen extends AbstractScreen {
             System.out.println("Key B or Escape is pressed, going back to the GameScreen");
             game.settingsScreen.dispose();
 
-            //TODO: Need to check which screen was used before the settingScreen, since we have two
-            // choices: testScreen and gameScreen. We need to know which one to set the screen back to.
-            //Current bug: Go to testScreen (press T) -> click settings button -> press B.
-            //This takes you to gameScreen but it should take you back to testScreen.
-
-            game.setScreen(game.gameScreen);
+            if(game.getScreenBefore() == game.gameScreen){ ;
+                game.setScreen(game.gameScreen);
+            }
+            else if(game.getScreenBefore() == game.testScreen){ ;
+                game.setScreen(game.testScreen);
+            }
             Gdx.input.setInputProcessor(game.gameScreen.getHud().stage);
         }
+
         else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             if (!musicIsMuted) {
                 game.gameScreen.getMusic().mute();
@@ -72,15 +77,18 @@ public class SettingsScreen extends AbstractScreen {
         }
     }
 
-    public void addActorToStage(Actor actor){
-        if(actor == null) {
-            return;
+    public void setScreenBefore(Screen screen){
+        if(screen != null) {
+            this.screenBefore = screen;
         }
-        stage.addActor(actor);
     }
 
-    public Stage getStage(){
-        return stage;
+    /**
+     * Can return null.
+     * @return screen used before switching to settingsScreen.
+     */
+    public Screen getScreenBefore(){
+        return this.screenBefore;
     }
 
     public void dispose(){

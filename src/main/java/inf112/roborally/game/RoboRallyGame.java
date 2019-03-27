@@ -1,6 +1,8 @@
 package inf112.roborally.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -38,6 +40,8 @@ public class RoboRallyGame extends Game {
 
     private AssMan assMan;
 
+    private Screen screenBefore;
+
     @Override
     public void create() {
         assMan = new AssMan();
@@ -64,6 +68,20 @@ public class RoboRallyGame extends Game {
         setScreen(menuScreen);
     }
 
+    /** Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
+     * screen, if any.
+     * @param screen may be {@code null} */
+    @Override
+    public void setScreen (Screen screen) {
+        this.screenBefore = getScreen();
+        if (this.screen != null) this.screen.hide();
+        this.screen = screen;
+        if (this.screen != null) {
+            this.screen.show();
+            this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
+    }
+
 
     public void newGame() {
         assMan.dispose();
@@ -87,5 +105,9 @@ public class RoboRallyGame extends Game {
         gameScreen.dispose();
         menuScreen.dispose();
         assMan.dispose();
+    }
+
+    public Screen getScreenBefore(){
+        return this.screenBefore;
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.gui.AssMan;
@@ -21,6 +22,8 @@ public class TestScreen implements Screen {
     private Sprite background;
     private Hud hud;
     private Stack<ProgramCard> stack;
+
+    public Stage stage;
 
     public TestScreen(RoboRallyGame game) {
         this.game = game;
@@ -37,6 +40,8 @@ public class TestScreen implements Screen {
         hud.clearAllCards();
         hud.updateCards();
 
+        //None of the buttons on the testScreen is added to this stage, but buttons are not being used atm anyways.
+        stage = new Stage(game.fixedViewPort, game.batch);
     }
 
     @Override
@@ -108,7 +113,6 @@ public class TestScreen implements Screen {
 
     @Override
     public void hide() {
-        game.getAssMan().dispose();
 
     }
 

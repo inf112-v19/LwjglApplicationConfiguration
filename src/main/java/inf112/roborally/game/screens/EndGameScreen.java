@@ -77,14 +77,4 @@ public class EndGameScreen extends AbstractScreen {
         winnerSprite.setSize(500, 500);
     }
 
-    public void addActorToStage(Actor actor){
-        if(actor == null){
-            return;
-        }
-        stage.addActor(actor);
-    }
-
-    public Stage getStage() {
-        return stage;
-    }
 }
