@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
@@ -96,7 +95,7 @@ public class GameLogic {
     private void handlePhase() {
         if (phase < 5) {
             System.out.println("executing phase " + phase);
-            player1.executeCard(player1.getRegisters().getCard(phase));
+            player1.getRegisters().executeCard(phase);
             try {
                 Thread.sleep(500);
             }
@@ -137,27 +136,6 @@ public class GameLogic {
             System.out.println("Switched to EndGame screen");
             game.endGameScreen.addWinner(player1);
             game.setScreen(game.endGameScreen);
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            player1.executeCard(new ProgramCard(Rotate.UTURN, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            player1.executeCard(new ProgramCard(Rotate.RIGHT, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            player1.executeCard(new ProgramCard(Rotate.LEFT, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 0, 0, ""));
-            board.boardMoves();
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {

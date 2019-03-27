@@ -10,7 +10,6 @@ import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.enums.Rotate;
 
 import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.sound.GameSound;
@@ -62,7 +61,7 @@ public class Player extends MovableGameObject {
         nFlags = board.getFlags().size();
 
         backup = new Backup(getX(), getY(), this);
-        registers = new ProgramRegisters(this);
+        registers = new ProgramRegisters(this, board);
         cardsInHand = new ArrayList<>();
 
         playerState = PlayerState.OPERATIONAL;
@@ -92,42 +91,14 @@ public class Player extends MovableGameObject {
     /**
      * FOR TESTING ONLY
      */
-
     public Player(int x, int y, int nFlags) {
         super(x, y, AssMan.PLAYER_TVBOT.fileName);
-
+        this.nFlags = nFlags;
         damage = 0;
         lives = MAX_LIVES;
-        registers = new ProgramRegisters(this);
+        registers = new ProgramRegisters(this, null);
         cardsInHand = new ArrayList<>();
-
-
-        // For testing with flag behaviour, now tests with 3 flags on the board
-
         targetFlag = 1;
-        this.nFlags = nFlags;
-
-    }
-
-    public void executeCard(ProgramCard programCard) {
-        if (programCard == null || !isOperational()) return;
-
-        if (programCard.getRotate() != Rotate.NONE) {
-            rotate(programCard.getRotate());
-            return;
-        }
-
-        if (programCard.getMoveDistance() == -1) {
-            if (canGo(getDirection().getOppositeDirection(), board.getWallLayer())
-                    && canPush(getDirection().getOppositeDirection(), board)) {
-                moveInDirection(getDirection().getOppositeDirection());
-            }
-        }
-        for (int i = 0; i < programCard.getMoveDistance(); i++) {
-            if (canGo(getDirection(), board.getWallLayer()) && canPush(getDirection(), board)) {
-                move(1);
-            }
-        }
     }
 
     @Override
@@ -135,12 +106,21 @@ public class Player extends MovableGameObject {
         screamed = false;
 
         for (int i = 0; i < steps; i++) {
-            moveInDirection(getDirection());
+            if (canGo(getDirection(), board.getWallLayer()) && canPush(getDirection(), board)) {
+                moveInDirection(getDirection());
+            }
         }
         // every time a player moves we need to check if it is off the board or not
         if (board != null && isOffTheBoard(board.getFloorLayer())) { // need to check if board is null for tests to work
             this.destroy();
         }
+    }
+
+    public void reverse() {
+        Direction directionToMoveIn = getDirection().getOppositeDirection();
+        if (canGo(directionToMoveIn, board.getWallLayer()) && canPush(directionToMoveIn, board))
+            moveInDirection(directionToMoveIn.getOppositeDirection());
+        move(0);
     }
 
 
@@ -296,7 +276,7 @@ public class Player extends MovableGameObject {
     }
 
     public boolean hitByLaser(TiledMapTileLayer laserLayer) {
-        return cellContainsKey(laserLayer.getCell(getX(),getY()), "Laser");
+        return cellContainsKey(laserLayer.getCell(getX(), getY()), "Laser");
 
     }
 

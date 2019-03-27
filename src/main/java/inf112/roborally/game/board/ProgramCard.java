@@ -46,6 +46,10 @@ public class ProgramCard implements Comparable {
         style.font.dispose();
     }
 
+    public boolean isRotate(){
+        return rotate != Rotate.NONE;
+    }
+
     public int getMoveDistance() {
         return this.moveDistance;
     }
