@@ -22,6 +22,7 @@ public class TestScreen implements Screen {
     private Hud hud;
     private Stack<ProgramCard> stack;
 
+
     public TestScreen(RoboRallyGame game) {
         this.game = game;
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
@@ -36,12 +37,11 @@ public class TestScreen implements Screen {
         hud = new Hud(player, game);
         hud.clearAllCards();
         hud.updateCards();
-
     }
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(hud.stage);
     }
 
     @Override
@@ -108,7 +108,6 @@ public class TestScreen implements Screen {
 
     @Override
     public void hide() {
-        game.getAssMan().dispose();
 
     }
 
