@@ -20,7 +20,7 @@ public class EndGameScreen extends AbstractScreen {
 
     //EndGameScreen has its own Stage for holding actors, buttons etc.
     //Need to set Gdx.input.setInputProcessor(stage);
-    private Stage stage;
+    public Stage stage;
 
     public EndGameScreen(RoboRallyGame game) {
         super(game, AssMan.BACKGROUND_ENDGAME.fileName);

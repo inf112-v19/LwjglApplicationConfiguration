@@ -62,8 +62,8 @@ public class RoboRallyGame extends Game {
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
         setScreen(menuScreen);
-
     }
+
 
     public void newGame() {
         assMan.dispose();

@@ -44,6 +44,12 @@ public class SettingsScreen extends AbstractScreen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             System.out.println("Key B or Escape is pressed, going back to the GameScreen");
             game.settingsScreen.dispose();
+
+            //TODO: Need to check which screen was used before the settingScreen, since we have two
+            // choices: testScreen and gameScreen. We need to know which one to set the screen back to.
+            //Current bug: Go to testScreen (press T) -> click settings button -> press B.
+            //This takes you to gameScreen but it should take you back to testScreen.
+
             game.setScreen(game.gameScreen);
             Gdx.input.setInputProcessor(game.gameScreen.getHud().stage);
         }

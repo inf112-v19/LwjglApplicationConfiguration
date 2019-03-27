@@ -136,12 +136,9 @@ public class GameLogic {
         else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             System.out.println("Switched to EndGame screen");
             game.endGameScreen.addWinner(player1);
-            //If you press the invisible settings button when winner is showing,
-            //then clear, submit and settings button is gone because of the dispose call beneath.
             game.getAssMan().dispose();
             game.setScreen(game.endGameScreen);
-            Gdx.input.setInputProcessor(game.endGameScreen.getStage());
-
+            Gdx.input.setInputProcessor(game.endGameScreen.stage);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
