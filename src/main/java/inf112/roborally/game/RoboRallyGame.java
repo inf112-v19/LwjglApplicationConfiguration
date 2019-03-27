@@ -66,6 +66,7 @@ public class RoboRallyGame extends Game {
     }
 
     public void newGame() {
+        assMan.dispose();
         dispose();
         create();
     }

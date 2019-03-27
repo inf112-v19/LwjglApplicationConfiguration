@@ -108,6 +108,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void hide() {
+        game.getAssMan().dispose();
 
     }
 

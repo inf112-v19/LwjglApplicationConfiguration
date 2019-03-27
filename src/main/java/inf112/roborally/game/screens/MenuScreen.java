@@ -66,15 +66,15 @@ public class MenuScreen implements Screen {
 
     private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            roboRallyGame.setScreen(roboRallyGame.gameScreen);
             dispose();
+            roboRallyGame.setScreen(roboRallyGame.gameScreen);
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
-            roboRallyGame.setScreen(roboRallyGame.testScreen);
             dispose();
+            roboRallyGame.setScreen(roboRallyGame.testScreen);
         }
     }
 
@@ -95,7 +95,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
