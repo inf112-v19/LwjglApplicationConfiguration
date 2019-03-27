@@ -39,7 +39,8 @@ public class GameScreen implements Screen {
         assMan = game.getAssMan();
 
 
-        board = new VaultBoard();
+        board = new TestBoard();
+//        board = new VaultBoard();
 
         board.addPlayer(new Player("Player1", AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName, NORTH, board));
         board.addPlayer(new Player("testBot1", AssMan.PLAYER_CLAPTRAP_REFINED.fileName, NORTH, board));

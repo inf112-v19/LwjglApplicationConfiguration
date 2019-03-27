@@ -11,7 +11,7 @@ import inf112.roborally.game.objects.Player;
 
 import java.util.*;
 
-
+@SuppressWarnings("Duplicates")
 public class GameLogic {
 
     private int phase;
@@ -82,6 +82,10 @@ public class GameLogic {
 
         System.out.println("players choosing cards");
         state = GameState.PICKING_CARDS;
+
+        //Uncomment the line below to run tests
+        //runTests();
+
     }
 
     private void checkIfReady() {
@@ -228,4 +232,116 @@ public class GameLogic {
     public GameState getState() {
         return state;
     }
+
+
+    //Test if Rotate left tile works
+
+    public void runTests(){
+        rotateLeftTileTest();
+        rotateRightTileTest();
+        robotLaserDamageTest();
+        boardLaserDamageTest();
+        wallStopRobotLaserTest();
+        repairSiteTest();
+        blueBeltTest();
+        pinkBeltTest();
+        flagTest();
+    }
+
+    //Test if Rotate left tile works
+    public void rotateLeftTileTest(){
+        System.out.println("\nTEST - rotateLeftTileTest");
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1,10, ""));
+        board.boardMoves();
+        System.out.println("Expected direction: SOUTH : Actual direction: " + player1.getDirection());
+
+    }
+
+    //Test if Rotate right tile works
+    public void rotateRightTileTest(){
+        System.out.println("\nTEST - rotateRightTileTest");
+        player1.executeCard(new ProgramCard(Rotate.UTURN, 0,10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.NONE, 2,10, ""));
+        board.boardMoves();
+        System.out.println("Expected direction: NORTH : Actual direction: " + player1.getDirection());
+    }
+
+    //Test if Robot laser gives 1 damage to enemy robots
+    public void robotLaserDamageTest(){
+        System.out.println("\nTEST - robotLaserDamageTest");
+        player1.executeCard(new ProgramCard(Rotate.UTURN, 0,10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1,10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.RIGHT, 0,10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1,10, ""));
+        board.boardMoves();
+        System.out.println("Expected damage: 1 : Actual damage: " + player1.getDamage());
+    }
+
+    //Test if the lasers on the board gives 1 damage
+    public void boardLaserDamageTest(){
+        System.out.println("\nTEST - boardLaserDamageTest");
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1,10, ""));
+        board.boardMoves();
+        System.out.println("Expected damage: 2 : Actual damage: " + player1.getDamage());
+    }
+    //Test if wall stops robot lasers
+    public void wallStopRobotLaserTest(){
+        System.out.println("\nTEST - wallStopRobotLaserTest");
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1,10, ""));
+        board.boardMoves();
+        System.out.println("Expected damage: 0 : Actual damage : " + players.get(3).getDamage());
+
+    }
+    //Test if repairSite changes backup location
+    public void repairSiteTest(){
+        System.out.println("\nTEST - repairSiteTest");
+        player1.executeCard(new ProgramCard(Rotate.RIGHT, 0,10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.NONE, 2,10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.LEFT, 0,10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected position: X = 2, Y = 4 \nActual position: X = " + player1.getBackup().getX() + ", Y = " + player1.getBackup().getY());
+    }
+
+    //Test if blue belt moves the robot 1 tile
+    public void blueBeltTest() {
+        System.out.println("\nTEST - blueBeltTest");
+        player1.executeCard(new ProgramCard(Rotate.RIGHT, 0,10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected position: X = 3, Y = 3 \nActual position: X = " + player1.getX() + ", Y = " + player1.getY());
+    }
+
+    //Test if pink belt moves the robot 2 tiles
+    public void pinkBeltTest() {
+        System.out.println("\nTEST - pinkBeltTest");
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected position: X = 4, Y = 1 \nActual position: X = " + player1.getX() + ", Y = " + player1.getY());
+    }
+
+    /*
+    Under work
+     */
+    public void flagTest() {
+        System.out.println("\nTEST - flagTest");
+        player1.executeCard(new ProgramCard(Rotate.RIGHT, 1, 10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.RIGHT, 1, 10, ""));
+        board.boardMoves();
+        player1.executeCard(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected position: X = 3, Y = 1 \nActual position: X = " + player1.getBackup().getX() + ", Y = " + player1.getBackup().getY());
+    }
 }
+
