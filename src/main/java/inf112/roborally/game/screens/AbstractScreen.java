@@ -49,6 +49,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int w, int h) {
+        game.dynamicViewPort.update(w, h);
         game.fixedViewPort.update(w, h);
     }
 
@@ -70,6 +71,10 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void updateBackground(String filepath) {
+        background = new Sprite(new Texture(filepath));
     }
 
 }

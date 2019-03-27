@@ -68,9 +68,9 @@ public class GameScreen implements Screen {
             if(index >= n) {
                 index = 0;
             }
-            namebuilder.append(Integer.toString(i));
+            namebuilder.append(Integer.toString(i+1));
             board.addPlayer(new Player(namebuilder.toString(), filepaths[index], NORTH, board));
-            namebuilder.deleteCharAt(5); // Delete the last character, which is the player number
+            namebuilder.deleteCharAt(6); // Delete the last character, which is the player number
             index++;
         }
     }

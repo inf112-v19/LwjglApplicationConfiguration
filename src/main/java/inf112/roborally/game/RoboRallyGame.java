@@ -57,7 +57,6 @@ public class RoboRallyGame extends Game {
 
 //        testScreen = new TestScreen(this);
         menuScreen = new MenuScreen(this);
-        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
 //        gameScreen = new GameScreen(this, VAULT);
         endGameScreen = new EndGameScreen(this);
         setScreen(menuScreen);
@@ -77,6 +76,10 @@ public class RoboRallyGame extends Game {
     public void newGame() {
         dispose();
         create();
+    }
+
+    public void createSetupScreen() {
+        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
     }
 
     public void createGameScreen(int robotChoiceIndex) {

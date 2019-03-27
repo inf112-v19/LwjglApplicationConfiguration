@@ -4,13 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.SetupState;
+import inf112.roborally.game.objects.Flag;
+import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 
@@ -21,6 +27,20 @@ public class SetupScreen extends AbstractScreen {
     private SetupState state;
 
     private ArrayList<Sprite> information;
+    private ArrayList<Sprite> flags;
+    private boolean placeFlags;
+
+    // One til tile, when width is 1920, is 90 pixels
+    // That makes it 1 of 23,333 parts of the screen
+    private final float NUMBERS_OF_TILES_IN_WIDTH = 21.333f;
+    private final int TILE_SIZE_IN_FULLSCRREEN = 90;
+    private final int N_TILES = 12; //12x12 tiles
+
+    // Information about current map size
+    private float mapWidth;
+    private float currentTileSize;
+    private float currentMapSize;
+    private float mapStartX;
 
     // Player choices to be added to the game screen
     private int robotChoiceIndex;
@@ -34,7 +54,9 @@ public class SetupScreen extends AbstractScreen {
 
         information = new ArrayList<>();
         this.possibleFilepaths = possibleFilepaths;
-        
+        placeFlags = false;
+
+
         createSkinButtons();
         state = SetupState.PICKINGSKIN;
 
@@ -84,14 +106,23 @@ public class SetupScreen extends AbstractScreen {
 
     private void createMapForPlacingFlags() {
         state = SetupState.PLACINGFLAGS;
-        Sprite map = new Sprite(new Texture("assets/maps/vault.png"));
-        map.scale(1.0f);
-        // The positioning is a little bit off
-        map.setPosition(Gdx.graphics.getWidth() / 2 + map.getWidth()/2, Gdx.graphics.getHeight() / 2);
-        information.add(map);
+        System.out.printf("Game size BEFORE scaling window: WIDTH=% d, HEIGHT=%d%n",
+                Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        // One tile here, inn full screen, is approx. 90x90
+        updateBackground("assets/backgrounds/setupscreenPlaceFlags.png");
+        updateMapNumbers();
 
+        flags = new ArrayList<>();
+        for(int i = 3; i > 0; i--) {
+            Sprite flag = new Sprite(new TextureRegion(new Texture("assets/objects/flags.png"), 150*(i-1), 0,150, 150));
+            flag.setPosition(100, 200*i);
+            flags.add(flag);
+        }
+        placeFlags = true;
     }
+
+
 
     @Override
     public void render(float v) {
@@ -103,6 +134,13 @@ public class SetupScreen extends AbstractScreen {
         for (Sprite sprite : information) {
             sprite.draw(batch);
         }
+
+        if (placeFlags) {
+            for(Sprite flag : flags) {
+                flag.draw(batch);
+            }
+        }
+
         batch.end();
         handleInput();
 
@@ -110,8 +148,8 @@ public class SetupScreen extends AbstractScreen {
 
     }
 
-    private void handleInput() {
 
+    private void handleInput() {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             System.out.println("Key T pressed in SetupScreen, moving further");
@@ -120,16 +158,45 @@ public class SetupScreen extends AbstractScreen {
             dispose();
         }
 
+        // Possible to add more SetupStates
         switch (state) {
             case PLACINGFLAGS:
+                // The map has 2 invisible tiles at all sides
                 if(Gdx.input.justTouched()) {
-                    System.out.printf("Mouse just pressed, at coordinates x = %d and y = %d",
-                            Gdx.input.getX(), Gdx.input.getY());
+                    float mouseX = Gdx.input.getX();
+                    float mouseY = Gdx.input.getY();
+                    System.out.printf("Mouse just pressed, at coordinates x = %.2f and y = %.2f",
+                                mouseX, mouseY);
                     System.out.print("\n");
+
+
+                    System.out.printf("Current TileSize = %.2f, Current MapSize = %.2f%nWidth minus map should be %.2f%n",
+                            currentTileSize, currentMapSize, mapStartX);
+                    if(mouseX >= mapStartX) {
+                        System.out.println("Mouse clicked INSIDE the map");
+                        convertMouseClickIntoMapPosition(mouseX, mouseY);
+                    }
+                    else {
+                        System.out.println("Mouse clicked OUTSIDE the map");
+                    }
+
+                    System.out.println("-------------------------------------------------------");
                 }
+                break;
         }
     }
 
+    private void convertMouseClickIntoMapPosition(float mouseX, float mouseY) {
+
+    }
+
+    private void updateMapNumbers() {
+        mapWidth = Gdx.graphics.getWidth();
+        currentTileSize = mapWidth/NUMBERS_OF_TILES_IN_WIDTH;
+        currentMapSize = currentTileSize * N_TILES;
+        // Map starts at left, so we need to find the map starting x value:
+        mapStartX = mapWidth - currentMapSize;
+    }
 
     private void setRobotChoice(int index) {
         robotChoiceIndex = index;
@@ -148,10 +215,17 @@ public class SetupScreen extends AbstractScreen {
     }
 
     
-    private void createGameScreen() {
+    private void createGameScreenFromSetup() {
         game.createGameScreen(robotChoiceIndex);
         game.setScreen(game.gameScreen);
         dispose();
+    }
+
+    @Override
+    public void resize(int w, int h) {
+        super.resize(w,h);
+        // Only need to update the map numbers whenever the screen is resized
+        updateMapNumbers();
     }
 
     @Override
