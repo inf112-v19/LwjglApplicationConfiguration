@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
@@ -23,6 +24,8 @@ public class MenuScreen implements Screen {
     private Viewport viewport;
     private int stateTimer;
 
+    private Stage stage;
+
     public MenuScreen(RoboRallyGame roboRallyGame) {
         this.roboRallyGame = roboRallyGame;
         batch = new SpriteBatch();
@@ -37,11 +40,13 @@ public class MenuScreen implements Screen {
         pressEnter.setPosition(Gdx.graphics.getWidth() / 2 - pressEnter.getWidth() / 2,
                 (Gdx.graphics.getHeight() - background.getHeight()) / 2 - pressEnter.getHeight() / 2);
 
+        stage = new Stage(roboRallyGame.fixedViewPort, roboRallyGame.batch);
         stateTimer = 0;
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

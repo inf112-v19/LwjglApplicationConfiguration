@@ -19,7 +19,6 @@ public class EndGameScreen extends AbstractScreen {
     private int rotateTimer;
 
     //EndGameScreen has its own Stage for holding actors, buttons etc.
-    //Need to set Gdx.input.setInputProcessor(stage);
     public Stage stage;
 
     public EndGameScreen(RoboRallyGame game) {
@@ -75,6 +74,11 @@ public class EndGameScreen extends AbstractScreen {
         winner.moveToPosition(new Position(22, 15));
         winnerSprite = winner.getSprite();
         winnerSprite.setSize(500, 500);
+    }
+
+    @Override
+    public void show(){
+        Gdx.input.setInputProcessor(stage);
     }
 
 }

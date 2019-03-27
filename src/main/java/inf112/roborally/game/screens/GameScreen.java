@@ -72,6 +72,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(hud.stage);
 
     }
 

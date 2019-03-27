@@ -24,7 +24,6 @@ public class SettingsScreen extends AbstractScreen {
     //SettingsScreen has its own Stage for holding actors, buttons etc.
     public Stage stage;
 
-    private Screen screenBefore;
 
     public SettingsScreen(RoboRallyGame game) {
         super(game, AssMan.BACKGROUND_SETTINGS.fileName);
@@ -52,10 +51,10 @@ public class SettingsScreen extends AbstractScreen {
             if(game.getScreenBefore() == game.gameScreen){
                 game.setScreen(game.gameScreen);
             }
-            else if(game.getScreenBefore() == game.testScreen){ ;
+            else if(game.getScreenBefore() == game.testScreen){
                 game.setScreen(game.testScreen);
             }
-            Gdx.input.setInputProcessor(game.gameScreen.getHud().stage);
+           //Gdx.input.setInputProcessor(game.gameScreen.getHud().stage);
         }
 
         else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
@@ -77,22 +76,13 @@ public class SettingsScreen extends AbstractScreen {
         }
     }
 
-    public void setScreenBefore(Screen screen){
-        if(screen != null) {
-            this.screenBefore = screen;
-        }
-    }
-
-    /**
-     * Can return null.
-     * @return screen used before switching to settingsScreen.
-     */
-    public Screen getScreenBefore(){
-        return this.screenBefore;
+    @Override
+    public void show(){
+        Gdx.input.setInputProcessor(stage);
     }
 
     public void dispose(){
-
+        stage.dispose();
     }
 
 }

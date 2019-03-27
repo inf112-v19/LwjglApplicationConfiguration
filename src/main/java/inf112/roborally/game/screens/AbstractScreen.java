@@ -71,7 +71,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        background.getTexture().dispose();
     }
 
 }

@@ -136,9 +136,7 @@ public class GameLogic {
         else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             System.out.println("Switched to EndGame screen");
             game.endGameScreen.addWinner(player1);
-            game.getAssMan().dispose();
             game.setScreen(game.endGameScreen);
-            Gdx.input.setInputProcessor(game.endGameScreen.stage);
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {

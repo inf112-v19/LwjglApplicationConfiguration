@@ -41,7 +41,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(hud.stage);
     }
 
     @Override

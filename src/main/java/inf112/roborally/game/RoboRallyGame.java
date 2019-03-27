@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -40,7 +41,9 @@ public class RoboRallyGame extends Game {
 
     private AssMan assMan;
 
+    //The screen that was active before setting a new screen with setScreen(screen);
     private Screen screenBefore;
+
 
     @Override
     public void create() {
@@ -70,6 +73,7 @@ public class RoboRallyGame extends Game {
 
     /** Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
      * screen, if any.
+     *
      * @param screen may be {@code null} */
     @Override
     public void setScreen (Screen screen) {
@@ -84,7 +88,6 @@ public class RoboRallyGame extends Game {
 
 
     public void newGame() {
-        assMan.dispose();
         dispose();
         create();
     }
@@ -104,10 +107,14 @@ public class RoboRallyGame extends Game {
         testScreen.dispose();
         gameScreen.dispose();
         menuScreen.dispose();
+        settingsScreen.dispose();
+        endGameScreen.dispose();
+        screenBefore.dispose();
         assMan.dispose();
     }
 
     public Screen getScreenBefore(){
         return this.screenBefore;
     }
+
 }
