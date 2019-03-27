@@ -161,7 +161,7 @@ public abstract class Board extends BoardCreator {
                 player.takeDamage();
             }
         }
-        laserFire();
+        robotLasersFire();
     }
 
     private boolean lasersHit(TiledMapTileLayer.Cell currentCell) {
@@ -268,29 +268,9 @@ public abstract class Board extends BoardCreator {
     }
 
 
-    public void laserFire() {
-        for (Player player :
-                players) {
-            robotFire(player);
-        }
-    }
-
-    public void robotFire(Player player) {
-        LaserShot laserShot = new LaserShot(player.getDirection(), player.getX(), player.getY());
-        while (true) {
-            if (!laserShot.canGo(laserShot.getDirection(), wallLayer)) return;
-
-            laserShot.moveInDirection(laserShot.getDirection());
-            for (Player target : players) {
-                if (laserShot.position.equals(target.position)) {
-                    target.takeDamage();
-                    System.out.println(player.getName() + " shoots  " + target.getName());
-                    return;
-                }
-            }
-            if (laserShot.outOfBounds(this)) {
-                return;
-            }
+    public void robotLasersFire() {
+        for (Player player : players) {
+            player.fireLaser(this);
         }
     }
 

@@ -70,10 +70,10 @@ public class Player extends MovableGameObject {
         createSounds();
     }
 
-    public void createSounds () {
+    public void createSounds() {
         allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
         allPlayerSounds[1] = new GameSound(AssMan.MUSIC_PLAYER_REPAIR.fileName);
-        allPlayerSounds[2] = new GameSound( AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
+        allPlayerSounds[2] = new GameSound(AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
     }
 
     @Override
@@ -220,7 +220,7 @@ public class Player extends MovableGameObject {
     }
 
     public void powerUp() {
-        if(!isPoweredDown()) return;
+        if (!isPoweredDown()) return;
 
         repairAllDamage();
         playerState = PlayerState.OPERATIONAL;
@@ -259,7 +259,7 @@ public class Player extends MovableGameObject {
 
 
     public void visitFlag(int flagNumber) {
-        if(flagNumber > nFlags) return;
+        if (flagNumber > nFlags) return;
 
         if (flagNumber == targetFlag) {
             targetFlag++;
@@ -283,11 +283,11 @@ public class Player extends MovableGameObject {
         return playerState == PlayerState.POWERED_DOWN || playerState == PlayerState.READY;
     }
 
-    public boolean isOperational(){
+    public boolean isOperational() {
         return playerState == PlayerState.OPERATIONAL;
     }
 
-    public boolean isPoweredDown(){
+    public boolean isPoweredDown() {
         return playerState == PlayerState.POWERED_DOWN;
     }
 
@@ -295,6 +295,22 @@ public class Player extends MovableGameObject {
         return lives < 1;
     }
 
+    public void fireLaser(Board board) {
+        LaserShot laserShot = new LaserShot(getDirection(), getX(), getY());
+        while (laserShot.canGo(laserShot.getDirection(), board.getWallLayer())) {
+            laserShot.moveInDirection(laserShot.getDirection());
+            for (Player target : board.getPlayers()) {
+                if (laserShot.position.equals(target.position)) {
+                    target.takeDamage();
+                    System.out.println(getName() + " shoots  " + target.getName());
+                    return;
+                }
+            }
+            if (laserShot.outOfBounds(board)) {
+                return;
+            }
+        }
+    }
 
     public int getCardLimit() {
         return ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
@@ -325,13 +341,8 @@ public class Player extends MovableGameObject {
     }
 
 
-    @Override
-    public String toString() {
-        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
-    }
-
     public GameSound getSoundFromPlayer(int index) {
-        if(index == 2){
+        if (index == 2) {
             screamed = true;
         }
         return allPlayerSounds[index];
@@ -344,14 +355,20 @@ public class Player extends MovableGameObject {
         allPlayerSounds = new GameSound[nSounds];
     }
 
-    public boolean hasScreamed(){
+    public boolean hasScreamed() {
         return this.screamed;
     }
+
     @Override
     public boolean equals(Object other) {
         if (other.getClass() != this.getClass())
             return false;
 
         return this.name.equals(((Player) other).name);
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 }
