@@ -16,9 +16,11 @@ import inf112.roborally.game.sound.GameSound;
 import java.util.ArrayList;
 
 
-public class Player extends MovableGameObject {
+public class Player extends MovableGameObject implements Comparable {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
+
+    int phase = 0;
 
     private String name;
     private int lives;
@@ -100,7 +102,9 @@ public class Player extends MovableGameObject {
 
     }
 
-    public void executeCard(ProgramCard programCard) {
+    public void executeCard(int phase) {
+        this.phase = phase;
+        ProgramCard programCard = registers.getCard(phase);
         if (programCard == null || !isOperational()) return;
 
         if (programCard.getRotate() != Rotate.NONE) {
@@ -342,5 +346,14 @@ public class Player extends MovableGameObject {
             return false;
 
         return this.name.equals(((Player) other).name);
+    }
+
+    // TODO: TEST THIS
+    @Override
+    public int compareTo(Object o) {
+        Player other = (Player) o;
+        int thisPriority = registers.getCard(phase).getPriority();
+        int otherPriority = other.getRegisters().getCard(phase).getPriority();
+        return ((Integer)thisPriority).compareTo(otherPriority);
     }
 }

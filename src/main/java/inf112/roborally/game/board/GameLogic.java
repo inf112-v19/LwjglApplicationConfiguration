@@ -69,7 +69,6 @@ public class GameLogic {
             case GAME_OVER:
                 game.setScreen(game.endGameScreen);
         }
-
     }
 
     public void doBeforeRound() {
@@ -111,10 +110,11 @@ public class GameLogic {
 
     private void handlePhase() {
         if (phase < 5) {
+            Collections.sort(players);
             System.out.println("executing phase " + phase);
             for (Player player : players) {
                 System.out.println(player.getName() + ": " + player.getRegisters().getCard(phase));
-                player.executeCard(player.getRegisters().getCard(phase));
+                player.executeCard(phase);
             }
             try {
                 Thread.sleep(500);
@@ -157,27 +157,7 @@ public class GameLogic {
             game.endGameScreen.addWinner(player1);
             game.setScreen(game.endGameScreen);
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            player1.executeCard(new ProgramCard(Rotate.UTURN, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            player1.executeCard(new ProgramCard(Rotate.RIGHT, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            player1.executeCard(new ProgramCard(Rotate.LEFT, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 0, 0, ""));
-            board.boardMoves();
-        }
+        board.boardMoves();
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0));
