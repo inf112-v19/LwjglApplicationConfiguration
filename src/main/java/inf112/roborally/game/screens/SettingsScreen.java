@@ -49,7 +49,7 @@ public class SettingsScreen extends AbstractScreen {
             System.out.println("Key B or Escape is pressed, going back to the GameScreen");
             game.settingsScreen.dispose();
 
-            if(game.getScreenBefore() == game.gameScreen){ ;
+            if(game.getScreenBefore() == game.gameScreen){
                 game.setScreen(game.gameScreen);
             }
             else if(game.getScreenBefore() == game.testScreen){ ;
