@@ -21,7 +21,6 @@ import static inf112.roborally.game.enums.Direction.NORTH;
 
 public class GameScreen implements Screen {
 
-    public static String mapPath = RoboRallyGame.TEST_MAP;
     private final RoboRallyGame game;
     private final Hud hud;
     private final GameLogic gameLogic;
@@ -33,8 +32,7 @@ public class GameScreen implements Screen {
 
     private AssMan assMan;
 
-    public GameScreen(RoboRallyGame game, String mapPath) {
-        this.mapPath = mapPath;
+    public GameScreen(RoboRallyGame game) {
         this.game = game;
         assMan = game.getAssMan();
 
@@ -151,6 +149,9 @@ public class GameScreen implements Screen {
 
     }
 
+    public Hud getHud(){
+        return this.hud;
+    }
     public GameLogic getGameLogic() {
         return gameLogic;
     }
