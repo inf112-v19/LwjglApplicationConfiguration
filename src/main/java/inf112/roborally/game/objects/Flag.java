@@ -26,9 +26,6 @@ public class Flag extends GameObject {
     public int getFlagNumber() {
         return flagNumber;
     }
-
-    public void scaleFlag(float scale) {
-        sprite.scale(scale);
-    }
+    
 }
 
