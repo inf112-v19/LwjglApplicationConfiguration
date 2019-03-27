@@ -23,6 +23,8 @@ public class Player extends MovableGameObject {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
 
+    private boolean debugging = false;
+
     private String name;
     private int lives;
     private int damage;
@@ -61,7 +63,7 @@ public class Player extends MovableGameObject {
         nFlags = board.getFlags().size();
 
         backup = new Backup(getX(), getY(), this);
-        registers = new ProgramRegisters(this, board);
+        registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
         playerState = PlayerState.OPERATIONAL;
@@ -96,13 +98,19 @@ public class Player extends MovableGameObject {
         this.nFlags = nFlags;
         damage = 0;
         lives = MAX_LIVES;
-        registers = new ProgramRegisters(this, null);
+        registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
         targetFlag = 1;
+        debugging = true;
     }
 
     @Override
     public void move(int steps) {
+        if (debugging) {
+            for(int i = 0; i < steps; i++) moveInDirection(getDirection());
+            return;
+        }
+
         screamed = false;
 
         for (int i = 0; i < steps; i++) {
@@ -117,6 +125,11 @@ public class Player extends MovableGameObject {
     }
 
     public void reverse() {
+        if (debugging) {
+            moveInDirection(getDirection().getOppositeDirection());
+            return;
+        }
+
         Direction directionToMoveIn = getDirection().getOppositeDirection();
         if (canGo(directionToMoveIn, board.getWallLayer()) && canPush(directionToMoveIn, board))
             moveInDirection(directionToMoveIn);
@@ -137,18 +150,6 @@ public class Player extends MovableGameObject {
                     + ", but number of cards in hand: " + getNumberOfCardsInHand());
         }
         return cardsInHand.remove(cardPos);
-    }
-
-    public ProgramCard getCardInHand(int cardPos) {
-        return cardsInHand.get(cardPos);
-    }
-
-    public ArrayList<ProgramCard> getCardsInHand() {
-        return cardsInHand;
-    }
-
-    public int getNumberOfCardsInHand() {
-        return cardsInHand.size();
     }
 
     public ArrayList<ProgramCard> returnCards() {
@@ -299,6 +300,29 @@ public class Player extends MovableGameObject {
         return lives < 1;
     }
 
+    public void killTheSound() {
+        for (GameSound s : allPlayerSounds) {
+            s.mute();
+        }
+        allPlayerSounds = new GameSound[nSounds];
+    }
+
+    public boolean hasScreamed() {
+        return this.screamed;
+    }
+
+    public ProgramCard getCardInHand(int cardPos) {
+        return cardsInHand.get(cardPos);
+    }
+
+    public ArrayList<ProgramCard> getCardsInHand() {
+        return cardsInHand;
+    }
+
+    public int getNumberOfCardsInHand() {
+        return cardsInHand.size();
+    }
+
     public int getCardLimit() {
         return ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
     }
@@ -333,17 +357,6 @@ public class Player extends MovableGameObject {
             screamed = true;
         }
         return allPlayerSounds[index];
-    }
-
-    public void killTheSound() {
-        for (GameSound s : allPlayerSounds) {
-            s.mute();
-        }
-        allPlayerSounds = new GameSound[nSounds];
-    }
-
-    public boolean hasScreamed() {
-        return this.screamed;
     }
 
     @Override

@@ -9,15 +9,13 @@ public class ProgramRegisters implements IProgramRegisters {
     public static final int MAX_NUMBER_OF_CARDS = 9;
 
     private final Player player;
-    private final Board board;
 
     private int unlockedRegisters;
     private ProgramCard[] registers;
 
 
-    public ProgramRegisters(Player player, Board board) {
+    public ProgramRegisters(Player player) {
         this.player = player;
-        this.board = board;
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
     }
