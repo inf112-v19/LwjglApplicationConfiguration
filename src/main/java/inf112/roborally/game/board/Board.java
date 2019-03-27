@@ -15,6 +15,8 @@ import inf112.roborally.game.enums.Direction;
 
 import java.util.*;
 
+import static inf112.roborally.game.board.TiledTools.*;
+
 
 @SuppressWarnings("Duplicates")
 public abstract class Board extends BoardCreator {
@@ -113,8 +115,7 @@ public abstract class Board extends BoardCreator {
 
     private void expressBeltsMove(Player player) {
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-        if (cellContainsKey(currentCell, "Express")) {
-
+        if (player.isOnExpressBelt(beltLayer)) {
             Direction beltDir = Direction.valueOf(getValue(currentCell));
             if (!player.canGo(beltDir, wallLayer) || player.crashWithRobot(beltDir, this)) return;
 
@@ -165,14 +166,6 @@ public abstract class Board extends BoardCreator {
 
     private boolean lasersHit(TiledMapTileLayer.Cell currentCell) {
         return cellContainsKey(currentCell, "Laser");
-    }
-
-    public boolean cellContainsKey(TiledMapTileLayer.Cell cell, String target) {
-        return cell != null && cell.getTile().getProperties().containsKey(target);
-    }
-
-    public String getValue(TiledMapTileLayer.Cell cell) {
-        return cell.getTile().getProperties().getValues().next().toString();
     }
 
     private void visitFlags() {
