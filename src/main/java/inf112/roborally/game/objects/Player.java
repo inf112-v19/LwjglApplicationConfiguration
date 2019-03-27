@@ -115,13 +115,13 @@ public class Player extends MovableGameObject {
         }
 
         if (programCard.getMoveDistance() == -1) {
-            if (board.canGo(this, getDirection().getOppositeDirection())
-                    && board.canPush(this, getDirection().getOppositeDirection())) {
+            if (canGo(getDirection().getOppositeDirection(), board.getWallLayer())
+                    && canPush(getDirection().getOppositeDirection(), board)) {
                 moveInDirection(getDirection().getOppositeDirection());
             }
         }
         for (int i = 0; i < programCard.getMoveDistance(); i++) {
-            if (board.canGo(this, getDirection()) && board.canPush(this, getDirection())) {
+            if (canGo(getDirection(), board.getWallLayer()) && canPush(getDirection(), board)) {
                 move(1);
             }
         }

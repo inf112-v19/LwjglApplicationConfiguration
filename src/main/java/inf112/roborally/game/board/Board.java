@@ -116,7 +116,7 @@ public abstract class Board extends BoardCreator {
         if (cellContainsKey(currentCell, "Express")) {
 
             Direction beltDir = Direction.valueOf(getValue(currentCell));
-            if (!canGo(player, beltDir) || crashWithRobot(player, beltDir)) return;
+            if (!player.canGo(beltDir, wallLayer) || player.crashWithRobot(beltDir, this)) return;
 
             player.moveInDirection(beltDir);
             currentCell = beltLayer.getCell(player.getX(), player.getY());
@@ -134,7 +134,7 @@ public abstract class Board extends BoardCreator {
         if (cellContainsKey(currentCell, "Normal") || cellContainsKey(currentCell, "Express")) {
 
             Direction beltDir = Direction.valueOf(getValue(currentCell));
-            if (!canGo(player, beltDir) || crashWithRobot(player, beltDir)) return;
+            if (!player.canGo(beltDir, wallLayer) || player.crashWithRobot(beltDir, this)) return;
 
             player.moveInDirection(beltDir);
             currentCell = beltLayer.getCell(player.getX(), player.getY());
@@ -167,6 +167,14 @@ public abstract class Board extends BoardCreator {
         return cellContainsKey(currentCell, "Laser");
     }
 
+    public boolean cellContainsKey(TiledMapTileLayer.Cell cell, String target) {
+        return cell != null && cell.getTile().getProperties().containsKey(target);
+    }
+
+    public String getValue(TiledMapTileLayer.Cell cell) {
+        return cell.getTile().getProperties().getValues().next().toString();
+    }
+
     private void visitFlags() {
         for (Player player : players) {
             for (Flag flag : flags) {
@@ -180,7 +188,7 @@ public abstract class Board extends BoardCreator {
 
     private void visitSpecialFields() {
         for (Player player : players) {
-            if (isOnRepair(player) || isOnOption(player)) {
+            if (player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) {
                 player.getBackup().moveToPlayerPosition();
             }
         }
@@ -190,24 +198,16 @@ public abstract class Board extends BoardCreator {
         return (floorLayer.getCell(object.getX(), object.getY()) == null);
     }
 
-    private boolean isOnRepair(Player p) {
-        return !isOffTheBoard(p) && cellContainsKey(floorLayer.getCell(p.getX(), p.getY()), "Special");
-    }
-
-    private boolean isOnOption(Player p) {
-        return !isOffTheBoard(p) && getValue(floorLayer.getCell(p.getX(), p.getY())).equals("OPTION");
-    }
-
     public void cleanUp() {
         for (Player player : players) {
-            if (isOnRepair(player) || isOnOption(player)) {
+            if (player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) {
                 player.repairOneDamage();
                 if (!soundIsMuted) {
                     player.getSoundFromPlayer(1).play();
                 }
                 addAnimation(new RepairAnimation(player.position));
             }
-            if (isOnOption(player)) {
+            if (player.isOnOption(floorLayer)) {
                 System.out.println("Give option card to player!");
             }
             player.respawn();
@@ -216,81 +216,6 @@ public abstract class Board extends BoardCreator {
 
     private void addAnimation(Animation animation) {
         ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.animations.add(animation);
-    }
-
-    public boolean canGo(MovableGameObject object, Direction direction) {
-        return canLeaveCell(object, direction) && canEnter(object, direction);
-    }
-
-    private boolean canLeaveCell(MovableGameObject object, Direction direction) {
-        TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(object.position.getX(), object.position.getY());
-        if (!cellContainsKey(currentCell, "Wall")) {
-            return true;
-        }
-        return !blockedByWall(currentCell, direction);
-    }
-
-    private boolean canEnter(MovableGameObject object, Direction direction) {
-        Position nextPosition = new Position(object.getX(), object.getY()).moveInDirection(direction);
-        // check if out of bounds
-
-        TiledMapTileLayer.Cell nextCell = wallLayer.getCell(nextPosition.getX(), nextPosition.getY());
-        if (!cellContainsKey(nextCell, "Wall")) {
-            return true;
-        }
-        return !blockedByWall(nextCell, direction.getOppositeDirection());
-    }
-
-
-    private boolean blockedByWall(TiledMapTileLayer.Cell cell, Direction direction) {
-        return splitValuesBySpace(getValue(cell)).contains(direction.toString());
-    }
-
-
-    public boolean crashWithRobot(MovableGameObject player, Direction direction) {
-        Position nextPos = new Position(player.getX(), player.getY());
-        nextPos.moveInDirection(direction);
-        for (Player other : players) {
-            if (other.equals(player)) continue;
-
-            if (other.position.equals(nextPos)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean canPush(MovableGameObject player, Direction direction) {
-        Position nextPos = new Position(player.getX(), player.getY());
-        nextPos.moveInDirection(direction);
-        for (Player other : players) {
-            if (other.equals(player)) continue;
-
-            if (other.position.equals(nextPos)) {
-                if (!canGo(other, direction) || !canPush(other, direction)) {
-                    return false;
-                }
-                other.moveInDirection(direction);
-            }
-        }
-        return true;
-    }
-
-    public boolean cellContainsKey(TiledMapTileLayer.Cell cell, String target) {
-        return cell != null && cell.getTile().getProperties().containsKey(target);
-    }
-
-    public String getValue(TiledMapTileLayer.Cell cell) {
-        return cell.getTile().getProperties().getValues().next().toString();
-    }
-
-    public List<String> splitValuesBySpace(String string) {
-        List<String> splitList = new ArrayList<>();
-        StringTokenizer st = new StringTokenizer(string);
-        while (st.hasMoreTokens()) {
-            splitList.add(st.nextToken());
-        }
-        return splitList;
     }
 
     public void drawGameObjects(SpriteBatch batch) {
@@ -358,29 +283,22 @@ public abstract class Board extends BoardCreator {
     }
 
     public void robotFire(Player player) {
-
         LaserShot laserShot = new LaserShot(player.getDirection(), player.getX(), player.getY());
         while (true) {
-            if (!canGo(laserShot, laserShot.getDirection()))
-                return;
-            laserShot.moveInDirection(laserShot.getDirection());
+            if (!laserShot.canGo(laserShot.getDirection(), wallLayer)) return;
 
-            for (Player target :
-                    players) {
+            laserShot.moveInDirection(laserShot.getDirection());
+            for (Player target : players) {
                 if (laserShot.position.equals(target.position)) {
                     target.takeDamage();
                     System.out.println(player.getName() + " shoots  " + target.getName());
                     return;
                 }
-
             }
-
-            if (laserShot.getX() < 0 || laserShot.getX() > getWidth()
-                    || laserShot.getY() < 0 || laserShot.getY() > getHeight()) {
+            if (laserShot.outOfBounds(this)) {
                 return;
             }
         }
-
     }
 
     public ArrayList<Flag> getFlags() {
