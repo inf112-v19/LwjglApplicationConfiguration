@@ -149,6 +149,9 @@ public class GameScreen implements Screen {
 
     }
 
+    public Hud getHud(){
+        return this.hud;
+    }
     public GameLogic getGameLogic() {
         return gameLogic;
     }

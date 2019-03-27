@@ -15,9 +15,11 @@ public class SettingsScreen extends AbstractScreen {
     // Just a local variable to let the settings screen keep track of whether or
     // not the music is muted
     private boolean musicIsMuted;
+    private RoboRallyGame game;
 
-    public SettingsScreen(RoboRallyGame roborallygame) {
-        super(roborallygame, AssMan.BACKGROUND_SETTINGS.fileName);
+    public SettingsScreen(RoboRallyGame game) {
+        super(game, AssMan.BACKGROUND_SETTINGS.fileName);
+        this.game = game;
         musicIsMuted = false;
     }
 
