@@ -77,10 +77,6 @@ public class GameLogic {
         }
         giveCardsToPlayer(player1);
 
-
-        //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
-        hud.clearAllCards();
-        hud.clearAllCards();
         hud.clearAllCards();
         hud.updateCards();
 
@@ -166,8 +162,6 @@ public class GameLogic {
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0));
-            hud.clearAllCards();
-            hud.clearAllCards();
             hud.clearAllCards();
             hud.updateCards();
         }

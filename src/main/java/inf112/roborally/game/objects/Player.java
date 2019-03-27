@@ -10,6 +10,8 @@ import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
+
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.sound.GameSound;
 
 import java.util.ArrayList;
@@ -38,6 +40,8 @@ public class Player extends MovableGameObject {
     private int targetFlag;
     private int nFlags;
 
+    //Whether or not the player has screamed from falling off the map this round.
+    private boolean screamed;
 
     public Player(String name, String filepath, Direction direction, Board board) {
         super(0, 0, filepath);
@@ -66,10 +70,10 @@ public class Player extends MovableGameObject {
         createSounds();
     }
 
-    public void createSounds() {
-        allPlayerSounds[0] = new GameSound("assets/music/playerLaser.wav");
-        allPlayerSounds[1] = new GameSound("assets/music/playerRepair.wav");
-        allPlayerSounds[2] = new GameSound("assets/music/playerWilhelmScream.wav");
+    public void createSounds () {
+        allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
+        allPlayerSounds[1] = new GameSound(AssMan.MUSIC_PLAYER_REPAIR.fileName);
+        allPlayerSounds[2] = new GameSound( AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
     }
 
     @Override
@@ -85,8 +89,10 @@ public class Player extends MovableGameObject {
     /**
      * FOR TESTING ONLY
      */
+
     public Player(int x, int y, int nFlags) {
-        super(x, y, "assets/robot/tvBot.png");
+        super(x, y, AssMan.PLAYER_TVBOT.fileName);
+
         damage = 0;
         lives = MAX_LIVES;
         registers = new ProgramRegisters(this);
@@ -94,6 +100,7 @@ public class Player extends MovableGameObject {
 
 
         // For testing with flag behaviour, now tests with 3 flags on the board
+
         targetFlag = 1;
         this.nFlags = nFlags;
 
@@ -122,6 +129,8 @@ public class Player extends MovableGameObject {
 
     @Override
     public void move(int steps) {
+        screamed = false;
+
         for (int i = 0; i < steps; i++) {
             moveInDirection(getDirection());
         }
@@ -322,6 +331,9 @@ public class Player extends MovableGameObject {
     }
 
     public GameSound getSoundFromPlayer(int index) {
+        if(index == 2){
+            screamed = true;
+        }
         return allPlayerSounds[index];
     }
 
@@ -332,6 +344,9 @@ public class Player extends MovableGameObject {
         allPlayerSounds = new GameSound[nSounds];
     }
 
+    public boolean hasScreamed(){
+        return this.screamed;
+    }
     @Override
     public boolean equals(Object other) {
         if (other.getClass() != this.getClass())

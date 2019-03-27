@@ -59,9 +59,9 @@ public class Hud {
 
 
     public boolean createSubmitButton() {
-        if (assMan.manager.isLoaded(AssMan.buttonSubmit.fileName)) {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_SUBMIT.fileName)) {
             submitButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
-                    (AssMan.buttonSubmit.fileName, Texture.class)));
+                    (AssMan.BUTTON_SUBMIT.fileName, Texture.class)));
             submitButton.setSize(submitButton.getWidth() * scale, submitButton.getHeight() * scale);
             submitButton.setPosition((1920 / 2) + 7, 260);
             submitButton.addListener(new ClickListener() {
@@ -81,9 +81,9 @@ public class Hud {
 
 
     public boolean createSubmitButtonGrey() {
-        if (assMan.manager.isLoaded(AssMan.buttonSubmitGrey.fileName)) {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_SUBMIT_GREY.fileName)) {
             greySubmitButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
-                    (AssMan.buttonSubmitGrey.fileName, Texture.class)));
+                    (AssMan.BUTTON_SUBMIT_GREY.fileName, Texture.class)));
             greySubmitButton.setSize(submitButton.getWidth(), submitButton.getHeight());
             greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
             greySubmitButton.addListener(new ClickListener());
@@ -95,18 +95,15 @@ public class Hud {
     }
 
     public boolean createButtonClear() {
-        if (assMan.manager.isLoaded(AssMan.buttonClear.fileName)) {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_CLEAR.fileName)) {
             clearButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get(
-                    AssMan.buttonClear.fileName, Texture.class)));
+                    AssMan.BUTTON_CLEAR.fileName, Texture.class)));
             clearButton.setSize(clearButton.getWidth() * scale, clearButton.getHeight() * scale);
             clearButton.setPosition((1920 / 2) - (clearButton.getWidth()) - 7, 260);
             clearButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().returnCards(player);
-                    clearAllCards();
-                    clearAllCards();
-                    clearAllCards();
                     clearAllCards();
                     updateCards();
                 }
@@ -118,10 +115,10 @@ public class Hud {
         }
     }
 
-    //Weird bug... Checking if the AssMan has loaded the file didn't work properly so it's not done here.
+    //Weird bug... Checking if AssMan has loaded the file didn't work properly so it's not done here.
     public boolean createSettingsButton() {
         settingsButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
-                (AssMan.settingsButton.fileName, Texture.class)));
+                (AssMan.BUTTON_SETTINGS.fileName, Texture.class)));
         settingsButton.setPosition(60, 60);
         settingsButton.addListener(new ClickListener() {
             @Override
@@ -143,7 +140,7 @@ public class Hud {
         }
     }
 
-    public void addButtonsToStage() {
+    private void addButtonsToStage() {
         if (greySubmitButton != null && submitButton != null && clearButton != null && settingsButton != null) {
             stage.addActor(greySubmitButton);
             stage.addActor(submitButton);
@@ -165,17 +162,20 @@ public class Hud {
 
     /**
      * Remove all program card buttons.
-     * Might need to call this function several times to actually remove all buttons. (Weird bug)
      */
     public void clearAllCards() {
-        for (Actor button : registerGui.getChildren()) {
-            if (button instanceof ProgramCardButton) {
-                button.remove();
+        for(int i = 0; i < 4; i++) {
+            for (Actor button : registerGui.getChildren()) {
+                if (button instanceof ProgramCardButton) {
+                    ((ProgramCardButton) button).dispose();
+                    button.remove();
+                }
             }
-        }
-        for (Actor button : handGui.getChildren()) {
-            if (button instanceof ProgramCardButton) {
-                button.remove();
+            for (Actor button : handGui.getChildren()) {
+                if (button instanceof ProgramCardButton) {
+                    ((ProgramCardButton) button).dispose();
+                    button.remove();
+                }
             }
         }
     }

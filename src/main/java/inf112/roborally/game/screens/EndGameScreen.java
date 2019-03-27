@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.objects.Position;
 
@@ -16,7 +17,7 @@ public class EndGameScreen extends AbstractScreen {
     private int rotateTimer;
 
     public EndGameScreen(RoboRallyGame roborallygame) {
-        super(roborallygame, "assets/img/endgamebackground.png");
+        super(roborallygame, AssMan.BACKGROUND_ENDGAME.fileName);
         rotateTimer = 0;
     }
 

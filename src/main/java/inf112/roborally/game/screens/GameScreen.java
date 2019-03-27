@@ -37,13 +37,12 @@ public class GameScreen implements Screen {
         assMan = game.getAssMan();
 
 
-        board = new TestBoard();
+        board = new VaultBoard();
 
-
-        board.addPlayer(new Player("Player1", AssMan.playerBartenderClaptrap.fileName, NORTH, board));
-        board.addPlayer(new Player("testBo1", AssMan.playerClaptrapRefined.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot2", AssMan.playerButlerRefined.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot3", AssMan.playerClaptrap3000.fileName, NORTH, board));
+        board.addPlayer(new Player("Player1", AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot1", AssMan.PLAYER_CLAPTRAP_REFINED.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot2", AssMan.PLAYER_BUTLER_REFINED.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot3", AssMan.PLAYER_CLAPTRAP_3000.fileName, NORTH, board));
 
         board.placePlayers();
 
@@ -124,7 +123,6 @@ public class GameScreen implements Screen {
             player.getBackup().getSprite().getTexture().dispose();
         }
         music.dispose();
-
     }
 
     @Override
@@ -147,10 +145,6 @@ public class GameScreen implements Screen {
         game.dynamicViewPort.update(width, height);
         game.fixedViewPort.update(width, height);
 
-    }
-
-    public Hud getHud() {
-        return hud;
     }
 
     public GameLogic getGameLogic() {

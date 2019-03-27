@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
@@ -24,17 +25,15 @@ public class TestScreen implements Screen {
     public TestScreen(RoboRallyGame game) {
         this.game = game;
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        background = new Sprite(new Texture("assets/img/testscreen.png"));
+        background = new Sprite(new Texture(AssMan.TESTSCREEN.fileName));
 
         player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < player.getCardLimit(); i++){
             player.receiveCard(stack.pop());
         }
 
         hud = new Hud(player, game);
-        hud.clearAllCards();
-        hud.clearAllCards();
         hud.clearAllCards();
         hud.updateCards();
 
@@ -61,6 +60,8 @@ public class TestScreen implements Screen {
         game.batch.begin();
         background.draw(game.batch);
         game.batch.end();
+
+        hud.createButtons();
         hud.draw();
 
     }
@@ -80,15 +81,11 @@ public class TestScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             player.getRegisters().placeCard(0);
             hud.clearAllCards();
-            hud.clearAllCards();
-            hud.clearAllCards();
             hud.updateCards();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             player.returnCards();
-            hud.clearAllCards();
-            hud.clearAllCards();
             hud.clearAllCards();
             hud.updateCards();
         }
@@ -111,6 +108,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void hide() {
+        game.getAssMan().dispose();
 
     }
 

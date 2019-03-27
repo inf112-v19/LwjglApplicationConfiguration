@@ -95,7 +95,7 @@ public abstract class Board extends BoardCreator {
             if (player == null) continue;
             expressBeltsMove(player);
             if (isOffTheBoard(player)) {
-                if (!soundIsMuted) {
+                if (!soundIsMuted && !player.hasScreamed()) {
                     player.getSoundFromPlayer(2).play();
                 }
                 player.destroy();
