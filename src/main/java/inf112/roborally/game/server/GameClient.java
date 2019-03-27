@@ -4,15 +4,15 @@ import java.io.*;
 import java.net.*;
 class GameClient {
 
-    public static void main(String argv[]) throws Exception
-    {
+    public static void main(String argv[]) throws Exception {
+
         while(true) {
             String sentence;
 
             BufferedReader inFromUser =
                     new BufferedReader(new InputStreamReader(System.in));
 
-            Socket clientSocket = new Socket("127.0.0.1", 6789); // replace "hostname" by your favourite hostname
+            Socket clientSocket = new Socket("192.168.56.1", 6789); // replace "hostname" by your favourite hostname
             // ...or "127.0.0.1", for example
 
             OutputStream outToServer = clientSocket.getOutputStream();

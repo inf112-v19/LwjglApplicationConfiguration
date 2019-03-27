@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,7 +17,6 @@ public class GameServer {
         String capitalizedSentence;
 
         ServerSocket serverSocket = new ServerSocket(6789);
-
         while(true) {
 
             Socket connectionSocket = serverSocket.accept();
@@ -37,8 +37,6 @@ public class GameServer {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outToServer);
 
             objectOutputStream.writeObject(packet);
-
-
 
         }
     }
