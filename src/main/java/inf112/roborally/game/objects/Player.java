@@ -119,7 +119,7 @@ public class Player extends MovableGameObject {
     public void reverse() {
         Direction directionToMoveIn = getDirection().getOppositeDirection();
         if (canGo(directionToMoveIn, board.getWallLayer()) && canPush(directionToMoveIn, board))
-            moveInDirection(directionToMoveIn.getOppositeDirection());
+            moveInDirection(directionToMoveIn);
         move(0);
     }
 
@@ -277,7 +277,6 @@ public class Player extends MovableGameObject {
 
     public boolean hitByLaser(TiledMapTileLayer laserLayer) {
         return cellContainsKey(laserLayer.getCell(getX(), getY()), "Laser");
-
     }
 
     public boolean isDestroyed() {

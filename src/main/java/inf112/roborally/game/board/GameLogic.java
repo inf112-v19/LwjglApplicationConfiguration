@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
+import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
@@ -142,6 +143,28 @@ public class GameLogic {
             players.get(0).getRegisters().returnCards(players.get(0));
             hud.clearAllCards();
             hud.updateCards();
+        }
+
+        boolean updatePlayer = true;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)){
+            player1.move(1);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)){
+            player1.rotate(Rotate.LEFT);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)){
+            player1.rotate(Rotate.RIGHT);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)){
+            player1.reverse();
+        }
+        else{
+            updatePlayer = false;
+        }
+        if(updatePlayer){
+            board.boardMoves();
+            updatePlayers();
         }
     }
 
