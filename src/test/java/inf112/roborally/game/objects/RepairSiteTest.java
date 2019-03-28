@@ -1,6 +1,5 @@
 package inf112.roborally.game.objects;
 
-import inf112.roborally.game.objects.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +24,46 @@ public class RepairSiteTest {
     public void repairOneDamageOnPlayer() {
         player.repairOneDamage();
         assertEquals(0, player.getDamage());
+    }
+
+    @Test
+    public void checkIfTakenDamage(){
+        assertEquals(1, player.getDamage());
+
+        player.repairAllDamage();
+        assertEquals(0, player.getDamage());
+    }
+
+    @Test
+    public void testTaken6Damage(){
+        for (int i = 0; i < 5; i++)
+            player.takeDamage();
+        assertEquals(6, player.getDamage());
+    }
+
+    @Test
+    public void repairAllDamage(){
+        for (int i = 0; i < 5; i++)
+            player.takeDamage();
+        player.repairAllDamage();
+        assertEquals(0, player.getDamage());
+    }
+
+    @Test
+    public void takingMoreThanTenDamageStartsAtZeroAgain(){
+        for (int i = 0; i < 15; i++)
+            player.takeDamage();
+        System.out.println(player.getDamage());
+       assertEquals(6, player.getDamage());
+       assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void takingTenDamageCausesOneLifeLost(){
+        for (int i = 0; i < 9; i++)
+            player.takeDamage();
+        assertEquals(0, player.getDamage());
+        assertEquals(2, player.getLives());
     }
 
 

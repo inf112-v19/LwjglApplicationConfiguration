@@ -63,6 +63,25 @@ public class FlagsFoundTest {
         assertFalse(player.hasWon());
     }
 
+
+    @Test
+    public void playerDoesNotWinUnlessGoingToFlagsInCorrectOrder(){
+        player.visitFlag(2);
+        player.visitFlag(1);
+        player.visitFlag(3);
+        assertFalse(player.hasWon());
+        assertEquals(2, player.getTargetFlag());
+
+        player.visitFlag(3);
+        player.visitFlag(2);
+        player.visitFlag(1);
+        assertEquals(3, player.getTargetFlag());
+
+        player.visitFlag(2);
+        player.visitFlag(3);
+        assertTrue(player.hasWon());
+    }
+
     @Test
     public void flagNumberDoesNotExceedNumberOfFlags() {
         player.visitFlag(1);

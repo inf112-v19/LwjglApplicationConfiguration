@@ -20,7 +20,7 @@ import static inf112.roborally.game.board.TiledTools.cellContainsKey;
 
 
 public class Player extends MovableGameObject {
-    private static final int MAX_DAMAGE = 9;
+    private static final int MAX_DAMAGE = 10;
     private static final int MAX_LIVES = 3;
 
     private boolean debugging = false;
@@ -169,22 +169,25 @@ public class Player extends MovableGameObject {
     }
 
     public void update() {
-        if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
+        if(!debugging) {
+            if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
 
-        if (isDestroyed() && !outOfLives()) {
-            playerState = PlayerState.DESTROYED;
-            if (backup != null) {
-                move(-1, -1);
+            if (isOffTheBoard(board.getFloorLayer()) && !outOfLives()) {
+                playerState = PlayerState.DESTROYED;
+                if (backup != null) {
+                    move(-1, -1);
+                }
+                Gdx.app.log(name, "is destroyed!");
             }
-            Gdx.app.log(name, "is destroyed!");
+            updateSprite();
         }
-        updateSprite();
     }
 
     public void respawn() {
         if (!isDestroyed()) return; // Can only respawn dead robots
 
-        lives--;
+        takeDamage();
+
         if (outOfLives()) {
             System.out.println(name + " is out of the game");
             playerState = PlayerState.GAME_OVER;
@@ -234,13 +237,20 @@ public class Player extends MovableGameObject {
 
     /**
      * Take one damage. Locks a register if damage taken is greater or equal to 5.
+     * Lose a life if damage taken is equal to MAX_DAMAGE.
      */
     public void takeDamage() {
-        if (damage < 10) {
+        if (damage < MAX_DAMAGE) {
             damage++;
         }
         if (damage >= 5) {
             registers.lock();
+        }
+
+        if(damage == MAX_DAMAGE){
+            lives--;
+            damage = 0;
+            playerState = PlayerState.DESTROYED;
         }
     }
 
@@ -272,7 +282,7 @@ public class Player extends MovableGameObject {
     }
 
     public void destroy() {
-        damage = MAX_DAMAGE + 1;
+        damage = MAX_DAMAGE;
     }
 
     public boolean hasWon() {
@@ -284,7 +294,7 @@ public class Player extends MovableGameObject {
     }
 
     public boolean isDestroyed() {
-        return damage > MAX_DAMAGE;
+        return playerState == PlayerState.DESTROYED;
     }
 
     public boolean isReady() {

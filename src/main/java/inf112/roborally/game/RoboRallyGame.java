@@ -3,13 +3,10 @@ package inf112.roborally.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
 import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.screens.*;
@@ -73,6 +70,8 @@ public class RoboRallyGame extends Game {
 
     /** Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
      * screen, if any.
+     *
+     * Saves the screen that was used before the function call.
      *
      * @param screen may be {@code null} */
     @Override

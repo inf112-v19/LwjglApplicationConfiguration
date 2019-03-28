@@ -44,7 +44,7 @@ public class MovePlayerTest {
     public void rotateLeftMove1() {
         player.rotate(Rotate.LEFT);
         player.move(1);
-        assertEquals(x +1 , player.getX());
+        assertEquals(x + 1 , player.getX());
     }
 
 
