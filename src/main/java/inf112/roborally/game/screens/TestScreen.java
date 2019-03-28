@@ -71,6 +71,10 @@ public class TestScreen implements Screen {
             Gdx.app.exit();
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            game.setScreen(game.settingsScreen);
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             player.takeDamage();
             player.update();

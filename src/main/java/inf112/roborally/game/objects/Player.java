@@ -242,10 +242,12 @@ public class Player extends MovableGameObject {
     public void takeDamage() {
         if (damage < MAX_DAMAGE && lives > 0) {
             damage++;
+
+            if(damage >= 5){
+                registers.lock();
+            }
         }
-        if (damage >= 5 && damage < MAX_DAMAGE) {
-            registers.lock();
-        }
+
 
         if(damage == MAX_DAMAGE){
             lives--;

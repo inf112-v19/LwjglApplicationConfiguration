@@ -45,16 +45,16 @@ public class SettingsScreen extends AbstractScreen {
 
     private void handleInput() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("Key B or Escape is pressed, going back to the GameScreen");
             game.settingsScreen.dispose();
 
             if(game.getScreenBefore() == game.gameScreen){
                 game.setScreen(game.gameScreen);
+                System.out.println("Key B or Escape is pressed, going back to the GameScreen");
             }
             else if(game.getScreenBefore() == game.testScreen){
                 game.setScreen(game.testScreen);
+                System.out.println("Key B or Escape is pressed, going back to the TestScreen");
             }
-           //Gdx.input.setInputProcessor(game.gameScreen.getHud().stage);
         }
 
         else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {

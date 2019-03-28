@@ -103,9 +103,11 @@ public class Hud {
             clearButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    player.getRegisters().returnCards(player);
-                    clearAllCards();
-                    updateCards();
+                    if(player.isAlive()) {
+                        player.getRegisters().returnCards(player);
+                        clearAllCards();
+                        updateCards();
+                    }
                 }
             });
             return true;
