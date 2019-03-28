@@ -61,6 +61,7 @@ public class RoboRallyGame extends Game {
 //        testScreen = new TestScreen(this);
         menuScreen = new MenuScreen(this);
 //        gameScreen = new GameScreen(this, VAULT);
+        settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
         setScreen(menuScreen);
 

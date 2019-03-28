@@ -24,7 +24,7 @@ public class SetupScreen extends AbstractScreen {
 
     private ArrayList<Sprite> information;
     private ArrayList<Sprite> flags;
-    private boolean placeFlags;
+    private ArrayList<Sprite> flagCheck;
 
     // One tile, when width is 1920, is 90 pixels
     // That makes it 1 of 23,333 parts of the screen
@@ -42,18 +42,18 @@ public class SetupScreen extends AbstractScreen {
     private ArrayList<Position> flagPositions;
 
     public SetupScreen(RoboRallyGame game, String[] possibleFilepaths) {
-        super(game, "assets/backgrounds/setupscreen.png");
+        super(game, "assets/backgrounds/setupscreenpink.png");
 
         stage = new Stage(game.fixedViewPort, game.batch);
         Gdx.input.setInputProcessor(stage);
 //        stage.addListener(game.cameraListener);
 
-        information = new ArrayList<>();
         this.possibleFilepaths = possibleFilepaths;
-        placeFlags = false;
-
+//        placeFlags = false;
+        information = new ArrayList<>();
+        flags = new ArrayList<>();
+        flagCheck = new ArrayList<>();
         flagPositions = new ArrayList<>();
-
 
         createSkinButtons();
         state = SetupState.PICKINGSKIN;
@@ -111,13 +111,11 @@ public class SetupScreen extends AbstractScreen {
         updateBackground("assets/backgrounds/setupscreenPlaceFlags.png");
         updateMapNumbers();
 
-        flags = new ArrayList<>();
         for(int i = 3; i > 0; i--) {
             Sprite flag = new Sprite(new TextureRegion(new Texture("assets/objects/flags.png"), 150*(i-1), 0,150, 150));
             flag.setPosition(100, 200*i);
             flags.add(flag);
         }
-        placeFlags = true;
     }
 
 
@@ -133,10 +131,11 @@ public class SetupScreen extends AbstractScreen {
             sprite.draw(batch);
         }
 
-        if (placeFlags) {
-            for(Sprite flag : flags) {
-                flag.draw(batch);
-            }
+        for(Sprite flag : flags) {
+            flag.draw(batch);
+        }
+        for(Sprite check : flagCheck) {
+            check.draw(batch);
         }
 
         batch.end();
@@ -172,23 +171,32 @@ public class SetupScreen extends AbstractScreen {
                         Position clickedPos = convertMouseClickIntoMapPosition(mouseX, mouseY);
                         System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
                                 clickedPos.getX(), clickedPos.getY());
+                        Sprite moveFlag = flags.remove(0); // Remove flags from the left side of the map
+//                        moveFlag.scale(-0.5f);
+//                        moveFlag.setPosition((mapStartX + (clickedPos.getX() * currentTileSize)), (clickedPos.getY() * currentTileSize));
+//                        flags.add(moveFlag);
 
                         // Because the map we use has 4 more tiles to the left (where we find the starting positions,
                         // we have to add 4 to the clicked x value
                         Position properPos = new Position(clickedPos.getX() + 4, clickedPos.getY());
                         flagPositions.add(properPos);
                         if(flagPositions.size() == 3) {
+                            state = SetupState.DONE;
                             createGameScreenFromSetup();
                         }
 
                     }
                     else {
-                        System.out.println("Mouse clicked OUTSIDE the map");
+                        System.out.println("Mouse clicked outside of the map");
                     }
 
                     System.out.println("-------------------------------------------------------");
                 }
                 break;
+            case DONE:
+                if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                    createGameScreenFromSetup();
+                }
         }
     }
 
@@ -203,7 +211,7 @@ public class SetupScreen extends AbstractScreen {
         int x = 1;
         int y = 1;
 
-        // Do the math for the x value;
+        // Do the "math" for the x value;
         for(int i = 1; i <= N_TILES; i++) {
             float compareX = i * currentTileSize;
             if(compareX > mapMouseX) {
@@ -211,7 +219,7 @@ public class SetupScreen extends AbstractScreen {
                 break;
             }
         }
-
+        // y value:
         for (int i = N_TILES; i >= 0; i--) {
             float compareY = i * currentTileSize;
             if(compareY < mapMouseY) {
@@ -247,7 +255,6 @@ public class SetupScreen extends AbstractScreen {
         createMapForPlacingFlags();
         
     }
-
     
     private void createGameScreenFromSetup() {
         game.createGameScreen(robotChoiceIndex, flagPositions);
