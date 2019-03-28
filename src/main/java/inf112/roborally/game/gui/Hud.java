@@ -67,7 +67,7 @@ public class Hud {
             submitButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (player.getRegisters().isFull()) {
+                    if (player.getRegisters().isFull() && player.isAlive()) {
                         player.playerState = PlayerState.READY;
                     }
                 }

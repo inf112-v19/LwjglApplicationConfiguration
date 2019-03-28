@@ -243,7 +243,7 @@ public class Player extends MovableGameObject {
         if (damage < MAX_DAMAGE && lives > 0) {
             damage++;
         }
-        if (damage >= 5) {
+        if (damage >= 5 && damage < MAX_DAMAGE) {
             registers.lock();
         }
 
@@ -364,6 +364,9 @@ public class Player extends MovableGameObject {
         return registers;
     }
 
+    public boolean isAlive(){
+        return lives != 0;
+    }
 
     public GameSound getSoundFromPlayer(int index) {
         if (index == 2) {

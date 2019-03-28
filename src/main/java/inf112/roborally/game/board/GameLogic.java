@@ -72,10 +72,13 @@ public class GameLogic {
         board.cleanUp();
         powerUpRobots();
         powerDownRobots();
-        if (!player1.isPoweredDown()) {
-            retrieveCardsFromPlayer(player1);
+
+            if (!player1.isPoweredDown()) {
+                retrieveCardsFromPlayer(player1);
+            }
+        if(player1.isAlive()) {
+            giveCardsToPlayer(player1);
         }
-        giveCardsToPlayer(player1);
 
         hud.clearAllCards();
         hud.updateCards();
