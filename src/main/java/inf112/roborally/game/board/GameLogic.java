@@ -100,7 +100,7 @@ public class GameLogic {
     private void handlePhase() {
         if (phase < 5) {
             System.out.println("executing phase " + phase);
-            player1.executeCard(player1.getRegisters().getCard(phase));
+            player1.getRegisters().executeCard(phase);
             try {
                 Thread.sleep(500);
             }
@@ -143,31 +143,32 @@ public class GameLogic {
             game.setScreen(game.endGameScreen);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            player1.executeCard(new ProgramCard(Rotate.UTURN, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            player1.executeCard(new ProgramCard(Rotate.RIGHT, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            player1.executeCard(new ProgramCard(Rotate.LEFT, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 0, 0, ""));
-            board.boardMoves();
-        }
-
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0));
             hud.clearAllCards();
             hud.updateCards();
+        }
+
+        boolean updatePlayer = true;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)){
+            player1.move(1);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)){
+            player1.rotate(Rotate.LEFT);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)){
+            player1.rotate(Rotate.RIGHT);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)){
+            player1.reverse();
+        }
+        else{
+            updatePlayer = false;
+        }
+        if(updatePlayer){
+            board.boardMoves();
+            updatePlayers();
         }
     }
 

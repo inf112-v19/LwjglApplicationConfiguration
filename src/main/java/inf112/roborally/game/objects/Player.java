@@ -3,23 +3,27 @@ package inf112.roborally.game.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.enums.Rotate;
 
 import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.sound.GameSound;
 
 import java.util.ArrayList;
 
+import static inf112.roborally.game.board.TiledTools.cellContainsKey;
+
 
 public class Player extends MovableGameObject {
     private static final int MAX_DAMAGE = 9;
     private static final int MAX_LIVES = 3;
+
+    private boolean debugging = false;
 
     private String name;
     private int lives;
@@ -70,10 +74,10 @@ public class Player extends MovableGameObject {
         createSounds();
     }
 
-    public void createSounds () {
+    public void createSounds() {
         allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
         allPlayerSounds[1] = new GameSound(AssMan.MUSIC_PLAYER_REPAIR.fileName);
-        allPlayerSounds[2] = new GameSound( AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
+        allPlayerSounds[2] = new GameSound(AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
     }
 
     @Override
@@ -89,55 +93,47 @@ public class Player extends MovableGameObject {
     /**
      * FOR TESTING ONLY
      */
-
     public Player(int x, int y, int nFlags) {
         super(x, y, AssMan.PLAYER_TVBOT.fileName);
-
+        this.nFlags = nFlags;
         damage = 0;
         lives = MAX_LIVES;
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
-
-
-        // For testing with flag behaviour, now tests with 3 flags on the board
-
         targetFlag = 1;
-        this.nFlags = nFlags;
-
-    }
-
-    public void executeCard(ProgramCard programCard) {
-        if (programCard == null || !isOperational()) return;
-
-        if (programCard.getRotate() != Rotate.NONE) {
-            rotate(programCard.getRotate());
-            return;
-        }
-
-        if (programCard.getMoveDistance() == -1) {
-            if (board.canGo(this, getDirection().getOppositeDirection())
-                    && board.canPush(this, getDirection().getOppositeDirection())) {
-                moveInDirection(getDirection().getOppositeDirection());
-            }
-        }
-        for (int i = 0; i < programCard.getMoveDistance(); i++) {
-            if (board.canGo(this, getDirection()) && board.canPush(this, getDirection())) {
-                move(1);
-            }
-        }
+        debugging = true;
     }
 
     @Override
     public void move(int steps) {
+        if (debugging) {
+            for(int i = 0; i < steps; i++) moveInDirection(getDirection());
+            return;
+        }
+
         screamed = false;
 
         for (int i = 0; i < steps; i++) {
-            moveInDirection(getDirection());
+            if (canGo(getDirection(), board.getWallLayer()) && canPush(getDirection(), board)) {
+                moveInDirection(getDirection());
+            }
         }
         // every time a player moves we need to check if it is off the board or not
-        if (board != null && board.isOffTheBoard(this)) { // need to check if board is null for tests to work
+        if (board != null && isOffTheBoard(board.getFloorLayer())) { // need to check if board is null for tests to work
             this.destroy();
         }
+    }
+
+    public void reverse() {
+        if (debugging) {
+            moveInDirection(getDirection().getOppositeDirection());
+            return;
+        }
+
+        Direction directionToMoveIn = getDirection().getOppositeDirection();
+        if (canGo(directionToMoveIn, board.getWallLayer()) && canPush(directionToMoveIn, board))
+            moveInDirection(directionToMoveIn);
+        move(0);
     }
 
 
@@ -157,18 +153,6 @@ public class Player extends MovableGameObject {
                     + ", but number of cards in hand: " + getNumberOfCardsInHand());
         }
         return cardsInHand.remove(cardPos);
-    }
-
-    public ProgramCard getCardInHand(int cardPos) {
-        return cardsInHand.get(cardPos);
-    }
-
-    public ArrayList<ProgramCard> getCardsInHand() {
-        return cardsInHand;
-    }
-
-    public int getNumberOfCardsInHand() {
-        return cardsInHand.size();
     }
 
     public ArrayList<ProgramCard> returnCards() {
@@ -223,7 +207,7 @@ public class Player extends MovableGameObject {
     }
 
     public void powerUp() {
-        if(!isPoweredDown()) return;
+        if (!isPoweredDown()) return;
 
         repairAllDamage();
         playerState = PlayerState.OPERATIONAL;
@@ -261,8 +245,25 @@ public class Player extends MovableGameObject {
     }
 
 
+    public void fireLaser(Board board) {
+        LaserShot laserShot = new LaserShot(getDirection(), getX(), getY());
+        while (laserShot.canGo(laserShot.getDirection(), board.getWallLayer())) {
+            laserShot.moveInDirection(laserShot.getDirection());
+            for (Player target : board.getPlayers()) {
+                if (laserShot.position.equals(target.position)) {
+                    target.takeDamage();
+                    System.out.println(getName() + " shoots  " + target.getName());
+                    return;
+                }
+            }
+            if (laserShot.outOfBounds(board)) {
+                return;
+            }
+        }
+    }
+
     public void visitFlag(int flagNumber) {
-        if(flagNumber > nFlags) return;
+        if (flagNumber > nFlags) return;
 
         if (flagNumber == targetFlag) {
             targetFlag++;
@@ -270,12 +271,16 @@ public class Player extends MovableGameObject {
         }
     }
 
+    public void destroy() {
+        damage = MAX_DAMAGE + 1;
+    }
+
     public boolean hasWon() {
         return targetFlag > nFlags;
     }
 
-    public void destroy() {
-        damage = MAX_DAMAGE + 1;
+    public boolean hitByLaser(TiledMapTileLayer laserLayer) {
+        return cellContainsKey(laserLayer.getCell(getX(), getY()), "Laser");
     }
 
     public boolean isDestroyed() {
@@ -286,11 +291,11 @@ public class Player extends MovableGameObject {
         return playerState == PlayerState.POWERED_DOWN || playerState == PlayerState.READY;
     }
 
-    public boolean isOperational(){
+    public boolean isOperational() {
         return playerState == PlayerState.OPERATIONAL;
     }
 
-    public boolean isPoweredDown(){
+    public boolean isPoweredDown() {
         return playerState == PlayerState.POWERED_DOWN;
     }
 
@@ -298,6 +303,28 @@ public class Player extends MovableGameObject {
         return lives < 1;
     }
 
+    public void killTheSound() {
+        for (GameSound s : allPlayerSounds) {
+            s.mute();
+        }
+        allPlayerSounds = new GameSound[nSounds];
+    }
+
+    public boolean hasScreamed() {
+        return this.screamed;
+    }
+
+    public ProgramCard getCardInHand(int cardPos) {
+        return cardsInHand.get(cardPos);
+    }
+
+    public ArrayList<ProgramCard> getCardsInHand() {
+        return cardsInHand;
+    }
+
+    public int getNumberOfCardsInHand() {
+        return cardsInHand.size();
+    }
 
     public int getCardLimit() {
         return ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
@@ -328,33 +355,23 @@ public class Player extends MovableGameObject {
     }
 
 
-    @Override
-    public String toString() {
-        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
-    }
-
     public GameSound getSoundFromPlayer(int index) {
-        if(index == 2){
+        if (index == 2) {
             screamed = true;
         }
         return allPlayerSounds[index];
     }
 
-    public void killTheSound() {
-        for (GameSound s : allPlayerSounds) {
-            s.mute();
-        }
-        allPlayerSounds = new GameSound[nSounds];
-    }
-
-    public boolean hasScreamed(){
-        return this.screamed;
-    }
     @Override
     public boolean equals(Object other) {
         if (other.getClass() != this.getClass())
             return false;
 
         return this.name.equals(((Player) other).name);
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 }

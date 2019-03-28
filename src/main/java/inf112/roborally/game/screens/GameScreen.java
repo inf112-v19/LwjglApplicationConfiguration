@@ -102,6 +102,7 @@ public class GameScreen implements Screen {
             if (animations.get(i).hasFinished())
                 animations.remove(i--); // need to decrement i when removing an element?
         }
+        board.renderLayer(board.getWallLayer());
         game.batch.end();
 
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
