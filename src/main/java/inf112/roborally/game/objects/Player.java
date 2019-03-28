@@ -240,7 +240,7 @@ public class Player extends MovableGameObject {
      * Lose a life if damage taken is equal to MAX_DAMAGE.
      */
     public void takeDamage() {
-        if (damage < MAX_DAMAGE) {
+        if (damage < MAX_DAMAGE && lives > 0) {
             damage++;
         }
         if (damage >= 5) {

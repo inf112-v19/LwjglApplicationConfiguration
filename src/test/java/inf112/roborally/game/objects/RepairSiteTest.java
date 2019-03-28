@@ -29,17 +29,14 @@ public class RepairSiteTest {
     @Test
     public void checkIfTakenDamage(){
         assertEquals(1, player.getDamage());
+    }
 
+    @Test
+    public void repairAllWhileHavingOneDamage(){
         player.repairAllDamage();
         assertEquals(0, player.getDamage());
     }
 
-    @Test
-    public void testTaken6Damage(){
-        for (int i = 0; i < 5; i++)
-            player.takeDamage();
-        assertEquals(6, player.getDamage());
-    }
 
     @Test
     public void repairAllDamage(){
@@ -50,21 +47,25 @@ public class RepairSiteTest {
     }
 
     @Test
-    public void takingMoreThanTenDamageStartsAtZeroAgain(){
-        for (int i = 0; i < 15; i++)
+    public void repairAfterBeingDestroyedGivesZero(){
+        for(int i = 0; i < 9; i++)
             player.takeDamage();
-        System.out.println(player.getDamage());
-       assertEquals(6, player.getDamage());
-       assertEquals(2, player.getLives());
+        player.repairAllDamage();
+        assertEquals(2, player.getLives());
+        assertEquals(0, player.getDamage());
     }
 
+
     @Test
-    public void takingTenDamageCausesOneLifeLost(){
-        for (int i = 0; i < 9; i++)
+    public void take2DamageAfterRepair(){
+        for(int i = 0; i < 8; i++)
             player.takeDamage();
-        assertEquals(0, player.getDamage());
-        assertEquals(2, player.getLives());
+        player.repairAllDamage();
+        player.takeDamage();
+        player.takeDamage();
+        assertEquals(2, player.getDamage());
     }
+
 
 
 }
