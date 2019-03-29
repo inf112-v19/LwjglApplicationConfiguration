@@ -139,6 +139,7 @@ public class BoardLogic {
         }
 
         executeCards();
+
         try {
             Thread.sleep(500);
         }
@@ -207,7 +208,7 @@ public class BoardLogic {
         }
     }
 
-    public void aiRobotsChooseCards() {
+    private void aiRobotsChooseCards() {
         for(Player ai : airobots){
             if(!ai.isAlive()) continue;
             while(!ai.getRegisters().isFull()){
