@@ -111,7 +111,6 @@ public class BoardLogic {
         }
         checkIfAPlayerHasWon();
         phase++;
-        state = GameState.BOARD_MOVES;
     }
 
     private void executeCards(){
@@ -136,6 +135,7 @@ public class BoardLogic {
                 return player;
             }
         }
+        state = GameState.BOARD_MOVES;
         return null;
     }
 
