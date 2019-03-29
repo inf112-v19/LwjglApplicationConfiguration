@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration.png)](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration)
+
 # LwjglApplicationConfiguration
 Group 5.1
 
