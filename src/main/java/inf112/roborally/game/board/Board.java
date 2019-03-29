@@ -31,7 +31,7 @@ public abstract class Board extends TiledBoard {
 
 
     public Board() {
-        players = new ArrayList<>();
+        players = neasdw ArrayList<>();
         repairSites = new ArrayList<>();
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
