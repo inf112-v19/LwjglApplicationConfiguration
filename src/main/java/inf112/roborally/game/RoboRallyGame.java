@@ -69,7 +69,7 @@ public class RoboRallyGame extends Game {
 
         createPossibleFilepaths();
 
-//        testScreen = new TestScreen(this);
+        testScreen = new TestScreen(this);
         menuScreen = new MenuScreen(this);
 //        gameScreen = new GameScreen(this, VAULT);
         settingsScreen = new SettingsScreen(this);
