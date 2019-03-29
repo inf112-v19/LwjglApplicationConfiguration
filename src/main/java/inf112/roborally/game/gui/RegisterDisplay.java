@@ -56,7 +56,7 @@ public class RegisterDisplay {
         addDamageTokens();
         addLifeTokens();
         addWires();
-        addLockTokens(lockGui); // Locks needs to be update on top of the cards
+        addLockTokens(lockGui); // Locks needs to be updated on top of the cards
 
         addPowerDown();
     }
