@@ -66,6 +66,10 @@ public class MenuScreen implements Screen {
     private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 //            roboRallyGame.setScreen(roboRallyGame.gameScreen);
+            roboRallyGame.createGameScreen();
+            roboRallyGame.setScreen(roboRallyGame.gameScreen);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             roboRallyGame.createSetupScreen();
             roboRallyGame.setScreen(roboRallyGame.setupScreen);
             dispose();

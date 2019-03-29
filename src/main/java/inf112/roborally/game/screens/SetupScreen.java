@@ -32,7 +32,6 @@ public class SetupScreen extends AbstractScreen {
     private final int N_TILES = 12; //12x12 tiles
 
     // Information about current map size
-//    private float screenWidth;
     private float currentTileSize;
     private float currentMapSize;
     private float mapStartX;
@@ -42,14 +41,12 @@ public class SetupScreen extends AbstractScreen {
     private ArrayList<Position> flagPositions;
 
     public SetupScreen(RoboRallyGame game, String[] possibleFilepaths) {
-        super(game, "assets/backgrounds/setupscreenpink.png");
+        super(game, "assets/backgrounds/setupscreen.png");
 
         stage = new Stage(game.fixedViewPort, game.batch);
         Gdx.input.setInputProcessor(stage);
-//        stage.addListener(game.cameraListener);
 
         this.possibleFilepaths = possibleFilepaths;
-//        placeFlags = false;
         information = new ArrayList<>();
         flags = new ArrayList<>();
         flagCheck = new ArrayList<>();
@@ -171,10 +168,14 @@ public class SetupScreen extends AbstractScreen {
                         Position clickedPos = convertMouseClickIntoMapPosition(mouseX, mouseY);
                         System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
                                 clickedPos.getX(), clickedPos.getY());
-                        Sprite moveFlag = flags.remove(0); // Remove flags from the left side of the map
-//                        moveFlag.scale(-0.5f);
-//                        moveFlag.setPosition((mapStartX + (clickedPos.getX() * currentTileSize)), (clickedPos.getY() * currentTileSize));
-//                        flags.add(moveFlag);
+//                        Sprite check = new Sprite(new Texture("assets/img/checkflag.png"));
+//                        float newX = background.getWidth() - ((N_TILES - clickedPos.getX()) * TILE_SIZE_IN_FULLSCRREEN);
+//                        float newY = background.getHeight() - ((N_TILES - clickedPos.getY()) * TILE_SIZE_IN_FULLSCRREEN);
+//                        check.setPosition(newX, newY);
+//                        check.scale(-0.8f);
+//                        flagCheck.add(check);
+
+                        flags.remove(0); // Remove a flag from the left side
 
                         // Because the map we use has 4 more tiles to the left (where we find the starting positions,
                         // we have to add 4 to the clicked x value
@@ -182,7 +183,6 @@ public class SetupScreen extends AbstractScreen {
                         flagPositions.add(properPos);
                         if(flagPositions.size() == 3) {
                             state = SetupState.DONE;
-                            createGameScreenFromSetup();
                         }
 
                     }
@@ -194,9 +194,7 @@ public class SetupScreen extends AbstractScreen {
                 }
                 break;
             case DONE:
-                if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                    createGameScreenFromSetup();
-                }
+                createGameScreenFromSetup();
         }
     }
 
@@ -245,7 +243,7 @@ public class SetupScreen extends AbstractScreen {
         System.out.println("The robot choice is robot at index " + index + "!");
 
         // Remove the text and buttons:
-        // Currently only one information in the arraylist
+        // Currently only one information in the ArrayList
         information.remove(0);
         for(ImageButton btn : skins) {
             btn.remove();
