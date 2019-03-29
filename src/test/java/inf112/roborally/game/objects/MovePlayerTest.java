@@ -1,8 +1,8 @@
 package inf112.roborally.game.objects;
 
-import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.enums.Direction;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,7 +44,7 @@ public class MovePlayerTest {
     public void rotateLeftMove1() {
         player.rotate(Rotate.LEFT);
         player.move(1);
-        assertEquals(x +1 , player.getX());
+        assertEquals(x + 1 , player.getX());
     }
 
 

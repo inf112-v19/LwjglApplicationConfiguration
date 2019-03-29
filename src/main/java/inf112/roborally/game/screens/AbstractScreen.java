@@ -17,7 +17,6 @@ public abstract class AbstractScreen implements Screen {
 
     public AbstractScreen (RoboRallyGame game, String filepath) {
         this.game = game;
-//        batch = new SpriteBatch();
         batch = game.batch;
         background = new Sprite(new Texture(filepath));
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
@@ -37,13 +36,10 @@ public abstract class AbstractScreen implements Screen {
         Gdx.gl.glClearColor(r, g, b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        batch.setProjectionMatrix(game.fixedCamera.combined);
-        batch.begin();
-        background.draw(batch);
-        batch.end();
+        // Moved the drawing with the batch to each subclass, because its often used
+        // differently
 
         // Moved the handleInput() call to the subclass
-
     }
 
     private void handleInput() {
@@ -52,6 +48,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int w, int h) {
+        game.dynamicViewPort.update(w, h);
         game.fixedViewPort.update(w, h);
     }
 
@@ -72,7 +69,11 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void dispose() {
+        background.getTexture().dispose();
+    }
 
+    public void updateBackground(String filepath) {
+        background = new Sprite(new Texture(filepath));
     }
 
 }

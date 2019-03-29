@@ -40,12 +40,14 @@ public class ProgramCard implements Comparable {
         return this.style;
     }
 
-    public TextureAtlas getAtlas(){
-        return this.atlas;
+    public void dispose(){
+        atlas.dispose();
+        skin.dispose();
+        style.font.dispose();
     }
 
-    public Skin getSkin(){
-        return this.skin;
+    public boolean isRotate(){
+        return rotate != Rotate.NONE;
     }
 
     public int getMoveDistance() {

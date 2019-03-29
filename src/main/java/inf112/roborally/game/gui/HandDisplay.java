@@ -6,6 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 
+import java.util.ArrayList;
+
 /**
  * A class for drawing all the cards that are in the player hand.
  */
@@ -31,7 +33,7 @@ public class HandDisplay {
         for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
             ProgramCard card = player.getCardInHand(i);
             card.setUpSkin();
-            ImageTextButton cardInHandButton = new ProgramCardButton(card);
+            final ProgramCardButton cardInHandButton = new ProgramCardButton(card);
             cardInHandButton.setTransform(true);
             cardInHandButton.setScale(scale);
             cardInHandButton.setPosition(posX + 130 * (i % 5), posY - 170 * j);
@@ -41,9 +43,6 @@ public class HandDisplay {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().placeCard(index);
-                    hud.clearAllCards();
-                    hud.clearAllCards();
-                    hud.clearAllCards();
                     hud.clearAllCards();
                     hud.updateCards();
                 }
@@ -57,5 +56,4 @@ public class HandDisplay {
             }
         }
     }
-
 }

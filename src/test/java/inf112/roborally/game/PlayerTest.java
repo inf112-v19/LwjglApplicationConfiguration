@@ -207,4 +207,39 @@ public class PlayerTest {
         player.repairAllDamage();
         assertEquals(5, player.getRegisters().getNumUnlockedRegisters());
     }
+
+    @Test
+    public void doNotTakeDamageWhenDead(){
+        for(int i = 0; i < 34; i++){
+            player.takeDamage();
+        }
+        assertEquals(0,player.getLives());
+        assertEquals(0, player.getDamage());
+    }
+
+    @Test
+    public void takingTenDamageCausesOneLifeLost(){
+        for (int i = 0; i < 10; i++)
+            player.takeDamage();
+        assertEquals(0, player.getDamage());
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void takingMoreThanTenDamageStartsAtZeroAgain(){
+        for (int i = 0; i < 16; i++)
+            player.takeDamage();
+        assertEquals(6, player.getDamage());
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void take6Damage(){
+        for (int i = 0; i < 6; i++)
+            player.takeDamage();
+        assertEquals(6, player.getDamage());
+    }
+
+
+
 }

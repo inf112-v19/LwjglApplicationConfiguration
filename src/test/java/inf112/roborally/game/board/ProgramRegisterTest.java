@@ -55,7 +55,20 @@ public class ProgramRegisterTest {
     }
 
     @Test
-    public void getCardLimit_EqualsNine(){
+    public void PlayerDoesNotReceiveACardIfHandIsFull(){
+        for(int i = 0; i < player.getCardLimit(); i++)
+            player.receiveCard(stack.pop());
+
+        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, player.getNumberOfCardsInHand());
+
+        player.receiveCard(stack.pop());
+        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, player.getNumberOfCardsInHand());
+    }
+
+
+
+    @Test
+    public void getCardLimit_EqualsMaxNumberOfCards(){
         assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, player.getCardLimit());
     }
 
@@ -136,4 +149,17 @@ public class ProgramRegisterTest {
 
         assertEquals(false, programRegisters.isFull());
     }
+
+    @Test
+    public void registerIsFull_ReturnsFalseWhenCalling_returnCards_AfterRegisterBeingFull(){
+        for(int i = 0; i < 9; i++)
+            player.receiveCard(stack.pop());
+
+        for(int i = 0; i < 5; i++)
+            player.getRegisters().placeCard(0);
+        player.getRegisters().returnCards(player);
+
+        assertEquals(false, programRegisters.isFull());
+    }
+
 }

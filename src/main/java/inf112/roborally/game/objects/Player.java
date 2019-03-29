@@ -2,25 +2,25 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.enums.Rotate;
-
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.sound.GameSound;
 
 import java.util.ArrayList;
 
+import static inf112.roborally.game.board.TiledTools.cellContainsKey;
 
 public class Player extends MovableGameObject implements Comparable {
-    private static final int MAX_DAMAGE = 9;
+    private static final int MAX_DAMAGE = 10;
     private static final int MAX_LIVES = 3;
 
-    int phase = 0;
+    private boolean debugging = false;
 
     private String name;
     private int lives;
@@ -41,6 +41,10 @@ public class Player extends MovableGameObject implements Comparable {
     private int targetFlag;
     private int nFlags;
 
+    //Whether or not the player has screamed from falling off the map this round.
+    private boolean screamed;
+
+    int phase;
 
     public Player(String name, String filepath, Direction direction, Board board) {
         super(0, 0, filepath);
@@ -67,12 +71,14 @@ public class Player extends MovableGameObject implements Comparable {
         nSounds = 3;
         allPlayerSounds = new GameSound[nSounds];
         createSounds();
+
+        phase = 0;
     }
 
     public void createSounds() {
-        allPlayerSounds[0] = new GameSound("assets/music/playerLaser.wav");
-        allPlayerSounds[1] = new GameSound("assets/music/playerRepair.wav");
-        allPlayerSounds[2] = new GameSound("assets/music/playerWilhelmScream.wav");
+        allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
+        allPlayerSounds[1] = new GameSound(AssMan.MUSIC_PLAYER_REPAIR.fileName);
+        allPlayerSounds[2] = new GameSound(AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
     }
 
     @Override
@@ -89,57 +95,56 @@ public class Player extends MovableGameObject implements Comparable {
      * FOR TESTING ONLY
      */
     public Player(int x, int y, int nFlags) {
-        super(x, y, "assets/robot/tvBot.png");
+        super(x, y, AssMan.PLAYER_TVBOT.fileName);
+        this.nFlags = nFlags;
         damage = 0;
         lives = MAX_LIVES;
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
-
-
-        // For testing with flag behaviour, now tests with 3 flags on the board
         targetFlag = 1;
-        this.nFlags = nFlags;
-
-    }
-
-    public void executeCard(int phase) {
-        this.phase = phase;
-        ProgramCard programCard = registers.getCard(phase);
-        if (programCard == null || !isOperational()) return;
-
-        if (programCard.getRotate() != Rotate.NONE) {
-            rotate(programCard.getRotate());
-            return;
-        }
-
-        if (programCard.getMoveDistance() == -1) {
-            if (board.canGo(this, getDirection().getOppositeDirection())
-                    && board.canPush(this, getDirection().getOppositeDirection())) {
-                moveInDirection(getDirection().getOppositeDirection());
-            }
-        }
-        for (int i = 0; i < programCard.getMoveDistance(); i++) {
-            if (board.canGo(this, getDirection()) && board.canPush(this, getDirection())) {
-                move(1);
-            }
-        }
+        debugging = true;
     }
 
     @Override
     public void move(int steps) {
+        if (debugging) {
+            for (int i = 0; i < steps; i++) moveInDirection(getDirection());
+            return;
+        }
+
+        screamed = false;
+
         for (int i = 0; i < steps; i++) {
-            moveInDirection(getDirection());
+            if (canGo(getDirection(), board.getWallLayer()) && canPush(getDirection(), board)) {
+                moveInDirection(getDirection());
+            }
         }
         // every time a player moves we need to check if it is off the board or not
-        if (board != null && board.isOffTheBoard(this)) { // need to check if board is null for tests to work
+        if (board != null && isOffTheBoard(board.getFloorLayer())) { // need to check if board is null for tests to work
             this.destroy();
         }
+    }
+
+    public void reverse() {
+        if (debugging) {
+            moveInDirection(getDirection().getOppositeDirection());
+            return;
+        }
+
+        Direction directionToMoveIn = getDirection().getOppositeDirection();
+        if (canGo(directionToMoveIn, board.getWallLayer()) && canPush(directionToMoveIn, board))
+            moveInDirection(directionToMoveIn);
+        move(0);
     }
 
 
     public void receiveCard(ProgramCard programCard) {
         if (programCard == null) {
             throw new NullPointerException("Trying to add a programCard that has value null");
+        }
+        else if (cardsInHand.size() == ProgramRegisters.MAX_NUMBER_OF_CARDS) {
+            System.out.println(this.name + " can not receive more cards");
+            return;
         }
         cardsInHand.add(programCard);
     }
@@ -150,18 +155,6 @@ public class Player extends MovableGameObject implements Comparable {
                     + ", but number of cards in hand: " + getNumberOfCardsInHand());
         }
         return cardsInHand.remove(cardPos);
-    }
-
-    public ProgramCard getCardInHand(int cardPos) {
-        return cardsInHand.get(cardPos);
-    }
-
-    public ArrayList<ProgramCard> getCardsInHand() {
-        return cardsInHand;
-    }
-
-    public int getNumberOfCardsInHand() {
-        return cardsInHand.size();
     }
 
     public ArrayList<ProgramCard> returnCards() {
@@ -178,22 +171,25 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void update() {
-        if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
+        if (!debugging) {
+            if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
 
-        if (isDestroyed() && !outOfLives()) {
-            playerState = PlayerState.DESTROYED;
-            if (backup != null) {
-                move(-1, -1);
+            if (isOffTheBoard(board.getFloorLayer()) && !outOfLives()) {
+                playerState = PlayerState.DESTROYED;
+                if (backup != null) {
+                    move(-1, -1);
+                }
+                Gdx.app.log(name, "is destroyed!");
             }
-            Gdx.app.log(name, "is destroyed!");
+            updateSprite();
         }
-        updateSprite();
     }
 
     public void respawn() {
         if (!isDestroyed()) return; // Can only respawn dead robots
 
-        lives--;
+        takeDamage();
+
         if (outOfLives()) {
             System.out.println(name + " is out of the game");
             playerState = PlayerState.GAME_OVER;
@@ -216,7 +212,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void powerUp() {
-        if(!isPoweredDown()) return;
+        if (!isPoweredDown()) return;
 
         repairAllDamage();
         playerState = PlayerState.OPERATIONAL;
@@ -243,19 +239,45 @@ public class Player extends MovableGameObject implements Comparable {
 
     /**
      * Take one damage. Locks a register if damage taken is greater or equal to 5.
+     * Lose a life if damage taken is equal to MAX_DAMAGE.
      */
     public void takeDamage() {
-        if (damage < 10) {
+        if (damage < MAX_DAMAGE && lives > 0) {
             damage++;
+
+            if (damage >= 5) {
+                registers.lock();
+            }
         }
-        if (damage >= 5) {
-            registers.lock();
+
+
+        if (damage == MAX_DAMAGE) {
+            lives--;
+            damage = 0;
+            playerState = PlayerState.DESTROYED;
         }
     }
 
 
+    public void fireLaser(Board board) {
+        LaserShot laserShot = new LaserShot(getDirection(), getX(), getY());
+        while (laserShot.canGo(laserShot.getDirection(), board.getWallLayer())) {
+            laserShot.moveInDirection(laserShot.getDirection());
+            for (Player target : board.getPlayers()) {
+                if (laserShot.position.equals(target.position)) {
+                    target.takeDamage();
+                    System.out.println(getName() + " shoots  " + target.getName());
+                    return;
+                }
+            }
+            if (laserShot.outOfBounds(board)) {
+                return;
+            }
+        }
+    }
+
     public void visitFlag(int flagNumber) {
-        if(flagNumber > nFlags) return;
+        if (flagNumber > nFlags) return;
 
         if (flagNumber == targetFlag) {
             targetFlag++;
@@ -263,27 +285,31 @@ public class Player extends MovableGameObject implements Comparable {
         }
     }
 
+    public void destroy() {
+        damage = MAX_DAMAGE;
+    }
+
     public boolean hasWon() {
         return targetFlag > nFlags;
     }
 
-    public void destroy() {
-        damage = MAX_DAMAGE + 1;
+    public boolean hitByLaser(TiledMapTileLayer laserLayer) {
+        return cellContainsKey(laserLayer.getCell(getX(), getY()), "Laser");
     }
 
     public boolean isDestroyed() {
-        return damage > MAX_DAMAGE;
+        return playerState == PlayerState.DESTROYED;
     }
 
     public boolean isReady() {
         return playerState == PlayerState.POWERED_DOWN || playerState == PlayerState.READY;
     }
 
-    public boolean isOperational(){
+    public boolean isOperational() {
         return playerState == PlayerState.OPERATIONAL;
     }
 
-    public boolean isPoweredDown(){
+    public boolean isPoweredDown() {
         return playerState == PlayerState.POWERED_DOWN;
     }
 
@@ -291,8 +317,31 @@ public class Player extends MovableGameObject implements Comparable {
         return lives < 1;
     }
 
-    public boolean handIsFull(){
+    public boolean handIsFull() {
         return cardsInHand.size() >= ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
+    }
+
+    public void killTheSound() {
+        for (GameSound s : allPlayerSounds) {
+            s.mute();
+        }
+        allPlayerSounds = new GameSound[nSounds];
+    }
+
+    public boolean hasScreamed() {
+        return this.screamed;
+    }
+
+    public ProgramCard getCardInHand(int cardPos) {
+        return cardsInHand.get(cardPos);
+    }
+
+    public ArrayList<ProgramCard> getCardsInHand() {
+        return cardsInHand;
+    }
+
+    public int getNumberOfCardsInHand() {
+        return cardsInHand.size();
     }
 
     public int getCardLimit() {
@@ -323,21 +372,15 @@ public class Player extends MovableGameObject implements Comparable {
         return registers;
     }
 
-
-    @Override
-    public String toString() {
-        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
+    public boolean isAlive() {
+        return lives != 0;
     }
 
     public GameSound getSoundFromPlayer(int index) {
-        return allPlayerSounds[index];
-    }
-
-    public void killTheSound() {
-        for (GameSound s : allPlayerSounds) {
-            s.mute();
+        if (index == 2) {
+            screamed = true;
         }
-        allPlayerSounds = new GameSound[nSounds];
+        return allPlayerSounds[index];
     }
 
     @Override
@@ -354,6 +397,15 @@ public class Player extends MovableGameObject implements Comparable {
         Player other = (Player) o;
         int thisPriority = registers.getCard(phase).getPriority();
         int otherPriority = other.getRegisters().getCard(phase).getPriority();
-        return ((Integer)thisPriority).compareTo(otherPriority);
+
+        return Integer.compare(thisPriority, otherPriority);
+    }
+
+    public void setPhase(int phase){
+        this.phase = phase;
+    }
+    @Override
+    public String toString() {
+        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 }
