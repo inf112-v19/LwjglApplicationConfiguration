@@ -2,7 +2,6 @@ package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
@@ -29,7 +28,7 @@ public class GameLogic extends BoardLogic {
         update();
     }
 
-    public void handleInput() {
+    private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
@@ -74,7 +73,22 @@ public class GameLogic extends BoardLogic {
     public void update() {
         handleInput();
         updatePlayers();
-        executeLogic();
+        switch (state) {
+            case BETWEEN_ROUNDS:
+                doBeforeRound();
+                break;
+            case PICKING_CARDS:
+                checkIfReady();
+                break;
+            case ROUND:
+                doPhase();
+                break;
+            case BOARD_MOVES:
+                boardMoves();
+                break;
+            case GAME_OVER:
+                endGame();
+        }
     }
 
     @Override
@@ -85,8 +99,8 @@ public class GameLogic extends BoardLogic {
     }
 
     @Override
-    public void checkIfReady(){
-        if (player1.isReady()){
+    public void checkIfReady() {
+        if (player1.isReady()) {
             state = GameState.ROUND;
             if (player1.playerState == PlayerState.READY)
                 player1.playerState = PlayerState.OPERATIONAL;
@@ -94,9 +108,8 @@ public class GameLogic extends BoardLogic {
         }
     }
 
-
     @Override
-    protected void boardMoves(){
+    protected void boardMoves() {
         board.boardMoves();
         super.boardMoves();
     }
@@ -111,12 +124,6 @@ public class GameLogic extends BoardLogic {
     protected void cleanBoard() {
         board.cleanUp();
     }
-
-
-
-
-
-
 
 
     //Test if Rotate left tile works

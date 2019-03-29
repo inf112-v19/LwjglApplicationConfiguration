@@ -92,7 +92,7 @@ public class BoardLogic {
         }
     }
 
-    void doPhase() {
+    protected void doPhase() {
         if (phase >= 5) {
             phase = 0;
             state = GameState.BETWEEN_ROUNDS;
@@ -121,10 +121,7 @@ public class BoardLogic {
     }
 
     protected void boardMoves() {
-        if (phase < 5)
-            state = GameState.ROUND;
-        else
-            state = GameState.BETWEEN_ROUNDS;
+        state = GameState.ROUND;
     }
 
     protected void cleanBoard(){

@@ -53,33 +53,34 @@ public class BoardLogicTest {
      */
     @Test
     public void sanityTest() {
-        assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
-        boardLogic.executeLogic();
+        for (int round = 0; round < 2; round++) {
+            assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
 
-        boardLogic.executeLogic();
-        assertEquals(GameState.PICKING_CARDS, boardLogic.getState());
+            boardLogic.executeLogic();
+            assertEquals(GameState.PICKING_CARDS, boardLogic.getState());
 
-        for (Player player : players) {
-            while (!player.getRegisters().isFull())
-                player.getRegisters().placeCard(0);
-            player.playerState = PlayerState.READY;
-        }
+            for (Player player : players) {
+                while (!player.getRegisters().isFull())
+                    player.getRegisters().placeCard(0);
+                player.playerState = PlayerState.READY;
+            }
 
-        for (int i = 0; i < 5; i ++) {
+            for (int i = 0; i < 5; i++) {
+                boardLogic.executeLogic();
+                assertEquals(GameState.ROUND, boardLogic.getState());
+                for (Player player : players) {
+                    assertEquals(player.playerState, PlayerState.OPERATIONAL);
+                }
+                boardLogic.executeLogic();
+                assertEquals(GameState.BOARD_MOVES, boardLogic.getState());
+
+            }
+
             boardLogic.executeLogic();
             assertEquals(GameState.ROUND, boardLogic.getState());
-            for (Player player : players) {
-                assertEquals(player.playerState, PlayerState.OPERATIONAL);
-            }
+
             boardLogic.executeLogic();
-            assertEquals(GameState.BOARD_MOVES, boardLogic.getState());
+            assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
         }
-
-        boardLogic.executeLogic();
-        assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
-
-        boardLogic.executeLogic();
-        assertEquals(GameState.PICKING_CARDS, boardLogic.getState());
     }
-
 }
