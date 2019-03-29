@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
+import static java.util.Collections.*;
+
 @SuppressWarnings("Duplicates")
 public class BoardLogic {
 
@@ -56,7 +58,6 @@ public class BoardLogic {
     protected void doBeforeRound() {
         System.out.println("set up before round");
         cleanBoard();
-
         powerUpRobots();
         powerDownRobots();
 
@@ -81,15 +82,13 @@ public class BoardLogic {
         state = GameState.PICKING_CARDS;
     }
 
-    public void removeDeadRobots() {
-        for (int i = 0; i < airobots.size(); i++) {
-            Player robot = airobots.get(i);
-            if(robot.playerState == PlayerState.DESTROYED && !robot.isAlive()) {
-                deadRobots.add(players.remove(i--));
-                if(airobots.contains(robot)) {
-                    int index = airobots.indexOf(robot);
-                    airobots.remove(index);
-                }
+    private void removeDeadRobots() {
+        for(int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            if (player.playerState == PlayerState.GAME_OVER) {
+                players.remove(player);
+                airobots.remove(player);
+                System.out.println(player.getName() + " was removed.");
             }
         }
     }
@@ -124,6 +123,7 @@ public class BoardLogic {
     }
 
     protected void doPhase() {
+        removeDeadRobots();
         if (phase >= 5) {
             phase = 0;
             state = GameState.BETWEEN_ROUNDS;
@@ -134,12 +134,17 @@ public class BoardLogic {
         System.out.println("executing phase " + phase);
 
         // sort players after phase priority
-        for (Player player : players)
+        for (Player player : players) {
             player.setPhase(phase);
+        }
         try {
+            System.out.println(players.toString());
             Collections.sort(players);
         } catch (NullPointerException e) {
-            throw new NullPointerException("AIRobots: " + airobots.size() + "\n Players: " + players.size());
+            throw new NullPointerException("AIRobots: "
+                    + airobots.size()
+                    + "\n Players: "
+                    + players.size());
         }
 
         executeCards();
@@ -164,7 +169,6 @@ public class BoardLogic {
     }
 
     protected void cleanBoard(){
-        removeDeadRobots();
         System.out.println("Cleaning board");
     }
 
@@ -219,7 +223,7 @@ public class BoardLogic {
     private void reshuffleDeck() {
         while (!returnedProgramCards.empty())
             stackOfProgramCards.push(returnedProgramCards.pop());
-        Collections.shuffle(stackOfProgramCards);
+        shuffle(stackOfProgramCards);
     }
 
     public GameState getState() {

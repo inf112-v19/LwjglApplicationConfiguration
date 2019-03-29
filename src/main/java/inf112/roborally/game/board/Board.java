@@ -8,6 +8,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.animations.LaserAnimation;
 import inf112.roborally.game.animations.RepairAnimation;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 import inf112.roborally.game.enums.Direction;
