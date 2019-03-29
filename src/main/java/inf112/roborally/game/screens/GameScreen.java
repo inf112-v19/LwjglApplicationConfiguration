@@ -28,6 +28,7 @@ public class GameScreen implements Screen {
     private final Board board;
     private Background background;
     private GameMusic music;
+    private boolean testMap = false;
 
     public ArrayList<Animation> animations;
 
@@ -37,14 +38,21 @@ public class GameScreen implements Screen {
         this.game = game;
         assMan = game.getAssMan();
 
-        if (flagPositions != null) {
-            board = new VaultBoard(flagPositions);
+
+        if(!testMap){
+
+            if (flagPositions != null) {
+                board = new VaultBoard(flagPositions);
+            } else {
+                board = new VaultBoard();
+            }
         }
         else {
-            board = new VaultBoard();
-        }
-        //Uncomment the line under and comment the line above to start testing, and the line in GameLogic - doBeforeRound
-//        board = new TestBoard();
+
+            board = new TestBoard();
+
+                   }
+
 
         addPlayersToBoard(robotChoiceIndex);
         board.placePlayers();
