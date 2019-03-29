@@ -34,6 +34,7 @@ public class Player extends MovableGameObject {
     private Board board;
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
+    public LaserCannon laserCannon;
 
     public boolean wantsToPowerDown;
 
@@ -49,12 +50,13 @@ public class Player extends MovableGameObject {
 
     public Player(String name, String filepath, Direction direction, Board board) {
         super(0, 0, filepath);
-
         this.name = name;
         this.board = board;
         setDirection(direction);
         makeSprite();
         loadVisualRepresentation();
+
+        laserCannon = new LaserCannon(this);
 
         damage = 0;
         lives = MAX_LIVES;
@@ -102,6 +104,8 @@ public class Player extends MovableGameObject {
         cardsInHand = new ArrayList<>();
         targetFlag = 1;
         debugging = true;
+        laserCannon = new LaserCannon(this);
+
     }
 
     @Override
@@ -253,24 +257,6 @@ public class Player extends MovableGameObject {
             lives--;
             damage = 0;
             playerState = PlayerState.DESTROYED;
-        }
-    }
-
-
-    public void fireLaser(Board board) {
-        LaserShot laserShot = new LaserShot(getDirection(), getX(), getY());
-        while (laserShot.canGo(laserShot.getDirection(), board.getWallLayer())) {
-            laserShot.moveInDirection(laserShot.getDirection());
-            for (Player target : board.getPlayers()) {
-                if (laserShot.position.equals(target.position)) {
-                    target.takeDamage();
-                    System.out.println(getName() + " shoots  " + target.getName());
-                    return;
-                }
-            }
-            if (laserShot.outOfBounds(board)) {
-                return;
-            }
         }
     }
 

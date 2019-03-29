@@ -19,9 +19,12 @@ public class RoboRallyGame extends Game {
     public static final String VAULT = "assets/maps/vault.tmx";
     public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
     public static final String TEST_MAP = "assets/maps/testMap.tmx";
+    public static final String LASER_TEST_MAP = "assets/maps/lasertest.tmx";
     //Music:
     public static final String MAIN_THEME = "assets/music/Zander Noriega - Perpetual Tension.wav";
     public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
+
+    public static final int MAX_PLAYERS = 8;
 
 
     public OrthographicCamera dynamicCamera;
@@ -33,12 +36,14 @@ public class RoboRallyGame extends Game {
 
     public SpriteBatch batch;
 
-    public TestScreen testScreen;
     public MenuScreen menuScreen;
     public SetupScreen setupScreen;
     public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
+
+    public TestScreen testScreen;
+    public LaserTestScreen laserTestScreen;
 
     private AssMan assMan;
 
@@ -69,11 +74,14 @@ public class RoboRallyGame extends Game {
 
         createPossibleFilepaths();
 
-        testScreen = new TestScreen(this);
         menuScreen = new MenuScreen(this);
 //        gameScreen = new GameScreen(this, VAULT);
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
+
+        testScreen = new TestScreen(this);
+        laserTestScreen = new LaserTestScreen(this);
+
         setScreen(menuScreen);
     }
 
@@ -120,12 +128,6 @@ public class RoboRallyGame extends Game {
     public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions) {
         gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions);
     }
-
-
-    public GameScreen getGameScreen() {
-        return this.gameScreen;
-    }
-
 
     public AssMan getAssMan(){
         return assMan;
