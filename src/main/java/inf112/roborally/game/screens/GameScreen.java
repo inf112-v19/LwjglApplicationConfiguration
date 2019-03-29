@@ -12,6 +12,7 @@ import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.sound.GameMusic;
 
 import java.util.ArrayList;
@@ -32,20 +33,20 @@ public class GameScreen implements Screen {
 
     private AssMan assMan;
 
-    public GameScreen(RoboRallyGame game) {
+    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions) {
         this.game = game;
         assMan = game.getAssMan();
 
-        board = new VaultBoard();
+        if (flagPositions != null) {
+            board = new VaultBoard(flagPositions);
+        }
+        else {
+            board = new VaultBoard();
+        }
         //Uncomment the line under and comment the line above to start testing, and the line in GameLogic - doBeforeRound
 //        board = new TestBoard();
 
-
-        board.addPlayer(new Player("Player1", AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot1", AssMan.PLAYER_CLAPTRAP_REFINED.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot2", AssMan.PLAYER_BUTLER_REFINED.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot3", AssMan.PLAYER_CLAPTRAP_3000.fileName, NORTH, board));
-
+        addPlayersToBoard(robotChoiceIndex);
         board.placePlayers();
 
 
@@ -70,6 +71,23 @@ public class GameScreen implements Screen {
         background = new Background(game.dynamicCamera);
 
         animations = new ArrayList<>();
+    }
+
+    private void addPlayersToBoard(int robotChoiceIndex) {
+        String[] filepaths = game.possibleRobotSkinFilepaths;
+        StringBuilder namebuilder = new StringBuilder();
+        namebuilder.append("Player");
+        int index = robotChoiceIndex;
+        int n = game.nSkins;
+        for (int i = 0; i < n; i++) {
+            if(index >= n) {
+                index = 0;
+            }
+            namebuilder.append(Integer.toString(i+1));
+            board.addPlayer(new Player(namebuilder.toString(), filepaths[index], NORTH, board));
+            namebuilder.deleteCharAt(6); // Delete the last character, which is the player number
+            index++;
+        }
     }
 
     @Override

@@ -9,7 +9,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.CameraListener;
+import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.*;
+
+import java.util.ArrayList;
 
 public class RoboRallyGame extends Game {
     //MAPS:
@@ -30,9 +33,10 @@ public class RoboRallyGame extends Game {
 
     public SpriteBatch batch;
 
-    public GameScreen gameScreen;
     public TestScreen testScreen;
     public MenuScreen menuScreen;
+    public SetupScreen setupScreen;
+    public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
 
@@ -41,6 +45,9 @@ public class RoboRallyGame extends Game {
     //The screen that was active before setting a new screen with setScreen(screen);
     private Screen screenBefore;
 
+
+    public int nSkins;
+    public String[] possibleRobotSkinFilepaths;
 
     @Override
     public void create() {
@@ -60,9 +67,11 @@ public class RoboRallyGame extends Game {
 
         batch = new SpriteBatch();
 
-        testScreen = new TestScreen(this);
+        createPossibleFilepaths();
+
+//        testScreen = new TestScreen(this);
         menuScreen = new MenuScreen(this);
-        gameScreen = new GameScreen(this);
+//        gameScreen = new GameScreen(this, VAULT);
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
         setScreen(menuScreen);
@@ -85,11 +94,33 @@ public class RoboRallyGame extends Game {
         }
     }
 
+    private void createPossibleFilepaths() {
+        nSkins = 4;
+        possibleRobotSkinFilepaths = new String[nSkins];
+        possibleRobotSkinFilepaths[0] = AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName;
+        possibleRobotSkinFilepaths[1] = AssMan.PLAYER_BUTLER_REFINED.fileName;
+        possibleRobotSkinFilepaths[2] = AssMan.PLAYER_CLAPTRAP_REFINED.fileName;
+        possibleRobotSkinFilepaths[3] = AssMan.PLAYER_CLAPTRAP_3000.fileName;
+    }
 
     public void newGame() {
         dispose();
         create();
     }
+
+    public void createSetupScreen() {
+        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
+    }
+
+    // Create GameScreen with preset skins and flag positions
+    public void createGameScreen() {
+        gameScreen = new GameScreen(this, 0, null);
+    }
+
+    public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions) {
+        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions);
+    }
+
 
     public GameScreen getGameScreen() {
         return this.gameScreen;
@@ -106,12 +137,18 @@ public class RoboRallyGame extends Game {
             screenBefore.dispose();
         }
         batch.dispose();
-        testScreen.dispose();
-        gameScreen.dispose();
+//        testScreen.dispose();
         menuScreen.dispose();
-        settingsScreen.dispose();
-        endGameScreen.dispose();
         assMan.dispose();
+        // It might not been made yet
+        if (setupScreen != null) {
+            setupScreen.dispose();
+        }
+
+        if(gameScreen != null) {
+            gameScreen.dispose();
+        }
+
     }
 
     public Screen getScreenBefore(){

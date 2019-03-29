@@ -29,12 +29,7 @@ public class EndGameScreen extends AbstractScreen {
 
     @Override
     public void render(float v) {
-        float r = 0 / 255f;
-        float g = 20 / 255f;
-        float b = 15 / 255f;
-
-        Gdx.gl.glClearColor(r, g, b, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        super.render(v);
 
         batch.setProjectionMatrix(game.fixedCamera.combined);
         batch.begin();
