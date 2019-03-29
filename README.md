@@ -81,11 +81,10 @@ remove it from the register and return it to the player hand, if it is not locke
  * You should be able to mute/unmute the game by pressing M.
  * Pressing 'B' or Escape when in settings screen should return you to the screen you came from.
  * Pressing 'N' should create a new game. You should end up at the Menu Screen where you are prompted to 'PRESS ENTER'. 
-   - Pressing 'N' followed by Enter: A new game should have been initiated, meaning all progress you potentially
+   - Pressing Enter: A new game should be initiated and all progress you potentially
     had in an earlier game should be gone.
    
-    * You should be able to go to the test screen by pressing 'T' instead of the Enter button.
- 
+    * Pressing 'T' should bring up the test screen instead.
       
       
 ## Known bugs
