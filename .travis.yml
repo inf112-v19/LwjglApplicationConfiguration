@@ -4,3 +4,4 @@ rvm:
   - junit
 notifications:
   slack: inf112-v19:CRw9f2OG9z4J4zS50po2QNwi
+    on_failure: always
