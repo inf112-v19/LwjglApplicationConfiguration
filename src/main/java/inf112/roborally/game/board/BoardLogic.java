@@ -53,7 +53,7 @@ public class BoardLogic {
             if (!player.isPoweredDown()) {
                 retrieveCardsFromPlayer(player);
             }
-            if (player.isAlive()) {
+            if (player.isAlive() && player.isOperational()) {
                 giveCardsToPlayer(player);
             }
         }
