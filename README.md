@@ -1,6 +1,9 @@
 # LwjglApplicationConfiguration
 Group 5.1
 
+## Status
+[![Build Status](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration.png)](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration)
+
 # INF112 roborally game
 Much more than a simple skeleton with libgdx. 
 ### Manual testing:
