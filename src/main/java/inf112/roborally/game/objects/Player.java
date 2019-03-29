@@ -394,6 +394,7 @@ public class Player extends MovableGameObject implements Comparable {
     // TODO: TEST THIS
     @Override
     public int compareTo(Object o) {
+        if (o == null) return 0;
         Player other = (Player) o;
         int thisPriority = registers.getCard(phase).getPriority();
         int otherPriority = other.getRegisters().getCard(phase).getPriority();
