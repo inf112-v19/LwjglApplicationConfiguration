@@ -24,7 +24,7 @@ public class BoardLogic {
         returnedProgramCards = new Stack<>();
     }
 
-    public void update() {
+    public void executeLogic() {
         switch (state) {
             case BETWEEN_ROUNDS:
                 doBeforeRound();
@@ -83,9 +83,8 @@ public class BoardLogic {
 
     public void checkIfReady() {
         if (allPlayersReady()) {
-            state = GameState.ROUND;
             for (Player player : players) {
-                if (player.playerState == PlayerState.READY)
+                if (player.playerState == PlayerState.READY) //true if submit button is pressed
                     player.playerState = PlayerState.OPERATIONAL;
             }
             state = GameState.ROUND;
