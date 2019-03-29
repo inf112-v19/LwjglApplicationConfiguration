@@ -28,7 +28,7 @@ remove it from the register and return it to the player hand, if it is not locke
 
 
 
-### Testing of the main game:
+### How to do testing for the main game:
  Run Main.java and press Enter when prompted to get to the main game.
 
 
@@ -70,6 +70,19 @@ remove it from the register and return it to the player hand, if it is not locke
    Pressing the power down button causes you to power down after you have played the current round. This means 
    the robot will not move the next round and all damage taken should be removed after the power down has finished.
  * Pressing the power down button before clicking the submit button will result in going into power down mode.
+      
+      
+      
+#### Settings button testing for game screen and test screen
+ * Pressing 'B' or clicking on the settings button located to the bottom right of the screen should
+ bring up the settings screen. 
+ * You should be able to mute/unmute the game by pressing M.
+ * Pressing 'B' or Escape when in settings screen should return you to the screen you came from.
+ * Pressing 'N' should create a new game. You should end up at the Menu Screen where you are prompted to 'PRESS ENTER'. 
+   - Pressing 'N' followed by Enter: A new game should have been initiated, meaning all progress you potentially had in an earlier game should be gone.
+   
+    * You should be able to go to the test screen by pressing 'T' instead of the Enter button.
+ 
       
       
 ## Known bugs
