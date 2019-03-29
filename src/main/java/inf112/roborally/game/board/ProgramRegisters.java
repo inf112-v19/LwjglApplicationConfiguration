@@ -67,7 +67,6 @@ public class ProgramRegisters implements IProgramRegisters {
         else {
             player.move(programCard.getMoveDistance());
         }
-        registers[phase] = null;
     }
 
     @Override

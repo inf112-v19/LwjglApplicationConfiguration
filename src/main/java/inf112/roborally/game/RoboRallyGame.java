@@ -102,13 +102,15 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void dispose() {
+        if(screenBefore != null) {
+            screenBefore.dispose();
+        }
         batch.dispose();
         testScreen.dispose();
         gameScreen.dispose();
         menuScreen.dispose();
         settingsScreen.dispose();
         endGameScreen.dispose();
-        screenBefore.dispose();
         assMan.dispose();
     }
 
