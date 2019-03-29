@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
+@SuppressWarnings("Duplicates")
 public class BoardLogic {
 
     protected int phase;
@@ -53,7 +54,7 @@ public class BoardLogic {
             if (!player.isPoweredDown()) {
                 retrieveCardsFromPlayer(player);
             }
-            if (player.isAlive()) {
+            if (player.isAlive() && player.isOperational()) {
                 giveCardsToPlayer(player);
             }
         }
