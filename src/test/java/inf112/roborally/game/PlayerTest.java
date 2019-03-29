@@ -19,7 +19,7 @@ public class PlayerTest {
     @Before
     public void setup(){
 
-        player = new Player(0,0);
+        player = new Player(0,0, 1);
         stack = ProgramCard.makeProgramCardDeck();
     }
 
@@ -176,9 +176,9 @@ public class PlayerTest {
     public void priorityTest(){
         PriorityQueue<ProgramCard> q = new PriorityQueue<>();
         // create 3 players:
-        Player p1 = new Player(0,0);
-        Player p2 = new Player(0,0);
-        Player p3 = new Player(0,0);
+        Player p1 = new Player(0,0,1);
+        Player p2 = new Player(0,0, 1);
+        Player p3 = new Player(0,0, 1);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
             p1.receiveCard(stack.pop());
@@ -207,4 +207,39 @@ public class PlayerTest {
         player.repairAllDamage();
         assertEquals(5, player.getRegisters().getNumUnlockedRegisters());
     }
+
+    @Test
+    public void doNotTakeDamageWhenDead(){
+        for(int i = 0; i < 34; i++){
+            player.takeDamage();
+        }
+        assertEquals(0,player.getLives());
+        assertEquals(0, player.getDamage());
+    }
+
+    @Test
+    public void takingTenDamageCausesOneLifeLost(){
+        for (int i = 0; i < 10; i++)
+            player.takeDamage();
+        assertEquals(0, player.getDamage());
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void takingMoreThanTenDamageStartsAtZeroAgain(){
+        for (int i = 0; i < 16; i++)
+            player.takeDamage();
+        assertEquals(6, player.getDamage());
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void take6Damage(){
+        for (int i = 0; i < 6; i++)
+            player.takeDamage();
+        assertEquals(6, player.getDamage());
+    }
+
+
+
 }

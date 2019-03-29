@@ -1,6 +1,5 @@
 package inf112.roborally.game.board;
 
-import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
 import org.junit.Before;
@@ -22,7 +21,7 @@ public class CardExecuteTest {
 
     @Before
     public void setup() {
-        player = new Player(0, 0); // Player will by default face south
+        player = new Player(0, 0, 1); // Player will by default face south
         player.rotate(Rotate.UTURN); // Rotate player so it faces North
         manualTestDeck = new Stack<>();
     }

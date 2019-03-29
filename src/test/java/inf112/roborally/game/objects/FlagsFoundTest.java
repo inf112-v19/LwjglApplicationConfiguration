@@ -23,21 +23,21 @@ public class FlagsFoundTest {
 //        flags.add(new Flag(1, 2, 2));
 //        flags.add(new Flag(6, 10, 3));
 
-        player = new Player(0,0);
+        player = new Player(0,0, 3);
 
     }
 
     @Test
     public void playerFindsOneFlag() {
         player.visitFlag(1);
-        assertEquals(1, player.getFlagCounter());
+        assertEquals(2, player.getTargetFlag());
     }
 
     @Test
     public void playerFindsTwoFlags() {
         player.visitFlag(1);
         player.visitFlag(2);
-        assertEquals(2, player.getFlagCounter());
+        assertEquals(3, player.getTargetFlag());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class FlagsFoundTest {
         int flagnumber = 1;
         player.visitFlag(flagnumber);
         player.visitFlag(flagnumber);
-        assertEquals(1, player.getFlagCounter());
+        assertEquals(2, player.getTargetFlag());
     }
 
     @Test
@@ -53,14 +53,33 @@ public class FlagsFoundTest {
         for (int i = 1; i < 4; i++) {
             player.visitFlag(i);
         }
-        assertTrue(player.thisPlayerHasWon());
+        assertTrue(player.hasWon());
     }
 
     @Test
     public void playerDoesNotWinWith2Flags() {
         player.visitFlag(1);
         player.visitFlag(2);
-        assertFalse(player.thisPlayerHasWon());
+        assertFalse(player.hasWon());
+    }
+
+
+    @Test
+    public void playerDoesNotWinUnlessGoingToFlagsInCorrectOrder(){
+        player.visitFlag(2);
+        player.visitFlag(1);
+        player.visitFlag(3);
+        assertFalse(player.hasWon());
+        assertEquals(2, player.getTargetFlag());
+
+        player.visitFlag(3);
+        player.visitFlag(2);
+        player.visitFlag(1);
+        assertEquals(3, player.getTargetFlag());
+
+        player.visitFlag(2);
+        player.visitFlag(3);
+        assertTrue(player.hasWon());
     }
 
     @Test
@@ -69,6 +88,6 @@ public class FlagsFoundTest {
         player.visitFlag(2);
         player.visitFlag(3);
         player.visitFlag(4);
-        assertEquals(3, player.getFlagCounter());
+        assertEquals(4, player.getTargetFlag());
     }
 }

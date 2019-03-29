@@ -32,10 +32,13 @@ public class Hud {
 
     private final RoboRallyGame game;
 
+    private AssMan assMan;
+    private float scale = 0.4f;
 
     public Hud(final Player player, final RoboRallyGame game) {
         this.player = player;
         this.game = game;
+        this.assMan = game.getAssMan();
         stage = new Stage(game.fixedViewPort, game.batch);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(game.cameraListener);
@@ -49,60 +52,104 @@ public class Hud {
         stage.addActor(handGui);
 
 
-
         handDisplay = new HandDisplay(player, this);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
 
-        float scale = 0.4f;
-        submitButton = new ImageButton(new TextureRegionDrawable(new Texture(
-                "assets/cards/buttonSubmit.png")));
-        submitButton.setSize(submitButton.getWidth() * scale, submitButton.getHeight() * scale);
-        submitButton.setPosition((1920 / 2) + 7, 260);
-        submitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                player.playerState = PlayerState.READY;
-            }
-        });
+    }
 
 
-        greySubmitButton = new ImageButton(new TextureRegionDrawable(new Texture(
-                "assets/cards/buttonSubmitGrey.png")));
-        greySubmitButton.setSize(submitButton.getWidth(), submitButton.getHeight());
-        greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
-        greySubmitButton.addListener(new ClickListener());
+    public boolean createSubmitButton() {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_SUBMIT.fileName)) {
+            submitButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
+                    (AssMan.BUTTON_SUBMIT.fileName, Texture.class)));
+            submitButton.setSize(submitButton.getWidth() * scale, submitButton.getHeight() * scale);
+            submitButton.setPosition((1920 / 2) + 7, 260);
+            submitButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if (player.getRegisters().isFull() && player.isAlive()) {
+                        player.playerState = PlayerState.READY;
+                    }
+                }
+            });
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-        clearButton = new ImageButton(new TextureRegionDrawable(new Texture(
-                "assets/cards/buttonClear.png")));
-        clearButton.setSize(clearButton.getWidth() * scale, clearButton.getHeight() * scale);
-        clearButton.setPosition((1920 / 2) - (clearButton.getWidth()) - 7, 260);
-        clearButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                player.getRegisters().returnCards(player);
-                clearAllCards();
-                clearAllCards();
-                clearAllCards();
-                clearAllCards();
-                updateCards();
-            }
-        });
 
+    public boolean createSubmitButtonGrey() {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_SUBMIT_GREY.fileName)) {
+            greySubmitButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
+                    (AssMan.BUTTON_SUBMIT_GREY.fileName, Texture.class)));
+            greySubmitButton.setSize(submitButton.getWidth(), submitButton.getHeight());
+            greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
+            greySubmitButton.addListener(new ClickListener());
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-        settingsButton = new ImageButton(new TextureRegionDrawable(new Texture("assets/img/settingsbtn.png")));
-//        settingsButton.setSize(settingsButton.getWidth() * 3, settingsButton.getHeight() * 3);
+    public boolean createButtonClear() {
+        if (assMan.manager.isLoaded(AssMan.BUTTON_CLEAR.fileName)) {
+            clearButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get(
+                    AssMan.BUTTON_CLEAR.fileName, Texture.class)));
+            clearButton.setSize(clearButton.getWidth() * scale, clearButton.getHeight() * scale);
+            clearButton.setPosition((1920 / 2) - (clearButton.getWidth()) - 7, 260);
+            clearButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    if(player.isAlive()) {
+                        player.getRegisters().returnCards(player);
+                        clearAllCards();
+                        updateCards();
+                    }
+                }
+            });
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public boolean createSettingsButton() {
+        settingsButton = new ImageButton(new TextureRegionDrawable(assMan.manager.get
+                (AssMan.BUTTON_SETTINGS.fileName, Texture.class)));
         settingsButton.setPosition(60, 60);
         settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(game.settingsScreen);
+                Gdx.input.setInputProcessor(game.settingsScreen.stage);
             }
         });
+        if (settingsButton != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
-        stage.addActor(greySubmitButton);
-        stage.addActor(submitButton);
-        stage.addActor(clearButton);
-        stage.addActor(settingsButton);
+    public void createButtons() {
+        if (createSubmitButton() && createSubmitButtonGrey() && createButtonClear() && createSettingsButton()) {
+            addButtonsToStage();
+        }
+    }
+
+    private void addButtonsToStage() {
+        if (greySubmitButton != null && submitButton != null && clearButton != null && settingsButton != null) {
+            stage.addActor(greySubmitButton);
+            stage.addActor(submitButton);
+            stage.addActor(clearButton);
+            stage.addActor(settingsButton);
+        }
+
     }
 
     public void draw() {
@@ -115,24 +162,30 @@ public class Hud {
         stage.draw();
     }
 
-
     /**
      * Remove all program card buttons.
-     * Might need to call this function several times to actually remove all buttons. (Weird bug)
      */
     public void clearAllCards() {
-        for (Actor button : registerGui.getChildren()) {
-            if (button instanceof ProgramCardButton) {
-                button.remove();
+        for(int i = 0; i < 4; i++) {
+            for (Actor button : registerGui.getChildren()) {
+                if (button instanceof ProgramCardButton) {
+                    ((ProgramCardButton) button).dispose();
+                    button.remove();
+                }
             }
-        }
-        for (Actor button : handGui.getChildren()){
-            if (button instanceof ProgramCardButton) {
-                button.remove();
-
+            for (Actor button : handGui.getChildren()) {
+                if (button instanceof ProgramCardButton) {
+                    ((ProgramCardButton) button).dispose();
+                    button.remove();
+                }
             }
         }
     }
+
+    public AssMan getAssMan() {
+        return assMan;
+    }
+
 
     /**
      * Updates program cards in hand and program cards in register visually.

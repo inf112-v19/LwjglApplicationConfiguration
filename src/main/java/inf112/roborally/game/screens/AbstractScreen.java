@@ -17,7 +17,6 @@ public abstract class AbstractScreen implements Screen {
 
     public AbstractScreen (RoboRallyGame game, String filepath) {
         this.game = game;
-//        batch = new SpriteBatch();
         batch = game.batch;
         background = new Sprite(new Texture(filepath));
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
@@ -70,7 +69,7 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        background.getTexture().dispose();
     }
 
     public void updateBackground(String filepath) {

@@ -1,11 +1,13 @@
 package inf112.roborally.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.*;
@@ -16,7 +18,7 @@ public class RoboRallyGame extends Game {
     //MAPS:
     public static final String VAULT = "assets/maps/vault.tmx";
     public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
-    public static final String TEST_MAP = "assets/maps/testMap.tmx";
+    public static final String TEST_MAP = "assets/maps/testMap2.tmx";
     //Music:
     public static final String MAIN_THEME = "assets/music/Zander Noriega - Perpetual Tension.wav";
     public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
@@ -38,11 +40,20 @@ public class RoboRallyGame extends Game {
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
 
+    private AssMan assMan;
+
+    //The screen that was active before setting a new screen with setScreen(screen);
+    private Screen screenBefore;
+
+
     public int nSkins;
     public String[] possibleRobotSkinFilepaths;
 
     @Override
     public void create() {
+        assMan = new AssMan();
+        assMan.load();
+        assMan.manager.finishLoading();
 
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);
@@ -64,7 +75,23 @@ public class RoboRallyGame extends Game {
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
         setScreen(menuScreen);
+    }
 
+    /** Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
+     * screen, if any.
+     *
+     * Saves the screen that was used before the function call.
+     *
+     * @param screen may be {@code null} */
+    @Override
+    public void setScreen (Screen screen) {
+        this.screenBefore = getScreen();
+        if (this.screen != null) this.screen.hide();
+        this.screen = screen;
+        if (this.screen != null) {
+            this.screen.show();
+            this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        }
     }
 
     private void createPossibleFilepaths() {
@@ -100,11 +127,20 @@ public class RoboRallyGame extends Game {
         return this.gameScreen;
     }
 
+
+    public AssMan getAssMan(){
+        return assMan;
+    }
+
     @Override
     public void dispose() {
+        if(screenBefore != null) {
+            screenBefore.dispose();
+        }
         batch.dispose();
 //        testScreen.dispose();
         menuScreen.dispose();
+        assMan.dispose();
         // It might not been made yet
         if (setupScreen != null) {
             setupScreen.dispose();
@@ -115,4 +151,9 @@ public class RoboRallyGame extends Game {
         }
 
     }
+
+    public Screen getScreenBefore(){
+        return this.screenBefore;
+    }
+
 }

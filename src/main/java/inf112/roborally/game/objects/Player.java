@@ -3,21 +3,27 @@ package inf112.roborally.game.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.enums.Rotate;
 
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.sound.GameSound;
+
 import java.util.ArrayList;
+
+import static inf112.roborally.game.board.TiledTools.cellContainsKey;
 
 
 public class Player extends MovableGameObject {
-    private static final int MAX_DAMAGE = 9;
+    private static final int MAX_DAMAGE = 10;
     private static final int MAX_LIVES = 3;
+
+    private boolean debugging = false;
 
     private String name;
     private int lives;
@@ -25,15 +31,21 @@ public class Player extends MovableGameObject {
     private Backup backup;
     private ArrayList<ProgramCard> cardsInHand;
     private ProgramRegisters registers;
-    private int flagCounter;
-    private boolean[] flagsFound;
     private Board board;
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
 
+    public boolean wantsToPowerDown;
+
     private int nSounds;
     private GameSound[] allPlayerSounds;
 
+    //flags:
+    private int targetFlag;
+    private int nFlags;
+
+    //Whether or not the player has screamed from falling off the map this round.
+    private boolean screamed;
 
     public Player(String name, String filepath, Direction direction, Board board) {
         super(0, 0, filepath);
@@ -47,15 +59,14 @@ public class Player extends MovableGameObject {
         damage = 0;
         lives = MAX_LIVES;
 
-        flagCounter = 0;
-        flagsFound = new boolean[board.getFlags().size()];
-
+        targetFlag = 1;
+        nFlags = board.getFlags().size();
 
         backup = new Backup(getX(), getY(), this);
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
-        playerState = PlayerState.PICKING_CARDS;
+        playerState = PlayerState.OPERATIONAL;
 
         // As for now, we have 3 sounds
         nSounds = 3;
@@ -63,10 +74,10 @@ public class Player extends MovableGameObject {
         createSounds();
     }
 
-    public void createSounds () {
-        allPlayerSounds[0] = new GameSound("assets/music/playerLaser.wav");
-        allPlayerSounds[1] = new GameSound("assets/music/playerRepair.wav");
-        allPlayerSounds[2] = new GameSound("assets/music/playerWilhelmScream.wav");
+    public void createSounds() {
+        allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
+        allPlayerSounds[1] = new GameSound(AssMan.MUSIC_PLAYER_REPAIR.fileName);
+        allPlayerSounds[2] = new GameSound(AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
     }
 
     @Override
@@ -82,58 +93,56 @@ public class Player extends MovableGameObject {
     /**
      * FOR TESTING ONLY
      */
-    public Player(int x, int y) {
-        super(x, y, "assets/robot/tvBot.png");
+    public Player(int x, int y, int nFlags) {
+        super(x, y, AssMan.PLAYER_TVBOT.fileName);
+        this.nFlags = nFlags;
         damage = 0;
         lives = MAX_LIVES;
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
-
-
-        // For testing with flag behaviour, now tests with 3 flags on the board
-        flagCounter = 0;
-//        backup = new Backup(x,y);
-        flagsFound = new boolean[3];
-    }
-
-    public void executeCard(ProgramCard programCard) {
-        if (programCard == null) {
-            return;
-        }
-
-        if (programCard.getRotate() != Rotate.NONE) {
-            rotate(programCard.getRotate());
-            return;
-        }
-
-        if (programCard.getMoveDistance() == -1) {
-            if (board.canGo(this, getDirection().getOppositeDirection())
-                    && board.canPush(this, getDirection().getOppositeDirection())) {
-                moveInDirection(getDirection().getOppositeDirection());
-            }
-        }
-        for (int i = 0; i < programCard.getMoveDistance(); i++) {
-            if (board.canGo(this, getDirection()) && board.canPush(this, getDirection())) {
-                move(1);
-            }
-        }
+        targetFlag = 1;
+        debugging = true;
     }
 
     @Override
     public void move(int steps) {
+        if (debugging) {
+            for(int i = 0; i < steps; i++) moveInDirection(getDirection());
+            return;
+        }
+
+        screamed = false;
+
         for (int i = 0; i < steps; i++) {
-            moveInDirection(getDirection());
+            if (canGo(getDirection(), board.getWallLayer()) && canPush(getDirection(), board)) {
+                moveInDirection(getDirection());
+            }
         }
         // every time a player moves we need to check if it is off the board or not
-        if (board != null && board.isOffTheBoard(this)) { // need to check if board is null for tests to work
+        if (board != null && isOffTheBoard(board.getFloorLayer())) { // need to check if board is null for tests to work
             this.destroy();
         }
+    }
+
+    public void reverse() {
+        if (debugging) {
+            moveInDirection(getDirection().getOppositeDirection());
+            return;
+        }
+
+        Direction directionToMoveIn = getDirection().getOppositeDirection();
+        if (canGo(directionToMoveIn, board.getWallLayer()) && canPush(directionToMoveIn, board))
+            moveInDirection(directionToMoveIn);
+        move(0);
     }
 
 
     public void receiveCard(ProgramCard programCard) {
         if (programCard == null) {
             throw new NullPointerException("Trying to add a programCard that has value null");
+        }else if(cardsInHand.size() == ProgramRegisters.MAX_NUMBER_OF_CARDS){
+            System.out.println(this.name + " can not receive more cards");
+            return;
         }
         cardsInHand.add(programCard);
     }
@@ -144,18 +153,6 @@ public class Player extends MovableGameObject {
                     + ", but number of cards in hand: " + getNumberOfCardsInHand());
         }
         return cardsInHand.remove(cardPos);
-    }
-
-    public ProgramCard getCardInHand(int cardPos) {
-        return cardsInHand.get(cardPos);
-    }
-
-    public ArrayList<ProgramCard> getCardsInHand() {
-        return cardsInHand;
-    }
-
-    public int getNumberOfCardsInHand() {
-        return cardsInHand.size();
     }
 
     public ArrayList<ProgramCard> returnCards() {
@@ -172,19 +169,54 @@ public class Player extends MovableGameObject {
     }
 
     public void update() {
-        if (isDestroyed() && !outOfLives()) {
-            Gdx.app.log("Player", "is destroyed!");
-            lives--;
-            repairAllDamage();
-            if (backup != null)
-                backup.movePlayerToBackup();
+        if(!debugging) {
+            if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
+
+            if (isOffTheBoard(board.getFloorLayer()) && !outOfLives()) {
+                playerState = PlayerState.DESTROYED;
+                if (backup != null) {
+                    move(-1, -1);
+                }
+                Gdx.app.log(name, "is destroyed!");
+            }
+            updateSprite();
         }
-        else if (isDestroyed() && outOfLives()) {
-            Gdx.app.log("Player", "is dead!");
-            Gdx.app.log("GAME OVER", "");
-        }
-        updateSprite();
     }
+
+    public void respawn() {
+        if (!isDestroyed()) return; // Can only respawn dead robots
+
+        takeDamage();
+
+        if (outOfLives()) {
+            System.out.println(name + " is out of the game");
+            playerState = PlayerState.GAME_OVER;
+        }
+        else {
+            repairAllDamage();
+            if (backup != null) {
+                backup.movePlayerToBackup();
+            }
+            playerState = PlayerState.OPERATIONAL;
+        }
+    }
+
+    public void powerDown() {
+        if (!wantsToPowerDown || !isOperational()) return;
+
+        playerState = PlayerState.POWERED_DOWN;
+        System.out.println(name + " powers down");
+        wantsToPowerDown = false;
+    }
+
+    public void powerUp() {
+        if (!isPoweredDown()) return;
+
+        repairAllDamage();
+        playerState = PlayerState.OPERATIONAL;
+        System.out.println(name + " powers up");
+    }
+
 
     /**
      * Repairs all damage dealt to the player and unlocks all locked registers.
@@ -205,53 +237,106 @@ public class Player extends MovableGameObject {
 
     /**
      * Take one damage. Locks a register if damage taken is greater or equal to 5.
+     * Lose a life if damage taken is equal to MAX_DAMAGE.
      */
     public void takeDamage() {
-        if (damage < 10) {
+        if (damage < MAX_DAMAGE && lives > 0) {
             damage++;
+
+            if(damage >= 5){
+                registers.lock();
+            }
         }
-        if (damage >= 5) {
-            registers.lock();
+
+
+        if(damage == MAX_DAMAGE){
+            lives--;
+            damage = 0;
+            playerState = PlayerState.DESTROYED;
         }
     }
 
 
-    public void visitFlag(int flagNumber) {
-        if (flagNumber > flagsFound.length) return;
+    public void fireLaser(Board board) {
+        LaserShot laserShot = new LaserShot(getDirection(), getX(), getY());
+        while (laserShot.canGo(laserShot.getDirection(), board.getWallLayer())) {
+            laserShot.moveInDirection(laserShot.getDirection());
+            for (Player target : board.getPlayers()) {
+                if (laserShot.position.equals(target.position)) {
+                    target.takeDamage();
+                    System.out.println(getName() + " shoots  " + target.getName());
+                    return;
+                }
+            }
+            if (laserShot.outOfBounds(board)) {
+                return;
+            }
+        }
+    }
 
-        // you need to pick up the flags in order, so first check if the flag you are standing on
-        // is your next flag
-        if (flagNumber - 1 <= flagCounter && !flagsFound[flagNumber - 1]) {
-            flagsFound[flagNumber - 1] = true;
-            flagCounter++;
+    public void visitFlag(int flagNumber) {
+        if (flagNumber > nFlags) return;
+
+        if (flagNumber == targetFlag) {
+            targetFlag++;
             System.out.printf("%s picked up a flag!%n", name);
         }
     }
 
-    // Iterates over the booleanArray which keeps track of how many  of the flags
-    // have been found. If one of the array positions is false, then
-    // this will return false
-    public boolean thisPlayerHasWon() {
-        for (boolean found : flagsFound) {
-            if (!found) {
-                return false;
-            }
-        }
-        return true;
+    public void destroy() {
+        damage = MAX_DAMAGE;
     }
 
-    public void destroy() {
-        damage = MAX_DAMAGE + 1;
+    public boolean hasWon() {
+        return targetFlag > nFlags;
+    }
+
+    public boolean hitByLaser(TiledMapTileLayer laserLayer) {
+        return cellContainsKey(laserLayer.getCell(getX(), getY()), "Laser");
     }
 
     public boolean isDestroyed() {
-        return damage > MAX_DAMAGE;
+        return playerState == PlayerState.DESTROYED;
+    }
+
+    public boolean isReady() {
+        return playerState == PlayerState.POWERED_DOWN || playerState == PlayerState.READY;
+    }
+
+    public boolean isOperational() {
+        return playerState == PlayerState.OPERATIONAL;
+    }
+
+    public boolean isPoweredDown() {
+        return playerState == PlayerState.POWERED_DOWN;
     }
 
     public boolean outOfLives() {
-        return lives == 0;
+        return lives < 1;
     }
 
+    public void killTheSound() {
+        for (GameSound s : allPlayerSounds) {
+            s.mute();
+        }
+        allPlayerSounds = new GameSound[nSounds];
+    }
+
+    public boolean hasScreamed() {
+        return this.screamed;
+    }
+
+    public ProgramCard getCardInHand(int cardPos) {
+        return cardsInHand.get(cardPos);
+    }
+
+    public ArrayList<ProgramCard> getCardsInHand() {
+        return cardsInHand;
+    }
+
+    public int getNumberOfCardsInHand() {
+        return cardsInHand.size();
+    }
 
     public int getCardLimit() {
         return ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
@@ -265,8 +350,8 @@ public class Player extends MovableGameObject {
         return this.lives;
     }
 
-    public int getFlagCounter() {
-        return this.flagCounter;
+    public int getTargetFlag() {
+        return targetFlag;
     }
 
     public String getName() {
@@ -281,25 +366,15 @@ public class Player extends MovableGameObject {
         return registers;
     }
 
-    public boolean[] getFlagsFound() {
-        return this.flagsFound;
-    }
-
-
-    @Override
-    public String toString() {
-        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
+    public boolean isAlive(){
+        return lives != 0;
     }
 
     public GameSound getSoundFromPlayer(int index) {
-        return allPlayerSounds[index];
-    }
-
-    public void killTheSound() {
-        for (GameSound s : allPlayerSounds) {
-            s.mute();
+        if (index == 2) {
+            screamed = true;
         }
-        allPlayerSounds = new GameSound[nSounds];
+        return allPlayerSounds[index];
     }
 
     @Override
@@ -308,5 +383,10 @@ public class Player extends MovableGameObject {
             return false;
 
         return this.name.equals(((Player) other).name);
+    }
+
+    @Override
+    public String toString() {
+        return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 }

@@ -1,6 +1,5 @@
 package inf112.roborally.game.board;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
@@ -41,12 +40,14 @@ public class ProgramCard implements Comparable {
         return this.style;
     }
 
-    public TextureAtlas getAtlas(){
-        return this.atlas;
+    public void dispose(){
+        atlas.dispose();
+        skin.dispose();
+        style.font.dispose();
     }
 
-    public Skin getSkin(){
-        return this.skin;
+    public boolean isRotate(){
+        return rotate != Rotate.NONE;
     }
 
     public int getMoveDistance() {

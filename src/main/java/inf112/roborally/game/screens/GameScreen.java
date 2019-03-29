@@ -8,6 +8,7 @@ import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.*;
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
@@ -21,7 +22,6 @@ import static inf112.roborally.game.enums.Direction.NORTH;
 
 public class GameScreen implements Screen {
 
-    public static String mapPath = RoboRallyGame.TEST_MAP;
     private final RoboRallyGame game;
     private final Hud hud;
     private final GameLogic gameLogic;
@@ -31,9 +31,12 @@ public class GameScreen implements Screen {
 
     public ArrayList<Animation> animations;
 
+    private AssMan assMan;
+
     public GameScreen(RoboRallyGame game, String mapPath, int robotChoiceIndex, ArrayList<Position> flagPositions) {
         this.mapPath = mapPath;
         this.game = game;
+        assMan = game.getAssMan();
 
         if (flagPositions != null) {
             board = new VaultBoard(flagPositions);
@@ -41,13 +44,26 @@ public class GameScreen implements Screen {
         else {
             board = new VaultBoard();
         }
+        //Uncomment the line under and comment the line above to start testing, and the line in GameLogic - doBeforeRound
+//        board = new TestBoard();
 
-        addPlayersToBoard(robotChoiceIndex);
 
-        board.placePlayers();
+        board.addPlayer(new Player("Player1", AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot1", AssMan.PLAYER_CLAPTRAP_REFINED.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot2", AssMan.PLAYER_BUTLER_REFINED.fileName, NORTH, board));
+        board.addPlayer(new Player("testBot3", AssMan.PLAYER_CLAPTRAP_3000.fileName, NORTH, board));
+
+        //addPlayersToBoard(robotChoiceIndex);
+        //board.placePlayers();
+
 
         hud = new Hud(board.getPlayers().get(0), game);
+
+        hud.createButtons();
+
+        System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud, game);
+
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
         music.play();
@@ -83,6 +99,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(hud.stage);
+
     }
 
     @Override
@@ -109,6 +127,7 @@ public class GameScreen implements Screen {
             if (animations.get(i).hasFinished())
                 animations.remove(i--); // need to decrement i when removing an element?
         }
+        board.renderLayer(board.getWallLayer());
         game.batch.end();
 
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
@@ -157,10 +176,9 @@ public class GameScreen implements Screen {
 
     }
 
-    public Hud getHud() {
-        return hud;
+    public Hud getHud(){
+        return this.hud;
     }
-
     public GameLogic getGameLogic() {
         return gameLogic;
     }

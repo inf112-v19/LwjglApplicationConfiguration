@@ -2,6 +2,7 @@ package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
@@ -9,210 +10,248 @@ import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
-import java.util.*;
-
-
-public class GameLogic {
-
-    private int phase;
-    private Board board;
-    private GameState state;
-    private RoboRallyGame game;
-
-    private Stack<ProgramCard> stackOfProgramCards;
-    private ArrayList<Player> players;
-    private Stack<ProgramCard> returnedProgramCards;
-    private Player player1;
+public class GameLogic extends BoardLogic {
 
     private final Hud hud;
+    private Board board;
+    private RoboRallyGame game;
+    private Player player1;
+
 
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
-        state = GameState.PREROUND;
+        super(board.getPlayers());
         this.game = game;
-        stackOfProgramCards = ProgramCard.makeProgramCardDeck();
-        returnedProgramCards = new Stack<>();
-        this.players = board.getPlayers();
-        player1 = players.get(0);
         this.board = board;
         this.hud = hud;
+        player1 = players.get(0);
 
-        phase = 0;
-
-        update();
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
-    }
-
-    /**
-     * Retrieve cards from last round
-     * Receive new cards
-     */
-    public void doBeforeRound() {
-        // todo: check if a player has won
-        retrieveCardsFromPlayer(player1);
-        board.cleanBoard();
-        giveCardsToPlayer(player1);
-
-        //Need to call updateCards() several times to fix bug where cards in register won't go away after submitting.
-        hud.clearAllCards();
-        hud.clearAllCards();
-        hud.clearAllCards();
-        hud.updateCards();
-
-        state = GameState.PICKING_CARDS;
-    }
-
-
-    public void update() {
-        handleInput();
-        updatePlayers();
-
-        switch (state) {
-            case PREROUND:
-                System.out.println("set up before round");
-                doBeforeRound();
-                System.out.println("player choosing cards");
-                for(Player player : players) {
-                    player.playerState = PlayerState.PICKING_CARDS;
-                }
-                break;
-            case PICKING_CARDS:
-                if (playerReady(player1)) {
-                    state = GameState.ROUND;
-                }
-                break;
-            case ROUND:
-                if (phase < 5) {
-                    System.out.println("executing phase " + phase);
-                    player1.executeCard(player1.getRegisters().getCard(phase));
-                    checkIfAnyPlayersWon();
-                    try {
-                        Thread.sleep(500);
-                    }
-                    catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    phase++;
-                    state = GameState.BOARDMOVES;
-                }
-                else {
-                    phase = 0;
-                    state = GameState.PREROUND;
-                    System.out.println("round over");
-                }
-                break;
-            case BOARDMOVES:
-                board.boardMoves();
-                state = GameState.ROUND;
-                break;
-        }
-
+        update();
     }
 
     public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
         }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.E))  {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             System.out.println("Switched to EndGame screen");
             game.endGameScreen.addWinner(player1);
             game.setScreen(game.endGameScreen);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 1, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            player1.executeCard(new ProgramCard(Rotate.UTURN, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            player1.executeCard(new ProgramCard(Rotate.RIGHT, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            player1.executeCard(new ProgramCard(Rotate.LEFT, 0, 0, ""));
-            board.boardMoves();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            player1.executeCard(new ProgramCard(Rotate.NONE, 0, 0, ""));
-            board.boardMoves();
-        }
-
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             players.get(0).getRegisters().returnCards(players.get(0));
             hud.clearAllCards();
-            hud.clearAllCards();
-            hud.clearAllCards();
             hud.updateCards();
         }
-    }
 
-    private void checkIfAnyPlayersWon() {
-        for (Player pl : players) {
-            if (pl.thisPlayerHasWon()) {
-                System.out.printf("%s just won the game by collecting all the flags!!%n", pl.getName());
-                // Might not be necessary to exit the game when it's finished
-                Gdx.app.exit();
-            }
+        boolean updatePlayer = true;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            player1.move(1);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            player1.rotate(Rotate.LEFT);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            player1.rotate(Rotate.RIGHT);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            player1.reverse();
+        }
+        else {
+            updatePlayer = false;
+        }
+        if (updatePlayer) {
+            board.boardMoves();
+            updatePlayers();
         }
     }
 
-    public void updatePlayers(){
-        for (Player pl : players){
-            pl.update();
+    @Override
+    public void update() {
+        handleInput();
+        updatePlayers();
+        switch (state) {
+            case BETWEEN_ROUNDS:
+                doBeforeRound();
+                break;
+            case PICKING_CARDS:
+                checkIfReady();
+                break;
+            case ROUND:
+                doPhase();
+                break;
+            case BOARD_MOVES:
+                boardMoves();
+                break;
+            case GAME_OVER:
+                endGame();
         }
     }
 
-    public boolean playerReady(Player player) {
-        return player.getRegisters().isFull() &&
-                player.playerState == PlayerState.READY;
+    @Override
+    protected void doBeforeRound() {
+        super.doBeforeRound();
+        hud.clearAllCards();
+        hud.updateCards();
     }
 
-    public boolean playersReady() {
-        for (Player player : players) {
-            if (!player.getRegisters().isFull()) {
-                return false;
-            }
+    @Override
+    public void checkIfReady(){
+        if (player1.isReady()){
+            state = GameState.ROUND;
+            if (player1.playerState == PlayerState.READY)
+                player1.playerState = PlayerState.OPERATIONAL;
+            state = GameState.ROUND;
         }
-        return true;
     }
 
-    /**
-     * Gives the player as many cards as allowed from the stack of program cards.*
-     *
-     * @param player which player to give program cards to.
+
+    @Override
+    protected void boardMoves(){
+        board.boardMoves();
+        super.boardMoves();
+    }
+
+    @Override
+    protected void endGame() {
+        game.endGameScreen.addWinner(checkIfAPlayerHasWon());
+        game.setScreen(game.endGameScreen);
+    }
+
+    @Override
+    protected void cleanBoard() {
+        board.cleanUp();
+    }
+
+
+
+
+
+
+
+
+    //Test if Rotate left tile works
+
+    public void runTests() {
+        rotateLeftTileTest();
+        rotateRightTileTest();
+        robotLaserDamageTest();
+        boardLaserDamageTest();
+        wallStopRobotLaserTest();
+        repairSiteTest();
+        blueBeltTest();
+        pinkBeltTest();
+        flagTest();
+    }
+
+    //Test if Rotate left tile works
+
+    public void rotateLeftTileTest() {
+        System.out.println("\nTEST - rotateLeftTileTest");
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected direction: SOUTH : Actual direction: " + player1.getDirection());
+
+    }
+
+    public void execute(ProgramCard card) {
+        player1.receiveCard(card);
+        player1.getRegisters().placeCard(0);
+        player1.getRegisters().executeCard(0);
+    }
+
+    //Test if Rotate right tile works
+    public void rotateRightTileTest() {
+        System.out.println("\nTEST - rotateRightTileTest");
+        execute(new ProgramCard(Rotate.UTURN, 0, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.NONE, 2, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected direction: NORTH : Actual direction: " + player1.getDirection());
+    }
+
+    //Test if Robot laser gives 1 damage to enemy robots
+    public void robotLaserDamageTest() {
+        System.out.println("\nTEST - robotLaserDamageTest");
+        execute(new ProgramCard(Rotate.UTURN, 0, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.RIGHT, 0, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected damage: 1 : Actual damage: " + player1.getDamage());
+    }
+
+    //Test if the lasers on the board gives 1 damage
+    public void boardLaserDamageTest() {
+        System.out.println("\nTEST - boardLaserDamageTest");
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected damage: 2 : Actual damage: " + player1.getDamage());
+    }
+
+    //Test if wall stops robot lasers
+    public void wallStopRobotLaserTest() {
+        System.out.println("\nTEST - wallStopRobotLaserTest");
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected damage: 0 : Actual damage : " + players.get(3).getDamage());
+
+    }
+
+    //Test if repairSite changes backup location
+    public void repairSiteTest() {
+        System.out.println("\nTEST - repairSiteTest");
+        execute(new ProgramCard(Rotate.RIGHT, 0, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.NONE, 2, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.LEFT, 0, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected position: X = 2, Y = 4 \nActual position: X = " + player1.getBackup().getX() + ", Y = " + player1.getBackup().getY());
+    }
+
+    //Test if blue belt moves the robot 1 tile
+    public void blueBeltTest() {
+        System.out.println("\nTEST - blueBeltTest");
+        execute(new ProgramCard(Rotate.RIGHT, 0, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected position: X = 3, Y = 3 \nActual position: X = " + player1.getX() + ", Y = " + player1.getY());
+    }
+
+    //Test if pink belt moves the robot 2 tiles
+    public void pinkBeltTest() {
+        System.out.println("\nTEST - pinkBeltTest");
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected position: X = 4, Y = 1 \nActual position: X = " + player1.getX() + ", Y = " + player1.getY());
+    }
+
+    /*
+    Under work
      */
-    private void giveCardsToPlayer(Player player) {
-        for (int i = 0; i < player.getCardLimit(); i++) {
-            if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
-                reshuffleDeck();
-            }
-            player.receiveCard(stackOfProgramCards.pop());
-        }
-    }
-
-    private void retrieveCardsFromPlayer(Player player) {
-        ArrayList<ProgramCard> playerCards = player.returnCards();
-        while (!playerCards.isEmpty()) {
-            returnedProgramCards.push(playerCards.remove(0));
-        }
-    }
-
-    /**
-     * If the stack of cards run out of cards we need to reshuffle all the returned cards and deal them out instead
-     * Move this to ProgramCard maybe..
-     */
-    private void reshuffleDeck() {
-        while (!returnedProgramCards.empty())
-            stackOfProgramCards.push(returnedProgramCards.pop());
-        Collections.shuffle(stackOfProgramCards);
-    }
-
-    public GameState getState(){
-        return state;
+    public void flagTest() {
+        System.out.println("\nTEST - flagTest");
+        execute(new ProgramCard(Rotate.RIGHT, 1, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.RIGHT, 1, 10, ""));
+        board.boardMoves();
+        execute(new ProgramCard(Rotate.NONE, 1, 10, ""));
+        board.boardMoves();
+        System.out.println("Expected position: X = 3, Y = 1 \nActual position: X = " + player1.getBackup().getX() + ", Y = " + player1.getBackup().getY());
     }
 }
+
