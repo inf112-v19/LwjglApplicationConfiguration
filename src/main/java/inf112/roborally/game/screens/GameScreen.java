@@ -33,8 +33,7 @@ public class GameScreen implements Screen {
 
     private AssMan assMan;
 
-    public GameScreen(RoboRallyGame game, String mapPath, int robotChoiceIndex, ArrayList<Position> flagPositions) {
-        this.mapPath = mapPath;
+    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions) {
         this.game = game;
         assMan = game.getAssMan();
 
@@ -47,14 +46,8 @@ public class GameScreen implements Screen {
         //Uncomment the line under and comment the line above to start testing, and the line in GameLogic - doBeforeRound
 //        board = new TestBoard();
 
-
-        board.addPlayer(new Player("Player1", AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot1", AssMan.PLAYER_CLAPTRAP_REFINED.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot2", AssMan.PLAYER_BUTLER_REFINED.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot3", AssMan.PLAYER_CLAPTRAP_3000.fileName, NORTH, board));
-
-        //addPlayersToBoard(robotChoiceIndex);
-        //board.placePlayers();
+        addPlayersToBoard(robotChoiceIndex);
+        board.placePlayers();
 
 
         hud = new Hud(board.getPlayers().get(0), game);

@@ -97,11 +97,10 @@ public class RoboRallyGame extends Game {
     private void createPossibleFilepaths() {
         nSkins = 4;
         possibleRobotSkinFilepaths = new String[nSkins];
-        possibleRobotSkinFilepaths[0] = "assets/robot/bartenderclaptrap.png";
-        possibleRobotSkinFilepaths[1] = "assets/robot/claptrapRefined.png";
-        possibleRobotSkinFilepaths[2] = "assets/robot/butlerRefined.png";
-        possibleRobotSkinFilepaths[3] = "assets/robot/claptrap3000.png";
-
+        possibleRobotSkinFilepaths[0] = AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName;
+        possibleRobotSkinFilepaths[1] = AssMan.PLAYER_BUTLER_REFINED.fileName;
+        possibleRobotSkinFilepaths[2] = AssMan.PLAYER_CLAPTRAP_REFINED.fileName;
+        possibleRobotSkinFilepaths[3] = AssMan.PLAYER_CLAPTRAP_3000.fileName;
     }
 
     public void newGame() {
@@ -115,11 +114,11 @@ public class RoboRallyGame extends Game {
 
     // Create GameScreen with preset skins and flag positions
     public void createGameScreen() {
-        gameScreen = new GameScreen(this, VAULT, 0, null);
+        gameScreen = new GameScreen(this, 0, null);
     }
 
     public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions) {
-        gameScreen = new GameScreen(this, VAULT, robotChoiceIndex, flagPositions);
+        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions);
     }
 
 

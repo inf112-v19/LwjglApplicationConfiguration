@@ -9,10 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.gui.AssMan;
-import org.lwjgl.Sys;
 
 public class SettingsScreen extends AbstractScreen {
 
