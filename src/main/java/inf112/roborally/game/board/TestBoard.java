@@ -10,8 +10,6 @@ import java.util.ArrayList;
 public class TestBoard extends Board {
 
     public TestBoard() {
-        flags.add(new Flag(3, 1, 1));
-        repairSites.add(new RepairSite(3, 0));
         createBoard(RoboRallyGame.TEST_MAP);
     }
 
