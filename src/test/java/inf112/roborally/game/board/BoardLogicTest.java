@@ -48,6 +48,9 @@ public class BoardLogicTest {
         assertEquals(0, player2.getCardsInHand().size());
     }
 
+    /**
+     * Loops through the game loop making sure the game state is correct at all times
+     */
     @Test
     public void sanityTest() {
         assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
@@ -76,7 +79,7 @@ public class BoardLogicTest {
         assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
 
         boardLogic.executeLogic();
-        assertEquals(GameState.ROUND, boardLogic.getState());
+        assertEquals(GameState.PICKING_CARDS, boardLogic.getState());
     }
 
 }
