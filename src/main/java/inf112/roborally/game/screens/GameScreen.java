@@ -37,14 +37,14 @@ public class GameScreen implements Screen {
         this.game = game;
         assMan = game.getAssMan();
 
-//        if (flagPositions != null) {
-//            board = new VaultBoard(flagPositions);
-//        }
-//        else {
-//            board = new VaultBoard();
-//        }
+        if (flagPositions != null) {
+            board = new VaultBoard(flagPositions);
+        }
+        else {
+            board = new VaultBoard();
+        }
         //Uncomment the line under and comment the line above to start testing, and the line in GameLogic - doBeforeRound
-        board = new TestBoard();
+//        board = new TestBoard();
 
         addPlayersToBoard(robotChoiceIndex);
         board.placePlayers();
