@@ -26,5 +26,6 @@ public class Flag extends GameObject {
     public int getFlagNumber() {
         return flagNumber;
     }
+
 }
 

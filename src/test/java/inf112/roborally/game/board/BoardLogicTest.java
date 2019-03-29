@@ -36,7 +36,7 @@ public class BoardLogicTest {
 
     @Test
     public void stateAfterUpdateIsPICKING_CARDS() {
-        boardLogic.update();
+        boardLogic.executeLogic();
         assertEquals(GameState.PICKING_CARDS, boardLogic.getState());
     }
 
@@ -51,8 +51,9 @@ public class BoardLogicTest {
     @Test
     public void sanityTest() {
         assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
+        boardLogic.executeLogic();
 
-        boardLogic.update();
+        boardLogic.executeLogic();
         assertEquals(GameState.PICKING_CARDS, boardLogic.getState());
 
         for (Player player : players) {
@@ -62,17 +63,20 @@ public class BoardLogicTest {
         }
 
         for (int i = 0; i < 5; i ++) {
-            boardLogic.update();
+            boardLogic.executeLogic();
             assertEquals(GameState.ROUND, boardLogic.getState());
             for (Player player : players) {
                 assertEquals(player.playerState, PlayerState.OPERATIONAL);
             }
-            boardLogic.update();
+            boardLogic.executeLogic();
             assertEquals(GameState.BOARD_MOVES, boardLogic.getState());
         }
 
-        boardLogic.update();
+        boardLogic.executeLogic();
         assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
+
+        boardLogic.executeLogic();
+        assertEquals(GameState.ROUND, boardLogic.getState());
     }
 
 }
