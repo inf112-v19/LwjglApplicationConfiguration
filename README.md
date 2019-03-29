@@ -10,8 +10,8 @@ screen where you can test that ProgramCard and ProgramRegister GUI works as it s
 submit button when you have chosen five cards is not supposed to do anything here.
 
 As instructed on the test screen, pressing S will add a card to the register. Pressing D will make
-the robot take a damage. Pressing R will empty all the registers, returning all cards to the hand.
-Clicking on the clear button does the same as pressing R. Clicking on a specific card in the register will 
+the robot take one damage. Pressing R should empty all the registers, returning all cards to the hand.
+Clicking on the clear button should do the same as pressing R. Clicking on a specific card in the register should 
 remove it from the register and return it to the player hand, if it is not locked that is.
 
 ##### How to test that locked cards in the register do not return:
@@ -38,23 +38,25 @@ remove it from the register and return it to the player hand, if it is not locke
 
 
 ##### When player ending its turn on a gyro:
- * Check that the player rotates the player once in the direction that the gyro is showing.
+ * Check that the gyro rotates the player once in the direction that the gyro is showing.
     
     
 ##### Walls stops the player:
- * Check that trying to move forward/backward into a wall will not let the player move through the wall.
+ * Check that trying to move forward/backward into a wall will not let the player move through a wall.
 
 
 ##### Players get hit by board laser:
- * Ending a phase in a laser causes the robot to take damage. Loses a life if the player has taken 10 damage.
+ * Ending a phase in a laser should cause the robot to take damage. Should lose a life the player has taken
+ max damage (visualised by the triangular damage indicators above the health bar on the program register).
 
     
 ##### Players get hit by other players' laser:
- * Same as board laser, but the laser is shot by other robots. End a phase in front of a robot and you take damage. 
-    
+ * Same as the board laser, but the laser is shot by other robots. End a phase in front of a robot and you take damage. 
+ * Ending a phase in front of another robot should cause you to take one damage. If you are facing a robot then the
+  robot you are facing should take one damage (check console for message saying e.g. "Player1 shoots testBot2").
     
 ##### Walking into the void (out of the map):
- * The player loses a life and is not returned to the board before the round is over.
+ * Check that the player loses a life and is not returned to the board before the round is over.
  * Check that the player scream sound is only played once.
  * If not dead: all old cards should be gone and the player should be ready for the next round with new cards.
  * If dead, meaning the player has no more lives: the player should not be returned to the map and should 
@@ -67,9 +69,9 @@ remove it from the register and return it to the player hand, if it is not locke
      
      
 ##### Testing power down:
-   Pressing the power down button causes you to power down after you have played the current round. This means 
-   the robot will not move the next round and all damage taken should be removed after the power down has finished.
- * Pressing the power down button before clicking the submit button will result in going into power down mode.
+   Pressing the power down button should cause you to power down after you have played the current round. The robot
+    should not move the next round and all damage taken should be removed when the power down is finished.
+ * Pressing the power down button before clicking the submit button should result in going into power down mode.
       
       
       
@@ -79,7 +81,8 @@ remove it from the register and return it to the player hand, if it is not locke
  * You should be able to mute/unmute the game by pressing M.
  * Pressing 'B' or Escape when in settings screen should return you to the screen you came from.
  * Pressing 'N' should create a new game. You should end up at the Menu Screen where you are prompted to 'PRESS ENTER'. 
-   - Pressing 'N' followed by Enter: A new game should have been initiated, meaning all progress you potentially had in an earlier game should be gone.
+   - Pressing 'N' followed by Enter: A new game should have been initiated, meaning all progress you potentially
+    had in an earlier game should be gone.
    
     * You should be able to go to the test screen by pressing 'T' instead of the Enter button.
  
