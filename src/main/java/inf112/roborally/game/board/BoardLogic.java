@@ -18,7 +18,6 @@ public class BoardLogic {
 
     protected ArrayList<Player> players;
     private ArrayList<Player> airobots;
-    private ArrayList<Player> deadRobots;
 
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
@@ -26,7 +25,6 @@ public class BoardLogic {
     public BoardLogic(ArrayList<Player> players) {
         this.players = players;
         airobots = new ArrayList<>();
-        deadRobots = new ArrayList<>();
         for (int i = 1; i < players.size(); i++)
             airobots.add(players.get(i));
 
@@ -67,14 +65,6 @@ public class BoardLogic {
             }
             if (player.isAlive() && player.isOperational()) {
                 giveCardsToPlayer(player);
-            }
-        }
-
-
-        for(Player ai : airobots){
-            if(!ai.isAlive()) continue;
-            while(!ai.getRegisters().isFull()){
-                ai.getRegisters().placeCard(0);
             }
         }
 
@@ -133,6 +123,7 @@ public class BoardLogic {
 
         System.out.println("executing phase " + phase);
 
+        aiRobotsChooseCards();
         // sort players after phase priority
         for (Player player : players) {
             player.setPhase(phase);
@@ -213,6 +204,16 @@ public class BoardLogic {
         ArrayList<ProgramCard> playerCards = player.returnCards();
         while (!playerCards.isEmpty()) {
             returnedProgramCards.push(playerCards.remove(0));
+        }
+    }
+
+    public void aiRobotsChooseCards() {
+        for(Player ai : airobots){
+            if(!ai.isAlive()) continue;
+            while(!ai.getRegisters().isFull()){
+                ai.getRegisters().placeCard(0);
+            }
+            System.out.println(ai.getCardsInHand().size());
         }
     }
 
