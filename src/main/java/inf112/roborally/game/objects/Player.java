@@ -62,6 +62,7 @@ public class Player extends MovableGameObject implements Comparable {
         nFlags = board.getFlags().size();
 
         backup = new Backup(getX(), getY(), this);
+        backup.setupSprite();
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
@@ -74,6 +75,23 @@ public class Player extends MovableGameObject implements Comparable {
 
         phase = 0;
     }
+
+
+    /**
+     * FOR TESTING ONLY
+     */
+    public Player(int x, int y, int nFlags) {
+        super(x, y, AssMan.PLAYER_TVBOT.fileName);
+        this.nFlags = nFlags;
+        damage = 0;
+        lives = MAX_LIVES;
+        backup = new Backup(getX(), getY(), this);
+        registers = new ProgramRegisters(this);
+        cardsInHand = new ArrayList<>();
+        targetFlag = 1;
+        debugging = true;
+    }
+
 
     public void createSounds() {
         allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
@@ -91,19 +109,6 @@ public class Player extends MovableGameObject implements Comparable {
         sprite.setRegion(regions.get(0));
     }
 
-    /**
-     * FOR TESTING ONLY
-     */
-    public Player(int x, int y, int nFlags) {
-        super(x, y, AssMan.PLAYER_TVBOT.fileName);
-        this.nFlags = nFlags;
-        damage = 0;
-        lives = MAX_LIVES;
-        registers = new ProgramRegisters(this);
-        cardsInHand = new ArrayList<>();
-        targetFlag = 1;
-        debugging = true;
-    }
 
     @Override
     public void move(int steps) {
@@ -391,6 +396,7 @@ public class Player extends MovableGameObject implements Comparable {
         return this.name.equals(((Player) other).name);
     }
 
+
     // TODO: TEST THIS
     @Override
     public int compareTo(Object o) {
@@ -405,6 +411,11 @@ public class Player extends MovableGameObject implements Comparable {
     public void setPhase(int phase){
         this.phase = phase;
     }
+
+    public int getMaxDamage(){
+        return MAX_DAMAGE;
+    }
+
     @Override
     public String toString() {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;

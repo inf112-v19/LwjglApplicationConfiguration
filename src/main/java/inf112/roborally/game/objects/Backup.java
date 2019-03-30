@@ -18,6 +18,14 @@ public class Backup extends GameObject {
     public Backup(int x, int y, Player player) {
         super(x, y, AssMan.BACKUP.fileName);
         this.player = player;
+    }
+
+
+    /**
+     * Need to call this function to initialize the sprite.
+     * Removed from constructor to make tests work.
+     */
+    public void setupSprite(){
         makeSprite();
         updateSprite();
         sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);

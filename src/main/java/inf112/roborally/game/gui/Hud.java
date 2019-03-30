@@ -157,7 +157,7 @@ public class Hud {
         greySubmitButton.setVisible(!submitButton.isVisible());
         registerDisplay.update();
 
-        handGui.setVisible(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS);
+        //handGui.setVisible(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS);
 
         stage.draw();
     }
