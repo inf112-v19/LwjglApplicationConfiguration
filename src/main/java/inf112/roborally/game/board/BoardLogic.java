@@ -165,6 +165,12 @@ public class BoardLogic {
     }
 
     protected Player checkIfAPlayerHasWon() {
+        if (players.size() == 1){
+            System.out.printf("%s just won the game by outliving their opponents!!%n", players.get(0).getName());
+            state = GameState.GAME_OVER;
+            return players.get(0);
+        }
+
         for (Player player : players) {
             if (player.hasWon()) {
                 System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
