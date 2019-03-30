@@ -9,6 +9,8 @@ import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
+import java.util.ArrayList;
+
 public class GameLogic extends BoardLogic {
 
     private final Hud hud;
@@ -22,6 +24,7 @@ public class GameLogic extends BoardLogic {
         this.game = game;
         this.board = board;
         this.hud = hud;
+
         player1 = players.get(0);
 
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
@@ -42,7 +45,7 @@ public class GameLogic extends BoardLogic {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            players.get(0).getRegisters().returnCards(players.get(0));
+            player1.getRegisters().returnCards(players.get(0));
             hud.clearAllCards();
             hud.updateCards();
         }
@@ -91,8 +94,7 @@ public class GameLogic extends BoardLogic {
         }
     }
 
-    @Override
-    protected void doBeforeRound() {
+    public void doBeforeRound() {
         super.doBeforeRound();
         hud.clearAllCards();
         hud.updateCards();
@@ -124,9 +126,6 @@ public class GameLogic extends BoardLogic {
     protected void cleanBoard() {
         board.cleanUp();
     }
-
-
-    //Test if Rotate left tile works
 
     public void runTests() {
         rotateLeftTileTest();

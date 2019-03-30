@@ -8,17 +8,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
+import static java.util.Collections.*;
+
 @SuppressWarnings("Duplicates")
 public class BoardLogic {
 
     protected int phase;
     protected GameState state;
+
     protected ArrayList<Player> players;
+    private ArrayList<Player> airobots;
+
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
 
     public BoardLogic(ArrayList<Player> players) {
         this.players = players;
+        airobots = new ArrayList<>();
+        for (int i = 1; i < players.size(); i++)
+            airobots.add(players.get(i));
+
         phase = 0;
         state = GameState.BETWEEN_ROUNDS;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
@@ -63,6 +72,17 @@ public class BoardLogic {
         state = GameState.PICKING_CARDS;
     }
 
+    private void removeDeadRobots() {
+        for(int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            if (player.playerState == PlayerState.GAME_OVER) {
+                players.remove(player);
+                airobots.remove(player);
+                System.out.println(player.getName() + " was removed.");
+            }
+        }
+    }
+
     private void powerUpRobots() {
         for (Player player : players) {
             player.powerUp();
@@ -93,6 +113,7 @@ public class BoardLogic {
     }
 
     protected void doPhase() {
+        removeDeadRobots();
         if (phase >= 5) {
             phase = 0;
             state = GameState.BETWEEN_ROUNDS;
@@ -101,8 +122,24 @@ public class BoardLogic {
         }
 
         System.out.println("executing phase " + phase);
+
+        aiRobotsChooseCards();
         // sort players after phase priority
+        for (Player player : players) {
+            player.setPhase(phase);
+        }
+        try {
+            System.out.println(players.toString());
+            Collections.sort(players);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("AIRobots: "
+                    + airobots.size()
+                    + "\n Players: "
+                    + players.size());
+        }
+
         executeCards();
+
         try {
             Thread.sleep(500);
         }
@@ -128,6 +165,12 @@ public class BoardLogic {
     }
 
     protected Player checkIfAPlayerHasWon() {
+        if (players.size() == 1){
+            System.out.printf("%s just won the game by outliving their opponents!!%n", players.get(0).getName());
+            state = GameState.GAME_OVER;
+            return players.get(0);
+        }
+
         for (Player player : players) {
             if (player.hasWon()) {
                 System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
@@ -171,6 +214,16 @@ public class BoardLogic {
         }
     }
 
+    private void aiRobotsChooseCards() {
+        for(Player ai : airobots){
+            if(!ai.isAlive()) continue;
+            while(!ai.getRegisters().isFull()){
+                ai.getRegisters().placeCard(0);
+            }
+            System.out.println(ai.getCardsInHand().size());
+        }
+    }
+
     /**
      * If the stack of cards run out of cards we need to reshuffle all the returned cards and deal them out instead
      * Move this to ProgramCard maybe..
@@ -178,7 +231,7 @@ public class BoardLogic {
     private void reshuffleDeck() {
         while (!returnedProgramCards.empty())
             stackOfProgramCards.push(returnedProgramCards.pop());
-        Collections.shuffle(stackOfProgramCards);
+        shuffle(stackOfProgramCards);
     }
 
     public GameState getState() {

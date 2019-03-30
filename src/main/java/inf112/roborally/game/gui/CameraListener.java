@@ -45,8 +45,21 @@ public class CameraListener extends DragListener {
 
     @Override
     public void touchDragged(InputEvent event, float x, float y, int pointer) {
-        camera.position.x = cameraX + initialX - x;
-        camera.position.y = cameraY + initialY - y;
+        float newCamPosX = cameraX + initialX - x;
+        float newCamPosY = cameraY + initialY - y;
+
+        if (newCamPosX > -293 && newCamPosX < 842)
+            camera.position.x = newCamPosX;
+        else
+            initialX = newCamPosX;
+
+        if (newCamPosY > -87 && newCamPosY < 537)
+            camera.position.y = newCamPosY;
+        else
+            initialY = newCamPosY;
+
         camera.update();
+
+        System.out.println(newCamPosX + ", " + newCamPosY);
     }
 }
