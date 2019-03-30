@@ -53,4 +53,14 @@ public class BackupTest {
         player.getBackup().moveToPosition(player.position);
         assertTrue(player.position.equals(backup.position));
     }
+
+    @Test
+    public void playerTryingToMoveToBackupWhenDeadDoesNotWork(){
+        player.move(1);
+        for(int i = 0; i < player.getMaxDamage()*3; i++)
+            player.takeDamage();
+        assertEquals(0, player.getLives());
+        player.respawn();
+        assertNotEquals(player.position, backup.position);
+    }
 }
