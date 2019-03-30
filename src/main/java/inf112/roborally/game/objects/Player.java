@@ -63,6 +63,7 @@ public class Player extends MovableGameObject {
         nFlags = board.getFlags().size();
 
         backup = new Backup(getX(), getY(), this);
+        backup.setupSprite();
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
@@ -73,6 +74,23 @@ public class Player extends MovableGameObject {
         allPlayerSounds = new GameSound[nSounds];
         createSounds();
     }
+
+
+    /**
+     * FOR TESTING ONLY
+     */
+    public Player(int x, int y, int nFlags) {
+        super(x, y, AssMan.PLAYER_TVBOT.fileName);
+        this.nFlags = nFlags;
+        damage = 0;
+        lives = MAX_LIVES;
+        backup = new Backup(getX(), getY(), this);
+        registers = new ProgramRegisters(this);
+        cardsInHand = new ArrayList<>();
+        targetFlag = 1;
+        debugging = true;
+    }
+
 
     public void createSounds() {
         allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
@@ -90,19 +108,6 @@ public class Player extends MovableGameObject {
         sprite.setRegion(regions.get(0));
     }
 
-    /**
-     * FOR TESTING ONLY
-     */
-    public Player(int x, int y, int nFlags) {
-        super(x, y, AssMan.PLAYER_TVBOT.fileName);
-        this.nFlags = nFlags;
-        damage = 0;
-        lives = MAX_LIVES;
-        registers = new ProgramRegisters(this);
-        cardsInHand = new ArrayList<>();
-        targetFlag = 1;
-        debugging = true;
-    }
 
     @Override
     public void move(int steps) {
@@ -383,6 +388,10 @@ public class Player extends MovableGameObject {
             return false;
 
         return this.name.equals(((Player) other).name);
+    }
+
+    public int getMaxDamage(){
+        return MAX_DAMAGE;
     }
 
     @Override

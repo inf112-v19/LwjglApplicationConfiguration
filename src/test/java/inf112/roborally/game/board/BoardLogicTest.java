@@ -35,7 +35,7 @@ public class BoardLogicTest {
     }
 
     @Test
-    public void stateAfterUpdateIsPICKING_CARDS() {
+    public void stateAfterExecuteLogicIsPICKING_CARDS() {
         boardLogic.executeLogic();
         assertEquals(GameState.PICKING_CARDS, boardLogic.getState());
     }
