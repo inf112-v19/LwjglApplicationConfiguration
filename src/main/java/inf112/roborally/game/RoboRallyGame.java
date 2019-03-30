@@ -20,7 +20,7 @@ public class RoboRallyGame extends Game {
     public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
     public static final String TEST_MAP = "assets/maps/testMap.tmx";
     //Music:
-    public static final String MAIN_THEME = "assets/music/Zander Noriega - Perpetual Tension.wav";
+    public static final String MAIN_THEME = AssMan.MUSIC_MAIN_THEME.fileName;
     public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
 
 
@@ -42,7 +42,8 @@ public class RoboRallyGame extends Game {
 
     private AssMan assMan;
 
-    //The screen that was active before setting a new screen with setScreen(screen);
+
+    /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
 
 

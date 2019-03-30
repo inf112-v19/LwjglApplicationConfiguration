@@ -182,11 +182,6 @@ public class Hud {
         }
     }
 
-    public AssMan getAssMan() {
-        return assMan;
-    }
-
-
     /**
      * Updates program cards in hand and program cards in register visually.
      */

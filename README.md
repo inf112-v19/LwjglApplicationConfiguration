@@ -95,6 +95,7 @@ When prompted to press Enter at startup, press 'S' instead. This should bring up
 you want to use. After choosing a skin, click on the map that is to the right of the black vertical line to place 
 a flag. After placing all three flags the game should start with your chosen skin and flag locations.
 
+Pressing 'T' instead of choosing skin and flag locations should start the game with the preset values.
 ## Known bugs
 - Currently throws "WARNING: An illegal reflective access operation has occurred", 
   when the java version used is >8. This has no effect on function or performance, and is just a warning.

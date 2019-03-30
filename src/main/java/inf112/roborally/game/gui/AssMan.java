@@ -25,6 +25,10 @@ public class AssMan{
     public static final AssetDescriptor<Music> MUSIC_PLAYER_WILHELM_SCREAM
             = new AssetDescriptor<>("assets/music/playerWilhelmScream.wav", Music.class);
 
+    public static final AssetDescriptor<Music> MUSIC_MAIN_THEME
+            = new AssetDescriptor<>( "assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
+
+
 
 
     //Player skins
@@ -153,6 +157,7 @@ public class AssMan{
         manager.load(MUSIC_PLAYER_LASER);
         manager.load(MUSIC_PLAYER_REPAIR);
         manager.load(MUSIC_PLAYER_WILHELM_SCREAM);
+        manager.load(MUSIC_MAIN_THEME);
 
         //Player skins
         manager.load(PLAYER_BARTENDER_CLAPTRAP);
