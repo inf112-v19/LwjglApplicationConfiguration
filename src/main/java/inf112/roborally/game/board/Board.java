@@ -153,7 +153,7 @@ public  class Board extends TiledBoard {
         }
     }
 
-    private void lasersFire() {
+    public void lasersFire() {
         for (Player player : players) {
             if (player.hitByLaser(laserLayer)) {
                 if (!soundIsMuted) {

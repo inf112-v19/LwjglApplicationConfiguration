@@ -36,7 +36,8 @@ public class LaserTestScreen implements Screen {
     @Override
     public void render(float v) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
-            allRobotsFire();
+            board.robotLasersFire();
+            board.lasersFire();
             updateAllRobots();
         }
         if (Gdx.input.isKeyJustPressed((Input.Keys.N))){
