@@ -59,4 +59,40 @@ public class BackupTest {
         player.respawn();
         assertNotEquals(player.position, backup.position);
     }
+
+    @Test
+    public void backupIsActuallyRemovedFromEarlierPosition(){
+        player.move(1);
+        backup.moveToPosition(player.position);
+        assertEquals(player.position, backup.position);
+        player.reverse();
+        assertNotEquals(player.position, backup.position);
+    }
+
+    @Test
+    public void moveBackupTwoTimesWork(){
+        player.move(2);
+        backup.moveToPosition(player.position);
+        player.move(1);
+        backup.moveToPosition(player.position);
+        assertEquals(player.position, backup.position);
+    }
+
+    @Test
+    public void moveBackupThreeTimesAndBackupLocationIsTheNewestLocation(){
+        for(int i = 0; i < 3; i++) {
+            player.move(1);
+            backup.moveToPosition(player.position);
+        }
+        assertEquals(player.position, backup.position);
+    }
+
+    @Test
+    public void moveBackupFifteenTimesAndBackupLocationIsTheNewestLocation(){
+        for(int i = 0; i < 15; i++) {
+            player.move(1);
+            backup.moveToPosition(player.position);
+        }
+        assertEquals(player.position, backup.position);
+    }
 }

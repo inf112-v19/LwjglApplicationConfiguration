@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * Contains assets used by the game.
+ * Contains assets used by the game. (All .png and .wav files)
  * With AssMan you are able to load as well as dispose all of them at the same time.
  *
  * .atlas files can not go here.
@@ -28,9 +28,6 @@ public class AssMan{
     public static final AssetDescriptor<Music> MUSIC_MAIN_THEME
             = new AssetDescriptor<>( "assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
 
-
-
-
     //Player skins
     public static final AssetDescriptor<Texture> PLAYER_BARTENDER_CLAPTRAP
             = new AssetDescriptor<>("assets/robot/bartenderclaptrap.png", Texture.class);
@@ -47,8 +44,6 @@ public class AssMan{
     public static final AssetDescriptor<Texture> PLAYER_TVBOT
             = new AssetDescriptor<>("assets/robot/tvBot.png", Texture.class);
 
-
-
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
             = new AssetDescriptor<>("assets/cards/buttonSubmit.png", Texture.class);
@@ -62,8 +57,6 @@ public class AssMan{
     public static final AssetDescriptor<Texture> BUTTON_SETTINGS
             = new AssetDescriptor<>("assets/img/settingsbtn.png", Texture.class);
 
-
-
     //GameScreen
     public static final AssetDescriptor<Texture> GAMESCREEN_BACKGROUND2
             = new AssetDescriptor<>("assets/screens/gamescreen/background2.png", Texture.class);
@@ -74,17 +67,13 @@ public class AssMan{
     public static final AssetDescriptor<Texture> GAMESCREEN_CLOUDS
             = new AssetDescriptor<>("assets/screens/gamescreen/clouds.png", Texture.class);
 
-
     //EndGameScreen
     public static final AssetDescriptor<Texture> ENDGAME_BACKGROUND
             = new AssetDescriptor<>("assets/screens/endgamescreen/endgamebackground.png", Texture.class);
 
-
     //Settings
     public static final AssetDescriptor<Texture> SETTINGS_BACKGROUND
             = new AssetDescriptor<>("assets/screens/settingsscreen/settingsbackground.png", Texture.class);
-
-
 
     //SetupScreen
     public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN
@@ -95,9 +84,6 @@ public class AssMan{
 
     public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN_PLACE_FLAGS
             = new AssetDescriptor<>( "assets/screens/setupscreen/setupscreenPlaceFlags.png", Texture.class);
-
-
-
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
@@ -115,13 +101,9 @@ public class AssMan{
     public static final AssetDescriptor<Texture> REGISTER_LOCK_TOKEN
             = new AssetDescriptor<>("assets/cards/tokens/lockToken.png", Texture.class);
 
-
-
     //Backup
     public static final AssetDescriptor<Texture> BACKUP
             = new AssetDescriptor<>("assets/objects/backup.png", Texture.class);
-
-
 
     //Repair
     public static final AssetDescriptor<Texture> REPAIRSITE_BACKGROUND
@@ -130,7 +112,6 @@ public class AssMan{
     public static final AssetDescriptor<Texture> REPAIRSITE_REPAIR_ANIMATION
             = new AssetDescriptor<>("assets/animations/wrench.png", Texture.class);
 
-
     //MenuScreen class
     public static final AssetDescriptor<Texture> MENUSCREEN_TITLESCREEN
             = new AssetDescriptor<>("assets/screens/menuscreen/titlescreen.jpg", Texture.class);
@@ -138,12 +119,9 @@ public class AssMan{
     public static final AssetDescriptor<Texture> MENUSCREEN_PRESS_ENTER_WHITE
             = new AssetDescriptor<>("assets/screens/menuscreen/pressEnterWhite.png", Texture.class);
 
-
-
     //TestScreen class
     public static final AssetDescriptor<Texture> TESTSCREEN_BACKGROUND
             = new AssetDescriptor<>("assets/screens/testscreen/testscreen.png", Texture.class);
-
 
     //Flag object
     public static final AssetDescriptor<Texture> FLAG_SKIN
