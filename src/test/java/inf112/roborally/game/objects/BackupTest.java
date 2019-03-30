@@ -1,13 +1,9 @@
 package inf112.roborally.game.objects;
 
-import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.BoardLogic;
-import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
