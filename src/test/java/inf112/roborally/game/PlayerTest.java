@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Stack;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class PlayerTest {
     private Player player;
@@ -241,5 +241,74 @@ public class PlayerTest {
     }
 
 
+    @Test (expected = IndexOutOfBoundsException.class)
+    public void negativeIndexShouldThrowIndexOutOfBounds(){
+        player.receiveCard(stack.pop());
+        player.removeCardInHand(-1);
+    }
+
+    @Test
+    public void gettingDestroyedLeadsToLosingALife(){
+        player.destroy();
+        player.takeDamage();
+        //Might want to change how the player loses lives.
+        //player.destroy() should decrement lives or we should rename the function?
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void checkOutOfLives(){
+        assertFalse(player.outOfLives());
+    }
+
+    @Test
+    public void notOutOfLivesAfterTakingOneDamage(){
+        player.destroy();
+        player.takeDamage();
+        assertFalse(player.outOfLives());
+    }
+
+    @Test
+    public void notOutOfLivesAfterTakingTwoDamage(){
+     for(int i = 0; i < 2; i++){
+         player.destroy();
+         player.takeDamage();
+     }
+     assertFalse(player.outOfLives());
+    }
+
+    @Test
+    public void isOutOfLivesAfterTakingThreeDamage(){
+        for(int i = 0; i < 3; i++){
+            player.destroy();
+            player.takeDamage();
+        }
+        assertTrue(player.outOfLives());
+    }
+
+    @Test
+    public void checkIfHandIsFull(){
+        for(int i = 0; i < player.getCardLimit(); i++)
+            player.receiveCard(stack.pop());
+        assertTrue(player.handIsFull());
+    }
+
+    @Test
+    public void handIsNotFull(){
+        for(int i = 0; i < player.getCardLimit() - 1; i++) {
+            player.receiveCard(stack.pop());
+            assertFalse(player.handIsFull());
+        }
+    }
+
+    @Test
+    public void getCardInHandReturnsCorrectCards(){
+        for(int i = 0; i < player.getCardLimit(); i++){
+            ProgramCard card = stack.pop();
+            player.receiveCard(card);
+            assertEquals(card, player.getCardInHand(i));
+        }
+    }
 
 }
+

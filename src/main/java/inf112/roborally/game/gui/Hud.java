@@ -68,7 +68,7 @@ public class Hud {
             submitButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (player.getRegisters().isFull() && player.isAlive()) {
+                    if (player.getRegisters().isFull() && !player.outOfLives()) {
                         player.playerState = PlayerState.READY;
                     }
                 }
@@ -104,7 +104,7 @@ public class Hud {
             clearButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if(player.isAlive()) {
+                    if(!player.outOfLives()) {
                         player.getRegisters().returnCards(player);
                         clearAllCards();
                         updateCards();

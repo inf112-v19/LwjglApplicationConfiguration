@@ -63,7 +63,7 @@ public class BoardLogic {
             if (!player.isPoweredDown()) {
                 retrieveCardsFromPlayer(player);
             }
-            if (player.isAlive() && player.isOperational()) {
+            if (!player.outOfLives() && player.isOperational()) {
                 giveCardsToPlayer(player);
             }
         }
@@ -218,7 +218,7 @@ public class BoardLogic {
 
     private void aiRobotsChooseCards() {
         for (Player ai : airobots) {
-            if (!ai.isAlive()) continue;
+            if (ai.outOfLives()) continue;
             while (!ai.getRegisters().isFull()) {
                 ai.getRegisters().placeCard(0);
             }
