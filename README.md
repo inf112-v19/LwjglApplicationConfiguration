@@ -90,6 +90,11 @@ remove it from the register and return it to the player hand, if it is not locke
     * Pressing 'T' should bring up the test screen instead.
       
       
+### How to choose flag location and skin on robot:
+When prompted to press Enter at startup, press 'S' instead. This should bring up a page where you can click on the skin
+you want to use. After choosing a skin, click on the map that is to the right of the black vertical line to place 
+a flag. After placing all three flags the game should start with your chosen skin and flag locations.
+
 ## Known bugs
 - Currently throws "WARNING: An illegal reflective access operation has occurred", 
   when the java version used is >8. This has no effect on function or performance, and is just a warning.
