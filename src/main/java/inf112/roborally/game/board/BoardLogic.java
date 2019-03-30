@@ -140,13 +140,11 @@ public class BoardLogic {
 
         executeCards();
 
-        for (Player player : players) {
-            if (!player.isDebuggingActive()) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        if (!players.get(0).isDebuggingActive()) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
         checkIfAPlayerHasWon();

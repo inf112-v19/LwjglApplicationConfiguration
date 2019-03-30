@@ -76,22 +76,7 @@ public class GameLogic extends BoardLogic {
     public void update() {
         handleInput();
         updatePlayers();
-        switch (state) {
-            case BETWEEN_ROUNDS:
-                doBeforeRound();
-                break;
-            case PICKING_CARDS:
-                checkIfReady();
-                break;
-            case ROUND:
-                doPhase();
-                break;
-            case BOARD_MOVES:
-                boardMoves();
-                break;
-            case GAME_OVER:
-                endGame();
-        }
+        executeLogic();
     }
 
     public void doBeforeRound() {
