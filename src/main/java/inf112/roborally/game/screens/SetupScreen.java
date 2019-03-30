@@ -168,9 +168,16 @@ public class SetupScreen extends AbstractScreen {
 
                     if(mouseX >= mapStartX) {
                         Position clickedPos = convertMouseClickIntoMapPosition(mouseX, mouseY);
+
+                        //Quick-fix to not let the player put flags in holes
+                        if(clickedPos.getX() == 4 && clickedPos.getY() == 10) return;
+                        if(clickedPos.getX() == 9 && clickedPos.getY() == 10) return;
+                        if(clickedPos.getX() == 4 && clickedPos.getY() == 3) return;
+                        if(clickedPos.getX() == 9 && clickedPos.getY() == 3) return;
+
                         System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
                                 clickedPos.getX(), clickedPos.getY());
-//                        Sprite check = new Sprite(new Texture("assets/img/checkflag.png"));
+//                        Sprite check = new Sprite(new Texture("assets/screens/setupscreen/checkflag.png"));
 //                        float newX = background.getWidth() - ((N_TILES - clickedPos.getX()) * TILE_SIZE_IN_FULLSCRREEN);
 //                        float newY = background.getHeight() - ((N_TILES - clickedPos.getY()) * TILE_SIZE_IN_FULLSCRREEN);
 //                        check.setPosition(newX, newY);
