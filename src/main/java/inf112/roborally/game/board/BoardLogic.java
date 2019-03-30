@@ -73,7 +73,7 @@ public class BoardLogic {
     }
 
     private void removeDeadRobots() {
-        for(int i = 0; i < players.size(); i++) {
+        for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
             if (player.playerState == PlayerState.GAME_OVER) {
                 players.remove(player);
@@ -140,17 +140,20 @@ public class BoardLogic {
 
         executeCards();
 
-        try {
-            Thread.sleep(500);
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
+        for (Player player : players) {
+            if (!player.isDebuggingActive()) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         checkIfAPlayerHasWon();
         phase++;
     }
 
-    private void executeCards(){
+    private void executeCards() {
         for (Player player : players) {
             player.getRegisters().executeCard(phase);
         }
@@ -160,12 +163,12 @@ public class BoardLogic {
         state = GameState.ROUND;
     }
 
-    protected void cleanBoard(){
+    protected void cleanBoard() {
         System.out.println("Cleaning board");
     }
 
     protected Player checkIfAPlayerHasWon() {
-        if (players.size() == 1){
+        if (players.size() == 1) {
             System.out.printf("%s just won the game by outliving their opponents!!%n", players.get(0).getName());
             state = GameState.GAME_OVER;
             return players.get(0);
@@ -182,7 +185,7 @@ public class BoardLogic {
         return null;
     }
 
-    protected void endGame(){
+    protected void endGame() {
         System.out.println("Game Over! " + checkIfAPlayerHasWon().getName() + " won the game.");
     }
 
@@ -215,9 +218,9 @@ public class BoardLogic {
     }
 
     private void aiRobotsChooseCards() {
-        for(Player ai : airobots){
-            if(!ai.isAlive()) continue;
-            while(!ai.getRegisters().isFull()){
+        for (Player ai : airobots) {
+            if (!ai.isAlive()) continue;
+            while (!ai.getRegisters().isFull()) {
                 ai.getRegisters().placeCard(0);
             }
             System.out.println(ai.getCardsInHand().size());

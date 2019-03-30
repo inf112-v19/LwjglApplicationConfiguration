@@ -416,6 +416,11 @@ public class Player extends MovableGameObject implements Comparable {
         return MAX_DAMAGE;
     }
 
+
+    public boolean isDebuggingActive(){
+        return debugging;
+    }
+
     @Override
     public String toString() {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
