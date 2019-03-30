@@ -61,7 +61,7 @@ public class BackupTest {
     }
 
     @Test
-    public void backupIsActuallyRemovedFromEarlierPosition(){
+    public void confirmThatBackupIsRemovedFromEarlierPosition(){
         player.move(1);
         backup.moveToPosition(player.position);
         assertEquals(player.position, backup.position);
@@ -70,7 +70,7 @@ public class BackupTest {
     }
 
     @Test
-    public void moveBackupTwoTimesWork(){
+    public void moveBackupTwoTimesWorks(){
         player.move(2);
         backup.moveToPosition(player.position);
         player.move(1);
@@ -88,11 +88,45 @@ public class BackupTest {
     }
 
     @Test
-    public void moveBackupFifteenTimesAndBackupLocationIsTheNewestLocation(){
+    public void moveBackupFifteenTimesAndBackupLocationIsTheNewestLocationOnly(){
         for(int i = 0; i < 15; i++) {
             player.move(1);
             backup.moveToPosition(player.position);
         }
         assertEquals(player.position, backup.position);
+
+        for(int i = 0; i < 15; i++) {
+            player.reverse();
+            assertNotEquals(player.position, backup.position);
+        }
+    }
+
+    @Test
+    public void positionAndGetMethodIsEqual(){
+        assertEquals(backup.getX(), backup.position.getX());
+        assertEquals(backup.getY(), backup.position.getY());
+    }
+
+    @Test
+    public void backupMoveMethodWorks(){
+        player.move(2);
+        backup.move(player.position.getX(), player.position.getY());
+        assertEquals(player.position, backup.position);
+    }
+
+    @Test
+    public void backupSeparatelyCreatedIsNotMovedToPlayerPositionAtCreation(){
+        Player player2 = new Player(3,3, 3);
+        Backup backup2 = new Backup(5, 5, player2);
+        assertNotEquals(player2.position, backup2.position);
+        //Should we make Backup constructor only take in player and use player x and y pos? The Player constructor
+        //for testing already does this. This test will fail in that case.
+    }
+
+    @Test
+    public void newBackupAtSameLocationIsDifferent(){
+        Player player2 = new Player(0, 0, 3);
+        Backup backup2 = player2.getBackup();
+        assertNotEquals(backup, backup2);
     }
 }
