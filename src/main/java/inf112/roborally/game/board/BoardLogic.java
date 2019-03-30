@@ -161,6 +161,7 @@ public class BoardLogic {
         state = GameState.ROUND;
     }
 
+
     protected void cleanBoard() {
         System.out.println("Cleaning board");
     }

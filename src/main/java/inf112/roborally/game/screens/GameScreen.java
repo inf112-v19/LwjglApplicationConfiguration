@@ -8,7 +8,6 @@ import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.*;
-import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
@@ -32,11 +31,9 @@ public class GameScreen implements Screen {
 
     public ArrayList<Animation> animations;
 
-    private AssMan assMan;
 
     public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions) {
         this.game = game;
-        assMan = game.getAssMan();
 
 
         if(!testMap){

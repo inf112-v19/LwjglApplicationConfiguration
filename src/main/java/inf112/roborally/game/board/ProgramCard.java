@@ -20,6 +20,15 @@ public class ProgramCard implements Comparable {
     private TextureAtlas atlas;
     private Skin skin;
 
+    /**
+     * Creates a program card.
+     * Need to call {@link #setUpSkin()} once after creation to be able to draw the card.
+     *
+     * @param rotate which rotation the card should have
+     * @param moveDistance how many steps to move
+     * @param priority card priority
+     * @param type which type of card it is, e.g. "move1" or "rotateLeft"
+     */
     public ProgramCard(Rotate rotate, int moveDistance, int priority, String type) {
         this.rotate = rotate;
         this.moveDistance = moveDistance;

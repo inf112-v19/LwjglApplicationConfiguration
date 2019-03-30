@@ -1,6 +1,9 @@
 package inf112.roborally.game.enums;
 
-
+/**
+ * Keeps track of the direction an object is facing.
+ * {@link #rotationDegree} keeps track of sprite rotation according to current direction.
+ */
 public enum Direction {
 
     NORTH(0, 180),

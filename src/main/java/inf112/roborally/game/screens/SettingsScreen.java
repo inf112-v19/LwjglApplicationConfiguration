@@ -13,7 +13,7 @@ public class SettingsScreen extends AbstractScreen {
     private boolean musicIsMuted;
     private RoboRallyGame game;
 
-    //SettingsScreen has its own Stage for holding actors, buttons etc.
+    //Stage for holding actors.
     public Stage stage;
 
 

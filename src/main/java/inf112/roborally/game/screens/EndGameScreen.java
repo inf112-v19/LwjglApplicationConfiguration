@@ -16,7 +16,7 @@ public class EndGameScreen extends AbstractScreen {
     private Sprite winnerSprite;
     private int rotateTimer;
 
-    //EndGameScreen has its own Stage for holding actors, buttons etc.
+     //Stage for holding actors.
     public Stage stage;
 
     public EndGameScreen(RoboRallyGame game) {

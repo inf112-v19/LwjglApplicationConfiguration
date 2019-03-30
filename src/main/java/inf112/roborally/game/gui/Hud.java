@@ -14,6 +14,7 @@ import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
 
+
 public class Hud {
 
     public Stage stage;
@@ -156,8 +157,6 @@ public class Hud {
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
         registerDisplay.update();
-
-        //handGui.setVisible(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS);
 
         stage.draw();
     }

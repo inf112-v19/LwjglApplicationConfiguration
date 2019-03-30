@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Background for the main game (GameScreen).
+ */
 public class Background {
     private Sprite clouds;
     private Sprite grid;

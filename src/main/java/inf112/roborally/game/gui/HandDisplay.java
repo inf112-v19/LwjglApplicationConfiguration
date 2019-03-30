@@ -24,6 +24,10 @@ public class HandDisplay {
         this.hud = hud;
     }
 
+    /**
+     * Draws all cards in the player hand.
+     * @param hud where it's being drawn
+     */
     public void updateCardsInHand(final Hud hud){
         float scale = 0.5f;
         int j = 0;

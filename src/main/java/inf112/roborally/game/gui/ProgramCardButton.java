@@ -3,6 +3,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import inf112.roborally.game.board.ProgramCard;
 
+/**
+ * Visual program card.
+ */
 public class ProgramCardButton extends ImageTextButton {
 
     ProgramCard card;

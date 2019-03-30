@@ -6,10 +6,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * Contains assets used by the game. (All .png and .wav files)
+ * Contains assets used by the game (all .png and .wav files).
  * With AssMan you are able to load as well as dispose all of them at the same time.
  *
  * .atlas files can not go here.
+ * Calling {@link #dispose()} will dispose all assets.
  */
 public class AssMan{
 
@@ -104,6 +105,10 @@ public class AssMan{
     public static final AssetDescriptor<Texture> REGISTER_LOCK_TOKEN
             = new AssetDescriptor<>("assets/cards/tokens/lockToken.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN
+            = new AssetDescriptor<>("assets/cards/powerDown.png", Texture.class);
+
+
     //Backup
     public static final AssetDescriptor<Texture> BACKUP
             = new AssetDescriptor<>("assets/objects/backup.png", Texture.class);
@@ -176,6 +181,7 @@ public class AssMan{
         manager.load(REGISTER_LIFE_TOKEN);
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
+        manager.load(REGISTER_POWER_DOWN);
 
         //Backup
         manager.load(BACKUP);
@@ -193,12 +199,10 @@ public class AssMan{
 
         //Flag
         manager.load(FLAG_SKIN);
-
     }
 
     public void dispose(){
         System.out.println("disposing asset manager");
         manager.clear();
     }
-
 }
