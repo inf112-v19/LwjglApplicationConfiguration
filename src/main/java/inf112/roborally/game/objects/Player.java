@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.PlayerHand;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
@@ -28,7 +29,6 @@ public class Player extends MovableGameObject implements Comparable {
     private int lives;
     private int damage;
     private Backup backup;
-    private ArrayList<ProgramCard> cardsInHand;
     private ProgramRegisters registers;
     private Board board;
     private ArrayList<TextureRegion> regions;
@@ -39,6 +39,7 @@ public class Player extends MovableGameObject implements Comparable {
     private boolean screamed;  //Whether or not the player has screamed from falling off the map this round.
     private int phase;
     private boolean debugging;
+    private PlayerHand hand;
 
     public Player(String name, String filepath, Direction direction, Board board) {
         this(0, 0, filepath);
@@ -66,7 +67,7 @@ public class Player extends MovableGameObject implements Comparable {
         targetFlag = 1;
         nFlags = 1;
         playerState = PlayerState.OPERATIONAL;
-        cardsInHand = new ArrayList<>();
+        hand = new PlayerHand(this);
         registers = new ProgramRegisters(this);
         backup = new Backup(getX(), getY(), this);
         laserCannon = new LaserCannon(this);
@@ -131,29 +132,9 @@ public class Player extends MovableGameObject implements Comparable {
         move(0);
     }
 
-
-    public void receiveCard(ProgramCard programCard) {
-        if (programCard == null) {
-            throw new NullPointerException("Trying to add a programCard that has value null");
-        }
-        else if (cardsInHand.size() == ProgramRegisters.MAX_NUMBER_OF_CARDS) {
-            System.out.println(this.name + " can not receive more cards");
-            return;
-        }
-        cardsInHand.add(programCard);
-    }
-
-    public ProgramCard removeCardInHand(int cardPos) {
-        if (cardPos < 0 || cardPos >= cardsInHand.size()) {
-            throw new IndexOutOfBoundsException("Trying to remove index: " + cardPos
-                    + ", but number of cards in hand: " + getNumberOfCardsInHand());
-        }
-        return cardsInHand.remove(cardPos);
-    }
-
     public ArrayList<ProgramCard> returnCards() {
         registers.returnCards(this);
-        return cardsInHand;
+        return hand.getCardsInHand();
     }
 
     @Override
@@ -293,10 +274,6 @@ public class Player extends MovableGameObject implements Comparable {
         return lives < 1;
     }
 
-    public boolean handIsFull() {
-        return cardsInHand.size() >= ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
-    }
-
     public void killTheSound() {
         for (GameSound s : allPlayerSounds) {
             s.mute();
@@ -306,18 +283,6 @@ public class Player extends MovableGameObject implements Comparable {
 
     public boolean hasScreamed() {
         return this.screamed;
-    }
-
-    public ProgramCard getCardInHand(int cardPos) {
-        return cardsInHand.get(cardPos);
-    }
-
-    public ArrayList<ProgramCard> getCardsInHand() {
-        return cardsInHand;
-    }
-
-    public int getNumberOfCardsInHand() {
-        return cardsInHand.size();
     }
 
     public int getCardLimit() {
@@ -391,5 +356,9 @@ public class Player extends MovableGameObject implements Comparable {
     @Override
     public String toString() {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
+    }
+
+    public PlayerHand getHand() {
+        return hand;
     }
 }

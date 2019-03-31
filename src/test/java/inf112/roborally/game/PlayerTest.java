@@ -111,7 +111,7 @@ public class PlayerTest {
     public void noLockedRegistersReturnsAllCards(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.getRegisters().placeCard(0);
@@ -129,7 +129,7 @@ public class PlayerTest {
     public void lockedCardsAreNotReturned(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.getRegisters().placeCard(0);
@@ -152,7 +152,7 @@ public class PlayerTest {
     public void lockedCardsAreNotReturned2(){
         for(int i = 0; i < 9; i++) {
             // Player is given nine cards:
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
             if (i < 5)
                 // Player puts the five first in registers:
                 player.getRegisters().placeCard(0);
@@ -181,9 +181,9 @@ public class PlayerTest {
         Player p3 = new Player(0,0, 1);
         // give them five cards each:
         for(int i = 0; i < 5; i++){
-            p1.receiveCard(stack.pop());
-            p2.receiveCard(stack.pop());
-            p3.receiveCard(stack.pop());
+            p1.getHand().receiveCard(stack.pop());
+            p2.getHand().receiveCard(stack.pop());
+            p3.getHand().receiveCard(stack.pop());
         }
         // have them all pick the first card and place it in a register:
         p1.getRegisters().placeCard(0);
@@ -243,8 +243,8 @@ public class PlayerTest {
 
     @Test (expected = IndexOutOfBoundsException.class)
     public void negativeIndexShouldThrowIndexOutOfBounds(){
-        player.receiveCard(stack.pop());
-        player.removeCardInHand(-1);
+        player.getHand().receiveCard(stack.pop());
+        player.getHand().removeCard(-1);
     }
 
     @Test
@@ -289,15 +289,15 @@ public class PlayerTest {
     @Test
     public void checkIfHandIsFull(){
         for(int i = 0; i < player.getCardLimit(); i++)
-            player.receiveCard(stack.pop());
-        assertTrue(player.handIsFull());
+            player.getHand().receiveCard(stack.pop());
+        assertTrue(player.getHand().isFull());
     }
 
     @Test
     public void handIsNotFull(){
         for(int i = 0; i < player.getCardLimit() - 1; i++) {
-            player.receiveCard(stack.pop());
-            assertFalse(player.handIsFull());
+            player.getHand().receiveCard(stack.pop());
+            assertFalse(player.getHand().isFull());
         }
     }
 
@@ -305,8 +305,8 @@ public class PlayerTest {
     public void getCardInHandReturnsCorrectCards(){
         for(int i = 0; i < player.getCardLimit(); i++){
             ProgramCard card = stack.pop();
-            player.receiveCard(card);
-            assertEquals(card, player.getCardInHand(i));
+            player.getHand().receiveCard(card);
+            assertEquals(card, player.getHand().getCard(i));
         }
     }
 

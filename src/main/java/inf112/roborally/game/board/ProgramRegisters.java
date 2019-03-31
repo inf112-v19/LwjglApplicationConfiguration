@@ -28,11 +28,11 @@ public class ProgramRegisters implements IProgramRegisters {
      */
     @Override
     public int placeCard(int cardPosition) {
-        if (cardPosition < 0 || cardPosition >= player.getNumberOfCardsInHand()) {
+        if (cardPosition < 0 || cardPosition >= player.getHand().size()) {
             throw new IndexOutOfBoundsException(
                     "Card position: " + cardPosition
                             + ". \n Number of cards in hand: "
-                            + player.getNumberOfCardsInHand()
+                            + player.getHand().size()
                             + ". Card position should be one less than number of cards in hand. "
                             + "\n Player name: "
                             + player.getName()
@@ -44,7 +44,7 @@ public class ProgramRegisters implements IProgramRegisters {
 
         for (int i = 0; i < unlockedRegisters; i++) {
             if (registers[i] == null) {
-                registers[i] = player.removeCardInHand(cardPosition);
+                registers[i] = player.getHand().removeCard(cardPosition);
                 return i;
             }
         }
@@ -111,7 +111,7 @@ public class ProgramRegisters implements IProgramRegisters {
     public void returnCards(Player player) {
         for (int i = 0; i < player.getRegisters().getNumUnlockedRegisters(); i++) {
             if (registers[i] != null) {
-                player.receiveCard(registers[i]);
+                player.getHand().receiveCard(registers[i]);
             }
             registers[i] = null;
         }
@@ -128,7 +128,7 @@ public class ProgramRegisters implements IProgramRegisters {
             throw new IndexOutOfBoundsException();
         }
         ProgramCard card = registers[index];
-        player.receiveCard(card);
+        player.getHand().receiveCard(card);
         registers[index] = null;
     }
 

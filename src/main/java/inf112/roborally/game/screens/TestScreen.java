@@ -31,7 +31,7 @@ public class TestScreen implements Screen {
         player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
         for(int i = 0; i < player.getCardLimit(); i++){
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
         }
 
         hud = new Hud(player, game);
