@@ -1,12 +1,9 @@
 package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
-
-import java.util.ArrayList;
 
 /**
  * A class for drawing all the cards that are in the player hand.
@@ -34,8 +31,8 @@ public class HandDisplay {
         posX = 1250;
         posY = 200;
 
-        for (int i = 0; i < player.getNumberOfCardsInHand(); i++) {
-            ProgramCard card = player.getCardInHand(i);
+        for (int i = 0; i < player.getHand().size(); i++) {
+            ProgramCard card = player.getHand().getCard(i);
             card.setUpSkin();
             final ProgramCardButton cardInHandButton = new ProgramCardButton(card);
             cardInHandButton.setTransform(true);

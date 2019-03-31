@@ -50,19 +50,19 @@ public class ProgramRegisterTest {
 
     @Test
     public void receiveCard_AddsOneCardToCardsInHand(){
-        player.receiveCard(stack.pop());
-        assertEquals(1, player.getNumberOfCardsInHand());
+        player.getHand().receiveCard(stack.pop());
+        assertEquals(1, player.getHand().size());
     }
 
     @Test
     public void PlayerDoesNotReceiveACardIfHandIsFull(){
         for(int i = 0; i < player.getCardLimit(); i++)
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
 
-        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, player.getNumberOfCardsInHand());
+        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, player.getHand().size());
 
-        player.receiveCard(stack.pop());
-        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, player.getNumberOfCardsInHand());
+        player.getHand().receiveCard(stack.pop());
+        assertEquals(ProgramRegisters.MAX_NUMBER_OF_CARDS, player.getHand().size());
     }
 
 
@@ -88,7 +88,7 @@ public class ProgramRegisterTest {
     @Test
     public void returnCards_ReturnsAllCards(){
         for(int i = 0; i < 9; i++){
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
         }
         assertEquals(9, player.returnCards().size());
     }
@@ -96,7 +96,7 @@ public class ProgramRegisterTest {
     @Test
     public void returnCards_ReturnsAllCardsWhenNoRegistersAreLocked(){
         for(int i = 0; i < 9; i++){
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
         }
         for(int i = 0; i < 5; i++)
             programRegisters.placeCard(i);
@@ -107,7 +107,7 @@ public class ProgramRegisterTest {
     @Test
     public void returnCards_ReturnsFourCardsWhenFiveRegistersAreLocked(){
         for(int i = 0; i < 9; i++){
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
         }
         for(int i = 0; i < 5; i++)
             programRegisters.placeCard(0);
@@ -119,7 +119,7 @@ public class ProgramRegisterTest {
     @Test
     public void returnCardsReturns_8CardsWhenOneRegistersAreLocked(){
         for(int i = 0; i < 9; i++)
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
             programRegisters.placeCard(0);
@@ -131,7 +131,7 @@ public class ProgramRegisterTest {
     @Test
     public void registerIsFull_ReturnsTrueWhenFull(){
         for(int i = 0; i < 9; i++)
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
             player.getRegisters().placeCard(0);
@@ -142,7 +142,7 @@ public class ProgramRegisterTest {
     @Test
     public void registerIsFull_ReturnsFalseWhenNotFull(){
         for(int i = 0; i < 9; i++)
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
 
         for(int i = 0; i < 1; i++)
             player.getRegisters().placeCard(0);
@@ -153,7 +153,7 @@ public class ProgramRegisterTest {
     @Test
     public void registerIsFull_ReturnsFalseWhenCalling_returnCards_AfterRegisterBeingFull(){
         for(int i = 0; i < 9; i++)
-            player.receiveCard(stack.pop());
+            player.getHand().receiveCard(stack.pop());
 
         for(int i = 0; i < 5; i++)
             player.getRegisters().placeCard(0);

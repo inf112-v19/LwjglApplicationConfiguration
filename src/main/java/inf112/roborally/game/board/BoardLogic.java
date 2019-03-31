@@ -205,7 +205,7 @@ public class BoardLogic {
             if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
                 reshuffleDeck();
             }
-            player.receiveCard(stackOfProgramCards.pop());
+            player.getHand().receiveCard(stackOfProgramCards.pop());
         }
     }
 
@@ -222,7 +222,7 @@ public class BoardLogic {
             while (!ai.getRegisters().isFull()) {
                 ai.getRegisters().placeCard(0);
             }
-            System.out.println(ai.getCardsInHand().size());
+            System.out.println(ai.getHand().size());
         }
     }
 
