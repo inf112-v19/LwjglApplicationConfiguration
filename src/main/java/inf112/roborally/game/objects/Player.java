@@ -18,7 +18,7 @@ import static inf112.roborally.game.board.TiledTools.cellContainsKey;
 import static inf112.roborally.game.enums.PlayerState.*;
 
 public class Player extends MovableGameObject implements Comparable {
-    private static final int MAX_DAMAGE = 10;
+    public static final int MAX_DAMAGE = 10;
     private static final int MAX_LIVES = 3;
 
     public boolean wantsToPowerDown;
@@ -149,14 +149,16 @@ public class Player extends MovableGameObject implements Comparable {
         updateSprite();
     }
 
-    public void respawn() {
-        if (!isDestroyed()) return; // Can only respawn dead robots
-
-        takeDamage();
+    /**
+     * @return true if player was respawned
+     */
+    public boolean respawn() {
+        if (!isDestroyed()) return false; // Can only respawn dead robots
 
         if (outOfLives()) {
             System.out.println(name + " is out of the game");
             playerState = GAME_OVER;
+            return false;
         }
         else {
             System.out.println(name + " was respawned!");
@@ -166,6 +168,7 @@ public class Player extends MovableGameObject implements Comparable {
             }
             playerState = OPERATIONAL;
         }
+        return true;
     }
 
     public void powerDown() {
@@ -207,6 +210,8 @@ public class Player extends MovableGameObject implements Comparable {
      * Lose a life if damage taken is equal to MAX_DAMAGE.
      */
     public void takeDamage() {
+        if (isDestroyed()) return;
+
         if (damage < MAX_DAMAGE && lives > 0) {
             damage++;
 
@@ -218,7 +223,6 @@ public class Player extends MovableGameObject implements Comparable {
 
         if (damage == MAX_DAMAGE) {
             lives--;
-            damage = 0;
             playerState = DESTROYED;
         }
     }
@@ -233,7 +237,11 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void destroy() {
+        if(isDestroyed()) return;
+
         damage = MAX_DAMAGE;
+        playerState = DESTROYED;
+        lives--;
     }
 
     public boolean hasWon() {

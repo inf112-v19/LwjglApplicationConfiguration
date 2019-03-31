@@ -41,11 +41,11 @@ public class BoardLogicTest {
     }
 
     @Test
-    public void doBeforeRoundDealsCorrectAmountOfCards() {
+    public void doBeforeRoundRespawnsBeforeDealingCards() {
         player2.playerState = PlayerState.DESTROYED;
         boardLogic.doBeforeRound();
         assertEquals(9, player1.getHand().size());
-        assertEquals(0, player2.getHand().size());
+        assertEquals(9, player2.getHand().size());
     }
 
     /**

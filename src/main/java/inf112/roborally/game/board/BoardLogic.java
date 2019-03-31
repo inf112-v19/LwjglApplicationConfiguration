@@ -1,6 +1,5 @@
 package inf112.roborally.game.board;
 
-import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
@@ -42,6 +41,7 @@ public class BoardLogic {
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
+                aiRobotsChooseCards();
                 checkIfReady();
                 break;
             case ROUND:
@@ -58,6 +58,7 @@ public class BoardLogic {
     protected void doBeforeRound() {
         System.out.println("set up before round");
         cleanBoard();
+        respawnRobots();
         powerUpRobots();
         powerDownRobots();
 
@@ -71,7 +72,15 @@ public class BoardLogic {
         }
         System.out.println("players choosing cards. + players alive: " + players.size());
         state = PICKING_CARDS;
-        aiRobotsChooseCards();
+    }
+
+    private void respawnRobots(){
+        for(Player player : players){
+            if(player.isDestroyed()){
+                if (player.outOfLives()) player.playerState = PlayerState.GAME_OVER;
+                else player.respawn();
+            }
+        }
     }
 
     private void removeDeadRobots() {

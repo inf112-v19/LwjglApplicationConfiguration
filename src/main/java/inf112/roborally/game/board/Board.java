@@ -202,7 +202,6 @@ public  class Board extends TiledBoard {
             if (player.isOnOption(floorLayer)) {
                 System.out.println("Give option card to player!");
             }
-            player.respawn();
         }
     }
 
