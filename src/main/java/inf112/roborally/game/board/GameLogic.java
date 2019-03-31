@@ -9,11 +9,9 @@ import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
 
-import java.util.ArrayList;
-
-public class GameLogic extends BoardLogic {
-
+public class GameLogic extends BoardLogic implements Runnable {
     private final Hud hud;
+
     private Board board;
     private RoboRallyGame game;
     private Player player1;
@@ -24,11 +22,25 @@ public class GameLogic extends BoardLogic {
         this.game = game;
         this.board = board;
         this.hud = hud;
-
         player1 = players.get(0);
-
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
-        update();
+    }
+
+    @Override
+    public void run() {
+        while (state != GameState.GAME_OVER) update();
+    }
+
+    public void update() {
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                // process the result, e.g. add it to an Array<Result> field of the ApplicationListener.
+                handleInput();
+            }
+        });
+        updatePlayers();
+        executeLogic();
     }
 
     private void handleInput() {
@@ -73,16 +85,15 @@ public class GameLogic extends BoardLogic {
         }
     }
 
-    public void update() {
-        handleInput();
-        updatePlayers();
-        executeLogic();
-    }
-
     public void doBeforeRound() {
         super.doBeforeRound();
-        hud.clearAllCards();
-        hud.updateCards();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                hud.clearAllCards();
+                hud.updateCards();
+            }
+        });
     }
 
     @Override
@@ -111,6 +122,5 @@ public class GameLogic extends BoardLogic {
     protected void cleanBoard() {
         board.cleanUp();
     }
-
 }
 

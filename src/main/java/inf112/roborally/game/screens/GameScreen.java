@@ -3,11 +3,14 @@ package inf112.roborally.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
-import inf112.roborally.game.board.*;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.GameLogic;
+import inf112.roborally.game.board.TestBoard;
+import inf112.roborally.game.board.VaultBoard;
+import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
@@ -34,34 +37,24 @@ public class GameScreen implements Screen {
 
     public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions) {
         this.game = game;
-
-
-        if(!testMap){
-
+        if (!testMap) {
             if (flagPositions != null) {
                 board = new VaultBoard(flagPositions);
-            } else {
+            }
+            else {
                 board = new VaultBoard();
             }
         }
         else {
-
             board = new TestBoard();
-
-                   }
-
-
+        }
         addPlayersToBoard(robotChoiceIndex);
         board.placePlayers();
-
-
         hud = new Hud(board.getPlayers().get(0), game);
-
         hud.createButtons();
-
         System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud, game);
-
+        new Thread(gameLogic).start();
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
         music.play();
@@ -72,9 +65,7 @@ public class GameScreen implements Screen {
         game.dynamicCamera.position.set(x, y, 0);
         game.dynamicCamera.zoom = 0.4f;
         game.dynamicCamera.update();
-
         background = new Background(game.dynamicCamera);
-
         animations = new ArrayList<>();
     }
 
@@ -85,10 +76,10 @@ public class GameScreen implements Screen {
         int index = robotChoiceIndex;
         int n = game.nSkins;
         for (int i = 0; i < n; i++) {
-            if(index >= n) {
+            if (index >= n) {
                 index = 0;
             }
-            namebuilder.append(Integer.toString(i+1));
+            namebuilder.append(Integer.toString(i + 1));
             board.addPlayer(new Player(namebuilder.toString(), filepaths[index], NORTH, board));
             namebuilder.deleteCharAt(6); // Delete the last character, which is the player number
             index++;
@@ -133,7 +124,6 @@ public class GameScreen implements Screen {
     }
 
     private void update() {
-        gameLogic.update();
         game.cameraListener.update();
         background.update(game.dynamicCamera);
     }
@@ -174,19 +164,16 @@ public class GameScreen implements Screen {
 
     }
 
-    public Hud getHud(){
-        return this.hud;
-    }
-    public GameLogic getGameLogic() {
-        return gameLogic;
-    }
-
     public GameMusic getMusic() {
         return music;
     }
 
     public Board getBoard() {
         return board;
+    }
+
+    public GameLogic getGameLogic() {
+        return gameLogic;
     }
 }
 
