@@ -7,8 +7,7 @@ Group 5.1
 # INF112 roborally game
 Much more than a simple skeleton with libgdx. 
 ### Manual testing:
-### GUI
-### How to do testing for the TestScreen:
+### GUI - How to do testing for the TestScreen:
 When running Main.java you will get prompted to 'PRESS ENTER'. Hitting 'T' instead will launch a test
 screen where you can test that ProgramCard and ProgramRegister GUI works as it should. Clicking the 
 submit button when you have chosen five cards is not supposed to do anything here.
@@ -30,9 +29,7 @@ remove it from the register and return it to the player hand, if it is not locke
   1. Choose 5 cards (optional, but in the game you are not able to take damage without picking five cards).
   2. Press 'D' 30+ times. Should not be able to interact with the game since the player is dead.
   
-### Tiles
-
-##### How to test each of the different tiles:
+### Tiles - How to test each of the different tiles:
 * You can do this in the main game, but its much easier to test this on the testMap.
 * In the GameScreen class there is a boolean called testMap, set this to true and run Main.java.
 * This will begin the game on the test map.
@@ -55,8 +52,7 @@ remove it from the register and return it to the player hand, if it is not locke
 * Also if you die, you wont respawn aswell.
 
 
-### Main Game
-### How to do testing for the main game:
+### Main Game - How to do testing for the main game:
  Run Main.java and press Enter when prompted to get to the main game.
 
 
