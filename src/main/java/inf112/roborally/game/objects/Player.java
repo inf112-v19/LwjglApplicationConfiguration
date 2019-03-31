@@ -16,6 +16,7 @@ import inf112.roborally.game.sound.GameSound;
 import java.util.ArrayList;
 
 import static inf112.roborally.game.board.TiledTools.cellContainsKey;
+import static inf112.roborally.game.enums.PlayerState.*;
 
 public class Player extends MovableGameObject implements Comparable {
     private static final int MAX_DAMAGE = 10;
@@ -66,7 +67,7 @@ public class Player extends MovableGameObject implements Comparable {
         lives = MAX_LIVES;
         targetFlag = 1;
         nFlags = 1;
-        playerState = PlayerState.OPERATIONAL;
+        playerState = OPERATIONAL;
         hand = new PlayerHand(this);
         registers = new ProgramRegisters(this);
         backup = new Backup(getX(), getY(), this);
@@ -146,18 +147,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void update() {
-        if (!debugging) {
-            if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
-
-            if (isOffTheBoard(board.getFloorLayer()) && !outOfLives()) {
-                playerState = PlayerState.DESTROYED;
-                if (backup != null) {
-                    move(-1, -1);
-                }
-                Gdx.app.log(name, "is destroyed!");
-            }
-            updateSprite();
-        }
+        updateSprite();
     }
 
     public void respawn() {
@@ -167,21 +157,22 @@ public class Player extends MovableGameObject implements Comparable {
 
         if (outOfLives()) {
             System.out.println(name + " is out of the game");
-            playerState = PlayerState.GAME_OVER;
+            playerState = GAME_OVER;
         }
         else {
+            System.out.println(name + " was respawned!");
             repairAllDamage();
             if (backup != null) {
                 backup.movePlayerToBackup();
             }
-            playerState = PlayerState.OPERATIONAL;
+            playerState = OPERATIONAL;
         }
     }
 
     public void powerDown() {
         if (!wantsToPowerDown || !isOperational()) return;
 
-        playerState = PlayerState.POWERED_DOWN;
+        playerState = POWERED_DOWN;
         System.out.println(name + " powers down");
         wantsToPowerDown = false;
     }
@@ -190,7 +181,7 @@ public class Player extends MovableGameObject implements Comparable {
         if (!isPoweredDown()) return;
 
         repairAllDamage();
-        playerState = PlayerState.OPERATIONAL;
+        playerState = OPERATIONAL;
         System.out.println(name + " powers up");
     }
 
@@ -229,7 +220,7 @@ public class Player extends MovableGameObject implements Comparable {
         if (damage == MAX_DAMAGE) {
             lives--;
             damage = 0;
-            playerState = PlayerState.DESTROYED;
+            playerState = DESTROYED;
         }
     }
 
@@ -255,19 +246,19 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public boolean isDestroyed() {
-        return playerState == PlayerState.DESTROYED;
+        return playerState == DESTROYED;
     }
 
     public boolean isReady() {
-        return playerState == PlayerState.POWERED_DOWN || playerState == PlayerState.READY;
+        return playerState == POWERED_DOWN || playerState == READY;
     }
 
     public boolean isOperational() {
-        return playerState == PlayerState.OPERATIONAL;
+        return playerState == OPERATIONAL;
     }
 
     public boolean isPoweredDown() {
-        return playerState == PlayerState.POWERED_DOWN;
+        return playerState == POWERED_DOWN;
     }
 
     public boolean outOfLives() {

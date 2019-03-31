@@ -68,7 +68,7 @@ public class BoardLogic {
                 giveCardsToPlayer(player);
             }
         }
-        System.out.println("players choosing cards");
+        System.out.println("players choosing cards. + players alive: " + players.size());
         state = PICKING_CARDS;
         aiRobotsChooseCards();
     }
@@ -129,7 +129,6 @@ public class BoardLogic {
             player.setPhase(phase);
         }
         try {
-            System.out.println(players.toString());
             Collections.sort(players);
         } catch (NullPointerException e) {
             throw new NullPointerException("AIRobots: "
@@ -139,14 +138,6 @@ public class BoardLogic {
         }
 
         executeCards();
-
-        if (!players.get(0).isDebuggingActive()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
         checkIfAPlayerHasWon();
         phase++;
     }
@@ -154,6 +145,14 @@ public class BoardLogic {
     private void executeCards() {
         for (Player player : players) {
             player.getRegisters().executeCard(phase);
+            updatePlayers();
+            if (!players.get(0).isDebuggingActive()) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
