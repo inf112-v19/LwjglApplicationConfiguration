@@ -1,5 +1,6 @@
 package inf112.roborally.game.board;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
@@ -97,6 +98,8 @@ public class BoardLogic {
     }
 
     private boolean allPlayersReady() {
+        removeDeadRobots();
+        System.out.println("Players: " + players.size());
         for (Player player : players) {
             if (!player.isReady()) return false;
         }
@@ -140,13 +143,13 @@ public class BoardLogic {
 
         executeCards();
 
-        if (!players.get(0).isDebuggingActive()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        }
         checkIfAPlayerHasWon();
         phase++;
     }
