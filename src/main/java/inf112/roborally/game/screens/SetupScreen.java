@@ -292,7 +292,7 @@ public class SetupScreen extends AbstractScreen {
     @Override
     public void resize(int w, int h) {
         super.resize(w,h);
-        // Only need to update the map numbers whenever the screen is resized
+        // Only need to updateZoom the map numbers whenever the screen is resized
         updateMapNumbers();
     }
 
