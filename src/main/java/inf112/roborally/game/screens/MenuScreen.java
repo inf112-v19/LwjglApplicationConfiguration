@@ -13,8 +13,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.gui.AssMan;
 
-import java.awt.event.InputEvent;
-
 public class MenuScreen implements Screen {
 
     private RoboRallyGame roboRallyGame;
@@ -85,6 +83,10 @@ public class MenuScreen implements Screen {
         else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             dispose();
             roboRallyGame.setScreen(roboRallyGame.testScreen);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.L)){
+            dispose();
+            roboRallyGame.setScreen(roboRallyGame.laserTestScreen);
         }
     }
 

@@ -24,7 +24,7 @@ import static inf112.roborally.game.board.TiledTools.getValue;
 
 
 @SuppressWarnings("Duplicates")
-public abstract class Board extends TiledBoard {
+public  class Board extends TiledBoard {
 
     protected ArrayList<Player> players;
     protected ArrayList<RepairSite> repairSites;
@@ -159,7 +159,7 @@ public abstract class Board extends TiledBoard {
         }
     }
 
-    private void lasersFire() {
+    public void lasersFire() {
         for (Player player : players) {
             if (player.hitByLaser(laserLayer)) {
                 if (!soundIsMuted) {
@@ -250,7 +250,7 @@ public abstract class Board extends TiledBoard {
 
     public void robotLasersFire() {
         for (Player player : players) {
-            player.fireLaser(this);
+            player.laserCannon.fire(this);
         }
     }
 

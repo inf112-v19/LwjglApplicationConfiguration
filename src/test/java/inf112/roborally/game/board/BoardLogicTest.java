@@ -53,7 +53,8 @@ public class BoardLogicTest {
      */
     @Test
     public void sanityTest() {
-        for (int round = 0; round < 2; round++) {
+        int nRounds = 2;
+        for (int round = 0; round < nRounds; round++) {
             assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
 
             boardLogic.executeLogic();
@@ -77,8 +78,8 @@ public class BoardLogicTest {
             }
 
             boardLogic.executeLogic();
-            assertEquals(GameState.ROUND, boardLogic.getState());
-
+            assertEquals(GameState.ROUND, boardLogic.getState()); //it goes to ROUND but the only thing that happens this round
+                                                                //is GameState getting set to BETWEEN ROUNDS. fix this
             boardLogic.executeLogic();
             assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
         }

@@ -31,6 +31,7 @@ public class Player extends MovableGameObject implements Comparable {
     private Board board;
     private ArrayList<TextureRegion> regions;
     public PlayerState playerState;
+    public LaserCannon laserCannon;
 
     public boolean wantsToPowerDown;
 
@@ -48,12 +49,13 @@ public class Player extends MovableGameObject implements Comparable {
 
     public Player(String name, String filepath, Direction direction, Board board) {
         super(0, 0, filepath);
-
         this.name = name;
         this.board = board;
         setDirection(direction);
         makeSprite();
         loadVisualRepresentation();
+
+        laserCannon = new LaserCannon(this);
 
         damage = 0;
         lives = MAX_LIVES;
@@ -108,7 +110,6 @@ public class Player extends MovableGameObject implements Comparable {
         }
         sprite.setRegion(regions.get(0));
     }
-
 
     @Override
     public void move(int steps) {
@@ -260,24 +261,6 @@ public class Player extends MovableGameObject implements Comparable {
             lives--;
             damage = 0;
             playerState = PlayerState.DESTROYED;
-        }
-    }
-
-
-    public void fireLaser(Board board) {
-        LaserShot laserShot = new LaserShot(getDirection(), getX(), getY());
-        while (laserShot.canGo(laserShot.getDirection(), board.getWallLayer())) {
-            laserShot.moveInDirection(laserShot.getDirection());
-            for (Player target : board.getPlayers()) {
-                if (laserShot.position.equals(target.position)) {
-                    target.takeDamage();
-                    System.out.println(getName() + " shoots  " + target.getName());
-                    return;
-                }
-            }
-            if (laserShot.outOfBounds(board)) {
-                return;
-            }
         }
     }
 
