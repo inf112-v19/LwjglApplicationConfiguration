@@ -28,6 +28,7 @@ public class GameLogic extends BoardLogic implements Runnable {
     @Override
     public void run() {
         while (state != GameState.GAME_OVER) update();
+        endGame();
     }
 
     public void update() {
