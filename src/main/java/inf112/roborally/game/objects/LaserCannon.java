@@ -2,6 +2,8 @@ package inf112.roborally.game.objects;
 
 import inf112.roborally.game.board.Board;
 
+import java.util.ArrayList;
+
 public class LaserCannon extends MovableGameObject {
     private Player gunOwner;
 
@@ -23,6 +25,23 @@ public class LaserCannon extends MovableGameObject {
             }
             if (outOfBounds(board)) {
                 return;
+            }
+        }
+    }
+
+    /**
+     * For testing only! this method can fire through walls
+     */
+    public void fire(ArrayList<Player> targets) {
+        correctPositionBeforeFire();
+        while (getX() >= 0 && getX() < 10 && getY() >= 0 && getY() < 10) {
+            this.moveInDirection(this.getDirection());
+            for (Player target : targets) {
+                if (this.position.equals(target.position)) {
+                    target.takeDamage();
+                    System.out.println(gunOwner.getName() + " shoots " + target.getName());
+                    return;
+                }
             }
         }
     }

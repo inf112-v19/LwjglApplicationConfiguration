@@ -85,6 +85,7 @@ public class Player extends MovableGameObject implements Comparable {
     public Player(int x, int y, int nFlags) {
         super(x, y, AssMan.PLAYER_TVBOT.fileName);
         this.nFlags = Math.abs(nFlags);
+        laserCannon = new LaserCannon(this);
         damage = 0;
         lives = MAX_LIVES;
         backup = new Backup(getX(), getY(), this);
@@ -92,6 +93,7 @@ public class Player extends MovableGameObject implements Comparable {
         cardsInHand = new ArrayList<>();
         targetFlag = 1;
         debugging = true;
+        name = "testBot";
     }
 
 
