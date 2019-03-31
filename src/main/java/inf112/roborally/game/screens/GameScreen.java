@@ -10,7 +10,6 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.TestBoard;
 import inf112.roborally.game.board.VaultBoard;
-import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
@@ -124,7 +123,7 @@ public class GameScreen implements Screen {
     }
 
     private void update() {
-        game.cameraListener.update();
+        game.cameraListener.updateZoom();
         background.update(game.dynamicCamera);
     }
 
