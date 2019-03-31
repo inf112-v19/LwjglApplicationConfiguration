@@ -28,6 +28,12 @@ public class GameLogic extends BoardLogic implements Runnable {
     @Override
     public void run() {
         while (state != GameState.GAME_OVER) update();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                endGame();
+            }
+        });
     }
 
     public void update() {

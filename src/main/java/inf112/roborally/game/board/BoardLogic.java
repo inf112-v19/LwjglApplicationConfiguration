@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.Stack;
 
 import static inf112.roborally.game.enums.GameState.*;
-import static java.util.Collections.*;
+import static java.util.Collections.shuffle;
 
 @SuppressWarnings("Duplicates")
 public class BoardLogic {
@@ -50,8 +50,6 @@ public class BoardLogic {
             case BOARD_MOVES:
                 boardMoves();
                 break;
-            case GAME_OVER:
-                endGame();
         }
     }
 
@@ -74,9 +72,9 @@ public class BoardLogic {
         state = PICKING_CARDS;
     }
 
-    private void respawnRobots(){
-        for(Player player : players){
-            if(player.isDestroyed()){
+    private void respawnRobots() {
+        for (Player player : players) {
+            if (player.isDestroyed()) {
                 if (player.outOfLives()) player.playerState = PlayerState.GAME_OVER;
                 else player.respawn();
             }
@@ -135,31 +133,30 @@ public class BoardLogic {
         }
 
         System.out.println("executing phase " + phase);
+        sortPlayersByPriority();
+        executeCards();
+        if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
+            try {
+                Thread.sleep(200);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        checkIfAPlayerHasWon();
+        phase++;
+    }
 
-        // sort players after phase priority
+    private void sortPlayersByPriority() {
         for (Player player : players) {
             player.setPhase(phase);
         }
         try {
             Collections.sort(players);
-        } catch (NullPointerException e) {
-            throw new NullPointerException("AIRobots: "
-                    + aiBots.size()
-                    + "\n Players: "
-                    + players.size());
         }
-
-        executeCards();
-
-            if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        checkIfAPlayerHasWon();
-        phase++;
+        catch (NullPointerException e) {
+            throw new NullPointerException("AIRobots: " + aiBots.size() + "\n Players: " + players.size());
+        }
     }
 
     private void executeCards() {
@@ -169,7 +166,8 @@ public class BoardLogic {
             if (!players.get(0).isDebuggingActive()) {
                 try {
                     Thread.sleep(500);
-                } catch (InterruptedException e) {
+                }
+                catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
