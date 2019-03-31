@@ -1,6 +1,5 @@
 package inf112.roborally.game.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;

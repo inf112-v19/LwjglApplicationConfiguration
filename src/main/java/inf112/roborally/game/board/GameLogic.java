@@ -104,7 +104,13 @@ public class GameLogic extends BoardLogic implements Runnable {
 
     @Override
     protected void cleanBoard() {
-        board.cleanUp();
+        super.cleanBoard();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                board.cleanUp();
+            }
+        });
     }
 }
 
