@@ -32,18 +32,11 @@ public class GameLogic extends BoardLogic implements Runnable {
     }
 
     public void update() {
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                // process the result, e.g. add it to an Array<Result> field of the ApplicationListener.
-                handleInput();
-            }
-        });
         updatePlayers();
         executeLogic();
     }
 
-    private void handleInput() {
+    public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }

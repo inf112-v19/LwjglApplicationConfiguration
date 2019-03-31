@@ -125,6 +125,7 @@ public class GameScreen implements Screen {
     private void update() {
         game.cameraListener.updateZoom();
         background.update(game.dynamicCamera);
+        gameLogic.handleInput();
     }
 
 
