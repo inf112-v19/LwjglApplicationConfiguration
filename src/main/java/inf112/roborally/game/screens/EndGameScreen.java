@@ -2,9 +2,7 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
@@ -18,11 +16,11 @@ public class EndGameScreen extends AbstractScreen {
     private Sprite winnerSprite;
     private int rotateTimer;
 
-    //EndGameScreen has its own Stage for holding actors, buttons etc.
+     //Stage for holding actors.
     public Stage stage;
 
     public EndGameScreen(RoboRallyGame game) {
-        super(game, AssMan.BACKGROUND_ENDGAME.fileName);
+        super(game, AssMan.ENDGAME_BACKGROUND.fileName);
         rotateTimer = 0;
         stage = new Stage(game.fixedViewPort, game.batch);
     }

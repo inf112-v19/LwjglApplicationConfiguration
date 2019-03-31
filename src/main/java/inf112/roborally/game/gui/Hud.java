@@ -14,6 +14,7 @@ import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
 
+
 public class Hud {
 
     public Stage stage;
@@ -67,7 +68,7 @@ public class Hud {
             submitButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (player.getRegisters().isFull() && player.isAlive()) {
+                    if (player.getRegisters().isFull() && !player.outOfLives()) {
                         player.playerState = PlayerState.READY;
                     }
                 }
@@ -103,7 +104,7 @@ public class Hud {
             clearButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if(player.isAlive()) {
+                    if(!player.outOfLives()) {
                         player.getRegisters().returnCards(player);
                         clearAllCards();
                         updateCards();
@@ -157,8 +158,6 @@ public class Hud {
         greySubmitButton.setVisible(!submitButton.isVisible());
         registerDisplay.update();
 
-        //handGui.setVisible(game.getGameScreen().getGameLogic().getState() == GameState.PICKING_CARDS);
-
         stage.draw();
     }
 
@@ -181,11 +180,6 @@ public class Hud {
             }
         }
     }
-
-    public AssMan getAssMan() {
-        return assMan;
-    }
-
 
     /**
      * Updates program cards in hand and program cards in register visually.

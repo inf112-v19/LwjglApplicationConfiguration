@@ -43,7 +43,7 @@ public class CardExecuteTest {
     }
 
     @Test
-    public void RotateRightThenOneForward() {
+    public void rotateRightThenOneForward() {
         manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority,""));
         manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority,""));
         movePlayerAllCardsInDeck();
@@ -52,7 +52,7 @@ public class CardExecuteTest {
     }
 
     @Test
-    public void PlayerMovesFiveCards() {
+    public void playerMovesFiveCards() {
         manualTestDeck.push(new ProgramCard(Rotate.NONE, 3, standardPriority,""));
         manualTestDeck.push(new ProgramCard(Rotate.LEFT, 3, standardPriority,""));
         manualTestDeck.push(new ProgramCard(Rotate.UTURN, 0, standardPriority,""));
@@ -62,6 +62,7 @@ public class CardExecuteTest {
         assertEquals(2, player.getX());
         assertEquals(-3, player.getY());
     }
+
 
     // Helper method only, not a test itself
     private void movePlayerAllCardsInDeck() {

@@ -2,19 +2,25 @@ package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.*;
-
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.animations.LaserAnimation;
 import inf112.roborally.game.animations.RepairAnimation;
-import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.objects.*;
+
+import inf112.roborally.game.enums.PlayerState;
+
 import inf112.roborally.game.enums.Direction;
 
-import java.util.*;
+import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.objects.*;
 
-import static inf112.roborally.game.board.TiledTools.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+
+import static inf112.roborally.game.board.TiledTools.cellContainsKey;
+import static inf112.roborally.game.board.TiledTools.getValue;
 
 
 @SuppressWarnings("Duplicates")
@@ -73,7 +79,7 @@ public  class Board extends TiledBoard {
         int startNumber = 0;
         for (Player currentPlayer : players) {
             currentPlayer.moveToPosition(startPlates.get(startNumber++).position);
-            currentPlayer.setDirection(Direction.WEST);
+            currentPlayer.setDirection(Direction.EAST);
             currentPlayer.updateSprite();
             currentPlayer.getBackup().moveToPlayerPosition();
         }
@@ -186,7 +192,7 @@ public  class Board extends TiledBoard {
 
     public void cleanUp() {
         for (Player player : players) {
-            if (player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) {
+            if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
                 if (!soundIsMuted) {
                     player.getSoundFromPlayer(1).play();

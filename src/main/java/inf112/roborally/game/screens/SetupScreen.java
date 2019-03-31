@@ -10,8 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.SetupState;
+import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.objects.Position;
 
 import java.util.ArrayList;
@@ -40,8 +42,11 @@ public class SetupScreen extends AbstractScreen {
     private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
 
+    //Keeps track of the converted clickPos
+    private ArrayList<Position> flagClickedPositions;
+
     public SetupScreen(RoboRallyGame game, String[] possibleFilepaths) {
-        super(game, "assets/backgrounds/setupscreen.png");
+        super(game, AssMan.SETUP_SETUP_SCREEN.fileName);
 
         stage = new Stage(game.fixedViewPort, game.batch);
         Gdx.input.setInputProcessor(stage);
@@ -51,6 +56,7 @@ public class SetupScreen extends AbstractScreen {
         flags = new ArrayList<>();
         flagCheck = new ArrayList<>();
         flagPositions = new ArrayList<>();
+        flagClickedPositions = new ArrayList<>();
 
         createSkinButtons();
         state = SetupState.PICKINGSKIN;
@@ -60,7 +66,7 @@ public class SetupScreen extends AbstractScreen {
 
     private void createSkinButtons() {
         int nSkins = possibleFilepaths.length;
-        Sprite selectSkinText = new Sprite(new Texture("assets/img/selectskintext.png"));
+        Sprite selectSkinText = new Sprite(new Texture(AssMan.SETUP_SELECT_SKIN_TEXT.fileName));
         selectSkinText.setPosition(Gdx.graphics.getWidth() / 2 + 125, 500);
         information.add(selectSkinText);
 
@@ -105,11 +111,12 @@ public class SetupScreen extends AbstractScreen {
                 Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // One tile here, inn full screen, is approx. 90x90
-        updateBackground("assets/backgrounds/setupscreenPlaceFlags.png");
+        updateBackground(AssMan.SETUP_SETUP_SCREEN_PLACE_FLAGS.fileName);
         updateMapNumbers();
 
         for(int i = 3; i > 0; i--) {
-            Sprite flag = new Sprite(new TextureRegion(new Texture("assets/objects/flags.png"), 150*(i-1), 0,150, 150));
+            Sprite flag = new Sprite(new TextureRegion(new Texture(AssMan.FLAG_SKIN.fileName),
+                    150*(i-1), 0,150, 150));
             flag.setPosition(100, 200*i);
             flags.add(flag);
         }
@@ -166,9 +173,31 @@ public class SetupScreen extends AbstractScreen {
 
                     if(mouseX >= mapStartX) {
                         Position clickedPos = convertMouseClickIntoMapPosition(mouseX, mouseY);
+
+                        //Quick-fix to not let the player put flags in holes
+                        if((clickedPos.getX() == 4 && clickedPos.getY() == 10) ||
+                           (clickedPos.getX() == 9 && clickedPos.getY() == 10) ||
+                           (clickedPos.getX() == 4 && clickedPos.getY() == 3)  ||
+                           (clickedPos.getX() == 9 && clickedPos.getY() == 3)){
+                            System.out.println("You can not place the flag in a pithole");
+                            return;
+                        }
+
+                        //If a flag has already been placed on this position then return
+                        for(int i = 0; i < flagPositions.size(); i++) {
+                            for (int j = 0; j < flagPositions.size(); j++) {
+                                if (clickedPos.getX() == flagPositions.get(j).getX() - 4 &&
+                                        clickedPos.getY() == flagPositions.get(j).getY()) {
+                                    System.out.println("You have already placed a flag here");
+                                    return;
+                                }
+                            }
+                        }
+                        flagClickedPositions.add(clickedPos);
+
                         System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
                                 clickedPos.getX(), clickedPos.getY());
-//                        Sprite check = new Sprite(new Texture("assets/img/checkflag.png"));
+//                        Sprite check = new Sprite(new Texture("assets/screens/setupscreen/checkflag.png"));
 //                        float newX = background.getWidth() - ((N_TILES - clickedPos.getX()) * TILE_SIZE_IN_FULLSCRREEN);
 //                        float newY = background.getHeight() - ((N_TILES - clickedPos.getY()) * TILE_SIZE_IN_FULLSCRREEN);
 //                        check.setPosition(newX, newY);
@@ -251,9 +280,9 @@ public class SetupScreen extends AbstractScreen {
 
         // Now it's time to place the flags:
         createMapForPlacingFlags();
-        
+
     }
-    
+
     private void createGameScreenFromSetup() {
         game.createGameScreen(robotChoiceIndex, flagPositions);
         game.setScreen(game.gameScreen);
@@ -263,7 +292,7 @@ public class SetupScreen extends AbstractScreen {
     @Override
     public void resize(int w, int h) {
         super.resize(w,h);
-        // Only need to update the map numbers whenever the screen is resized
+        // Only need to updateZoom the map numbers whenever the screen is resized
         updateMapNumbers();
     }
 

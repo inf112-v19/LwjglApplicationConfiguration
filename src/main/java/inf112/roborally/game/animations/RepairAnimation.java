@@ -10,7 +10,7 @@ public class RepairAnimation extends Animation {
     float direction;
 
     public RepairAnimation(Position position) {
-        super(position, AssMan.REPAIR_REPAIR_ANIMATION.fileName);
+        super(position, AssMan.REPAIRSITE_REPAIR_ANIMATION.fileName);
         sprite.setSize(32, 32);
         sprite.setOriginCenter();
 

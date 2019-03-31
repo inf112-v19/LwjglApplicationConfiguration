@@ -2,7 +2,6 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
@@ -10,7 +9,6 @@ import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.board.ProgramRegisters;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
-
 import inf112.roborally.game.gui.AssMan;
 import inf112.roborally.game.sound.GameSound;
 
@@ -18,8 +16,7 @@ import java.util.ArrayList;
 
 import static inf112.roborally.game.board.TiledTools.cellContainsKey;
 
-
-public class Player extends MovableGameObject {
+public class Player extends MovableGameObject implements Comparable {
     private static final int MAX_DAMAGE = 10;
     private static final int MAX_LIVES = 3;
 
@@ -48,6 +45,8 @@ public class Player extends MovableGameObject {
     //Whether or not the player has screamed from falling off the map this round.
     private boolean screamed;
 
+    int phase;
+
     public Player(String name, String filepath, Direction direction, Board board) {
         super(0, 0, filepath);
         this.name = name;
@@ -65,6 +64,7 @@ public class Player extends MovableGameObject {
         nFlags = board.getFlags().size();
 
         backup = new Backup(getX(), getY(), this);
+        backup.setupSprite();
         registers = new ProgramRegisters(this);
         cardsInHand = new ArrayList<>();
 
@@ -74,7 +74,26 @@ public class Player extends MovableGameObject {
         nSounds = 3;
         allPlayerSounds = new GameSound[nSounds];
         createSounds();
+
+        phase = 0;
     }
+
+
+    /**
+     * FOR TESTING ONLY
+     */
+    public Player(int x, int y, int nFlags) {
+        super(x, y, AssMan.PLAYER_TVBOT.fileName);
+        this.nFlags = Math.abs(nFlags);
+        damage = 0;
+        lives = MAX_LIVES;
+        backup = new Backup(getX(), getY(), this);
+        registers = new ProgramRegisters(this);
+        cardsInHand = new ArrayList<>();
+        targetFlag = 1;
+        debugging = true;
+    }
+
 
     public void createSounds() {
         allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
@@ -92,26 +111,10 @@ public class Player extends MovableGameObject {
         sprite.setRegion(regions.get(0));
     }
 
-    /**
-     * FOR TESTING ONLY
-     */
-    public Player(int x, int y, int nFlags) {
-        super(x, y, AssMan.PLAYER_TVBOT.fileName);
-        this.nFlags = nFlags;
-        damage = 0;
-        lives = MAX_LIVES;
-        registers = new ProgramRegisters(this);
-        cardsInHand = new ArrayList<>();
-        targetFlag = 1;
-        debugging = true;
-        laserCannon = new LaserCannon(this);
-
-    }
-
     @Override
     public void move(int steps) {
         if (debugging) {
-            for(int i = 0; i < steps; i++) moveInDirection(getDirection());
+            for (int i = 0; i < steps; i++) moveInDirection(getDirection());
             return;
         }
 
@@ -144,7 +147,8 @@ public class Player extends MovableGameObject {
     public void receiveCard(ProgramCard programCard) {
         if (programCard == null) {
             throw new NullPointerException("Trying to add a programCard that has value null");
-        }else if(cardsInHand.size() == ProgramRegisters.MAX_NUMBER_OF_CARDS){
+        }
+        else if (cardsInHand.size() == ProgramRegisters.MAX_NUMBER_OF_CARDS) {
             System.out.println(this.name + " can not receive more cards");
             return;
         }
@@ -173,7 +177,7 @@ public class Player extends MovableGameObject {
     }
 
     public void update() {
-        if(!debugging) {
+        if (!debugging) {
             if (playerState == PlayerState.DESTROYED) return; // Player needs to respawn before it receives updates.
 
             if (isOffTheBoard(board.getFloorLayer()) && !outOfLives()) {
@@ -247,13 +251,13 @@ public class Player extends MovableGameObject {
         if (damage < MAX_DAMAGE && lives > 0) {
             damage++;
 
-            if(damage >= 5){
+            if (damage >= 5) {
                 registers.lock();
             }
         }
 
 
-        if(damage == MAX_DAMAGE){
+        if (damage == MAX_DAMAGE) {
             lives--;
             damage = 0;
             playerState = PlayerState.DESTROYED;
@@ -299,6 +303,10 @@ public class Player extends MovableGameObject {
 
     public boolean outOfLives() {
         return lives < 1;
+    }
+
+    public boolean handIsFull() {
+        return cardsInHand.size() >= ProgramRegisters.MAX_NUMBER_OF_CARDS - damage;
     }
 
     public void killTheSound() {
@@ -352,10 +360,6 @@ public class Player extends MovableGameObject {
         return registers;
     }
 
-    public boolean isAlive(){
-        return lives != 0;
-    }
-
     public GameSound getSoundFromPlayer(int index) {
         if (index == 2) {
             screamed = true;
@@ -369,6 +373,31 @@ public class Player extends MovableGameObject {
             return false;
 
         return this.name.equals(((Player) other).name);
+    }
+
+
+    // TODO: TEST THIS
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) return 0;
+        Player other = (Player) o;
+        int thisPriority = registers.getCard(phase).getPriority();
+        int otherPriority = other.getRegisters().getCard(phase).getPriority();
+
+        return Integer.compare(thisPriority, otherPriority);
+    }
+
+    public void setPhase(int phase){
+        this.phase = phase;
+    }
+
+    public int getMaxDamage(){
+        return MAX_DAMAGE;
+    }
+
+
+    public boolean isDebuggingActive(){
+        return debugging;
     }
 
     @Override

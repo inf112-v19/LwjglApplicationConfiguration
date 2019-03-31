@@ -42,7 +42,7 @@ public class RegisterDisplay {
     /**
      * Draws the program register of a given player.
      * Shows cards in the players register slots. If a register is locked a small lock icon will appear.
-     * It also shows lives and damage.
+     * It also shows lives, damage taken and the power button.
      *
      * @param player
      */
@@ -62,7 +62,7 @@ public class RegisterDisplay {
     }
 
     private void addPowerDown() {
-        ImageButton powerDown = new ImageButton(new TextureRegionDrawable(new Texture("assets/cards/powerDown.png")));
+        ImageButton powerDown = new ImageButton(new TextureRegionDrawable(new Texture(AssMan.REGISTER_POWER_DOWN.fileName)));
         powerDown.setSize(powerDown.getWidth() * scale, powerDown.getHeight() * scale);
         powerDown.setPosition(programBoard.getX() + 180 * scale, 370 * scale, Align.center);
         powerDown.addListener(new ClickListener() {

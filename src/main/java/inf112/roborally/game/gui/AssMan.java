@@ -6,10 +6,11 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 
 /**
- * Contains assets used by the game.
+ * Contains assets used by the game (all .png and .wav files).
  * With AssMan you are able to load as well as dispose all of them at the same time.
  *
  * .atlas files can not go here.
+ * Calling {@link #dispose()} will dispose all assets.
  */
 public class AssMan{
 
@@ -25,7 +26,8 @@ public class AssMan{
     public static final AssetDescriptor<Music> MUSIC_PLAYER_WILHELM_SCREAM
             = new AssetDescriptor<>("assets/music/playerWilhelmScream.wav", Music.class);
 
-
+    public static final AssetDescriptor<Music> MUSIC_MAIN_THEME
+            = new AssetDescriptor<>( "assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
 
     //Player skins
     public static final AssetDescriptor<Texture> PLAYER_BARTENDER_CLAPTRAP
@@ -43,8 +45,6 @@ public class AssMan{
     public static final AssetDescriptor<Texture> PLAYER_TVBOT
             = new AssetDescriptor<>("assets/robot/tvBot.png", Texture.class);
 
-
-
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
             = new AssetDescriptor<>("assets/cards/buttonSubmit.png", Texture.class);
@@ -58,25 +58,36 @@ public class AssMan{
     public static final AssetDescriptor<Texture> BUTTON_SETTINGS
             = new AssetDescriptor<>("assets/img/settingsbtn.png", Texture.class);
 
+    //GameScreen
+    public static final AssetDescriptor<Texture> GAMESCREEN_BACKGROUND2
+            = new AssetDescriptor<>("assets/screens/gamescreen/background2.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> GAMESCREEN_GRID2
+            = new AssetDescriptor<>("assets/screens/gamescreen/grid2.png", Texture.class);
 
-    //Background
-    public static final AssetDescriptor<Texture> BACKGROUND_BACKGROUND_2
-            = new AssetDescriptor<>("assets/img/background2.png", Texture.class);
+    public static final AssetDescriptor<Texture> GAMESCREEN_CLOUDS
+            = new AssetDescriptor<>("assets/screens/gamescreen/clouds.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> BACKGROUND_GRID_2
-            = new AssetDescriptor<>("assets/img/grid2.png", Texture.class);
+    //EndGameScreen
+    public static final AssetDescriptor<Texture> ENDGAME_BACKGROUND
+            = new AssetDescriptor<>("assets/screens/endgamescreen/endgamebackground.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> BACKGROUND_CLOUDS
-            = new AssetDescriptor<>("assets/img/clouds.png", Texture.class);
+    //Settings
+    public static final AssetDescriptor<Texture> SETTINGS_BACKGROUND
+            = new AssetDescriptor<>("assets/screens/settingsscreen/settingsbackground.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> BACKGROUND_ENDGAME
-            = new AssetDescriptor<>("assets/img/endgamebackground.png", Texture.class);
+    //SetupScreen
+    public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN
+            = new AssetDescriptor<>( "assets/screens/setupscreen/setupscreen.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> BACKGROUND_SETTINGS
-            = new AssetDescriptor<>("assets/img/settingsbackground.png", Texture.class);
+    public static final AssetDescriptor<Texture> SETUP_SELECT_SKIN_TEXT
+            = new AssetDescriptor<>( "assets/screens/setupscreen/selectskintext.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN_PLACE_FLAGS
+            = new AssetDescriptor<>( "assets/screens/setupscreen/setupscreenPlaceFlags.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> SETUP_CHECK_FLAG
+            = new AssetDescriptor<>( "assets/screens/setupscreen/checkflag.png", Texture.class);
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
@@ -94,80 +105,104 @@ public class AssMan{
     public static final AssetDescriptor<Texture> REGISTER_LOCK_TOKEN
             = new AssetDescriptor<>("assets/cards/tokens/lockToken.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN
+            = new AssetDescriptor<>("assets/cards/powerDown.png", Texture.class);
 
 
     //Backup
     public static final AssetDescriptor<Texture> BACKUP
             = new AssetDescriptor<>("assets/objects/backup.png", Texture.class);
 
-
-
     //Repair
-    public static final AssetDescriptor<Texture> REPAIR_SITE
+    public static final AssetDescriptor<Texture> REPAIRSITE_BACKGROUND
             = new AssetDescriptor<>("assets/objects/repairsite.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> REPAIR_REPAIR_ANIMATION
+    public static final AssetDescriptor<Texture> REPAIRSITE_REPAIR_ANIMATION
             = new AssetDescriptor<>("assets/animations/wrench.png", Texture.class);
-
 
     //MenuScreen class
     public static final AssetDescriptor<Texture> MENUSCREEN_TITLESCREEN
-            = new AssetDescriptor<>("assets/img/titlescreen.jpg", Texture.class);
+            = new AssetDescriptor<>("assets/screens/menuscreen/titlescreen.jpg", Texture.class);
 
     public static final AssetDescriptor<Texture> MENUSCREEN_PRESS_ENTER_WHITE
-            = new AssetDescriptor<>("assets/img/pressEnterWhite.png", Texture.class);
-
-
+            = new AssetDescriptor<>("assets/screens/menuscreen/pressEnterWhite.png", Texture.class);
 
     //TestScreen class
-    public static final AssetDescriptor<Texture> TESTSCREEN
-            = new AssetDescriptor<>("assets/img/testscreen.png", Texture.class);
+    public static final AssetDescriptor<Texture> TESTSCREEN_BACKGROUND
+            = new AssetDescriptor<>("assets/screens/testscreen/testscreen.png", Texture.class);
+
+    //Flag object
+    public static final AssetDescriptor<Texture> FLAG_SKIN
+            = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
 
 
     @SuppressWarnings("Duplicates")
     public static void load(){
+
+        //Music
         manager.load(MUSIC_PLAYER_LASER);
         manager.load(MUSIC_PLAYER_REPAIR);
         manager.load(MUSIC_PLAYER_WILHELM_SCREAM);
+        manager.load(MUSIC_MAIN_THEME);
 
+        //Player skins
         manager.load(PLAYER_BARTENDER_CLAPTRAP);
         manager.load(PLAYER_CLAPTRAP_REFINED);
         manager.load(PLAYER_BUTLER_REFINED);
         manager.load(PLAYER_CLAPTRAP_3000);
         manager.load(PLAYER_TVBOT);
 
+        //Hud buttons
         manager.load(BUTTON_SUBMIT);
         manager.load(BUTTON_SUBMIT_GREY);
         manager.load(BUTTON_CLEAR);
         manager.load(BUTTON_SETTINGS);
 
-        manager.load(BACKGROUND_BACKGROUND_2);
-        manager.load(BACKGROUND_GRID_2);
-        manager.load(BACKGROUND_CLOUDS);
-        manager.load(BACKGROUND_ENDGAME);
-        manager.load(BACKGROUND_SETTINGS);
+        //Gamescreen
+        manager.load(GAMESCREEN_BACKGROUND2);
+        manager.load(GAMESCREEN_GRID2);
+        manager.load(GAMESCREEN_CLOUDS);
 
+        //Endgame
+        manager.load(ENDGAME_BACKGROUND);
+
+        //Settings
+        manager.load(SETTINGS_BACKGROUND);
+
+        //Setup
+        manager.load(SETUP_SETUP_SCREEN);
+        manager.load(SETUP_SELECT_SKIN_TEXT);
+        manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
+        manager.load(SETUP_CHECK_FLAG);
+
+        //Program register
         manager.load(REGISTER_PROGRAM_REGISTER);
         manager.load(REGISTER_DAMAGE_TOKEN);
         manager.load(REGISTER_LIFE_TOKEN);
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
+        manager.load(REGISTER_POWER_DOWN);
 
+        //Backup
         manager.load(BACKUP);
 
-        manager.load(REPAIR_SITE);
-        manager.load(REPAIR_REPAIR_ANIMATION);
+        //Repair site
+        manager.load(REPAIRSITE_BACKGROUND);
+        manager.load(REPAIRSITE_REPAIR_ANIMATION);
 
+        //Menuscreen
         manager.load(MENUSCREEN_TITLESCREEN);
         manager.load(MENUSCREEN_PRESS_ENTER_WHITE);
 
-        manager.load(TESTSCREEN);
+        //Testscreen
+        manager.load(TESTSCREEN_BACKGROUND);
 
+        //Flag
+        manager.load(FLAG_SKIN);
     }
 
     public void dispose(){
         System.out.println("disposing asset manager");
         manager.clear();
     }
-
 }

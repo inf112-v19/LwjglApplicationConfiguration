@@ -30,9 +30,16 @@ public class ProgramRegisters implements IProgramRegisters {
     public int placeCard(int cardPosition) {
         if (cardPosition < 0 || cardPosition >= player.getNumberOfCardsInHand()) {
             throw new IndexOutOfBoundsException(
-                    "Card position: " + cardPosition + ". Number of cards in hand: "
+                    "Card position: " + cardPosition
+                            + ". \n Number of cards in hand: "
                             + player.getNumberOfCardsInHand()
-                            + ". Card position should be one less than number of cards in hand.");
+                            + ". Card position should be one less than number of cards in hand. "
+                            + "\n Player name: "
+                            + player.getName()
+                            + "\n Player damage: "
+                            + player.getDamage()
+                            + "\n Player lives: "
+                            + player.getLives());
         }
 
         for (int i = 0; i < unlockedRegisters; i++) {
@@ -54,6 +61,10 @@ public class ProgramRegisters implements IProgramRegisters {
         return true;
     }
 
+    /**
+     * Executes a card in the register according to current phase in the game.
+     * @param phase which register to execute
+     */
     public void executeCard(int phase) {
         if (registers[phase] == null || !player.isOperational()) return;
 
@@ -93,7 +104,7 @@ public class ProgramRegisters implements IProgramRegisters {
     }
 
     /**
-     * Return cards from registers into player hand. Only returns the cards from unlocked registers.
+     * Return cards from registers into player hand. Only returns cards from unlocked registers.
      *
      * @param player the player who is returning cards.
      */
@@ -106,20 +117,30 @@ public class ProgramRegisters implements IProgramRegisters {
         }
     }
 
-    public ProgramCard returnCard(Player player, int index) {
+    /**
+     * Remove a specific card from one of the registers and put it back into the hand.
+     *
+     * @param player the player removing the card.
+     * @param index which register to remove from.
+     */
+    public void returnCard(Player player, int index) {
         if (index < 0 || index > registers.length) {
             throw new IndexOutOfBoundsException();
         }
         ProgramCard card = registers[index];
         player.receiveCard(card);
         registers[index] = null;
-        return card;
     }
 
     public ProgramCard getCard(int register) {
         return registers[register];
     }
 
+
+    /**
+     * Empty slots in the register are null values. Can return null.
+     * @return All cards in the register
+     */
     public ArrayList<ProgramCard> getAllCards() {
         ArrayList<ProgramCard> list = new ArrayList<>();
         for (ProgramCard pc : registers) {
@@ -130,5 +151,9 @@ public class ProgramRegisters implements IProgramRegisters {
 
     public int getNumUnlockedRegisters() {
         return unlockedRegisters;
+    }
+
+    public int getNumLockedRegisters(){
+        return NUMBER_OF_REGISTERS - unlockedRegisters;
     }
 }
