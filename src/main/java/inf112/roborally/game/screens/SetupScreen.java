@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.gui.AssMan;
@@ -41,6 +42,9 @@ public class SetupScreen extends AbstractScreen {
     private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
 
+    //Keeps track of the converted clickPos
+    private ArrayList<Position> flagClickedPositions;
+
     public SetupScreen(RoboRallyGame game, String[] possibleFilepaths) {
         super(game, AssMan.SETUP_SETUP_SCREEN.fileName);
 
@@ -52,6 +56,7 @@ public class SetupScreen extends AbstractScreen {
         flags = new ArrayList<>();
         flagCheck = new ArrayList<>();
         flagPositions = new ArrayList<>();
+        flagClickedPositions = new ArrayList<>();
 
         createSkinButtons();
         state = SetupState.PICKINGSKIN;
@@ -170,10 +175,25 @@ public class SetupScreen extends AbstractScreen {
                         Position clickedPos = convertMouseClickIntoMapPosition(mouseX, mouseY);
 
                         //Quick-fix to not let the player put flags in holes
-                        if(clickedPos.getX() == 4 && clickedPos.getY() == 10) return;
-                        if(clickedPos.getX() == 9 && clickedPos.getY() == 10) return;
-                        if(clickedPos.getX() == 4 && clickedPos.getY() == 3) return;
-                        if(clickedPos.getX() == 9 && clickedPos.getY() == 3) return;
+                        if((clickedPos.getX() == 4 && clickedPos.getY() == 10) ||
+                           (clickedPos.getX() == 9 && clickedPos.getY() == 10) ||
+                           (clickedPos.getX() == 4 && clickedPos.getY() == 3)  ||
+                           (clickedPos.getX() == 9 && clickedPos.getY() == 3)){
+                            System.out.println("You can not place the flag in a pithole");
+                            return;
+                        }
+
+                        //If a flag has already been placed on this position then return
+                        for(int i = 0; i < flagPositions.size(); i++) {
+                            for (int j = 0; j < flagPositions.size(); j++) {
+                                if (clickedPos.getX() == flagPositions.get(j).getX() - 4 &&
+                                        clickedPos.getY() == flagPositions.get(j).getY()) {
+                                    System.out.println("You have already placed a flag here");
+                                    return;
+                                }
+                            }
+                        }
+                        flagClickedPositions.add(clickedPos);
 
                         System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
                                 clickedPos.getX(), clickedPos.getY());
@@ -260,9 +280,9 @@ public class SetupScreen extends AbstractScreen {
 
         // Now it's time to place the flags:
         createMapForPlacingFlags();
-        
+
     }
-    
+
     private void createGameScreenFromSetup() {
         game.createGameScreen(robotChoiceIndex, flagPositions);
         game.setScreen(game.gameScreen);
