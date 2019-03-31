@@ -20,7 +20,9 @@ public class Player extends MovableGameObject implements Comparable {
     private static final int MAX_DAMAGE = 10;
     private static final int MAX_LIVES = 3;
 
-    private boolean debugging = false;
+    public boolean wantsToPowerDown;
+    public PlayerState playerState;
+    public LaserCannon laserCannon;
 
     private String name;
     private int lives;
@@ -30,70 +32,54 @@ public class Player extends MovableGameObject implements Comparable {
     private ProgramRegisters registers;
     private Board board;
     private ArrayList<TextureRegion> regions;
-    public PlayerState playerState;
-    public LaserCannon laserCannon;
-
-    public boolean wantsToPowerDown;
-
     private int nSounds;
     private GameSound[] allPlayerSounds;
-
-    //flags:
     private int targetFlag;
     private int nFlags;
-
-    //Whether or not the player has screamed from falling off the map this round.
-    private boolean screamed;
-
-    int phase;
+    private boolean screamed;  //Whether or not the player has screamed from falling off the map this round.
+    private int phase;
+    private boolean debugging;
 
     public Player(String name, String filepath, Direction direction, Board board) {
-        super(0, 0, filepath);
+        this(0, 0, filepath);
         this.name = name;
         this.board = board;
         setDirection(direction);
         makeSprite();
         loadVisualRepresentation();
-
-        laserCannon = new LaserCannon(this);
-
-        damage = 0;
-        lives = MAX_LIVES;
-
-        targetFlag = 1;
         nFlags = board.getFlags().size();
-
-        backup = new Backup(getX(), getY(), this);
         backup.setupSprite();
-        registers = new ProgramRegisters(this);
-        cardsInHand = new ArrayList<>();
-
-        playerState = PlayerState.OPERATIONAL;
-
-        // As for now, we have 3 sounds
+        phase = 0;
         nSounds = 3;
         allPlayerSounds = new GameSound[nSounds];
         createSounds();
-
-        phase = 0;
+        debugging = false;
     }
 
+    /**
+     * Basic player
+     */
+    private Player(int x, int y, String filePath) {
+        super(x, y, filePath);
+        damage = 0;
+        lives = MAX_LIVES;
+        targetFlag = 1;
+        nFlags = 1;
+        playerState = PlayerState.OPERATIONAL;
+        cardsInHand = new ArrayList<>();
+        registers = new ProgramRegisters(this);
+        backup = new Backup(getX(), getY(), this);
+        laserCannon = new LaserCannon(this);
+    }
 
     /**
      * FOR TESTING ONLY
      */
     public Player(int x, int y, int nFlags) {
-        super(x, y, AssMan.PLAYER_TVBOT.fileName);
-        this.nFlags = Math.abs(nFlags);
-        laserCannon = new LaserCannon(this);
-        damage = 0;
-        lives = MAX_LIVES;
-        backup = new Backup(getX(), getY(), this);
-        registers = new ProgramRegisters(this);
-        cardsInHand = new ArrayList<>();
-        targetFlag = 1;
-        debugging = true;
+        this(x, y, AssMan.PLAYER_TVBOT.fileName);
+        this.nFlags = nFlags;
         name = "testBot";
+        debugging = true;
     }
 
 
@@ -389,16 +375,16 @@ public class Player extends MovableGameObject implements Comparable {
         return Integer.compare(thisPriority, otherPriority);
     }
 
-    public void setPhase(int phase){
+    public void setPhase(int phase) {
         this.phase = phase;
     }
 
-    public int getMaxDamage(){
+    public int getMaxDamage() {
         return MAX_DAMAGE;
     }
 
 
-    public boolean isDebuggingActive(){
+    public boolean isDebuggingActive() {
         return debugging;
     }
 
