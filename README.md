@@ -7,7 +7,7 @@ Group 5.1
 # INF112 roborally game
 Much more than a simple skeleton with libgdx. 
 ### Manual testing:
-### How to do testing for the TestScreen:
+### GUI - How to do testing for the TestScreen:
 When running Main.java you will get prompted to 'PRESS ENTER'. Hitting 'T' instead will launch a test
 screen where you can test that ProgramCard and ProgramRegister GUI works as it should. Clicking the 
 submit button when you have chosen five cards is not supposed to do anything here.
@@ -28,10 +28,31 @@ remove it from the register and return it to the player hand, if it is not locke
 ##### How to check that the player is unable interact with the game when dead:
   1. Choose 5 cards (optional, but in the game you are not able to take damage without picking five cards).
   2. Press 'D' 30+ times. Should not be able to interact with the game since the player is dead.
+  
+### Tiles - How to test each of the different tiles:
+* You can do this in the main game, but its much easier to test this on the testMap.
+* In the GameScreen class there is a boolean called testMap, set this to true and run Main.java.
+* This will begin the game on the test map.
+
+##### Controls:
+* W - Forward one tile
+* A - Rotate left
+* S - Backup one tile
+* D - Rotate right
+* Each input counts as one phase, which means that the tiles do their thing right after your input
+
+##### Things to test here:
+* The different types of tiles, you can find deeper information about each tile further down.
+* You fire a laser at the end of each phase
+* Other robots fire a laser at the end of each phase
+* Lasers fired by robots do not penetrate walls
+* Pushing of robots
+* Warning: The testmap does not have garbage cleaning, and respawning.(To test this, see instructions further down)
+* This means that dead robot's texture wont be removed from the map, but you wont be able to interact with them
+* Also if you die, you wont respawn aswell.
 
 
-
-### How to do testing for the main game:
+### Main Game - How to do testing for the main game:
  Run Main.java and press Enter when prompted to get to the main game.
 
 
@@ -77,6 +98,7 @@ remove it from the register and return it to the player hand, if it is not locke
  * Pressing the power down button before clicking the submit button should result in going into power down mode.
       
       
+    
       
 #### Settings button testing for game screen and test screen
  * Pressing 'B' or clicking on the settings button located to the bottom right of the screen should
