@@ -7,6 +7,17 @@ Group 5.1
 # INF112 RoboRally game
 Much more than a simple skeleton with libgdx.
 
+#### How to play
+Choose a card by clicking on one of the cards to the right. These are the cards you currently have in your hand.
+Choosing a card will put it in the register. You can click on the card in the register to remove it again.
+You can submit once five cards are chosen. Pressing the submit button will cause the game round to start.
+Pressing the clear button will remove any chosen cards from the register.
+Pressing the power down button will cause your robot to go into power down mode.
+
+You can zoom in and out by pressing '1' and '2', respectively.
+You can also move the screen by dragging anywhere on the map.
+
+
 ### How to run
 To run the game, run Main.java and follow the instructions.
 
@@ -67,7 +78,7 @@ If you pressed 'L' in the menu screen you will be taken here. Press 'N','E','S',
 * Other robots fire a laser at the end of each phase
 * Lasers fired by robots do not penetrate walls
 * Pushing of robots
-* Warning: The testmap does not have garbage cleaning, and respawning.(To test this, see instructions further down)
+* Warning: The testmap does not have garbage cleaning, and respawning.(To test this use main game)
 * This means that dead robot's texture won't be removed from the map, but you won't be able to interact with them
 * Also if you die, you wont respawn as well.
 
