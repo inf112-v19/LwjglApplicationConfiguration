@@ -47,7 +47,7 @@ public class TestScreen implements Screen {
     @Override
     public void render(float v) {
         handleInput();
-        player.update();
+        player.updateSprite();
 
         float r = 0 / 255f;
         float g = 20 / 255f;
@@ -77,7 +77,7 @@ public class TestScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             player.takeDamage();
-            player.update();
+            player.updateSprite();
             System.out.println(player.getPlayerState());
             player.respawn();
         }

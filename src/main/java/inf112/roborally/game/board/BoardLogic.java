@@ -204,7 +204,7 @@ public class BoardLogic {
 
     protected void updatePlayers() {
         for (Player player : players) {
-            player.update();
+            player.updateSprite();
         }
     }
 

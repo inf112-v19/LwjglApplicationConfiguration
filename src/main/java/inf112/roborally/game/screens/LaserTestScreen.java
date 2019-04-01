@@ -9,8 +9,6 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.objects.Player;
 
-import java.util.ArrayList;
-
 public class LaserTestScreen implements Screen {
     RoboRallyGame game;
     Board board;
@@ -78,7 +76,7 @@ public class LaserTestScreen implements Screen {
     private void rotateAllRobot(Direction dir) {
         for(Player rob : board.getPlayers()) {
             rob.setDirection(dir);
-            rob.update();
+            rob.updateSprite();
         }
     }
 
@@ -90,7 +88,7 @@ public class LaserTestScreen implements Screen {
 
     private void updateAllRobots(){
         for (Player p : board.getPlayers()) {
-            p.update();
+            p.updateSprite();
         }
     }
 
