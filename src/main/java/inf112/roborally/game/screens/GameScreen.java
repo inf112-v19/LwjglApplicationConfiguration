@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
     public ArrayList<Animation> animations;
     private Background background;
     private GameMusic music;
-    private boolean testMap = true;
+    private boolean testMap = false;
 
 
     public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions) {
