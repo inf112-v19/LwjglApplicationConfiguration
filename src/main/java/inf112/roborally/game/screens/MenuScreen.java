@@ -95,6 +95,7 @@ public class MenuScreen implements Screen {
             roboRallyGame.createGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
         }
+
     }
 
     @Override
