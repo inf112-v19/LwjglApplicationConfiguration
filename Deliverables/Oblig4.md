@@ -2,10 +2,11 @@
 
 ## Part 1: Project and project structure
 - We have chosen William as the designated test person. 
-- We are satisfied with how the project methodology has been so far. And do not see a reason to change that.
-- They group dynamics are fine.
-- The communication is still good. We still have meetings regularly, and everyone is active on Slack.
-- 
+- We are satisfied with how the project methodology has been so far. The choices we've made so far have proved to be good ones. 
+Everyone has helped to choose new tasks to be distributed, and this has worked well.
+- The group dynamics has so far been great. We have different kinds of expertise, which enables us to do certain tasks better.
+- The communication in our group has been great. We show up at meetings and help each other when we have issues. 
+
 
 
 ## Part 2: Requirements
