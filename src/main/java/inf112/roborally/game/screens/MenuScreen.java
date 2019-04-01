@@ -31,7 +31,7 @@ public class MenuScreen implements Screen {
 
         viewport = new FitViewport(1920, 1080);
 
-        background = new Sprite(new Texture(AssMan.MENUSCREEN_CHOISES.fileName));
+        background = new Sprite(new Texture(AssMan.MENUSCREEN_CHOICES.fileName));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         pressEnter = new Sprite(new Texture(AssMan.MENUSCREEN_PRESS_ENTER_WHITE.fileName));
         pressEnter.setPosition(Gdx.graphics.getWidth() / 2 - pressEnter.getWidth() / 2,
