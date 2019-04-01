@@ -67,7 +67,9 @@ public class SettingsScreen extends AbstractScreen {
                 System.out.println("Started the music from the settings screen");
             }
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            game.setLauncTestMap(false);
             game.newGame();
+
         }
     }
 

@@ -161,8 +161,7 @@ public class RoboRallyGame extends Game {
         return this.screenBefore;
     }
 
-    public void launchTestMap(){
-        this.runTestMap = true;
+    public void setLauncTestMap(boolean bool){
+        runTestMap = bool;
     }
-
 }
