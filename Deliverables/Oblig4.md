@@ -6,7 +6,7 @@
 Everyone has helped to choose new tasks to be distributed, and this has worked well.
 - The group dynamics has so far been great. We have different kinds of expertise, which enables us to do certain tasks better.
 - The communication in our group has been great. We show up at meetings and help each other when we have issues. 
-
+- Reports from meetings since the previous delivery are added to the folder Meeting Reports in Deliverables.
 
 
 ## Part 2: Requirements
@@ -16,4 +16,4 @@ The reason we chose to finish the other requirements on the list, is because we 
 
     
 ## Part 3: Code
-- See README.md for a guide on how to run the program.
+- See README.md for a step by step guide on how to run the program.
