@@ -139,7 +139,7 @@ public class BoardLogic {
         executeCards();
         checkIfAPlayerHasWon();
         phase++;
-        if(players.get(0).isDebuggingActive()) return;
+        if(!players.isEmpty() && players.get(0).isDebuggingActive()) return;
 
         if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
             sleepThread(100);
