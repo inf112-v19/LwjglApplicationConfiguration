@@ -35,7 +35,7 @@ Clicking on the clear button should do the same as pressing 'R'. Clicking on a s
 remove it from the register and return it to the player hand, if it is not locked that is.
 
 ### LaserTestScreen - How to
-If you pressed 'L' in the menu screen you will be take here. Press 'N','E','S', or 'W' to rotate the robots in the cardinal directions. Press 'Enter' to fire all laser (lasers on the board and robot lasers). Text is printed to the screen to tell you if robots got hit or not.
+If you pressed 'L' in the menu screen you will be taken here. Press 'N','E','S', or 'W' to rotate the robots in the cardinal directions. Press 'Enter' to fire all laser (lasers on the board and robot lasers). Text is printed to the screen to tell you if robots got hit or not.
 
 ##### How to test that locked cards in the register do not return:
   1. Fill up all five registers by pressing 'S' five times.
@@ -179,14 +179,6 @@ Pressing 'T' instead of choosing skin and flag locations should start the game w
    - Pressing Enter: A new game should be initiated and all progress you potentially
     had in an earlier game should be gone.
    
-   
-#### Menuscreen commands
-  * Pressing Enter should bring up the main game.
-  * Pressing 'S' should bring up the setup game screen.
-  * Pressing 'L' should bring up the LaserTest screen.
-  * Pressing 'T' should bring up the test screen.
-  * Pressing 'A' should bring up the AIvsAi screen.
-  * Pressing 'B' should bring up the BoardTest screen.
       
       
 ### How to choose flag location and skin on robot:
