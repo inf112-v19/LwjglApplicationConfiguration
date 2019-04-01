@@ -7,11 +7,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.animations.LaserAnimation;
 import inf112.roborally.game.animations.RepairAnimation;
-
-import inf112.roborally.game.enums.PlayerState;
-
 import inf112.roborally.game.enums.Direction;
-
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.*;
 
@@ -24,7 +20,7 @@ import static inf112.roborally.game.board.TiledTools.getValue;
 
 
 @SuppressWarnings("Duplicates")
-public  class Board extends TiledBoard {
+public class Board extends TiledBoard {
 
     protected ArrayList<Player> players;
     protected ArrayList<RepairSite> repairSites;
