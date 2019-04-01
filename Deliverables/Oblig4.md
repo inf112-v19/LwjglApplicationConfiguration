@@ -11,7 +11,7 @@ We have become better at dividing up the tasks in the group, and we are now more
 Furthermore, the feedback from the last assignment has been taken into account, e.g. we moved the player logic from the board into the player class.
 In this cycle we have also done a lot of refactoring, which has also made it easier to understand the structure of the code, both for ourselves and for others.
  - Things to follow up during the next sprint:
-    - Improved and more descriptive commit messages
+    - Improved and more descriptive commit messages.
     - Try to stick to our project methodology a little bit closer.  
 - Reports from meetings since the previous delivery are added to the folder Meeting Reports in Deliverables.
 
