@@ -44,11 +44,9 @@ public class GameLogic extends BoardLogic implements Runnable {
     public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             System.out.println("Switched to EndGame screen");
             game.endGameScreen.addWinner(player1);
             game.setScreen(game.endGameScreen);
@@ -64,17 +62,13 @@ public class GameLogic extends BoardLogic implements Runnable {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
             player1.move(1);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             player1.rotate(Rotate.LEFT);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             player1.rotate(Rotate.RIGHT);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             player1.reverse();
-        }
-        else {
+        } else {
             updatePlayer = false;
         }
         if (updatePlayer) {
