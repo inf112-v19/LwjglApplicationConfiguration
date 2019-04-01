@@ -2,14 +2,14 @@ package inf112.roborally.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.TiledTools;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
 
-import static inf112.roborally.game.board.TiledTools.*;
+import static inf112.roborally.game.board.TiledTools.cellContainsKey;
+import static inf112.roborally.game.board.TiledTools.getValue;
 
 public abstract class MovableGameObject extends GameObject {
     protected int rotationDegree;
@@ -144,14 +144,13 @@ public abstract class MovableGameObject extends GameObject {
                 || this.getY() < 0 || this.getY() > board.getHeight();
     }
 
+    public Direction getDirection() {
+        return this.direction;
+    }
 
     public void setDirection(Direction direction) {
         this.direction = direction;
         rotationDegree = direction.getRotationDegree();
-    }
-
-    public Direction getDirection() {
-        return this.direction;
     }
 
 
