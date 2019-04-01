@@ -316,9 +316,12 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void setPlayerState(PlayerState playerState) {
-        if(this.playerState == GAME_OVER){
+        if (this.playerState == GAME_OVER) {
             System.out.println("Can not set player state when player state is: " + playerState);
             return;
+        }
+        else if (this.playerState == DESTROYED) {
+            System.out.println("Only respawn method can change the state of a destroyed robot");
         }
 
         this.playerState = playerState;
