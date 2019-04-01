@@ -37,9 +37,10 @@ public abstract class TiledBoard {
     /**
      * Use this when rendering a specific layer(like walls) on top of sprites.
      * MUST CALL BATCH BEGIN BEFORE THIS!!
+     *
      * @param layer
      */
-    public void renderLayer(TiledMapTileLayer layer){
+    public void renderLayer(TiledMapTileLayer layer) {
         mapRenderer.renderTileLayer(layer);
     }
 

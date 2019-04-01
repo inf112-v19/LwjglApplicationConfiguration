@@ -3,6 +3,7 @@ package inf112.roborally.game.board;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
+
 import java.util.ArrayList;
 
 public class VaultBoard extends Board {
@@ -18,7 +19,7 @@ public class VaultBoard extends Board {
     public VaultBoard(ArrayList<Position> flagPositions) {
         for (int i = 0; i < flagPositions.size(); i++) {
             Position currPos = flagPositions.get(i);
-            flags.add(new Flag(currPos.getX(), currPos.getY(), i+1));
+            flags.add(new Flag(currPos.getX(), currPos.getY(), i + 1));
         }
         createBoard(RoboRallyGame.VAULT);
         findLasers();

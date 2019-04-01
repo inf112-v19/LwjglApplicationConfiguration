@@ -11,7 +11,9 @@ import java.util.StringTokenizer;
  */
 public class TiledTools {
 
-    /** gets the first value of a specified cell in a TiledMapTileLayer
+    /**
+     * gets the first value of a specified cell in a TiledMapTileLayer
+     *
      * @param cell
      * @return
      */
@@ -21,6 +23,7 @@ public class TiledTools {
 
     /**
      * Checks if a cell in a TiledMapTileLayer contains a key
+     *
      * @param cell
      * @param target
      * @return true if cell contains target, false if not
@@ -32,6 +35,7 @@ public class TiledTools {
     /**
      * gets the first value from a cell in a TiledMapTileLayer
      * and splits the resulting string by spaces into a list
+     *
      * @param cell
      * @return
      */
