@@ -18,7 +18,6 @@ public class MenuScreen implements Screen {
     private RoboRallyGame roboRallyGame;
     private SpriteBatch batch;
     private Sprite background;
-    private Sprite pressEnter;
     private Viewport viewport;
     private int stateTimer;
 
@@ -33,10 +32,6 @@ public class MenuScreen implements Screen {
 
         background = new Sprite(new Texture(AssMan.MENUSCREEN_CHOICES.fileName));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        pressEnter = new Sprite(new Texture(AssMan.MENUSCREEN_PRESS_ENTER_WHITE.fileName));
-        pressEnter.setPosition(Gdx.graphics.getWidth() / 2 - pressEnter.getWidth() / 2,
-                (Gdx.graphics.getHeight() - background.getHeight()) / 2 - pressEnter.getHeight() / 2);
-
         stage = new Stage(roboRallyGame.fixedViewPort, roboRallyGame.batch);
         stateTimer = 0;
     }
@@ -55,7 +50,6 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClearColor(r, g, b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        pressEnter.setAlpha(stateTimer / 255f);
         background.setAlpha(stateTimer / 255f);
         if (stateTimer < 255) stateTimer++;
         batch.begin();
@@ -70,32 +64,26 @@ public class MenuScreen implements Screen {
             roboRallyGame.createGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
             roboRallyGame.AIvsAI = false;
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             roboRallyGame.AIvsAI = false;
             roboRallyGame.createSetupScreen();
             roboRallyGame.setScreen(roboRallyGame.setupScreen);
             dispose();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             roboRallyGame.AIvsAI = false;
             dispose();
             roboRallyGame.setScreen(roboRallyGame.testScreen);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             roboRallyGame.AIvsAI = false;
             dispose();
             roboRallyGame.setScreen(roboRallyGame.laserTestScreen);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             roboRallyGame.AIvsAI = true;
             roboRallyGame.createGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
 
             roboRallyGame.AIvsAI = false;
             roboRallyGame.launchTestMap();
@@ -127,7 +115,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        pressEnter.getTexture().dispose();
         background.getTexture().dispose();
     }
 }
