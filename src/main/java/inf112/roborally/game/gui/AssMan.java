@@ -124,7 +124,7 @@ public class AssMan {
     public static final AssetDescriptor<Texture> MENUSCREEN_TITLESCREEN
             = new AssetDescriptor<>("assets/screens/menuscreen/titlescreen.jpg", Texture.class);
     //MenuScreen choises class
-    public static final AssetDescriptor<Texture> MENUSCREEN_CHOISES
+    public static final AssetDescriptor<Texture> MENUSCREEN_CHOICES
             = new AssetDescriptor<>("assets/screens/menuscreen/menuchoices.png", Texture.class);
 
     public static final AssetDescriptor<Texture> MENUSCREEN_PRESS_ENTER_WHITE
@@ -196,7 +196,7 @@ public class AssMan {
         //Menuscreen
         manager.load(MENUSCREEN_TITLESCREEN);
         manager.load(MENUSCREEN_PRESS_ENTER_WHITE);
-        manager.load(MENUSCREEN_CHOISES);
+        manager.load(MENUSCREEN_CHOICES);
 
         //Testscreen
         manager.load(TESTSCREEN_BACKGROUND);

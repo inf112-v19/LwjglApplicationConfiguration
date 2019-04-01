@@ -4,17 +4,17 @@ Group 5.1
 ## Status
 [![Build Status](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration.png)](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration)
 
-# INF112 roborally game
+# INF112 RoboRally game
 Much more than a simple skeleton with libgdx.
 
 ### How to run
 To run the game, run Main.java and follow the instructions.
 
 When running, you will first be taken to the menu screen. Here you have some options:
-- To play the game normaly either press 'Enter' for a quick game 
+- To play the game normally either press 'Enter' for a quick game 
 where your skin has already been selected and flags have been placed.
 - Or press 'S' to select your desired skin and place flags where ever 
-your hearth desires. There is no option for multiplayer (yet).
+your heart desires. There is no option for multiplayer (yet).
 
 ### How to test
 We have junit tests that make sure code is not broken when implementing new features. The menus screen also has some options for testing:
@@ -22,26 +22,26 @@ We have junit tests that make sure code is not broken when implementing new feat
 - Pressing 'L' will take you to the laser test screen.
 - Pressing 'A' will do the same as QuickPlay, but all the robots are 
 controlled by AI and you can sit back, relax, and watch the mayhem.
-- Pressing 'B' will take you to a testBoard where you can move around to make sure the board interacts how it shoudl with the player.
+- Pressing 'B' will take you to a testBoard where you can move around to make sure the board interacts how it should with the player.
 
 ### GUI - How to do testing for the TestScreen:
 When running Main.java you will get prompted to 'PRESS ENTER'. Hitting 'T' instead will launch a test
 screen where you can test that ProgramCard and ProgramRegister GUI works as it should. Clicking the 
 submit button when you have chosen five cards is not supposed to do anything here.
 
-As instructed on the test screen, pressing S will add a card to the register. Pressing D will make
-the robot take one damage. Pressing R should empty all the registers, returning all cards to the hand.
-Clicking on the clear button should do the same as pressing R. Clicking on a specific card in the register should 
+As instructed on the test screen, pressing 'S' will add a card to the register. Pressing 'D' will make
+the robot take one damage. Pressing 'R' should empty all the registers, returning all cards to the hand.
+Clicking on the clear button should do the same as pressing 'R'. Clicking on a specific card in the register should 
 remove it from the register and return it to the player hand, if it is not locked that is.
 
 ### LaserTestScreen - How to
 If you pressed 'L' in the menu screen you will be take here. Press 'N','E','S', or 'W' to rotate the robots in the cardinal directions. Press 'Enter' to fire all laser (lasers on the board and robot lasers). Text is printed to the screen to tell you if robots got hit or not.
 
 ##### How to test that locked cards in the register do not return:
-  1. Fill up all five registers by pressing S five times.
-  2. Press D at least five times to take enough damage to lock a register.
+  1. Fill up all five registers by pressing 'S' five times.
+  2. Press 'D' at least five times to take enough damage to lock a register.
   3. Check that pressing R will only return the cards that are not locked.
-  * Instead of pressing R in step (3) you can click on the individual cards to return them.
+  * Instead of pressing 'R' in step (3) you can click on the individual cards to return them.
       Check that locked cards are still not removed from the locked registers.
       
       
@@ -68,8 +68,8 @@ If you pressed 'L' in the menu screen you will be take here. Press 'N','E','S', 
 * Lasers fired by robots do not penetrate walls
 * Pushing of robots
 * Warning: The testmap does not have garbage cleaning, and respawning.(To test this, see instructions further down)
-* This means that dead robot's texture wont be removed from the map, but you wont be able to interact with them
-* Also if you die, you wont respawn aswell.
+* This means that dead robot's texture won't be removed from the map, but you won't be able to interact with them
+* Also if you die, you wont respawn as well.
 
 
 ### Main Game - How to do testing for the main game:
@@ -123,7 +123,7 @@ If you pressed 'L' in the menu screen you will be take here. Press 'N','E','S', 
 #### Settings button testing for game screen and test screen
  * Pressing 'B' or clicking on the settings button located to the bottom right of the screen should
  bring up the settings screen. 
- * You should be able to mute/unmute the game by pressing M.
+ * You should be able to mute/unmute the game by pressing 'M'.
  * Pressing 'B' or Escape when in settings screen should return you to the screen you came from.
  * Pressing 'N' should create a new game. You should end up at the Menu Screen where you are prompted to 'PRESS ENTER'. 
    - Pressing Enter: A new game should be initiated and all progress you potentially
@@ -141,7 +141,7 @@ Pressing 'T' instead of choosing skin and flag locations should start the game w
 
 
 ##### Players get hit by board laser:
- * Ending a phase in a laser should cause the robot to take damage. Should lose a life the player has taken
+ * Ending a phase in a laser should cause the robot to take damage. A robot should lose a life if it has taken
  max damage (visualised by the triangular damage indicators above the health bar on the program register).
 
     
@@ -179,7 +179,14 @@ Pressing 'T' instead of choosing skin and flag locations should start the game w
    - Pressing Enter: A new game should be initiated and all progress you potentially
     had in an earlier game should be gone.
    
-    * Pressing 'T' should bring up the test screen instead.
+   
+#### Menuscreen commands
+  * Pressing Enter should bring up the main game.
+  * Pressing 'S' should bring up the setup game screen.
+  * Pressing 'L' should bring up the LaserTest screen.
+  * Pressing 'T' should bring up the test screen.
+  * Pressing 'A' should bring up the AIvsAi screen.
+  * Pressing 'B' should bring up the BoardTest screen.
       
       
 ### How to choose flag location and skin on robot:
