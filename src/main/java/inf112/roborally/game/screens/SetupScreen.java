@@ -112,7 +112,7 @@ public class SetupScreen extends AbstractScreen {
             flag.setPosition(100, 200 * i);
             flags.add(flag);
         }
-        
+
         state = SetupState.PLACINGFLAGS;
     }
 
@@ -193,8 +193,7 @@ public class SetupScreen extends AbstractScreen {
                             state = SetupState.DONE;
                         }
 
-                    }
-                    else {
+                    } else {
                         System.out.println("Please click inside the map!");
                     }
                 }

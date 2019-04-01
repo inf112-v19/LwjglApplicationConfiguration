@@ -54,8 +54,7 @@ public class EndGameScreen extends AbstractScreen {
     private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             game.newGame();
         }
     }
