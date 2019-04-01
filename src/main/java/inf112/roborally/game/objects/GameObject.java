@@ -5,13 +5,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.enums.Direction;
 
 public abstract class GameObject {
+    public Position position;
     protected String filePath;
     protected Sprite sprite;
-
-    public Position position;
 
     /**
      * Objects on the board that needs to be drawn, that are not on the TiledMap
@@ -50,7 +48,7 @@ public abstract class GameObject {
         position.move(x, y);
     }
 
-    public void moveToPosition(Position position){
+    public void moveToPosition(Position position) {
         this.position.move(position.getX(), position.getY());
     }
 
@@ -62,7 +60,9 @@ public abstract class GameObject {
         return position.getY();
     }
 
-    public String getFilePath() { return filePath; }
+    public String getFilePath() {
+        return filePath;
+    }
 
     public Sprite getSprite() {
         return sprite;

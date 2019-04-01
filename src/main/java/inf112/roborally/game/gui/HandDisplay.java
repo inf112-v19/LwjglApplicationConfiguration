@@ -10,9 +10,8 @@ import inf112.roborally.game.objects.Player;
  */
 public class HandDisplay {
 
-    public Hud hud;
     private final Player player;
-
+    public Hud hud;
     private int posX, posY;
 
 
@@ -23,9 +22,10 @@ public class HandDisplay {
 
     /**
      * Draws all cards in the player hand.
+     *
      * @param hud where it's being drawn
      */
-    public void updateCardsInHand(final Hud hud){
+    public void updateCardsInHand(final Hud hud) {
         float scale = 0.5f;
         int j = 0;
         posX = 1250;

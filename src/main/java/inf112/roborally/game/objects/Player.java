@@ -154,8 +154,7 @@ public class Player extends MovableGameObject implements Comparable {
             System.out.println(name + " is out of the game");
             playerState = GAME_OVER;
             return false;
-        }
-        else {
+        } else {
             System.out.println(name + " was respawned!");
             repairAllDamage();
             if (backup != null) {
@@ -311,8 +310,7 @@ public class Player extends MovableGameObject implements Comparable {
         if (this.playerState == GAME_OVER) {
             System.out.println("Can not set player state when player state is: " + playerState);
             return;
-        }
-        else if (this.playerState == DESTROYED) {
+        } else if (this.playerState == DESTROYED) {
             System.out.println("Only respawn method can change the state of a destroyed robot");
         }
         this.playerState = playerState;

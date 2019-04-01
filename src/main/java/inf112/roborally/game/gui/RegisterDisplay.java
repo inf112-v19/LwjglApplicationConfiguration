@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.ProgramCard;
@@ -23,21 +22,17 @@ import java.util.ArrayList;
 
 
 public class RegisterDisplay {
-    private Player player;
     public Group registerGui;
+    float scale = .5f;
+    float h;
+    private Player player;
     private ProgramRegisters registers;
-
     private Image programBoard;
     private Image wires;
     private ArrayList<Image> damageTokens;
     private ArrayList<Image> lifeTokens;
     private ArrayList<Image> lockTokens;
     private ArrayList<TextureRegionDrawable> wireTextures;
-
-
-
-    float scale = .5f;
-    float h;
 
     /**
      * Draws the program register of a given player.

@@ -47,6 +47,7 @@ public class RoboRallyGame extends Game {
     public LaserTestScreen laserTestScreen;
 
     private AssMan assMan;
+    private boolean runTestMap = false;
 
 
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
@@ -125,11 +126,11 @@ public class RoboRallyGame extends Game {
 
     // Create GameScreen with preset skins and flag positions
     public void createGameScreen() {
-        gameScreen = new GameScreen(this, 0, null);
+        gameScreen = new GameScreen(this, 0, null , runTestMap);
     }
 
     public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions) {
-        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions);
+        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, runTestMap);
     }
 
     public AssMan getAssMan(){
@@ -158,6 +159,10 @@ public class RoboRallyGame extends Game {
 
     public Screen getScreenBefore(){
         return this.screenBefore;
+    }
+
+    public void launchTestMap(){
+        this.runTestMap = true;
     }
 
 }

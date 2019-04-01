@@ -8,11 +8,11 @@ import com.badlogic.gdx.graphics.Texture;
 /**
  * Contains assets used by the game (all .png and .wav files).
  * With AssMan you are able to load as well as dispose all of them at the same time.
- *
+ * <p>
  * .atlas files can not go here.
  * Calling {@link #dispose()} will dispose all assets.
  */
-public class AssMan{
+public class AssMan {
 
     public static final AssetManager manager = new AssetManager();
 
@@ -27,7 +27,7 @@ public class AssMan{
             = new AssetDescriptor<>("assets/music/playerWilhelmScream.wav", Music.class);
 
     public static final AssetDescriptor<Music> MUSIC_MAIN_THEME
-            = new AssetDescriptor<>( "assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
+            = new AssetDescriptor<>("assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
 
     //Player skins
     public static final AssetDescriptor<Texture> PLAYER_BARTENDER_CLAPTRAP
@@ -78,16 +78,16 @@ public class AssMan{
 
     //SetupScreen
     public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN
-            = new AssetDescriptor<>( "assets/screens/setupscreen/setupscreen.png", Texture.class);
+            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreen.png", Texture.class);
 
     public static final AssetDescriptor<Texture> SETUP_SELECT_SKIN_TEXT
-            = new AssetDescriptor<>( "assets/screens/setupscreen/selectskintext.png", Texture.class);
+            = new AssetDescriptor<>("assets/screens/setupscreen/selectskintext.png", Texture.class);
 
     public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN_PLACE_FLAGS
-            = new AssetDescriptor<>( "assets/screens/setupscreen/setupscreenPlaceFlags.png", Texture.class);
+            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenPlaceFlags.png", Texture.class);
 
     public static final AssetDescriptor<Texture> SETUP_CHECK_FLAG
-            = new AssetDescriptor<>( "assets/screens/setupscreen/checkflag.png", Texture.class);
+            = new AssetDescriptor<>("assets/screens/setupscreen/checkflag.png", Texture.class);
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
@@ -140,7 +140,7 @@ public class AssMan{
 
 
     @SuppressWarnings("Duplicates")
-    public static void load(){
+    public static void load() {
 
         //Music
         manager.load(MUSIC_PLAYER_LASER);
@@ -205,7 +205,7 @@ public class AssMan{
         manager.load(FLAG_SKIN);
     }
 
-    public void dispose(){
+    public void dispose() {
         System.out.println("Disposing asset manager");
         manager.clear();
     }

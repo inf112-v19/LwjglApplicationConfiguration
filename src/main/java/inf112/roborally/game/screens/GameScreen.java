@@ -30,12 +30,11 @@ public class GameScreen implements Screen {
     public ArrayList<Animation> animations;
     private Background background;
     private GameMusic music;
-    private boolean testMap = false;
 
 
-    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions) {
+    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, boolean runTestMap) {
         this.game = game;
-        if (!testMap) {
+        if (!runTestMap) {
             if (flagPositions != null) {
                 board = new VaultBoard(flagPositions);
             } else {
