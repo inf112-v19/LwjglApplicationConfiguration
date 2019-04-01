@@ -26,11 +26,9 @@ public class CameraListener extends DragListener {
     public void updateZoom() {
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && camera.zoom > 0.1) {
             camera.zoom -= 0.01;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) && camera.zoom < 0.6f) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) && camera.zoom < 0.6f) {
             camera.zoom += 0.01;
-        }
-        else {
+        } else {
             return;
         }
         camera.update();
@@ -54,15 +52,13 @@ public class CameraListener extends DragListener {
 
         if (newCamPosX > MIN_X && newCamPosX < MAX_X) {
             camera.position.x = newCamPosX;
-        }
-        else {
+        } else {
             cameraX = camera.position.x;
             initialX = x;
         }
         if (newCamPosY > MIN_Y && newCamPosY < MAX_Y) {
             camera.position.y = newCamPosY;
-        }
-        else {
+        } else {
             cameraY = camera.position.y;
             initialY = y;
         }
