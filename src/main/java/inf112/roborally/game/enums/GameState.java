@@ -1,9 +1,9 @@
 package inf112.roborally.game.enums;
 
 public enum GameState {
-    PREROUND,
+    BETWEEN_ROUNDS,
     ROUND,
     PICKING_CARDS,
-    GAMEOVER,
-    BOARDMOVES
+    GAME_OVER,
+    BOARD_MOVES
 }

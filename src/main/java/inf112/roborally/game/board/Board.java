@@ -1,318 +1,216 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.*;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.objects.*;
+import inf112.roborally.game.animations.Animation;
+import inf112.roborally.game.animations.LaserAnimation;
+import inf112.roborally.game.animations.RepairAnimation;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.objects.Flag;
+import inf112.roborally.game.objects.GameObject;
+import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.objects.StartPosition;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.Iterator;
 
-public abstract class Board extends BoardCreator {
+import static inf112.roborally.game.board.TiledTools.cellContainsKey;
+import static inf112.roborally.game.board.TiledTools.getValue;
+
+
+@SuppressWarnings("Duplicates")
+public class Board extends TiledBoard {
 
     protected ArrayList<Player> players;
-    protected ArrayList<RepairSite> repairSites;
     protected ArrayList<Flag> flags;
-    protected ArrayList<Laser> lasers;
+    protected ArrayList<LaserAnimation> lasers;
+    protected ArrayList<StartPosition> startPlates;
 
-    private boolean boardWantsToMuteMusic = false;
-    private boolean musicIsMuted = false;
+    // Need this one so we don't check for non existing music when sounds are muted/disposed
+    private boolean soundIsMuted;
 
 
     public Board() {
         players = new ArrayList<>();
-        repairSites = new ArrayList<>();
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
-    }
-
-    public void render(OrthographicCamera camera) {
-        mapRenderer.setView(camera);
-        mapRenderer.render();
+        startPlates = new ArrayList<>();
+        soundIsMuted = false;
     }
 
     public void findLasers() {
         for (int x = 0; x < laserLayer.getWidth(); x++) {
             for (int y = 0; y < laserLayer.getHeight(); y++) {
-                if (laserLayer.getCell(x, y) != null) {
-                    Direction direction = Direction.valueOf(
-                            laserLayer.getCell(x, y).getTile().getProperties().getValues().next().toString());
-                    lasers.add(new Laser(x, y, direction));
+                TiledMapTileLayer.Cell cell = laserLayer.getCell(x, y);
+                if (cell != null) {
+                    Direction direction = Direction.valueOf(getValue(cell));
+                    lasers.add(new LaserAnimation(x, y, direction));
                 }
             }
         }
     }
 
-    public void drawLasers(SpriteBatch batch) {
-        for (Laser laser : lasers) {
-            laser.getSprite().draw(batch);
-            laser.updateSprite();
-        }
-    }
-
-    public void handleInput() {
-        for (Player p : players)
-            p.moved = false;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
-        //Just for testing
-        Player p1 = players.get(0);
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
-            p1.getRegisters().returnCardsFromRegisters(p1.getCardsInHand());
-            // messy but it works:
-            ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getHud().getCardsInHandDisplay().updateCardsInHandVisually();
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            p1.setDirection(Direction.EAST);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            p1.setDirection(Direction.WEST);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            p1.setDirection(Direction.NORTH);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            p1.setDirection(Direction.SOUTH);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            p1.moveBackupToPlayerPosition();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.M) && !musicIsMuted) {
-            boardWantsToMuteMusic = true;
-        }
-
-
-        Camera camera = ((RoboRallyGame) Gdx.app.getApplicationListener()).camera;
-        boolean cameraMoved = true;
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.position.x += 10;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.position.x -= 10;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.position.y += 10;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.position.y -= 10;
-        }
-        else {
-            cameraMoved = false;
-        }
-
-        if (cameraMoved) {
-            camera.update();
-        }
-    }
-
-    public void dispose() {
-        System.out.println("disposing board");
-        map.dispose();
-    }
-
-    public void updateBoard() {
-        for (Player player : players) {
-            boardInteractsWithPlayer(player);
-            if (playerIsOnRepair(player.getX(), player.getY())) {
-                player.updateBackup();
-                player.repairOneDamage();
-            }
-        }
-
-    }
-
-    public void update() {
-        handleInput();
-        for (Player player : players) {
-            player.updateSprite();
-            if (player.moved) {
-                if (canGo(player, player.getDirection()))
-                    player.move(1);
-                boardInteractsWithPlayer(player);
-            }
-            player.update();
-            player.updateSprite();
-        }
-    }
-
-    public void executeCard(Player player, ProgramCard card) {
-        if (card == null) {
-            return;
-        }
-
-        if (card.getRotate() != Rotate.NONE) {
-            player.rotate(card.getRotate());
-            return;
-        }
-
-        if (card.getMoveDistance() == -1) {
-            if (canGo(player, player.getDirection().getOppositeDirection())) {
-                player.moveInDirection(player.getDirection().getOppositeDirection());
-            }
-        }
-        for (int i = 0; i < card.getMoveDistance(); i++) {
-            if (canGo(player, player.getDirection())) {
-                player.move(1);
-            }
-        }
-
-    }
-
-    public boolean canGo(MovableGameObject player, Direction direction) {
-        // first check the current tile:
-        Position nextPos = new Position(player.getX(), player.getY());
-
-        // check this tile:
-        TiledMapTileLayer.Cell currentCell = getWallLayer().getCell(nextPos.getX(), nextPos.getY());
-        List<String> walls = new ArrayList<>();
-        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(currentCell.getTile().getProperties().getValues().next().toString());
-        }
-        if (walls.contains(direction.toString())) {
-            System.out.println("Hit a wall!(here)");
-            return false;
-        }
-
-        // move new position to target tile:
-        nextPos.moveInDirection(direction);
-
-        // check target tile:
-        if (nextPos.getX() < 0 || nextPos.getY() < 0 || getWidth() <= nextPos.getX()
-                || getHeight() <= nextPos.getY())
-            return false;
-
-        walls = new ArrayList<>();
-        TiledMapTileLayer.Cell targetCell = wallLayer.getCell(nextPos.getX(), nextPos.getY());
-
-        if (targetCell != null && targetCell.getTile().getProperties().containsKey("Wall")) {
-            walls = splitBySpace(targetCell.getTile().getProperties().getValues().next().toString());
-        }
-
-        Direction oppositeDirection = direction.getOppositeDirection();
-
-        if (walls.contains(oppositeDirection.toString())) {
-            System.out.println("Hit a wall!(next)");
-            return false;
-        }
-
-        for (Player other : players) {
-            if (other.equals(player)) continue;
-
-            if (other.positionEquals(nextPos)) {
-                if (!canGo(other, direction)) {
-                    return false;
+    public void findStartPlates() {
+        for (int x = 0; x < startLayer.getWidth(); x++) {
+            for (int y = 0; y < startLayer.getHeight(); y++) {
+                TiledMapTileLayer.Cell cell = startLayer.getCell(x, y);
+                if (cell != null) {
+                    int value = Integer.parseInt(getValue(cell));
+                    startPlates.add(new StartPosition(x, y, value));
                 }
-                other.moveInDirection(direction);
             }
         }
-
-        return true;
     }
 
-    /**
-     * helper method for canGo()
-     */
-    public List<String> splitBySpace(String strToSplit) {
-        List<String> splitList;
-        String[] items = strToSplit.split(" ");
-        splitList = Arrays.asList(items);
-        return splitList;
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 
-    public void boardInteractsWithPlayer(Player player) {
-        if (player == null) return;
-
-
-        beltsMove(player);
-
-        int x = player.getX();
-        int y = player.getY();
-
-        if (lasersHit(x, y)) {
-            System.out.println("Ouch!");
-            player.takeDamage();
-            player.getLaserHitPlayerSound().play(0.05f);
-        }
-        if (playerIsOffTheBoard(x, y)) {
-            player.destroy();
-        }
-        int flagInPlayerPos = posHasFlagOnIt(x, y);
-
-        // If flagInPlayerPos is greater than 0, it means that a flag is found, and it is
-        // the flags number
-        if (flagInPlayerPos > 0) {
-            player.addFlag(flagInPlayerPos);
-            player.updateBackup();
-            System.out.printf("%s found a flag!%n", player.getName());
+    public void placePlayers() {
+        findStartPlates();
+        Collections.sort(startPlates);
+        int startNumber = 0;
+        for (Player currentPlayer : players) {
+            currentPlayer.moveToPosition(startPlates.get(startNumber++).position);
+            currentPlayer.setDirection(Direction.EAST);
+            currentPlayer.updateSprite();
+            currentPlayer.getBackup().moveToPlayerPosition();
         }
     }
 
+    public void boardMoves() {
+        expressBeltsMovePlayers();
+        beltsMovePlayers();
+        lasersFire();
+        robotLasersFire();
+        visitFlags();
+        visitSpecialFields();
+    }
+
+    private void expressBeltsMovePlayers() {
+        for (Player player : players) {
+            if (player == null) continue;
+            expressBeltsMove(player);
+            if (player.isOffTheBoard(floorLayer)) {
+                if (!soundIsMuted && !player.hasScreamed()) {
+                    player.getSoundFromPlayer(2).play();
+                }
+                player.destroy();
+            }
+        }
+    }
+
+    private void beltsMovePlayers() {
+        for (Player player : players) {
+            if (player == null) continue;
+            beltsMove(player);
+            if (player.isOffTheBoard(floorLayer)) {
+                if (!soundIsMuted && !player.hasScreamed()) {
+                    player.getSoundFromPlayer(2).play();
+                }
+                player.destroy();
+            }
+        }
+    }
+
+    private void expressBeltsMove(Player player) {
+        TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
+        if (player.isOnExpressBelt(beltLayer)) {
+            Direction beltDir = Direction.valueOf(getValue(currentCell));
+            if (!player.canGo(beltDir, wallLayer) || player.crashWithRobot(beltDir, this)) return;
+
+            player.moveInDirection(beltDir);
+            currentCell = beltLayer.getCell(player.getX(), player.getY());
+            if (!cellContainsKey(currentCell, "Rotate")) return;
+
+            Iterator<Object> i = currentCell.getTile().getProperties().getValues();
+            i.next();
+            player.rotate(Rotate.valueOf(i.next().toString()));
+
+        }
+    }
 
     private void beltsMove(Player player) {
-        // check if player is on a belt:
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-        if (currentCell != null && currentCell.getTile().getProperties().containsKey("Belt")) {
-            Direction dir = Direction.valueOf(currentCell.getTile().getProperties().getValues().next().toString());
-            if (canGo(player, player.getDirection())) {
-                player.moveInDirection(dir);
+        if (cellContainsKey(currentCell, "Normal") || cellContainsKey(currentCell, "Express")) {
+
+            Direction beltDir = Direction.valueOf(getValue(currentCell));
+            if (!player.canGo(beltDir, wallLayer) || player.crashWithRobot(beltDir, this)) return;
+
+            player.moveInDirection(beltDir);
+            currentCell = beltLayer.getCell(player.getX(), player.getY());
+            if (!cellContainsKey(currentCell, "Rotate")) return;
+
+            Iterator<Object> i = currentCell.getTile().getProperties().getValues();
+            i.next();
+            player.rotate(Rotate.valueOf(i.next().toString()));
+        }
+
+        // Gyros rotate
+        if (cellContainsKey(currentCell, "Gyro")) {
+            player.rotate(Rotate.valueOf(getValue(currentCell)));
+        }
+    }
+
+    public void lasersFire() {
+        for (Player player : players) {
+            if (player.hitByLaser(laserLayer)) {
+                if (!soundIsMuted) {
+                    player.getSoundFromPlayer(0).play();
+                }
+                player.takeDamage();
             }
         }
     }
 
-    private boolean lasersHit(int x, int y) {
-        TiledMapTileLayer.Cell currentCell = laserLayer.getCell(x, y);
-        return currentCell != null && currentCell.getTile().getProperties().containsKey("Laser");
-    }
-
-    private boolean playerIsOffTheBoard(int x, int y) {
-        return (floorLayer.getCell(x, y) == null);
-    }
-
-    // Check the position if there is a flag there
-    // Return the flagnumber if true, else return -1
-    private int posHasFlagOnIt(int x, int y) {
-        for (Flag f : flags) {
-            if (f.getX() == x && f.getY() == y) {
-                return f.getFlagNumber();
+    private void visitFlags() {
+        for (Player player : players) {
+            for (Flag flag : flags) {
+                if (player.position.equals(flag.position)) {
+                    player.visitFlag(flag.getFlagNumber());
+                    player.getBackup().moveToPlayerPosition();
+                }
             }
         }
-        return -1;
     }
 
-    public boolean playerIsOnRepair(int x, int y) {
-        for (RepairSite rs : repairSites) {
-            if (rs.getX() == x && rs.getY() == y) {
-                return true;
+    private void visitSpecialFields() {
+        for (Player player : players) {
+            if (player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) {
+                player.getBackup().moveToPlayerPosition();
             }
         }
-        return false;
     }
 
+
+    public void cleanUp() {
+        for (Player player : players) {
+            if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
+                player.repairOneDamage();
+                if (!soundIsMuted) {
+                    player.getSoundFromPlayer(1).play();
+                }
+                addAnimation(new RepairAnimation(player.position));
+            }
+            if (player.isOnOption(floorLayer)) {
+                System.out.println("Give option card to player!");
+            }
+        }
+    }
+
+    private void addAnimation(Animation animation) {
+        ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.animations.add(animation);
+    }
 
     public void drawGameObjects(SpriteBatch batch) {
-        for (Flag o : flags) {
-            o.getSprite().draw(batch);
-        }
-        for (RepairSite rs : repairSites) {
-            rs.getSprite().draw(batch);
-        }
-    }
-
-    public void drawPlayers(SpriteBatch batch) {
-        for (Player player : players) {
-            player.getSprite().draw(batch);
-        }
+        drawBackup(batch);
+        drawList(players, batch);
+        drawList(lasers, batch);
+        drawList(flags, batch);
     }
 
     public void drawBackup(SpriteBatch batch) {
@@ -321,30 +219,37 @@ public abstract class Board extends BoardCreator {
         }
     }
 
-    public TiledMapTileLayer getWallLayer() {
-        return this.wallLayer;
+    private void drawList(ArrayList<? extends GameObject> list, SpriteBatch batch) {
+        for (GameObject object : list)
+            object.draw(batch);
     }
 
-    public int getWidth() {
-        return this.floorLayer.getWidth();
+    public void killTheSound() {
+        for (Player p : players) {
+            p.killTheSound();
+        }
+        soundIsMuted = true;
     }
 
-    public int getHeight() {
-        return this.floorLayer.getHeight();
+    public void restartTheSound() {
+        for (Player p : players) {
+            p.createSounds();
+        }
+        soundIsMuted = false;
     }
 
     public ArrayList<Player> getPlayers() {
         return this.players;
     }
 
-    public boolean boardWantsToMuteMusic() {
-        return this.boardWantsToMuteMusic;
+
+    public void robotLasersFire() {
+        for (Player player : players) {
+            player.getLaserCannon().fire(this);
+        }
     }
 
-    public void musicIsMuted() {
-        System.out.println("Music is now muted");
-        boardWantsToMuteMusic = false;
-        musicIsMuted = true;
+    public ArrayList<Flag> getFlags() {
+        return flags;
     }
-
 }

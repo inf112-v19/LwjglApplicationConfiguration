@@ -1,14 +1,16 @@
 package inf112.roborally.game.enums;
 
-
+/**
+ * Keeps track of the direction an object is facing.
+ * {@link #rotationDegree} keeps track of sprite rotation according to current direction.
+ */
 public enum Direction {
 
-    NORTH,
-    EAST,
-    SOUTH,
-    WEST;
+    NORTH(0, 180),
+    EAST(1, 90),
+    SOUTH(2, 0),
+    WEST(3, 270);
 
-    private Direction opposite;
     static {
         NORTH.opposite = SOUTH;
         SOUTH.opposite = NORTH;
@@ -16,24 +18,29 @@ public enum Direction {
         WEST.opposite = EAST;
     }
 
+    private int value;
+    private int rotationDegree;
+    private Direction opposite;
+
+    Direction(int v, int rotationDegree) {
+        this.value = v;
+        this.rotationDegree = rotationDegree;
+    }
+
+    public int toInt() {
+        return value;
+    }
+
+    public int getRotationDegree() {
+        return rotationDegree;
+    }
+
     public Direction getOppositeDirection() {
         return opposite;
     }
 
-    private int rotationDegree;
-    static {
-        SOUTH.rotationDegree = 0;
-        EAST.rotationDegree = 90;
-        NORTH.rotationDegree = 180;
-        WEST.rotationDegree = 270;
-    }
-
-    public int getRotationDegree(){
-        return rotationDegree;
-    }
-
-    public Direction rotate(Rotate rotate){
-        switch (rotate){
+    public Direction rotate(Rotate rotate) {
+        switch (rotate) {
             case RIGHT:
                 return degreeToDirection(this.rotationDegree - 90);
             case LEFT:
@@ -45,12 +52,12 @@ public enum Direction {
         }
     }
 
-    public Direction degreeToDirection(int degree){
+    public Direction degreeToDirection(int degree) {
         while (degree <= 0)
             degree += 360;
         degree = degree % 360;
 
-        if(degree == 0)
+        if (degree == 0)
             return Direction.SOUTH;
         else if (degree == 270)
             return Direction.WEST;
@@ -61,4 +68,5 @@ public enum Direction {
         else
             return this;
     }
+
 }

@@ -15,46 +15,54 @@ public class Position {
         this.y = y;
     }
 
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-
-    public void moveInDirection(Direction dir){
-        switch (dir){
+    public Position moveInDirection(Direction dir) {
+        switch (dir) {
             case NORTH:
-                setY(getY() +1); break;
+                setY(getY() + 1);
+                return this;
             case SOUTH:
-                setY(getY() - 1); break;
+                setY(getY() - 1);
+                return this;
             case EAST:
-                setX(getX() + 1); break;
+                setX(getX() + 1);
+                return this;
             case WEST:
-                setX(getX() - 1); break;
+                setX(getX() - 1);
+                return this;
         }
+        return this;
     }
 
-    public void move(int x, int y){
+    public void move(int x, int y) {
         setX(x);
         setY(y);
+    }
+
+    public int getX() {
+        return this.x;
     }
 
     public void setX(int x) {
         this.x = x;
     }
 
+    public int getY() {
+        return this.y;
+    }
+
     public void setY(int y) {
         this.y = y;
     }
 
-    public boolean positionEquals(Object other){
-        Position that = (Position) other;
-        if (this.x == that.x && this.y == that.y)
-            return true;
-
-        return false;
+    public void setPosition(Position position) {
+        x = position.getX();
+        y = position.getY();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        Position that = (Position) other;
+        return this.x == that.x && this.y == that.y;
+
+    }
 }

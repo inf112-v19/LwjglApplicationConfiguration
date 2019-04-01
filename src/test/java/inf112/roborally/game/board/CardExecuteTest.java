@@ -1,6 +1,5 @@
 package inf112.roborally.game.board;
 
-import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.objects.Player;
 import inf112.roborally.game.enums.Rotate;
 import org.junit.Before;
@@ -22,14 +21,14 @@ public class CardExecuteTest {
 
     @Before
     public void setup() {
-        player = new Player(0, 0); // Player will by default face south
+        player = new Player(0, 0, 1); // Player will by default face south
         player.rotate(Rotate.UTURN); // Rotate player so it faces North
         manualTestDeck = new Stack<>();
     }
 
     @Test
     public void playerMovesOneForward() {
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority));
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority,""));
         movePlayerAllCardsInDeck();
         assertEquals(0, player.getX()); // Check X pos
         assertEquals(1, player.getY()); // Check Y pos
@@ -37,32 +36,33 @@ public class CardExecuteTest {
 
     @Test
     public void playerMovesTwoForwards() {
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 2, standardPriority));
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 2, standardPriority,""));
         movePlayerAllCardsInDeck();
         assertEquals(0, player.getX());
         assertEquals(2, player.getY());
     }
 
     @Test
-    public void RotateRightThenOneForward() {
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority));
+    public void rotateRightThenOneForward() {
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 1, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority,""));
         movePlayerAllCardsInDeck();
         assertEquals(1, player.getX());
         assertEquals(0, player.getY());
     }
 
     @Test
-    public void PlayerMovesFiveCards() {
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 3, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.LEFT, 3, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.UTURN, 0, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.NONE, 2, standardPriority));
-        manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority));
+    public void playerMovesFiveCards() {
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 3, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.LEFT, 3, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.UTURN, 0, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.NONE, 2, standardPriority,""));
+        manualTestDeck.push(new ProgramCard(Rotate.RIGHT, 0, standardPriority,""));
         movePlayerAllCardsInDeck();
         assertEquals(2, player.getX());
         assertEquals(-3, player.getY());
     }
+
 
     // Helper method only, not a test itself
     private void movePlayerAllCardsInDeck() {

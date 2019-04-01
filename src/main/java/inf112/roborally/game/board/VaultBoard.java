@@ -1,28 +1,28 @@
 package inf112.roborally.game.board;
 
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.objects.Flag;
-import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.objects.RepairSite;
+import inf112.roborally.game.objects.Position;
+
+import java.util.ArrayList;
 
 public class VaultBoard extends Board {
 
     public VaultBoard() {
-        flags.add(new Flag(1, 10, 1));
-        flags.add(new Flag(6, 2, 2));
-        flags.add(new Flag(6, 10, 3));
-
-        repairSites.add(new RepairSite(5, 2));
-
+        flags.add(new Flag(13, 6, 1));
+        flags.add(new Flag(5, 8, 2));
+        flags.add(new Flag(11, 4, 3));
         createBoard(RoboRallyGame.VAULT);
+        findLasers();
+    }
 
-        Player player1 = new Player("Player1", 6, 6, Direction.NORTH, flags.size());
-
-        Player player2 = new Player("Player2", 5, 7, Direction.SOUTH, flags.size());
-
-        players.add(player1);
-        players.add(player2);
+    public VaultBoard(ArrayList<Position> flagPositions) {
+        for (int i = 0; i < flagPositions.size(); i++) {
+            Position currPos = flagPositions.get(i);
+            flags.add(new Flag(currPos.getX(), currPos.getY(), i + 1));
+        }
+        createBoard(RoboRallyGame.VAULT);
+        findLasers();
     }
 
 }
