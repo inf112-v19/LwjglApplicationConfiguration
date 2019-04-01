@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Stack;
 
-import static java.util.Collections.*;
+import static inf112.roborally.game.enums.GameState.*;
+import static java.util.Collections.shuffle;
 
 @SuppressWarnings("Duplicates")
 public class BoardLogic {
@@ -17,19 +18,19 @@ public class BoardLogic {
     protected GameState state;
 
     protected ArrayList<Player> players;
-    private ArrayList<Player> airobots;
+    private ArrayList<Player> aiBots;
 
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
 
     public BoardLogic(ArrayList<Player> players) {
         this.players = players;
-        airobots = new ArrayList<>();
-        for (int i = 1; i < players.size(); i++)
-            airobots.add(players.get(i));
+        aiBots = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++)
+            aiBots.add(players.get(i));
 
         phase = 0;
-        state = GameState.BETWEEN_ROUNDS;
+        state = BETWEEN_ROUNDS;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
         returnedProgramCards = new Stack<>();
     }
@@ -40,6 +41,7 @@ public class BoardLogic {
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
+                aiRobotsChooseCards();
                 checkIfReady();
                 break;
             case ROUND:
@@ -48,14 +50,13 @@ public class BoardLogic {
             case BOARD_MOVES:
                 boardMoves();
                 break;
-            case GAME_OVER:
-                endGame();
         }
     }
 
     protected void doBeforeRound() {
         System.out.println("set up before round");
         cleanBoard();
+        respawnRobots();
         powerUpRobots();
         powerDownRobots();
 
@@ -67,18 +68,26 @@ public class BoardLogic {
                 giveCardsToPlayer(player);
             }
         }
-
-        System.out.println("players choosing cards");
-        state = GameState.PICKING_CARDS;
+        System.out.println("players choosing cards. + players alive: " + players.size());
+        state = PICKING_CARDS;
     }
 
-    private void removeDeadRobots() {
+    private void respawnRobots() {
+        for (Player player : players) {
+            if (player.isDestroyed()) {
+                if (player.outOfLives()) player.playerState = PlayerState.GAME_OVER;
+                else player.respawn();
+            }
+        }
+    }
+
+    public void removeDeadRobots() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
             if (player.playerState == PlayerState.GAME_OVER) {
-                players.remove(player);
-                airobots.remove(player);
                 System.out.println(player.getName() + " was removed.");
+                players.remove(player);
+                aiBots.remove(player);
             }
         }
     }
@@ -96,6 +105,7 @@ public class BoardLogic {
     }
 
     private boolean allPlayersReady() {
+        System.out.println("Players: " + players.size());
         for (Player player : players) {
             if (!player.isReady()) return false;
         }
@@ -108,57 +118,66 @@ public class BoardLogic {
                 if (player.playerState == PlayerState.READY) //true if submit button is pressed
                     player.playerState = PlayerState.OPERATIONAL;
             }
-            state = GameState.ROUND;
+            state = ROUND;
         }
     }
 
     protected void doPhase() {
-        removeDeadRobots();
         if (phase >= 5) {
             phase = 0;
-            state = GameState.BETWEEN_ROUNDS;
+            state = BETWEEN_ROUNDS;
             System.out.println("round over");
             return;
         }
 
         System.out.println("executing phase " + phase);
+        sortPlayersByPriority();
+        executeCards();
+//        sleepThread();
+        checkIfAPlayerHasWon();
+        phase++;
+    }
 
-        aiRobotsChooseCards();
-        // sort players after phase priority
+    private void sleepThread() {
+        if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
+            try {
+                Thread.sleep(200);
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void sortPlayersByPriority() {
         for (Player player : players) {
             player.setPhase(phase);
         }
         try {
-            System.out.println(players.toString());
             Collections.sort(players);
-        } catch (NullPointerException e) {
-            throw new NullPointerException("AIRobots: "
-                    + airobots.size()
-                    + "\n Players: "
-                    + players.size());
         }
-
-        executeCards();
-
-        if (!players.get(0).isDebuggingActive()) {
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        catch (NullPointerException e) {
+            throw new NullPointerException("AIRobots: " + aiBots.size() + "\n Players: " + players.size());
         }
-        checkIfAPlayerHasWon();
-        phase++;
     }
 
     private void executeCards() {
         for (Player player : players) {
             player.getRegisters().executeCard(phase);
+            updatePlayers();
+            if (!players.get(0).isDebuggingActive()) {
+                try {
+                    Thread.sleep(500);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     protected void boardMoves() {
-        state = GameState.ROUND;
+        state = ROUND;
     }
 
 
@@ -169,18 +188,18 @@ public class BoardLogic {
     protected Player checkIfAPlayerHasWon() {
         if (players.size() == 1) {
             System.out.printf("%s just won the game by outliving their opponents!!%n", players.get(0).getName());
-            state = GameState.GAME_OVER;
+            state = GAME_OVER;
             return players.get(0);
         }
 
         for (Player player : players) {
             if (player.hasWon()) {
                 System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
-                state = GameState.GAME_OVER;
+                state = GAME_OVER;
                 return player;
             }
         }
-        state = GameState.BOARD_MOVES;
+        state = BOARD_MOVES;
         return null;
     }
 
@@ -217,12 +236,12 @@ public class BoardLogic {
     }
 
     private void aiRobotsChooseCards() {
-        for (Player ai : airobots) {
+        for (Player ai : aiBots) {
             if (ai.outOfLives()) continue;
             while (!ai.getRegisters().isFull()) {
                 ai.getRegisters().placeCard(0);
             }
-            System.out.println(ai.getHand().size());
+            ai.playerState = PlayerState.READY;
         }
     }
 

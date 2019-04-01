@@ -108,6 +108,8 @@ public class GameScreen implements Screen {
         board.render(game.dynamicCamera);
 
         game.batch.setProjectionMatrix(game.dynamicCamera.combined);
+
+        gameLogic.removeDeadRobots();
         game.batch.begin();
         board.drawGameObjects(game.batch);
         for (int i = 0; i < animations.size(); i++) {

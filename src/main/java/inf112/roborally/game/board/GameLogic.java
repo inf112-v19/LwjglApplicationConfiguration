@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
-import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.objects.Player;
@@ -29,6 +28,12 @@ public class GameLogic extends BoardLogic implements Runnable {
     @Override
     public void run() {
         while (state != GameState.GAME_OVER) update();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                endGame();
+            }
+        });
     }
 
     public void update() {
@@ -78,6 +83,7 @@ public class GameLogic extends BoardLogic implements Runnable {
         }
     }
 
+    @Override
     public void doBeforeRound() {
         super.doBeforeRound();
         Gdx.app.postRunnable(new Runnable() {
@@ -90,18 +96,13 @@ public class GameLogic extends BoardLogic implements Runnable {
     }
 
     @Override
-    public void checkIfReady() {
-        if (player1.isReady()) {
-            state = GameState.ROUND;
-            if (player1.playerState == PlayerState.READY)
-                player1.playerState = PlayerState.OPERATIONAL;
-            state = GameState.ROUND;
-        }
-    }
-
-    @Override
     protected void boardMoves() {
-        board.boardMoves();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                board.boardMoves();
+            }
+        });
         super.boardMoves();
     }
 
@@ -113,7 +114,13 @@ public class GameLogic extends BoardLogic implements Runnable {
 
     @Override
     protected void cleanBoard() {
-        board.cleanUp();
+        super.cleanBoard();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                board.cleanUp();
+            }
+        });
     }
 }
 

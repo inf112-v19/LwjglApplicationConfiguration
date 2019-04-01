@@ -1,8 +1,7 @@
-package inf112.roborally.game;
+package inf112.roborally.game.objects;
 
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.objects.Player;
-
+import inf112.roborally.game.enums.PlayerState;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,99 +16,100 @@ public class PlayerTest {
     private Stack<ProgramCard> stack;
 
     @Before
-    public void setup(){
+    public void setup() {
 
-        player = new Player(0,0, 1);
+        player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
     }
 
     @Test
-    public void takeDamageTest(){
+    public void takeDamageTest() {
         player.takeDamage();
         assertEquals(1, player.getDamage());
     }
 
     @Test
-    public void takeDamageTest2(){
+    public void takeDamageTest2() {
         int expected = 1;
-        for(int i = 0; i < 9; i++){
+        for (int i = 0; i < 9; i++) {
             player.takeDamage();
             assertEquals(expected++, player.getDamage());
         }
     }
 
     @Test
-    public void oneDamageOneLessCard(){
-        for(int i = 0; i < 10; i++) {
-            assertEquals(9 - i , player.getCardLimit());
+    public void oneDamageOneLessCard() {
+        for (int i = 0; i < 10; i++) {
+            assertEquals(9 - i, player.getCardLimit());
             player.takeDamage();
         }
     }
 
     @Test
-    public void zeroDmgDoesNotDestroy(){
-        assert(!player.isDestroyed());
+    public void zeroDmgDoesNotDestroy() {
+        assert (!player.isDestroyed());
     }
 
     @Test
-    public void nineDmgDoesNotDestroy(){
-        for(int i = 0; i < 9; i++){
+    public void nineDmgDoesNotDestroy() {
+        for (int i = 0; i < 9; i++) {
             player.takeDamage();
         }
-        assert(!player.isDestroyed());
+        assert (!player.isDestroyed());
     }
 
     @Test
-    public void tenDmgDestroys(){
-        for(int i = 0; i < 10; i++){
+    public void tenDmgDestroys() {
+        for (int i = 0; i < 10; i++) {
             player.takeDamage();
         }
-        assert(player.isDestroyed());
+        assert (player.isDestroyed());
+        assertEquals(PlayerState.DESTROYED, player.playerState);
     }
 
     @Test
-    public void fiveDmgLocksOneRegister(){
-        for(int i = 0; i < 5; i++)
+    public void fiveDmgLocksOneRegister() {
+        for (int i = 0; i < 5; i++)
             player.takeDamage();
         assertEquals(true, player.getRegisters().isLocked(4));
 
         //the other registers should not be locked:
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             assertEquals(false, player.getRegisters().isLocked(i));
     }
 
     @Test
-    public void fourDmgDoesNotLocksOneRegister(){
-        for(int i = 0; i < 4; i++)
+    public void fourDmgDoesNotLocksOneRegister() {
+        for (int i = 0; i < 4; i++)
             player.takeDamage();
 
         //the other registers should not be locked:
-        for(int i = 0; i < 5; i++)
-            assert(!player.getRegisters().isLocked(i));
+        for (int i = 0; i < 5; i++)
+            assert (!player.getRegisters().isLocked(i));
     }
 
     @Test
-    public void nineDmgLocksAllRegisters(){
-        for(int i = 0; i < 9; i++)
+    public void nineDmgLocksAllRegisters() {
+        for (int i = 0; i < 9; i++)
             player.takeDamage();
         //all registers should be locked:
-        for(int i = 0; i < 5; i++)
-            assert(player.getRegisters().isLocked(i));
+        for (int i = 0; i < 5; i++)
+            assert (player.getRegisters().isLocked(i));
     }
 
     @Test
-    public void repairResultsInZeroDmg(){
-        for(int i = 0; i < 9; i++)
+    public void repairResultsInZeroDmg() {
+        for (int i = 0; i < 9; i++)
             player.takeDamage();
         player.repairAllDamage();
         assertEquals(0, player.getDamage());
-        for(int i = 0; i < 5; i++)
-            assert(!player.getRegisters().isLocked(i));
+        for (int i = 0; i < 5; i++)
+            assert (!player.getRegisters().isLocked(i));
     }
 
     @Test
-    public void noLockedRegistersReturnsAllCards(){
-        for(int i = 0; i < 9; i++) {
+    public void noLockedRegistersReturnsAllCards() {
+        for (int i = 0; i < 9; i++) {
             // Player is given nine cards:
             player.getHand().receiveCard(stack.pop());
             if (i < 5)
@@ -121,13 +121,13 @@ public class PlayerTest {
         assertEquals(9, cardsReturned.size());
 
         // All registers are empty:
-        for(ProgramCard register : player.getRegisters().getAllCards())
-            assert(register == null);
+        for (ProgramCard register : player.getRegisters().getAllCards())
+            assert (register == null);
     }
 
     @Test
-    public void lockedCardsAreNotReturned(){
-        for(int i = 0; i < 9; i++) {
+    public void lockedCardsAreNotReturned() {
+        for (int i = 0; i < 9; i++) {
             // Player is given nine cards:
             player.getHand().receiveCard(stack.pop());
             if (i < 5)
@@ -135,7 +135,7 @@ public class PlayerTest {
                 player.getRegisters().placeCard(0);
         }
         // Player takes nine damage, locking all registers:
-        for(int i = 0; i < 9; i++)
+        for (int i = 0; i < 9; i++)
             player.takeDamage();
 
         // Only cards in hand are returned:
@@ -144,13 +144,13 @@ public class PlayerTest {
         assertEquals(4, cardsReturned.size());
 
         // All registers contains program cards:
-        for(ProgramCard register : player.getRegisters().getAllCards())
-            assert(register != null);
+        for (ProgramCard register : player.getRegisters().getAllCards())
+            assert (register != null);
     }
 
     @Test
-    public void lockedCardsAreNotReturned2(){
-        for(int i = 0; i < 9; i++) {
+    public void lockedCardsAreNotReturned2() {
+        for (int i = 0; i < 9; i++) {
             // Player is given nine cards:
             player.getHand().receiveCard(stack.pop());
             if (i < 5)
@@ -158,7 +158,7 @@ public class PlayerTest {
                 player.getRegisters().placeCard(0);
         }
         // Player takes 5 damage, locking one register:
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
             player.takeDamage();
 
         // Cards in hand are returned + 4 from registers:
@@ -166,21 +166,21 @@ public class PlayerTest {
         assertEquals(8, cardsReturned.size());
 
         // The first 4 registers do not contain program cards:
-        for(int i = 0; i < 4; i++)
-            assert(player.getRegisters().getAllCards().get(i) == null);
+        for (int i = 0; i < 4; i++)
+            assert (player.getRegisters().getAllCards().get(i) == null);
         // The last register does:
-        assert(player.getRegisters().getAllCards().get(4) != null);
+        assert (player.getRegisters().getAllCards().get(4) != null);
     }
 
     @Test
-    public void priorityTest(){
+    public void priorityTest() {
         PriorityQueue<ProgramCard> q = new PriorityQueue<>();
         // create 3 players:
-        Player p1 = new Player(0,0,1);
-        Player p2 = new Player(0,0, 1);
-        Player p3 = new Player(0,0, 1);
+        Player p1 = new Player(0, 0, 1);
+        Player p2 = new Player(0, 0, 1);
+        Player p3 = new Player(0, 0, 1);
         // give them five cards each:
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             p1.getHand().receiveCard(stack.pop());
             p2.getHand().receiveCard(stack.pop());
             p3.getHand().receiveCard(stack.pop());
@@ -194,14 +194,14 @@ public class PlayerTest {
         q.add(p2.getRegisters().getCard(0));
         q.add(p3.getRegisters().getCard(0));
         // print in order of highest priority
-        while(!q.isEmpty()) {
+        while (!q.isEmpty()) {
             System.out.println(q.poll());
         }
     }
 
     @Test
-    public void repairUnlocksAllRegister(){
-        for(int i = 0; i < 9; i++){
+    public void repairUnlocksAllRegister() {
+        for (int i = 0; i < 9; i++) {
             player.takeDamage();
         }
         player.repairAllDamage();
@@ -209,105 +209,147 @@ public class PlayerTest {
     }
 
     @Test
-    public void doNotTakeDamageWhenDead(){
-        for(int i = 0; i < 34; i++){
+    public void canNotTakeMoreThanMaxDamage() {
+        for (int i = 0; i < 34; i++) {
             player.takeDamage();
         }
-        assertEquals(0,player.getLives());
-        assertEquals(0, player.getDamage());
+        assertEquals(Player.MAX_DAMAGE, player.getDamage());
     }
 
     @Test
-    public void takingTenDamageCausesOneLifeLost(){
-        for (int i = 0; i < 10; i++)
+    public void takingTenDamageCausesOneLifeLost() {
+        for (int i = 0; i < 10; i++) {
             player.takeDamage();
+        }
+        assertEquals(true, player.respawn());
         assertEquals(0, player.getDamage());
         assertEquals(2, player.getLives());
     }
 
     @Test
-    public void takingMoreThanTenDamageStartsAtZeroAgain(){
+    public void takingElevenDamageCausesOneLifeLost() {
+        for (int i = 0; i < 11; i++) {
+            player.takeDamage();
+        }
+        assertEquals(true, player.respawn());
+        assertEquals(0, player.getDamage());
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void playerNeedsToRespawnBeforeTakingDamageAgain() {
         for (int i = 0; i < 16; i++)
             player.takeDamage();
-        assertEquals(6, player.getDamage());
+        assertEquals(Player.MAX_DAMAGE, player.getDamage());
         assertEquals(2, player.getLives());
+        assertEquals(true, player.respawn());
     }
 
     @Test
-    public void take6Damage(){
+    public void playerTakesDamageAfterRepsawning() {
+        for (int i = 0; i < 16; i++) {
+            player.takeDamage();
+            player.respawn();
+        }
+        assertEquals(16 - Player.MAX_DAMAGE, player.getDamage());
+        assertEquals(2, player.getLives());
+    }
+
+
+    @Test
+    public void take6Damage() {
         for (int i = 0; i < 6; i++)
             player.takeDamage();
         assertEquals(6, player.getDamage());
     }
 
 
-    @Test (expected = IndexOutOfBoundsException.class)
-    public void negativeIndexShouldThrowIndexOutOfBounds(){
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void negativeIndexShouldThrowIndexOutOfBounds() {
         player.getHand().receiveCard(stack.pop());
         player.getHand().removeCard(-1);
     }
 
     @Test
-    public void gettingDestroyedLeadsToLosingALife(){
+    public void gettingDestroyedLeadsToLosingALife() {
         player.destroy();
-        player.takeDamage();
-        //Might want to change how the player loses lives.
-        //player.destroy() should decrement lives or we should rename the function?
         assertEquals(2, player.getLives());
     }
 
     @Test
-    public void checkOutOfLives(){
+    public void checkOutOfLives() {
         assertFalse(player.outOfLives());
     }
 
     @Test
-    public void notOutOfLivesAfterTakingOneDamage(){
+    public void notOutOfLivesAfterGettingDestroyedOnce() {
         player.destroy();
-        player.takeDamage();
         assertFalse(player.outOfLives());
     }
 
     @Test
-    public void notOutOfLivesAfterTakingTwoDamage(){
-     for(int i = 0; i < 2; i++){
-         player.destroy();
-         player.takeDamage();
-     }
-     assertFalse(player.outOfLives());
+    public void notOutOfLivesAfterGettingDestroyedTwice() {
+        for (int i = 0; i < 2; i++) {
+            player.destroy();
+            player.respawn();
+        }
+        assertFalse(player.outOfLives());
     }
 
     @Test
-    public void isOutOfLivesAfterTakingThreeDamage(){
-        for(int i = 0; i < 3; i++){
+    public void isOutOfLivesAfterGettingDestroyedThrice() {
+        for (int i = 0; i < 3; i++) {
             player.destroy();
-            player.takeDamage();
+            player.respawn();
         }
         assertTrue(player.outOfLives());
     }
 
     @Test
-    public void checkIfHandIsFull(){
-        for(int i = 0; i < player.getCardLimit(); i++)
+    public void checkIfHandIsFull() {
+        for (int i = 0; i < player.getCardLimit(); i++)
             player.getHand().receiveCard(stack.pop());
         assertTrue(player.getHand().isFull());
     }
 
     @Test
-    public void handIsNotFull(){
-        for(int i = 0; i < player.getCardLimit() - 1; i++) {
+    public void handIsNotFull() {
+        for (int i = 0; i < player.getCardLimit() - 1; i++) {
             player.getHand().receiveCard(stack.pop());
             assertFalse(player.getHand().isFull());
         }
     }
 
     @Test
-    public void getCardInHandReturnsCorrectCards(){
-        for(int i = 0; i < player.getCardLimit(); i++){
+    public void getCardInHandReturnsCorrectCards() {
+        for (int i = 0; i < player.getCardLimit(); i++) {
             ProgramCard card = stack.pop();
             player.getHand().receiveCard(card);
             assertEquals(card, player.getHand().getCard(i));
         }
+    }
+
+    @Test
+    public void destroyDestroysPlayer() {
+        player.destroy();
+        assertEquals(PlayerState.DESTROYED, player.playerState);
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void tenDamageDestroysRobot() {
+        for (int i = 0; i < 10; i++) {
+            player.takeDamage();
+        }
+        assertEquals(PlayerState.DESTROYED, player.playerState);
+        assertEquals(2, player.getLives());
+    }
+
+    @Test
+    public void respawnSetsStateToOperational() {
+        player.destroy();
+        assertEquals(true, player.respawn());
+        assertEquals(PlayerState.OPERATIONAL, player.playerState);
     }
 
 }
