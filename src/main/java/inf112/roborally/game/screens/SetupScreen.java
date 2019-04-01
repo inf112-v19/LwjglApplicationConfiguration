@@ -101,7 +101,6 @@ public class SetupScreen extends AbstractScreen {
     }
 
     private void createMapForPlacingFlags() {
-        state = SetupState.PLACINGFLAGS;
 
         // One tile here, inn full screen, is approx. 90x90
         updateBackground(AssMan.SETUP_SETUP_SCREEN_PLACE_FLAGS.fileName);
@@ -113,6 +112,8 @@ public class SetupScreen extends AbstractScreen {
             flag.setPosition(100, 200 * i);
             flags.add(flag);
         }
+        
+        state = SetupState.PLACINGFLAGS;
     }
 
 
