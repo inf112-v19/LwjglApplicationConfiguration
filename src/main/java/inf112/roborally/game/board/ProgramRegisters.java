@@ -63,19 +63,17 @@ public class ProgramRegisters implements IProgramRegisters {
 
     /**
      * Executes a card in the register according to current phase in the game.
+     *
      * @param phase which register to execute
      */
     public void executeCard(int phase) {
         if (registers[phase] == null || !player.isOperational()) return;
-
         ProgramCard programCard = registers[phase];
         if (programCard.isRotate()) {
             player.rotate(programCard.getRotate());
-        }
-        else if (programCard.getMoveDistance() == -1) {
+        } else if (programCard.getMoveDistance() == -1) {
             player.reverse();
-        }
-        else {
+        } else {
             player.move(programCard.getMoveDistance());
         }
     }
@@ -121,7 +119,7 @@ public class ProgramRegisters implements IProgramRegisters {
      * Remove a specific card from one of the registers and put it back into the hand.
      *
      * @param player the player removing the card.
-     * @param index which register to remove from.
+     * @param index  which register to remove from.
      */
     public void returnCard(Player player, int index) {
         if (index < 0 || index > registers.length) {
@@ -136,9 +134,9 @@ public class ProgramRegisters implements IProgramRegisters {
         return registers[register];
     }
 
-
     /**
      * Empty slots in the register are null values. Can return null.
+     *
      * @return All cards in the register
      */
     public ArrayList<ProgramCard> getAllCards() {
@@ -153,7 +151,7 @@ public class ProgramRegisters implements IProgramRegisters {
         return unlockedRegisters;
     }
 
-    public int getNumLockedRegisters(){
+    public int getNumLockedRegisters() {
         return NUMBER_OF_REGISTERS - unlockedRegisters;
     }
 }
