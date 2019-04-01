@@ -1,5 +1,7 @@
 package inf112.roborally.game.board;
 
+import com.badlogic.gdx.Gdx;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.Player;
@@ -25,7 +27,9 @@ public class BoardLogic {
     public BoardLogic(ArrayList<Player> players) {
         this.players = players;
         aiBots = new ArrayList<>();
-        for (int i = 0; i < players.size(); i++)
+        if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
+            aiBots.add(players.get(0));
+        for (int i = 1; i < players.size(); i++)
             aiBots.add(players.get(i));
 
         phase = 0;
@@ -106,7 +110,6 @@ public class BoardLogic {
     }
 
     private boolean allPlayersReady() {
-        System.out.println("Players: " + players.size());
         for (Player player : players) {
             if (!player.isReady()) return false;
         }
@@ -134,16 +137,20 @@ public class BoardLogic {
         System.out.println("executing phase " + phase);
         sortPlayersByPriority();
         executeCards();
-//        sleepThread();
+        if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
+            sleepThread(100);
+        else
+            sleepThread(500);
         checkIfAPlayerHasWon();
         phase++;
     }
 
-    private void sleepThread() {
+    private void sleepThread(int millis) {
         if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
             try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
+                Thread.sleep(millis);
+            }
+            catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -155,7 +162,8 @@ public class BoardLogic {
         }
         try {
             Collections.sort(players);
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             throw new NullPointerException("AIRobots: " + aiBots.size() + "\n Players: " + players.size());
         }
     }

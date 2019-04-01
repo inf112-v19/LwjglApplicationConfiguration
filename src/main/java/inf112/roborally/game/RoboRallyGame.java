@@ -26,6 +26,7 @@ public class RoboRallyGame extends Game {
 
     public static final int MAX_PLAYERS = 8;
 
+    public boolean AIvsAI = false;
 
     public OrthographicCamera dynamicCamera;
     public Viewport dynamicViewPort;

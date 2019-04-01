@@ -69,18 +69,27 @@ public class MenuScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             roboRallyGame.createGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             roboRallyGame.createSetupScreen();
             roboRallyGame.setScreen(roboRallyGame.setupScreen);
             dispose();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             dispose();
             roboRallyGame.setScreen(roboRallyGame.testScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             dispose();
             roboRallyGame.setScreen(roboRallyGame.laserTestScreen);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            roboRallyGame.AIvsAI = true;
+            roboRallyGame.createGameScreen();
+            roboRallyGame.setScreen(roboRallyGame.gameScreen);
         }
     }
 
