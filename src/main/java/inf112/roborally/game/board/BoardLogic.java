@@ -18,10 +18,9 @@ public class BoardLogic {
     protected GameState state;
 
     protected ArrayList<Player> players;
-    private ArrayList<Player> aiBots;
-
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
+    private ArrayList<Player> aiBots;
 
     public BoardLogic(ArrayList<Player> players) {
         this.players = players;
@@ -144,8 +143,7 @@ public class BoardLogic {
         if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
             try {
                 Thread.sleep(200);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -157,8 +155,7 @@ public class BoardLogic {
         }
         try {
             Collections.sort(players);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new NullPointerException("AIRobots: " + aiBots.size() + "\n Players: " + players.size());
         }
     }
@@ -199,7 +196,9 @@ public class BoardLogic {
     }
 
     protected void endGame() {
-        System.out.println("Game Over! " + checkIfAPlayerHasWon().getName() + " won the game.");
+        System.out.println("Game Over! "
+                + checkIfAPlayerHasWon().getName()
+                + " won the game.");
     }
 
 
