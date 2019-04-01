@@ -59,7 +59,7 @@ public class BoardLogic {
     }
 
     protected void doBeforeRound() {
-        System.out.println("set up before round");
+        System.out.println("Set up before round");
         cleanBoard();
         respawnRobots();
         powerUpRobots();
@@ -73,7 +73,7 @@ public class BoardLogic {
                 giveCardsToPlayer(player);
             }
         }
-        System.out.println("players choosing cards. + players alive: " + players.size());
+        System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
     }
 
@@ -130,11 +130,11 @@ public class BoardLogic {
         if (phase >= 5) {
             phase = 0;
             state = BETWEEN_ROUNDS;
-            System.out.println("round over");
+            System.out.println("Round over");
             return;
         }
 
-        System.out.println("executing phase " + phase);
+        System.out.println("Executing phase " + phase);
         sortPlayersByPriority();
         executeCards();
         checkIfAPlayerHasWon();

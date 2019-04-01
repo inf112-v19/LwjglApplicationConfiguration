@@ -34,6 +34,9 @@ the robot take one damage. Pressing R should empty all the registers, returning 
 Clicking on the clear button should do the same as pressing R. Clicking on a specific card in the register should 
 remove it from the register and return it to the player hand, if it is not locked that is.
 
+### LaserTestScreen - How to
+If you pressed 'L' in the menu screen you will be take here. Press 'N','E','S', or 'W' to rotate the robots in the cardinal directions. Press 'Enter' to fire all laser (lasers on the board and robot lasers). Text is printed to the screen to tell you if robots got hit or not.
+
 ##### How to test that locked cards in the register do not return:
   1. Fill up all five registers by pressing S five times.
   2. Press D at least five times to take enough damage to lock a register.

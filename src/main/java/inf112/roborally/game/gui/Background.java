@@ -47,7 +47,7 @@ public class Background {
     }
 
     public void dispose() {
-        System.out.println("disposing background");
+        System.out.println("Disposing background");
         background.getTexture().dispose();
         grid.getTexture().dispose();
     }

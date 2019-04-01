@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.roborally.game.Main;
 
 public class Flag extends GameObject {
-    private int flagNumber;
     private final int PPM = Main.PIXELS_PER_TILE;
+    private int flagNumber;
 
     public Flag(int x, int y, int flagNumber) {
         super(x, y, "assets/objects/flagTextures.atlas");
