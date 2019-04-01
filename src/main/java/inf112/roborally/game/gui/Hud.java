@@ -69,7 +69,7 @@ public class Hud {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (player.getRegisters().isFull() && !player.outOfLives()) {
-                        player.playerState = PlayerState.READY;
+                        player.setPlayerState(PlayerState.READY);
                     }
                 }
             });

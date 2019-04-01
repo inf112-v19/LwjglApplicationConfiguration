@@ -20,9 +20,9 @@ public class BoardLogicTest {
     @Before
     public void setup() {
         player1 = new Player(0, 0, 1);
-        player1.playerState = PlayerState.OPERATIONAL;
+        player1.setPlayerState(PlayerState.OPERATIONAL);
         player2 = new Player(1, 1, 1);
-        player2.playerState = PlayerState.OPERATIONAL;
+        player2.setPlayerState(PlayerState.OPERATIONAL);
         players = new ArrayList<>();
         players.add(player2);
         players.add(player1);
@@ -42,7 +42,7 @@ public class BoardLogicTest {
 
     @Test
     public void doBeforeRoundRespawnsBeforeDealingCards() {
-        player2.playerState = PlayerState.DESTROYED;
+        player2.setPlayerState(PlayerState.DESTROYED);
         boardLogic.doBeforeRound();
         assertEquals(9, player1.getHand().size());
         assertEquals(9, player2.getHand().size());
@@ -63,14 +63,14 @@ public class BoardLogicTest {
             for (Player player : players) {
                 while (!player.getRegisters().isFull())
                     player.getRegisters().placeCard(0);
-                player.playerState = PlayerState.READY;
+                player.setPlayerState(PlayerState.READY);
             }
 
             for (int i = 0; i < 5; i++) {
                 boardLogic.executeLogic();
                 assertEquals(GameState.ROUND, boardLogic.getState());
                 for (Player player : players) {
-                    assertEquals(player.playerState, PlayerState.OPERATIONAL);
+                    assertEquals(player.getPlayerState(), PlayerState.OPERATIONAL);
                 }
                 boardLogic.executeLogic();
                 assertEquals(GameState.BOARD_MOVES, boardLogic.getState());

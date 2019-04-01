@@ -64,7 +64,7 @@ public class PlayerTest {
             player.takeDamage();
         }
         assert (player.isDestroyed());
-        assertEquals(PlayerState.DESTROYED, player.playerState);
+        assertEquals(PlayerState.DESTROYED, player.getPlayerState());
     }
 
     @Test
@@ -332,7 +332,7 @@ public class PlayerTest {
     @Test
     public void destroyDestroysPlayer() {
         player.destroy();
-        assertEquals(PlayerState.DESTROYED, player.playerState);
+        assertEquals(PlayerState.DESTROYED, player.getPlayerState());
         assertEquals(2, player.getLives());
     }
 
@@ -341,7 +341,7 @@ public class PlayerTest {
         for (int i = 0; i < 10; i++) {
             player.takeDamage();
         }
-        assertEquals(PlayerState.DESTROYED, player.playerState);
+        assertEquals(PlayerState.DESTROYED, player.getPlayerState());
         assertEquals(2, player.getLives());
     }
 
@@ -349,7 +349,7 @@ public class PlayerTest {
     public void respawnSetsStateToOperational() {
         player.destroy();
         assertEquals(true, player.respawn());
-        assertEquals(PlayerState.OPERATIONAL, player.playerState);
+        assertEquals(PlayerState.OPERATIONAL, player.getPlayerState());
     }
 
 }

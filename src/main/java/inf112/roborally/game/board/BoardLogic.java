@@ -77,7 +77,7 @@ public class BoardLogic {
     private void respawnRobots() {
         for (Player player : players) {
             if (player.isDestroyed()) {
-                if (player.outOfLives()) player.playerState = PlayerState.GAME_OVER;
+                if (player.outOfLives()) player.setPlayerState(PlayerState.GAME_OVER);
                 else player.respawn();
             }
         }
@@ -86,7 +86,7 @@ public class BoardLogic {
     public void removeDeadRobots() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            if (player.playerState == PlayerState.GAME_OVER) {
+            if (player.getPlayerState() == PlayerState.GAME_OVER) {
                 System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
@@ -117,8 +117,8 @@ public class BoardLogic {
     public void checkIfReady() {
         if (allPlayersReady()) {
             for (Player player : players) {
-                if (player.playerState == PlayerState.READY) //true if submit button is pressed
-                    player.playerState = PlayerState.OPERATIONAL;
+                if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
+                    player.setPlayerState(PlayerState.OPERATIONAL);
             }
             state = ROUND;
         }
@@ -236,7 +236,7 @@ public class BoardLogic {
             while (!ai.getRegisters().isFull()) {
                 ai.getRegisters().placeCard(0);
             }
-            ai.playerState = PlayerState.READY;
+            ai.setPlayerState(PlayerState.READY);
         }
     }
 

@@ -84,7 +84,7 @@ public class LaserTestScreen implements Screen {
 
     private void allRobotsFire() {
         for (Player robot : board.getPlayers()){
-            robot.laserCannon.fire(board);
+            robot.getLaserCannon().fire(board);
         }
     }
 

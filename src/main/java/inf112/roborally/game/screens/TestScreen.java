@@ -78,7 +78,7 @@ public class TestScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             player.takeDamage();
             player.update();
-            System.out.println(player.playerState);
+            System.out.println(player.getPlayerState());
             player.respawn();
         }
 
