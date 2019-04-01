@@ -55,6 +55,9 @@ public class EndGameScreen extends AbstractScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            game.newGame();
+        }
     }
 
     public void addWinner(Player winner) {
