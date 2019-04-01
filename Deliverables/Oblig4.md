@@ -18,7 +18,7 @@ In this cycle we have also done a lot of refactoring, which has also made it eas
 ## Part 2: Requirements
 - We have finished everything on the list, except option cards, multiplayer and a "smart" AI.
 The reason we chose to finish the other requirements on the list, is because we found them more important, and as a core part of the game.
- - To see tasks completed this iteration, check the "Done in Mandatory 4" column on the GitHub project board
+ - To see tasks completed this iteration, check the "Done in Mandatory 4" column on the GitHub project board.
 
 
     
