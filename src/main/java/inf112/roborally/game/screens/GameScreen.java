@@ -131,7 +131,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        System.out.println("disposing game screen");
+        System.out.println("Disposing game screen");
         background.dispose();
 
         board.dispose();

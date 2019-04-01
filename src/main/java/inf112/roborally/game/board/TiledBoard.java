@@ -53,7 +53,7 @@ public abstract class TiledBoard {
     }
 
     public void dispose() {
-        System.out.println("disposing board");
+        System.out.println("Disposing board");
         map.dispose();
 
     }

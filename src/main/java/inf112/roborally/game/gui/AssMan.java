@@ -206,7 +206,7 @@ public class AssMan{
     }
 
     public void dispose(){
-        System.out.println("disposing asset manager");
+        System.out.println("Disposing asset manager");
         manager.clear();
     }
 }

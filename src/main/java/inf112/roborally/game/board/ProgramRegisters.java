@@ -30,10 +30,10 @@ public class ProgramRegisters implements IProgramRegisters {
     public int placeCard(int cardPosition) {
         if (cardPosition < 0 || cardPosition >= player.getHand().size()) {
             throw new IndexOutOfBoundsException(
-                    "Card position: " + cardPosition
-                            + ". \n Number of cards in hand: "
+                            "Card position: "
+                            + cardPosition
+                            + "\n Number of cards in hand: "
                             + player.getHand().size()
-                            + ". Card position should be one less than number of cards in hand. "
                             + "\n Player name: "
                             + player.getName()
                             + "\n Player damage: "
