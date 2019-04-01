@@ -60,8 +60,6 @@ public class EndGameScreen extends AbstractScreen {
 
     public void addWinner(Player winner) {
         this.winner = winner;
-        // Scale the sprite of the winning player, to get him big enough
-//        winner.scaleSize(10.0f);
         // Set player to the proper position
         //TODO Instead of manually input the x and y here, find a way to use width/2 and height/2 or something like that
         winner.moveToPosition(new Position(22, 15));
