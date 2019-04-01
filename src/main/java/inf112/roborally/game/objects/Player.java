@@ -69,7 +69,7 @@ public class Player extends MovableGameObject implements Comparable {
         playerState = OPERATIONAL;
         hand = new PlayerHand(this);
         registers = new ProgramRegisters(this);
-        backup = new Backup(gthis);
+        backup = new Backup(this);
         laserCannon = new LaserCannon(this);
     }
 

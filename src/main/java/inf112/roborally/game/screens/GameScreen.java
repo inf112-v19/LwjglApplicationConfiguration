@@ -27,11 +27,10 @@ public class GameScreen implements Screen {
     private final Hud hud;
     private final GameLogic gameLogic;
     private final Board board;
+    public ArrayList<Animation> animations;
     private Background background;
     private GameMusic music;
     private boolean testMap = false;
-
-    public ArrayList<Animation> animations;
 
 
     public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions) {
@@ -39,12 +38,10 @@ public class GameScreen implements Screen {
         if (!testMap) {
             if (flagPositions != null) {
                 board = new VaultBoard(flagPositions);
-            }
-            else {
+            } else {
                 board = new VaultBoard();
             }
-        }
-        else {
+        } else {
             board = new TestBoard();
         }
         addPlayersToBoard(robotChoiceIndex);
@@ -53,7 +50,7 @@ public class GameScreen implements Screen {
         hud.createButtons();
         System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud, game);
-//        new Thread(gameLogic).start();
+
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
         music.play();
@@ -78,7 +75,7 @@ public class GameScreen implements Screen {
             if (index >= n) {
                 index = 0;
             }
-            namebuilder.append(Integer.toString(i + 1));
+            namebuilder.append((i + 1));
             board.addPlayer(new Player(namebuilder.toString(), filepaths[index], NORTH, board));
             namebuilder.deleteCharAt(6); // Delete the last character, which is the player number
             index++;
