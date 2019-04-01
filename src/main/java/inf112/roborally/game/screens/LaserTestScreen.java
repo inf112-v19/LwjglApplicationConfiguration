@@ -38,7 +38,7 @@ public class LaserTestScreen implements Screen {
             board.lasersFire();
             updateAllRobots();
         }
-        if (Gdx.input.isKeyJustPressed((Input.Keys.N))) {
+        if (Gdx.input.isKeyJustPressed((Input.Keys.W))) {
             rotateAllRobot(Direction.NORTH);
             System.out.println("Press Enter to fire lasers");
             System.out.println("When facing north");
@@ -48,15 +48,18 @@ public class LaserTestScreen implements Screen {
             System.out.println("Press Enter to fire lasers");
 
         }
-        if (Gdx.input.isKeyJustPressed((Input.Keys.W))) {
+        if (Gdx.input.isKeyJustPressed((Input.Keys.A))) {
             rotateAllRobot(Direction.WEST);
             System.out.println("Press Enter to fire lasers");
 
         }
-        if (Gdx.input.isKeyJustPressed((Input.Keys.E))) {
+        if (Gdx.input.isKeyJustPressed((Input.Keys.D))) {
             rotateAllRobot(Direction.EAST);
             System.out.println("Press Enter to fire lasers");
+        }
 
+        if (Gdx.input.isKeyJustPressed((Input.Keys.B))) {
+            game.setScreen(game.settingsScreen);
         }
 
         float r = 10 / 255f;

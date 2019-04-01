@@ -61,6 +61,7 @@ public class RoboRallyGame extends Game {
         assMan = new AssMan();
         assMan.load();
         assMan.manager.finishLoading();
+        AIvsAI = false;
 
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);
@@ -141,7 +142,7 @@ public class RoboRallyGame extends Game {
             screenBefore.dispose();
         }
         batch.dispose();
-//        testScreen.dispose();
+        testScreen.dispose();
         menuScreen.dispose();
         assMan.dispose();
         // It might not been made yet
