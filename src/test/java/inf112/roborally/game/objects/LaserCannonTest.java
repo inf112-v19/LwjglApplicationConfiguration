@@ -38,7 +38,7 @@ public class LaserCannonTest {
     @Test
     public void lasersShotsDoNotPenetrateRobots(){
         player1.setDirection(Direction.EAST);
-        player1.laserCannon.fire(players);
+        player1.getLaserCannon().fire(players);
         assertEquals(0, player2.getDamage());
         assertEquals(1, player3.getDamage());
     }
@@ -53,7 +53,7 @@ public class LaserCannonTest {
         // Player 1 has a robot in every direction
 
         player1.setDirection(Direction.NORTH);
-        player1.laserCannon.fire(players);
+        player1.getLaserCannon().fire(players);
         assertEquals(0, player1.getDamage());
         assertEquals(0, player2.getDamage());
         assertEquals(0, player3.getDamage());
@@ -61,7 +61,7 @@ public class LaserCannonTest {
         assertEquals(1, player5.getDamage());
 
         player1.setDirection(Direction.WEST);
-        player1.laserCannon.fire(players);
+        player1.getLaserCannon().fire(players);
         assertEquals(0, player1.getDamage());
         assertEquals(1, player2.getDamage());
         assertEquals(0, player3.getDamage());
@@ -69,7 +69,7 @@ public class LaserCannonTest {
         assertEquals(1, player5.getDamage());
 
         player1.setDirection(Direction.SOUTH);
-        player1.laserCannon.fire(players);
+        player1.getLaserCannon().fire(players);
         assertEquals(0, player1.getDamage());
         assertEquals(1, player2.getDamage());
         assertEquals(1, player3.getDamage());
@@ -77,7 +77,7 @@ public class LaserCannonTest {
         assertEquals(1, player5.getDamage());
 
         player1.setDirection(Direction.EAST);
-        player1.laserCannon.fire(players);
+        player1.getLaserCannon().fire(players);
         assertEquals(0, player1.getDamage());
         assertEquals(1, player2.getDamage());
         assertEquals(1, player3.getDamage());

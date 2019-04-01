@@ -22,9 +22,9 @@ public class Player extends MovableGameObject implements Comparable {
     private static final int MAX_LIVES = 3;
 
     public boolean wantsToPowerDown;
-    public PlayerState playerState;
-    public LaserCannon laserCannon;
 
+    private PlayerState playerState;
+    private LaserCannon laserCannon;
     private String name;
     private int lives;
     private int damage;
@@ -237,7 +237,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void destroy() {
-        if(isDestroyed()) return;
+        if (isDestroyed()) return;
 
         damage = MAX_DAMAGE;
         playerState = DESTROYED;
@@ -311,12 +311,30 @@ public class Player extends MovableGameObject implements Comparable {
         return registers;
     }
 
+    public PlayerState getPlayerState() {
+        return playerState;
+    }
+
+    public void setPlayerState(PlayerState playerState) {
+        if(this.playerState == GAME_OVER){
+            System.out.println("Can not set player state when player state is: " + playerState);
+            return;
+        }
+
+        this.playerState = playerState;
+    }
+
+    public LaserCannon getLaserCannon() {
+        return laserCannon;
+    }
+
     public GameSound getSoundFromPlayer(int index) {
         if (index == 2) {
             screamed = true;
         }
         return allPlayerSounds[index];
     }
+
 
     @Override
     public boolean equals(Object other) {
@@ -359,4 +377,6 @@ public class Player extends MovableGameObject implements Comparable {
     public PlayerHand getHand() {
         return hand;
     }
+
+
 }

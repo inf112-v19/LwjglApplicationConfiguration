@@ -18,10 +18,9 @@ public class BoardLogic {
     protected GameState state;
 
     protected ArrayList<Player> players;
-    private ArrayList<Player> aiBots;
-
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
+    private ArrayList<Player> aiBots;
 
     public BoardLogic(ArrayList<Player> players) {
         this.players = players;
@@ -77,7 +76,7 @@ public class BoardLogic {
     private void respawnRobots() {
         for (Player player : players) {
             if (player.isDestroyed()) {
-                if (player.outOfLives()) player.playerState = PlayerState.GAME_OVER;
+                if (player.outOfLives()) player.setPlayerState(PlayerState.GAME_OVER);
                 else player.respawn();
             }
         }
@@ -86,7 +85,7 @@ public class BoardLogic {
     public void removeDeadRobots() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            if (player.playerState == PlayerState.GAME_OVER) {
+            if (player.getPlayerState() == PlayerState.GAME_OVER) {
                 System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
@@ -117,8 +116,8 @@ public class BoardLogic {
     public void checkIfReady() {
         if (allPlayersReady()) {
             for (Player player : players) {
-                if (player.playerState == PlayerState.READY) //true if submit button is pressed
-                    player.playerState = PlayerState.OPERATIONAL;
+                if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
+                    player.setPlayerState(PlayerState.OPERATIONAL);
             }
             state = ROUND;
         }
@@ -144,8 +143,7 @@ public class BoardLogic {
         if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
             try {
                 Thread.sleep(200);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -157,8 +155,7 @@ public class BoardLogic {
         }
         try {
             Collections.sort(players);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new NullPointerException("AIRobots: " + aiBots.size() + "\n Players: " + players.size());
         }
     }
@@ -199,7 +196,9 @@ public class BoardLogic {
     }
 
     protected void endGame() {
-        System.out.println("Game Over! " + checkIfAPlayerHasWon().getName() + " won the game.");
+        System.out.println("Game Over! "
+                + checkIfAPlayerHasWon().getName()
+                + " won the game.");
     }
 
 
@@ -236,7 +235,7 @@ public class BoardLogic {
             while (!ai.getRegisters().isFull()) {
                 ai.getRegisters().placeCard(0);
             }
-            ai.playerState = PlayerState.READY;
+            ai.setPlayerState(PlayerState.READY);
         }
     }
 

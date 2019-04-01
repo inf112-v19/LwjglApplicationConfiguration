@@ -16,8 +16,7 @@ public class PlayerHand {
     public void receiveCard(ProgramCard programCard) {
         if (programCard == null) {
             throw new NullPointerException("Trying to add a programCard that has value null");
-        }
-        else if (cardsInHand.size() == ProgramRegisters.MAX_NUMBER_OF_CARDS) {
+        } else if (cardsInHand.size() == ProgramRegisters.MAX_NUMBER_OF_CARDS) {
             System.out.println(player.getName() + " can not receive more cards");
             return;
         }
