@@ -8,13 +8,12 @@ import inf112.roborally.game.gui.AssMan;
 
 public class SettingsScreen extends AbstractScreen {
 
+    //Stage for holding actors.
+    public Stage stage;
     // Just a local variable to let the settings screen keep track of whether or
     // not the music is muted
     private boolean musicIsMuted;
     private RoboRallyGame game;
-
-    //Stage for holding actors.
-    public Stage stage;
 
 
     public SettingsScreen(RoboRallyGame game) {
@@ -41,44 +40,39 @@ public class SettingsScreen extends AbstractScreen {
     }
 
     private void handleInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             game.settingsScreen.dispose();
 
-            if(game.getScreenBefore() == game.gameScreen){
+            if (game.getScreenBefore() == game.gameScreen) {
                 game.setScreen(game.gameScreen);
                 System.out.println("Key B or Escape is pressed, going back to the GameScreen");
-            }
-            else if(game.getScreenBefore() == game.testScreen){
+            } else if (game.getScreenBefore() == game.testScreen) {
                 game.setScreen(game.testScreen);
                 System.out.println("Key B or Escape is pressed, going back to the TestScreen");
             }
-        }
-
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             if (!musicIsMuted) {
                 game.gameScreen.getMusic().mute();
                 game.gameScreen.getBoard().killTheSound();
                 musicIsMuted = true;
                 System.out.println("Muted the music from the settings screen");
-            }
-            else {
+            } else {
                 game.gameScreen.getMusic().play();
                 game.gameScreen.getBoard().restartTheSound();
                 musicIsMuted = false;
                 System.out.println("Started the music from the settings screen");
             }
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             game.newGame();
         }
     }
 
     @Override
-    public void show(){
+    public void show() {
         Gdx.input.setInputProcessor(stage);
     }
 
-    public void dispose(){
+    public void dispose() {
         stage.dispose();
     }
 

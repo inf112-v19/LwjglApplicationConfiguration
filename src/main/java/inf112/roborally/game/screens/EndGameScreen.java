@@ -12,12 +12,11 @@ import inf112.roborally.game.objects.Position;
 
 public class EndGameScreen extends AbstractScreen {
 
+    //Stage for holding actors.
+    public Stage stage;
     private Player winner;
     private Sprite winnerSprite;
     private int rotateTimer;
-
-    //Stage for holding actors.
-    public Stage stage;
 
     public EndGameScreen(RoboRallyGame game) {
         super(game, AssMan.ENDGAME_BACKGROUND.fileName);
@@ -60,6 +59,7 @@ public class EndGameScreen extends AbstractScreen {
 
     public void addWinner(Player winner) {
         this.winner = winner;
+
         // Set player to the proper position
         //TODO Instead of manually input the x and y here, find a way to use width/2 and height/2 or something like that
         winner.moveToPosition(new Position(22, 15));

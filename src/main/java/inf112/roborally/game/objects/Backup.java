@@ -15,8 +15,8 @@ public class Backup extends GameObject {
      * @param x position x
      * @param y position y
      */
-    public Backup(int x, int y, Player player) {
-        super(x, y, AssMan.BACKUP.fileName);
+    public Backup(Player player) {
+        super(player.getX(), player.getY(), AssMan.BACKUP.fileName);
         this.player = player;
     }
 

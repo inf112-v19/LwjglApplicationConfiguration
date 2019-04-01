@@ -13,13 +13,13 @@ public class LaserTestScreen implements Screen {
     RoboRallyGame game;
     Board board;
 
-    public LaserTestScreen(RoboRallyGame game){
+    public LaserTestScreen(RoboRallyGame game) {
         this.game = game;
         board = new Board();
         board.createBoard(RoboRallyGame.LASER_TEST_MAP);
         board.findLasers();
 
-        for(int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++){
+        for (int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++) {
             Player testBot = new Player("testBot" + i, "assets/robot/claptrapRefined.png", Direction.NORTH, board);
             board.addPlayer(testBot);
         }
@@ -33,27 +33,27 @@ public class LaserTestScreen implements Screen {
 
     @Override
     public void render(float v) {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             board.robotLasersFire();
             board.lasersFire();
             updateAllRobots();
         }
-        if (Gdx.input.isKeyJustPressed((Input.Keys.N))){
+        if (Gdx.input.isKeyJustPressed((Input.Keys.N))) {
             rotateAllRobot(Direction.NORTH);
             System.out.println("Press Enter to fire lasers");
             System.out.println("When facing north");
         }
-        if (Gdx.input.isKeyJustPressed((Input.Keys.S))){
+        if (Gdx.input.isKeyJustPressed((Input.Keys.S))) {
             rotateAllRobot(Direction.SOUTH);
             System.out.println("Press Enter to fire lasers");
 
         }
-        if (Gdx.input.isKeyJustPressed((Input.Keys.W))){
+        if (Gdx.input.isKeyJustPressed((Input.Keys.W))) {
             rotateAllRobot(Direction.WEST);
             System.out.println("Press Enter to fire lasers");
 
         }
-        if (Gdx.input.isKeyJustPressed((Input.Keys.E))){
+        if (Gdx.input.isKeyJustPressed((Input.Keys.E))) {
             rotateAllRobot(Direction.EAST);
             System.out.println("Press Enter to fire lasers");
 
@@ -74,19 +74,19 @@ public class LaserTestScreen implements Screen {
     }
 
     private void rotateAllRobot(Direction dir) {
-        for(Player rob : board.getPlayers()) {
+        for (Player rob : board.getPlayers()) {
             rob.setDirection(dir);
             rob.updateSprite();
         }
     }
 
     private void allRobotsFire() {
-        for (Player robot : board.getPlayers()){
+        for (Player robot : board.getPlayers()) {
             robot.getLaserCannon().fire(board);
         }
     }
 
-    private void updateAllRobots(){
+    private void updateAllRobots() {
         for (Player p : board.getPlayers()) {
             p.updateSprite();
         }

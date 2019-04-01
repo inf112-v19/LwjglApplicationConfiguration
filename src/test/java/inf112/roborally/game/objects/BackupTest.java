@@ -117,15 +117,6 @@ public class BackupTest {
     }
 
     @Test
-    public void backupSeparatelyCreatedIsNotMovedToPlayerPositionAtCreation(){
-        Player player2 = new Player(3,3, 3);
-        Backup backup2 = new Backup(5, 5, player2);
-        assertNotEquals(player2.position, backup2.position);
-        //Should we make Backup constructor only take in player and use player x and y pos? The Player constructor
-        //for testing already does this. This test will fail in that case.
-    }
-
-    @Test
     public void newBackupAtSameLocationIsDifferent(){
         Player player2 = new Player(0, 0, 3);
         Backup backup2 = player2.getBackup();

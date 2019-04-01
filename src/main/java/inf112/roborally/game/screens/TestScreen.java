@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.gui.AssMan;
@@ -30,7 +29,7 @@ public class TestScreen implements Screen {
 
         player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
-        for(int i = 0; i < player.getCardLimit(); i++){
+        for (int i = 0; i < player.getCardLimit(); i++) {
             player.getHand().receiveCard(stack.pop());
         }
 
@@ -63,7 +62,6 @@ public class TestScreen implements Screen {
 
         hud.createButtons();
         hud.draw();
-
     }
 
     private void handleInput() {
