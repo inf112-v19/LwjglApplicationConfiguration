@@ -50,6 +50,8 @@ public class BoardLogic {
             case BOARD_MOVES:
                 boardMoves();
                 break;
+            case GAME_OVER:
+                endGame();
         }
     }
 
@@ -165,14 +167,7 @@ public class BoardLogic {
         for (Player player : players) {
             player.getRegisters().executeCard(phase);
             updatePlayers();
-            if (!players.get(0).isDebuggingActive()) {
-                try {
-                    Thread.sleep(500);
-                }
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+//            sleepThread();
         }
     }
 

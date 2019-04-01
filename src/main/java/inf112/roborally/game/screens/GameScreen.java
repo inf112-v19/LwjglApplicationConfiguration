@@ -53,7 +53,7 @@ public class GameScreen implements Screen {
         hud.createButtons();
         System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud, game);
-        new Thread(gameLogic).start();
+//        new Thread(gameLogic).start();
         // Music
         music = new GameMusic(RoboRallyGame.MAIN_THEME);
         music.play();
@@ -128,6 +128,7 @@ public class GameScreen implements Screen {
         game.cameraListener.updateZoom();
         background.update(game.dynamicCamera);
         gameLogic.handleInput();
+        gameLogic.update();
     }
 
 

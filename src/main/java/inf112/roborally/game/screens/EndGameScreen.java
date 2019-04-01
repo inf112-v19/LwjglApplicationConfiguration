@@ -16,7 +16,7 @@ public class EndGameScreen extends AbstractScreen {
     private Sprite winnerSprite;
     private int rotateTimer;
 
-     //Stage for holding actors.
+    //Stage for holding actors.
     public Stage stage;
 
     public EndGameScreen(RoboRallyGame game) {
@@ -43,7 +43,7 @@ public class EndGameScreen extends AbstractScreen {
     // Rotate the player, because he is celebrating!
     private void updateRotation() {
         rotateTimer++;
-        if(rotateTimer > 30) {
+        if (rotateTimer > 30) {
             winner.rotate(Rotate.RIGHT);
             winner.updateSprite();
             winnerSprite = winner.getSprite();
@@ -70,7 +70,7 @@ public class EndGameScreen extends AbstractScreen {
     }
 
     @Override
-    public void show(){
+    public void show() {
         Gdx.input.setInputProcessor(stage);
     }
 
