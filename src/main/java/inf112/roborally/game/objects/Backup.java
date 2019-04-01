@@ -25,7 +25,7 @@ public class Backup extends GameObject {
      * Need to call this function to initialize the sprite.
      * Removed from constructor to make tests work.
      */
-    public void setupSprite(){
+    public void setupSprite() {
         makeSprite();
         updateSprite();
         sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
@@ -35,7 +35,7 @@ public class Backup extends GameObject {
         player.moveToPosition(this.position);
     }
 
-    public void moveToPlayerPosition(){
+    public void moveToPlayerPosition() {
         moveToPosition(player.position);
         updateSprite();
     }
