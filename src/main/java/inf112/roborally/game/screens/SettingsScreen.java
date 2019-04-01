@@ -49,7 +49,11 @@ public class SettingsScreen extends AbstractScreen {
             } else if (game.getScreenBefore() == game.testScreen) {
                 game.setScreen(game.testScreen);
                 System.out.println("Key B or Escape is pressed, going back to the TestScreen");
+            } else if (game.getScreenBefore() == game.laserTestScreen) {
+                game.setScreen(game.laserTestScreen);
+                System.out.println("Key B or Escape is pressed, going back to the LaserTestScreen");
             }
+
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             if (!musicIsMuted) {
                 game.gameScreen.getMusic().mute();
