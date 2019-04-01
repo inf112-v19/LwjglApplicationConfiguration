@@ -23,7 +23,6 @@ import static inf112.roborally.game.board.TiledTools.getValue;
 public class Board extends TiledBoard {
 
     protected ArrayList<Player> players;
-    protected ArrayList<RepairSite> repairSites;
     protected ArrayList<Flag> flags;
     protected ArrayList<LaserAnimation> lasers;
     protected ArrayList<StartPosition> startPlates;
@@ -34,7 +33,6 @@ public class Board extends TiledBoard {
 
     public Board() {
         players = new ArrayList<>();
-        repairSites = new ArrayList<>();
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
         startPlates = new ArrayList<>();
@@ -207,7 +205,6 @@ public class Board extends TiledBoard {
 
     public void drawGameObjects(SpriteBatch batch) {
         drawBackup(batch);
-        drawList(repairSites, batch);
         drawList(players, batch);
         drawList(lasers, batch);
         drawList(flags, batch);
