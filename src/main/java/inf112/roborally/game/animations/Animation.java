@@ -16,7 +16,7 @@ public abstract class Animation extends GameObject {
 
     protected abstract void update();
 
-    public boolean hasFinished(){
+    public boolean hasFinished() {
         return lifetime < stateTimer;
     }
 }

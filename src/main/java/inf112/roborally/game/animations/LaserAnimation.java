@@ -1,9 +1,8 @@
 package inf112.roborally.game.animations;
 
-import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
-
 import inf112.roborally.game.Main;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.objects.MovableGameObject;
@@ -41,7 +40,7 @@ public class LaserAnimation extends MovableGameObject {
     }
 
     @Override
-    public void draw(SpriteBatch batch){
+    public void draw(SpriteBatch batch) {
         super.draw(batch);
         updateSprite();
     }

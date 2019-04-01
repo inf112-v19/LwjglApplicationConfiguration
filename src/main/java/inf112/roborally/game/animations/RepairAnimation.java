@@ -31,21 +31,20 @@ public class RepairAnimation extends Animation {
 
         if (rotation < -45) {
             direction = 1;
-        }
-        else if (rotation > 45) {
+        } else if (rotation > 45) {
             direction = -1;
         }
 
         rotation = rotation + 5 * direction;
         sprite.setRotation(rotation);
 
-        direction+= 0.052f;
+        direction += 0.052f;
         stateTimer++;
     }
 
     @Override
-    public void updateSprite(){
+    public void updateSprite() {
         super.updateSprite();
-        sprite.setPosition(sprite.getX()-3, sprite.getY() + 7);
+        sprite.setPosition(sprite.getX() - 3, sprite.getY() + 7);
     }
 }

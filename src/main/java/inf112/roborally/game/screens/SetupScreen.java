@@ -102,8 +102,6 @@ public class SetupScreen extends AbstractScreen {
 
     private void createMapForPlacingFlags() {
         state = SetupState.PLACINGFLAGS;
-        System.out.printf("Game size BEFORE scaling window: WIDTH=% d, HEIGHT=%d%n",
-                Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         // One tile here, inn full screen, is approx. 90x90
         updateBackground(AssMan.SETUP_SETUP_SCREEN_PLACE_FLAGS.fileName);
@@ -147,7 +145,6 @@ public class SetupScreen extends AbstractScreen {
     private void handleInput() {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
-            System.out.println("Key T pressed in SetupScreen, moving further");
             game.createGameScreen(); // Choose the standard skin index
             game.setScreen(game.gameScreen);
             dispose();
@@ -160,10 +157,6 @@ public class SetupScreen extends AbstractScreen {
                 if (Gdx.input.justTouched()) {
                     float mouseX = Gdx.input.getX();
                     float mouseY = Gdx.input.getY();
-                    System.out.printf("Mouse just pressed, at coordinates x = %.2f and y = %.2f",
-                            mouseX, mouseY);
-                    System.out.print("\n");
-
 
                     if (mouseX >= mapStartX) {
                         Position clickedPos = convertMouseClickIntoMapPosition(mouseX, mouseY);
@@ -189,8 +182,6 @@ public class SetupScreen extends AbstractScreen {
                         }
                         flagClickedPositions.add(clickedPos);
 
-                        System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
-                                clickedPos.getX(), clickedPos.getY());
                         flags.remove(0); // Remove a flag from the left side
 
                         // Because the map we use has 4 more tiles to the left (where we find the starting positions,
@@ -201,11 +192,10 @@ public class SetupScreen extends AbstractScreen {
                             state = SetupState.DONE;
                         }
 
-                    } else {
-                        System.out.println("Mouse clicked outside of the map");
                     }
-
-                    System.out.println("-------------------------------------------------------");
+                    else {
+                        System.out.println("Please click inside the map!");
+                    }
                 }
                 break;
             case DONE:
