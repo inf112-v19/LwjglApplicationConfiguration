@@ -191,13 +191,6 @@ public class SetupScreen extends AbstractScreen {
 
                         System.out.printf("Mouse clicked INSIDE the map.%nConverts to the map Position (%d,%d)%n",
                                 clickedPos.getX(), clickedPos.getY());
-//                        Sprite check = new Sprite(new Texture("assets/screens/setupscreen/checkflag.png"));
-//                        float newX = background.getWidth() - ((N_TILES - clickedPos.getX()) * TILE_SIZE_IN_FULLSCRREEN);
-//                        float newY = background.getHeight() - ((N_TILES - clickedPos.getY()) * TILE_SIZE_IN_FULLSCRREEN);
-//                        check.setPosition(newX, newY);
-//                        check.scale(-0.8f);
-//                        flagCheck.add(check);
-
                         flags.remove(0); // Remove a flag from the left side
 
                         // Because the map we use has 4 more tiles to the left (where we find the starting positions,

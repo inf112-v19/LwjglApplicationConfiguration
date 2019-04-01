@@ -76,7 +76,7 @@ public class LaserTestScreen implements Screen {
     private void rotateAllRobot(Direction dir) {
         for (Player rob : board.getPlayers()) {
             rob.setDirection(dir);
-            rob.update();
+            rob.updateSprite();
         }
     }
 
@@ -88,7 +88,7 @@ public class LaserTestScreen implements Screen {
 
     private void updateAllRobots() {
         for (Player p : board.getPlayers()) {
-            p.update();
+            p.updateSprite();
         }
     }
 

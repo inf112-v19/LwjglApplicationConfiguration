@@ -83,7 +83,6 @@ public class Player extends MovableGameObject implements Comparable {
         debugging = true;
     }
 
-
     public void createSounds() {
         allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
         allPlayerSounds[1] = new GameSound(AssMan.MUSIC_PLAYER_REPAIR.fileName);
@@ -145,10 +144,6 @@ public class Player extends MovableGameObject implements Comparable {
         }
     }
 
-    public void update() {
-        updateSprite();
-    }
-
     /**
      * @return true if player was respawned
      */
@@ -187,7 +182,6 @@ public class Player extends MovableGameObject implements Comparable {
         System.out.println(name + " powers up");
     }
 
-
     /**
      * Repairs all damage dealt to the player and unlocks all locked registers.
      */
@@ -219,8 +213,6 @@ public class Player extends MovableGameObject implements Comparable {
                 registers.lock();
             }
         }
-
-
         if (damage == MAX_DAMAGE) {
             lives--;
             playerState = DESTROYED;
@@ -316,11 +308,13 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void setPlayerState(PlayerState playerState) {
-        if(this.playerState == GAME_OVER){
+        if (this.playerState == GAME_OVER) {
             System.out.println("Can not set player state when player state is: " + playerState);
             return;
         }
-
+        else if (this.playerState == DESTROYED) {
+            System.out.println("Only respawn method can change the state of a destroyed robot");
+        }
         this.playerState = playerState;
     }
 
@@ -335,7 +329,6 @@ public class Player extends MovableGameObject implements Comparable {
         return allPlayerSounds[index];
     }
 
-
     @Override
     public boolean equals(Object other) {
         if (other.getClass() != this.getClass())
@@ -344,8 +337,6 @@ public class Player extends MovableGameObject implements Comparable {
         return this.name.equals(((Player) other).name);
     }
 
-
-    // TODO: TEST THIS
     @Override
     public int compareTo(Object o) {
         if (o == null) return 0;
@@ -377,6 +368,4 @@ public class Player extends MovableGameObject implements Comparable {
     public PlayerHand getHand() {
         return hand;
     }
-
-
 }
