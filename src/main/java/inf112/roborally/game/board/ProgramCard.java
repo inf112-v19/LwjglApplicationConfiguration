@@ -24,10 +24,10 @@ public class ProgramCard implements Comparable {
      * Creates a program card.
      * Need to call {@link #setUpSkin()} once after creation to be able to draw the card.
      *
-     * @param rotate which rotation the card should have
+     * @param rotate       which rotation the card should have
      * @param moveDistance how many steps to move
-     * @param priority card priority
-     * @param type which type of card it is, e.g. "move1" or "rotateLeft"
+     * @param priority     card priority
+     * @param type         which type of card it is, e.g. "move1" or "rotateLeft"
      */
     public ProgramCard(Rotate rotate, int moveDistance, int priority, String type) {
         this.rotate = rotate;
@@ -36,48 +36,12 @@ public class ProgramCard implements Comparable {
         this.type = type;
     }
 
-    public void setUpSkin(){
-        atlas = new TextureAtlas("assets/cards/imageButton.atlas");
-        skin = new Skin();
-        skin.addRegions(atlas);
-        style = new ImageTextButton.ImageTextButtonStyle();
-        style.font = new BitmapFont();
-        style.up = skin.getDrawable(type);
-    }
-
-    public ImageTextButton.ImageTextButtonStyle getStyle(){
-        return this.style;
-    }
-
-    public void dispose(){
-        atlas.dispose();
-        skin.dispose();
-        style.font.dispose();
-    }
-
-    public boolean isRotate(){
-        return rotate != Rotate.NONE;
-    }
-
-    public int getMoveDistance() {
-        return this.moveDistance;
-    }
-
-    public Rotate getRotate() {
-        return this.rotate;
-    }
-
-    public int getPriority() {
-        return this.priority;
-    }
-
     public static Stack<ProgramCard> makeProgramCardDeck() {
         Stack<ProgramCard> cardStack = new Stack<>();
-
         // Adding cards that rotate:
         for (int priority = 10; priority <= 60; priority += 10) {
             // 180
-            cardStack.push(new ProgramCard(Rotate.UTURN, 0, priority , "uTurn"));
+            cardStack.push(new ProgramCard(Rotate.UTURN, 0, priority, "uTurn"));
         }
         for (int priority = 80; priority <= 420; priority += 20) {
             // Right
@@ -114,9 +78,42 @@ public class ProgramCard implements Comparable {
         for (int i = 1; i < 27; i++) {
             testCardStack.push(new ProgramCard(Rotate.RIGHT, 0, i, "testCard"));
         }
-
-
         return testCardStack;
+    }
+
+    public void setUpSkin() {
+        atlas = new TextureAtlas("assets/cards/imageButton.atlas");
+        skin = new Skin();
+        skin.addRegions(atlas);
+        style = new ImageTextButton.ImageTextButtonStyle();
+        style.font = new BitmapFont();
+        style.up = skin.getDrawable(type);
+    }
+
+    public ImageTextButton.ImageTextButtonStyle getStyle() {
+        return this.style;
+    }
+
+    public void dispose() {
+        atlas.dispose();
+        skin.dispose();
+        style.font.dispose();
+    }
+
+    public boolean isRotate() {
+        return rotate != Rotate.NONE;
+    }
+
+    public int getMoveDistance() {
+        return this.moveDistance;
+    }
+
+    public Rotate getRotate() {
+        return this.rotate;
+    }
+
+    public int getPriority() {
+        return this.priority;
     }
 
     public String getType() {
@@ -138,10 +135,8 @@ public class ProgramCard implements Comparable {
                     s = "U turn,";
                     break;
             }
-        }
-        else
+        } else
             s = "Move " + moveDistance + ",";
-
         return s + " priority: " + priority;
     }
 
@@ -153,6 +148,5 @@ public class ProgramCard implements Comparable {
         if (this.getPriority() > other.getPriority())
             return -1;
         return 1;
-
     }
 }
