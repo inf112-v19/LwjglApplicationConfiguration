@@ -22,6 +22,7 @@ We have junit tests that make sure code is not broken when implementing new feat
 - Pressing 'L' will take you to the laser test screen.
 - Pressing 'A' will do the same as QuickPlay, but all the robots are 
 controlled by AI and you can sit back, relax, and watch the mayhem.
+- Pressing 'B' will take you to a testBoard where you can move around to make sure the board interacts how it shoudl with the player.
 
 ### GUI - How to do testing for the TestScreen:
 When running Main.java you will get prompted to 'PRESS ENTER'. Hitting 'T' instead will launch a test
