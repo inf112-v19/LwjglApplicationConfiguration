@@ -27,7 +27,7 @@ public class BoardLogic {
     public BoardLogic(ArrayList<Player> players) {
         this.players = players;
         aiBots = new ArrayList<>();
-        if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
+        if (players.get(0).isDebuggingActive() || ((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
             aiBots.add(players.get(0));
         for (int i = 1; i < players.size(); i++)
             aiBots.add(players.get(i));
@@ -137,12 +137,14 @@ public class BoardLogic {
         System.out.println("executing phase " + phase);
         sortPlayersByPriority();
         executeCards();
+        checkIfAPlayerHasWon();
+        phase++;
+        if(players.get(0).isDebuggingActive()) return;
+
         if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
             sleepThread(100);
         else
             sleepThread(500);
-        checkIfAPlayerHasWon();
-        phase++;
     }
 
     private void sleepThread(int millis) {
