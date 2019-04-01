@@ -81,13 +81,13 @@ public class BoardLogic {
         }
     }
 
-    private void removeDeadRobots() {
+    public void removeDeadRobots() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
             if (player.playerState == PlayerState.GAME_OVER) {
+                System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
-                System.out.println(player.getName() + " was removed.");
             }
         }
     }
@@ -105,7 +105,6 @@ public class BoardLogic {
     }
 
     private boolean allPlayersReady() {
-        removeDeadRobots();
         System.out.println("Players: " + players.size());
         for (Player player : players) {
             if (!player.isReady()) return false;
@@ -124,7 +123,6 @@ public class BoardLogic {
     }
 
     protected void doPhase() {
-        removeDeadRobots();
         if (phase >= 5) {
             phase = 0;
             state = BETWEEN_ROUNDS;
@@ -135,6 +133,12 @@ public class BoardLogic {
         System.out.println("executing phase " + phase);
         sortPlayersByPriority();
         executeCards();
+//        sleepThread();
+        checkIfAPlayerHasWon();
+        phase++;
+    }
+
+    private void sleepThread() {
         if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
             try {
                 Thread.sleep(200);
@@ -143,8 +147,6 @@ public class BoardLogic {
                 e.printStackTrace();
             }
         }
-        checkIfAPlayerHasWon();
-        phase++;
     }
 
     private void sortPlayersByPriority() {

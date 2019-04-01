@@ -97,7 +97,12 @@ public class GameLogic extends BoardLogic implements Runnable {
 
     @Override
     protected void boardMoves() {
-        board.boardMoves();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                board.boardMoves();
+            }
+        });
         super.boardMoves();
     }
 
