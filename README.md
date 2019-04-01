@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration.png)](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration)
-
 # LwjglApplicationConfiguration
 Group 5.1
 
@@ -7,8 +5,24 @@ Group 5.1
 [![Build Status](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration.png)](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration)
 
 # INF112 roborally game
-Much more than a simple skeleton with libgdx. 
-### Manual testing:
+Much more than a simple skeleton with libgdx.
+
+### How to run
+To run the game, run Main.java and follow the instructions.
+
+When running, you will first be taken to the menu screen. Here you have some options:
+- To play the game normaly either press 'Enter' for a quick game 
+where your skin has already been selected and flags have been placed.
+- Or press 'S' to select your desired skin and place flags where ever 
+your hearth desires. There is no option for multiplayer (yet).
+
+### How to test
+We have junit tests that make sure code is not broken when implementing new features. The menus screen also has some options for testing:
+- Pressing 'T' will take you to the GUI test screen.
+- Pressing 'L' will take you to the laser test screen.
+- Pressing 'A' will do the same as QuickPlay, but all the robots are 
+controlled by AI and you can sit back, relax, and watch the mayhem.
+
 ### GUI - How to do testing for the TestScreen:
 When running Main.java you will get prompted to 'PRESS ENTER'. Hitting 'T' instead will launch a test
 screen where you can test that ProgramCard and ProgramRegister GUI works as it should. Clicking the 
@@ -70,7 +84,6 @@ remove it from the register and return it to the player hand, if it is not locke
 ##### Walls stops the player:
  * Check that trying to move forward/backward into a wall will not let the player move through a wall.
 
-<<<<<<< HEAD
 
 ##### Players get hit by board laser:
  * Ending a phase in a laser should cause the robot to take damage. Should lose a life the player has taken
@@ -121,7 +134,7 @@ you want to use. After choosing a skin, click on the map that is to the right of
 a flag. After placing all three flags the game should start with your chosen skin and flag locations.
 
 Pressing 'T' instead of choosing skin and flag locations should start the game with the preset values.
-=======
+
 
 ##### Players get hit by board laser:
  * Ending a phase in a laser should cause the robot to take damage. Should lose a life the player has taken
