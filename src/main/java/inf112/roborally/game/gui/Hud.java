@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 
 
 public class Hud {

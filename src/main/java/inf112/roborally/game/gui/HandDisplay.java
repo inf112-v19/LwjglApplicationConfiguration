@@ -3,7 +3,7 @@ package inf112.roborally.game.gui;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 
 /**
  * A class for drawing all the cards that are in the player hand.

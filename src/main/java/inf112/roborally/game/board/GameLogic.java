@@ -6,7 +6,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 
 public class GameLogic extends BoardLogic implements Runnable {
     private final Hud hud;

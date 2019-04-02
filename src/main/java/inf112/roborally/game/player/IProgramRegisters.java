@@ -1,4 +1,6 @@
-package inf112.roborally.game.board;
+package inf112.roborally.game.player;
+
+import inf112.roborally.game.board.ProgramCard;
 
 import java.util.List;
 

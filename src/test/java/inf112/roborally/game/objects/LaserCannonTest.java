@@ -1,6 +1,7 @@
 package inf112.roborally.game.objects;
 
 import inf112.roborally.game.enums.Direction;
+import inf112.roborally.game.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 

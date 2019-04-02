@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 
 public class LaserTestScreen implements Screen {
     RoboRallyGame game;

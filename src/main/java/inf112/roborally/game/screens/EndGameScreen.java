@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.AssMan;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.Position;
 
 public class EndGameScreen extends AbstractScreen {

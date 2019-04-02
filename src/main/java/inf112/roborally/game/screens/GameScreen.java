@@ -12,7 +12,7 @@ import inf112.roborally.game.board.TestBoard;
 import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.sound.GameMusic;
 

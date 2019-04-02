@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;

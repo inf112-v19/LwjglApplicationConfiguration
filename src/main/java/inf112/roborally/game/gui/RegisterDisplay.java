@@ -13,10 +13,10 @@ import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.board.ProgramRegisters;
+import inf112.roborally.game.player.ProgramRegisters;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
 

@@ -11,7 +11,7 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.GameObject;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.StartPosition;
 
 import java.util.ArrayList;

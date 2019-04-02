@@ -2,7 +2,7 @@ package inf112.roborally.game.board;
 
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 

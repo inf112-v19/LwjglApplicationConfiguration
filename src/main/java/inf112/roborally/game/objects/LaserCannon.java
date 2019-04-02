@@ -1,6 +1,7 @@
 package inf112.roborally.game.objects;
 
 import inf112.roborally.game.board.Board;
+import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
 
