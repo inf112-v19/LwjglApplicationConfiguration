@@ -1,4 +1,4 @@
-package inf112.roborally.game.board;
+package inf112.roborally.game.tools;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 

@@ -1,4 +1,4 @@
-package inf112.roborally.game.gui;
+package inf112.roborally.game.tools;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;

@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import static inf112.roborally.game.board.TiledTools.cellContainsKey;
-import static inf112.roborally.game.board.TiledTools.getValue;
+import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
+import static inf112.roborally.game.tools.TiledTools.getValue;
 
 
 @SuppressWarnings("Duplicates")

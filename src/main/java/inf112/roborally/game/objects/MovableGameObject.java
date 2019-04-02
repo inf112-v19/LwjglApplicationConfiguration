@@ -4,13 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.TiledTools;
+import inf112.roborally.game.tools.TiledTools;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.player.Player;
 
-import static inf112.roborally.game.board.TiledTools.cellContainsKey;
-import static inf112.roborally.game.board.TiledTools.getValue;
+import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
+import static inf112.roborally.game.tools.TiledTools.getValue;
 
 public abstract class MovableGameObject extends GameObject {
     protected int rotationDegree;

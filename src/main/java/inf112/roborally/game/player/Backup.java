@@ -1,9 +1,8 @@
 package inf112.roborally.game.player;
 
 import inf112.roborally.game.Main;
-import inf112.roborally.game.gui.AssMan;
+import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.objects.GameObject;
-import inf112.roborally.game.player.Player;
 
 public class Backup extends GameObject {
 

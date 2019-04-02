@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.gui.AssMan;
+import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.Position;
 

@@ -17,6 +17,7 @@ import inf112.roborally.game.player.ProgramRegisters;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 

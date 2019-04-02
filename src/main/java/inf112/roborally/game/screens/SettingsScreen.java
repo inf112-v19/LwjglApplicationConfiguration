@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.gui.AssMan;
+import inf112.roborally.game.tools.AssMan;
 
 public class SettingsScreen extends AbstractScreen {
 

@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.SetupState;
-import inf112.roborally.game.gui.AssMan;
+import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.objects.Position;
 
 import java.util.ArrayList;
