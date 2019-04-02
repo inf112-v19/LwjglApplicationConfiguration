@@ -13,7 +13,9 @@ public class LaserCannon extends MovableGameObject {
         this.gunOwner = player;
     }
 
-    public void fire(Board board) {
+    public boolean fire(Board board) {
+        if(!gunOwner.isOperational()) return false;
+
         correctPositionBeforeFire();
         while (this.canGo(this.getDirection(), board.getWallLayer())) {
             this.moveInDirection(this.getDirection());
@@ -21,13 +23,14 @@ public class LaserCannon extends MovableGameObject {
                 if (this.position.equals(target.position)) {
                     target.takeDamage();
                     System.out.println(gunOwner.getName() + " shoots " + target.getName());
-                    return;
+                    return true;
                 }
             }
             if (outOfBounds(board)) {
-                return;
+                break;
             }
         }
+        return false;
     }
 
     /**
