@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
+import inf112.roborally.game.tools.AiRobo;
 import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class BoardLogic {
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
-                aiRobotsChooseCards();
+                AiRobo.makeDecisionsForRobos(aiBots);
                 checkIfReady();
                 break;
             case ROUND:
@@ -236,16 +237,6 @@ public class BoardLogic {
         ArrayList<ProgramCard> playerCards = player.returnCards();
         while (!playerCards.isEmpty()) {
             returnedProgramCards.push(playerCards.remove(0));
-        }
-    }
-
-    private void aiRobotsChooseCards() {
-        for (Player ai : aiBots) {
-            if (ai.outOfLives()) continue;
-            while (!ai.getRegisters().isFull()) {
-                ai.getRegisters().placeCard(0);
-            }
-            ai.setPlayerState(PlayerState.READY);
         }
     }
 
