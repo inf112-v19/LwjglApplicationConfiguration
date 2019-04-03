@@ -107,12 +107,16 @@ public class RoboRallyGame extends Game {
     }
 
     private void createPossibleFilepaths() {
-        nSkins = 4;
+        nSkins = 8;
         possibleRobotSkinFilepaths = new String[nSkins];
         possibleRobotSkinFilepaths[0] = AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName;
         possibleRobotSkinFilepaths[1] = AssMan.PLAYER_BUTLER_REFINED.fileName;
         possibleRobotSkinFilepaths[2] = AssMan.PLAYER_CLAPTRAP_REFINED.fileName;
         possibleRobotSkinFilepaths[3] = AssMan.PLAYER_CLAPTRAP_3000.fileName;
+        possibleRobotSkinFilepaths[4] = AssMan.NURSE_BOT.fileName;
+        possibleRobotSkinFilepaths[5] = AssMan.CAPTAIN_BOT.fileName;
+        possibleRobotSkinFilepaths[6] = AssMan.COP_BOT.fileName;
+        possibleRobotSkinFilepaths[7] = AssMan.WIZZARD_BOT.fileName;
     }
 
     public void newGame() {

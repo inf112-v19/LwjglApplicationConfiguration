@@ -20,7 +20,7 @@ public class LaserTestScreen implements Screen {
         board.findLasers();
 
         for (int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++) {
-            Player testBot = new Player("testBot" + i, "assets/robot/claptrapRefined.png", Direction.NORTH, board);
+            Player testBot = new Player("testBot" + i, "assets/robots/claptrapRefined.png", Direction.NORTH, board);
             board.addPlayer(testBot);
         }
         board.placePlayers();

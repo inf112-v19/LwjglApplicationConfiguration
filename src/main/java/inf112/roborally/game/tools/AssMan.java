@@ -31,19 +31,31 @@ public class AssMan {
 
     //Player skins
     public static final AssetDescriptor<Texture> PLAYER_BARTENDER_CLAPTRAP
-            = new AssetDescriptor<>("assets/robot/bartenderclaptrap.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/bartenderclaptrap.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_CLAPTRAP_REFINED
-            = new AssetDescriptor<>("assets/robot/claptrapRefined.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/claptrapRefined.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_BUTLER_REFINED
-            = new AssetDescriptor<>("assets/robot/butlerRefined.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/butlerRefined.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_CLAPTRAP_3000
-            = new AssetDescriptor<>("assets/robot/claptrap3000.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/claptrap3000.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_TVBOT
-            = new AssetDescriptor<>("assets/robot/tvBot.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/tvBot.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> NURSE_BOT
+            = new AssetDescriptor<>("assets/robots/NUR53_CP.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> CAPTAIN_BOT
+            = new AssetDescriptor<>("assets/robots/EMPR_TP.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> WIZZARD_BOT
+            = new AssetDescriptor<>("assets/robots/B34RD_TP.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> COP_BOT
+            = new AssetDescriptor<>("assets/robots/CU5TM-TP.png", Texture.class);
 
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
