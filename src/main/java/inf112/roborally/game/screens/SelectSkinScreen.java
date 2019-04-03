@@ -30,9 +30,9 @@ public class SelectSkinScreen implements Screen {
         Image background = new Image(new TextureRegionDrawable(new Texture(AssMan.SELECT_SCREEN.fileName)));
         stage.addActor(background);
         //Create buttons:
-        TextureRegionDrawable button = new TextureRegionDrawable(new Texture(AssMan.RIGHT_ARROW.fileName));
-        TextureRegionDrawable buttonPressed = new TextureRegionDrawable(new Texture(AssMan.RIGHT_ARROW_PRESS.fileName));
-        ImageButton next = new ImageButton(button, buttonPressed);
+        TextureRegionDrawable buttonUp = new TextureRegionDrawable(new Texture(AssMan.RIGHT_ARROW.fileName));
+        TextureRegionDrawable buttonDown = new TextureRegionDrawable(new Texture(AssMan.RIGHT_ARROW_PRESS.fileName));
+        ImageButton next = new ImageButton(buttonUp, buttonDown);
         next.setPosition(1920 - next.getWidth() - 100, 1080 / 2f - next.getHeight() / 2f);
         next.addListener(new ClickListener() {
             @Override
@@ -41,9 +41,9 @@ public class SelectSkinScreen implements Screen {
                 clicked = true;
             }
         });
-        button = new TextureRegionDrawable(new Texture(AssMan.LEFT_ARROW.fileName));
-        buttonPressed = new TextureRegionDrawable(new Texture(AssMan.LEFT_ARROW_PRESS.fileName));
-        ImageButton previous = new ImageButton(button, buttonPressed);
+        buttonUp = new TextureRegionDrawable(new Texture(AssMan.LEFT_ARROW.fileName));
+        buttonDown = new TextureRegionDrawable(new Texture(AssMan.LEFT_ARROW_PRESS.fileName));
+        ImageButton previous = new ImageButton(buttonUp, buttonDown);
         previous.setPosition(100, 1080 / 2f - previous.getWidth() / 2f);
         previous.addListener(new ClickListener() {
             @Override
@@ -52,9 +52,9 @@ public class SelectSkinScreen implements Screen {
                 clicked = true;
             }
         });
-        button = new TextureRegionDrawable(new Texture(AssMan.CONFIRM.fileName));
-        buttonPressed = new TextureRegionDrawable(new Texture(AssMan.CONFIRM_PRSS.fileName));
-        ImageButton confirm = new ImageButton(button, buttonPressed);
+        buttonUp = new TextureRegionDrawable(new Texture(AssMan.CONFIRM.fileName));
+        buttonDown = new TextureRegionDrawable(new Texture(AssMan.CONFIRM_PRSS.fileName));
+        ImageButton confirm = new ImageButton(buttonUp, buttonDown);
         confirm.setPosition(1920 / 2f - confirm.getWidth() / 2, 100);
         confirm.addListener(new ClickListener(){
             @Override
