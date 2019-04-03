@@ -1,5 +1,7 @@
 package inf112.roborally.game.server;
 
+import sun.net.ConnectionResetException;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -12,29 +14,32 @@ public class EchoThread extends Thread {
 
     public void run() {
         InputStream inp = null;
-        BufferedReader brinp = null;
-        DataOutputStream out = null;
+        ObjectInputStream brinp = null;
+        ObjectOutputStream out = null;
         try {
             inp = socket.getInputStream();
-            brinp = new BufferedReader(new InputStreamReader(inp));
-            out = new DataOutputStream(socket.getOutputStream());
+            brinp = new ObjectInputStream(inp);
+            out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             return;
         }
-        String line;
+
         while (true) {
             try {
-                line = brinp.readLine();
-                if ((line == null) || line.equalsIgnoreCase("QUIT")) {
+                MessagePacket packet = (MessagePacket) brinp.readObject();
+                int packetInt = packet.getNumber();
+                String packetWord = packet.getWord();
+                if ((packetInt == 0) || packetWord.equalsIgnoreCase("QUIT")) {
                     socket.close();
                     return;
                 } else {
-                    out.writeBytes(line + "\n\r");
-                    out.flush();
+                    System.out.println(packetInt + " " + packetWord);
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Lost connection to " + socket.getInetAddress());
                 return;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
         }
     }

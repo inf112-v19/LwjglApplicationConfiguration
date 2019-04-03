@@ -13,9 +13,6 @@ public class GameServer {
     public static void main(String argv[]) throws Exception
     {
 
-        String clientSentence;
-        String capitalizedSentence;
-
         ServerSocket serverSocket = new ServerSocket(6789);
         while(true) {
 

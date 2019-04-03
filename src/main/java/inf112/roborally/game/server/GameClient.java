@@ -12,7 +12,7 @@ class GameClient {
             BufferedReader inFromUser =
                     new BufferedReader(new InputStreamReader(System.in));
 
-            Socket clientSocket = new Socket("192.168.56.1", 6789); // replace "hostname" by your favourite hostname
+            Socket clientSocket = new Socket("127.0.0.1", 6789); // replace "hostname" by your favourite hostname
             // ...or "127.0.0.1", for example
 
             OutputStream outToServer = clientSocket.getOutputStream();
@@ -26,14 +26,14 @@ class GameClient {
 
             objectOutputStream.writeObject(packet);
 
-            InputStream inFromClient = clientSocket.getInputStream();
-
-            ObjectInputStream objectInputStream = new ObjectInputStream(inFromClient);
-
-            MessagePacket incomingPacket = (MessagePacket) objectInputStream.readObject();
-
-
-            System.out.println("FROM SERVER: \n"  + incomingPacket.getNumber() + "\n" + incomingPacket.getWord());
+//            InputStream inFromClient = clientSocket.getInputStream();
+//
+//            ObjectInputStream objectInputStream = new ObjectInputStream(inFromClient);
+//
+//            MessagePacket incomingPacket = (MessagePacket) objectInputStream.readObject();
+//
+//
+//            System.out.println("FROM SERVER: \n"  + incomingPacket.getNumber() + "\n" + incomingPacket.getWord());
 
 
         }

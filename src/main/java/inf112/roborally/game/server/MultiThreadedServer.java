@@ -8,6 +8,7 @@ public class MultiThreadedServer {
 
     static final int PORT = 6789;
 
+
     public static void main(String args[]) {
         ServerSocket serverSocket = null;
         Socket socket = null;
