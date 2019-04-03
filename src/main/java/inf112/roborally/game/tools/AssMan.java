@@ -150,6 +150,28 @@ public class AssMan {
     public static final AssetDescriptor<Texture> FLAG_SKIN
             = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
 
+    // Buttons:
+
+    public static final AssetDescriptor<Texture> RIGHT_ARROW
+            = new AssetDescriptor<>("assets/buttons/right_arrow.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> RIGHT_ARROW_PRESS
+            = new AssetDescriptor<>("assets/buttons/right_arrow_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> LEFT_ARROW
+            = new AssetDescriptor<>("assets/buttons/left_arrow.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> LEFT_ARROW_PRESS
+            = new AssetDescriptor<>("assets/buttons/left_arrow_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> CONFIRM
+            = new AssetDescriptor<>("assets/buttons/confirm.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> CONFIRM_PRSS
+            = new AssetDescriptor<>("assets/buttons/confirm_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> SELECT_SCREEN
+            = new AssetDescriptor<>("assets/buttons/select_skin_screen.png", Texture.class);
 
     @SuppressWarnings("Duplicates")
     public static void load() {
