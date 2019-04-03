@@ -45,16 +45,16 @@ public class AssMan {
     public static final AssetDescriptor<Texture> PLAYER_TVBOT
             = new AssetDescriptor<>("assets/robots/tvBot.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> NURSE_BOT
+    public static final AssetDescriptor<Texture> PLAYER_NURSE_BOT
             = new AssetDescriptor<>("assets/robots/NUR53_CP.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> CAPTAIN_BOT
+    public static final AssetDescriptor<Texture> PLAYER_CAPTAIN_BOT
             = new AssetDescriptor<>("assets/robots/EMPR_TP.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> WIZZARD_BOT
+    public static final AssetDescriptor<Texture> PLAYER_WIZZARD_BOT
             = new AssetDescriptor<>("assets/robots/B34RD_TP.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> COP_BOT
+    public static final AssetDescriptor<Texture> PLAYER_COP_BOT
             = new AssetDescriptor<>("assets/robots/CU5TM-TP.png", Texture.class);
 
     //Hud buttons
@@ -215,6 +215,20 @@ public class AssMan {
 
         //Flag
         manager.load(FLAG_SKIN);
+    }
+
+    public static String[] getPlayerSkins() {
+        String[] skins = new String[8];
+        skins[0] = PLAYER_CLAPTRAP_REFINED.fileName;
+        skins[1] = PLAYER_BUTLER_REFINED.fileName;
+        skins[2] = PLAYER_CAPTAIN_BOT.fileName;
+        skins[3] = PLAYER_BARTENDER_CLAPTRAP.fileName;
+        skins[4] = PLAYER_CLAPTRAP_3000.fileName;
+        skins[5] = PLAYER_COP_BOT.fileName;
+        skins[6] = PLAYER_WIZZARD_BOT.fileName;
+        skins[7] = PLAYER_NURSE_BOT.fileName;
+
+        return skins;
     }
 
     public void dispose() {

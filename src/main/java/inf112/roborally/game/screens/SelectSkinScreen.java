@@ -1,13 +1,14 @@
 package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.tools.AssMan;
 
@@ -15,11 +16,11 @@ public class SelectSkinScreen implements Screen {
     private final RoboRallyGame game;
 
     private Stage stage;
-    private int selectedSkin;
-    private TextureRegionDrawable[] skins;
     private ImageButton next;
     private ImageButton previous;
     private ImageButton confirm;
+    private int selectedSkin;
+    private TextureRegionDrawable[] skins;
     private Image currentSkin;
     private Boolean clicked = false;
 
@@ -27,17 +28,20 @@ public class SelectSkinScreen implements Screen {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
 
+//        next = new ImageButton();
+//        previous = new ImageButton();
+//        confirm = new ImageButton();
+//        stage.addActor(next);
+//        stage.addActor(previous);
+//        stage.addActor(confirm);
+
         selectedSkin = 0;
         skins = new TextureRegionDrawable[8];
         for (int i = 0; i < 8; i++) {
-            skins[i] = new TextureRegionDrawable(new Texture(AssMan.CAPTAIN_BOT.fileName));
+            skins[i] = new TextureRegionDrawable(new Texture(AssMan.getPlayerSkins()[i]));
         }
         currentSkin = new Image(skins[selectedSkin]);
-        currentSkin.setPosition(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, Align.center);
-
-        stage.addActor(next);
-        stage.addActor(previous);
-        stage.addActor(confirm);
+        currentSkin.setPosition(1920 / 2f - currentSkin.getWidth() / 2, 1080 / 2f - currentSkin.getHeight() / 2);
         stage.addActor(currentSkin);
     }
 
@@ -49,6 +53,15 @@ public class SelectSkinScreen implements Screen {
     @Override
     public void render(float v) {
         if (clicked) update(); // don't update unless we have to
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+            clicked = true;
+            selectedSkin++;
+            selectedSkin = selectedSkin % 8;
+        }
+
+        Gdx.gl.glClearColor(0 / 255f, 20 / 255f, 15 / 255f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
     }
 
@@ -59,7 +72,8 @@ public class SelectSkinScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        game.resize(width, height);
+        game.fixedViewPort.update(width, height);
+        game.dynamicViewPort.update(width, height);
     }
 
     @Override
@@ -76,5 +90,6 @@ public class SelectSkinScreen implements Screen {
 
     @Override
     public void dispose() {
+        stage.dispose();
     }
 }
