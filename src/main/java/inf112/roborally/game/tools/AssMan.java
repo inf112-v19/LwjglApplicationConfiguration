@@ -170,6 +170,12 @@ public class AssMan {
     public static final AssetDescriptor<Texture> CONFIRM_PRSS
             = new AssetDescriptor<>("assets/buttons/confirm_press.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> BACK
+            = new AssetDescriptor<> ("assets/buttons/back.png", Texture.class);
+
+            public static final AssetDescriptor<Texture> BACK_PRESS
+            = new AssetDescriptor<> ("assets/buttons/back_press.png", Texture.class);
+
     public static final AssetDescriptor<Texture> SELECT_SCREEN
             = new AssetDescriptor<>("assets/buttons/select_skin_screen.png", Texture.class);
 

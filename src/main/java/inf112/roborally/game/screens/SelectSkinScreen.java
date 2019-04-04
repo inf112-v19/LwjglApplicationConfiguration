@@ -56,16 +56,28 @@ public class SelectSkinScreen implements Screen {
         buttonDown = new TextureRegionDrawable(new Texture(AssMan.CONFIRM_PRSS.fileName));
         ImageButton confirm = new ImageButton(buttonUp, buttonDown);
         confirm.setPosition(1920 / 2f - confirm.getWidth() / 2, 100);
-        confirm.addListener(new ClickListener(){
+        confirm.addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 dispose();
                 game.setScreen(game.setupScreen);
+            }
+        });
+        buttonUp = new TextureRegionDrawable(new Texture(AssMan.BACK.fileName));
+        buttonDown = new TextureRegionDrawable(new Texture(AssMan.BACK_PRESS.fileName));
+        ImageButton back = new ImageButton(buttonUp, buttonDown);
+        back.setPosition(0, 1080 - back.getHeight());
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.menuScreen = new MenuScreen(game);
+                game.setScreen(game.menuScreen);
             }
         });
         stage.addActor(next);
         stage.addActor(previous);
         stage.addActor(confirm);
+        stage.addActor(back);
         // Robot skins:
         skins = new TextureRegionDrawable[8];
         for (int i = 0; i < 8; i++) {
