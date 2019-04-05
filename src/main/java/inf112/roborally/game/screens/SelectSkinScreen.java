@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.tools.ButtonFactory;
 import inf112.roborally.game.tools.AssMan;
 
 public class SelectSkinScreen implements Screen {
@@ -30,10 +31,7 @@ public class SelectSkinScreen implements Screen {
         Image background = new Image(new TextureRegionDrawable(new Texture(AssMan.SELECT_SCREEN.fileName)));
         stage.addActor(background);
         //Create buttons:
-        TextureRegionDrawable buttonUp = new TextureRegionDrawable(new Texture(AssMan.RIGHT_ARROW.fileName));
-        TextureRegionDrawable buttonDown = new TextureRegionDrawable(new Texture(AssMan.RIGHT_ARROW_PRESS.fileName));
-        ImageButton next = new ImageButton(buttonUp, buttonDown);
-        next.setPosition(1920 - next.getWidth() - 100, 1080 / 2f - next.getHeight() / 2f);
+        ImageButton next = ButtonFactory.createArrowRightButton();
         next.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -41,10 +39,7 @@ public class SelectSkinScreen implements Screen {
                 clicked = true;
             }
         });
-        buttonUp = new TextureRegionDrawable(new Texture(AssMan.LEFT_ARROW.fileName));
-        buttonDown = new TextureRegionDrawable(new Texture(AssMan.LEFT_ARROW_PRESS.fileName));
-        ImageButton previous = new ImageButton(buttonUp, buttonDown);
-        previous.setPosition(100, 1080 / 2f - previous.getWidth() / 2f);
+        ImageButton previous = ButtonFactory.createArrowLeftButton();
         previous.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -52,10 +47,7 @@ public class SelectSkinScreen implements Screen {
                 clicked = true;
             }
         });
-        buttonUp = new TextureRegionDrawable(new Texture(AssMan.CONFIRM.fileName));
-        buttonDown = new TextureRegionDrawable(new Texture(AssMan.CONFIRM_PRSS.fileName));
-        ImageButton confirm = new ImageButton(buttonUp, buttonDown);
-        confirm.setPosition(1920 / 2f - confirm.getWidth() / 2, 100);
+        ImageButton confirm = ButtonFactory.createConfirmButton();
         confirm.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -63,10 +55,7 @@ public class SelectSkinScreen implements Screen {
                 game.setScreen(game.setupScreen);
             }
         });
-        buttonUp = new TextureRegionDrawable(new Texture(AssMan.BACK.fileName));
-        buttonDown = new TextureRegionDrawable(new Texture(AssMan.BACK_PRESS.fileName));
-        ImageButton back = new ImageButton(buttonUp, buttonDown);
-        back.setPosition(0, 1080 - back.getHeight());
+        ImageButton back = ButtonFactory.createBackButton();
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
