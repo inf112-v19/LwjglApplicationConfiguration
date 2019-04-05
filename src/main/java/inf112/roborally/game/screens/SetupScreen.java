@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.objects.Position;
@@ -33,6 +35,8 @@ public class SetupScreen extends AbstractScreen {
     private float currentTileSize;
     private float currentMapSize;
     private float mapStartX;
+    private float screenWidth;
+    private float screenHeight;
 
     // Player choices to be added to the game screen
     private int robotChoiceIndex;
@@ -40,6 +44,9 @@ public class SetupScreen extends AbstractScreen {
 
     //Keeps track of the converted clickPos
     private ArrayList<Position> flagClickedPositions;
+
+    // Try to render a board
+    private Texture board;
 
     public SetupScreen(RoboRallyGame game, String[] possibleFilepaths) {
         super(game, AssMan.SETUP_SETUP_SCREEN.fileName);
@@ -103,7 +110,8 @@ public class SetupScreen extends AbstractScreen {
     private void createMapForPlacingFlags() {
 
         // One tile here, inn full screen, is approx. 90x90
-        updateBackground(AssMan.SETUP_SETUP_SCREEN_PLACE_FLAGS.fileName);
+//        updateBackground(AssMan.SETUP_SETUP_SCREEN_PLACE_FLAGS.fileName);
+        updateBackground(AssMan.GAMESCREEN_BACKGROUND2.fileName);
         updateMapNumbers();
 
         for (int i = 3; i > 0; i--) {
@@ -113,7 +121,11 @@ public class SetupScreen extends AbstractScreen {
             flags.add(flag);
         }
 
-        state = SetupState.PLACINGFLAGS;
+
+        board = new Texture(AssMan.SETUP_MAP_VAULT.fileName);
+
+//        state = SetupState.PLACINGFLAGS;
+        state = SetupState.TESTPPLACINGFLAGS;
     }
 
 
@@ -134,8 +146,12 @@ public class SetupScreen extends AbstractScreen {
         for (Sprite check : flagCheck) {
             check.draw(batch);
         }
+        if(board != null) {
+            batch.draw(board, screenWidth, screenHeight);
+        }
 
         batch.end();
+
         handleInput();
 
         stage.draw();
@@ -153,6 +169,12 @@ public class SetupScreen extends AbstractScreen {
 
         // Possible to add more SetupStates
         switch (state) {
+            case TESTPPLACINGFLAGS:
+
+
+
+                break;
+
             case PLACINGFLAGS:
                 // The map has 2 invisible tiles at all sides
                 if (Gdx.input.justTouched()) {
@@ -235,7 +257,8 @@ public class SetupScreen extends AbstractScreen {
     }
 
     private void updateMapNumbers() {
-        float screenWidth = Gdx.graphics.getWidth();
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
         final float NUMBERS_OF_TILES_IN_WIDTH = 21.333f;
         currentTileSize = screenWidth / NUMBERS_OF_TILES_IN_WIDTH;
         currentMapSize = currentTileSize * N_TILES;
