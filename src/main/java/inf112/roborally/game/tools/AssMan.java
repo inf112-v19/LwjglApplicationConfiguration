@@ -31,19 +31,31 @@ public class AssMan {
 
     //Player skins
     public static final AssetDescriptor<Texture> PLAYER_BARTENDER_CLAPTRAP
-            = new AssetDescriptor<>("assets/robot/bartenderclaptrap.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/bartenderclaptrap.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_CLAPTRAP_REFINED
-            = new AssetDescriptor<>("assets/robot/claptrapRefined.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/claptrapRefined.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_BUTLER_REFINED
-            = new AssetDescriptor<>("assets/robot/butlerRefined.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/butlerRefined.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_CLAPTRAP_3000
-            = new AssetDescriptor<>("assets/robot/claptrap3000.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/claptrap3000.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_TVBOT
-            = new AssetDescriptor<>("assets/robot/tvBot.png", Texture.class);
+            = new AssetDescriptor<>("assets/robots/tvBot.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> PLAYER_NURSE_BOT
+            = new AssetDescriptor<>("assets/robots/NUR53_CP.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> PLAYER_CAPTAIN_BOT
+            = new AssetDescriptor<>("assets/robots/EMPR_TP.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> PLAYER_WIZZARD_BOT
+            = new AssetDescriptor<>("assets/robots/B34RD_TP.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> PLAYER_COP_BOT
+            = new AssetDescriptor<>("assets/robots/CU5TM-TP.png", Texture.class);
 
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
@@ -141,6 +153,34 @@ public class AssMan {
     public static final AssetDescriptor<Texture> FLAG_SKIN
             = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
 
+    // Buttons:
+
+    public static final AssetDescriptor<Texture> RIGHT_ARROW
+            = new AssetDescriptor<>("assets/buttons/right_arrow.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> RIGHT_ARROW_PRESS
+            = new AssetDescriptor<>("assets/buttons/right_arrow_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> LEFT_ARROW
+            = new AssetDescriptor<>("assets/buttons/left_arrow.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> LEFT_ARROW_PRESS
+            = new AssetDescriptor<>("assets/buttons/left_arrow_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> CONFIRM
+            = new AssetDescriptor<>("assets/buttons/confirm.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> CONFIRM_PRSS
+            = new AssetDescriptor<>("assets/buttons/confirm_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> BACK
+            = new AssetDescriptor<> ("assets/buttons/back.png", Texture.class);
+
+            public static final AssetDescriptor<Texture> BACK_PRESS
+            = new AssetDescriptor<> ("assets/buttons/back_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> SELECT_SCREEN
+            = new AssetDescriptor<>("assets/buttons/select_skin_screen.png", Texture.class);
 
     @SuppressWarnings("Duplicates")
     public static void load() {
@@ -207,6 +247,20 @@ public class AssMan {
 
         //Flag
         manager.load(FLAG_SKIN);
+    }
+
+    public static String[] getPlayerSkins() {
+        String[] skins = new String[8];
+        skins[0] = PLAYER_CLAPTRAP_REFINED.fileName;
+        skins[1] = PLAYER_BUTLER_REFINED.fileName;
+        skins[2] = PLAYER_CAPTAIN_BOT.fileName;
+        skins[3] = PLAYER_BARTENDER_CLAPTRAP.fileName;
+        skins[4] = PLAYER_CLAPTRAP_3000.fileName;
+        skins[5] = PLAYER_COP_BOT.fileName;
+        skins[6] = PLAYER_WIZZARD_BOT.fileName;
+        skins[7] = PLAYER_NURSE_BOT.fileName;
+
+        return skins;
     }
 
     public void dispose() {
