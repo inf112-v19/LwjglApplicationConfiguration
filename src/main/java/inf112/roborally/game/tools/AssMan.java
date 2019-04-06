@@ -118,7 +118,13 @@ public class AssMan {
             = new AssetDescriptor<>("assets/cards/tokens/lockToken.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN
-            = new AssetDescriptor<>("assets/cards/powerDown.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/powerdown.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN_PRESS
+            = new AssetDescriptor<>("assets/buttons/powerdown_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN_PRESSED
+            = new AssetDescriptor<>("assets/buttons/powerdown_active.png", Texture.class);
 
 
     //Backup
@@ -215,6 +221,8 @@ public class AssMan {
 
         //Flag
         manager.load(FLAG_SKIN);
+
+
     }
 
     public void dispose() {
