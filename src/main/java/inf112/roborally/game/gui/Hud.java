@@ -181,7 +181,7 @@ public class Hud {
     }
 
     public void setPowerDownTouchable(boolean canTouch) {
-        if (canTouch)
+        if (canTouch && !player.isPoweredDown())
             registerDisplay.getPowerDown().setTouchable(Touchable.enabled);
         else
             registerDisplay.getPowerDown().setTouchable(Touchable.disabled);
