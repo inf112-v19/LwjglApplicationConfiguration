@@ -126,6 +126,17 @@ public class AssMan {
     public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN_PRESSED
             = new AssetDescriptor<>("assets/buttons/powerdown_active.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> REGISTER_SUBMIT
+            = new AssetDescriptor<>("assets/buttons/submit.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_SUBMIT_PRESS
+            = new AssetDescriptor<>("assets/buttons/submit_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_CLEAR
+            = new AssetDescriptor<>("assets/buttons/clear.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_CLEAR_PRESS
+            = new AssetDescriptor<>("assets/buttons/clear_press.png", Texture.class);
 
     //Backup
     public static final AssetDescriptor<Texture> BACKUP
@@ -203,6 +214,10 @@ public class AssMan {
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
         manager.load(REGISTER_POWER_DOWN);
+        manager.load(REGISTER_SUBMIT);
+        manager.load(REGISTER_SUBMIT_PRESS);
+        manager.load(REGISTER_CLEAR);
+        manager.load(REGISTER_CLEAR_PRESS);
 
         //Backup
         manager.load(BACKUP);
