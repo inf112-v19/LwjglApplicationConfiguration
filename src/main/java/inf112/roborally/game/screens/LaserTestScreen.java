@@ -17,7 +17,6 @@ public class LaserTestScreen implements Screen {
         this.game = game;
         board = new Board();
         board.createBoard(RoboRallyGame.LASER_TEST_MAP);
-        board.findLasers();
 
         for (int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++) {
             Player testBot = new Player("testBot" + i, "assets/robots/claptrapRefined.png", Direction.NORTH, board);

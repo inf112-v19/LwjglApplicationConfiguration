@@ -46,18 +46,6 @@ public class Board extends TiledBoard {
         soundIsMuted = false;
     }
 
-    public void findLasers() {
-        for (int x = 0; x < laserLayer.getWidth(); x++) {
-            for (int y = 0; y < laserLayer.getHeight(); y++) {
-                TiledMapTileLayer.Cell cell = laserLayer.getCell(x, y);
-                if (cell != null) {
-                    Direction direction = Direction.valueOf(getValue(cell));
-                    lasers.add(new LaserAnimation(x, y, direction));
-                }
-            }
-        }
-    }
-
     public ArrayList<LaserBeam> getLaserGuns() {
         return laserGuns;
     }
@@ -227,7 +215,6 @@ public class Board extends TiledBoard {
     public void drawGameObjects(SpriteBatch batch) {
         drawBackup(batch);
         drawList(players, batch);
-        drawList(lasers, batch);
         drawList(flags, batch);
     }
 
