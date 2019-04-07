@@ -1,27 +1,20 @@
 package inf112.roborally.game.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.enums.GameState;
-import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramRegisters;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
-
 
 public class RegisterDisplay {
     private Group registerGui;
@@ -41,8 +34,6 @@ public class RegisterDisplay {
      * Draws the program register of a given player.
      * Shows cards in the players register slots. If a register is locked a small lock icon will appear.
      * It also shows lives, damage taken and the power button.
-     *
-     * @param player
      */
     public RegisterDisplay(Player player, Group registerGui, Group lockGui) {
         this.player = player;
@@ -58,12 +49,9 @@ public class RegisterDisplay {
     }
 
     private void addPowerDown() {
-        TextureRegionDrawable normal =
-                new TextureRegionDrawable(new Texture(AssMan.REGISTER_POWER_DOWN.fileName));
-        TextureRegionDrawable press =
-                new TextureRegionDrawable(new Texture(AssMan.REGISTER_POWER_DOWN_PRESS.fileName));
-        TextureRegionDrawable pressed =
-                new TextureRegionDrawable(new Texture(AssMan.REGISTER_POWER_DOWN_PRESSED.fileName));
+        TextureRegionDrawable normal = new TextureRegionDrawable(AssMan.manager.get(AssMan.POWER_DOWN));
+        TextureRegionDrawable press = new TextureRegionDrawable(AssMan.manager.get(AssMan.POWER_DOWN_PRESS));
+        TextureRegionDrawable pressed = new TextureRegionDrawable(AssMan.manager.get(AssMan.POWER_DOWN_PRESSED));
         powerDown = new ImageButton(normal, press, pressed);
         int pdSize = 160;
         powerDown.setSize(pdSize  * scale, pdSize * scale);
@@ -103,7 +91,7 @@ public class RegisterDisplay {
     }
 
     private void addLifeTokens() {
-        float startX = 1920 / 2 + 488 * scale;
+        float startX = 1920 / 2f + 488 * scale;
         float startY = h - 170 * scale;
         float space = 105 * scale;
 
@@ -132,7 +120,7 @@ public class RegisterDisplay {
     }
 
     private void addLockTokens(Group lockGui) {
-        float startX = 1920 / 2 + 400 * scale;
+        float startX = 1920 / 2f + 400 * scale;
         float startY = h - 235 * scale;
         float space = 200 * scale;
         lockTokens = new ArrayList<>();

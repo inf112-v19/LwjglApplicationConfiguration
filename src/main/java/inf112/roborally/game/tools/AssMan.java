@@ -117,13 +117,13 @@ public class AssMan {
     public static final AssetDescriptor<Texture> REGISTER_LOCK_TOKEN
             = new AssetDescriptor<>("assets/cards/tokens/lockToken.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN
+    public static final AssetDescriptor<Texture> POWER_DOWN
             = new AssetDescriptor<>("assets/buttons/powerdown.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN_PRESS
+    public static final AssetDescriptor<Texture> POWER_DOWN_PRESS
             = new AssetDescriptor<>("assets/buttons/powerdown_press.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN_PRESSED
+    public static final AssetDescriptor<Texture> POWER_DOWN_PRESSED
             = new AssetDescriptor<>("assets/buttons/powerdown_active.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_SUBMIT
@@ -213,11 +213,14 @@ public class AssMan {
         manager.load(REGISTER_LIFE_TOKEN);
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
-        manager.load(REGISTER_POWER_DOWN);
+        manager.load(POWER_DOWN);
         manager.load(REGISTER_SUBMIT);
         manager.load(REGISTER_SUBMIT_PRESS);
         manager.load(REGISTER_CLEAR);
         manager.load(REGISTER_CLEAR_PRESS);
+        manager.load(POWER_DOWN);
+        manager.load(POWER_DOWN_PRESS);
+        manager.load(POWER_DOWN_PRESSED);
 
         //Backup
         manager.load(BACKUP);
