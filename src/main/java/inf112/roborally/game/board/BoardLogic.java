@@ -9,6 +9,7 @@ import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import static inf112.roborally.game.enums.GameState.*;
@@ -20,12 +21,12 @@ public class BoardLogic {
     protected int phase;
     protected GameState state;
 
-    protected ArrayList<Player> players;
+    protected List<Player> players;
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
     private ArrayList<Player> aiBots;
 
-    public BoardLogic(ArrayList<Player> players) {
+    public BoardLogic(List<Player> players) {
         this.players = players;
         aiBots = new ArrayList<>();
         if (players.get(0).isDebuggingActive() || ((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)

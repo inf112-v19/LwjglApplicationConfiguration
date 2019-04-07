@@ -29,7 +29,6 @@ public class Player extends MovableGameObject implements Comparable {
     private int lives;
     private int damage;
     private Backup backup;
-    private ProgramRegisters registers;
     private Board board;
     private ArrayList<TextureRegion> regions;
     private int nSounds;
@@ -39,6 +38,7 @@ public class Player extends MovableGameObject implements Comparable {
     private boolean screamed;  //Whether or not the player has screamed from falling off the map this round.
     private int phase;
     private boolean debugging;
+    private ProgramRegisters registers;
     private PlayerHand hand;
 
     public Player(String name, String filepath, Direction direction, Board board) {

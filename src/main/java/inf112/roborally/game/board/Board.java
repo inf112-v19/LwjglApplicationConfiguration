@@ -17,6 +17,7 @@ import inf112.roborally.game.objects.StartPosition;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
 import static inf112.roborally.game.tools.TiledTools.getValue;
@@ -25,7 +26,7 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 @SuppressWarnings("Duplicates")
 public class Board extends TiledBoard {
 
-    protected ArrayList<Player> players;
+    protected List<Player> players;
     protected ArrayList<Flag> flags;
     protected ArrayList<LaserAnimation> lasers;
     protected ArrayList<StartPosition> startPlates;
@@ -35,7 +36,7 @@ public class Board extends TiledBoard {
 
 
     public Board() {
-        players = new ArrayList<>();
+        players = Collections.synchronizedList(new ArrayList<Player>());
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
         startPlates = new ArrayList<>();
@@ -219,7 +220,7 @@ public class Board extends TiledBoard {
         }
     }
 
-    private void drawList(ArrayList<? extends GameObject> list, SpriteBatch batch) {
+    private void drawList(List<? extends GameObject> list, SpriteBatch batch) {
         for (GameObject object : list)
             object.draw(batch);
     }
@@ -238,7 +239,7 @@ public class Board extends TiledBoard {
         soundIsMuted = false;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return this.players;
     }
 

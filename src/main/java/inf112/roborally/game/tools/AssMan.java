@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 /**
- * Contains assets used by the game (all .png and .wav files).
+ * Contains assets used by the game.
  * With AssMan you are able to load as well as dispose all of them at the same time.
- * <p>
- * .atlas files can not go here.
+ *
  * Calling {@link #dispose()} will dispose all assets.
  */
 public class AssMan {
