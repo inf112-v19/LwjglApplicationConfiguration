@@ -85,6 +85,8 @@ public class GameLogic extends BoardLogic implements Runnable {
             public void run() {
                 hud.clearAllCards();
                 hud.updateCards();
+                hud.resetPowerDown();
+                hud.setPowerDownTouchable(true);
             }
         });
     }
