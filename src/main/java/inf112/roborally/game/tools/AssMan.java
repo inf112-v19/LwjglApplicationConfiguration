@@ -152,7 +152,7 @@ public class AssMan {
             = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
 
     public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
-            = new AssetDescriptor<>("assets/objects/flagTextures.atlas", TextureAtlas.class);
+            = new AssetDescriptor<>("assets/flags/flags.atlas", TextureAtlas.class);
 
     @SuppressWarnings("Duplicates")
     public static void load() {
