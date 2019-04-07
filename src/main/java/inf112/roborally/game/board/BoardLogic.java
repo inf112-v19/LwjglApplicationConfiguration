@@ -91,7 +91,11 @@ public class BoardLogic {
     public void removeDeadRobots() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            if (player.getPlayerState() == PlayerState.GAME_OVER) {
+            if(players.size() == 1){
+                endGame();
+                return;
+            }
+            else if (player.getPlayerState() == PlayerState.GAME_OVER) {
                 System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
