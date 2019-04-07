@@ -26,13 +26,11 @@ public class Hud {
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
     private ImageButton settingsButton;
-    private AssMan assMan;
     private float scale = 0.4f;
 
     public Hud(final Player player, final RoboRallyGame game) {
         this.player = player;
         this.game = game;
-        this.assMan = game.getAssMan();
         stage = new Stage(game.fixedViewPort, game.batch);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(game.cameraListener);

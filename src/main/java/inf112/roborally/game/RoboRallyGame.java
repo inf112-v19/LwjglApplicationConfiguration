@@ -46,7 +46,6 @@ public class RoboRallyGame extends Game {
     public TestScreen testScreen;
     public LaserTestScreen laserTestScreen;
 
-    private AssMan assMan;
     private boolean runTestMap = false;
 
 
@@ -59,9 +58,8 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void create() {
-        assMan = new AssMan();
-        assMan.load();
-        assMan.manager.finishLoading();
+        AssMan.load();
+        AssMan.manager.finishLoading();
         AIvsAI = false;
 
         dynamicCamera = new OrthographicCamera();
@@ -137,10 +135,6 @@ public class RoboRallyGame extends Game {
         gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, runTestMap);
     }
 
-    public AssMan getAssMan(){
-        return assMan;
-    }
-
     @Override
     public void dispose() {
         if(screenBefore != null) {
@@ -149,7 +143,7 @@ public class RoboRallyGame extends Game {
         batch.dispose();
         testScreen.dispose();
         menuScreen.dispose();
-        assMan.dispose();
+        AssMan.dispose();
         // It might not been made yet
         if (setupScreen != null) {
             setupScreen.dispose();
