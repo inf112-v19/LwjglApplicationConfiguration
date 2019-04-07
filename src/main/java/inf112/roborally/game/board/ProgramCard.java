@@ -1,7 +1,6 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.roborally.game.enums.Rotate;
@@ -10,14 +9,12 @@ import inf112.roborally.game.tools.AssMan;
 import java.util.Collections;
 import java.util.Stack;
 
-
 public class ProgramCard implements Comparable {
     private Rotate rotate;
     private int moveDistance;
     private int priority;
 
     private ImageTextButton.ImageTextButtonStyle style;
-    private TextureAtlas atlas;
     private Skin skin;
 
     /**
@@ -80,9 +77,8 @@ public class ProgramCard implements Comparable {
     }
 
     public void setUpSkin() {
-        atlas = AssMan.manager.get(AssMan.PROGRAM_CARD_ATLAS);
         skin = new Skin();
-        skin.addRegions(atlas);
+        skin.addRegions(AssMan.manager.get(AssMan.PROGRAM_CARD_ATLAS));
         style = new ImageTextButton.ImageTextButtonStyle();
         style.font = new BitmapFont();
         style.up = skin.getDrawable(identify());

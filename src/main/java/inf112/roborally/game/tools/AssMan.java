@@ -225,7 +225,7 @@ public class AssMan {
         manager.load(FLAG_ATLAS);
     }
 
-    public void dispose() {
+    public static void dispose() {
         System.out.println("Disposing asset manager");
         manager.clear();
     }
