@@ -154,9 +154,13 @@ public class AssMan {
     public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
             = new AssetDescriptor<>("assets/flags/flags.atlas", TextureAtlas.class);
 
+    public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
+            = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
+
     @SuppressWarnings("Duplicates")
     public static void load() {
 
+        manager.load(PROGRAM_CARD_ATLAS);
         //Music
         manager.load(MUSIC_PLAYER_LASER);
         manager.load(MUSIC_PLAYER_REPAIR);

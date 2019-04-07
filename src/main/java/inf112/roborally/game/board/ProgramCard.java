@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.tools.AssMan;
 
 import java.util.Collections;
 import java.util.Stack;
@@ -82,7 +83,7 @@ public class ProgramCard implements Comparable {
     }
 
     public void setUpSkin() {
-        atlas = new TextureAtlas("assets/cards/imageButton.atlas");
+        atlas = AssMan.manager.get(AssMan.PROGRAM_CARD_ATLAS);
         skin = new Skin();
         skin.addRegions(atlas);
         style = new ImageTextButton.ImageTextButtonStyle();
@@ -95,7 +96,6 @@ public class ProgramCard implements Comparable {
     }
 
     public void dispose() {
-        atlas.dispose();
         skin.dispose();
         style.font.dispose();
     }
