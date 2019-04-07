@@ -15,7 +15,6 @@ public class ProgramCard implements Comparable {
     private Rotate rotate;
     private int moveDistance;
     private int priority;
-    private String type;
 
     private ImageTextButton.ImageTextButtonStyle style;
     private TextureAtlas atlas;
@@ -28,13 +27,11 @@ public class ProgramCard implements Comparable {
      * @param rotate       which rotation the card should have
      * @param moveDistance how many steps to move
      * @param priority     card priority
-     * @param type         which type of card it is, e.g. "move1" or "rotateLeft"
      */
-    public ProgramCard(Rotate rotate, int moveDistance, int priority, String type) {
+    public ProgramCard(Rotate rotate, int moveDistance, int priority) {
         this.rotate = rotate;
         this.moveDistance = moveDistance;
         this.priority = priority;
-        this.type = type;
     }
 
     public static Stack<ProgramCard> makeProgramCardDeck() {
@@ -42,31 +39,31 @@ public class ProgramCard implements Comparable {
         // Adding cards that rotate:
         for (int priority = 10; priority <= 60; priority += 10) {
             // 180
-            cardStack.push(new ProgramCard(Rotate.UTURN, 0, priority, "uTurn"));
+            cardStack.push(new ProgramCard(Rotate.UTURN, 0, priority));
         }
         for (int priority = 80; priority <= 420; priority += 20) {
             // Right
-            cardStack.push(new ProgramCard(Rotate.RIGHT, 0, priority - 10, "rotateRight"));
+            cardStack.push(new ProgramCard(Rotate.RIGHT, 0, priority - 10));
             // Left
-            cardStack.push(new ProgramCard(Rotate.LEFT, 0, priority, "rotateLeft"));
+            cardStack.push(new ProgramCard(Rotate.LEFT, 0, priority));
         }
 
         // Adding cards that move:
         // Backwards
         for (int priority = 430; priority <= 480; priority += 10) {
-            cardStack.push(new ProgramCard(Rotate.NONE, -1, priority, "back1"));
+            cardStack.push(new ProgramCard(Rotate.NONE, -1, priority));
         }
         // Forwards 1
         for (int priority = 490; priority <= 660; priority += 10) {
-            cardStack.push(new ProgramCard(Rotate.NONE, 1, priority, "move1"));
+            cardStack.push(new ProgramCard(Rotate.NONE, 1, priority));
         }
         // Forwards 2
         for (int priority = 670; priority <= 780; priority += 10) {
-            cardStack.push(new ProgramCard(Rotate.NONE, 2, priority, "move2"));
+            cardStack.push(new ProgramCard(Rotate.NONE, 2, priority));
         }
         // Forwards 3
         for (int priority = 790; priority <= 840; priority += 10) {
-            cardStack.push(new ProgramCard(Rotate.NONE, 3, priority, "move3"));
+            cardStack.push(new ProgramCard(Rotate.NONE, 3, priority));
         }
         Collections.shuffle(cardStack);
         return cardStack;
@@ -77,7 +74,7 @@ public class ProgramCard implements Comparable {
     public static Stack<ProgramCard> makeTestProgramCardDeck() {
         Stack<ProgramCard> testCardStack = new Stack<>();
         for (int i = 1; i < 27; i++) {
-            testCardStack.push(new ProgramCard(Rotate.RIGHT, 0, i, "testCard"));
+            testCardStack.push(new ProgramCard(Rotate.RIGHT, 0, i));
         }
         return testCardStack;
     }
@@ -88,7 +85,7 @@ public class ProgramCard implements Comparable {
         skin.addRegions(atlas);
         style = new ImageTextButton.ImageTextButtonStyle();
         style.font = new BitmapFont();
-        style.up = skin.getDrawable(type);
+        style.up = skin.getDrawable(identify());
     }
 
     public ImageTextButton.ImageTextButtonStyle getStyle() {
@@ -116,28 +113,23 @@ public class ProgramCard implements Comparable {
         return this.priority;
     }
 
-    public String getType() {
-        return type;
-    }
-
     @Override
     public String toString() {
-        String s = "";
-        if (this.moveDistance == 0) {
-            switch (rotate) {
-                case LEFT:
-                    s = "Turn left,";
-                    break;
-                case RIGHT:
-                    s = "Turn right,";
-                    break;
-                case UTURN:
-                    s = "U turn,";
-                    break;
-            }
-        } else
-            s = "Move " + moveDistance + ",";
-        return s + " priority: " + priority;
+        String result;
+        if (rotate != Rotate.NONE)
+            result = "Rotate: ";
+        else
+            result = "Move: ";
+        return result + identify() + " Priority: " + priority;
+    }
+
+    private String identify() {
+        if (rotate != Rotate.NONE) { // rotation card
+            return rotate.toString();
+        }
+        else { // move card
+            return Integer.toString(moveDistance);
+        }
     }
 
     @Override

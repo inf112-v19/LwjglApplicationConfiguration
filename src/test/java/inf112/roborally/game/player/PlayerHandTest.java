@@ -20,7 +20,7 @@ public class PlayerHandTest {
     public void setup() {
         player = new Player(0, 0, 1);
         hand = player.getHand();
-        card = new ProgramCard(Rotate.NONE, 0, 0, "");
+        card = new ProgramCard(Rotate.NONE, 0, 0);
     }
 
     @Test
