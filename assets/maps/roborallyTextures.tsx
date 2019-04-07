@@ -307,4 +307,24 @@
    <property name="Gyro" value="LEFT"/>
   </properties>
  </tile>
+ <tile id="59">
+  <properties>
+   <property name="Laser" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="60">
+  <properties>
+   <property name="Laser" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="61">
+  <properties>
+   <property name="Laser" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="62">
+  <properties>
+   <property name="Laser" value="EAST"/>
+  </properties>
+ </tile>
 </tileset>

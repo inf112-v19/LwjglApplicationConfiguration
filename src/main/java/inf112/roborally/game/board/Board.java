@@ -11,8 +11,10 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.GameObject;
+import inf112.roborally.game.objects.LaserBeam;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.StartPosition;
+import inf112.roborally.game.tools.TiledTools;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +30,7 @@ public class Board extends TiledBoard {
     protected ArrayList<Player> players;
     protected ArrayList<Flag> flags;
     protected ArrayList<LaserAnimation> lasers;
+    protected ArrayList<LaserBeam> laserGuns;
     protected ArrayList<StartPosition> startPlates;
 
     // Need this one so we don't check for non existing music when sounds are muted/disposed
@@ -38,6 +41,7 @@ public class Board extends TiledBoard {
         players = new ArrayList<>();
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
+        laserGuns = new ArrayList<>();
         startPlates = new ArrayList<>();
         soundIsMuted = false;
     }
@@ -50,6 +54,20 @@ public class Board extends TiledBoard {
                     Direction direction = Direction.valueOf(getValue(cell));
                     lasers.add(new LaserAnimation(x, y, direction));
                 }
+            }
+        }
+    }
+
+    public ArrayList<LaserBeam> getLaserGuns() {
+        return laserGuns;
+    }
+
+    public void findLaserGuns(){
+        for (int x = 0; x < laserLayer.getWidth(); x++) {
+            for (int y = 0; y < laserLayer.getHeight(); y++) {
+                TiledMapTileLayer.Cell cell = laserLayer.getCell(x, y);
+                if (cell != null)
+                    laserGuns.add(new LaserBeam(x, y, Direction.valueOf(getValue(cell)), this));
             }
         }
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.objects.MovableGameObject;
+import inf112.roborally.game.tools.AssMan;
 
 
 public class LaserAnimation extends MovableGameObject {
@@ -22,7 +23,7 @@ public class LaserAnimation extends MovableGameObject {
     }
 
     private void setUpAnimation() {
-        sprite = new Sprite(new TextureAtlas(filePath).findRegion("laser"));
+        sprite = new Sprite(AssMan.manager.get(AssMan.LASER_ATLAS).findRegion("laser"));
         sprite.setBounds(getX(), getY(), Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 

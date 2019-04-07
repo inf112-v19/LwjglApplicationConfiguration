@@ -12,6 +12,7 @@ import inf112.roborally.game.board.TestBoard;
 import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
+import inf112.roborally.game.objects.LaserBeam;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.sound.GameMusic;
@@ -113,7 +114,8 @@ public class GameScreen implements Screen {
             if (animations.get(i).hasFinished())
                 animations.remove(i--); // need to decrement i when removing an element?
         }
-        board.renderLayer(board.getWallLayer());
+        for(LaserBeam beam : board.getLaserGuns())
+            beam.draw(game.batch);
         game.batch.end();
 
         game.batch.setProjectionMatrix(game.fixedCamera.combined);

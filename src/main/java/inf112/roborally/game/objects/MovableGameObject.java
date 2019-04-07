@@ -12,7 +12,7 @@ import inf112.roborally.game.player.Player;
 import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
 import static inf112.roborally.game.tools.TiledTools.getValue;
 
-public abstract class MovableGameObject extends GameObject {
+public class MovableGameObject extends GameObject {
     protected int rotationDegree;
     private Direction direction;
 
