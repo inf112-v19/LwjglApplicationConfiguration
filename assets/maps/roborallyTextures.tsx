@@ -253,11 +253,6 @@
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
- <tile id="48">
-  <properties>
-   <property name="Laser" value="NORTH"/>
-  </properties>
- </tile>
  <tile id="49">
   <properties>
    <property name="Normal" value="WEST"/>
@@ -290,11 +285,6 @@
   <properties>
    <property name="Express" value="WEST"/>
    <property name="Rotate" value="LEFT"/>
-  </properties>
- </tile>
- <tile id="55">
-  <properties>
-   <property name="Laser" value="EAST"/>
   </properties>
  </tile>
  <tile id="56">

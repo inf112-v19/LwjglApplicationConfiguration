@@ -12,9 +12,8 @@ import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.GameObject;
 import inf112.roborally.game.objects.LaserBeam;
-import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.StartPosition;
-import inf112.roborally.game.tools.TiledTools;
+import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +49,7 @@ public class Board extends TiledBoard {
         return laserGuns;
     }
 
-    public void findLaserGuns(){
+    public void findLaserGuns() {
         for (int x = 0; x < laserLayer.getWidth(); x++) {
             for (int y = 0; y < laserLayer.getHeight(); y++) {
                 TiledMapTileLayer.Cell cell = laserLayer.getCell(x, y);
@@ -163,14 +162,7 @@ public class Board extends TiledBoard {
     }
 
     public void lasersFire() {
-        for (Player player : players) {
-            if (player.hitByLaser(laserLayer)) {
-                if (!soundIsMuted) {
-                    player.getSoundFromPlayer(0).play();
-                }
-                player.takeDamage();
-            }
-        }
+        for (LaserBeam laser : laserGuns) laser.fire();
     }
 
     private void visitFlags() {
@@ -256,5 +248,10 @@ public class Board extends TiledBoard {
 
     public ArrayList<Flag> getFlags() {
         return flags;
+    }
+
+    public void drawLasers(SpriteBatch batch) {
+        for(LaserBeam beam : laserGuns)
+            beam.draw(batch);
     }
 }

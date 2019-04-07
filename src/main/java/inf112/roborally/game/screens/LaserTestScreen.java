@@ -17,7 +17,7 @@ public class LaserTestScreen implements Screen {
         this.game = game;
         board = new Board();
         board.createBoard(RoboRallyGame.LASER_TEST_MAP);
-
+        board.findLaserGuns();
         for (int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++) {
             Player testBot = new Player("testBot" + i, "assets/robots/claptrapRefined.png", Direction.NORTH, board);
             board.addPlayer(testBot);
@@ -68,10 +68,10 @@ public class LaserTestScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         board.render(game.dynamicCamera);
-
         game.batch.setProjectionMatrix(game.dynamicCamera.combined);
         game.batch.begin();
         board.drawGameObjects(game.batch);
+        board.drawLasers(game.batch);
         game.batch.end();
     }
 

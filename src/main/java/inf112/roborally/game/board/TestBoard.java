@@ -7,6 +7,7 @@ public class TestBoard extends Board {
 
     public TestBoard() {flags.add(new Flag(16, 16, 1));
         createBoard(RoboRallyGame.TEST_MAP);
+        findLaserGuns();
     }
 
 }

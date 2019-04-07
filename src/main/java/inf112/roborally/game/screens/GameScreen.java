@@ -114,8 +114,7 @@ public class GameScreen implements Screen {
             if (animations.get(i).hasFinished())
                 animations.remove(i--); // need to decrement i when removing an element?
         }
-        for(LaserBeam beam : board.getLaserGuns())
-            beam.draw(game.batch);
+       board.drawLasers(game.batch);
         game.batch.end();
 
         game.batch.setProjectionMatrix(game.fixedCamera.combined);
