@@ -4,6 +4,7 @@ import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 /**
  * Contains assets used by the game (all .png and .wav files).
@@ -150,6 +151,8 @@ public class AssMan {
     public static final AssetDescriptor<Texture> FLAG_SKIN
             = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
 
+    public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
+            = new AssetDescriptor<>("assets/objects/flagTextures.atlas", TextureAtlas.class);
 
     @SuppressWarnings("Duplicates")
     public static void load() {
@@ -215,6 +218,7 @@ public class AssMan {
 
         //Flag
         manager.load(FLAG_SKIN);
+        manager.load(FLAG_ATLAS);
     }
 
     public void dispose() {

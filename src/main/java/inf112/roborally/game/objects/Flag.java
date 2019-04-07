@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.tools.AssMan;
 
 public class Flag extends GameObject {
     private final int PPM = Main.PIXELS_PER_TILE;
@@ -17,7 +18,7 @@ public class Flag extends GameObject {
     }
 
     private void setupTextureAtlas() {
-        sprite = new Sprite(new TextureAtlas(filePath).findRegion("flags"));
+        sprite = AssMan.manager.get(AssMan.FLAG_ATLAS).createSprite("flags");
         sprite.setBounds(getX() / PPM, getY() / PPM, PPM, PPM);
         int size = 150;
         sprite.setRegion(new TextureRegion(sprite.getTexture(), 450 - flagNumber * size, 0, size, size));
