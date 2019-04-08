@@ -47,7 +47,6 @@ public class GameLogic extends BoardLogic implements Runnable {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            System.out.println("Switched to EndGame screen");
             game.endGameScreen.addWinner(player1);
             game.setScreen(game.endGameScreen);
         }

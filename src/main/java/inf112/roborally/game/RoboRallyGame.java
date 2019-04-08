@@ -144,7 +144,7 @@ public class RoboRallyGame extends Game {
         testScreen.dispose();
         menuScreen.dispose();
         AssMan.dispose();
-        // It might not been made yet
+
         if (setupScreen != null) {
             setupScreen.dispose();
         }
@@ -159,7 +159,7 @@ public class RoboRallyGame extends Game {
         return this.screenBefore;
     }
 
-    public void setLauncTestMap(boolean bool){
+    public void setLaunchTestMap(boolean bool){
         runTestMap = bool;
     }
 }

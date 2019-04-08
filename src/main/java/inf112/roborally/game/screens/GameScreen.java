@@ -167,6 +167,17 @@ public class GameScreen implements Screen {
         return music;
     }
 
+    public boolean playMusic(boolean bool){
+        if(bool) {
+            music.play();
+            board.restartTheSound();
+        }else{
+            music.pause();
+            board.killTheSound();
+        }
+        return !bool;
+    }
+
     public Board getBoard() {
         return board;
     }

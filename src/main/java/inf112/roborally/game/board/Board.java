@@ -27,7 +27,7 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 
 @SuppressWarnings("Duplicates")
 public class Board extends TiledBoard {
-    private final float volume = .3f;
+    private final float volume = .25f;
 
     protected List<Player> players;
     protected ArrayList<Flag> flags;
@@ -45,7 +45,6 @@ public class Board extends TiledBoard {
         lasers = new ArrayList<>();
         laserGuns = new ArrayList<>();
         startPlates = new ArrayList<>();
-        soundIsMuted = false;
     }
 
     public void findLaserGuns() {
