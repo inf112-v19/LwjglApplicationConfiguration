@@ -2,6 +2,7 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
@@ -12,10 +13,9 @@ import inf112.roborally.game.board.TestBoard;
 import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.objects.LaserBeam;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.Position;
-import inf112.roborally.game.sound.GameMusic;
+import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
     private final Board board;
     public ArrayList<Animation> animations;
     private Background background;
-    private GameMusic music;
+    private Music music;
 
 
     public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, boolean runTestMap) {
@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
         gameLogic = new GameLogic(board, hud, game);
 
         // Music
-        music = new GameMusic(RoboRallyGame.MAIN_THEME);
+        music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
         music.play();
 
         // Move dynamicCamera to center of board:
@@ -164,7 +164,7 @@ public class GameScreen implements Screen {
 
     }
 
-    public GameMusic getMusic() {
+    public Music getMusic() {
         return music;
     }
 

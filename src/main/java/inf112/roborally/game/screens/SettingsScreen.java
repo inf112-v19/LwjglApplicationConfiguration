@@ -56,7 +56,7 @@ public class SettingsScreen extends AbstractScreen {
 
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             if (!musicIsMuted) {
-                game.gameScreen.getMusic().mute();
+                game.gameScreen.getMusic().pause();
                 game.gameScreen.getBoard().killTheSound();
                 musicIsMuted = true;
                 System.out.println("Muted the music from the settings screen");
