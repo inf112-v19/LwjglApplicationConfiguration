@@ -21,7 +21,6 @@ public class PlayerStatusDisplay {
     private Group statusBoard;
     private boolean hidden;
     private BitmapFont font;
-    private PlayerStatus ps;
     private List<PlayerStatus> statuses;
 
     public PlayerStatusDisplay(Player player, List<Player> players, final Hud hud) {
@@ -94,7 +93,7 @@ public class PlayerStatusDisplay {
         public void update() {
             damageNumber.setText("x" + player.getDamage());
             for (int i = 0; i < 3; i++) {
-                lives.get(i).setVisible(player.getLives() >= i);
+                lives.get(i).setVisible(player.getLives() > i);
             }
         }
     }
