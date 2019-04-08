@@ -211,7 +211,13 @@ public class Board extends TiledBoard {
     public void drawGameObjects(SpriteBatch batch) {
         drawBackup(batch);
         drawList(players, batch);
+        drawLasers(batch);
         drawList(flags, batch);
+    }
+
+    public void drawLasers(SpriteBatch batch) {
+        for(LaserBeam beam : laserGuns)
+            beam.draw(batch);
     }
 
     public void drawBackup(SpriteBatch batch) {
@@ -246,10 +252,5 @@ public class Board extends TiledBoard {
 
     public ArrayList<Flag> getFlags() {
         return flags;
-    }
-
-    public void drawLasers(SpriteBatch batch) {
-        for(LaserBeam beam : laserGuns)
-            beam.draw(batch);
     }
 }
