@@ -33,9 +33,9 @@ public class TestScreen implements Screen {
             player.getHand().receiveCard(stack.pop());
         }
 
-        hud = new Hud(player, game);
-        hud.clearAllCards();
-        hud.updateCards();
+//        hud = new Hud(player, game);
+//        hud.clearAllCards();
+//        hud.updateCards();
     }
 
     @Override

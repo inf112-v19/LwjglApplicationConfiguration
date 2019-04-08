@@ -9,14 +9,11 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.objects.LaserCannon;
 import inf112.roborally.game.objects.MovableGameObject;
-import inf112.roborally.game.sound.GameSound;
 
 import java.util.ArrayList;
 
-import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
 import static inf112.roborally.game.enums.PlayerState.*;
 
 public class Player extends MovableGameObject implements Comparable {

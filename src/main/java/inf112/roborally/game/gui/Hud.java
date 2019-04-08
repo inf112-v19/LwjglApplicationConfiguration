@@ -14,12 +14,13 @@ import inf112.roborally.game.tools.AssMan;
 public class Hud {
 
     private final RoboRallyGame game;
-    public Stage stage;
     public Group registerGui; // All register elements except locks
     public Group lockGui; // Lock are register elements, but need a separate group so the can be drawn on top of cards
     public Group handGui; // Cards in player hand. Needs a separate so the cards can be hidden during phases.
     private HandDisplay handDisplay;
     private RegisterDisplay registerDisplay;
+    private PlayerStatusDisplay playerStatusDisplay;
+    public Stage stage;
     private Player player;
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
@@ -45,6 +46,7 @@ public class Hud {
 
         handDisplay = new HandDisplay(player, this);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
+        playerStatusDisplay = new PlayerStatusDisplay(player,this);
 
     }
 
@@ -136,6 +138,7 @@ public class Hud {
     }
 
     public void draw() {
+        playerStatusDisplay.update();
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
         registerDisplay.update();
