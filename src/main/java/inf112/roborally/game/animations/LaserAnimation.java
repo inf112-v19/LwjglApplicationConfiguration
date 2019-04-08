@@ -11,10 +11,11 @@ public class LaserAnimation {
     private final Animation<TextureRegion> animation;
     private int stateTimer;
     private GameSound sound;
+    protected Sprite sprite;
 
     public LaserAnimation() {
         stateTimer = 0;
-        sound = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
+        sound = new GameSound(AssMan.SOUND_PLAYER_LASER);
         TextureAtlas.AtlasRegion region = AssMan.manager.get(AssMan.LASER_ATLAS).findRegion("laser");
         Array<TextureRegion> regions = new Array<>();
         for (int i = 0; i < 3; i++)

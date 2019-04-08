@@ -3,6 +3,7 @@ package inf112.roborally.game.tools;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -18,14 +19,14 @@ public class AssMan {
     public static final AssetManager manager = new AssetManager();
 
     //Music
-    public static final AssetDescriptor<Music> MUSIC_PLAYER_LASER
-            = new AssetDescriptor<>("assets/music/playerLaser.wav", Music.class);
+    public static final AssetDescriptor<Sound> SOUND_PLAYER_LASER
+            = new AssetDescriptor<>("assets/music/playerLaser.wav", Sound.class);
 
-    public static final AssetDescriptor<Music> MUSIC_PLAYER_REPAIR
-            = new AssetDescriptor<>("assets/music/playerRepair.wav", Music.class);
+    public static final AssetDescriptor<Sound> SOUND_PLAYER_REPAIR
+            = new AssetDescriptor<>("assets/music/playerRepair.wav", Sound.class);
 
-    public static final AssetDescriptor<Music> MUSIC_PLAYER_WILHELM_SCREAM
-            = new AssetDescriptor<>("assets/music/playerWilhelmScream.wav", Music.class);
+    public static final AssetDescriptor<Sound> SOUND_PLAYER_WILHELM_SCREAM
+            = new AssetDescriptor<>("assets/music/playerWilhelmScream.wav", Sound.class);
 
     public static final AssetDescriptor<Music> MUSIC_MAIN_THEME
             = new AssetDescriptor<>("assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
@@ -168,9 +169,9 @@ public class AssMan {
         manager.load(LASER_ATLAS);
         manager.load(PROGRAM_CARD_ATLAS);
         //Music
-        manager.load(MUSIC_PLAYER_LASER);
-        manager.load(MUSIC_PLAYER_REPAIR);
-        manager.load(MUSIC_PLAYER_WILHELM_SCREAM);
+        manager.load(SOUND_PLAYER_LASER);
+        manager.load(SOUND_PLAYER_REPAIR);
+        manager.load(SOUND_PLAYER_WILHELM_SCREAM);
         manager.load(MUSIC_MAIN_THEME);
 
         //Player skins

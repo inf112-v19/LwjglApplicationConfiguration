@@ -14,6 +14,7 @@ import inf112.roborally.game.objects.GameObject;
 import inf112.roborally.game.objects.LaserBeam;
 import inf112.roborally.game.objects.StartPosition;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,6 +26,7 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 
 @SuppressWarnings("Duplicates")
 public class Board extends TiledBoard {
+    private final float volume = .3f;
 
     protected ArrayList<Player> players;
     protected ArrayList<Flag> flags;
@@ -102,7 +104,7 @@ public class Board extends TiledBoard {
             expressBeltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
                 if (!soundIsMuted && !player.hasScreamed()) {
-                    player.getSoundFromPlayer(2).play();
+                    AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                 }
                 player.destroy();
             }
@@ -115,7 +117,8 @@ public class Board extends TiledBoard {
             beltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
                 if (!soundIsMuted && !player.hasScreamed()) {
-                    player.getSoundFromPlayer(2).play();
+                    AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
+                    player.setScreamed(true);
                 }
                 player.destroy();
             }
@@ -190,7 +193,7 @@ public class Board extends TiledBoard {
             if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
                 if (!soundIsMuted) {
-                    player.getSoundFromPlayer(1).play();
+                   AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
                 }
                 addAnimation(new RepairAnimation(player.position));
             }
@@ -222,16 +225,10 @@ public class Board extends TiledBoard {
     }
 
     public void killTheSound() {
-        for (Player p : players) {
-            p.killTheSound();
-        }
         soundIsMuted = true;
     }
 
     public void restartTheSound() {
-        for (Player p : players) {
-            p.createSounds();
-        }
         soundIsMuted = false;
     }
 

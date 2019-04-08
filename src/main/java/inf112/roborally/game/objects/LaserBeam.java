@@ -10,35 +10,36 @@ import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
 
-public class LaserBeam extends MovableGameObject {
+public class LaserBeam extends LaserAnimation {
     private Board board;
     private ArrayList<Position> beam;
-    private LaserAnimation animation;
+    private Position position;
+    private Direction direction;
 
     public LaserBeam(int x, int y, Direction direction, Board board) {
-        super(x, y, "");
         this.board = board;
-        animation = new LaserAnimation();
+        this.direction = direction;
+        position = new Position(x, y);
         beam = new ArrayList<>();
-        setDirection(direction);
-        if (laserIsFlipped()) {
-            setDirection(direction.getOppositeDirection());
-        }
         sprite = new Sprite();
         sprite.setBounds(0, 0, Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
         sprite.setOriginCenter();
-        sprite.setRotation(getDirection().getRotationDegree());
+        sprite.setRotation(direction.getRotationDegree());
+
+        if (laserIsFlipped()) {
+            this.direction = direction.getOppositeDirection();
+        }
     }
 
     public void fire() {
-        MovableGameObject laser = new MovableGameObject(getX(), getY(), "");
-        laser.setDirection(this.getDirection());
+        MovableGameObject laser = new MovableGameObject(position.getX(), position.getY(), "");
+        laser.setDirection(this.direction);
         while (laser.canGo(laser.getDirection(), board.getWallLayer())) {
             for (Player robot : board.getPlayers()) {
                 if (laser.position.equals(robot.position)) {
                     System.out.println("Lasers hit " + robot.getName());
                     robot.takeDamage();
-                    animation.playSound();
+                    playSound();
                     return;
                 }
             }
@@ -46,9 +47,8 @@ public class LaserBeam extends MovableGameObject {
         }
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
-        sprite.setRegion(animation.getRegion());
+        sprite.setRegion(getRegion());
         updateBeam();
         for (Position pos : beam) {
             sprite.setPosition(pos.getX() * 32, pos.getY() * 32);
@@ -60,16 +60,16 @@ public class LaserBeam extends MovableGameObject {
         beam.clear();
         if (beamBlockedByRobot()) return;
 
-        MovableGameObject laserbeam = new MovableGameObject(getX(), getY(), "");
+        MovableGameObject laserbeam = new MovableGameObject(position.getX(), position.getY(), "");
         beam.add(new Position(laserbeam.getX(), laserbeam.getY()));
-        laserbeam.setDirection(getDirection());
+        laserbeam.setDirection(direction);
         while (true) {
             if (laserbeam.crashWithRobot(laserbeam.getDirection(), board)) return;
 
             if (!laserbeam.canGo(laserbeam.getDirection(), board.getWallLayer())) return;
 
-            laserbeam.moveInDirection(getDirection());
-            beam.add(new Position(laserbeam.getX(), laserbeam.getY()));
+            laserbeam.moveInDirection(direction);
+            beam.add(laserbeam.position.copy());
         }
     }
 
