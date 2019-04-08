@@ -2,10 +2,7 @@ package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -29,13 +26,11 @@ public class Hud {
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
     private ImageButton settingsButton;
-    private AssMan assMan;
     private float scale = 0.4f;
 
     public Hud(final Player player, final RoboRallyGame game) {
         this.player = player;
         this.game = game;
-        this.assMan = game.getAssMan();
         stage = new Stage(game.fixedViewPort, game.batch);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(game.cameraListener);
@@ -66,11 +61,13 @@ public class Hud {
                 public void clicked(InputEvent event, float x, float y) {
                     if (player.getRegisters().isFull() && !player.outOfLives()) {
                         player.setPlayerState(PlayerState.READY);
+                        setPowerDownTouchable(false);
                     }
                 }
             });
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -84,7 +81,8 @@ public class Hud {
             greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
             greySubmitButton.addListener(new ClickListener());
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -106,7 +104,8 @@ public class Hud {
                 }
             });
             return true;
-        } else {
+        }
+        else {
             return false;
         }
     }
@@ -177,5 +176,16 @@ public class Hud {
         clearAllCards();
         handDisplay.updateCardsInHand(this);
         registerDisplay.drawCardsInProgramRegister(this);
+    }
+
+    public void setPowerDownTouchable(boolean canTouch) {
+        if (canTouch && !player.isPoweredDown())
+            registerDisplay.getPowerDown().setTouchable(Touchable.enabled);
+        else
+            registerDisplay.getPowerDown().setTouchable(Touchable.disabled);
+    }
+
+    public void resetPowerDown() {
+        if (registerDisplay.getPowerDown().isChecked()) registerDisplay.getPowerDown().toggle();
     }
 }

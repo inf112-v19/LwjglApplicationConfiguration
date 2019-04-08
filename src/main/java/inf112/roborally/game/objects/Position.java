@@ -59,10 +59,13 @@ public class Position {
         y = position.getY();
     }
 
+    public Position copy(){
+        return new Position(x, y);
+    }
+
     @Override
     public boolean equals(Object other) {
         Position that = (Position) other;
         return this.x == that.x && this.y == that.y;
-
     }
 }

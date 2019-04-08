@@ -13,7 +13,7 @@ public class VaultBoard extends Board {
         flags.add(new Flag(5, 8, 2));
         flags.add(new Flag(11, 4, 3));
         createBoard(RoboRallyGame.VAULT);
-        findLasers();
+        findLaserGuns();
     }
 
     public VaultBoard(ArrayList<Position> flagPositions) {
@@ -22,7 +22,7 @@ public class VaultBoard extends Board {
             flags.add(new Flag(currPos.getX(), currPos.getY(), i + 1));
         }
         createBoard(RoboRallyGame.VAULT);
-        findLasers();
+        findLaserGuns();
     }
 
 }

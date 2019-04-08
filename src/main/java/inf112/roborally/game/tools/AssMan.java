@@ -3,13 +3,14 @@ package inf112.roborally.game.tools;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 /**
- * Contains assets used by the game (all .png and .wav files).
+ * Contains assets used by the game.
  * With AssMan you are able to load as well as dispose all of them at the same time.
- * <p>
- * .atlas files can not go here.
+ *
  * Calling {@link #dispose()} will dispose all assets.
  */
 public class AssMan {
@@ -17,14 +18,14 @@ public class AssMan {
     public static final AssetManager manager = new AssetManager();
 
     //Music
-    public static final AssetDescriptor<Music> MUSIC_PLAYER_LASER
-            = new AssetDescriptor<>("assets/music/playerLaser.wav", Music.class);
+    public static final AssetDescriptor<Sound> SOUND_PLAYER_LASER
+            = new AssetDescriptor<>("assets/music/playerLaser.wav", Sound.class);
 
-    public static final AssetDescriptor<Music> MUSIC_PLAYER_REPAIR
-            = new AssetDescriptor<>("assets/music/playerRepair.wav", Music.class);
+    public static final AssetDescriptor<Sound> SOUND_PLAYER_REPAIR
+            = new AssetDescriptor<>("assets/music/playerRepair.wav", Sound.class);
 
-    public static final AssetDescriptor<Music> MUSIC_PLAYER_WILHELM_SCREAM
-            = new AssetDescriptor<>("assets/music/playerWilhelmScream.wav", Music.class);
+    public static final AssetDescriptor<Sound> SOUND_PLAYER_WILHELM_SCREAM
+            = new AssetDescriptor<>("assets/music/playerWilhelmScream.wav", Sound.class);
 
     public static final AssetDescriptor<Music> MUSIC_MAIN_THEME
             = new AssetDescriptor<>("assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
@@ -130,9 +131,26 @@ public class AssMan {
     public static final AssetDescriptor<Texture> REGISTER_LOCK_TOKEN
             = new AssetDescriptor<>("assets/cards/tokens/lockToken.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> REGISTER_POWER_DOWN
-            = new AssetDescriptor<>("assets/cards/powerDown.png", Texture.class);
+    public static final AssetDescriptor<Texture> POWER_DOWN
+            = new AssetDescriptor<>("assets/buttons/powerdown.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> POWER_DOWN_PRESS
+            = new AssetDescriptor<>("assets/buttons/powerdown_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> POWER_DOWN_PRESSED
+            = new AssetDescriptor<>("assets/buttons/powerdown_active.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_SUBMIT
+            = new AssetDescriptor<>("assets/buttons/submit.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_SUBMIT_PRESS
+            = new AssetDescriptor<>("assets/buttons/submit_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_CLEAR
+            = new AssetDescriptor<>("assets/buttons/clear.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> REGISTER_CLEAR_PRESS
+            = new AssetDescriptor<>("assets/buttons/clear_press.png", Texture.class);
 
     //Backup
     public static final AssetDescriptor<Texture> BACKUP
@@ -164,6 +182,8 @@ public class AssMan {
             = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
 
     // Buttons:
+    public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
+            = new AssetDescriptor<>("assets/flags/flags.atlas", TextureAtlas.class);
 
     public static final AssetDescriptor<Texture> RIGHT_ARROW
             = new AssetDescriptor<>("assets/buttons/right_arrow.png", Texture.class);
@@ -192,13 +212,23 @@ public class AssMan {
     public static final AssetDescriptor<Texture> SELECT_SCREEN
             = new AssetDescriptor<>("assets/buttons/select_skin_screen.png", Texture.class);
 
+    public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
+            = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
+
+    public static final AssetDescriptor<TextureAtlas> LASER_ATLAS
+            = new AssetDescriptor<>("assets/objects/animatedlaser.atlas", TextureAtlas.class);
+
+
+
     @SuppressWarnings("Duplicates")
     public static void load() {
 
+        manager.load(LASER_ATLAS);
+        manager.load(PROGRAM_CARD_ATLAS);
         //Music
-        manager.load(MUSIC_PLAYER_LASER);
-        manager.load(MUSIC_PLAYER_REPAIR);
-        manager.load(MUSIC_PLAYER_WILHELM_SCREAM);
+        manager.load(SOUND_PLAYER_LASER);
+        manager.load(SOUND_PLAYER_REPAIR);
+        manager.load(SOUND_PLAYER_WILHELM_SCREAM);
         manager.load(MUSIC_MAIN_THEME);
 
         //Player skins
@@ -243,7 +273,14 @@ public class AssMan {
         manager.load(REGISTER_LIFE_TOKEN);
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
-        manager.load(REGISTER_POWER_DOWN);
+        manager.load(POWER_DOWN);
+        manager.load(REGISTER_SUBMIT);
+        manager.load(REGISTER_SUBMIT_PRESS);
+        manager.load(REGISTER_CLEAR);
+        manager.load(REGISTER_CLEAR_PRESS);
+        manager.load(POWER_DOWN);
+        manager.load(POWER_DOWN_PRESS);
+        manager.load(POWER_DOWN_PRESSED);
 
         //Backup
         manager.load(BACKUP);
@@ -262,6 +299,7 @@ public class AssMan {
 
         //Flag
         manager.load(FLAG_SKIN);
+        manager.load(FLAG_ATLAS);
     }
 
     public static String[] getPlayerSkins() {
@@ -288,6 +326,7 @@ public class AssMan {
     }
 
     public void dispose() {
+    public static void dispose() {
         System.out.println("Disposing asset manager");
         manager.clear();
     }

@@ -29,16 +29,14 @@ public class Player extends MovableGameObject implements Comparable {
     private int lives;
     private int damage;
     private Backup backup;
-    private ProgramRegisters registers;
     private Board board;
     private ArrayList<TextureRegion> regions;
-    private int nSounds;
-    private GameSound[] allPlayerSounds;
     private int targetFlag;
     private int nFlags;
     private boolean screamed;  //Whether or not the player has screamed from falling off the map this round.
     private int phase;
     private boolean debugging;
+    private ProgramRegisters registers;
     private PlayerHand hand;
 
     public Player(String name, String filepath, Direction direction, Board board) {
@@ -51,9 +49,6 @@ public class Player extends MovableGameObject implements Comparable {
         nFlags = board.getFlags().size();
         backup.setupSprite();
         phase = 0;
-        nSounds = 3;
-        allPlayerSounds = new GameSound[nSounds];
-        createSounds();
         debugging = false;
     }
 
@@ -81,12 +76,6 @@ public class Player extends MovableGameObject implements Comparable {
         this.nFlags = nFlags;
         name = "testBot";
         debugging = true;
-    }
-
-    public void createSounds() {
-        allPlayerSounds[0] = new GameSound(AssMan.MUSIC_PLAYER_LASER.fileName);
-        allPlayerSounds[1] = new GameSound(AssMan.MUSIC_PLAYER_REPAIR.fileName);
-        allPlayerSounds[2] = new GameSound(AssMan.MUSIC_PLAYER_WILHELM_SCREAM.fileName);
     }
 
     @Override
@@ -239,10 +228,6 @@ public class Player extends MovableGameObject implements Comparable {
         return targetFlag > nFlags;
     }
 
-    public boolean hitByLaser(TiledMapTileLayer laserLayer) {
-        return cellContainsKey(laserLayer.getCell(getX(), getY()), "Laser");
-    }
-
     public boolean isDestroyed() {
         return playerState == DESTROYED;
     }
@@ -263,15 +248,12 @@ public class Player extends MovableGameObject implements Comparable {
         return lives < 1;
     }
 
-    public void killTheSound() {
-        for (GameSound s : allPlayerSounds) {
-            s.mute();
-        }
-        allPlayerSounds = new GameSound[nSounds];
-    }
-
     public boolean hasScreamed() {
         return this.screamed;
+    }
+
+    public void setScreamed(boolean b) {
+        screamed = b;
     }
 
     public int getCardLimit() {
@@ -318,13 +300,6 @@ public class Player extends MovableGameObject implements Comparable {
 
     public LaserCannon getLaserCannon() {
         return laserCannon;
-    }
-
-    public GameSound getSoundFromPlayer(int index) {
-        if (index == 2) {
-            screamed = true;
-        }
-        return allPlayerSounds[index];
     }
 
     @Override

@@ -1,6 +1,5 @@
 package inf112.roborally.game.gui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -10,22 +9,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.player.ProgramRegisters;
-import inf112.roborally.game.enums.GameState;
-import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramRegisters;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 
-
 public class RegisterDisplay {
-    public Group registerGui;
-    float scale = .5f;
-    float h;
+    private Group registerGui;
+    private float scale = .5f;
+    private float h;
     private Player player;
     private ProgramRegisters registers;
     private Image programBoard;
@@ -34,41 +28,40 @@ public class RegisterDisplay {
     private ArrayList<Image> lifeTokens;
     private ArrayList<Image> lockTokens;
     private ArrayList<TextureRegionDrawable> wireTextures;
+    private ImageButton powerDown;
 
     /**
      * Draws the program register of a given player.
      * Shows cards in the players register slots. If a register is locked a small lock icon will appear.
      * It also shows lives, damage taken and the power button.
-     *
-     * @param player
      */
     public RegisterDisplay(Player player, Group registerGui, Group lockGui) {
         this.player = player;
         this.registerGui = registerGui;
         registers = player.getRegisters();
-
         //Items on a registerGui or in a group are drawn in the order they are added.
         addProgramBoard();
         addDamageTokens();
         addLifeTokens();
         addWires();
         addLockTokens(lockGui); // Locks needs to be updated on top of the cards
-
         addPowerDown();
     }
 
     private void addPowerDown() {
-        ImageButton powerDown = new ImageButton(new TextureRegionDrawable(new Texture(AssMan.REGISTER_POWER_DOWN.fileName)));
-        powerDown.setSize(powerDown.getWidth() * scale, powerDown.getHeight() * scale);
-        powerDown.setPosition(programBoard.getX() + 180 * scale, 370 * scale, Align.center);
+        TextureRegionDrawable normal = new TextureRegionDrawable(AssMan.manager.get(AssMan.POWER_DOWN));
+        TextureRegionDrawable press = new TextureRegionDrawable(AssMan.manager.get(AssMan.POWER_DOWN_PRESS));
+        TextureRegionDrawable pressed = new TextureRegionDrawable(AssMan.manager.get(AssMan.POWER_DOWN_PRESSED));
+        powerDown = new ImageButton(normal, press, pressed);
+        int pdSize = 160;
+        powerDown.setSize(pdSize  * scale, pdSize * scale);
+        powerDown.setPosition(programBoard.getX() + 180 * scale, 380 * scale, Align.center);
         powerDown.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                GameLogic logic = ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.getGameLogic();
-                if (logic.getState() == GameState.PICKING_CARDS && player.getPlayerState() == PlayerState.OPERATIONAL) {
-                    System.out.println(player.getName() + " wants to power down");
-                    player.wantsToPowerDown = true;
-                }
+                player.wantsToPowerDown = !player.wantsToPowerDown;
+                if (player.wantsToPowerDown) System.out.println(player.getName() + " wants to power down");
+                else System.out.println(player.getName() + " changed his/her mind");
             }
         });
         registerGui.addActor(powerDown);
@@ -98,7 +91,7 @@ public class RegisterDisplay {
     }
 
     private void addLifeTokens() {
-        float startX = 1920 / 2 + 488 * scale;
+        float startX = 1920 / 2f + 488 * scale;
         float startY = h - 170 * scale;
         float space = 105 * scale;
 
@@ -127,7 +120,7 @@ public class RegisterDisplay {
     }
 
     private void addLockTokens(Group lockGui) {
-        float startX = 1920 / 2 + 400 * scale;
+        float startX = 1920 / 2f + 400 * scale;
         float startY = h - 235 * scale;
         float space = 200 * scale;
         lockTokens = new ArrayList<>();
@@ -196,5 +189,9 @@ public class RegisterDisplay {
                 hud.registerGui.addActor(cardInRegisterButton);
             }
         }
+    }
+
+    public ImageButton getPowerDown(){
+        return powerDown;
     }
 }

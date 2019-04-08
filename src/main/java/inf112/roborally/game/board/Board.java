@@ -11,12 +11,15 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.GameObject;
-import inf112.roborally.game.player.Player;
+import inf112.roborally.game.objects.LaserBeam;
 import inf112.roborally.game.objects.StartPosition;
+import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
 import static inf112.roborally.game.tools.TiledTools.getValue;
@@ -24,10 +27,12 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 
 @SuppressWarnings("Duplicates")
 public class Board extends TiledBoard {
+    private final float volume = .3f;
 
-    protected ArrayList<Player> players;
+    protected List<Player> players;
     protected ArrayList<Flag> flags;
     protected ArrayList<LaserAnimation> lasers;
+    protected ArrayList<LaserBeam> laserGuns;
     protected ArrayList<StartPosition> startPlates;
 
     // Need this one so we don't check for non existing music when sounds are muted/disposed
@@ -35,21 +40,24 @@ public class Board extends TiledBoard {
 
 
     public Board() {
-        players = new ArrayList<>();
+        players = Collections.synchronizedList(new ArrayList<Player>());
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
+        laserGuns = new ArrayList<>();
         startPlates = new ArrayList<>();
         soundIsMuted = false;
     }
 
-    public void findLasers() {
+    public ArrayList<LaserBeam> getLaserGuns() {
+        return laserGuns;
+    }
+
+    public void findLaserGuns() {
         for (int x = 0; x < laserLayer.getWidth(); x++) {
             for (int y = 0; y < laserLayer.getHeight(); y++) {
                 TiledMapTileLayer.Cell cell = laserLayer.getCell(x, y);
-                if (cell != null) {
-                    Direction direction = Direction.valueOf(getValue(cell));
-                    lasers.add(new LaserAnimation(x, y, direction));
-                }
+                if (cell != null)
+                    laserGuns.add(new LaserBeam(x, y, Direction.valueOf(getValue(cell)), this));
             }
         }
     }
@@ -97,7 +105,7 @@ public class Board extends TiledBoard {
             expressBeltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
                 if (!soundIsMuted && !player.hasScreamed()) {
-                    player.getSoundFromPlayer(2).play();
+                    AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                 }
                 player.destroy();
             }
@@ -110,7 +118,8 @@ public class Board extends TiledBoard {
             beltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
                 if (!soundIsMuted && !player.hasScreamed()) {
-                    player.getSoundFromPlayer(2).play();
+                    AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
+                    player.setScreamed(true);
                 }
                 player.destroy();
             }
@@ -157,14 +166,7 @@ public class Board extends TiledBoard {
     }
 
     public void lasersFire() {
-        for (Player player : players) {
-            if (player.hitByLaser(laserLayer)) {
-                if (!soundIsMuted) {
-                    player.getSoundFromPlayer(0).play();
-                }
-                player.takeDamage();
-            }
-        }
+        for (LaserBeam laser : laserGuns) laser.fire();
     }
 
     private void visitFlags() {
@@ -192,7 +194,7 @@ public class Board extends TiledBoard {
             if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
                 if (!soundIsMuted) {
-                    player.getSoundFromPlayer(1).play();
+                   AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
                 }
                 addAnimation(new RepairAnimation(player.position));
             }
@@ -209,8 +211,13 @@ public class Board extends TiledBoard {
     public void drawGameObjects(SpriteBatch batch) {
         drawBackup(batch);
         drawList(players, batch);
-        drawList(lasers, batch);
+        drawLasers(batch);
         drawList(flags, batch);
+    }
+
+    public void drawLasers(SpriteBatch batch) {
+        for(LaserBeam beam : laserGuns)
+            beam.draw(batch);
     }
 
     public void drawBackup(SpriteBatch batch) {
@@ -219,26 +226,20 @@ public class Board extends TiledBoard {
         }
     }
 
-    private void drawList(ArrayList<? extends GameObject> list, SpriteBatch batch) {
+    private void drawList(List<? extends GameObject> list, SpriteBatch batch) {
         for (GameObject object : list)
             object.draw(batch);
     }
 
     public void killTheSound() {
-        for (Player p : players) {
-            p.killTheSound();
-        }
         soundIsMuted = true;
     }
 
     public void restartTheSound() {
-        for (Player p : players) {
-            p.createSounds();
-        }
         soundIsMuted = false;
     }
 
-    public ArrayList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return this.players;
     }
 

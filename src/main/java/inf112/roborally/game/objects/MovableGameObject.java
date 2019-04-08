@@ -4,15 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
-import inf112.roborally.game.tools.TiledTools;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.TiledTools;
 
 import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
 import static inf112.roborally.game.tools.TiledTools.getValue;
 
-public abstract class MovableGameObject extends GameObject {
+public class MovableGameObject extends GameObject {
     protected int rotationDegree;
     private Direction direction;
 
@@ -112,8 +112,7 @@ public abstract class MovableGameObject extends GameObject {
     }
 
     public boolean crashWithRobot(Direction direction, Board board) {
-        Position nextPos = new Position(getX(), getY());
-        nextPos.moveInDirection(direction);
+        Position nextPos = this.position.copy().moveInDirection(direction);
         for (Player other : board.getPlayers()) {
             if (this.equals(other)) continue;
 
