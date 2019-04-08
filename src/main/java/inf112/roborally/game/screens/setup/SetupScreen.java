@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens;
+package inf112.roborally.game.screens.setup;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,6 +14,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.enums.SetupState;
+import inf112.roborally.game.screens.AbstractScreen;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.objects.Position;
 

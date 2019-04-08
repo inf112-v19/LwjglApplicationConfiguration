@@ -219,7 +219,7 @@ public class AssMan {
         //Settings
         manager.load(SETTINGS_BACKGROUND);
 
-        //Setup
+        //setup
         manager.load(SETUP_SETUP_SCREEN);
         manager.load(SETUP_SELECT_SKIN_TEXT);
         manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
