@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.roborally.game.screens.setup.SelectMapScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.screens.setup.SetupScreen;
 import inf112.roborally.game.tools.AssMan;
@@ -42,7 +43,7 @@ public class RoboRallyGame extends Game {
     public MenuScreen menuScreen;
     public SetupScreen setupScreen;
     public SelectSkinScreen selectSkinScreen;
-//    public SelectMapScreen selectMapScreen;
+    public SelectMapScreen selectMapScreen;
     public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
@@ -87,6 +88,7 @@ public class RoboRallyGame extends Game {
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
         selectSkinScreen = new SelectSkinScreen(this);
+        selectMapScreen = new SelectMapScreen(this);
 
         testScreen = new TestScreen(this);
         laserTestScreen = new LaserTestScreen(this);

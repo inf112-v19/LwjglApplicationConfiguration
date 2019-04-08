@@ -12,9 +12,11 @@ public class SelectSkinScreen extends SelectScreen {
         super(game, SetupState.PICKINGSKIN, AssMan.getPlayerSkins().length);
     }
 
+    @Override
     public void completeChoice() {
         System.out.println("SelectSkinScreen completeChoice() selected, switching to select map");
+        System.out.println("Selected the choice at index " + choiceIndex);
+        game.setScreen(game.selectMapScreen);
         dispose();
-        Gdx.app.exit();
     }
 }

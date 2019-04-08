@@ -22,7 +22,7 @@ public abstract class SelectScreen implements Screen {
 
     private Stage stage;
     private TextureRegionDrawable[] choices;
-    private int choiceIndex;
+    protected int choiceIndex;
     private Image currentChoice;
     private Boolean clicked = false;
     private final int numberOfChoices;
