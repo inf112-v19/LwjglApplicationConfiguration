@@ -1,6 +1,5 @@
 package inf112.roborally.game.objects;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.Main;
@@ -8,7 +7,6 @@ import inf112.roborally.game.animations.LaserAnimation;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.player.Player;
-import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 
@@ -33,18 +31,12 @@ public class LaserBeam extends MovableGameObject {
     }
 
     public void fire() {
-        for (Player robot : board.getPlayers()){
-            if (this.position.equals(robot.position)){
-                robot.takeDamage();
-                animation.playSound();
-                return;
-            }
-        }
         MovableGameObject laser = new MovableGameObject(getX(), getY(), "");
         laser.setDirection(this.getDirection());
         while (laser.canGo(laser.getDirection(), board.getWallLayer())) {
             for (Player robot : board.getPlayers()) {
-                if (laser.crashWithRobot(laser.getDirection(), board)) {
+                if (laser.position.equals(robot.position)) {
+                    System.out.println("Lasers hit " + robot.getName());
                     robot.takeDamage();
                     animation.playSound();
                     return;
