@@ -30,7 +30,7 @@ public class MenuScreen implements Screen {
 
         viewport = new FitViewport(1920, 1080);
 
-        background = new Sprite(new Texture(AssMan.MENUSCREEN_CHOICES.fileName));
+        background = new Sprite(AssMan.manager.get(AssMan.MENUSCREEN_CHOICES));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage = new Stage(roboRallyGame.fixedViewPort, roboRallyGame.batch);
         stateTimer = 0;
