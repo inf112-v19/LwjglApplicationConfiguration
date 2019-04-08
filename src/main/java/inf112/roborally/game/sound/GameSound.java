@@ -1,7 +1,10 @@
 package inf112.roborally.game.sound;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import inf112.roborally.game.tools.AssMan;
 
 public class GameSound implements IGameMusic{
     private Sound sound;
@@ -10,6 +13,10 @@ public class GameSound implements IGameMusic{
     public GameSound(String filepath) {
         sound = Gdx.audio.newSound(Gdx.files.internal(filepath));
         this.filepath = filepath;
+    }
+
+    public GameSound(AssetDescriptor<Sound> file) {
+        sound = AssMan.manager.get(file);
     }
 
     @Override
