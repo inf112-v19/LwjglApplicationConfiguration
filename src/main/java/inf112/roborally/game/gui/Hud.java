@@ -10,9 +10,7 @@ import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 public class Hud {
 
@@ -28,9 +26,10 @@ public class Hud {
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
-    private ImageButton settingsButton;
-    private float scale = 0.4f;
 
+    private ImageButton settingsButton;
+
+    private float scale = 0.4f;
     public Hud(final Player player, final RoboRallyGame game) {
         this.player = player;
         this.game = game;
@@ -143,7 +142,7 @@ public class Hud {
     }
 
     public void draw() {
-        playerStatusDisplay.update();
+        if (playerStatusDisplay != null) playerStatusDisplay.update();
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
         registerDisplay.update();
@@ -196,5 +195,9 @@ public class Hud {
 
     public void resetPowerDown() {
         if (registerDisplay.getPowerDown().isChecked()) registerDisplay.getPowerDown().toggle();
+    }
+
+    public PlayerStatusDisplay getPlayerStatusDisplay() {
+        return playerStatusDisplay;
     }
 }
