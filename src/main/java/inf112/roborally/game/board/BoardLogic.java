@@ -24,7 +24,7 @@ public class BoardLogic {
     protected List<Player> players;
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
-    private ArrayList<Player> aiBots;
+    protected ArrayList<Player> aiBots;
 
     public BoardLogic(List<Player> players) {
         this.players = players;
@@ -46,7 +46,7 @@ public class BoardLogic {
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
-                AiRobo.makeDecisionsForRobos(aiBots);
+                aiRobosReady();
                 checkIfReady();
                 break;
             case ROUND:
@@ -59,6 +59,11 @@ public class BoardLogic {
                 endGame();
         }
     }
+
+    public void aiRobosReady() {
+
+    }
+
 
     protected void doBeforeRound() {
         System.out.println("Set up before round");
