@@ -39,10 +39,11 @@ public class RoboRallyGame extends Game {
 
     public MenuScreen menuScreen;
     public SetupScreen setupScreen;
+    public SelectSkinScreen selectSkinScreen;
+//    public SelectMapScreen selectMapScreen;
     public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
-    public SelectSkinScreen selectSkinScreen;
 
     public TestScreen testScreen;
     public LaserTestScreen laserTestScreen;

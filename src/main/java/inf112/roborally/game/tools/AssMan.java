@@ -57,6 +57,10 @@ public class AssMan {
     public static final AssetDescriptor<Texture> PLAYER_COP_BOT
             = new AssetDescriptor<>("assets/robots/CU5TM-TP.png", Texture.class);
 
+    //Maps
+    public static final AssetDescriptor<Texture> MAP_VAULT
+            = new AssetDescriptor<Texture>("assets/maps/vault.png", Texture.class);
+
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
             = new AssetDescriptor<>("assets/cards/buttonSubmit.png", Texture.class);
@@ -100,9 +104,6 @@ public class AssMan {
 
     public static final AssetDescriptor<Texture> SETUP_CHECK_FLAG
             = new AssetDescriptor<>("assets/screens/setupscreen/checkflag.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SETUP_MAP_VAULT
-            = new AssetDescriptor<>("assets/screens/setupscreen/vault.png", Texture.class);
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
@@ -198,6 +199,9 @@ public class AssMan {
         manager.load(PLAYER_CLAPTRAP_3000);
         manager.load(PLAYER_TVBOT);
 
+        // Maps (png files)
+        manager.load(MAP_VAULT);
+
         //Hud buttons
         manager.load(BUTTON_SUBMIT);
         manager.load(BUTTON_SUBMIT_GREY);
@@ -220,7 +224,6 @@ public class AssMan {
         manager.load(SETUP_SELECT_SKIN_TEXT);
         manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
         manager.load(SETUP_CHECK_FLAG);
-        manager.load(SETUP_MAP_VAULT);
 
         //Program register
         manager.load(REGISTER_PROGRAM_REGISTER);
@@ -261,6 +264,12 @@ public class AssMan {
         skins[7] = PLAYER_NURSE_BOT.fileName;
 
         return skins;
+    }
+
+    public static String[] getMapChoices() {
+        String[] maps = new String[1];
+        maps[1] = MAP_VAULT.fileName;
+        return maps;
     }
 
     public void dispose() {

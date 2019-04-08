@@ -122,10 +122,10 @@ public class SetupScreen extends AbstractScreen {
         }
 
 
-        board = new Texture(AssMan.SETUP_MAP_VAULT.fileName);
+//        board = new Texture(AssMan.SETUP_MAP_VAULT.fileName);
 
 //        state = SetupState.PLACINGFLAGS;
-        state = SetupState.TESTPPLACINGFLAGS;
+//        state = SetupState.TESTPPLACINGFLAGS;
     }
 
 
@@ -169,11 +169,11 @@ public class SetupScreen extends AbstractScreen {
 
         // Possible to add more SetupStates
         switch (state) {
-            case TESTPPLACINGFLAGS:
+//            case TESTPPLACINGFLAGS:
 
 
 
-                break;
+//                break;
 
             case PLACINGFLAGS:
                 // The map has 2 invisible tiles at all sides
