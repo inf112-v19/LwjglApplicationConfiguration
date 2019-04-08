@@ -10,6 +10,9 @@ import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Hud {
 
@@ -46,8 +49,10 @@ public class Hud {
 
         handDisplay = new HandDisplay(player, this);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
-        playerStatusDisplay = new PlayerStatusDisplay(player,this);
+    }
 
+    public void addPlayerStatusDisplay(List<Player> players) {
+        playerStatusDisplay = new PlayerStatusDisplay(player, players, this);
     }
 
 

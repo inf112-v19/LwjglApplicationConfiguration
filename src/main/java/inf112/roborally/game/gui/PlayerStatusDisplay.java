@@ -13,6 +13,7 @@ import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerStatusDisplay {
     private ArrayList<Player> otherPlayers;
@@ -21,12 +22,17 @@ public class PlayerStatusDisplay {
     private boolean hidden;
     private BitmapFont font;
     private PlayerStatus ps;
+    private List<PlayerStatus> statuses;
 
-    public PlayerStatusDisplay(Player player, final Hud hud) {
+    public PlayerStatusDisplay(Player player, List<Player> players, final Hud hud) {
         font = new BitmapFont();
+        statuses = new ArrayList<>();
         statusBoard = new Group();
         hud.stage.addActor(statusBoard);
         otherPlayers = new ArrayList<>();
+        for (Player maybeOther : players) {
+            if (!maybeOther.equals(player)) otherPlayers.add(maybeOther);
+        }
         hidden = false;
         bg = new Image(new Texture("assets/register/robot_status_display.png"));
         bg.addListener(new ClickListener() {
@@ -42,24 +48,26 @@ public class PlayerStatusDisplay {
             }
         });
         statusBoard.addActor(bg);
-        ps = new PlayerStatus(player);
+        for(int i = 0; i < otherPlayers.size(); i++)
+            statuses.add(new PlayerStatus(i));
     }
 
     public void update() {
-        ps.update();
+        for(PlayerStatus status : statuses) status.update();
     }
-        private class PlayerStatus {
+
+    private class PlayerStatus {
         private Player player;
         private ArrayList<Image> lives;
         private Label damageNumber;
 
-        public PlayerStatus(Player p) {
-            this.player = p;
+        public PlayerStatus(int index) {
+            this.player = otherPlayers.get(index);
             int size = 256;
             int height = 384;
             Image robotSkin = new Image(new TextureRegion(player.getSprite().getTexture(), size * 2, 0, size, height));
             robotSkin.setSize(84, 113);
-            robotSkin.setPosition(75, 1080 - robotSkin.getHeight());
+            robotSkin.setPosition(75, 1080 - robotSkin.getHeight() - (robotSkin.getHeight()+24.5f)*index);
             Image damageToken = new Image(AssMan.manager.get(AssMan.REGISTER_DAMAGE_TOKEN));
             damageToken.setPosition(robotSkin.getX() + 70, robotSkin.getY() + 15);
             damageToken.setSize(32, 32);
