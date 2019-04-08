@@ -325,7 +325,6 @@ public class AssMan {
         return maps;
     }
 
-    public void dispose() {
     public static void dispose() {
         System.out.println("Disposing asset manager");
         manager.clear();
