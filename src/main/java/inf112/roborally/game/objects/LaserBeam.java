@@ -39,7 +39,9 @@ public class LaserBeam extends LaserAnimation {
                 if (laser.position.equals(robot.position)) {
                     System.out.println("Lasers hit " + robot.getName());
                     robot.takeDamage();
-                    playSound();
+                    if(!board.isSoundMuted()) {
+                        playSound();
+                    }
                     return;
                 }
             }

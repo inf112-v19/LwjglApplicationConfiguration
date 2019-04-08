@@ -105,6 +105,7 @@ public class Board extends TiledBoard {
             if (player.isOffTheBoard(floorLayer)) {
                 if (!soundIsMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
+                    player.setScreamed(true);
                 }
                 player.destroy();
             }
@@ -256,6 +257,10 @@ public class Board extends TiledBoard {
         return laserGuns;
     }
 
+
+    public boolean isSoundMuted(){
+        return this.soundIsMuted;
+    }
     public void dispose() {
         System.out.println("Disposing board");
         super.dispose();
