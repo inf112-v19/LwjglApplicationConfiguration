@@ -52,8 +52,7 @@ public class Hud {
 
     public boolean createSubmitButton() {
         if (AssMan.manager.isLoaded(AssMan.BUTTON_SUBMIT.fileName)) {
-            submitButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get
-                    (AssMan.BUTTON_SUBMIT.fileName, Texture.class)));
+            submitButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_SUBMIT)));
             submitButton.setSize(submitButton.getWidth() * scale, submitButton.getHeight() * scale);
             submitButton.setPosition((1920 / 2) + 7, 260);
             submitButton.addListener(new ClickListener() {
@@ -75,8 +74,7 @@ public class Hud {
 
     public boolean createSubmitButtonGrey() {
         if (AssMan.manager.isLoaded(AssMan.BUTTON_SUBMIT_GREY.fileName)) {
-            greySubmitButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get
-                    (AssMan.BUTTON_SUBMIT_GREY.fileName, Texture.class)));
+            greySubmitButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_SUBMIT_GREY)));
             greySubmitButton.setSize(submitButton.getWidth(), submitButton.getHeight());
             greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
             greySubmitButton.addListener(new ClickListener());
@@ -89,8 +87,7 @@ public class Hud {
 
     public boolean createButtonClear() {
         if (AssMan.manager.isLoaded(AssMan.BUTTON_CLEAR.fileName)) {
-            clearButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(
-                    AssMan.BUTTON_CLEAR.fileName, Texture.class)));
+            clearButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_CLEAR)));
             clearButton.setSize(clearButton.getWidth() * scale, clearButton.getHeight() * scale);
             clearButton.setPosition((1920 / 2) - (clearButton.getWidth()) - 7, 260);
             clearButton.addListener(new ClickListener() {
@@ -111,8 +108,7 @@ public class Hud {
     }
 
     public boolean createSettingsButton() {
-        settingsButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get
-                (AssMan.BUTTON_SETTINGS.fileName, Texture.class)));
+        settingsButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_SETTINGS)));
         settingsButton.setPosition(60, 60);
         settingsButton.addListener(new ClickListener() {
             @Override

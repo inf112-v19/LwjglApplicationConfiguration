@@ -24,12 +24,12 @@ public class Background {
 
         background = new Sprite(new Texture(AssMan.GAMESCREEN_BACKGROUND2.fileName));
 
-        grid = new Sprite(new Texture(AssMan.GAMESCREEN_GRID2.fileName));
+        grid = new Sprite(AssMan.manager.get(AssMan.GAMESCREEN_GRID2));
         grid.setSize(background.getWidth() * 1.4f, background.getHeight() * 1.4f);
         gridX = -grid.getWidth() / 10;
         gridY = -grid.getHeight() / 10;
 
-        clouds = new Sprite(new Texture(AssMan.GAMESCREEN_CLOUDS.fileName));
+        clouds = new Sprite(AssMan.manager.get(AssMan.GAMESCREEN_CLOUDS));
         clouds.setSize(background.getWidth() * 1.4f, background.getHeight() * 1.4f);
         clouds.setOriginCenter();
         cloudX = clouds.getOriginX() - 200;
