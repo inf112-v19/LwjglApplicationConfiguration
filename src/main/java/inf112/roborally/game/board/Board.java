@@ -48,10 +48,6 @@ public class Board extends TiledBoard {
         soundIsMuted = false;
     }
 
-    public ArrayList<LaserBeam> getLaserGuns() {
-        return laserGuns;
-    }
-
     public void findLaserGuns() {
         for (int x = 0; x < laserLayer.getWidth(); x++) {
             for (int y = 0; y < laserLayer.getHeight(); y++) {
@@ -75,6 +71,9 @@ public class Board extends TiledBoard {
     }
 
     public void addPlayer(Player player) {
+        if(player == null){
+            return;
+        }
         players.add(player);
     }
 
@@ -194,7 +193,7 @@ public class Board extends TiledBoard {
             if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
                 if (!soundIsMuted) {
-                   AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
+                    AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
                 }
                 addAnimation(new RepairAnimation(player.position));
             }
@@ -206,6 +205,7 @@ public class Board extends TiledBoard {
 
     private void addAnimation(Animation animation) {
         ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.animations.add(animation);
+        //animation.dispose();
     }
 
     public void drawGameObjects(SpriteBatch batch) {
@@ -216,7 +216,7 @@ public class Board extends TiledBoard {
     }
 
     public void drawLasers(SpriteBatch batch) {
-        for(LaserBeam beam : laserGuns)
+        for (LaserBeam beam : laserGuns)
             beam.draw(batch);
     }
 
@@ -239,11 +239,6 @@ public class Board extends TiledBoard {
         soundIsMuted = false;
     }
 
-    public List<Player> getPlayers() {
-        return this.players;
-    }
-
-
     public void robotLasersFire() {
         for (Player player : players) {
             player.getLaserCannon().fire(this);
@@ -252,5 +247,31 @@ public class Board extends TiledBoard {
 
     public ArrayList<Flag> getFlags() {
         return flags;
+    }
+
+    public List<Player> getPlayers() {
+        return this.players;
+    }
+
+    public ArrayList<LaserBeam> getLaserGuns() {
+        return laserGuns;
+    }
+
+    public void dispose() {
+        System.out.println("Disposing board");
+        super.dispose();
+
+        for (Flag flag : flags) {
+            flag.dispose();
+        }
+        for(LaserAnimation beam : laserGuns){
+            beam.dispose();
+        }
+        for(LaserAnimation laser : lasers){
+            laser.dispose();
+        }
+        for(Player player : players){
+            player.dispose();
+        }
     }
 }

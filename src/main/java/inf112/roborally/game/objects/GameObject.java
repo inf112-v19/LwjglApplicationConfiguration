@@ -3,6 +3,7 @@ package inf112.roborally.game.objects;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.Main;
 
 public abstract class GameObject {
@@ -28,6 +29,7 @@ public abstract class GameObject {
 
 
     public void updateSprite() {
+        System.out.println("Position: " + position + "\n Sprite: " + sprite);
         sprite.setPosition(position.getX() * Main.PIXELS_PER_TILE, position.getY() * Main.PIXELS_PER_TILE);
     }
 
@@ -60,4 +62,7 @@ public abstract class GameObject {
         return new Vector3(sprite.getX() + sprite.getWidth() / 2, sprite.getY() + sprite.getHeight() / 2, 0);
     }
 
+    public void dispose(){
+        sprite.getTexture().dispose();
+    }
 }

@@ -32,4 +32,9 @@ public class LaserAnimation {
     public void playSound() {
         sound.play();
     }
+
+    public void dispose(){
+        sprite.getTexture().dispose();
+        sound.dispose();
+    }
 }

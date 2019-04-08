@@ -9,8 +9,6 @@ public abstract class Animation extends GameObject {
 
     public Animation(Position position) {
         super(position);
-        updateSprite();
-
     }
 
     protected abstract void update();
