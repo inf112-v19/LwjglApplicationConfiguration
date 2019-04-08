@@ -94,7 +94,7 @@ public class PlayerStatusDisplay {
                 lives.add(img);
                 tab.addActor(img);
             }
-            Label name = new Label(player.getName(), new Label.LabelStyle(font, Color.BLACK));
+            Label name = new Label(player.getName(), new Label.LabelStyle(font, Color.WHITE));
             name.setFontScale(2);
             name.setPosition(robotSkin.getX() + 100, robotSkin.getY() + 63);
             tab.addActor(name);
