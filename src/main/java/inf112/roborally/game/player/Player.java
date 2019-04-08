@@ -118,7 +118,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public ArrayList<ProgramCard> returnCards() {
-        registers.returnCards(this);
+        registers.returnCards();
         return hand.getCardsInHand();
     }
 

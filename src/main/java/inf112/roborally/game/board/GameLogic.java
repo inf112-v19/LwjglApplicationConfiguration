@@ -53,7 +53,7 @@ public class GameLogic extends BoardLogic implements Runnable {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            player1.getRegisters().returnCards(players.get(0));
+            player1.getRegisters().returnCards();
             hud.clearAllCards();
             hud.updateCards();
         }

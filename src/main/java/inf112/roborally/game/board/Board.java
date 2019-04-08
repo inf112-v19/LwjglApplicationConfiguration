@@ -205,7 +205,6 @@ public class Board extends TiledBoard {
 
     private void addAnimation(Animation animation) {
         ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.animations.add(animation);
-        //animation.dispose();
     }
 
     public void drawGameObjects(SpriteBatch batch) {
