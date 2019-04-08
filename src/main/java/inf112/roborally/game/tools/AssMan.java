@@ -64,6 +64,12 @@ public class AssMan {
     public static final AssetDescriptor<Texture> MAP_SPACE_BUG
             = new AssetDescriptor<>("assets/maps/space_bug.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> MAP_SPACE_BUG2
+            = new AssetDescriptor<>("assets/maps/space_bug2.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> MAP_AROUND_THE_WORLD
+            = new AssetDescriptor<>("assets/maps/around_the_world.png", Texture.class);
+
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
             = new AssetDescriptor<>("assets/cards/buttonSubmit.png", Texture.class);
@@ -205,6 +211,8 @@ public class AssMan {
         // Maps (png files)
         manager.load(MAP_VAULT);
         manager.load(MAP_SPACE_BUG);
+        manager.load(MAP_SPACE_BUG2);
+        manager.load(MAP_AROUND_THE_WORLD);
 
         //Hud buttons
         manager.load(BUTTON_SUBMIT);
@@ -271,9 +279,11 @@ public class AssMan {
     }
 
     public static String[] getMapChoices() {
-        String[] maps = new String[2];
+        String[] maps = new String[4];
         maps[0] = MAP_VAULT.fileName;
         maps[1] = MAP_SPACE_BUG.fileName;
+        maps[2] = MAP_SPACE_BUG2.fileName;
+        maps[3] = MAP_AROUND_THE_WORLD.fileName;
         return maps;
     }
 
