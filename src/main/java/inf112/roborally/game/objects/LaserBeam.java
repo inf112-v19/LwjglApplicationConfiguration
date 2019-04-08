@@ -34,7 +34,7 @@ public class LaserBeam extends LaserAnimation {
     public void fire() {
         MovableGameObject laser = new MovableGameObject(position.getX(), position.getY(), "");
         laser.setDirection(this.direction);
-        while (laser.canGo(laser.getDirection(), board.getWallLayer())) {
+        while (true) {
             for (Player robot : board.getPlayers()) {
                 if (laser.position.equals(robot.position)) {
                     System.out.println("Lasers hit " + robot.getName());
@@ -43,6 +43,7 @@ public class LaserBeam extends LaserAnimation {
                     return;
                 }
             }
+            if (!laser.canGo(laser.getDirection(), board.getWallLayer())) return;
             laser.moveInDirection(laser.getDirection());
         }
     }
