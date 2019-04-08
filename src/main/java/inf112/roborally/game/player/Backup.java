@@ -13,10 +13,10 @@ public class Backup extends GameObject {
      * A BACKUP is an object with a sprite, an x and a y value
      * it servers as a checkpoint, intended uses is when a player gets destroyed the
      * backup moves the player to its current position.
-     * @param Player owner of backup
+     * @param player owner of backup
      */
     public Backup(Player player) {
-        super(player.getX(), player.getY(), AssMan.BACKUP.fileName);
+        super(player.getX(), player.getY());
         this.player = player;
     }
 
@@ -30,7 +30,6 @@ public class Backup extends GameObject {
         sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
     }
 
-    @Override
     public void makeSprite(){
         sprite = new Sprite(AssMan.manager.get(AssMan.BACKUP));
     }

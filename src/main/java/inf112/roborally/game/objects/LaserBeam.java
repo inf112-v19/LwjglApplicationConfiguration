@@ -32,7 +32,7 @@ public class LaserBeam extends LaserAnimation {
     }
 
     public void fire() {
-        MovableGameObject laser = new MovableGameObject(position.getX(), position.getY(), "");
+        MovableGameObject laser = new MovableGameObject(position.getX(), position.getY());
         laser.setDirection(this.direction);
         while (true) {
             for (Player robot : board.getPlayers()) {
@@ -61,7 +61,7 @@ public class LaserBeam extends LaserAnimation {
         beam.clear();
         if (beamBlockedByRobot()) return;
 
-        MovableGameObject laserbeam = new MovableGameObject(position.getX(), position.getY(), "");
+        MovableGameObject laserbeam = new MovableGameObject(position.getX(), position.getY());
         beam.add(new Position(laserbeam.getX(), laserbeam.getY()));
         laserbeam.setDirection(direction);
         while (true) {

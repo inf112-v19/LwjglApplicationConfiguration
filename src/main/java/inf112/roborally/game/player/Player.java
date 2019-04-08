@@ -1,5 +1,7 @@
 package inf112.roborally.game.player;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
@@ -39,12 +41,12 @@ public class Player extends MovableGameObject implements Comparable {
     private ProgramRegisters registers;
     private PlayerHand hand;
 
-    public Player(String name, String filepath, Direction direction, Board board) {
-        this(0, 0, filepath);
+    public Player(String name, Texture skin, Direction direction, Board board) {
+        this(0, 0);
         this.name = name;
+        makeSprite(skin);
         this.board = board;
         setDirection(direction);
-        makeSprite();
         loadVisualRepresentation();
         nFlags = board.getFlags().size();
         backup.setupSprite();
@@ -55,8 +57,8 @@ public class Player extends MovableGameObject implements Comparable {
     /**
      * Basic player
      */
-    private Player(int x, int y, String filePath) {
-        super(x, y, filePath);
+    private Player(int x, int y) {
+        super(x, y);
         damage = 0;
         lives = MAX_LIVES;
         targetFlag = 1;
@@ -72,15 +74,14 @@ public class Player extends MovableGameObject implements Comparable {
      * FOR TESTING ONLY
      */
     public Player(int x, int y, int nFlags) {
-        this(x, y, AssMan.PLAYER_TVBOT.fileName);
+        this(x, y);
         this.nFlags = nFlags;
         name = "testBot";
         debugging = true;
     }
 
-    @Override
-    public void makeSprite() {
-        super.makeSprite();
+    public void makeSprite(Texture skin) {
+        sprite = new Sprite(skin);
         regions = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             regions.add(new TextureRegion(getSprite().getTexture(), 32 * 8 * i, 0, 32 * 8, 48 * 8));

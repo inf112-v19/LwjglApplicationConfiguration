@@ -46,16 +46,16 @@ public class AssMan {
     public static final AssetDescriptor<Texture> PLAYER_TVBOT
             = new AssetDescriptor<>("assets/robots/tvBot.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> NURSE_BOT
+    public static final AssetDescriptor<Texture> PLAYER_NURSE_BOT
             = new AssetDescriptor<>("assets/robots/NUR53_CP.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> CAPTAIN_BOT
+    public static final AssetDescriptor<Texture> PLAYER_CAPTAIN_BOT
             = new AssetDescriptor<>("assets/robots/EMPR_TP.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> WIZZARD_BOT
+    public static final AssetDescriptor<Texture> PLAYER_WIZARD_BOT
             = new AssetDescriptor<>("assets/robots/B34RD_TP.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> COP_BOT
+    public static final AssetDescriptor<Texture> PLAYER_COP_BOT
             = new AssetDescriptor<>("assets/robots/CU5TM-TP.png", Texture.class);
 
     //Hud buttons
@@ -196,6 +196,10 @@ public class AssMan {
         manager.load(PLAYER_BUTLER_REFINED);
         manager.load(PLAYER_CLAPTRAP_3000);
         manager.load(PLAYER_TVBOT);
+        manager.load(PLAYER_CAPTAIN_BOT);
+        manager.load(PLAYER_COP_BOT);
+        manager.load(PLAYER_NURSE_BOT);
+        manager.load(PLAYER_WIZARD_BOT);
 
         //Hud buttons
         manager.load(BUTTON_SUBMIT);
@@ -253,6 +257,20 @@ public class AssMan {
         //Flag
         manager.load(FLAG_SKIN);
         manager.load(FLAG_ATLAS);
+    }
+
+    public static Texture[] getPlayerSkins(){
+        Texture[] skins = new Texture[8];
+        skins[0] = manager.get(PLAYER_CLAPTRAP_REFINED);
+        skins[1] = manager.get(PLAYER_BUTLER_REFINED);
+        skins[2] = manager.get(PLAYER_CAPTAIN_BOT);
+        skins[3] = manager.get(PLAYER_BARTENDER_CLAPTRAP);
+        skins[4] = manager.get(PLAYER_CLAPTRAP_3000);
+        skins[5] = manager.get(PLAYER_COP_BOT);
+        skins[6] = manager.get(PLAYER_WIZARD_BOT);
+        skins[7] = manager.get(PLAYER_NURSE_BOT);
+
+        return skins;
     }
 
     public static void dispose() {

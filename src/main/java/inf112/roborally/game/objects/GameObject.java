@@ -1,6 +1,5 @@
 package inf112.roborally.game.objects;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
@@ -8,7 +7,6 @@ import inf112.roborally.game.Main;
 
 public abstract class GameObject {
     public Position position;
-    protected String filePath;
     protected Sprite sprite;
 
     /**
@@ -20,13 +18,11 @@ public abstract class GameObject {
      * @param x position x
      * @param y position y
      */
-    public GameObject(int x, int y, String filePath) {
-        this.filePath = filePath;
+    public GameObject(int x, int y) {
         position = new Position(x, y);
     }
 
-    public GameObject(Position position, String filePath) {
-        this.filePath = filePath;
+    public GameObject(Position position) {
         this.position = position;
     }
 
@@ -35,14 +31,10 @@ public abstract class GameObject {
         sprite.setPosition(position.getX() * Main.PIXELS_PER_TILE, position.getY() * Main.PIXELS_PER_TILE);
     }
 
-    public void makeSprite() {
-        sprite = new Sprite(new Texture(filePath));
-    }
 
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }
-
 
     public void move(int x, int y) {
         position.move(x, y);
@@ -58,10 +50,6 @@ public abstract class GameObject {
 
     public int getY() {
         return position.getY();
-    }
-
-    public String getFilePath() {
-        return filePath;
     }
 
     public Sprite getSprite() {

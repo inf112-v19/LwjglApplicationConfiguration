@@ -66,18 +66,14 @@ public class GameScreen implements Screen {
     }
 
     private void addPlayersToBoard(int robotChoiceIndex) {
-        String[] filepaths = game.possibleRobotSkinFilepaths;
-        StringBuilder namebuilder = new StringBuilder();
-        namebuilder.append("Player");
         int index = robotChoiceIndex;
         int n = game.nSkins;
         for (int i = 0; i < n; i++) {
             if (index >= n) {
                 index = 0;
             }
-            namebuilder.append((i + 1));
-            board.addPlayer(new Player(namebuilder.toString(), filepaths[index], NORTH, board));
-            namebuilder.deleteCharAt(6); // Delete the last character, which is the player number
+            board.addPlayer(new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board));
+
             index++;
         }
     }

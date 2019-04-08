@@ -7,9 +7,8 @@ public abstract class Animation extends GameObject {
     protected int lifetime;
     protected int stateTimer;
 
-    public Animation(Position position, String filePath) {
-        super(position, filePath);
-        makeSprite();
+    public Animation(Position position) {
+        super(position);
         updateSprite();
 
     }

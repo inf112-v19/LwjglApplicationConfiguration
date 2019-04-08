@@ -1,7 +1,6 @@
 package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -60,7 +59,7 @@ public class Hud {
                 public void clicked(InputEvent event, float x, float y) {
                     if (player.getRegisters().isFull() && !player.outOfLives()) {
                         player.setPlayerState(PlayerState.READY);
-                        setPowerDownTouchable(false);
+                        setButtonTouchable(false);
                     }
                 }
             });
@@ -174,11 +173,17 @@ public class Hud {
         registerDisplay.drawCardsInProgramRegister(this);
     }
 
-    public void setPowerDownTouchable(boolean canTouch) {
-        if (canTouch && !player.isPoweredDown())
+    public void setButtonTouchable(boolean canTouch) {
+        if (canTouch && !player.isPoweredDown()) {
             registerDisplay.getPowerDown().setTouchable(Touchable.enabled);
-        else
+            submitButton.setTouchable(Touchable.enabled);
+            clearButton.setTouchable(Touchable.enabled);
+        }
+        else {
             registerDisplay.getPowerDown().setTouchable(Touchable.disabled);
+            submitButton.setTouchable(Touchable.disabled);
+            clearButton.setTouchable(Touchable.disabled);
+        }
     }
 
     public void resetPowerDown() {
