@@ -135,6 +135,10 @@ public class GameScreen implements Screen {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
         }
+
+        for(Animation animation : animations){
+            animation.dispose();
+        }
         music.dispose();
     }
 
@@ -162,6 +166,17 @@ public class GameScreen implements Screen {
 
     public Music getMusic() {
         return music;
+    }
+
+    public boolean playMusic(boolean bool){
+        if(bool) {
+            music.play();
+            board.restartTheSound();
+        }else{
+            music.pause();
+            board.killTheSound();
+        }
+        return !bool;
     }
 
     public Board getBoard() {

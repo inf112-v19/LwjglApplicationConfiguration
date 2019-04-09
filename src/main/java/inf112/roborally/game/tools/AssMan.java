@@ -154,7 +154,7 @@ public class AssMan {
     //MenuScreen class
     public static final AssetDescriptor<Texture> MENUSCREEN_TITLESCREEN
             = new AssetDescriptor<>("assets/screens/menuscreen/titlescreen.jpg", Texture.class);
-    //MenuScreen choises class
+
     public static final AssetDescriptor<Texture> MENUSCREEN_CHOICES
             = new AssetDescriptor<>("assets/screens/menuscreen/menuchoices.png", Texture.class);
 
@@ -172,9 +172,11 @@ public class AssMan {
     public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
             = new AssetDescriptor<>("assets/flags/flags.atlas", TextureAtlas.class);
 
+    //Program card
     public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
             = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
 
+    //Laser
     public static final AssetDescriptor<TextureAtlas> LASER_ATLAS
             = new AssetDescriptor<>("assets/objects/animatedlaser.atlas", TextureAtlas.class);
 
@@ -185,9 +187,11 @@ public class AssMan {
     @SuppressWarnings("Duplicates")
     public static void load() {
 
+
         manager.load(PLAYER_STATUS);
         manager.load(LASER_ATLAS);
         manager.load(PROGRAM_CARD_ATLAS);
+
         //Music
         manager.load(SOUND_PLAYER_LASER);
         manager.load(SOUND_PLAYER_REPAIR);
@@ -234,7 +238,6 @@ public class AssMan {
         manager.load(REGISTER_LIFE_TOKEN);
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
-        manager.load(POWER_DOWN);
         manager.load(REGISTER_SUBMIT);
         manager.load(REGISTER_SUBMIT_PRESS);
         manager.load(REGISTER_CLEAR);
@@ -261,6 +264,12 @@ public class AssMan {
         //Flag
         manager.load(FLAG_SKIN);
         manager.load(FLAG_ATLAS);
+
+        //Program card
+        manager.load(PROGRAM_CARD_ATLAS);
+
+        //Laser
+        manager.load(LASER_ATLAS);
     }
 
     public static Texture[] getPlayerSkins() {

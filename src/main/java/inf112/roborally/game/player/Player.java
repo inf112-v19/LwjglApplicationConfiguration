@@ -3,7 +3,6 @@ package inf112.roborally.game.player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
@@ -119,7 +118,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public ArrayList<ProgramCard> returnCards() {
-        registers.returnCards(this);
+        registers.returnCards();
         return hand.getCardsInHand();
     }
 
@@ -338,5 +337,10 @@ public class Player extends MovableGameObject implements Comparable {
 
     public PlayerHand getHand() {
         return hand;
+    }
+
+    public void dispose(){
+        super.dispose();
+        backup.dispose();
     }
 }

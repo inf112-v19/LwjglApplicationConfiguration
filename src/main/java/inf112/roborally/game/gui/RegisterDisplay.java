@@ -179,7 +179,7 @@ public class RegisterDisplay {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         if (!registers.isLocked(index)) {
-                            registers.returnCard(player, index);
+                            registers.returnCard(index);
                             hud.clearAllCards();
                             hud.updateCards();
                         }

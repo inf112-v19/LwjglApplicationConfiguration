@@ -1,8 +1,6 @@
 package inf112.roborally.game.player;
 
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.player.IProgramRegisters;
-import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
 
@@ -106,9 +104,8 @@ public class ProgramRegisters implements IProgramRegisters {
     /**
      * Return cards from registers into player hand. Only returns cards from unlocked registers.
      *
-     * @param player the player who is returning cards.
      */
-    public void returnCards(Player player) {
+    public void returnCards() {
         for (int i = 0; i < player.getRegisters().getNumUnlockedRegisters(); i++) {
             if (registers[i] != null) {
                 player.getHand().receiveCard(registers[i]);
@@ -120,10 +117,9 @@ public class ProgramRegisters implements IProgramRegisters {
     /**
      * Remove a specific card from one of the registers and put it back into the hand.
      *
-     * @param player the player removing the card.
      * @param index  which register to remove from.
      */
-    public void returnCard(Player player, int index) {
+    public void returnCard(int index) {
         if (index < 0 || index > registers.length) {
             throw new IndexOutOfBoundsException();
         }

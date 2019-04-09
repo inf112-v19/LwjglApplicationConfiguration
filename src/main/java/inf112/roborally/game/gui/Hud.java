@@ -99,7 +99,7 @@ public class Hud {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (!player.outOfLives()) {
-                        player.getRegisters().returnCards(player);
+                        player.getRegisters().returnCards();
                         clearAllCards();
                         updateCards();
                     }

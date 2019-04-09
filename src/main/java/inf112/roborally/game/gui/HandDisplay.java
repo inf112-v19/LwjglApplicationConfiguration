@@ -50,6 +50,7 @@ public class HandDisplay {
             });
 
             hud.handGui.addActor(cardInHandButton);
+            cardInHandButton.dispose();
 
             if (i % 5 == 4) {
                 j++;

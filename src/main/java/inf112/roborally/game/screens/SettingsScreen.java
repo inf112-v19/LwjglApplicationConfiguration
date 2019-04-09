@@ -56,18 +56,14 @@ public class SettingsScreen extends AbstractScreen {
 
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             if (!musicIsMuted) {
-                game.gameScreen.getMusic().pause();
-                game.gameScreen.getBoard().killTheSound();
-                musicIsMuted = true;
+                musicIsMuted = game.gameScreen.playMusic(false);
                 System.out.println("Muted the music from the settings screen");
             } else {
-                game.gameScreen.getMusic().play();
-                game.gameScreen.getBoard().restartTheSound();
-                musicIsMuted = false;
+                musicIsMuted = game.gameScreen.playMusic(true);
                 System.out.println("Started the music from the settings screen");
             }
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            game.setLauncTestMap(false);
+            game.setLaunchTestMap(false);
             game.newGame();
 
         }

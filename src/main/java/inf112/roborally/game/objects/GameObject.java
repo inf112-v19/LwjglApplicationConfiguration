@@ -60,4 +60,7 @@ public abstract class GameObject {
         return new Vector3(sprite.getX() + sprite.getWidth() / 2, sprite.getY() + sprite.getHeight() / 2, 0);
     }
 
+    public void dispose(){
+        sprite.getTexture().dispose();
+    }
 }
