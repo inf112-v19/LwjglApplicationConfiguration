@@ -152,7 +152,6 @@ public class RoboRallyGame extends Game {
         if(gameScreen != null) {
             gameScreen.dispose();
         }
-
     }
 
     public void setLaunchTestMap(boolean bool){

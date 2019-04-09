@@ -125,4 +125,8 @@ public class PlayerStatusDisplay {
             cards.addActor(but);
         }
     }
+
+    public void dispose(){
+        font.dispose();
+    }
 }

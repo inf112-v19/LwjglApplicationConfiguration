@@ -157,7 +157,7 @@ public class Hud {
         for (int i = 0; i < 4; i++) {
             for (Actor button : registerGui.getChildren()) {
                 if (button instanceof ProgramCardButton) {
-                    ((ProgramCardButton) button).dispose();
+                   ((ProgramCardButton) button).dispose();
                     button.remove();
                 }
             }
@@ -199,5 +199,12 @@ public class Hud {
 
     public PlayerStatusDisplay getPlayerStatusDisplay() {
         return playerStatusDisplay;
+    }
+
+    public void dispose(){
+        stage.dispose();
+        if(playerStatusDisplay != null) {
+            playerStatusDisplay.dispose();
+        }
     }
 }
