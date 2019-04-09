@@ -53,7 +53,6 @@ public class GameScreen implements Screen {
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
-        System.out.println("RoboMuted: " + RoboRallyGame.soundMuted);
         if(!RoboRallyGame.soundMuted) {
             music.play();
         }
@@ -112,7 +111,7 @@ public class GameScreen implements Screen {
         for (int i = 0; i < animations.size(); i++) {
             animations.get(i).draw(game.batch);
             if (animations.get(i).hasFinished())
-                animations.remove(i--); // need to decrement i when removing an element?
+                animations.remove(i--);
         }
         game.batch.end();
 
