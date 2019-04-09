@@ -221,8 +221,9 @@ public class Player extends MovableGameObject implements Comparable {
         lives--;
     }
 
-    public boolean hasWon() {
-        return targetFlag > nFlags;
+
+    public boolean outOfLives() {
+        return lives < 1;
     }
 
     public boolean isDestroyed() {
@@ -241,16 +242,60 @@ public class Player extends MovableGameObject implements Comparable {
         return playerState == POWERED_DOWN;
     }
 
-    public boolean outOfLives() {
-        return lives < 1;
-    }
-
     public boolean hasScreamed() {
         return this.screamed;
     }
 
+    public boolean hasWon() {
+        return targetFlag > nFlags;
+    }
+
+
+
+    @Override
+    public boolean equals(Object other) {
+        if (other.getClass() != this.getClass())
+            return false;
+
+        return this.name.equals(((Player) other).name);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) return 0;
+        Player other = (Player) o;
+        int thisPriority = registers.getCard(phase).getPriority();
+        int otherPriority = other.getRegisters().getCard(phase).getPriority();
+
+        return Integer.compare(thisPriority, otherPriority);
+    }
+
+
+    public void setPlayerState(PlayerState playerState) {
+        if (this.playerState == GAME_OVER) {
+            System.out.println("Can not set player state when player state is: " + playerState);
+            return;
+        } else if (this.playerState == DESTROYED) {
+            System.out.println("Only respawn method can change the state of a destroyed robot");
+        }
+        this.playerState = playerState;
+    }
+
     public void setScreamed(boolean b) {
         screamed = b;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
+
+    public boolean isDebuggingActive() {
+        return debugging;
+    }
+
+
+    public LaserCannon getLaserCannon() {
+        return laserCannon;
     }
 
     public int getCardLimit() {
@@ -285,58 +330,17 @@ public class Player extends MovableGameObject implements Comparable {
         return playerState;
     }
 
-    public void setPlayerState(PlayerState playerState) {
-        if (this.playerState == GAME_OVER) {
-            System.out.println("Can not set player state when player state is: " + playerState);
-            return;
-        } else if (this.playerState == DESTROYED) {
-            System.out.println("Only respawn method can change the state of a destroyed robot");
-        }
-        this.playerState = playerState;
-    }
-
-    public LaserCannon getLaserCannon() {
-        return laserCannon;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other.getClass() != this.getClass())
-            return false;
-
-        return this.name.equals(((Player) other).name);
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        if (o == null) return 0;
-        Player other = (Player) o;
-        int thisPriority = registers.getCard(phase).getPriority();
-        int otherPriority = other.getRegisters().getCard(phase).getPriority();
-
-        return Integer.compare(thisPriority, otherPriority);
-    }
-
-    public void setPhase(int phase) {
-        this.phase = phase;
-    }
-
     public int getMaxDamage() {
         return MAX_DAMAGE;
     }
 
-
-    public boolean isDebuggingActive() {
-        return debugging;
+    public PlayerHand getHand() {
+        return hand;
     }
 
     @Override
     public String toString() {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
-    }
-
-    public PlayerHand getHand() {
-        return hand;
     }
 
     public void dispose(){

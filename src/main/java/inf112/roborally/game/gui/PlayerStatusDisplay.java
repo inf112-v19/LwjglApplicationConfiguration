@@ -34,7 +34,7 @@ public class PlayerStatusDisplay {
         for (Player maybeOther : players) {
             if (!maybeOther.equals(player)) otherPlayers.add(maybeOther);
         }
-        statusTab = new Image(AssMan.manager.get(AssMan.PLAYER_STATUS));
+        statusTab = new Image(AssMan.manager.get(AssMan.STATUS_DISPLAY_ROBOTS));
         statusTab.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

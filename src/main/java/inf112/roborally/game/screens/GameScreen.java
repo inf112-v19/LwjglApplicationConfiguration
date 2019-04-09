@@ -164,10 +164,6 @@ public class GameScreen implements Screen {
 
     }
 
-    public Music getMusic() {
-        return music;
-    }
-
     public boolean playMusic(boolean bool){
         if(bool) {
             music.play();
@@ -179,12 +175,12 @@ public class GameScreen implements Screen {
         return !bool;
     }
 
-    public Board getBoard() {
-        return board;
+    public Music getMusic() {
+        return music;
     }
 
-    public GameLogic getGameLogic() {
-        return gameLogic;
+    public Board getBoard() {
+        return board;
     }
 }
 

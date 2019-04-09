@@ -61,7 +61,7 @@ public class RegisterDisplay {
             public void clicked(InputEvent event, float x, float y) {
                 player.wantsToPowerDown = !player.wantsToPowerDown;
                 if (player.wantsToPowerDown) System.out.println(player.getName() + " wants to power down");
-                else System.out.println(player.getName() + " changed his/her mind");
+                else System.out.println(player.getName() + " changed his/her mind about powering down");
             }
         });
         registerGui.addActor(powerDown);

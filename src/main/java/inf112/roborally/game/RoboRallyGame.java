@@ -155,11 +155,11 @@ public class RoboRallyGame extends Game {
 
     }
 
-    public Screen getScreenBefore(){
-        return this.screenBefore;
-    }
-
     public void setLaunchTestMap(boolean bool){
         runTestMap = bool;
+    }
+
+    public Screen getScreenBefore(){
+        return this.screenBefore;
     }
 }

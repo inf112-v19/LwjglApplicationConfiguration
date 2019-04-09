@@ -5,7 +5,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 /**
@@ -180,17 +179,13 @@ public class AssMan {
     public static final AssetDescriptor<TextureAtlas> LASER_ATLAS
             = new AssetDescriptor<>("assets/objects/animatedlaser.atlas", TextureAtlas.class);
 
-    public static final AssetDescriptor<Texture> PLAYER_STATUS =
+    //Status display for robots
+    public static final AssetDescriptor<Texture> STATUS_DISPLAY_ROBOTS =
             new AssetDescriptor<>("assets/register/robot_status_display.png", Texture.class);
 
 
     @SuppressWarnings("Duplicates")
     public static void load() {
-
-
-        manager.load(PLAYER_STATUS);
-        manager.load(LASER_ATLAS);
-        manager.load(PROGRAM_CARD_ATLAS);
 
         //Music
         manager.load(SOUND_PLAYER_LASER);
@@ -270,6 +265,9 @@ public class AssMan {
 
         //Laser
         manager.load(LASER_ATLAS);
+
+        //Status display for robots
+        manager.load(STATUS_DISPLAY_ROBOTS);
     }
 
     public static Texture[] getPlayerSkins() {
