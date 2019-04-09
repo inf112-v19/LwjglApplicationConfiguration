@@ -3,6 +3,7 @@ package inf112.roborally.game.player;
 import inf112.roborally.game.board.ProgramCard;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PlayerHand {
     private ArrayList<ProgramCard> cardsInHand;
@@ -38,6 +39,10 @@ public class PlayerHand {
     public ArrayList<ProgramCard> returnCards(ArrayList<ProgramCard> list) {
         while (!cardsInHand.isEmpty()) list.add(cardsInHand.remove(0));
         return list;
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cardsInHand);
     }
 
     public ArrayList<ProgramCard> getCardsInHand() {

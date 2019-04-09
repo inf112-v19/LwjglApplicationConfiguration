@@ -254,7 +254,7 @@ public class BoardLogic {
      * If the stack of cards run out of cards we need to reshuffle all the returned cards and deal them out instead
      * Move this to ProgramCard maybe..
      */
-    protected void reshuffleDeck() {
+    private void reshuffleDeck() {
         while (!returnedProgramCards.empty())
             stackOfProgramCards.push(returnedProgramCards.pop());
         shuffle(stackOfProgramCards);
