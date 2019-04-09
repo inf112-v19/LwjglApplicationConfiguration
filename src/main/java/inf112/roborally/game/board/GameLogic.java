@@ -86,6 +86,7 @@ public class GameLogic extends BoardLogic implements Runnable {
                 hud.updateCards();
                 hud.resetPowerDown();
                 hud.setButtonTouchable(true);
+                hud.getPlayerStatusDisplay().clearCards();
             }
         });
     }
@@ -116,6 +117,15 @@ public class GameLogic extends BoardLogic implements Runnable {
                 board.cleanUp();
             }
         });
+    }
+
+    @Override
+    protected void doPhase(){
+        if (phase < 5) {
+            hud.getPlayerStatusDisplay().clearCards();
+            hud.getPlayerStatusDisplay().addCards(phase);
+        }
+        super.doPhase();
     }
 }
 

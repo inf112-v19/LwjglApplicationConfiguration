@@ -5,12 +5,13 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 /**
  * Contains assets used by the game.
  * With AssMan you are able to load as well as dispose all of them at the same time.
- *
+ * <p>
  * Calling {@link #dispose()} will dispose all assets.
  */
 public class AssMan {
@@ -179,10 +180,17 @@ public class AssMan {
     public static final AssetDescriptor<TextureAtlas> LASER_ATLAS
             = new AssetDescriptor<>("assets/objects/animatedlaser.atlas", TextureAtlas.class);
 
+    public static final AssetDescriptor<Texture> PLAYER_STATUS =
+            new AssetDescriptor<>("assets/register/robot_status_display.png", Texture.class);
 
 
     @SuppressWarnings("Duplicates")
     public static void load() {
+
+
+        manager.load(PLAYER_STATUS);
+        manager.load(LASER_ATLAS);
+        manager.load(PROGRAM_CARD_ATLAS);
 
         //Music
         manager.load(SOUND_PLAYER_LASER);
@@ -264,7 +272,7 @@ public class AssMan {
         manager.load(LASER_ATLAS);
     }
 
-    public static Texture[] getPlayerSkins(){
+    public static Texture[] getPlayerSkins() {
         Texture[] skins = new Texture[8];
         skins[0] = manager.get(PLAYER_CLAPTRAP_REFINED);
         skins[1] = manager.get(PLAYER_BUTLER_REFINED);

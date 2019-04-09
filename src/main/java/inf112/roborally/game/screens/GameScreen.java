@@ -63,6 +63,7 @@ public class GameScreen implements Screen {
         game.dynamicCamera.update();
         background = new Background(game.dynamicCamera);
         animations = new ArrayList<>();
+        hud.addPlayerStatusDisplay(board.getPlayers());
     }
 
     private void addPlayersToBoard(int robotChoiceIndex) {
