@@ -34,6 +34,8 @@ public class EchoThread extends Thread {
                     return;
                 } else {
                     System.out.println(packetInt + " " + packetWord);
+                    out.writeObject(packet);
+
                 }
             } catch (IOException e) {
                 System.out.println("Lost connection to " + socket.getInetAddress());
