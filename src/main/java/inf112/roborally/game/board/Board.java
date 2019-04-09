@@ -27,17 +27,13 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 
 @SuppressWarnings("Duplicates")
 public class Board extends TiledBoard {
-    private final float volume = .25f;
+    private float volume = .25f;
 
     protected List<Player> players;
     protected ArrayList<Flag> flags;
     protected ArrayList<LaserAnimation> lasers;
     protected ArrayList<LaserBeam> laserGuns;
     protected ArrayList<StartPosition> startPlates;
-
-    // Need this one so we don't check for non existing music when sounds are muted/disposed
-    private boolean soundIsMuted;
-
 
     public Board() {
         players = Collections.synchronizedList(new ArrayList<Player>());
@@ -102,7 +98,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             expressBeltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!soundIsMuted && !player.hasScreamed()) {
+                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }
@@ -116,7 +112,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             beltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!soundIsMuted && !player.hasScreamed()) {
+                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }
@@ -192,7 +188,7 @@ public class Board extends TiledBoard {
         for (Player player : players) {
             if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
-                if (!soundIsMuted) {
+                if (!RoboRallyGame.soundMuted) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
                 }
                 addAnimation(new RepairAnimation(player.position));
@@ -230,14 +226,6 @@ public class Board extends TiledBoard {
             object.draw(batch);
     }
 
-    public void killTheSound() {
-        soundIsMuted = true;
-    }
-
-    public void restartTheSound() {
-        soundIsMuted = false;
-    }
-
     public void robotLasersFire() {
         for (Player player : players) {
             player.getLaserCannon().fire(this);
@@ -257,9 +245,6 @@ public class Board extends TiledBoard {
     }
 
 
-    public boolean isSoundMuted(){
-        return this.soundIsMuted;
-    }
     public void dispose() {
         System.out.println("Disposing board");
         super.dispose();

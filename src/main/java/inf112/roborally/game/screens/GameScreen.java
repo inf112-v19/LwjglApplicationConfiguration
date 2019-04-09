@@ -53,7 +53,10 @@ public class GameScreen implements Screen {
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
-        music.play();
+        System.out.println("RoboMuted: " + RoboRallyGame.soundMuted);
+        if(!RoboRallyGame.soundMuted) {
+            music.play();
+        }
 
         // Move dynamicCamera to center of board:
         int x = board.getWidth() / 2 * Main.PIXELS_PER_TILE;
@@ -167,10 +170,10 @@ public class GameScreen implements Screen {
     public boolean playMusic(boolean bool){
         if(bool) {
             music.play();
-            board.restartTheSound();
+            RoboRallyGame.soundMuted = false;
         }else{
             music.pause();
-            board.killTheSound();
+            RoboRallyGame.soundMuted = true;
         }
         return !bool;
     }

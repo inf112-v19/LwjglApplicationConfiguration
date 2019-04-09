@@ -48,6 +48,7 @@ public class RoboRallyGame extends Game {
 
     private boolean runTestMap = false;
 
+    public static boolean soundMuted;
 
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
@@ -77,7 +78,6 @@ public class RoboRallyGame extends Game {
         createPossibleFilepaths();
 
         menuScreen = new MenuScreen(this);
-//        gameScreen = new GameScreen(this, VAULT);
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
 
