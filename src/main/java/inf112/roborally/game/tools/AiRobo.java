@@ -19,15 +19,18 @@ public class AiRobo {
     private static void makeDecisions(Player robo, Board board) {
         if (robo.outOfLives()) return;
 
-        int count = 0;
+        int timeToPowerDown = 0;
+
         while (!robo.getRegisters().isFull()) {
             ArrayList<ProgramCard> smartMoves = smartMove(robo, board);
-            if (smartMoves.contains(robo.getHand().getCard(0)) && robo.getHand().size() > 1 && count < 2) {
+            if (timeToPowerDown == 2 && smartMoves.contains(robo.getHand().getCard(0))) {
+                robo.wantsToPowerDown = true;
+                timeToPowerDown = 0;
+            } else if (smartMoves.contains(robo.getHand().getCard(0)) && robo.getHand().size() > 1) {
                 robo.getHand().shuffle();
-                count++;
+                timeToPowerDown++;
             } else {
                 robo.getRegisters().placeCard(0);
-                count = 0;
             }
         }
         robo.wantsToPowerDown = robo.getDamage() > 5;
@@ -38,13 +41,7 @@ public class AiRobo {
         ArrayList<ProgramCard> notTheSmartestCardChoices = new ArrayList<>();
         for (int i = 0; i < robo.getHand().size(); i++) {
             ProgramCard card = robo.getHand().getCard(i);
-            System.out.println(robo.getX() + " " + card.getMoveDistance());
 
-            /*
-             *  If the aiRobos are positioned near the end of the board,
-             *  a smart move will be not to go a certain amount of steps
-             *  that will get the aiRobo out of the map and loose a life.
-             */
             if (!safeToMoveInDirection(robo, card, board)) {
                 notTheSmartestCardChoices.add(card);
             }
@@ -53,6 +50,11 @@ public class AiRobo {
         return notTheSmartestCardChoices;
     }
 
+    /*
+     *  If the aiRobos are positioned near the end of the board,
+     *  a smart move will be not to go a certain amount of steps
+     *  that will get the aiRobo out of the map and loose a life.
+     */
     private static boolean safeToMoveInDirection(Player robo, ProgramCard card, Board board) {
         return (robo.getX() - card.getMoveDistance() >= 0
                 || !robo.getDirection().equals(Direction.WEST)) &&
