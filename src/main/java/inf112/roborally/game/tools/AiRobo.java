@@ -1,31 +1,35 @@
 package inf112.roborally.game.tools;
 
 import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.BoardLogic;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.PlayerHand;
 
 import java.util.ArrayList;
 
 public class AiRobo {
+
+    public static void makeDecisionsForRobos(ArrayList<Player> aiRobos, Board board) {
+        for (Player robo : aiRobos) {
+            makeDecisions(robo, board);
+        }
+    }
 
     private static void makeDecisions(Player robo, Board board) {
         if (robo.outOfLives()) return;
 
         ArrayList<ProgramCard> smartMoves = smartMove(robo, board);
         while (!robo.getRegisters().isFull()) {
-            if(smartMoves.contains(robo.getHand().getCard(0))) {
+            if(smartMoves.contains(robo.getHand().getCard(0)) && robo.getHand().size()>1) {
+                robo.getRegisters().placeCard(1);
+            } else {
                 robo.getRegisters().placeCard(0);
             }
         }
         robo.wantsToPowerDown = robo.getDamage() > 5;
         robo.setPlayerState(PlayerState.READY);
-    }
-
-    public static void makeDecisionsForRobos(ArrayList<Player> aiRobos, Board board) {
-        for (Player robo : aiRobos) {
-            makeDecisions(robo, board);
-        }
     }
 
     private static ArrayList<ProgramCard> smartMove(Player robo, Board board) {
