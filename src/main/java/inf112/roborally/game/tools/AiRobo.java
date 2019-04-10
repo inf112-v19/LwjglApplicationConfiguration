@@ -36,7 +36,7 @@ public class AiRobo {
                 shuffleCounter = 0;
             }
         }
-        robo.wantsToPowerDown = wantsToPowerDown(robo, badMoves);
+        robo.wantsToPowerDown = wantsToPowerDown(robo);
         robo.setPlayerState(PlayerState.READY);
     }
 
@@ -77,13 +77,19 @@ public class AiRobo {
                         || !robo.getDirection().equals(Direction.NORTH));
     }
 
-    private static boolean wantsToPowerDown(Player robo, ArrayList<ProgramCard> badMoves) {
-        for (ProgramCard badMove : badMoves) {
-            if (robo.getRegisters().getAllCards().contains(badMove)) {
-                return true;
-            }
-        }
-        return robo.getDamage() > 8;
+    private static boolean wantsToPowerDown(Player robo) {
+        int randomNumber = (int) (Math.random() * 50 + 1);
+        int aiRoboDamage = robo.getDamage();
+        return (aiRoboDamage == 0 && randomNumber > 45) ||
+                (aiRoboDamage == 1 && randomNumber > 40) ||
+                (aiRoboDamage == 2 && randomNumber > 35) ||
+                (aiRoboDamage == 3 && randomNumber > 30) ||
+                (aiRoboDamage == 4 && randomNumber > 25) ||
+                (aiRoboDamage == 5 && randomNumber > 20) ||
+                (aiRoboDamage == 6 && randomNumber > 15) ||
+                (aiRoboDamage == 7 && randomNumber > 10) ||
+                (aiRoboDamage == 8 && randomNumber > 5) ||
+                (aiRoboDamage == 9 && randomNumber > 0);
     }
 
 }
