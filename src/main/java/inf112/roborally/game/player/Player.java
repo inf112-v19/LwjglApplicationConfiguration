@@ -10,7 +10,6 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.LaserCannon;
 import inf112.roborally.game.objects.MovableGameObject;
-import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 
@@ -252,7 +251,6 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
 
-
     @Override
     public boolean equals(Object other) {
         if (other.getClass() != this.getClass())
@@ -271,17 +269,6 @@ public class Player extends MovableGameObject implements Comparable {
         return Integer.compare(thisPriority, otherPriority);
     }
 
-
-    public void setPlayerState(PlayerState playerState) {
-        if (this.playerState == GAME_OVER) {
-            System.out.println("Can not set player state when player state is: " + playerState);
-            return;
-        } else if (this.playerState == DESTROYED) {
-            System.out.println("Only respawn method can change the state of a destroyed robot");
-        }
-        this.playerState = playerState;
-    }
-
     public void setScreamed(boolean b) {
         screamed = b;
     }
@@ -293,7 +280,6 @@ public class Player extends MovableGameObject implements Comparable {
     public boolean isDebuggingActive() {
         return debugging;
     }
-
 
     public LaserCannon getLaserCannon() {
         return laserCannon;
@@ -331,6 +317,16 @@ public class Player extends MovableGameObject implements Comparable {
         return playerState;
     }
 
+    public void setPlayerState(PlayerState playerState) {
+        if (this.playerState == GAME_OVER) {
+            System.out.println("Can not set player state when player state is: " + playerState);
+            return;
+        } else if (this.playerState == DESTROYED) {
+            System.out.println("Only respawn method can change the state of a destroyed robot");
+        }
+        this.playerState = playerState;
+    }
+
     public int getMaxDamage() {
         return MAX_DAMAGE;
     }
@@ -344,15 +340,14 @@ public class Player extends MovableGameObject implements Comparable {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 
-    public void dispose(){
+    public void dispose() {
         super.dispose();
         backup.dispose();
     }
 
     public Player getDummy() {
-        Player dummy = new Player(name, sprite.getTexture(), getDirection(), board);
+        Player dummy = new Player("dummy", sprite.getTexture(), getDirection(), board);
         dummy.move(getX(), getY());
-
         return dummy;
     }
 }

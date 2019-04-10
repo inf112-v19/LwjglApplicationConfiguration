@@ -1,8 +1,6 @@
 package inf112.roborally.game.tools;
 
-import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
 
@@ -26,6 +24,7 @@ public class AiRobo {
     }
 
     private static void moveDummy(Player robo) {
+        if (robo.getRegisters().isFull()) return;
         Player dummy = robo.getDummy();
         Player successDummy = robo.getDummy();
         for (int i = 0; i < robo.getHand().size(); i++) {
