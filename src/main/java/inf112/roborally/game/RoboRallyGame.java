@@ -166,7 +166,7 @@ public class RoboRallyGame extends Game {
 
     }
 
-    private String chosenMap(int mapIndex) {
+    public String chosenMap(int mapIndex) {
         String[] mapChoices = new String[4];
         mapChoices[0] = VAULT;
         mapChoices[1] = SPACE_BUG;

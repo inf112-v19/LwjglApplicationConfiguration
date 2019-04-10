@@ -20,7 +20,11 @@ public class BoardCreator extends Board {
         }
         createBoard(mapFilePath);
         findLaserGuns();
+    }
 
-        System.out.printf("Created map %s with boardcreator%n", mapFilePath);
+    // If we want to create the map without placing flags
+    public BoardCreator(String mapFilePath) {
+        createBoard(mapFilePath);
+        findLaserGuns();
     }
 }

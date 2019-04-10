@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.BoardCreator;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.tools.AssMan;
 
@@ -35,6 +37,9 @@ public class PlaceFlagsScreen implements Screen {
     private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
 
+    // Create a board in the background so that we can check if the player places the flags
+    // on legal positions
+    private Board board;
 
     public PlaceFlagsScreen(final RoboRallyGame game, String mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
         this.game = game;
@@ -44,6 +49,7 @@ public class PlaceFlagsScreen implements Screen {
         this.robotChoiceIndex = robotChoiceIndex;
         flagPositions = new ArrayList<>();
 
+        board = new BoardCreator(game.chosenMap(mapChoiceIndex));
 
         Image background = new Image(new TextureRegionDrawable(new Texture(AssMan.GAMESCREEN_BACKGROUND2.fileName)));
         stage.addActor(background);
@@ -55,14 +61,6 @@ public class PlaceFlagsScreen implements Screen {
         float mapX = 1920 / 2f - mapWidth / 2;
         float mapY = 1080 / 2f - mapHeight / 2;
         map.setPosition(mapX, mapY);
-//        System.out.printf("Created map: mapX = %.2f, mapY = %.2f%n", mapX, mapY);
-
-//        float mapXnoscale = 1920 / 2f - map.getWidth() / 2;
-//        float mapYnoscale = 1080 / 2f - map.getHeight() / 2;
-//        map.setPosition(mapXnoscale, mapYnoscale);
-//        System.out.printf("Created map, without scaling: mapX = %.2f, mapY = %.2f%n", mapXnoscale, mapYnoscale);
-
-//        map.setPosition(1920 / 2f - map.getWidth() / 2, 1080 / 2f - map.getHeight() / 2);
 
         map.addListener(new ClickListener() {
             @Override
@@ -77,7 +75,7 @@ public class PlaceFlagsScreen implements Screen {
     }
 
     private void handleClick(float x, float y) {
-        System.out.printf("Inside handleclick(), x = %.2f and y = %.2f%n", x, y);
+//        System.out.printf("Inside handleclick(), x = %.2f and y = %.2f%n", x, y);
 
         // Check if invisible part around map was clicked
         if(x < tileSize || x > mapWidth - tileSize || y < tileSize || y > mapHeight - tileSize) {
@@ -88,16 +86,40 @@ public class PlaceFlagsScreen implements Screen {
         }
         else {
             Position clickedPos = convertMouseClickIntoMapPosition(x,y);
-            System.out.printf("Position: x = %d, y = %d%n", clickedPos.getX(), clickedPos.getY());
-            flagPositions.add(clickedPos);
+            if (!checkIfLegalPosition(clickedPos)) {
+                System.out.println("Cannot place a flag here, either it's a hole, " +
+                        "or a flag has already been placed here!");
+            }
+            else {
+//                System.out.printf("Position: x = %d, y = %d%n", clickedPos.getX(), clickedPos.getY());
+                flagPositions.add(clickedPos);
 
-            if(flagPositions.size() == 3) {
-                game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
-                game.setScreen(game.gameScreen);
-                dispose();
+                // If we have placed 3 flags, we are done
+                // This can be changed later if we want to add more flags
+                if(flagPositions.size() == 3) {
+                    game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
+                    game.setScreen(game.gameScreen);
+                    dispose();
+                }
             }
         }
 
+    }
+
+    // Check if the clicked position is not either a hole or a previously clicked position
+    private boolean checkIfLegalPosition(Position clickedPos) {
+        boolean result = true;
+        if(board.getFloorLayer().getCell(clickedPos.getX(), clickedPos.getY()) == null){
+            result = false;
+        }
+        for(Position pos : flagPositions) {
+            if(clickedPos.equals(pos)) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
     }
 
     private Position convertMouseClickIntoMapPosition(float mouseX, float mouseY) {
@@ -107,8 +129,7 @@ public class PlaceFlagsScreen implements Screen {
         // Calculate how many tiles there are on the map
         // minus two at the end, because the map has invisible tiles around it
         int nTilesOnMap = (int) map.getWidth() / tileSize;
-        System.out.println("Number of tiles on map: " + nTilesOnMap);
-
+        
         int x = 0;
         int y = 0;
 
