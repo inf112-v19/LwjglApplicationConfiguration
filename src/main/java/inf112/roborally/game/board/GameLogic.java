@@ -44,7 +44,7 @@ public class GameLogic extends BoardLogic implements Runnable {
 
     @Override
     public void aiRobosReady() {
-        AiRobo.makeDecisionsForRobos(aiBots, board);
+        AiRobo.makeDecisionsForRobos(aiBots);
     }
 
     public void handleInput() {

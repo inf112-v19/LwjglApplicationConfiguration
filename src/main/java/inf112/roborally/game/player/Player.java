@@ -348,4 +348,11 @@ public class Player extends MovableGameObject implements Comparable {
         super.dispose();
         backup.dispose();
     }
+
+    public Player getDummy() {
+        Player dummy = new Player(name, sprite.getTexture(), getDirection(), board);
+        dummy.move(getX(), getY());
+
+        return dummy;
+    }
 }

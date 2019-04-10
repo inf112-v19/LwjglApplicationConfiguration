@@ -10,71 +10,38 @@ import java.util.ArrayList;
 
 public class AiRobo {
 
-    public static void makeDecisionsForRobos(ArrayList<Player> aiRobos, Board board) {
+    public static void makeDecisionsForRobos(ArrayList<Player> aiRobos) {
         for (Player robo : aiRobos) {
-            makeDecisions(robo, board);
+            makeDecisions(robo);
         }
     }
 
-    private static void makeDecisions(Player robo, Board board) {
+    private static void makeDecisions(Player robo) {
         if (robo.outOfLives()) return;
 
-        int shuffleCounter = 0;
+        moveDummy(robo);
 
-        ArrayList<ProgramCard> badMoves = new ArrayList<>();
-
-        while (!robo.getRegisters().isFull()) {
-            badMoves = badMoves(robo, board);
-
-            if (badMoves.contains(robo.getHand().getCard(0))
-                    && robo.getHand().size() > 1
-                    && shuffleCounter < 2) {
-                robo.getHand().shuffle();
-                shuffleCounter++;
-            } else {
-                robo.getRegisters().placeCard(0);
-                shuffleCounter = 0;
-            }
-        }
         robo.wantsToPowerDown = wantsToPowerDown(robo);
         robo.setPlayerState(PlayerState.READY);
     }
 
-    private static ArrayList<ProgramCard> badMoves(Player robo, Board board) {
-        ArrayList<ProgramCard> badMoves = new ArrayList<>();
+    private static void moveDummy(Player robo) {
+        Player dummy = robo.getDummy();
+        Player successDummy = robo.getDummy();
         for (int i = 0; i < robo.getHand().size(); i++) {
             ProgramCard card = robo.getHand().getCard(i);
-
-            if (!safeToMoveInDirection(robo, card, board)) {
-                badMoves.add(card);
+            dummy.rotate(card.getRotate());
+            dummy.move(card.getMoveDistance());
+            if (dummy.isDestroyed()) {
+                dummy = successDummy.getDummy();
+            } else {
+                robo.getRegisters().placeCard(i);
+                successDummy = dummy.getDummy();
             }
         }
-
-        return badMoves;
-    }
-
-    /*
-     *  If the aiRobos are positioned near the end of the board,
-     *  a smart move will be not to go a certain amount of steps
-     *  that will get the aiRobo out of the map and loose a life.
-     */
-    private static boolean safeToMoveInDirection(Player robo, ProgramCard card, Board board) {
-        return (robo.getX() - card.getMoveDistance() >= 0
-                || !robo.getDirection().equals(Direction.WEST)) &&
-                (robo.getX() - card.getMoveDistance() >= 0
-                        || !robo.getDirection().equals(Direction.EAST)) &&
-                (robo.getY() - card.getMoveDistance() >= 0
-                        || !robo.getDirection().equals(Direction.NORTH)) &&
-                (robo.getY() - card.getMoveDistance() >= 0
-                        || !robo.getDirection().equals(Direction.SOUTH)) &&
-                (robo.getX() + card.getMoveDistance() <= board.getWidth()
-                        || !robo.getDirection().equals(Direction.EAST)) &&
-                (robo.getX() + card.getMoveDistance() <= board.getWidth()
-                        || !robo.getDirection().equals(Direction.WEST)) &&
-                (robo.getY() + card.getMoveDistance() <= board.getHeight()
-                        || !robo.getDirection().equals(Direction.SOUTH)) &&
-                (robo.getY() + card.getMoveDistance() <= board.getHeight()
-                        || !robo.getDirection().equals(Direction.NORTH));
+        while (!robo.getRegisters().isFull()) {
+            robo.getRegisters().placeCard(0);
+        }
     }
 
     private static boolean wantsToPowerDown(Player robo) {
