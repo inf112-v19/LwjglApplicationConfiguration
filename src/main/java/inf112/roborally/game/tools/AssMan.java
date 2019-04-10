@@ -1,5 +1,6 @@
 package inf112.roborally.game.tools;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -193,7 +194,6 @@ public class AssMan {
     public static void load() {
         //Font
         manager.load(FONT_GROTESKIA);
-
         //Music
         manager.load(SOUND_PLAYER_LASER);
         manager.load(SOUND_PLAYER_REPAIR);

@@ -61,14 +61,9 @@ public class NameScreen implements Screen {
 
     @Override
     public void render(float v) {
-        handleInput();
-
         Gdx.gl.glClearColor(0 / 255f, 20 / 255f, 15 / 255f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
-    }
-
-    private void handleInput() {
     }
 
     @Override
