@@ -19,21 +19,21 @@ public class AiRobo {
     private static void makeDecisions(Player robo, Board board) {
         if (robo.outOfLives()) return;
 
-        int timeToPowerDown = 0;
-
+        int shuffleCounter = 0;
         while (!robo.getRegisters().isFull()) {
             ArrayList<ProgramCard> smartMoves = smartMove(robo, board);
-            if (timeToPowerDown == 2 && smartMoves.contains(robo.getHand().getCard(0))) {
-                robo.wantsToPowerDown = true;
-                timeToPowerDown = 0;
-            } else if (smartMoves.contains(robo.getHand().getCard(0)) && robo.getHand().size() > 1) {
+            if (smartMoves.contains(robo.getHand().getCard(0))
+                    && robo.getHand().size() > 1
+                    && shuffleCounter < 2) {
                 robo.getHand().shuffle();
-                timeToPowerDown++;
+                shuffleCounter++;
             } else {
                 robo.getRegisters().placeCard(0);
+                shuffleCounter = 0;
             }
         }
-        robo.wantsToPowerDown = robo.getDamage() > 5;
+
+        robo.wantsToPowerDown = wantsToPowerDown(robo);
         robo.setPlayerState(PlayerState.READY);
     }
 
@@ -73,4 +73,11 @@ public class AiRobo {
                 (robo.getY() + card.getMoveDistance() <= board.getHeight()
                         || !robo.getDirection().equals(Direction.NORTH));
     }
+
+    private static boolean wantsToPowerDown(Player robo) {
+        int randomNumberToCheckForPowerDown = (int) (Math.random() * 50) + 1;
+        System.out.println("Random number: " + randomNumberToCheckForPowerDown + " and " + robo.getName() + "'s damage: " + robo.getDamage());
+        return randomNumberToCheckForPowerDown > 40 || robo.getDamage() > 8;
+    }
+
 }
