@@ -23,6 +23,10 @@ public class RoboRallyGame extends Game {
     public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
     public static final String TEST_MAP = "assets/maps/testMap.tmx";
     public static final String LASER_TEST_MAP = "assets/maps/lasertest.tmx";
+    public static final String SPACE_BUG = "assets/maps/space_bug.tmx";
+    public static final String SPACE_BUG2 = "assets/maps/space_bug2.tmx";
+    public static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
+
     //Music:
     public static final String MAIN_THEME = AssMan.MUSIC_MAIN_THEME.fileName;
     public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
@@ -133,13 +137,13 @@ public class RoboRallyGame extends Game {
         setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
     }
 
-    // Create GameScreen with preset skins and flag positions
+    // Create GameScreen with preset skins, map and flag positions
     public void createGameScreen() {
-        gameScreen = new GameScreen(this, 0, null , runTestMap);
+        gameScreen = new GameScreen(this, 0, new ArrayList<Position>(), null , runTestMap);
     }
 
-    public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions) {
-        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, runTestMap);
+    public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex) {
+        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, chosenMap(mapChoiceIndex), runTestMap);
     }
 
     @Override
@@ -160,6 +164,16 @@ public class RoboRallyGame extends Game {
             gameScreen.dispose();
         }
 
+    }
+
+    private String chosenMap(int mapIndex) {
+        String[] mapChoices = new String[4];
+        mapChoices[0] = VAULT;
+        mapChoices[1] = SPACE_BUG;
+        mapChoices[2] = SPACE_BUG2;
+        mapChoices[3] = AROUND_THE_WORLD;
+
+        return mapChoices[mapIndex];
     }
 
     public Screen getScreenBefore(){

@@ -321,7 +321,6 @@ public class AssMan {
         maps[0] = MAP_VAULT.fileName;
         maps[1] = MAP_SPACE_BUG.fileName;
         maps[2] = MAP_SPACE_BUG2.fileName;
-        // This map is much bigger, so for now we don't add it
         maps[3] = MAP_AROUND_THE_WORLD.fileName;
         return maps;
     }

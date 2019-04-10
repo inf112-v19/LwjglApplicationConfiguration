@@ -31,14 +31,16 @@ public class PlaceFlagsScreen implements Screen {
 
     // Choices from the last screens
     private String mapFilepath;
+    private int mapChoiceIndex;
     private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
 
 
-    public PlaceFlagsScreen(final RoboRallyGame game, String mapFilepath, int robotChoiceIndex) {
+    public PlaceFlagsScreen(final RoboRallyGame game, String mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         this.mapFilepath = mapFilepath;
+        this.mapChoiceIndex = mapChoiceIndex;
         this.robotChoiceIndex = robotChoiceIndex;
         flagPositions = new ArrayList<>();
 
@@ -81,8 +83,8 @@ public class PlaceFlagsScreen implements Screen {
         if(x < tileSize || x > mapWidth - tileSize || y < tileSize || y > mapHeight - tileSize) {
             System.out.println("Pressed inside map png, but in the invisible part");
         }
-        else if(x < tileSize * 5 || y < tileSize * 5) {
-            System.out.println("Clicked on the starting point on the map");
+        else if(x < tileSize * 5) {
+            System.out.println("Clicked on the starting part on the map");
         }
         else {
             Position clickedPos = convertMouseClickIntoMapPosition(x,y);
@@ -90,7 +92,7 @@ public class PlaceFlagsScreen implements Screen {
             flagPositions.add(clickedPos);
 
             if(flagPositions.size() == 3) {
-                game.createGameScreen(robotChoiceIndex, flagPositions);
+                game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
                 game.setScreen(game.gameScreen);
                 dispose();
             }

@@ -13,7 +13,7 @@
  </layer>
  <layer id="46" name="lasers" width="30" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIxkYQmkLKKa3vfQG2Oylh1sGyl5sgJ72IqergfLvKBg6AAAXmAJp
+   eJxjYBgFo4CBwW6gHTCAwIaBwYEOdoxIMJLT1SggHQAAG8wBNQ==
   </data>
  </layer>
  <layer id="47" name="walls" width="30" height="14">

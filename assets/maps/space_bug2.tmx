@@ -13,15 +13,15 @@
  </layer>
  <layer id="28" name="lasers" width="18" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYKA9MESjB8ocCygeLGCwuYfeYLD5nxL3DJY0TggAAGZaA0k=
+   eJxjYBg6wAaNJhXYUcshVAKDzT30BoPN/4PBPZSmcUIAAJmdAek=
   </data>
  </layer>
- <layer id="29" name="walls" width="18" height="14">
+ <layer id="29" name="walls" width="18" height="14" locked="1">
   <data encoding="base64" compression="zlib">
    eJxjYKAuYMYixopG4xKjFHCj8ZmQ3MMC5YMAFxF2s1DRXYTcw4RdOV73YAtncgA1zEF2PwsDaf6hhb9IcQ/MPh4i3cNJgbtw2c1MQIyaAABLBwCe
   </data>
  </layer>
- <layer id="31" name="start" width="18" height="14">
+ <layer id="31" name="start" width="18" height="14" locked="1">
   <data encoding="base64" compression="zlib">
    eJxjYKAukKaSOSJUModagHegHYAG2KhkDjuVzKEW4BtoB6ABUSqZI0MlcygFABr3AIk=
   </data>

@@ -17,7 +17,7 @@ public class SelectMapScreen extends SelectScreen {
     @Override
     public void completeChoice() {
         System.out.println("SelectMapScreen completeChoice selected");
-        game.setScreen(new PlaceFlagsScreen(game, AssMan.getMapChoices()[choiceIndex], robotSkinIndex));
+        game.setScreen(new PlaceFlagsScreen(game, AssMan.getMapChoices()[choiceIndex], choiceIndex, robotSkinIndex));
         dispose();
 //        System.out.println("Shutting down");
 //        Gdx.app.exit();

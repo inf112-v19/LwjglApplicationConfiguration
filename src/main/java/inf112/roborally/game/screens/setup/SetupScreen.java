@@ -284,8 +284,8 @@ public class SetupScreen extends AbstractScreen {
     }
 
     private void createGameScreenFromSetup() {
-        game.createGameScreen(robotChoiceIndex, flagPositions);
-        game.setScreen(game.gameScreen);
+//        game.createGameScreen(robotChoiceIndex, flagPositions);
+//        game.setScreen(game.gameScreen);
         dispose();
     }
 
