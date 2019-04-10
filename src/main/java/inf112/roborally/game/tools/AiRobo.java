@@ -2,7 +2,6 @@ package inf112.roborally.game.tools;
 
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
@@ -40,16 +39,28 @@ public class AiRobo {
                 dummy = successDummy.getDummy();
             }
         }
+        for (int i = 0; i < robo.getHand().size(); i++) {
+            ProgramCard card = robo.getHand().getCard(i);
+            dummy.rotate(card.getRotate());
+            dummy.move(card.getMoveDistance());
+            if (!dummy.isDestroyed()) {
+                System.out.println("Moves closer to flag");
+                robo.getRegisters().placeCard(i);
+                successDummy = dummy.getDummy();
+            } else {
+                dummy = successDummy.getDummy();
+            }
+        }
         while (!robo.getRegisters().isFull()) {
             robo.getRegisters().placeCard(0);
         }
     }
 
     private static boolean shorterDistToFlag(Player robo, Player dummy) {
-        return (robo.getTargetFlagPos().getX() - dummy.getX()
-                < robo.getTargetFlagPos().getX()- robo.getX()
-                || robo.getTargetFlagPos().getY() - dummy.getY()
-                < robo.getTargetFlagPos().getY() - robo.getY());
+        return (Math.abs(robo.getTargetFlagPos().getX() - dummy.getX())
+                < Math.abs(robo.getTargetFlagPos().getX() - robo.getX())
+                || Math.abs(robo.getTargetFlagPos().getY() - dummy.getY())
+                < Math.abs(robo.getTargetFlagPos().getY() - robo.getY()));
     }
 
     private static boolean wantsToPowerDown(Player robo) {
