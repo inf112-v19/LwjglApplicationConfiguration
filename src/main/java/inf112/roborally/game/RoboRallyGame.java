@@ -57,6 +57,7 @@ public class RoboRallyGame extends Game {
 
     private boolean runTestMap = false;
 
+    public static boolean soundMuted;
 
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
@@ -86,7 +87,6 @@ public class RoboRallyGame extends Game {
         createPossibleFilepaths();
 
         menuScreen = new MenuScreen(this);
-//        gameScreen = new GameScreen(this, VAULT);
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
         selectSkinScreen = new SelectSkinScreen(this);
@@ -155,7 +155,7 @@ public class RoboRallyGame extends Game {
         testScreen.dispose();
         menuScreen.dispose();
         AssMan.dispose();
-        // It might not been made yet
+
         if (setupScreen != null) {
             setupScreen.dispose();
         }
@@ -163,7 +163,10 @@ public class RoboRallyGame extends Game {
         if(gameScreen != null) {
             gameScreen.dispose();
         }
+    }
 
+    public void setLaunchTestMap(boolean bool){
+        runTestMap = bool;
     }
 
     public String chosenMap(int mapIndex) {
@@ -178,9 +181,5 @@ public class RoboRallyGame extends Game {
 
     public Screen getScreenBefore(){
         return this.screenBefore;
-    }
-
-    public void setLauncTestMap(boolean bool){
-        runTestMap = bool;
     }
 }

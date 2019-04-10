@@ -1,20 +1,18 @@
 package inf112.roborally.game.player;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.objects.LaserCannon;
 import inf112.roborally.game.objects.MovableGameObject;
-import inf112.roborally.game.sound.GameSound;
 
 import java.util.ArrayList;
 
-import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
 import static inf112.roborally.game.enums.PlayerState.*;
 
 public class Player extends MovableGameObject implements Comparable {
@@ -39,12 +37,12 @@ public class Player extends MovableGameObject implements Comparable {
     private ProgramRegisters registers;
     private PlayerHand hand;
 
-    public Player(String name, String filepath, Direction direction, Board board) {
-        this(0, 0, filepath);
+    public Player(String name, Texture skin, Direction direction, Board board) {
+        this(0, 0);
         this.name = name;
+        makeSprite(skin);
         this.board = board;
         setDirection(direction);
-        makeSprite();
         loadVisualRepresentation();
         nFlags = board.getFlags().size();
         backup.setupSprite();
@@ -55,8 +53,8 @@ public class Player extends MovableGameObject implements Comparable {
     /**
      * Basic player
      */
-    private Player(int x, int y, String filePath) {
-        super(x, y, filePath);
+    private Player(int x, int y) {
+        super(x, y);
         damage = 0;
         lives = MAX_LIVES;
         targetFlag = 1;
@@ -72,15 +70,14 @@ public class Player extends MovableGameObject implements Comparable {
      * FOR TESTING ONLY
      */
     public Player(int x, int y, int nFlags) {
-        this(x, y, AssMan.PLAYER_TVBOT.fileName);
+        this(x, y);
         this.nFlags = nFlags;
         name = "testBot";
         debugging = true;
     }
 
-    @Override
-    public void makeSprite() {
-        super.makeSprite();
+    public void makeSprite(Texture skin) {
+        sprite = new Sprite(skin);
         regions = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             regions.add(new TextureRegion(getSprite().getTexture(), 32 * 8 * i, 0, 32 * 8, 48 * 8));
@@ -121,7 +118,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public ArrayList<ProgramCard> returnCards() {
-        registers.returnCards(this);
+        registers.returnCards();
         return hand.getCardsInHand();
     }
 
@@ -224,8 +221,9 @@ public class Player extends MovableGameObject implements Comparable {
         lives--;
     }
 
-    public boolean hasWon() {
-        return targetFlag > nFlags;
+
+    public boolean outOfLives() {
+        return lives < 1;
     }
 
     public boolean isDestroyed() {
@@ -244,16 +242,60 @@ public class Player extends MovableGameObject implements Comparable {
         return playerState == POWERED_DOWN;
     }
 
-    public boolean outOfLives() {
-        return lives < 1;
-    }
-
     public boolean hasScreamed() {
         return this.screamed;
     }
 
+    public boolean hasWon() {
+        return targetFlag > nFlags;
+    }
+
+
+
+    @Override
+    public boolean equals(Object other) {
+        if (other.getClass() != this.getClass())
+            return false;
+
+        return this.name.equals(((Player) other).name);
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) return 0;
+        Player other = (Player) o;
+        int thisPriority = registers.getCard(phase).getPriority();
+        int otherPriority = other.getRegisters().getCard(phase).getPriority();
+
+        return Integer.compare(thisPriority, otherPriority);
+    }
+
+
+    public void setPlayerState(PlayerState playerState) {
+        if (this.playerState == GAME_OVER) {
+            System.out.println("Can not set player state when player state is: " + playerState);
+            return;
+        } else if (this.playerState == DESTROYED) {
+            System.out.println("Only respawn method can change the state of a destroyed robot");
+        }
+        this.playerState = playerState;
+    }
+
     public void setScreamed(boolean b) {
         screamed = b;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
+
+    public boolean isDebuggingActive() {
+        return debugging;
+    }
+
+
+    public LaserCannon getLaserCannon() {
+        return laserCannon;
     }
 
     public int getCardLimit() {
@@ -288,49 +330,12 @@ public class Player extends MovableGameObject implements Comparable {
         return playerState;
     }
 
-    public void setPlayerState(PlayerState playerState) {
-        if (this.playerState == GAME_OVER) {
-            System.out.println("Can not set player state when player state is: " + playerState);
-            return;
-        } else if (this.playerState == DESTROYED) {
-            System.out.println("Only respawn method can change the state of a destroyed robot");
-        }
-        this.playerState = playerState;
-    }
-
-    public LaserCannon getLaserCannon() {
-        return laserCannon;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other.getClass() != this.getClass())
-            return false;
-
-        return this.name.equals(((Player) other).name);
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        if (o == null) return 0;
-        Player other = (Player) o;
-        int thisPriority = registers.getCard(phase).getPriority();
-        int otherPriority = other.getRegisters().getCard(phase).getPriority();
-
-        return Integer.compare(thisPriority, otherPriority);
-    }
-
-    public void setPhase(int phase) {
-        this.phase = phase;
-    }
-
     public int getMaxDamage() {
         return MAX_DAMAGE;
     }
 
-
-    public boolean isDebuggingActive() {
-        return debugging;
+    public PlayerHand getHand() {
+        return hand;
     }
 
     @Override
@@ -338,7 +343,8 @@ public class Player extends MovableGameObject implements Comparable {
         return getName() + " | Health: " + (10 - damage) + " | Lives: " + lives;
     }
 
-    public PlayerHand getHand() {
-        return hand;
+    public void dispose(){
+        super.dispose();
+        backup.dispose();
     }
 }

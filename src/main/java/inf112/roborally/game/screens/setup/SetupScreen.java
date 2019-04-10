@@ -70,7 +70,7 @@ public class SetupScreen extends AbstractScreen {
 
     private void createSkinButtons() {
         int nSkins = possibleFilepaths.length;
-        Sprite selectSkinText = new Sprite(new Texture(AssMan.SETUP_SELECT_SKIN_TEXT.fileName));
+        Sprite selectSkinText = new Sprite(AssMan.manager.get(AssMan.SETUP_SELECT_SKIN_TEXT));
         selectSkinText.setPosition(Gdx.graphics.getWidth() / 2 + 125, 500);
         information.add(selectSkinText);
 

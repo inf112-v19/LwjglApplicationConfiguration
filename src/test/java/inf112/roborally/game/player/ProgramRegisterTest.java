@@ -159,7 +159,7 @@ public class ProgramRegisterTest {
 
         for(int i = 0; i < 5; i++)
             player.getRegisters().placeCard(0);
-        player.getRegisters().returnCards(player);
+        player.getRegisters().returnCards();
 
         assertEquals(false, programRegisters.isFull());
     }

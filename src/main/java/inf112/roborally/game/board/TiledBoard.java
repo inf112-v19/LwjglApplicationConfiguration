@@ -2,6 +2,7 @@ package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -36,7 +37,7 @@ public abstract class TiledBoard {
 
     /**
      * Use this when rendering a specific layer(like walls) on top of sprites.
-     * MUST CALL BATCH BEGIN BEFORE THIS!!
+     * MUST CALL {@link SpriteBatch#begin()} BEFORE THIS!!
      *
      * @param layer
      */
@@ -53,9 +54,8 @@ public abstract class TiledBoard {
     }
 
     public void dispose() {
-        System.out.println("Disposing board");
         map.dispose();
-
+        mapRenderer.dispose();
     }
 
     public TiledMapTileLayer getLaserLayer() {

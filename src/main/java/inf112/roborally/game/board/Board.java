@@ -27,7 +27,7 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 
 @SuppressWarnings("Duplicates")
 public class Board extends TiledBoard {
-    private final float volume = .3f;
+    private float volume = .25f;
 
     protected List<Player> players;
     protected ArrayList<Flag> flags;
@@ -35,21 +35,12 @@ public class Board extends TiledBoard {
     protected ArrayList<LaserBeam> laserGuns;
     protected ArrayList<StartPosition> startPlates;
 
-    // Need this one so we don't check for non existing music when sounds are muted/disposed
-    private boolean soundIsMuted;
-
-
     public Board() {
         players = Collections.synchronizedList(new ArrayList<Player>());
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
         laserGuns = new ArrayList<>();
         startPlates = new ArrayList<>();
-        soundIsMuted = false;
-    }
-
-    public ArrayList<LaserBeam> getLaserGuns() {
-        return laserGuns;
     }
 
     public void findLaserGuns() {
@@ -75,6 +66,9 @@ public class Board extends TiledBoard {
     }
 
     public void addPlayer(Player player) {
+        if(player == null){
+            return;
+        }
         players.add(player);
     }
 
@@ -104,8 +98,9 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             expressBeltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!soundIsMuted && !player.hasScreamed()) {
+                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
+                    player.setScreamed(true);
                 }
                 player.destroy();
             }
@@ -117,7 +112,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             beltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!soundIsMuted && !player.hasScreamed()) {
+                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }
@@ -193,8 +188,8 @@ public class Board extends TiledBoard {
         for (Player player : players) {
             if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
-                if (!soundIsMuted) {
-                   AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
+                if (!RoboRallyGame.soundMuted) {
+                    AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
                 }
                 addAnimation(new RepairAnimation(player.position));
             }
@@ -216,7 +211,7 @@ public class Board extends TiledBoard {
     }
 
     public void drawLasers(SpriteBatch batch) {
-        for(LaserBeam beam : laserGuns)
+        for (LaserBeam beam : laserGuns)
             beam.draw(batch);
     }
 
@@ -231,19 +226,6 @@ public class Board extends TiledBoard {
             object.draw(batch);
     }
 
-    public void killTheSound() {
-        soundIsMuted = true;
-    }
-
-    public void restartTheSound() {
-        soundIsMuted = false;
-    }
-
-    public List<Player> getPlayers() {
-        return this.players;
-    }
-
-
     public void robotLasersFire() {
         for (Player player : players) {
             player.getLaserCannon().fire(this);
@@ -252,5 +234,32 @@ public class Board extends TiledBoard {
 
     public ArrayList<Flag> getFlags() {
         return flags;
+    }
+
+    public List<Player> getPlayers() {
+        return this.players;
+    }
+
+    public ArrayList<LaserBeam> getLaserGuns() {
+        return laserGuns;
+    }
+
+
+    public void dispose() {
+        System.out.println("Disposing board");
+        super.dispose();
+
+        for (Flag flag : flags) {
+            flag.dispose();
+        }
+        for(LaserAnimation beam : laserGuns){
+            beam.dispose();
+        }
+        for(LaserAnimation laser : lasers){
+            laser.dispose();
+        }
+        for(Player player : players){
+            player.dispose();
+        }
     }
 }

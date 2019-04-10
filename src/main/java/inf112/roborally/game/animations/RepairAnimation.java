@@ -1,5 +1,6 @@
 package inf112.roborally.game.animations;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.objects.Position;
@@ -10,9 +11,11 @@ public class RepairAnimation extends Animation {
     float direction;
 
     public RepairAnimation(Position position) {
-        super(position, AssMan.REPAIRSITE_REPAIR_ANIMATION.fileName);
+        super(position);
+        sprite = new Sprite(AssMan.manager.get(AssMan.REPAIRSITE_REPAIR_ANIMATION));
         sprite.setSize(32, 32);
         sprite.setOriginCenter();
+        updateSprite();
 
         stateTimer = 0;
         rotation = 45;

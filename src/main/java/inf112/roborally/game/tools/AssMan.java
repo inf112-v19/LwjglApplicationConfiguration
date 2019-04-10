@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 /**
  * Contains assets used by the game.
  * With AssMan you are able to load as well as dispose all of them at the same time.
- *
+ * <p>
  * Calling {@link #dispose()} will dispose all assets.
  */
 public class AssMan {
@@ -166,7 +166,7 @@ public class AssMan {
     //MenuScreen class
     public static final AssetDescriptor<Texture> MENUSCREEN_TITLESCREEN
             = new AssetDescriptor<>("assets/screens/menuscreen/titlescreen.jpg", Texture.class);
-    //MenuScreen choises class
+
     public static final AssetDescriptor<Texture> MENUSCREEN_CHOICES
             = new AssetDescriptor<>("assets/screens/menuscreen/menuchoices.png", Texture.class);
 
@@ -215,16 +215,18 @@ public class AssMan {
     public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
             = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
 
+    //Laser
     public static final AssetDescriptor<TextureAtlas> LASER_ATLAS
             = new AssetDescriptor<>("assets/objects/animatedlaser.atlas", TextureAtlas.class);
 
+    //Status display for robots
+    public static final AssetDescriptor<Texture> STATUS_DISPLAY_ROBOTS =
+            new AssetDescriptor<>("assets/register/robot_status_display.png", Texture.class);
 
 
     @SuppressWarnings("Duplicates")
     public static void load() {
 
-        manager.load(LASER_ATLAS);
-        manager.load(PROGRAM_CARD_ATLAS);
         //Music
         manager.load(SOUND_PLAYER_LASER);
         manager.load(SOUND_PLAYER_REPAIR);
@@ -237,6 +239,10 @@ public class AssMan {
         manager.load(PLAYER_BUTLER_REFINED);
         manager.load(PLAYER_CLAPTRAP_3000);
         manager.load(PLAYER_TVBOT);
+        manager.load(PLAYER_CAPTAIN_BOT);
+        manager.load(PLAYER_COP_BOT);
+        manager.load(PLAYER_NURSE_BOT);
+        manager.load(PLAYER_WIZARD_BOT);
 
         // Maps (png files)
         manager.load(MAP_VAULT);
@@ -273,7 +279,6 @@ public class AssMan {
         manager.load(REGISTER_LIFE_TOKEN);
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
-        manager.load(POWER_DOWN);
         manager.load(REGISTER_SUBMIT);
         manager.load(REGISTER_SUBMIT_PRESS);
         manager.load(REGISTER_CLEAR);
@@ -300,6 +305,15 @@ public class AssMan {
         //Flag
         manager.load(FLAG_SKIN);
         manager.load(FLAG_ATLAS);
+
+        //Program card
+        manager.load(PROGRAM_CARD_ATLAS);
+
+        //Laser
+        manager.load(LASER_ATLAS);
+
+        //Status display for robots
+        manager.load(STATUS_DISPLAY_ROBOTS);
     }
 
     public static String[] getPlayerSkins() {
@@ -323,6 +337,20 @@ public class AssMan {
         maps[2] = MAP_SPACE_BUG2.fileName;
         maps[3] = MAP_AROUND_THE_WORLD.fileName;
         return maps;
+    }
+
+    public static Texture[] getPlayerSkins() {
+        Texture[] skins = new Texture[8];
+        skins[0] = manager.get(PLAYER_CLAPTRAP_REFINED);
+        skins[1] = manager.get(PLAYER_BUTLER_REFINED);
+        skins[2] = manager.get(PLAYER_CAPTAIN_BOT);
+        skins[3] = manager.get(PLAYER_BARTENDER_CLAPTRAP);
+        skins[4] = manager.get(PLAYER_CLAPTRAP_3000);
+        skins[5] = manager.get(PLAYER_COP_BOT);
+        skins[6] = manager.get(PLAYER_WIZARD_BOT);
+        skins[7] = manager.get(PLAYER_NURSE_BOT);
+
+        return skins;
     }
 
     public static void dispose() {

@@ -23,8 +23,8 @@ public class MovableGameObject extends GameObject {
      * @param x position x
      * @param y position y
      */
-    public MovableGameObject(int x, int y, String filePath) {
-        super(x, y, filePath);
+    public MovableGameObject(int x, int y) {
+        super(x, y);
         direction = Direction.SOUTH;
         rotationDegree = direction.getRotationDegree();
     }
