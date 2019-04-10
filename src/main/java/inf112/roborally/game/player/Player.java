@@ -10,6 +10,7 @@ import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.LaserCannon;
 import inf112.roborally.game.objects.MovableGameObject;
+import inf112.roborally.game.objects.Position;
 
 import java.util.ArrayList;
 
@@ -349,5 +350,9 @@ public class Player extends MovableGameObject implements Comparable {
         Player dummy = new Player("dummy", sprite.getTexture(), getDirection(), board);
         dummy.move(getX(), getY());
         return dummy;
+    }
+
+    public Position getTargetFlagPos() {
+        return board.getFlags().get(targetFlag-1).position;
     }
 }
