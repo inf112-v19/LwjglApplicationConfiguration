@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -30,7 +29,7 @@ public class MenuScreen implements Screen {
 
         viewport = new FitViewport(1920, 1080);
 
-        background = new Sprite(new Texture(AssMan.MENUSCREEN_CHOICES.fileName));
+        background = new Sprite(AssMan.manager.get(AssMan.MENUSCREEN_CHOICES));
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage = new Stage(roboRallyGame.fixedViewPort, roboRallyGame.batch);
         stateTimer = 0;
@@ -86,7 +85,7 @@ public class MenuScreen implements Screen {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
 
             roboRallyGame.AIvsAI = false;
-            roboRallyGame.setLauncTestMap(true);
+            roboRallyGame.setLaunchTestMap(true);
             roboRallyGame.createGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
         }

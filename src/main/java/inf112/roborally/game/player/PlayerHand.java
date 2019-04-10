@@ -25,7 +25,7 @@ public class PlayerHand {
     }
 
     public boolean isFull() {
-        return cardsInHand.size() >= ProgramRegisters.MAX_NUMBER_OF_CARDS - player.getDamage();
+        return cardsInHand.size() >= player.getCardLimit();
     }
 
     public ProgramCard removeCard(int cardPos) {

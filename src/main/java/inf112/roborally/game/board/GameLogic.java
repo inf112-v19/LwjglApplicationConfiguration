@@ -53,13 +53,12 @@ public class GameLogic extends BoardLogic implements Runnable {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            System.out.println("Switched to EndGame screen");
             game.endGameScreen.addWinner(player1);
             game.setScreen(game.endGameScreen);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            player1.getRegisters().returnCards(players.get(0));
+            player1.getRegisters().returnCards();
             hud.clearAllCards();
             hud.updateCards();
         }
@@ -92,7 +91,8 @@ public class GameLogic extends BoardLogic implements Runnable {
                 hud.clearAllCards();
                 hud.updateCards();
                 hud.resetPowerDown();
-                hud.setPowerDownTouchable(true);
+                hud.setButtonTouchable(true);
+                hud.getPlayerStatusDisplay().clearCards();
             }
         });
     }
@@ -123,6 +123,15 @@ public class GameLogic extends BoardLogic implements Runnable {
                 board.cleanUp();
             }
         });
+    }
+
+    @Override
+    protected void doPhase(){
+        if (phase < 5) {
+            hud.getPlayerStatusDisplay().clearCards();
+            hud.getPlayerStatusDisplay().addCards(phase);
+        }
+        super.doPhase();
     }
 }
 

@@ -53,7 +53,9 @@ public class GameScreen implements Screen {
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
-        music.play();
+        if(!RoboRallyGame.soundMuted) {
+            music.play();
+        }
 
         // Move dynamicCamera to center of board:
         int x = board.getWidth() / 2 * Main.PIXELS_PER_TILE;
@@ -63,21 +65,18 @@ public class GameScreen implements Screen {
         game.dynamicCamera.update();
         background = new Background(game.dynamicCamera);
         animations = new ArrayList<>();
+        hud.addPlayerStatusDisplay(board.getPlayers());
     }
 
     private void addPlayersToBoard(int robotChoiceIndex) {
-        String[] filepaths = game.possibleRobotSkinFilepaths;
-        StringBuilder namebuilder = new StringBuilder();
-        namebuilder.append("Player");
         int index = robotChoiceIndex;
         int n = game.nSkins;
         for (int i = 0; i < n; i++) {
             if (index >= n) {
                 index = 0;
             }
-            namebuilder.append((i + 1));
-            board.addPlayer(new Player(namebuilder.toString(), filepaths[index], NORTH, board));
-            namebuilder.deleteCharAt(6); // Delete the last character, which is the player number
+            board.addPlayer(new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board));
+
             index++;
         }
     }
@@ -112,7 +111,7 @@ public class GameScreen implements Screen {
         for (int i = 0; i < animations.size(); i++) {
             animations.get(i).draw(game.batch);
             if (animations.get(i).hasFinished())
-                animations.remove(i--); // need to decrement i when removing an element?
+                animations.remove(i--);
         }
         game.batch.end();
 
@@ -137,6 +136,10 @@ public class GameScreen implements Screen {
         for (Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
+        }
+
+        for(Animation animation : animations){
+            animation.dispose();
         }
         music.dispose();
     }
@@ -163,16 +166,23 @@ public class GameScreen implements Screen {
 
     }
 
+    public boolean playMusic(boolean bool){
+        if(bool) {
+            music.play();
+            RoboRallyGame.soundMuted = false;
+        }else{
+            music.pause();
+            RoboRallyGame.soundMuted = true;
+        }
+        return !bool;
+    }
+
     public Music getMusic() {
         return music;
     }
 
     public Board getBoard() {
         return board;
-    }
-
-    public GameLogic getGameLogic() {
-        return gameLogic;
     }
 }
 

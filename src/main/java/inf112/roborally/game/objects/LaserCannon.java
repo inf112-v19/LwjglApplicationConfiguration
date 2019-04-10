@@ -9,7 +9,7 @@ public class LaserCannon extends MovableGameObject {
     private Player gunOwner;
 
     public LaserCannon(Player player) {
-        super(player.getX(), player.getY(), "");
+        super(player.getX(), player.getY());
         this.gunOwner = player;
     }
 

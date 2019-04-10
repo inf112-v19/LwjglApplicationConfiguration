@@ -7,7 +7,7 @@ public class Flag extends GameObject {
     private int flagNumber;
 
     public Flag(int x, int y, int flagNumber) {
-        super(x, y, "assets/objects/flagTextures.atlas");
+        super(x, y);
         this.flagNumber = flagNumber;
         setupTextureAtlas();
         updateSprite();

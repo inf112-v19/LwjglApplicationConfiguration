@@ -57,6 +57,7 @@ public class BoardLogic {
                 break;
             case GAME_OVER:
                 endGame();
+                break;
         }
     }
 
@@ -185,7 +186,6 @@ public class BoardLogic {
         for (Player player : players) {
             player.getRegisters().executeCard(phase);
             updatePlayers();
-//            sleepThread();
         }
     }
 

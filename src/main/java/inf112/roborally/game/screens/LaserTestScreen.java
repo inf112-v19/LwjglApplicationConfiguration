@@ -8,6 +8,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.AssMan;
 
 public class LaserTestScreen implements Screen {
     RoboRallyGame game;
@@ -19,7 +20,7 @@ public class LaserTestScreen implements Screen {
         board.createBoard(RoboRallyGame.LASER_TEST_MAP);
         board.findLaserGuns();
         for (int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++) {
-            Player testBot = new Player("testBot" + i, "assets/robots/claptrapRefined.png", Direction.NORTH, board);
+            Player testBot = new Player("testBot" + i, AssMan.getPlayerSkins()[i], Direction.NORTH, board); //
             board.addPlayer(testBot);
         }
         board.placePlayers();

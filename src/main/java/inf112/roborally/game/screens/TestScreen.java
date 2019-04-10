@@ -25,7 +25,7 @@ public class TestScreen implements Screen {
     public TestScreen(RoboRallyGame game) {
         this.game = game;
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        background = new Sprite(new Texture(AssMan.TESTSCREEN_BACKGROUND.fileName));
+        background = new Sprite(AssMan.manager.get(AssMan.TESTSCREEN_BACKGROUND));
 
         player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
@@ -115,5 +115,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void dispose() {
+        hud.dispose();
+        background.getTexture().dispose();
     }
 }
