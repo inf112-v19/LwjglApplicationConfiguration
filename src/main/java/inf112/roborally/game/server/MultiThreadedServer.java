@@ -12,6 +12,7 @@ public class MultiThreadedServer {
     public static void main(String args[]) {
         ServerSocket serverSocket = null;
         Socket socket = null;
+        int connections = 0;
 
         try {
             serverSocket = new ServerSocket(PORT);
@@ -27,6 +28,8 @@ public class MultiThreadedServer {
             }
             // new thread for a client
             new EchoThread(socket).start();
+            connections ++;
+            System.out.println(connections);
         }
     }
 }

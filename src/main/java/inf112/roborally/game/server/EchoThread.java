@@ -16,6 +16,7 @@ public class EchoThread extends Thread {
         InputStream inp = null;
         ObjectInputStream brinp = null;
         ObjectOutputStream out = null;
+
         try {
             inp = socket.getInputStream();
             brinp = new ObjectInputStream(inp);
@@ -27,12 +28,15 @@ public class EchoThread extends Thread {
         while (true) {
             try {
                 MessagePacket packet = (MessagePacket) brinp.readObject();
-                int packetInt = packet.getNumber();
+                int packetInt = packet.getId();
                 String packetWord = packet.getWord();
                 if ((packetInt == 0) || packetWord.equalsIgnoreCase("QUIT")) {
                     socket.close();
                     return;
-                } else {
+                } else if (packetWord.equalsIgnoreCase("JOIN")){
+                    System.out.println(socket.getInetAddress() + " connected");
+                }
+                else {
                     System.out.println(packetInt + " " + packetWord);
                     out.writeObject(packet);
 

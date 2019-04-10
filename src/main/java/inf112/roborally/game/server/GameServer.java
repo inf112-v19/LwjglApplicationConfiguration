@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+// NOT in use, only for demonstration
 public class GameServer {
 
     public static void main(String argv[]) throws Exception
@@ -27,7 +28,7 @@ public class GameServer {
 
             MessagePacket packet = (MessagePacket) objectInputStream.readObject();
 
-            System.out.println(packet.getNumber());
+            System.out.println(packet.getId());
             System.out.println(packet.getWord());
 
             OutputStream outToServer = connectionSocket.getOutputStream();

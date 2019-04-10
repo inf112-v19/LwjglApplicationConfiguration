@@ -7,6 +7,7 @@ class GameClient {
     public static void main(String argv[]) throws Exception {
 
         String sentence;
+        int id = 1;
 
 //            BufferedReader inFromUser =
 //                    new BufferedReader(new InputStreamReader(System.in));
@@ -19,19 +20,22 @@ class GameClient {
 
         ServerConnection clientToServer = new ServerConnection(outToServer, inFromServer);
 
+        MessagePacket handshake = new MessagePacket(id, "JOIN");
+
+        clientToServer.send(handshake);
+
         while(true) {
 
 
             sentence = inFromUser.readLine();
 
-            String[] message = sentence.split(" ");
-            MessagePacket packet = new MessagePacket(Integer.parseInt(message[0]), message[1]);
+            MessagePacket packet = new MessagePacket(id, sentence);
 
             clientToServer.send(packet);
 
             MessagePacket incomingPacket = clientToServer.receive();
 
-            System.out.println("FROM SERVER: "  + incomingPacket.getNumber() + " " + incomingPacket.getWord());
+            System.out.println("FROM SERVER: "  + incomingPacket.getId() + " " + incomingPacket.getWord());
 
 
         }
