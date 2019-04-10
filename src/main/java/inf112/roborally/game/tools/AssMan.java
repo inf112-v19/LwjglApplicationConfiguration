@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 /**
@@ -183,9 +184,15 @@ public class AssMan {
     public static final AssetDescriptor<Texture> STATUS_DISPLAY_ROBOTS =
             new AssetDescriptor<>("assets/register/robot_status_display.png", Texture.class);
 
+    // Font
+    public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA =
+            new AssetDescriptor<>("assets/fonts/groteskia.fnt", BitmapFont.class);
+
 
     @SuppressWarnings("Duplicates")
     public static void load() {
+        //Font
+        manager.load(FONT_GROTESKIA);
 
         //Music
         manager.load(SOUND_PLAYER_LASER);
@@ -286,6 +293,6 @@ public class AssMan {
 
     public static void dispose() {
         System.out.println("Disposing asset manager");
-        manager.clear();
+        manager.dispose();
     }
 }

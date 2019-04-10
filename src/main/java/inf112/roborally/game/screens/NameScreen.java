@@ -8,14 +8,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.tools.AssMan;
-
 
 public class NameScreen implements Screen {
     private final RoboRallyGame game;
@@ -26,10 +24,10 @@ public class NameScreen implements Screen {
     public NameScreen(RoboRallyGame game) {
         this.game = game;
         stage = new Stage(game.fixedViewPort, game.batch);
-        BitmapFont font = new BitmapFont();
-        font.getData().scale(10);
-        text = new TextField("'Your name'", new TextField.TextFieldStyle(font, Color.WHITE, null, null,
-                new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2))));
+        BitmapFont font = AssMan.manager.get(AssMan.FONT_GROTESKIA);
+        font.getData().scale(5);
+        text = new TextField("'Your name'", new TextField.TextFieldStyle(font, Color.WHITE, null,
+                null, new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2))));
         text.setSize(1000, 200);
         text.setPosition(1920 / 2, 600, Align.center);
         text.setAlignment(Align.center);

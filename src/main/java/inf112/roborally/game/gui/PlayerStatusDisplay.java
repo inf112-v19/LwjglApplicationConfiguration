@@ -27,7 +27,7 @@ public class PlayerStatusDisplay {
     public PlayerStatusDisplay(Player player, List<Player> players, final Hud hud) {
         tab = new Group();
         hud.stage.addActor(tab);
-        font = new BitmapFont();
+        font = AssMan.manager.get(AssMan.FONT_GROTESKIA);
         statuses = new ArrayList<>();
         cards = new Group();
         otherPlayers = new ArrayList<>();
@@ -95,12 +95,12 @@ public class PlayerStatusDisplay {
                 tab.addActor(img);
             }
             Label name = new Label(player.getName(), new Label.LabelStyle(font, Color.WHITE));
-            name.setFontScale(2);
-            name.setPosition(robotSkin.getX() + 100, robotSkin.getY() + 63);
+            name.setFontScale(1);
+            name.setPosition(robotSkin.getX() + 100, robotSkin.getY() + 56);
             tab.addActor(name);
             damageNumber = new Label("x" + player.getDamage(), new Label.LabelStyle(font, Color.BLACK));
-            damageNumber.setFontScale(2.5f);
-            damageNumber.setPosition(damageToken.getX() + damageToken.getWidth() + 3, damageToken.getY() + 8);
+            damageNumber.setFontScale(1.3f);
+            damageNumber.setPosition(damageToken.getX() + damageToken.getWidth() + 3, damageToken.getY());
             tab.addActor(damageNumber);
         }
 
