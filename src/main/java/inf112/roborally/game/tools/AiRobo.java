@@ -20,9 +20,13 @@ public class AiRobo {
         if (robo.outOfLives()) return;
 
         int shuffleCounter = 0;
+
+        ArrayList<ProgramCard> badMoves = new ArrayList<>();
+
         while (!robo.getRegisters().isFull()) {
-            ArrayList<ProgramCard> smartMoves = smartMove(robo, board);
-            if (smartMoves.contains(robo.getHand().getCard(0))
+            badMoves = badMoves(robo, board);
+
+            if (badMoves.contains(robo.getHand().getCard(0))
                     && robo.getHand().size() > 1
                     && shuffleCounter < 2) {
                 robo.getHand().shuffle();
@@ -32,22 +36,21 @@ public class AiRobo {
                 shuffleCounter = 0;
             }
         }
-
-        robo.wantsToPowerDown = wantsToPowerDown(robo);
+        robo.wantsToPowerDown = wantsToPowerDown(robo, badMoves);
         robo.setPlayerState(PlayerState.READY);
     }
 
-    private static ArrayList<ProgramCard> smartMove(Player robo, Board board) {
-        ArrayList<ProgramCard> notTheSmartestCardChoices = new ArrayList<>();
+    private static ArrayList<ProgramCard> badMoves(Player robo, Board board) {
+        ArrayList<ProgramCard> badMoves = new ArrayList<>();
         for (int i = 0; i < robo.getHand().size(); i++) {
             ProgramCard card = robo.getHand().getCard(i);
 
             if (!safeToMoveInDirection(robo, card, board)) {
-                notTheSmartestCardChoices.add(card);
+                badMoves.add(card);
             }
         }
 
-        return notTheSmartestCardChoices;
+        return badMoves;
     }
 
     /*
@@ -74,10 +77,13 @@ public class AiRobo {
                         || !robo.getDirection().equals(Direction.NORTH));
     }
 
-    private static boolean wantsToPowerDown(Player robo) {
-        int randomNumberToCheckForPowerDown = (int) (Math.random() * 50) + 1;
-        System.out.println("Random number: " + randomNumberToCheckForPowerDown + " and " + robo.getName() + "'s damage: " + robo.getDamage());
-        return randomNumberToCheckForPowerDown > 40 || robo.getDamage() > 8;
+    private static boolean wantsToPowerDown(Player robo, ArrayList<ProgramCard> badMoves) {
+        for (ProgramCard badMove : badMoves) {
+            if (robo.getRegisters().getAllCards().contains(badMove)) {
+                return true;
+            }
+        }
+        return robo.getDamage() > 8;
     }
 
 }
