@@ -346,10 +346,10 @@ public class Player extends MovableGameObject implements Comparable {
         backup.dispose();
     }
 
-    public Player getDummy() {
-        Player dummy = new Player("dummy", sprite.getTexture(), getDirection(), board);
-        dummy.move(getX(), getY());
-        return dummy;
+    public Player createTestPilot() {
+        Player testPilot = new Player("testPilot", sprite.getTexture(), getDirection(), board);
+        testPilot.move(getX(), getY());
+        return testPilot;
     }
 
     public Position getTargetFlagPos() {

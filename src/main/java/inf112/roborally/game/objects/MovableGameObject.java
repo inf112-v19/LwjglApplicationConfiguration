@@ -124,7 +124,7 @@ public class MovableGameObject extends GameObject {
     }
 
     public boolean canPush(Direction direction, Board board) {
-        if (this instanceof Player && ((Player) this).getName().equals("dummy")) return true;
+        if (this instanceof Player && ((Player) this).getName().equals("testPilot")) return true;
 
         Position nextPos = new Position(getX(), getY());
         nextPos.moveInDirection(direction);

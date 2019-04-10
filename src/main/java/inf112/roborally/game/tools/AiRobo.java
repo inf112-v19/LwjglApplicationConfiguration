@@ -17,50 +17,46 @@ public class AiRobo {
     private static void makeDecisions(Player robo) {
         if (robo.outOfLives()) return;
 
-        moveDummy(robo);
+        moveTestPilot(robo);
 
         robo.wantsToPowerDown = wantsToPowerDown(robo);
         robo.setPlayerState(PlayerState.READY);
     }
 
-    private static void moveDummy(Player robo) {
+    private static void moveTestPilot(Player robo) {
         if (robo.getRegisters().isFull()) return;
-        Player dummy = robo.getDummy();
-        Player successDummy = robo.getDummy();
+        Player testPilot = robo.createTestPilot();
+        Player successfulTestPilot = robo.createTestPilot();
         for (int i = 0; i < robo.getHand().size(); i++) {
             ProgramCard card = robo.getHand().getCard(i);
-            dummy.rotate(card.getRotate());
-            dummy.move(card.getMoveDistance());
-            if (!dummy.isDestroyed() && shorterDistToFlag(robo, dummy)) {
-                System.out.println("Moves closer to flag");
+            testPilot.rotate(card.getRotate());
+            testPilot.move(card.getMoveDistance());
+            if (!testPilot.isDestroyed() && shorterDistToFlag(robo, testPilot)) {
                 robo.getRegisters().placeCard(i);
-                successDummy = dummy.getDummy();
+                successfulTestPilot = testPilot.createTestPilot();
             } else {
-                dummy = successDummy.getDummy();
+                testPilot = successfulTestPilot.createTestPilot();
             }
         }
         for (int i = 0; i < robo.getHand().size(); i++) {
             ProgramCard card = robo.getHand().getCard(i);
-            dummy.rotate(card.getRotate());
-            dummy.move(card.getMoveDistance());
-            if (!dummy.isDestroyed()) {
-                System.out.println("Moves closer to flag");
+            testPilot.rotate(card.getRotate());
+            testPilot.move(card.getMoveDistance());
+            if (!testPilot.isDestroyed()) {
                 robo.getRegisters().placeCard(i);
-                successDummy = dummy.getDummy();
+                successfulTestPilot = testPilot.createTestPilot();
             } else {
-                dummy = successDummy.getDummy();
+                testPilot = successfulTestPilot.createTestPilot();
             }
         }
-        while (!robo.getRegisters().isFull()) {
-            robo.getRegisters().placeCard(0);
-        }
+        while (!robo.getRegisters().isFull()) robo.getRegisters().placeCard(0);
     }
 
-    private static boolean shorterDistToFlag(Player robo, Player dummy) {
-        return (Math.abs(robo.getTargetFlagPos().getX() - dummy.getX())
+    private static boolean shorterDistToFlag(Player robo, Player testPilot) {
+        return (Math.abs(robo.getTargetFlagPos().getX() - testPilot.getX())
+                + Math.abs(robo.getTargetFlagPos().getY() - testPilot.getY())
                 < Math.abs(robo.getTargetFlagPos().getX() - robo.getX())
-                || Math.abs(robo.getTargetFlagPos().getY() - dummy.getY())
-                < Math.abs(robo.getTargetFlagPos().getY() - robo.getY()));
+                + Math.abs(robo.getTargetFlagPos().getY() - robo.getY()));
     }
 
     private static boolean wantsToPowerDown(Player robo) {
