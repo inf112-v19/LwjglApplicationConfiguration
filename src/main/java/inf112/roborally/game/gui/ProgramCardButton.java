@@ -1,14 +1,18 @@
 package inf112.roborally.game.gui;
+
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import inf112.roborally.game.board.ProgramCard;
 
+/**
+ * Visual program card.
+ */
 public class ProgramCardButton extends ImageTextButton {
 
     ProgramCard card;
     private Label label;
 
-    public ProgramCardButton(ProgramCard card){
+    public ProgramCardButton(ProgramCard card) {
         super("", card.getStyle());
         this.card = card;
         label = getLabel();
@@ -17,7 +21,8 @@ public class ProgramCardButton extends ImageTextButton {
         setLabel(label);
         getCell(label).padRight(160).padBottom(250);
     }
-    public void dispose(){
+
+    public void dispose() {
         card.dispose();
     }
 }

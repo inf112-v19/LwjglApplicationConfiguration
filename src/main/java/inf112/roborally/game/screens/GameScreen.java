@@ -2,17 +2,20 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
-import inf112.roborally.game.board.*;
-import inf112.roborally.game.gui.AssMan;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.GameLogic;
+import inf112.roborally.game.board.TestBoard;
+import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.objects.Player;
-import inf112.roborally.game.sound.GameMusic;
+import inf112.roborally.game.player.Player;
+import inf112.roborally.game.objects.Position;
+import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 
@@ -21,44 +24,38 @@ import static inf112.roborally.game.enums.Direction.NORTH;
 
 public class GameScreen implements Screen {
 
-    public static String mapPath = RoboRallyGame.TEST_MAP;
     private final RoboRallyGame game;
     private final Hud hud;
     private final GameLogic gameLogic;
     private final Board board;
-    private Background background;
-    private GameMusic music;
-
     public ArrayList<Animation> animations;
+    private Background background;
+    private Music music;
 
-    private AssMan assMan;
 
-    public GameScreen(RoboRallyGame game, String mapPath) {
-        this.mapPath = mapPath;
+    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, boolean runTestMap) {
         this.game = game;
-        assMan = game.getAssMan();
-
-
-        board = new VaultBoard();
-
-        board.addPlayer(new Player("Player1", AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot1", AssMan.PLAYER_CLAPTRAP_REFINED.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot2", AssMan.PLAYER_BUTLER_REFINED.fileName, NORTH, board));
-        board.addPlayer(new Player("testBot3", AssMan.PLAYER_CLAPTRAP_3000.fileName, NORTH, board));
-
+        if (!runTestMap) {
+            if (flagPositions != null) {
+                board = new VaultBoard(flagPositions);
+            } else {
+                board = new VaultBoard();
+            }
+        } else {
+            board = new TestBoard();
+        }
+        addPlayersToBoard(robotChoiceIndex);
         board.placePlayers();
-
-
         hud = new Hud(board.getPlayers().get(0), game);
-
         hud.createButtons();
-
         System.out.println(game.fixedCamera.position);
         gameLogic = new GameLogic(board, hud, game);
 
         // Music
-        music = new GameMusic(RoboRallyGame.MAIN_THEME);
-        music.play();
+        music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
+        if(!RoboRallyGame.soundMuted) {
+            music.play();
+        }
 
         // Move dynamicCamera to center of board:
         int x = board.getWidth() / 2 * Main.PIXELS_PER_TILE;
@@ -66,14 +63,27 @@ public class GameScreen implements Screen {
         game.dynamicCamera.position.set(x, y, 0);
         game.dynamicCamera.zoom = 0.4f;
         game.dynamicCamera.update();
-
         background = new Background(game.dynamicCamera);
-
         animations = new ArrayList<>();
+        hud.addPlayerStatusDisplay(board.getPlayers());
+    }
+
+    private void addPlayersToBoard(int robotChoiceIndex) {
+        int index = robotChoiceIndex;
+        int n = game.nSkins;
+        for (int i = 0; i < n; i++) {
+            if (index >= n) {
+                index = 0;
+            }
+            board.addPlayer(new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board));
+
+            index++;
+        }
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(hud.stage);
 
     }
 
@@ -94,12 +104,14 @@ public class GameScreen implements Screen {
         board.render(game.dynamicCamera);
 
         game.batch.setProjectionMatrix(game.dynamicCamera.combined);
+
+        gameLogic.removeDeadRobots();
         game.batch.begin();
         board.drawGameObjects(game.batch);
         for (int i = 0; i < animations.size(); i++) {
             animations.get(i).draw(game.batch);
             if (animations.get(i).hasFinished())
-                animations.remove(i--); // need to decrement i when removing an element?
+                animations.remove(i--);
         }
         game.batch.end();
 
@@ -108,21 +120,26 @@ public class GameScreen implements Screen {
     }
 
     private void update() {
-        gameLogic.update();
-        game.cameraListener.update();
+        game.cameraListener.updateZoom();
         background.update(game.dynamicCamera);
+        gameLogic.handleInput();
+        gameLogic.update();
     }
 
 
     @Override
     public void dispose() {
-        System.out.println("disposing game screen");
+        System.out.println("Disposing game screen");
         background.dispose();
 
         board.dispose();
         for (Player player : board.getPlayers()) {
             player.getSprite().getTexture().dispose();
             player.getBackup().getSprite().getTexture().dispose();
+        }
+
+        for(Animation animation : animations){
+            animation.dispose();
         }
         music.dispose();
     }
@@ -149,11 +166,18 @@ public class GameScreen implements Screen {
 
     }
 
-    public GameLogic getGameLogic() {
-        return gameLogic;
+    public boolean playMusic(boolean bool){
+        if(bool) {
+            music.play();
+            RoboRallyGame.soundMuted = false;
+        }else{
+            music.pause();
+            RoboRallyGame.soundMuted = true;
+        }
+        return !bool;
     }
 
-    public GameMusic getMusic() {
+    public Music getMusic() {
         return music;
     }
 

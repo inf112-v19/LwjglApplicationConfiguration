@@ -4,24 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.gui.AssMan;
-
-import java.awt.event.InputEvent;
+import inf112.roborally.game.tools.AssMan;
 
 public class MenuScreen implements Screen {
 
     private RoboRallyGame roboRallyGame;
     private SpriteBatch batch;
     private Sprite background;
-    private Sprite pressEnter;
     private Viewport viewport;
     private int stateTimer;
+
+    private Stage stage;
 
     public MenuScreen(RoboRallyGame roboRallyGame) {
         this.roboRallyGame = roboRallyGame;
@@ -30,18 +29,15 @@ public class MenuScreen implements Screen {
 
         viewport = new FitViewport(1920, 1080);
 
-        background = new Sprite(new Texture(AssMan.MENUSCREEN_TITLESCREEN.fileName));
-        background.setPosition(Gdx.graphics.getWidth() / 2 - background.getWidth() / 2,
-                Gdx.graphics.getHeight() - background.getHeight());
-        pressEnter = new Sprite(new Texture(AssMan.MENUSCREEN_PRESS_ENTER_WHITE.fileName));
-        pressEnter.setPosition(Gdx.graphics.getWidth() / 2 - pressEnter.getWidth() / 2,
-                (Gdx.graphics.getHeight() - background.getHeight()) / 2 - pressEnter.getHeight() / 2);
-
+        background = new Sprite(AssMan.manager.get(AssMan.MENUSCREEN_CHOICES));
+        background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage = new Stage(roboRallyGame.fixedViewPort, roboRallyGame.batch);
         stateTimer = 0;
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -53,12 +49,10 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClearColor(r, g, b, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        pressEnter.setAlpha(stateTimer / 255f);
         background.setAlpha(stateTimer / 255f);
         if (stateTimer < 255) stateTimer++;
         batch.begin();
         background.draw(batch);
-        pressEnter.draw(batch);
         batch.end();
 
         handleInput();
@@ -66,16 +60,36 @@ public class MenuScreen implements Screen {
 
     private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            roboRallyGame.createGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
+            roboRallyGame.AIvsAI = false;
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            roboRallyGame.AIvsAI = false;
+            roboRallyGame.createSetupScreen();
+            roboRallyGame.setScreen(roboRallyGame.setupScreen);
             dispose();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
-            roboRallyGame.setScreen(roboRallyGame.testScreen);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+            roboRallyGame.AIvsAI = false;
             dispose();
+            roboRallyGame.setScreen(roboRallyGame.testScreen);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+            roboRallyGame.AIvsAI = false;
+            dispose();
+            roboRallyGame.setScreen(roboRallyGame.laserTestScreen);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            roboRallyGame.AIvsAI = true;
+            roboRallyGame.createGameScreen();
+            roboRallyGame.setScreen(roboRallyGame.gameScreen);
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+
+            roboRallyGame.AIvsAI = false;
+            roboRallyGame.setLaunchTestMap(true);
+            roboRallyGame.createGameScreen();
+            roboRallyGame.setScreen(roboRallyGame.gameScreen);
         }
+
     }
 
     @Override
@@ -95,12 +109,11 @@ public class MenuScreen implements Screen {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
-        pressEnter.getTexture().dispose();
         background.getTexture().dispose();
     }
 }

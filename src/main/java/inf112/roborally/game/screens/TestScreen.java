@@ -6,12 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.gui.AssMan;
+import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
 
 import java.util.Stack;
 
@@ -22,32 +21,32 @@ public class TestScreen implements Screen {
     private Hud hud;
     private Stack<ProgramCard> stack;
 
+
     public TestScreen(RoboRallyGame game) {
         this.game = game;
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        background = new Sprite(new Texture(AssMan.TESTSCREEN.fileName));
+        background = new Sprite(AssMan.manager.get(AssMan.TESTSCREEN_BACKGROUND));
 
         player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();
-        for(int i = 0; i < player.getCardLimit(); i++){
-            player.receiveCard(stack.pop());
+        for (int i = 0; i < player.getCardLimit(); i++) {
+            player.getHand().receiveCard(stack.pop());
         }
 
         hud = new Hud(player, game);
         hud.clearAllCards();
         hud.updateCards();
-
     }
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(hud.stage);
     }
 
     @Override
     public void render(float v) {
         handleInput();
-        player.update();
+        player.updateSprite();
 
         float r = 0 / 255f;
         float g = 20 / 255f;
@@ -63,7 +62,6 @@ public class TestScreen implements Screen {
 
         hud.createButtons();
         hud.draw();
-
     }
 
     private void handleInput() {
@@ -71,10 +69,14 @@ public class TestScreen implements Screen {
             Gdx.app.exit();
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            game.setScreen(game.settingsScreen);
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             player.takeDamage();
-            player.update();
-            System.out.println(player.playerState);
+            player.updateSprite();
+            System.out.println(player.getPlayerState());
             player.respawn();
         }
 
@@ -113,5 +115,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void dispose() {
+        hud.dispose();
+        background.getTexture().dispose();
     }
 }

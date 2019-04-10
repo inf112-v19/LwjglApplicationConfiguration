@@ -253,11 +253,6 @@
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
- <tile id="48">
-  <properties>
-   <property name="Laser" value="NORTH"/>
-  </properties>
- </tile>
  <tile id="49">
   <properties>
    <property name="Normal" value="WEST"/>
@@ -292,11 +287,6 @@
    <property name="Rotate" value="LEFT"/>
   </properties>
  </tile>
- <tile id="55">
-  <properties>
-   <property name="Laser" value="EAST"/>
-  </properties>
- </tile>
  <tile id="56">
   <properties>
    <property name="Gyro" value="RIGHT"/>
@@ -305,6 +295,26 @@
  <tile id="57">
   <properties>
    <property name="Gyro" value="LEFT"/>
+  </properties>
+ </tile>
+ <tile id="59">
+  <properties>
+   <property name="Laser" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="60">
+  <properties>
+   <property name="Laser" value="NORTH"/>
+  </properties>
+ </tile>
+ <tile id="61">
+  <properties>
+   <property name="Laser" value="EAST"/>
+  </properties>
+ </tile>
+ <tile id="62">
+  <properties>
+   <property name="Laser" value="EAST"/>
   </properties>
  </tile>
 </tileset>

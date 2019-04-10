@@ -2,23 +2,25 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.gui.AssMan;
-import org.lwjgl.Sys;
+import inf112.roborally.game.tools.AssMan;
 
 public class SettingsScreen extends AbstractScreen {
 
+    //Stage for holding actors.
+    public Stage stage;
     // Just a local variable to let the settings screen keep track of whether or
     // not the music is muted
     private boolean musicIsMuted;
+    private RoboRallyGame game;
 
-    public SettingsScreen(RoboRallyGame roborallygame) {
-        super(roborallygame, AssMan.BACKGROUND_SETTINGS.fileName);
+
+    public SettingsScreen(RoboRallyGame game) {
+        super(game, AssMan.SETTINGS_BACKGROUND.fileName);
+        this.game = game;
         musicIsMuted = false;
+        stage = new Stage(game.fixedViewPort, game.batch);
     }
 
     /**
@@ -29,35 +31,51 @@ public class SettingsScreen extends AbstractScreen {
     @Override
     public void render(float v) {
         super.render(v);
+
+        batch.setProjectionMatrix(game.fixedCamera.combined);
+        batch.begin();
+        background.draw(batch);
+        batch.end();
         handleInput();
     }
 
     private void handleInput() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            System.out.println("Key B or Escape is pressed, going back to the GameScreen");
-            game.setScreen(game.gameScreen);
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            if (!musicIsMuted) {
-                game.gameScreen.getMusic().mute();
-                game.gameScreen.getBoard().killTheSound();
-                musicIsMuted = true;
-                System.out.println("Muted the music from the settings screen");
+        if (Gdx.input.isKeyJustPressed(Input.Keys.B) || Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.settingsScreen.dispose();
+
+            if (game.getScreenBefore() == game.gameScreen) {
+                game.setScreen(game.gameScreen);
+                System.out.println("Key B or Escape is pressed, going back to the GameScreen");
+            } else if (game.getScreenBefore() == game.testScreen) {
+                game.setScreen(game.testScreen);
+                System.out.println("Key B or Escape is pressed, going back to the TestScreen");
+            } else if (game.getScreenBefore() == game.laserTestScreen) {
+                game.setScreen(game.laserTestScreen);
+                System.out.println("Key B or Escape is pressed, going back to the LaserTestScreen");
             }
-            else {
-                game.gameScreen.getMusic().play();
-                game.gameScreen.getBoard().restartTheSound();
-                musicIsMuted = false;
+
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            if (!musicIsMuted) {
+                musicIsMuted = game.gameScreen.playMusic(false);
+                System.out.println("Muted the music from the settings screen");
+            } else {
+                musicIsMuted = game.gameScreen.playMusic(true);
                 System.out.println("Started the music from the settings screen");
             }
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            game.setLaunchTestMap(false);
             game.newGame();
+
         }
     }
 
-    public void dispose(){
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+    }
 
+    public void dispose() {
+        stage.dispose();
     }
 
 }

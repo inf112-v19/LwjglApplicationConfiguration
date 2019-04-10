@@ -7,6 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 
 public class CameraListener extends DragListener {
+    private static final float MIN_X = -293;
+    private static final float MIN_Y = -87;
+    private static final float MAX_X = 842;
+    private static final float MAX_Y = 537;
+
     private OrthographicCamera camera;
     private float initialX, initialY;
     private float cameraX, cameraY;
@@ -18,18 +23,13 @@ public class CameraListener extends DragListener {
         this.camera = camera;
     }
 
-    /**
-     * Handles zooming in and out
-     */
-    public void update() {
+    public void updateZoom() {
         if (Gdx.input.isKeyPressed(Input.Keys.NUM_1) && camera.zoom > 0.1) {
             camera.zoom -= 0.01;
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) && camera.zoom < 0.6f) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.NUM_2) && camera.zoom < 0.6f) {
             camera.zoom += 0.01;
-        }
-        else {
-            return; // if we return here the dynamicCamera is only updated when it needs to be updated
+        } else {
+            return;
         }
         camera.update();
     }
@@ -45,8 +45,23 @@ public class CameraListener extends DragListener {
 
     @Override
     public void touchDragged(InputEvent event, float x, float y, int pointer) {
-        camera.position.x = cameraX + initialX - x;
-        camera.position.y = cameraY + initialY - y;
+        float moveX = initialX - x;
+        float moveY = initialY - y;
+        float newCamPosX = cameraX + moveX;
+        float newCamPosY = cameraY + moveY;
+
+        if (newCamPosX > MIN_X && newCamPosX < MAX_X) {
+            camera.position.x = newCamPosX;
+        } else {
+            cameraX = camera.position.x;
+            initialX = x;
+        }
+        if (newCamPosY > MIN_Y && newCamPosY < MAX_Y) {
+            camera.position.y = newCamPosY;
+        } else {
+            cameraY = camera.position.y;
+            initialY = y;
+        }
         camera.update();
     }
 }

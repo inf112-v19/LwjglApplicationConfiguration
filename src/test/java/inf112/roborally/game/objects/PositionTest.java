@@ -16,4 +16,29 @@ public class PositionTest {
         assertTrue(a.equals(b));
         assertFalse(a.equals(c));
     }
+
+    @Test
+    public void testPositionNotEqual(){
+        Position a = new Position(1, 1);
+        Position b = new Position(0, 1);
+        Position c = new Position(1, 0);
+        Position d = new Position(1,0);
+        
+        assertFalse(a.equals(b));
+        assertFalse(a.equals(c));
+        assertFalse(b.equals(c));
+
+    }
+
+    @Test
+    public void testPositionEqual(){
+        Position a = new Position(1, 1);
+        Position b = new Position(0, 1);
+        Position c = new Position(1, 0);
+        Position d = new Position(1,0);
+
+        assertTrue(a.equals(a));
+        assertTrue(b.equals(b));
+        assertTrue(c.equals(d));
+    }
 }

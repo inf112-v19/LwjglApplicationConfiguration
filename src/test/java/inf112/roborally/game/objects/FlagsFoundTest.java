@@ -1,5 +1,6 @@
 package inf112.roborally.game.objects;
 
+import inf112.roborally.game.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,6 +62,25 @@ public class FlagsFoundTest {
         player.visitFlag(1);
         player.visitFlag(2);
         assertFalse(player.hasWon());
+    }
+
+
+    @Test
+    public void playerDoesNotWinUnlessGoingToFlagsInCorrectOrder(){
+        player.visitFlag(2);
+        player.visitFlag(1);
+        player.visitFlag(3);
+        assertFalse(player.hasWon());
+        assertEquals(2, player.getTargetFlag());
+
+        player.visitFlag(3);
+        player.visitFlag(2);
+        player.visitFlag(1);
+        assertEquals(3, player.getTargetFlag());
+
+        player.visitFlag(2);
+        player.visitFlag(3);
+        assertTrue(player.hasWon());
     }
 
     @Test
