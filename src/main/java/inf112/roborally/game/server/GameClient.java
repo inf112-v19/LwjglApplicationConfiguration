@@ -13,7 +13,7 @@ class GameClient {
 //                    new BufferedReader(new InputStreamReader(System.in));
         ClientInput inFromUser = new ClientInput(new BufferedReader(new InputStreamReader((System.in))));
 
-        Socket clientSocket = new Socket("10.111.35.178", 6789); // replace "hostname" by your favourite hostname
+        Socket clientSocket = new Socket("127.0.0.1", 6789); // replace "hostname" by your favourite hostname
         // ...or "127.0.0.1", for example
         OutputStream outToServer = clientSocket.getOutputStream();
         InputStream inFromServer = clientSocket.getInputStream();

@@ -7,9 +7,11 @@ import java.net.Socket;
 
 public class EchoThread extends Thread {
     protected Socket socket;
+    private int id;
 
-    public EchoThread(Socket clientSocket) {
+    public EchoThread(Socket clientSocket, int connections) {
         this.socket = clientSocket;
+        this.id = connections;
     }
 
     public void run() {

@@ -40,8 +40,8 @@ public class MultiThreadedServer {
                 System.out.println("I/O error: " + e);
             }
             // new thread for a client
-            new EchoThread(socket).start();
             connections ++;
+            new EchoThread(socket, connections).start();
             System.out.println(connections);
         }
     }
