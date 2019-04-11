@@ -67,7 +67,7 @@ public class GameScreen implements Screen {
 
     private void addPlayersToBoard(int robotChoiceIndex) {
         int index = robotChoiceIndex;
-        int n = game.nSkins;
+        int n = AssMan.getPlayerSkins().length;
         for (int i = 0; i < n; i++) {
             if (index >= n) {
                 index = 0;

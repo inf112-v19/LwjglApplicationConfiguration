@@ -14,9 +14,11 @@ public class SelectSkinScreen extends SelectScreen {
 
     @Override
     public void completeChoice() {
-        System.out.println("SelectSkinScreen completeChoice() selected, switching to select map");
-        System.out.println("Selected the choice at index " + choiceIndex);
+        skinChoiceIndex = choiceIndex;
         game.setScreen(game.selectMapScreen);
+        // Since we are creating a new subclass of the SelectScreen abstract class, we need to
+        // update the new one with the skin choice we just picked
+        game.selectMapScreen.setSkinChoiceIndex(skinChoiceIndex);
         dispose();
     }
 }

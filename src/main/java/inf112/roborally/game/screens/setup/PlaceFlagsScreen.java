@@ -98,9 +98,7 @@ public class PlaceFlagsScreen implements Screen {
                 // If we have placed 3 flags, we are done
                 // This can be changed later if we want to add more flags
                 if(flagPositions.size() == 3) {
-                    game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
-                    game.setScreen(game.gameScreen);
-                    dispose();
+                    doneWithSetup();
                 }
             }
         }
@@ -156,6 +154,12 @@ public class PlaceFlagsScreen implements Screen {
         return new Position(x, y);
     }
 
+    private void doneWithSetup() {
+        game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
+        game.setScreen(game.gameScreen);
+        dispose();
+    }
+
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -198,5 +202,6 @@ public class PlaceFlagsScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+//        board.dispose();
     }
 }
