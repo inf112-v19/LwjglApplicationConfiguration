@@ -7,6 +7,7 @@ import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.AiRobo;
 
 public class GameLogic extends BoardLogic implements Runnable {
     private final Hud hud;
@@ -39,6 +40,11 @@ public class GameLogic extends BoardLogic implements Runnable {
     public void update() {
         updatePlayers();
         executeLogic();
+    }
+
+    @Override
+    public void aiRobosReady() {
+        AiRobo.makeDecisionsForRobos(aiBots);
     }
 
     public void handleInput() {
