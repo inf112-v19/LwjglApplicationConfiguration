@@ -25,6 +25,6 @@ public class ClientHandler extends SimpleChannelInboundHandler {
 
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
-
+        System.out.println("Client received: " + o.toString());
     }
 }

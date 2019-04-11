@@ -9,9 +9,10 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
 public class ChatClientInit extends ChannelInitializer<SocketChannel> {
+
     @Override
-    protected void initChannel(SocketChannel socketChannel) throws Exception {
-        ChannelPipeline pipeline = socketChannel.pipeline();
+    protected void initChannel(SocketChannel arg0) throws Exception {
+        ChannelPipeline pipeline = arg0.pipeline();
 
         pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
         pipeline.addLast("decoder", new StringDecoder());

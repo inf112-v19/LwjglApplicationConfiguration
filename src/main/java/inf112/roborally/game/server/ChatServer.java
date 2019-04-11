@@ -4,16 +4,12 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 
 public class ChatServer {
 
-    public static void main(String[] args) throws InterruptedException {
-        new ChatServer(8000).run();
-    }
     private final int port;
 
-    public ChatServer(int port){
+    public ChatServer(int port) {
         this.port = port;
     }
 
@@ -22,8 +18,10 @@ public class ChatServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         try {
-            ServerBootstrap  bootstrap = new ServerBootstrap().group(bossGroup, workerGroup)
-                    .channel(NioServerSocketChannel.class).childHandler(new ChatServerInit());
+            ServerBootstrap bootstrap = new ServerBootstrap()
+                    .group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new ChatServerInit());
 
             bootstrap.bind(port).sync().channel().closeFuture().sync();
         }
@@ -31,5 +29,9 @@ public class ChatServer {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        new ChatServer(8000).run();
     }
 }

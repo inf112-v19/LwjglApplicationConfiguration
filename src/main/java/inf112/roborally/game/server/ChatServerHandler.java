@@ -13,31 +13,29 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
-        Channel incoming  = ctx.channel();
-        for (Channel channel: channels){
+        Channel incoming = ctx.channel();
+        for (Channel channel : channels) {
             channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has joined\n");
-
         }
         channels.add(ctx.channel());
     }
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
-        Channel incoming  = ctx.channel();
-        for (Channel channel: channels){
+        Channel incoming = ctx.channel();
+        for (Channel channel : channels) {
             channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has left\n");
         }
         channels.remove(ctx.channel());
     }
 
+
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
         Channel incoming = channelHandlerContext.channel();
-        for (Channel channel : channels){
-            if( channel != incoming ){
-                    channel.writeAndFlush("[" + incoming .remoteAddress() + "] " + s  + "\n");
-            }
-
+        for (Channel channel : channels) {
+//            if (channel != incoming)
+                channel.writeAndFlush("[" + incoming.remoteAddress() + "] " + s + "\n");
         }
     }
 }
