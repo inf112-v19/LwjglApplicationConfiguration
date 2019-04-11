@@ -4,25 +4,40 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.tools.AssMan;
+import inf112.roborally.game.tools.ButtonFactory;
 
 /**
  * A basic screen that has and renders a stage. Subclasses simply add actors to the stage.
  */
-public abstract class StageScreen implements Screen {
+public abstract class BasicScreen implements Screen {
     protected final RoboRallyGame game;
     protected final Stage stage;
     protected final Label.LabelStyle labelStyle;
+    protected ImageButton back;
 
-    protected StageScreen(RoboRallyGame game) {
+    public BasicScreen(RoboRallyGame game) {
         this.game = game;
         stage = new Stage(game.fixedViewPort, game.batch);
         labelStyle = new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE);
+        back = ButtonFactory.createBackButton();
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                goToPreviousScreen();
+            }
+        });
 
+        stage.addActor(back);
     }
+
+    protected abstract void goToPreviousScreen();
 
     @Override
     public void show() {
