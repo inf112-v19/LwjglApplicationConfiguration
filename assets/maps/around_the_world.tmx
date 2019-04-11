@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="30" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="49" nextobjectid="1">
+ <tileset firstgid="1" source="roborallyTextures.tsx"/>
+ <layer id="44" name="floor" width="30" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBg4wIiEOdD4hDBIvTKJeqhlLy6zcNlFbXuJ8Scx9uIKPy0K3Elt/xIyl172auHRQyt7keMDm79pbS+u8CbGXlzhpYxDPb3TFTZ/YbOPFvbisxtZnpr2EouVGQYWAAAlCgMT
+  </data>
+ </layer>
+ <layer id="45" name="belts" width="30" height="14">
+  <data encoding="base64" compression="zlib">
+   eJztkr0OgCAMhHkR4oIuOqGL9/4PJiQlIU1ba2Tkkgvk4+c6XAhTVUdxIm8OPkp78U37WAyF8zfJsDc3UEZ08HZW58vki1YIdzWd3fuFGBTe50ozcu4VnGxErvSvxfn/PN+by3sLhY/O1Xr71mfQTGs335deSb2Fwpuy4T99tviUrQfj/hNe
+  </data>
+ </layer>
+ <layer id="46" name="lasers" width="30" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo4CBwW6gHTCAwIaBwYEOdoxIMJLT1SggHQAAG8wBNQ==
+  </data>
+ </layer>
+ <layer id="47" name="walls" width="30" height="14">
+  <data encoding="base64" compression="zlib">
+   eJzNktEOABAIRRv5/1/2wrSmJSTnpWlX6gogljzJFRal3K4+igRjXmznzswHCtdroEELrbb1zkpNaV6N03k1Pyk3d0R619KPFerTbz577VVnpX/6vy/3ypvMopTb1UdQAZeeALo=
+  </data>
+ </layer>
+ <layer id="48" name="start" width="30" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBhYID1A9ooMkL0DBXgH2gF0BmwDZC/7ANk7UIBvoB1AZyA6QPbKDJC99AYA2mcAiQ==
+  </data>
+ </layer>
+</map>

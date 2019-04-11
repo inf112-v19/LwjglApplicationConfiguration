@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="5" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="39" nextobjectid="1">
+ <tileset firstgid="1" source="roborallyTextures.tsx"/>
+ <layer id="34" name="floor" width="5" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAOGJEwxwgQQwcAR1AAhQ==
+  </data>
+ </layer>
+ <layer id="35" name="belts" width="5" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF2AAAARgAAQ==
+  </data>
+ </layer>
+ <layer id="36" name="lasers" width="5" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF2AAAARgAAQ==
+  </data>
+ </layer>
+ <layer id="37" name="walls" width="5" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYMANmPHIwQATkjoWMtRhswNdjAmJjU8vseqIAQAagAAu
+  </data>
+ </layer>
+ <layer id="38" name="start" width="5" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYMANpLGIieBRjwx4iVTHhkWMnUi9fESqE8UiJkNADwBLhACJ
+  </data>
+ </layer>
+</map>
