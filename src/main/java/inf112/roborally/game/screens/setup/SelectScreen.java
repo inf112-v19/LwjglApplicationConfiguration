@@ -44,24 +44,25 @@ public abstract class SelectScreen implements Screen {
         next.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                choiceIndex = (++choiceIndex) % numberOfChoices;
-                clicked = true;
+                nextClicked();
+//                choiceIndex = (++choiceIndex) % numberOfChoices;
+//                clicked = true;
             }
         });
+        next.setProgrammaticChangeEvents(true);
         ImageButton previous = ButtonFactory.createArrowLeftButton();
         previous.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
-                clicked = true;
+                previousClicked();
+//                choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
+//                clicked = true;
             }
         });
         ImageButton confirm = ButtonFactory.createConfirmButton();
         confirm.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                dispose();
-//                game.setScreen(game.setupScreen);
                 completeChoice();
             }
         });
@@ -69,9 +70,7 @@ public abstract class SelectScreen implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                game.menuScreen = new MenuScreen(game);
-//                game.setScreen(game.menuScreen);
-                game.newGame();
+                game.newGame(); // restart the whole game if back button is clicked
             }
         });
 
@@ -79,7 +78,6 @@ public abstract class SelectScreen implements Screen {
         stage.addActor(previous);
         stage.addActor(confirm);
         stage.addActor(back);
-
 
         String information = "";
         switch (setupState) {
@@ -129,10 +127,42 @@ public abstract class SelectScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
 
+        handleInput();
+    }
+
+    private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();
             Gdx.app.exit();
         }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+            nextClicked();
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+            previousClicked();
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            confirmClicked();
+        }
+
+    }
+
+    /**
+     * Instead of having the 3 next methods in their buttons, they are out here so that
+     * player can also chose with the keyboard
+     */
+    private void previousClicked() {
+        choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
+        clicked = true;
+    }
+
+    private void nextClicked() {
+        choiceIndex = (++choiceIndex) % numberOfChoices;
+        clicked = true;
+    }
+
+    private void confirmClicked() {
+        completeChoice();
     }
 
     private void update() {
