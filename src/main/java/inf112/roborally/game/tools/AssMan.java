@@ -1,6 +1,5 @@
 package inf112.roborally.game.tools;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -189,6 +188,22 @@ public class AssMan {
     public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA =
             new AssetDescriptor<>("assets/fonts/groteskia.fnt", BitmapFont.class);
 
+    // TextFieldScreen
+    public static final AssetDescriptor<Texture> TEXT_FIELD_BG
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/text_field_bg.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_FIELD_CURSOR
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/cursor.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_UP
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_PRESS
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_CHECKED
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_checked.png", Texture.class);
+
 
     @SuppressWarnings("Duplicates")
     public static void load() {
@@ -275,6 +290,13 @@ public class AssMan {
 
         //Status display for robots
         manager.load(STATUS_DISPLAY_ROBOTS);
+
+        // InputFieldScreen
+        manager.load(TEXT_FIELD_BG);
+        manager.load(TEXT_FIELD_CURSOR);
+        manager.load(TEXT_BUTTON_UP);
+        manager.load(TEXT_BUTTON_PRESS);
+        manager.load(TEXT_BUTTON_CHECKED);
     }
 
     public static Texture[] getPlayerSkins() {
@@ -293,6 +315,6 @@ public class AssMan {
 
     public static void dispose() {
         System.out.println("Disposing asset manager");
-        manager.dispose();
+        manager.clear();
     }
 }
