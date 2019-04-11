@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.screens.Input.NameScreen;
 import inf112.roborally.game.tools.AssMan;
 
 public class MenuScreen implements Screen {
@@ -59,6 +60,10 @@ public class MenuScreen implements Screen {
     }
 
     private void handleInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)){
+            NameScreen nameScreen = new NameScreen(roboRallyGame);
+            roboRallyGame.setScreen(nameScreen);
+        }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             roboRallyGame.createGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);

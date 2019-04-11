@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import java.util.concurrent.TimeoutException;
@@ -228,10 +229,31 @@ public class AssMan {
     public static final AssetDescriptor<Texture> STATUS_DISPLAY_ROBOTS =
             new AssetDescriptor<>("assets/register/robot_status_display.png", Texture.class);
 
+    // Font
+    public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA =
+            new AssetDescriptor<>("assets/fonts/groteskia.fnt", BitmapFont.class);
+
+    // TextFieldScreen
+    public static final AssetDescriptor<Texture> TEXT_FIELD_BG
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/text_field_bg.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_FIELD_CURSOR
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/cursor.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_UP
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_PRESS
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_CHECKED
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_checked.png", Texture.class);
+
 
     @SuppressWarnings("Duplicates")
     public static void load() {
-
+        //Font
+        manager.load(FONT_GROTESKIA);
         //Music
         manager.load(SOUND_PLAYER_LASER);
         manager.load(SOUND_PLAYER_REPAIR);
@@ -320,6 +342,13 @@ public class AssMan {
 
         //Status display for robots
         manager.load(STATUS_DISPLAY_ROBOTS);
+
+        // InputFieldScreen
+        manager.load(TEXT_FIELD_BG);
+        manager.load(TEXT_FIELD_CURSOR);
+        manager.load(TEXT_BUTTON_UP);
+        manager.load(TEXT_BUTTON_PRESS);
+        manager.load(TEXT_BUTTON_CHECKED);
     }
 
 //    public static String[] getPlayerSkins() {
