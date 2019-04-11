@@ -154,7 +154,7 @@ public class BoardLogic {
         if(!players.isEmpty() && players.get(0).isDebuggingActive()) return;
 
         if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
-            sleepThread(100);
+            sleepThread(25);
         else
             sleepThread(500);
     }
