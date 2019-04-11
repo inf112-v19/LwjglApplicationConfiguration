@@ -6,13 +6,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.BoardCreator;
@@ -41,7 +41,8 @@ public class PlaceFlagsScreen implements Screen {
     private ArrayList<Position> flagPositions;
 
     // Text:
-    private TextField text;
+    private Label informationText;
+    private int remainingFlags = 3;
 
     // Create a board in the background so that we can check if the player places the flags
     // on legal positions
@@ -75,13 +76,18 @@ public class PlaceFlagsScreen implements Screen {
 
             }
         });
-
         stage.addActor(map);
+
+        // The text labels on the left side
+        informationText = new Label("Remaining flags: " + remainingFlags,
+                new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE));
+        informationText.setPosition(50, 1000);
+        informationText.setFontScale(2);
+
+        stage.addActor(informationText);
     }
 
     private void handleClick(float x, float y) {
-//        System.out.printf("Inside handleclick(), x = %.2f and y = %.2f%n", x, y);
-
         // Check if invisible part around map was clicked
         if(x < tileSize || x > mapWidth - tileSize || y < tileSize || y > mapHeight - tileSize) {
             System.out.println("Pressed inside map png, but in the invisible part");
@@ -98,10 +104,13 @@ public class PlaceFlagsScreen implements Screen {
             else {
                 System.out.printf("Placed a flag at position: x = %d, y = %d%n", clickedPos.getX(), clickedPos.getY());
                 flagPositions.add(clickedPos);
+                remainingFlags--;
+                // Update the information
+                informationText.setText("Remaining flags: " + remainingFlags);
 
                 // If we have placed 3 flags, we are done
                 // This can be changed later if we want to add more flags
-                if(flagPositions.size() == 3) {
+                if (remainingFlags == 0) {
                     doneWithSetup();
                 }
             }

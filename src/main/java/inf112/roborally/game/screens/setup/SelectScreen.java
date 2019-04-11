@@ -69,8 +69,9 @@ public abstract class SelectScreen implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.menuScreen = new MenuScreen(game);
-                game.setScreen(game.menuScreen);
+//                game.menuScreen = new MenuScreen(game);
+//                game.setScreen(game.menuScreen);
+                game.newGame();
             }
         });
 
