@@ -27,6 +27,9 @@ public abstract class SelectScreen implements Screen {
     private Boolean clicked = false;
     private final int numberOfChoices;
 
+    protected int skinChoiceIndex;
+    protected int mapChoiceIndex;
+
     public SelectScreen(final RoboRallyGame game, SetupState setupState, final int numberOfChoices) {
         this.game = game;
         this.numberOfChoices = numberOfChoices;
@@ -143,6 +146,10 @@ public abstract class SelectScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+    }
+
+    public void setSkinChoiceIndex(int skinChoiceIndex) {
+        this.skinChoiceIndex = skinChoiceIndex;
     }
 
     public abstract void completeChoice();
