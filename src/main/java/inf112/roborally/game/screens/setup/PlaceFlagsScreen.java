@@ -3,11 +3,14 @@ package inf112.roborally.game.screens.setup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
@@ -37,6 +40,9 @@ public class PlaceFlagsScreen implements Screen {
     private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
 
+    // Text:
+    private TextField text;
+
     // Create a board in the background so that we can check if the player places the flags
     // on legal positions
     private Board board;
@@ -51,8 +57,7 @@ public class PlaceFlagsScreen implements Screen {
 
         board = new BoardCreator(game.chosenMap(mapChoiceIndex));
 
-        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2)));
-
+        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_PLACEFLAGS_BACKGROUND)));
         stage.addActor(background);
 
         map = new Image(new TextureRegionDrawable(mapFilepath));
@@ -66,7 +71,6 @@ public class PlaceFlagsScreen implements Screen {
         map.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Clicked map!");
                 handleClick(x,y);
 
             }
@@ -92,7 +96,7 @@ public class PlaceFlagsScreen implements Screen {
                         "or a flag has already been placed here!");
             }
             else {
-//                System.out.printf("Position: x = %d, y = %d%n", clickedPos.getX(), clickedPos.getY());
+                System.out.printf("Placed a flag at position: x = %d, y = %d%n", clickedPos.getX(), clickedPos.getY());
                 flagPositions.add(clickedPos);
 
                 // If we have placed 3 flags, we are done

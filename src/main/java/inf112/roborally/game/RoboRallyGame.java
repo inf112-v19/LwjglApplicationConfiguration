@@ -121,7 +121,7 @@ public class RoboRallyGame extends Game {
 
     // Create GameScreen with preset skins, map and flag positions
     public void createGameScreen() {
-        gameScreen = new GameScreen(this, 0, new ArrayList<Position>(), null , runTestMap);
+        gameScreen = new GameScreen(this, 0, null, null , runTestMap);
     }
 
     public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex) {

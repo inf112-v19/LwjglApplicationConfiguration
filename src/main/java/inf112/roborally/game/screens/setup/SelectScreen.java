@@ -3,14 +3,16 @@ package inf112.roborally.game.screens.setup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.screens.MenuScreen;
@@ -35,7 +37,7 @@ public abstract class SelectScreen implements Screen {
         this.numberOfChoices = numberOfChoices;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         //Add the background:
-        Image background = new Image(new TextureRegionDrawable(new Texture(AssMan.SELECT_SCREEN.fileName)));
+        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_SCREEN_BLACK)));
         stage.addActor(background);
         // Create buttons
         ImageButton next = ButtonFactory.createArrowRightButton();
@@ -77,6 +79,8 @@ public abstract class SelectScreen implements Screen {
         stage.addActor(confirm);
         stage.addActor(back);
 
+
+        String information = "";
         switch (setupState) {
             case PICKINGSKIN:
                 // Robotskins:
@@ -84,6 +88,7 @@ public abstract class SelectScreen implements Screen {
                 for (int i = 0; i < numberOfChoices; i++) {
                     choices[i] = new TextureRegionDrawable(AssMan.getPlayerSkins()[i]);
                 }
+                information = "skin";
                 break;
             case PICKINGMAP:
                 // Maps:
@@ -91,8 +96,17 @@ public abstract class SelectScreen implements Screen {
                 for (int i = 0; i < numberOfChoices; i++) {
                     choices[i] = new TextureRegionDrawable(AssMan.getMapChoices()[i]);
                 }
+                information = "map";
                 break;
         }
+
+        // Information text:
+        Label label = new Label("Select your " + information + ":",
+                new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE));
+        label.setPosition(1920 / 2, 960, Align.center);
+        label.setAlignment(Align.center);
+        label.setFontScale(4);
+        stage.addActor(label);
 
         choiceIndex = 0;
         currentChoice = new Image(choices[choiceIndex]);
