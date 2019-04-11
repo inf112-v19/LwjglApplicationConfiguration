@@ -31,11 +31,12 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
 
     @Override
-    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String s) throws Exception {
+    protected void channelRead0(ChannelHandlerContext channelHandlerContext, String msg) throws Exception {
         Channel incoming = channelHandlerContext.channel();
+        System.out.println(msg);
         for (Channel channel : channels) {
-//            if (channel != incoming)
-                channel.writeAndFlush("[" + incoming.remoteAddress() + "] " + s + "\n");
+            if (channel != incoming)
+                channel.writeAndFlush("[" + incoming.remoteAddress() + "] " + msg + "\n");
         }
     }
 }
