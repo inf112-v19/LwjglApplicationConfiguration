@@ -1,6 +1,7 @@
-package inf112.roborally.game.screens.input;
+package inf112.roborally.game.screens.multiplayer;
 
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.screens.InputFieldScreen;
 
 public class NameScreen extends InputFieldScreen {
 
@@ -10,7 +11,7 @@ public class NameScreen extends InputFieldScreen {
     }
 
     @Override
-    boolean confirmInput() {
+    protected boolean confirmInput() {
         if (!clicked || text.getText().length() < 3) return false;
         System.out.println(text.getText());
         return true;

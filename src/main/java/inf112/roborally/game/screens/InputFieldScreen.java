@@ -1,36 +1,31 @@
-package inf112.roborally.game.screens.input;
+package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.screens.StageScreen;
 import inf112.roborally.game.tools.AssMan;
 
-public abstract class InputFieldScreen implements Screen {
-    final RoboRallyGame game;
-    Stage stage;
-    TextField text;
-    boolean clicked = false;
-    TextButton confirm;
+public abstract class InputFieldScreen extends StageScreen {
+    protected TextField text;
+    protected boolean clicked = false;
+    protected TextButton confirm;
 
     public InputFieldScreen(RoboRallyGame game) {
-        this.game = game;
-
+        super(game);
         BitmapFont font = AssMan.manager.get(AssMan.FONT_GROTESKIA);
         font.getData().setScale(4);
         TextureRegionDrawable textFieldBg = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_FIELD_BG));
         TextureRegionDrawable cursor = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_FIELD_CURSOR));
-        text = new TextField("'Your input'",
+        text = new TextField("'Your multiplayer'",
                 new TextField.TextFieldStyle(font, Color.WHITE, cursor, null, textFieldBg));
         text.setSize(1000, 200);
         text.setPosition(1920 / 2, 600, Align.center);
@@ -56,50 +51,14 @@ public abstract class InputFieldScreen implements Screen {
                 confirmInput();
             }
         });
-        stage = new Stage(game.fixedViewPort, game.batch);
         stage.addActor(text);
         stage.addActor(confirm);
     }
 
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    @Override
-    public void render(float v) {
-        handleInput();
-        Gdx.gl.glClearColor(0 / 255f, 20 / 255f, 15 / 255f, 1f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.draw();
-    }
-
-    void handleInput() {
+    protected void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
         else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) confirmInput();
     }
 
-    abstract boolean confirmInput();
-
-    @Override
-    public void resize(int i, int i1) {
-        game.fixedViewPort.update(i, i1);
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
+    protected abstract boolean confirmInput();
 }
