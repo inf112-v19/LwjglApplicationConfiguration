@@ -25,19 +25,23 @@ public class AiRobo {
 
     private static void moveTestPilot(Player robo) {
         if (robo.getRegisters().isFull()) return;
+
         Player testPilot = robo.createTestPilot();
         Player successfulTestPilot = robo.createTestPilot();
+
         for (int i = 0; i < robo.getHand().size(); i++) {
             ProgramCard card = robo.getHand().getCard(i);
             testPilot.rotate(card.getRotate());
             testPilot.move(card.getMoveDistance());
-            if (!testPilot.isDestroyed() && shorterDistToFlag(robo, testPilot)) {
+            if (!testPilot.isDestroyed()
+                    && shorterDistToFlag(successfulTestPilot, testPilot)) {
                 robo.getRegisters().placeCard(i);
                 successfulTestPilot = testPilot.createTestPilot();
             } else {
                 testPilot = successfulTestPilot.createTestPilot();
             }
         }
+
         for (int i = 0; i < robo.getHand().size(); i++) {
             ProgramCard card = robo.getHand().getCard(i);
             testPilot.rotate(card.getRotate());
@@ -49,7 +53,9 @@ public class AiRobo {
                 testPilot = successfulTestPilot.createTestPilot();
             }
         }
-        while (!robo.getRegisters().isFull()) robo.getRegisters().placeCard(0);
+
+        while (!robo.getRegisters().isFull())
+            robo.getRegisters().placeCard(0);
     }
 
     private static boolean shorterDistToFlag(Player robo, Player testPilot) {
