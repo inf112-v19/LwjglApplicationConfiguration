@@ -45,7 +45,7 @@ public class RoboRallyGame extends Game {
     public SpriteBatch batch;
 
     public MenuScreen menuScreen;
-    public SetupScreen setupScreen;
+//    public SetupScreen setupScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
     public GameScreen gameScreen;
@@ -62,9 +62,6 @@ public class RoboRallyGame extends Game {
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
 
-
-    public int nSkins;
-    public String[] possibleRobotSkinFilepaths;
 
     @Override
     public void create() {
@@ -83,8 +80,6 @@ public class RoboRallyGame extends Game {
         fixedViewPort = new FitViewport(1920, 1080, fixedCamera);
 
         batch = new SpriteBatch();
-
-        createPossibleFilepaths();
 
         menuScreen = new MenuScreen(this);
         settingsScreen = new SettingsScreen(this);
@@ -115,27 +110,14 @@ public class RoboRallyGame extends Game {
         }
     }
 
-    private void createPossibleFilepaths() {
-        nSkins = 8;
-        possibleRobotSkinFilepaths = new String[nSkins];
-        possibleRobotSkinFilepaths[0] = AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName;
-        possibleRobotSkinFilepaths[1] = AssMan.PLAYER_BUTLER_REFINED.fileName;
-        possibleRobotSkinFilepaths[2] = AssMan.PLAYER_CLAPTRAP_REFINED.fileName;
-        possibleRobotSkinFilepaths[3] = AssMan.PLAYER_CLAPTRAP_3000.fileName;
-        possibleRobotSkinFilepaths[4] = AssMan.PLAYER_NURSE_BOT.fileName;
-        possibleRobotSkinFilepaths[5] = AssMan.PLAYER_CAPTAIN_BOT.fileName;
-        possibleRobotSkinFilepaths[6] = AssMan.PLAYER_COP_BOT.fileName;
-        possibleRobotSkinFilepaths[7] = AssMan.PLAYER_WIZARD_BOT.fileName;
-    }
-
     public void newGame() {
         dispose();
         create();
     }
 
-    public void createSetupScreen() {
-        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
-    }
+//    public void createSetupScreen() {
+//        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
+//    }
 
     // Create GameScreen with preset skins, map and flag positions
     public void createGameScreen() {
@@ -156,9 +138,9 @@ public class RoboRallyGame extends Game {
         menuScreen.dispose();
         AssMan.dispose();
 
-        if (setupScreen != null) {
-            setupScreen.dispose();
-        }
+//        if (setupScreen != null) {
+//            setupScreen.dispose();
+//        }
 
         if(gameScreen != null) {
             gameScreen.dispose();
