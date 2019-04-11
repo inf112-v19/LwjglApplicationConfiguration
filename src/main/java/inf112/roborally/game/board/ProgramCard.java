@@ -80,7 +80,7 @@ public class ProgramCard implements Comparable {
         skin = new Skin();
         skin.addRegions(AssMan.manager.get(AssMan.PROGRAM_CARD_ATLAS));
         style = new ImageTextButton.ImageTextButtonStyle();
-        style.font = new BitmapFont();
+        style.font = AssMan.manager.get(AssMan.FONT_GROTESKIA);
         style.up = skin.getDrawable(identify());
     }
 
