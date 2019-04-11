@@ -115,6 +115,7 @@ public class TestScreen implements Screen {
 
     @Override
     public void dispose() {
+        System.out.println("Disposing TestScreen");
         hud.dispose();
         background.getTexture().dispose();
     }

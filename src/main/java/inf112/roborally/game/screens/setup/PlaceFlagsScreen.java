@@ -201,6 +201,7 @@ public class PlaceFlagsScreen implements Screen {
 
     @Override
     public void dispose() {
+        System.out.println("Disposing PlaceFlagsScreen");
         stage.dispose();
 //        board.dispose();
     }
