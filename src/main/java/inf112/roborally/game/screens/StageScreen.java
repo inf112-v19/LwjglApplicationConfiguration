@@ -37,7 +37,7 @@ public abstract class StageScreen implements Screen {
         stage.draw();
     }
 
-    abstract void handleInput();
+    protected abstract void handleInput();
 
     @Override
     public void resize(int i, int i1) {
