@@ -21,6 +21,7 @@ public abstract class InputFieldScreen implements Screen {
     Stage stage;
     TextField text;
     boolean clicked = false;
+    TextButton confirm;
 
     public InputFieldScreen(RoboRallyGame game) {
         this.game = game;
@@ -45,7 +46,7 @@ public abstract class InputFieldScreen implements Screen {
         TextureRegionDrawable up = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_UP));
         TextureRegionDrawable press = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_PRESS));
         TextureRegionDrawable checked = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_CHECKED));
-        TextButton confirm = new TextButton("Confirm", new TextButton.TextButtonStyle(up, press, checked, font));
+        confirm = new TextButton("Confirm", new TextButton.TextButtonStyle(up, press, checked, font));
         confirm.setTransform(true);
         confirm.setWidth(confirm.getWidth() * 1.5f);
         confirm.setPosition(1920 / 2f - confirm.getWidth() / 2f, 200);
