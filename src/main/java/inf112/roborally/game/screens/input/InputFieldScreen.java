@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens.Input;
+package inf112.roborally.game.screens.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

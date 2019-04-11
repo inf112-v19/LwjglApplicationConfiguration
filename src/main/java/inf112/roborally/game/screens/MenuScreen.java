@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.screens.Input.NameScreen;
+import inf112.roborally.game.screens.input.NameScreen;
 import inf112.roborally.game.tools.AssMan;
 
 public class MenuScreen implements Screen {
