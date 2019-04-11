@@ -139,6 +139,7 @@ public class GameScreen implements Screen {
             animation.dispose();
         }
         music.dispose();
+        hud.dispose();
     }
 
     @Override

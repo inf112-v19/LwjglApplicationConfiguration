@@ -127,6 +127,11 @@ public class PlayerStatusDisplay {
     }
 
     public void dispose(){
+        System.out.println("Disposing PlayerStatusDisplay");
         font.dispose();
+
+        //Need to dispose cards/tab?
+        cards.clear();
+        tab.clear();
     }
 }
