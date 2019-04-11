@@ -1,20 +1,21 @@
 package inf112.roborally.game.tools;
 
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.backends.lwjgl.audio.Mp3;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import inf112.roborally.game.sound.GameSound;
 
 public class ButtonFactory {
 
     public static ClickListener soundOnTouchDown(){
-        final GameSound sound = new GameSound("assets/soundeffects/buttons_and_clicks/Clic07.mp3");
         return new ClickListener(){
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                sound.play();
+                AssMan.manager.get(AssMan.SOUND_BUTTON_CLICKED).play(0.5f);
                 return true;
             }
         };

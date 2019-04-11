@@ -79,14 +79,14 @@ public abstract class SelectScreen implements Screen {
                 // Robotskins:
                 choices = new TextureRegionDrawable[numberOfChoices];
                 for (int i = 0; i < numberOfChoices; i++) {
-                    choices[i] = new TextureRegionDrawable(new Texture(AssMan.getPlayerSkins()[i]));
+                    choices[i] = new TextureRegionDrawable(AssMan.getPlayerSkins()[i]);
                 }
                 break;
             case PICKINGMAP:
                 // Maps:
                 choices = new TextureRegionDrawable[numberOfChoices];
                 for (int i = 0; i < numberOfChoices; i++) {
-                    choices[i] = new TextureRegionDrawable(new Texture(AssMan.getMapChoices()[i]));
+                    choices[i] = new TextureRegionDrawable(AssMan.getMapChoices()[i]);
                 }
                 break;
         }

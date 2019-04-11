@@ -7,6 +7,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import java.util.concurrent.TimeoutException;
+
 /**
  * Contains assets used by the game.
  * With AssMan you are able to load as well as dispose all of them at the same time.
@@ -30,6 +32,9 @@ public class AssMan {
     public static final AssetDescriptor<Music> MUSIC_MAIN_THEME
             = new AssetDescriptor<>("assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
 
+    public static final AssetDescriptor<Sound> SOUND_BUTTON_CLICKED
+            = new AssetDescriptor<>("assets/soundeffects/buttons_and_clicks/Clic07.mp3", Sound.class);
+
     //Player skins
     public static final AssetDescriptor<Texture> PLAYER_BARTENDER_CLAPTRAP
             = new AssetDescriptor<>("assets/robots/bartenderclaptrap.png", Texture.class);
@@ -52,7 +57,7 @@ public class AssMan {
     public static final AssetDescriptor<Texture> PLAYER_CAPTAIN_BOT
             = new AssetDescriptor<>("assets/robots/EMPR_TP.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> PLAYER_WIZZARD_BOT
+    public static final AssetDescriptor<Texture> PLAYER_WIZARD_BOT
             = new AssetDescriptor<>("assets/robots/B34RD_TP.png", Texture.class);
 
     public static final AssetDescriptor<Texture> PLAYER_COP_BOT
@@ -232,6 +237,7 @@ public class AssMan {
         manager.load(SOUND_PLAYER_REPAIR);
         manager.load(SOUND_PLAYER_WILHELM_SCREAM);
         manager.load(MUSIC_MAIN_THEME);
+        manager.load(SOUND_BUTTON_CLICKED);
 
         //Player skins
         manager.load(PLAYER_BARTENDER_CLAPTRAP);
@@ -316,26 +322,27 @@ public class AssMan {
         manager.load(STATUS_DISPLAY_ROBOTS);
     }
 
-    public static String[] getPlayerSkins() {
-        String[] skins = new String[8];
-        skins[0] = PLAYER_CLAPTRAP_REFINED.fileName;
-        skins[1] = PLAYER_BUTLER_REFINED.fileName;
-        skins[2] = PLAYER_CAPTAIN_BOT.fileName;
-        skins[3] = PLAYER_BARTENDER_CLAPTRAP.fileName;
-        skins[4] = PLAYER_CLAPTRAP_3000.fileName;
-        skins[5] = PLAYER_COP_BOT.fileName;
-        skins[6] = PLAYER_WIZZARD_BOT.fileName;
-        skins[7] = PLAYER_NURSE_BOT.fileName;
+//    public static String[] getPlayerSkins() {
+//        String[] skins = new String[8];
+//        skins[0] = PLAYER_CLAPTRAP_REFINED.fileName;
+//        skins[1] = PLAYER_BUTLER_REFINED.fileName;
+//        skins[2] = PLAYER_CAPTAIN_BOT.fileName;
+//        skins[3] = PLAYER_BARTENDER_CLAPTRAP.fileName;
+//        skins[4] = PLAYER_CLAPTRAP_3000.fileName;
+//        skins[5] = PLAYER_COP_BOT.fileName;
+//        skins[6] = PLAYER_WIZARD_BOT.fileName;
+//        skins[7] = PLAYER_NURSE_BOT.fileName;
+//
+//        return skins;
+//    }
 
-        return skins;
-    }
+    public static Texture[] getMapChoices() {
+        Texture[] maps = new Texture[4];
+        maps[0] = manager.get(MAP_VAULT);
+        maps[1] = manager.get(MAP_SPACE_BUG);
+        maps[2] = manager.get(MAP_SPACE_BUG2);
+        maps[3] = manager.get(MAP_AROUND_THE_WORLD);
 
-    public static String[] getMapChoices() {
-        String[] maps = new String[4];
-        maps[0] = MAP_VAULT.fileName;
-        maps[1] = MAP_SPACE_BUG.fileName;
-        maps[2] = MAP_SPACE_BUG2.fileName;
-        maps[3] = MAP_AROUND_THE_WORLD.fileName;
         return maps;
     }
 

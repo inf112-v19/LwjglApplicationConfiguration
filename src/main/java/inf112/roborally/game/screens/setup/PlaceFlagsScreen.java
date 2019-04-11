@@ -32,7 +32,7 @@ public class PlaceFlagsScreen implements Screen {
     private int tileSize = 64;
 
     // Choices from the last screens
-    private String mapFilepath;
+    private Texture mapFilepath;
     private int mapChoiceIndex;
     private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
@@ -41,7 +41,7 @@ public class PlaceFlagsScreen implements Screen {
     // on legal positions
     private Board board;
 
-    public PlaceFlagsScreen(final RoboRallyGame game, String mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
+    public PlaceFlagsScreen(final RoboRallyGame game, Texture mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         this.mapFilepath = mapFilepath;
@@ -51,10 +51,11 @@ public class PlaceFlagsScreen implements Screen {
 
         board = new BoardCreator(game.chosenMap(mapChoiceIndex));
 
-        Image background = new Image(new TextureRegionDrawable(new Texture(AssMan.GAMESCREEN_BACKGROUND2.fileName)));
+        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2)));
+
         stage.addActor(background);
 
-        map = new Image(new TextureRegionDrawable(new Texture(mapFilepath)));
+        map = new Image(new TextureRegionDrawable(mapFilepath));
         mapWidth = map.getWidth() * 2f;
         mapHeight = map.getHeight() * 2f;
         map.setSize(mapWidth, mapHeight);
