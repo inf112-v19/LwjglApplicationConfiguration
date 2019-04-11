@@ -1,8 +1,11 @@
 package inf112.roborally.game.server;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class MultiThreadedServer {
 
@@ -13,9 +16,19 @@ public class MultiThreadedServer {
         ServerSocket serverSocket = null;
         Socket socket = null;
         int connections = 0;
+        ArrayList<String> list = new ArrayList<String>();
+
+        try {
+            InetAddress ip = InetAddress.getLocalHost();
+            System.out.println(ip);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
 
         try {
             serverSocket = new ServerSocket(PORT);
+
         } catch (IOException e) {
             e.printStackTrace();
 
