@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
-import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.GameLogic;
-import inf112.roborally.game.board.TestBoard;
-import inf112.roborally.game.board.VaultBoard;
+import inf112.roborally.game.board.*;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
@@ -33,11 +30,11 @@ public class GameScreen implements Screen {
     private Music music;
 
 
-    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, boolean runTestMap) {
+    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, String mapFilePath, boolean runTestMap) {
         this.game = game;
         if (!runTestMap) {
             if (flagPositions != null) {
-                board = new VaultBoard(flagPositions);
+                board = new BoardCreator(mapFilePath, flagPositions);
             } else {
                 board = new VaultBoard();
             }
@@ -70,7 +67,7 @@ public class GameScreen implements Screen {
 
     private void addPlayersToBoard(int robotChoiceIndex) {
         int index = robotChoiceIndex;
-        int n = game.nSkins;
+        int n = AssMan.getPlayerSkins().length;
         for (int i = 0; i < n; i++) {
             if (index >= n) {
                 index = 0;

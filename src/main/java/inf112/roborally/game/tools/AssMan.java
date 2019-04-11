@@ -5,7 +5,10 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+
+import java.util.concurrent.TimeoutException;
 
 /**
  * Contains assets used by the game.
@@ -29,6 +32,9 @@ public class AssMan {
 
     public static final AssetDescriptor<Music> MUSIC_MAIN_THEME
             = new AssetDescriptor<>("assets/music/Zander Noriega - Perpetual Tension.wav", Music.class);
+
+    public static final AssetDescriptor<Sound> SOUND_BUTTON_CLICKED
+            = new AssetDescriptor<>("assets/soundeffects/buttons_and_clicks/Clic07.mp3", Sound.class);
 
     //Player skins
     public static final AssetDescriptor<Texture> PLAYER_BARTENDER_CLAPTRAP
@@ -57,6 +63,19 @@ public class AssMan {
 
     public static final AssetDescriptor<Texture> PLAYER_COP_BOT
             = new AssetDescriptor<>("assets/robots/CU5TM-TP.png", Texture.class);
+
+    //Maps
+    public static final AssetDescriptor<Texture> MAP_VAULT
+            = new AssetDescriptor<>("assets/maps/vault.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> MAP_SPACE_BUG
+            = new AssetDescriptor<>("assets/maps/space_bug.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> MAP_SPACE_BUG2
+            = new AssetDescriptor<>("assets/maps/space_bug2.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> MAP_AROUND_THE_WORLD
+            = new AssetDescriptor<>("assets/maps/around_the_world.png", Texture.class);
 
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
@@ -168,10 +187,37 @@ public class AssMan {
     public static final AssetDescriptor<Texture> FLAG_SKIN
             = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
 
+    // Buttons:
     public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
             = new AssetDescriptor<>("assets/flags/flags.atlas", TextureAtlas.class);
 
-    //Program card
+    public static final AssetDescriptor<Texture> RIGHT_ARROW
+            = new AssetDescriptor<>("assets/buttons/right_arrow.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> RIGHT_ARROW_PRESS
+            = new AssetDescriptor<>("assets/buttons/right_arrow_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> LEFT_ARROW
+            = new AssetDescriptor<>("assets/buttons/left_arrow.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> LEFT_ARROW_PRESS
+            = new AssetDescriptor<>("assets/buttons/left_arrow_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> CONFIRM
+            = new AssetDescriptor<>("assets/buttons/confirm.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> CONFIRM_PRSS
+            = new AssetDescriptor<>("assets/buttons/confirm_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> BACK
+            = new AssetDescriptor<> ("assets/buttons/back.png", Texture.class);
+
+            public static final AssetDescriptor<Texture> BACK_PRESS
+            = new AssetDescriptor<> ("assets/buttons/back_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> SELECT_SCREEN
+            = new AssetDescriptor<>("assets/buttons/select_skin_screen.png", Texture.class);
+
     public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
             = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
 
@@ -183,15 +229,37 @@ public class AssMan {
     public static final AssetDescriptor<Texture> STATUS_DISPLAY_ROBOTS =
             new AssetDescriptor<>("assets/register/robot_status_display.png", Texture.class);
 
+    // Font
+    public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA =
+            new AssetDescriptor<>("assets/fonts/groteskia.fnt", BitmapFont.class);
+
+    // TextFieldScreen
+    public static final AssetDescriptor<Texture> TEXT_FIELD_BG
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/text_field_bg.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_FIELD_CURSOR
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/cursor.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_UP
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_PRESS
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> TEXT_BUTTON_CHECKED
+            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_checked.png", Texture.class);
+
 
     @SuppressWarnings("Duplicates")
     public static void load() {
-
+        //Font
+        manager.load(FONT_GROTESKIA);
         //Music
         manager.load(SOUND_PLAYER_LASER);
         manager.load(SOUND_PLAYER_REPAIR);
         manager.load(SOUND_PLAYER_WILHELM_SCREAM);
         manager.load(MUSIC_MAIN_THEME);
+        manager.load(SOUND_BUTTON_CLICKED);
 
         //Player skins
         manager.load(PLAYER_BARTENDER_CLAPTRAP);
@@ -203,6 +271,12 @@ public class AssMan {
         manager.load(PLAYER_COP_BOT);
         manager.load(PLAYER_NURSE_BOT);
         manager.load(PLAYER_WIZARD_BOT);
+
+        // Maps (png files)
+        manager.load(MAP_VAULT);
+        manager.load(MAP_SPACE_BUG);
+        manager.load(MAP_SPACE_BUG2);
+        manager.load(MAP_AROUND_THE_WORLD);
 
         //Hud buttons
         manager.load(BUTTON_SUBMIT);
@@ -221,7 +295,7 @@ public class AssMan {
         //Settings
         manager.load(SETTINGS_BACKGROUND);
 
-        //Setup
+        //setup
         manager.load(SETUP_SETUP_SCREEN);
         manager.load(SETUP_SELECT_SKIN_TEXT);
         manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
@@ -268,6 +342,37 @@ public class AssMan {
 
         //Status display for robots
         manager.load(STATUS_DISPLAY_ROBOTS);
+
+        // InputFieldScreen
+        manager.load(TEXT_FIELD_BG);
+        manager.load(TEXT_FIELD_CURSOR);
+        manager.load(TEXT_BUTTON_UP);
+        manager.load(TEXT_BUTTON_PRESS);
+        manager.load(TEXT_BUTTON_CHECKED);
+    }
+
+//    public static String[] getPlayerSkins() {
+//        String[] skins = new String[8];
+//        skins[0] = PLAYER_CLAPTRAP_REFINED.fileName;
+//        skins[1] = PLAYER_BUTLER_REFINED.fileName;
+//        skins[2] = PLAYER_CAPTAIN_BOT.fileName;
+//        skins[3] = PLAYER_BARTENDER_CLAPTRAP.fileName;
+//        skins[4] = PLAYER_CLAPTRAP_3000.fileName;
+//        skins[5] = PLAYER_COP_BOT.fileName;
+//        skins[6] = PLAYER_WIZARD_BOT.fileName;
+//        skins[7] = PLAYER_NURSE_BOT.fileName;
+//
+//        return skins;
+//    }
+
+    public static Texture[] getMapChoices() {
+        Texture[] maps = new Texture[4];
+        maps[0] = manager.get(MAP_VAULT);
+        maps[1] = manager.get(MAP_SPACE_BUG);
+        maps[2] = manager.get(MAP_SPACE_BUG2);
+        maps[3] = manager.get(MAP_AROUND_THE_WORLD);
+
+        return maps;
     }
 
     public static Texture[] getPlayerSkins() {

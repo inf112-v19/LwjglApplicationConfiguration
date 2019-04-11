@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.roborally.game.screens.setup.SelectMapScreen;
+import inf112.roborally.game.screens.setup.SelectSkinScreen;
+import inf112.roborally.game.screens.setup.SetupScreen;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Position;
@@ -20,6 +23,10 @@ public class RoboRallyGame extends Game {
     public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
     public static final String TEST_MAP = "assets/maps/testMap.tmx";
     public static final String LASER_TEST_MAP = "assets/maps/lasertest.tmx";
+    public static final String SPACE_BUG = "assets/maps/space_bug.tmx";
+    public static final String SPACE_BUG2 = "assets/maps/space_bug2.tmx";
+    public static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
+
     //Music:
     public static final String MAIN_THEME = AssMan.MUSIC_MAIN_THEME.fileName;
     public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
@@ -38,7 +45,9 @@ public class RoboRallyGame extends Game {
     public SpriteBatch batch;
 
     public MenuScreen menuScreen;
-    public SetupScreen setupScreen;
+//    public SetupScreen setupScreen;
+    public SelectSkinScreen selectSkinScreen;
+    public SelectMapScreen selectMapScreen;
     public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
@@ -53,9 +62,6 @@ public class RoboRallyGame extends Game {
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
 
-
-    public int nSkins;
-    public String[] possibleRobotSkinFilepaths;
 
     @Override
     public void create() {
@@ -75,11 +81,11 @@ public class RoboRallyGame extends Game {
 
         batch = new SpriteBatch();
 
-        createPossibleFilepaths();
-
         menuScreen = new MenuScreen(this);
         settingsScreen = new SettingsScreen(this);
         endGameScreen = new EndGameScreen(this);
+        selectSkinScreen = new SelectSkinScreen(this);
+        selectMapScreen = new SelectMapScreen(this);
 
         testScreen = new TestScreen(this);
         laserTestScreen = new LaserTestScreen(this);
@@ -104,35 +110,22 @@ public class RoboRallyGame extends Game {
         }
     }
 
-    private void createPossibleFilepaths() {
-        nSkins = 8;
-        possibleRobotSkinFilepaths = new String[nSkins];
-        possibleRobotSkinFilepaths[0] = AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName;
-        possibleRobotSkinFilepaths[1] = AssMan.PLAYER_BUTLER_REFINED.fileName;
-        possibleRobotSkinFilepaths[2] = AssMan.PLAYER_CLAPTRAP_REFINED.fileName;
-        possibleRobotSkinFilepaths[3] = AssMan.PLAYER_CLAPTRAP_3000.fileName;
-        possibleRobotSkinFilepaths[4] = AssMan.PLAYER_NURSE_BOT.fileName;
-        possibleRobotSkinFilepaths[5] = AssMan.PLAYER_CAPTAIN_BOT.fileName;
-        possibleRobotSkinFilepaths[6] = AssMan.PLAYER_COP_BOT.fileName;
-        possibleRobotSkinFilepaths[7] = AssMan.PLAYER_WIZARD_BOT.fileName;
-    }
-
     public void newGame() {
         dispose();
         create();
     }
 
-    public void createSetupScreen() {
-        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
-    }
+//    public void createSetupScreen() {
+//        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
+//    }
 
-    // Create GameScreen with preset skins and flag positions
+    // Create GameScreen with preset skins, map and flag positions
     public void createGameScreen() {
-        gameScreen = new GameScreen(this, 0, null , runTestMap);
+        gameScreen = new GameScreen(this, 0, null, null , runTestMap);
     }
 
-    public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions) {
-        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, runTestMap);
+    public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex) {
+        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, chosenMap(mapChoiceIndex), runTestMap);
     }
 
     @Override
@@ -145,9 +138,9 @@ public class RoboRallyGame extends Game {
         menuScreen.dispose();
         AssMan.dispose();
 
-        if (setupScreen != null) {
-            setupScreen.dispose();
-        }
+//        if (setupScreen != null) {
+//            setupScreen.dispose();
+//        }
 
         if(gameScreen != null) {
             gameScreen.dispose();
@@ -156,6 +149,16 @@ public class RoboRallyGame extends Game {
 
     public void setLaunchTestMap(boolean bool){
         runTestMap = bool;
+    }
+
+    public String chosenMap(int mapIndex) {
+        String[] mapChoices = new String[4];
+        mapChoices[0] = VAULT;
+        mapChoices[1] = SPACE_BUG;
+        mapChoices[2] = SPACE_BUG2;
+        mapChoices[3] = AROUND_THE_WORLD;
+
+        return mapChoices[mapIndex];
     }
 
     public Screen getScreenBefore(){
