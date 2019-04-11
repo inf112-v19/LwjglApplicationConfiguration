@@ -40,12 +40,12 @@ public class PlayerHand {
         return list;
     }
 
-    public int size() {
-        return cardsInHand.size();
-    }
-
     public ArrayList<ProgramCard> getCardsInHand() {
         return cardsInHand;
+    }
+
+    public int size() {
+        return cardsInHand.size();
     }
 
     public ProgramCard getCard(int cardPos) {
