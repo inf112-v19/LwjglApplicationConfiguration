@@ -176,7 +176,7 @@ public class RoboRallyGame extends Game {
     public void joinGame(String ip, String name){
         System.out.println(name + " wants to connect to " + ip);
         try {
-            client = new ChatClient(ip, 8000, this);
+            client = new ChatClient(ip, 8000, this, name);
             new Thread(client).start();
         } catch (Exception e) {
             e.printStackTrace();

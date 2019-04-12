@@ -21,11 +21,13 @@ public class ChatClient implements Runnable{
     private final int port;
     private RoboRallyGame game;
     private ArrayList<ProgramCard> chosenCards;
+    private String name;
 
-    public ChatClient(String host, int port, RoboRallyGame game) {
+    public ChatClient(String host, int port, RoboRallyGame game, String name) {
         this.host = host;
         this.port = port;
         this.game = game;
+        this.name = name;
     }
 
     @Override
@@ -46,6 +48,8 @@ public class ChatClient implements Runnable{
             }
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            MessagePacket handshake = new MessagePacket("HANDSHAKE", new Payload(name));
+            channel.writeAndFlush(handshake);
 
             while (true) {
                 ProgramCard cd = null;

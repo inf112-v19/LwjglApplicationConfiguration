@@ -36,9 +36,6 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
         }
         channels.remove(ctx.channel());
     }
-    public ChannelGroup getConnections(){
-        return channels;
-    }
 
 
     @Override
