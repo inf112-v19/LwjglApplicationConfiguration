@@ -54,6 +54,7 @@ public abstract class TiledBoard {
     }
 
     public void dispose() {
+        System.out.println("Disposing TiledBoard");
         map.dispose();
         mapRenderer.dispose();
     }

@@ -67,7 +67,7 @@ public class GameScreen implements Screen {
 
     private void addPlayersToBoard(int robotChoiceIndex) {
         int index = robotChoiceIndex;
-        int n = game.nSkins;
+        int n = AssMan.getPlayerSkins().length;
         for (int i = 0; i < n; i++) {
             if (index >= n) {
                 index = 0;
@@ -126,7 +126,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        System.out.println("Disposing game screen");
+        System.out.println("Disposing GameScreen");
         background.dispose();
 
         board.dispose();
@@ -139,6 +139,7 @@ public class GameScreen implements Screen {
             animation.dispose();
         }
         music.dispose();
+        hud.dispose();
     }
 
     @Override
