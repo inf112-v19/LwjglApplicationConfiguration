@@ -4,9 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.InputFieldScreen;
-import inf112.roborally.game.server.ChatServer;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
