@@ -1,6 +1,7 @@
 package inf112.roborally.game.server;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -8,11 +9,13 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 public class ChatServer {
 
     private final int port;
+    private Channel channels;
 
     public ChatServer(int port) {
         this.port = port;
@@ -29,6 +32,7 @@ public class ChatServer {
                     .childHandler(new ChatServerInit());
 
             bootstrap.bind(port).sync().channel().closeFuture().sync();
+
         }
         finally {
             bossGroup.shutdownGracefully();

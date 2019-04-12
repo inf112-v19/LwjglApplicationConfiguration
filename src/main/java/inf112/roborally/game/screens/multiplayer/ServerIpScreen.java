@@ -11,6 +11,7 @@ public class ServerIpScreen extends InputFieldScreen {
         super(game);
         text.setText("'Enter server ip'");
         confirm.setText("Connect");
+        game.joinGame(text.getText());
     }
 
     @Override

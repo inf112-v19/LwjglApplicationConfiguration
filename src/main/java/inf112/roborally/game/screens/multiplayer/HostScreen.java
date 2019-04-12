@@ -32,6 +32,8 @@ public class HostScreen extends InputFieldScreen {
         label.setVisible(false);
         stage.addActor(label);
         name = "";
+        game.hostGame();
+        game.joinGame(ip);
 
 
     }

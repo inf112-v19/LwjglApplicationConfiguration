@@ -63,8 +63,8 @@ public class RoboRallyGame extends Game {
 
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
-    private ChatServer server;
-    private ChatClient client;
+    public ChatServer server;
+    public ChatClient client;
 
 
 
@@ -177,7 +177,7 @@ public class RoboRallyGame extends Game {
         }
     }
 
-    public void joinGame(String ip, String name){
+    public void joinGame(String ip){
         try {
             client = new ChatClient(ip, 8000);
             client.run();
