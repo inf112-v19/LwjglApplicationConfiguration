@@ -149,7 +149,6 @@ public class PlaceFlagsScreen implements Screen {
 
 
     private void doneWithSetup() {
-        System.out.println("Board: " + game.board);
         game.createCustomGameScreen();
         game.setScreen(game.gameScreen);
         dispose();

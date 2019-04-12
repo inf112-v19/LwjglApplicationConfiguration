@@ -14,6 +14,7 @@ public class SelectSkinScreen extends SelectScreen {
         super(game, AssMan.getPlayerSkins(), AssMan.getPlayerSkins().length);
     }
 
+
     @Override
     public void completeChoice() {
         skinChoiceIndex = choiceIndex; //Which skin to use

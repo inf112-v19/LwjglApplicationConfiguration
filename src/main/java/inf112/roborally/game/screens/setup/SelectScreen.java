@@ -55,8 +55,6 @@ public abstract class SelectScreen implements Screen {
         confirm.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                dispose();
-//                game.setScreen(game.setupScreen);
                 completeChoice();
             }
         });

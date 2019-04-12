@@ -33,14 +33,14 @@ public class Board extends TiledBoard {
     protected ArrayList<Flag> flags;
     protected ArrayList<LaserAnimation> lasers;
     protected ArrayList<LaserBeam> laserGuns;
-    protected List<StartPosition> startPlates;
+    protected ArrayList<StartPosition> startPlates;
 
     public Board() {
         players = Collections.synchronizedList(new ArrayList<Player>());
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
         laserGuns = new ArrayList<>();
-        startPlates = Collections.synchronizedList(new ArrayList<StartPosition>());
+        startPlates = new ArrayList<>();
     }
 
     public void findLaserGuns() {
@@ -77,8 +77,6 @@ public class Board extends TiledBoard {
         Collections.sort(startPlates);
         int startNumber = 0;
         for (Player currentPlayer : players) {
-            System.out.println("players size: " + players.size());
-            System.out.println("startplates size: " + startPlates.size());
             currentPlayer.moveToPosition(startPlates.get(startNumber++).position);
             currentPlayer.setDirection(Direction.EAST);
             currentPlayer.updateSprite();

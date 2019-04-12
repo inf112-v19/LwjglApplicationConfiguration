@@ -33,7 +33,6 @@ public class GameScreen implements Screen {
     public GameScreen(RoboRallyGame game) {
         this.game = game;
         board = game.getBoard();
-        //game.selectSkinScreen.addPlayersToBoard();
         board.placePlayers();
         hud = new Hud(board.getPlayers().get(0), game);
         hud.createButtons();
@@ -55,20 +54,6 @@ public class GameScreen implements Screen {
         background = new Background(game.dynamicCamera);
         animations = new ArrayList<>();
         hud.addPlayerStatusDisplay(board.getPlayers());
-    }
-
-
-    private void addPlayersToBoard(int robotChoiceIndex) {
-        int index = robotChoiceIndex;
-        int n = AssMan.getPlayerSkins().length;
-        for (int i = 0; i < n; i++) {
-            if (index >= n) {
-                index = 0;
-            }
-            board.addPlayer(new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board));
-
-            index++;
-        }
     }
 
     @Override
