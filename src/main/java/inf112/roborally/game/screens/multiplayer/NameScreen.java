@@ -11,6 +11,10 @@ public class NameScreen extends InputFieldScreen {
     }
 
     @Override
+    protected void goToPreviousScreen() {
+    }
+
+    @Override
     protected boolean confirmInput() {
         if (!clicked || text.getText().length() < 3) return false;
         System.out.println(text.getText());

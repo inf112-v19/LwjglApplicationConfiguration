@@ -5,11 +5,19 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.InputFieldScreen;
 
 public class ServerIpScreen extends InputFieldScreen {
+    private String ip;
 
-    public ServerIpScreen(RoboRallyGame game) {
+    public ServerIpScreen(final RoboRallyGame game) {
         super(game);
-        text.setText("'ServerIp'");
+        text.setText("'Enter server ip'");
         confirm.setText("Connect");
+    }
+
+    @Override
+    protected void goToPreviousScreen() {
+        Screen previousScreen = new MultiplayerScreen(game);
+        game.setScreen(previousScreen);
+        dispose();
     }
 
     @Override
