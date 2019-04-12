@@ -40,8 +40,9 @@ public class ChatClient {
             group.shutdownGracefully();
         }
     }
-
+/*
     public static void main(String[] args) throws Exception {
         new ChatClient("10.111.35.178", 8000).run();
     }
+    */
 }

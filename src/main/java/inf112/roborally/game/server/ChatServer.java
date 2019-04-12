@@ -35,7 +35,7 @@ public class ChatServer {
             workerGroup.shutdownGracefully();
         }
     }
-
+/*
     public static void main(String[] args) throws InterruptedException, SocketException {
         Enumeration<NetworkInterface> a = NetworkInterface.getNetworkInterfaces();
         while (a.hasMoreElements()){
@@ -47,4 +47,5 @@ public class ChatServer {
         }
         new ChatServer(8000).run();
     }
+    */
 }

@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.screens.setup.SelectMapScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.screens.setup.SetupScreen;
+import inf112.roborally.game.server.ChatClient;
+import inf112.roborally.game.server.ChatServer;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Position;
@@ -177,6 +179,22 @@ public class RoboRallyGame extends Game {
         mapChoices[3] = AROUND_THE_WORLD;
 
         return mapChoices[mapIndex];
+    }
+
+    public void hostGame(){
+        try {
+            new ChatServer(8000).run();
+        } catch (InterruptedException e) {
+            System.out.println("Lost connection");
+        }
+    }
+
+    public void joinGame(String ip, String name){
+        try {
+            new ChatClient(ip, 8000).run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Screen getScreenBefore(){
