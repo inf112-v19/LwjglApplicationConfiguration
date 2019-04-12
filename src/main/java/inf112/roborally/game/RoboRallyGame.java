@@ -63,6 +63,10 @@ public class RoboRallyGame extends Game {
 
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
+    private ChatServer server;
+    private ChatClient client;
+
+
 
 
     public int nSkins;
@@ -183,7 +187,8 @@ public class RoboRallyGame extends Game {
 
     public void hostGame(){
         try {
-            new ChatServer(8000).run();
+           server = new ChatServer(8000);
+           server.run();
         } catch (InterruptedException e) {
             System.out.println("Lost connection");
         }
@@ -191,7 +196,8 @@ public class RoboRallyGame extends Game {
 
     public void joinGame(String ip, String name){
         try {
-            new ChatClient(ip, 8000).run();
+            client = new ChatClient(ip, 8000);
+            client.run();
         } catch (Exception e) {
             e.printStackTrace();
         }
