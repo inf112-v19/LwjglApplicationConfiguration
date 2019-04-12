@@ -30,7 +30,7 @@ public abstract class SelectScreen implements Screen {
     protected int skinChoiceIndex;
     protected int mapChoiceIndex;
 
-    public SelectScreen(final RoboRallyGame game, SetupState setupState, final int numberOfChoices) {
+    public SelectScreen(final RoboRallyGame game, Texture[] textures, final int numberOfChoices) {
         this.game = game;
         this.numberOfChoices = numberOfChoices;
         this.stage = new Stage(game.fixedViewPort, game.batch);
@@ -77,21 +77,10 @@ public abstract class SelectScreen implements Screen {
         stage.addActor(confirm);
         stage.addActor(back);
 
-        switch (setupState) {
-            case PICKINGSKIN:
-                // Robotskins:
-                choices = new TextureRegionDrawable[numberOfChoices];
-                for (int i = 0; i < numberOfChoices; i++) {
-                    choices[i] = new TextureRegionDrawable(AssMan.getPlayerSkins()[i]);
-                }
-                break;
-            case PICKINGMAP:
-                // Maps:
-                choices = new TextureRegionDrawable[numberOfChoices];
-                for (int i = 0; i < numberOfChoices; i++) {
-                    choices[i] = new TextureRegionDrawable(AssMan.getMapChoices()[i]);
-                }
-                break;
+
+        choices = new TextureRegionDrawable[numberOfChoices];
+        for (int i = 0; i < numberOfChoices; i++) {
+            choices[i] = new TextureRegionDrawable(textures[i]);
         }
 
         choiceIndex = 0;

@@ -7,7 +7,7 @@ import inf112.roborally.game.tools.AssMan;
 
 public class SelectMapScreen extends SelectScreen {
     public SelectMapScreen(final RoboRallyGame game) {
-        super(game, SetupState.PICKINGMAP, AssMan.getMapChoices().length);
+        super(game, AssMan.getMapChoices(), AssMan.getMapChoices().length);
     }
 
     @Override

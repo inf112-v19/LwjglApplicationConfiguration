@@ -12,7 +12,7 @@ import static inf112.roborally.game.enums.Direction.NORTH;
 public class SelectSkinScreen extends SelectScreen {
 
     public SelectSkinScreen(final RoboRallyGame game) {
-        super(game, SetupState.PICKINGSKIN, AssMan.getPlayerSkins().length);
+        super(game, AssMan.getPlayerSkins(), AssMan.getPlayerSkins().length);
     }
 
     @Override
