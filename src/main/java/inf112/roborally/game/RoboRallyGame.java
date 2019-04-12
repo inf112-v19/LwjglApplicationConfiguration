@@ -74,6 +74,7 @@ public class RoboRallyGame extends Game {
 
     public ArrayList<String> players;
     public Board board;
+    public String name;
 
     @Override
     public void create() {
@@ -199,10 +200,10 @@ public class RoboRallyGame extends Game {
     }
 
 
-    public void joinGame(String ip, String name){
+    public void joinGame(String ip){
         System.out.println(name + " wants to connect to " + ip);
         try {
-            client = new ChatClient(ip, 8000, this);
+            client = new ChatClient(ip, 8000, this, name);
             new Thread(client).start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -220,5 +221,8 @@ public class RoboRallyGame extends Game {
     public void startServer() {
         server = new ChatServer(8000, this);
         new Thread(server).start();
+    }
+    public void setName(String name){
+        this.name = name;
     }
 }

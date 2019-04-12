@@ -19,7 +19,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     @Override
-    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+    public void handlerAdded(ChannelHandlerContext ctx) {
         Channel incoming = ctx.channel();
         for (Channel channel : channels) {
             channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has joined\n");
@@ -29,15 +29,12 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
     }
 
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+    public void handlerRemoved(ChannelHandlerContext ctx){
         Channel incoming = ctx.channel();
         for (Channel channel : channels) {
             channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has left\n");
         }
         channels.remove(ctx.channel());
-    }
-    public ChannelGroup getConnections(){
-        return channels;
     }
 
 
@@ -50,4 +47,16 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
                 channel.writeAndFlush("[" + incoming.remoteAddress() + "] " + msg + "\n");
         }
     }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        MessagePacket packet = (MessagePacket) msg;
+        String tag = packet.tag;
+        if(tag.equals("HANDSHAKE")){
+            for (Channel channel : channels) {
+                    channel.writeAndFlush(packet.payload + " has connected!");
+            }
+        }
+    }
+
 }

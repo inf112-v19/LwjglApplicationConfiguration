@@ -12,9 +12,7 @@ import java.net.UnknownHostException;
 
 public class HostServerScreen extends InputFieldScreen {
     private String ip;
-    private String name;
     private Label label;
-    private boolean nameIsEntered = false;
 
     public HostServerScreen(RoboRallyGame game) {
         super(game);
@@ -25,14 +23,14 @@ public class HostServerScreen extends InputFieldScreen {
         catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        game.joinGame("127.0.0.1"); //Replace with "ip" after
         label = new Label("Server Ip: " + ip, labelStyle);
         label.setPosition(1920 / 2, 1080 / 2, Align.center);
         label.setAlignment(Align.center);
         label.setFontScale(2);
-        text.setText("'Enter name'");
-        label.setVisible(false);
+        text.setVisible(false);
+        confirm.setText("Start Game");
         stage.addActor(label);
-        name = "";
     }
 
     @Override
@@ -44,17 +42,8 @@ public class HostServerScreen extends InputFieldScreen {
 
     @Override
     protected boolean confirmInput() {
-        if (!nameIsEntered) {
-            name = text.getText();
-            label.setVisible(true);
-            nameIsEntered = true;
-            confirm.setText("Start Game");
-            text.setVisible(false);
-        }
-        else {
-            System.out.println(name + " wants to start the game.");
-        }
-        return true;
+            System.out.println(game.name + " wants to start the game.");
+            return true;
     }
 
     @Override

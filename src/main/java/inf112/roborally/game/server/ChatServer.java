@@ -10,7 +10,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class ChatServer implements Runnable{
 
     private final int port;
-    private Channel channels;
     private final RoboRallyGame game;
 
     public ChatServer(int port, RoboRallyGame game) {
