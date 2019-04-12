@@ -44,7 +44,9 @@ public class ChatClient implements Runnable{
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
             while (true) {
                 ProgramCard cd = null;
                 try {
