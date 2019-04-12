@@ -5,19 +5,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.InputFieldScreen;
+import inf112.roborally.game.server.ChatServer;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 
-public class HostScreen extends InputFieldScreen {
+public class HostServerScreen extends InputFieldScreen {
     private String ip;
     private String name;
     private Label label;
     private boolean nameIsEntered = false;
 
-    public HostScreen(RoboRallyGame game) {
+    public HostServerScreen(RoboRallyGame game) {
         super(game);
+        game.startServer();
         try {
             ip = InetAddress.getLocalHost().getHostAddress();
         }

@@ -9,9 +9,10 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ChatClient {
+public class ChatClient implements Runnable{
 
     private final String host;
     private final int port;
@@ -21,7 +22,8 @@ public class ChatClient {
         this.port = port;
     }
 
-    public void run() throws Exception {
+    @Override
+    public void run() {
         EventLoopGroup group = new NioEventLoopGroup();
 
         try {
@@ -29,10 +31,22 @@ public class ChatClient {
                     .group(group)
                     .channel(NioSocketChannel.class)
                     .handler(new ChatClientInit());
-            Channel channel = bootstrap.connect(host, port).sync().channel();
+            Channel channel = null;
+            try {
+                channel = bootstrap.connect(host, port).sync().channel();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             while (true) {
-                ProgramCard cd = new ProgramCard(Rotate.NONE, Integer.parseInt(in.readLine()), 0);
+                ProgramCard cd = null;
+                try {
+                    cd = new ProgramCard(Rotate.NONE, Integer.parseInt(in.readLine()), 0);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
                 channel.writeAndFlush(cd + "\r\n");
             }
         }

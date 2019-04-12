@@ -32,7 +32,7 @@ public class LobbyScreen extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        Screen screen = new ServerIpScreen(game);
+        Screen screen = new JoinServerScreen(game);
         game.setScreen(screen);
         dispose();
     }

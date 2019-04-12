@@ -10,7 +10,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-public class ChatServer {
+public class ChatServer implements Runnable{
 
     private final int port;
 
@@ -18,7 +18,9 @@ public class ChatServer {
         this.port = port;
     }
 
-    public void run() throws InterruptedException {
+    @Override
+    public void run() {
+        System.out.println("Starting game server..");
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
@@ -28,7 +30,12 @@ public class ChatServer {
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ChatServerInit());
 
-            bootstrap.bind(port).sync().channel().closeFuture().sync();
+            try {
+                bootstrap.bind(port).sync().channel().closeFuture().sync();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
         finally {
             bossGroup.shutdownGracefully();
