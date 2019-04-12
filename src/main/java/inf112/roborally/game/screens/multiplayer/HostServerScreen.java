@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.InputFieldScreen;
 import inf112.roborally.game.server.ChatServer;
 
@@ -34,7 +35,6 @@ public class HostServerScreen extends InputFieldScreen {
         label.setVisible(false);
         stage.addActor(label);
         name = "";
-
     }
 
     @Override
@@ -57,5 +57,11 @@ public class HostServerScreen extends InputFieldScreen {
             System.out.println(name + " wants to start the game.");
         }
         return true;
+    }
+
+    @Override
+    public void render(float v) {
+        super.render(v);
+        System.out.println(game.players);
     }
 }

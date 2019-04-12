@@ -69,7 +69,7 @@ public class RoboRallyGame extends Game {
     public ChatServer server;
     public ChatClient client;
 
-    public ArrayList<Player> players;
+    public ArrayList<String> players;
     public Board board;
 
     @Override
@@ -191,7 +191,7 @@ public class RoboRallyGame extends Game {
     }
 
     public void startServer() {
-        server = new ChatServer(8000);
+        server = new ChatServer(8000, this);
         new Thread(server).start();
     }
 }

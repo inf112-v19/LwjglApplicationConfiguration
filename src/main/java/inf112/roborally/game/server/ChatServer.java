@@ -1,24 +1,21 @@
 package inf112.roborally.game.server;
 
+import inf112.roborally.game.RoboRallyGame;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-
 public class ChatServer implements Runnable{
 
     private final int port;
     private Channel channels;
+    private final RoboRallyGame game;
 
-    public ChatServer(int port) {
+    public ChatServer(int port, RoboRallyGame game) {
         this.port = port;
+        this.game = game;
     }
 
     @Override
@@ -31,7 +28,7 @@ public class ChatServer implements Runnable{
             ServerBootstrap bootstrap = new ServerBootstrap()
                     .group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(new ChatServerInit());
+                    .childHandler(new ChatServerInit(game));
 
             try {
                 bootstrap.bind(port).sync().channel().closeFuture().sync();
