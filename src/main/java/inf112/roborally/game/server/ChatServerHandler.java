@@ -1,5 +1,6 @@
 package inf112.roborally.game.server;
 
+import inf112.roborally.game.RoboRallyGame;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -8,6 +9,12 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
+
+    private final RoboRallyGame game;
+
+    public ChatServerHandler(RoboRallyGame game) {
+        this.game = game;
+    }
 
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
@@ -18,6 +25,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
             channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has joined\n");
         }
         channels.add(ctx.channel());
+        game.players.add(ctx.channel().toString());
     }
 
     @Override
