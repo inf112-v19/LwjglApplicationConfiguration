@@ -10,6 +10,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.screens.setup.SelectMapScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.screens.setup.SetupScreen;
+import inf112.roborally.game.server.ChatClient;
+import inf112.roborally.game.server.ChatServer;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Position;
@@ -45,7 +47,7 @@ public class RoboRallyGame extends Game {
     public SpriteBatch batch;
 
     public MenuScreen menuScreen;
-    public SetupScreen setupScreen;
+//    public SetupScreen setupScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
     public GameScreen gameScreen;
@@ -61,10 +63,11 @@ public class RoboRallyGame extends Game {
 
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
+    private ChatServer server;
+    private ChatClient client;
 
 
-    public int nSkins;
-    public String[] possibleRobotSkinFilepaths;
+
 
     @Override
     public void create() {
@@ -83,8 +86,6 @@ public class RoboRallyGame extends Game {
         fixedViewPort = new FitViewport(1920, 1080, fixedCamera);
 
         batch = new SpriteBatch();
-
-        createPossibleFilepaths();
 
         menuScreen = new MenuScreen(this);
         settingsScreen = new SettingsScreen(this);
@@ -115,31 +116,18 @@ public class RoboRallyGame extends Game {
         }
     }
 
-    private void createPossibleFilepaths() {
-        nSkins = 8;
-        possibleRobotSkinFilepaths = new String[nSkins];
-        possibleRobotSkinFilepaths[0] = AssMan.PLAYER_BARTENDER_CLAPTRAP.fileName;
-        possibleRobotSkinFilepaths[1] = AssMan.PLAYER_BUTLER_REFINED.fileName;
-        possibleRobotSkinFilepaths[2] = AssMan.PLAYER_CLAPTRAP_REFINED.fileName;
-        possibleRobotSkinFilepaths[3] = AssMan.PLAYER_CLAPTRAP_3000.fileName;
-        possibleRobotSkinFilepaths[4] = AssMan.PLAYER_NURSE_BOT.fileName;
-        possibleRobotSkinFilepaths[5] = AssMan.PLAYER_CAPTAIN_BOT.fileName;
-        possibleRobotSkinFilepaths[6] = AssMan.PLAYER_COP_BOT.fileName;
-        possibleRobotSkinFilepaths[7] = AssMan.PLAYER_WIZARD_BOT.fileName;
-    }
-
     public void newGame() {
         dispose();
         create();
     }
 
-    public void createSetupScreen() {
-        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
-    }
+//    public void createSetupScreen() {
+//        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
+//    }
 
     // Create GameScreen with preset skins, map and flag positions
     public void createGameScreen() {
-        gameScreen = new GameScreen(this, 0, new ArrayList<Position>(), null , runTestMap);
+        gameScreen = new GameScreen(this, 0, null, null , runTestMap);
     }
 
     public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex) {
@@ -148,6 +136,7 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void dispose() {
+        System.out.println("Disposing RoboRallyGame");
         if(screenBefore != null) {
             screenBefore.dispose();
         }
@@ -156,9 +145,9 @@ public class RoboRallyGame extends Game {
         menuScreen.dispose();
         AssMan.dispose();
 
-        if (setupScreen != null) {
-            setupScreen.dispose();
-        }
+//        if (setupScreen != null) {
+//            setupScreen.dispose();
+//        }
 
         if(gameScreen != null) {
             gameScreen.dispose();
@@ -177,6 +166,24 @@ public class RoboRallyGame extends Game {
         mapChoices[3] = AROUND_THE_WORLD;
 
         return mapChoices[mapIndex];
+    }
+
+    public void hostGame(){
+        try {
+           server = new ChatServer(8000);
+           server.run();
+        } catch (InterruptedException e) {
+            System.out.println("Lost connection");
+        }
+    }
+
+    public void joinGame(String ip, String name){
+        try {
+            client = new ChatClient(ip, 8000);
+            client.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Screen getScreenBefore(){

@@ -117,6 +117,7 @@ public class LaserTestScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        System.out.println("Disposing LaserTestScreen");
+        board.dispose();
     }
 }

@@ -298,6 +298,7 @@ public class SetupScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
+        System.out.println("Disposing SetupScreen");
         super.dispose();
         stage.dispose();
     }

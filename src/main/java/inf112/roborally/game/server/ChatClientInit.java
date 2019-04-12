@@ -8,6 +8,7 @@ import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+@SuppressWarnings("Duplicates")
 public class ChatClientInit extends ChannelInitializer<SocketChannel> {
 
     @Override

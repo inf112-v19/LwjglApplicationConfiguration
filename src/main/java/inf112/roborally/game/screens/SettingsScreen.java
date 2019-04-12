@@ -65,7 +65,6 @@ public class SettingsScreen extends AbstractScreen {
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             game.setLaunchTestMap(false);
             game.newGame();
-
         }
     }
 
