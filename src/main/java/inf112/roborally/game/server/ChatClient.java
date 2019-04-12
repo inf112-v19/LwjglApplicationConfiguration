@@ -46,10 +46,11 @@ public class ChatClient implements Runnable{
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            //Under development
             MessagePacket handshake = new MessagePacket("HANDSHAKE", new Payload(name));
             channel.writeAndFlush(handshake);
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
             while (true) {
                 ProgramCard cd = null;

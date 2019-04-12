@@ -196,4 +196,7 @@ public class RoboRallyGame extends Game {
         server = new ChatServer(8000, this);
         new Thread(server).start();
     }
+    public void setName(String name){
+        this.name = name;
+    }
 }
