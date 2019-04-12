@@ -42,6 +42,7 @@ public class PlaceFlagsScreen implements Screen {
 
     // Text:
     private Label informationText;
+    private Label clickedMessage;
     private int remainingFlags = 3;
 
     // Create a board in the background so that we can check if the player places the flags
@@ -84,7 +85,15 @@ public class PlaceFlagsScreen implements Screen {
         informationText.setPosition(50, 1000);
         informationText.setFontScale(2);
 
+        // The error message
+        clickedMessage = new Label("",
+                new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE));
+        clickedMessage.setPosition(1550,1010, Align.center);
+        clickedMessage.setAlignment(Align.center);
+        clickedMessage.setFontScale(2);
+
         stage.addActor(informationText);
+        stage.addActor(clickedMessage);
     }
 
     private void handleClick(float x, float y) {
@@ -98,11 +107,10 @@ public class PlaceFlagsScreen implements Screen {
         else {
             Position clickedPos = convertMouseClickIntoMapPosition(x,y);
             if (!checkIfLegalPosition(clickedPos)) {
-                System.out.println("Cannot place a flag here, either it's a hole, " +
-                        "or a flag has already been placed here!");
+                clickedMessage.setText("Cannot place flag here");
             }
             else {
-                System.out.printf("Placed a flag at position: x = %d, y = %d%n", clickedPos.getX(), clickedPos.getY());
+                clickedMessage.setText("Placed flag at x=" + clickedPos.getX() + ", y=" + clickedPos.getY());
                 flagPositions.add(clickedPos);
                 remainingFlags--;
                 // Update the information
@@ -215,6 +223,5 @@ public class PlaceFlagsScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-//        board.dispose();
     }
 }
