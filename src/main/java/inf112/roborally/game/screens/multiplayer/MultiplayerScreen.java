@@ -21,7 +21,7 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Screen screen = new ServerIpScreen(game);
+                Screen screen = new JoinServerScreen(game);
                 game.setScreen(screen);
                 dispose();
             }
@@ -33,7 +33,7 @@ public class MultiplayerScreen extends BasicScreen {
         create.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Screen screen = new HostScreen(game);
+                Screen screen = new HostServerScreen(game);
                 game.setScreen(screen);
                 dispose();
             }

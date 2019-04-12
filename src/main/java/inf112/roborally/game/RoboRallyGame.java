@@ -19,6 +19,7 @@ import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.*;
+import sun.awt.windows.ThemeReader;
 
 import java.util.ArrayList;
 
@@ -66,8 +67,8 @@ public class RoboRallyGame extends Game {
 
     /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
-    private ChatServer server;
-    private ChatClient client;
+    public ChatServer server;
+    public ChatClient client;
 
     public ArrayList<Player> players;
     public Board board;
@@ -186,19 +187,11 @@ public class RoboRallyGame extends Game {
         return mapChoices[mapIndex];
     }
 
-    public void hostGame(){
-        try {
-           server = new ChatServer(8000);
-           server.run();
-        } catch (InterruptedException e) {
-            System.out.println("Lost connection");
-        }
-    }
 
-    public void joinGame(String ip, String name){
+    public void joinGame(String ip){
         try {
             client = new ChatClient(ip, 8000);
-            client.run();
+            new Thread(client).start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -210,5 +203,10 @@ public class RoboRallyGame extends Game {
 
     public Board getBoard() {
         return board;
+    }
+
+    public void startServer() {
+        server = new ChatServer(8000);
+        new Thread(server).start();
     }
 }
