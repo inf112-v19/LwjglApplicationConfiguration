@@ -1,5 +1,7 @@
 package inf112.roborally.game.server;
 
+import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.enums.Rotate;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -7,7 +9,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ChatClient {
@@ -31,7 +32,8 @@ public class ChatClient {
             Channel channel = bootstrap.connect(host, port).sync().channel();
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             while (true) {
-                channel.writeAndFlush(in.readLine() + "\r\n");
+                ProgramCard cd = new ProgramCard(Rotate.NONE, Integer.parseInt(in.readLine()), 0);
+                channel.writeAndFlush(cd + "\r\n");
             }
         }
         finally {
@@ -40,6 +42,6 @@ public class ChatClient {
     }
 
     public static void main(String[] args) throws Exception {
-        new ChatClient("localhost", 8000).run();
+        new ChatClient("10.111.35.178", 8000).run();
     }
 }
