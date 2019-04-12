@@ -31,10 +31,10 @@ public class GameScreen implements Screen {
     private Music music;
 
 
-    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, String mapFilePath, boolean runTestMap) {
+    public GameScreen(RoboRallyGame game, int robotChoiceIndex) {
         this.game = game;
         board = game.getBoard();
-        addPlayersToBoard(robotChoiceIndex);
+        game.selectSkinScreen.addPlayersToBoard(robotChoiceIndex);
         board.placePlayers();
         hud = new Hud(board.getPlayers().get(0), game);
         hud.createButtons();
@@ -57,6 +57,17 @@ public class GameScreen implements Screen {
         animations = new ArrayList<>();
         hud.addPlayerStatusDisplay(board.getPlayers());
     }
+
+    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex){
+        this.game = game;
+        board = game.getBoard();
+        game.selectSkinScreen.addPlayersToBoard(robotChoiceIndex);
+        board.placePlayers();
+        hud = new Hud(board.getPlayers().get(0), game);
+        hud.createButtons();
+        gameLogic = new GameLogic(board, hud, game);
+    }
+
 
     private void addPlayersToBoard(int robotChoiceIndex) {
         int index = robotChoiceIndex;

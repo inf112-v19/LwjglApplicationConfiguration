@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.board.Board;
+import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.setup.SelectMapScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
@@ -130,11 +131,25 @@ public class RoboRallyGame extends Game {
 
     // Create GameScreen with preset skins, map and flag positions
     public void createGameScreen() {
-        gameScreen = new GameScreen(this, 0, null, null , runTestMap);
+        createDefaultBoard();
+        gameScreen = new GameScreen(this, 0);
     }
 
+
     public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex) {
-        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, chosenMap(mapChoiceIndex), runTestMap);
+        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, mapChoiceIndex);
+    }
+
+
+    /**
+     * Create a new board with preset board map and flag locations.
+     */
+    private void createDefaultBoard() {
+        board = new Board();
+        board.createBoard(VAULT);
+        board.getFlags().add(new Flag(13, 13, 1));
+        board.getFlags().add(new Flag(11, 11, 2));
+        board.getFlags().add(new Flag(10, 10, 3));
     }
 
     @Override

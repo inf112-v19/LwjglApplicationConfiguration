@@ -152,7 +152,8 @@ public class PlaceFlagsScreen implements Screen {
     }
 
     private void doneWithSetup() {
-        game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
+        game.createGameScreen();
+        game.createGameScreen();
         game.setScreen(game.gameScreen);
         dispose();
     }

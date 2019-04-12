@@ -13,8 +13,9 @@ public class SelectMapScreen extends SelectScreen {
     @Override
     public void completeChoice() {
         game.board = new Board();
-        game.board.createBoard(game.chosenMap(mapChoiceIndex));
         mapChoiceIndex = choiceIndex;
+        game.board.createBoard(game.chosenMap(mapChoiceIndex));
+        game.board.findLaserGuns();
         game.setScreen(new PlaceFlagsScreen(game, AssMan.getMapChoices()[mapChoiceIndex], mapChoiceIndex, skinChoiceIndex));
         dispose();
     }
