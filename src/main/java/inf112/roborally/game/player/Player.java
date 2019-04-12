@@ -69,7 +69,6 @@ public class Player extends MovableGameObject implements Comparable {
         registers = new ProgramRegisters(this);
         backup = new Backup(this);
         laserCannon = new LaserCannon(this);
-        skinTexture = AssMan.getPlayerSkins()[0];
     }
 
     /**
@@ -80,7 +79,6 @@ public class Player extends MovableGameObject implements Comparable {
         this.nFlags = nFlags;
         name = "testBot";
         debugging = true;
-        skinTexture = AssMan.getPlayerSkins()[0];
     }
 
     public void makeSprite(Texture skin) {
