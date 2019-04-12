@@ -1,16 +1,15 @@
 package inf112.roborally.game.screens.multiplayer;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.InputFieldScreen;
 
 public class ServerIpScreen extends InputFieldScreen {
+    private String ip;
 
     public ServerIpScreen(final RoboRallyGame game) {
         super(game);
-        text.setText("'ServerIp'");
+        text.setText("'Enter server ip'");
         confirm.setText("Connect");
     }
 

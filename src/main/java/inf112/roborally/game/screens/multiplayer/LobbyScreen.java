@@ -1,9 +1,7 @@
 package inf112.roborally.game.screens.multiplayer;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.InputFieldScreen;
@@ -16,7 +14,6 @@ public class LobbyScreen extends InputFieldScreen {
     public LobbyScreen(final RoboRallyGame game) {
         super(game);
         timer = 0;
-        text.setVisible(false);
         confirm.setVisible(false);
         Label label = new Label("Connecting to server", labelStyle);
         label.setPosition(1920 / 2, 1080 / 2 + 50, Align.center);
@@ -29,6 +26,8 @@ public class LobbyScreen extends InputFieldScreen {
 
         stage.addActor(label);
         stage.addActor(waiting);
+
+        setFieldVisible(false);
     }
 
     @Override

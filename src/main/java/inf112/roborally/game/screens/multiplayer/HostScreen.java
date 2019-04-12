@@ -28,7 +28,7 @@ public class HostScreen extends InputFieldScreen {
         label.setPosition(1920 / 2, 1080 / 2, Align.center);
         label.setAlignment(Align.center);
         label.setFontScale(2);
-        text.setText("'Your name'");
+        text.setText("'Enter name'");
         label.setVisible(false);
         stage.addActor(label);
         name = "";
@@ -49,7 +49,8 @@ public class HostScreen extends InputFieldScreen {
             nameIsEntered = true;
             confirm.setText("Start Game");
             text.setVisible(false);
-        } else {
+        }
+        else {
             System.out.println(name + " wants to start the game.");
         }
         return true;
