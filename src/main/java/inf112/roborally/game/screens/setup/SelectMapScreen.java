@@ -1,7 +1,7 @@
 package inf112.roborally.game.screens.setup;
 
-import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.tools.AssMan;
 
@@ -12,6 +12,8 @@ public class SelectMapScreen extends SelectScreen {
 
     @Override
     public void completeChoice() {
+        game.board = new Board();
+        game.board.createBoard(game.chosenMap(mapChoiceIndex));
         mapChoiceIndex = choiceIndex;
         game.setScreen(new PlaceFlagsScreen(game, AssMan.getMapChoices()[mapChoiceIndex], mapChoiceIndex, skinChoiceIndex));
         dispose();

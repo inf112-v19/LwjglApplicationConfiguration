@@ -35,7 +35,6 @@ public class HostScreen extends InputFieldScreen {
         game.hostGame();
         game.joinGame(ip);
 
-
     }
 
     @Override
