@@ -120,7 +120,9 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void dispose() {
+    public void dispose()
+    {
+        System.out.println("Disposing MenuScreen");
         background.getTexture().dispose();
     }
 }
