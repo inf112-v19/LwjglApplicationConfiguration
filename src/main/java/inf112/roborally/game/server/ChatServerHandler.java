@@ -9,7 +9,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 
 public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
-    private static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+    public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
@@ -27,6 +27,9 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
             channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has left\n");
         }
         channels.remove(ctx.channel());
+    }
+    public ChannelGroup getConnections(){
+        return channels;
     }
 
 

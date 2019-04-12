@@ -5,6 +5,7 @@ import inf112.roborally.game.enums.Rotate;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
@@ -48,6 +49,7 @@ public class ChatClient implements Runnable{
                     e.printStackTrace();
                 }
                 channel.writeAndFlush(cd + "\r\n");
+
             }
         }
         finally {

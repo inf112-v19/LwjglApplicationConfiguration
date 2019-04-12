@@ -24,7 +24,7 @@ public class JoinServerScreen extends InputFieldScreen {
     protected boolean confirmInput() {
         if (!clicked || text.getText().length() < 3) return false;
         ip = text.getText();
-        game.joinGame(ip, "name");
+        game.joinGame(ip);
         System.out.println("Trying to connect to: " + ip);
         Screen s = new LobbyScreen(game);
         game.setScreen(s);
