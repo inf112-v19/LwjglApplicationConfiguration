@@ -65,7 +65,7 @@ public class MenuScreen implements Screen {
             roboRallyGame.setScreen(s);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            roboRallyGame.createGameScreen();
+            roboRallyGame.createDefaultGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
             roboRallyGame.AIvsAI = false;
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
@@ -86,13 +86,13 @@ public class MenuScreen implements Screen {
             roboRallyGame.setScreen(roboRallyGame.laserTestScreen);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             roboRallyGame.AIvsAI = true;
-            roboRallyGame.createGameScreen();
+            roboRallyGame.createDefaultGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
 
             roboRallyGame.AIvsAI = false;
             roboRallyGame.setLaunchTestMap(true);
-            roboRallyGame.createGameScreen();
+            roboRallyGame.createDefaultGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
         }
 

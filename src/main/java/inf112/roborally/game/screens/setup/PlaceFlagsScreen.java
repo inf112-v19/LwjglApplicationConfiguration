@@ -11,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.BoardCreator;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.tools.AssMan;
@@ -152,8 +150,7 @@ public class PlaceFlagsScreen implements Screen {
     }
 
     private void doneWithSetup() {
-        game.createGameScreen();
-        game.createGameScreen();
+        game.createDefaultGameScreen();
         game.setScreen(game.gameScreen);
         dispose();
     }
