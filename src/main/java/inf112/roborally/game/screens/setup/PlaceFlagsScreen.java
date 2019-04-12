@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.BoardCreator;
+import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.tools.AssMan;
 
@@ -49,6 +50,10 @@ public class PlaceFlagsScreen implements Screen {
     // on legal positions
     private Board board;
 
+    // Display a "check" wherever we placed a flag
+//    private TextureRegionDrawable[] visuallyShowClick;
+    private Image[] visuallyShowClick;
+
     public PlaceFlagsScreen(final RoboRallyGame game, Texture mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
@@ -58,6 +63,7 @@ public class PlaceFlagsScreen implements Screen {
         flagPositions = new ArrayList<>();
 
         board = new BoardCreator(game.chosenMap(mapChoiceIndex));
+
 
         Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_PLACEFLAGS_BACKGROUND)));
         stage.addActor(background);
@@ -92,6 +98,16 @@ public class PlaceFlagsScreen implements Screen {
         clickedMessage.setAlignment(Align.center);
         clickedMessage.setFontScale(2);
 
+        // "Checks" for when a flag is placed
+//        visuallyShowClick = new TextureRegionDrawable[remainingFlags];
+//        for (int i = 0; i < visuallyShowClick.length; i++) {
+//            visuallyShowClick[i] = new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_CHECK_FLAG));
+//        }
+        visuallyShowClick = new Image[remainingFlags];
+        for (int i = 0; i < visuallyShowClick.length; i++) {
+            visuallyShowClick[i] = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_CHECK_FLAG)));
+        }
+
         stage.addActor(informationText);
         stage.addActor(clickedMessage);
     }
@@ -111,10 +127,20 @@ public class PlaceFlagsScreen implements Screen {
             }
             else {
                 clickedMessage.setText("Placed flag at x=" + clickedPos.getX() + ", y=" + clickedPos.getY());
+
+                // Place a "check" on the right position
+                Image currCheck = visuallyShowClick[remainingFlags-1];
+                currCheck.setScale(0.1f);
+                // Set the position to clicked x plus the x value of where the map starts
+                // Same with y value
+                currCheck.setPosition(x + map.getX(),y + map.getY());
+                stage.addActor(currCheck);
+
                 flagPositions.add(clickedPos);
                 remainingFlags--;
                 // Update the information
                 informationText.setText("Remaining flags: " + remainingFlags);
+
 
                 // If we have placed 3 flags, we are done
                 // This can be changed later if we want to add more flags

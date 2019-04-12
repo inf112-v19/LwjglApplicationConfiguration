@@ -23,16 +23,17 @@ public abstract class SelectScreen implements Screen {
     protected final RoboRallyGame game;
 
     private Stage stage;
-    private TextureRegionDrawable[] choices;
+    protected TextureRegionDrawable[] choices;
     protected int choiceIndex;
     private Image currentChoice;
     private Boolean clicked = false;
-    private final int numberOfChoices;
+    protected final int numberOfChoices;
+    protected String information;
 
     protected int skinChoiceIndex;
     protected int mapChoiceIndex;
 
-    public SelectScreen(final RoboRallyGame game, SetupState setupState, final int numberOfChoices) {
+    public SelectScreen(final RoboRallyGame game, final int numberOfChoices) {
         this.game = game;
         this.numberOfChoices = numberOfChoices;
         this.stage = new Stage(game.fixedViewPort, game.batch);
@@ -49,7 +50,6 @@ public abstract class SelectScreen implements Screen {
 //                clicked = true;
             }
         });
-        next.setProgrammaticChangeEvents(true);
         ImageButton previous = ButtonFactory.createArrowLeftButton();
         previous.addListener(new ClickListener() {
             @Override
@@ -79,25 +79,10 @@ public abstract class SelectScreen implements Screen {
         stage.addActor(confirm);
         stage.addActor(back);
 
-        String information = "";
-        switch (setupState) {
-            case PICKINGSKIN:
-                // Robotskins:
-                choices = new TextureRegionDrawable[numberOfChoices];
-                for (int i = 0; i < numberOfChoices; i++) {
-                    choices[i] = new TextureRegionDrawable(AssMan.getPlayerSkins()[i]);
-                }
-                information = "skin";
-                break;
-            case PICKINGMAP:
-                // Maps:
-                choices = new TextureRegionDrawable[numberOfChoices];
-                for (int i = 0; i < numberOfChoices; i++) {
-                    choices[i] = new TextureRegionDrawable(AssMan.getMapChoices()[i]);
-                }
-                information = "map";
-                break;
-        }
+        information = "";
+
+        // Set the different texture for the possible choices
+        setChoicesBasedOnScreen();
 
         // Information text:
         Label label = new Label("Select your " + information + ":",
@@ -113,6 +98,12 @@ public abstract class SelectScreen implements Screen {
         stage.addActor(currentChoice);
 
     }
+
+    /**
+     * Set the choice textures in each subclass,
+     * for one it's the robot skins, for the other it's the different maps
+     */
+    protected abstract void setChoicesBasedOnScreen();
 
     @Override
     public void show() {
@@ -149,7 +140,7 @@ public abstract class SelectScreen implements Screen {
 
     /**
      * Instead of having the 3 next methods in their buttons, they are out here so that
-     * player can also chose with the keyboard
+     * player can also choose with the keyboard
      */
     private void previousClicked() {
         choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;

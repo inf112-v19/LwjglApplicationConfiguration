@@ -1,6 +1,7 @@
 package inf112.roborally.game.screens.setup;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.screens.setup.SelectScreen;
@@ -9,7 +10,16 @@ import inf112.roborally.game.tools.AssMan;
 public class SelectSkinScreen extends SelectScreen {
 
     public SelectSkinScreen(final RoboRallyGame game) {
-        super(game, SetupState.PICKINGSKIN, AssMan.getPlayerSkins().length);
+        super(game, AssMan.getPlayerSkins().length);
+    }
+
+    @Override
+    protected void setChoicesBasedOnScreen() {
+        choices = new TextureRegionDrawable[numberOfChoices];
+        for (int i = 0; i < numberOfChoices; i++) {
+            choices[i] = new TextureRegionDrawable(AssMan.getPlayerSkins()[i]);
+        }
+        information = "skin";
     }
 
     @Override
