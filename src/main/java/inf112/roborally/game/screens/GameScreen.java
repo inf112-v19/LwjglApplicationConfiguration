@@ -7,11 +7,12 @@ import com.badlogic.gdx.graphics.GL20;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
-import inf112.roborally.game.board.*;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.Position;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
@@ -32,15 +33,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, String mapFilePath, boolean runTestMap) {
         this.game = game;
-        if (!runTestMap) {
-            if (flagPositions != null) {
-                board = new BoardCreator(mapFilePath, flagPositions);
-            } else {
-                board = new VaultBoard();
-            }
-        } else {
-            board = new TestBoard();
-        }
+        board = game.getBoard();
         addPlayersToBoard(robotChoiceIndex);
         board.placePlayers();
         hud = new Hud(board.getPlayers().get(0), game);
@@ -50,7 +43,7 @@ public class GameScreen implements Screen {
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
-        if(!RoboRallyGame.soundMuted) {
+        if (!RoboRallyGame.soundMuted) {
             music.play();
         }
 
@@ -135,7 +128,7 @@ public class GameScreen implements Screen {
             player.getBackup().getSprite().getTexture().dispose();
         }
 
-        for(Animation animation : animations){
+        for (Animation animation : animations) {
             animation.dispose();
         }
         music.dispose();
@@ -164,11 +157,12 @@ public class GameScreen implements Screen {
 
     }
 
-    public boolean playMusic(boolean bool){
-        if(bool) {
+    public boolean playMusic(boolean bool) {
+        if (bool) {
             music.play();
             RoboRallyGame.soundMuted = false;
-        }else{
+        }
+        else {
             music.pause();
             RoboRallyGame.soundMuted = true;
         }

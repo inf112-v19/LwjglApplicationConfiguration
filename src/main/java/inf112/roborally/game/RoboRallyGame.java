@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.setup.SelectMapScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.screens.setup.SetupScreen;
@@ -66,11 +68,12 @@ public class RoboRallyGame extends Game {
     private ChatServer server;
     private ChatClient client;
 
-
-
+    public ArrayList<Player> players;
+    public Board board;
 
     @Override
     public void create() {
+        players = new ArrayList<>();
         AssMan.load();
         AssMan.manager.finishLoading();
         AIvsAI = false;
@@ -188,5 +191,9 @@ public class RoboRallyGame extends Game {
 
     public Screen getScreenBefore(){
         return this.screenBefore;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.BoardCreator;
+import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.tools.AssMan;
 
@@ -36,10 +37,7 @@ public class PlaceFlagsScreen implements Screen {
     private int mapChoiceIndex;
     private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
-
-    // Create a board in the background so that we can check if the player places the flags
-    // on legal positions
-    private Board board;
+    private int flagNumber;
 
     public PlaceFlagsScreen(final RoboRallyGame game, Texture mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
         this.game = game;
@@ -47,10 +45,8 @@ public class PlaceFlagsScreen implements Screen {
         this.mapFilepath = mapFilepath;
         this.mapChoiceIndex = mapChoiceIndex;
         this.robotChoiceIndex = robotChoiceIndex;
+        flagNumber = 0;
         flagPositions = new ArrayList<>();
-
-        board = new BoardCreator(game.chosenMap(mapChoiceIndex));
-
         Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2)));
 
         stage.addActor(background);
@@ -94,6 +90,7 @@ public class PlaceFlagsScreen implements Screen {
             else {
 //                System.out.printf("Position: x = %d, y = %d%n", clickedPos.getX(), clickedPos.getY());
                 flagPositions.add(clickedPos);
+                game.board.getFlags().add(new Flag(clickedPos.getX(), clickedPos.getY(), ++flagNumber));
 
                 // If we have placed 3 flags, we are done
                 // This can be changed later if we want to add more flags
@@ -108,7 +105,7 @@ public class PlaceFlagsScreen implements Screen {
     // Check if the clicked position is not either a hole or a previously clicked position
     private boolean checkIfLegalPosition(Position clickedPos) {
         boolean result = true;
-        if(board.getFloorLayer().getCell(clickedPos.getX(), clickedPos.getY()) == null){
+        if(game.board.getFloorLayer().getCell(clickedPos.getX(), clickedPos.getY()) == null){
             result = false;
         }
         for(Position pos : flagPositions) {
@@ -203,6 +200,5 @@ public class PlaceFlagsScreen implements Screen {
     public void dispose() {
         System.out.println("Disposing PlaceFlagsScreen");
         stage.dispose();
-//        board.dispose();
     }
 }

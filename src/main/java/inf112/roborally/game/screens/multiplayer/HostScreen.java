@@ -32,8 +32,6 @@ public class HostScreen extends InputFieldScreen {
         label.setVisible(false);
         stage.addActor(label);
         name = "";
-
-
     }
 
     @Override
