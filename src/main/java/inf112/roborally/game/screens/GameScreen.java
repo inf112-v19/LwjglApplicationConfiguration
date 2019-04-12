@@ -11,7 +11,6 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 
@@ -31,10 +30,10 @@ public class GameScreen implements Screen {
     private Music music;
 
 
-    public GameScreen(RoboRallyGame game, int robotChoiceIndex) {
+    public GameScreen(RoboRallyGame game) {
         this.game = game;
         board = game.getBoard();
-        game.selectSkinScreen.addPlayersToBoard(robotChoiceIndex);
+        //game.selectSkinScreen.addPlayersToBoard();
         board.placePlayers();
         hud = new Hud(board.getPlayers().get(0), game);
         hud.createButtons();
@@ -56,16 +55,6 @@ public class GameScreen implements Screen {
         background = new Background(game.dynamicCamera);
         animations = new ArrayList<>();
         hud.addPlayerStatusDisplay(board.getPlayers());
-    }
-
-    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex){
-        this.game = game;
-        board = game.getBoard();
-        game.selectSkinScreen.addPlayersToBoard(robotChoiceIndex);
-        board.placePlayers();
-        hud = new Hud(board.getPlayers().get(0), game);
-        hud.createButtons();
-        gameLogic = new GameLogic(board, hud, game);
     }
 
 

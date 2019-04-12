@@ -1,15 +1,14 @@
 package inf112.roborally.game.screens.setup;
 
-import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.player.Player;
-import inf112.roborally.game.screens.setup.SelectScreen;
 import inf112.roborally.game.tools.AssMan;
 
 import static inf112.roborally.game.enums.Direction.NORTH;
 
 public class SelectSkinScreen extends SelectScreen {
+
+    protected int skinChoiceIndex;
 
     public SelectSkinScreen(final RoboRallyGame game) {
         super(game, AssMan.getPlayerSkins(), AssMan.getPlayerSkins().length);
@@ -17,23 +16,25 @@ public class SelectSkinScreen extends SelectScreen {
 
     @Override
     public void completeChoice() {
-        skinChoiceIndex = choiceIndex;
+        skinChoiceIndex = choiceIndex; //Which skin to use
+        for(Player player : game.board.getPlayers()) {
+            player.setSkinTexture(AssMan.getPlayerSkins()[skinChoiceIndex]);
+        }
+
         game.setScreen(game.selectMapScreen);
-        // Since we are creating a new subclass of the SelectScreen abstract class, we need to
-        // update the new one with the skin choice we just picked
-        game.selectMapScreen.setSkinChoiceIndex(skinChoiceIndex);
         dispose();
     }
 
-    public void addPlayersToBoard(int robotChoiceIndex) {
-        int index = robotChoiceIndex;
-        int n = AssMan.getPlayerSkins().length;
-        for (int i = 0; i < n; i++) {
-            if (index >= n) {
+    public void addPlayersToBoard() {
+        int index = skinChoiceIndex;
+        int numberOfSkins = AssMan.getPlayerSkins().length;
+        for (int i = 0; i < numberOfSkins; i++) {
+            if (index >= numberOfSkins) {
                 index = 0;
             }
-            game.board.addPlayer(new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, game.board));
-
+            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, game.board);
+            game.board.addPlayer(player);
+            System.out.println("Added player " + player);
             index++;
         }
     }

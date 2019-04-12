@@ -11,6 +11,7 @@ import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.LaserCannon;
 import inf112.roborally.game.objects.MovableGameObject;
 import inf112.roborally.game.objects.Position;
+import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 
@@ -38,6 +39,8 @@ public class Player extends MovableGameObject implements Comparable {
     private ProgramRegisters registers;
     private PlayerHand hand;
 
+    private Texture skinTexture;
+
     public Player(String name, Texture skin, Direction direction, Board board) {
         this(0, 0);
         this.name = name;
@@ -49,6 +52,7 @@ public class Player extends MovableGameObject implements Comparable {
         backup.setupSprite();
         phase = 0;
         debugging = false;
+        skinTexture = AssMan.getPlayerSkins()[0];
     }
 
     /**
@@ -65,6 +69,7 @@ public class Player extends MovableGameObject implements Comparable {
         registers = new ProgramRegisters(this);
         backup = new Backup(this);
         laserCannon = new LaserCannon(this);
+        skinTexture = AssMan.getPlayerSkins()[0];
     }
 
     /**
@@ -75,6 +80,7 @@ public class Player extends MovableGameObject implements Comparable {
         this.nFlags = nFlags;
         name = "testBot";
         debugging = true;
+        skinTexture = AssMan.getPlayerSkins()[0];
     }
 
     public void makeSprite(Texture skin) {
@@ -276,6 +282,10 @@ public class Player extends MovableGameObject implements Comparable {
 
     public void setPhase(int phase) {
         this.phase = phase;
+    }
+
+    public void setSkinTexture(Texture skinTexture){
+        this.skinTexture = skinTexture;
     }
 
     public boolean isDebuggingActive() {

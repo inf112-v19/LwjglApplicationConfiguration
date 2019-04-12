@@ -21,7 +21,10 @@ public abstract class TiledBoard {
     protected TiledMapTileLayer wallLayer;
     protected TiledMapTileLayer startLayer;
 
+    String mapPath;
+
     public void createBoard(String mapPath) {
+        this.mapPath = mapPath;
         loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
         parameters.flipY = true;
@@ -86,5 +89,7 @@ public abstract class TiledBoard {
     public int getHeight() {
         return this.floorLayer.getHeight();
     }
+
+    public String getMapPath(){ return this.mapPath; }
 
 }
