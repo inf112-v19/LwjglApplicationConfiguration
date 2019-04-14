@@ -1,9 +1,11 @@
 package inf112.roborally.game.tools;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -58,7 +60,7 @@ public class ButtonFactory {
 
     public static TextButton createTextButton(String text) {
         BitmapFont font = AssMan.manager.get(AssMan.FONT_GROTESKIA);
-        font.getData().setScale(4);
+        font.getData().setScale(2);
         TextureRegionDrawable up = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_UP));
         TextureRegionDrawable down = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_PRESS));
         TextButton button = new TextButton(text, new TextButton.TextButtonStyle(up, down, up, font));
@@ -67,5 +69,9 @@ public class ButtonFactory {
         button.setPosition(1920 / 2f - button.getWidth() / 2f, 200);
         button.addListener(soundOnTouchDown());
         return button;
+    }
+
+    public static Label createLabel(String text, Color color){
+        return new Label(text, new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), color));
     }
 }

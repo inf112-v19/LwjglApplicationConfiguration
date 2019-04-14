@@ -8,17 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.board.Board;
-import inf112.roborally.game.player.Player;
-import inf112.roborally.game.screens.setup.SelectMapScreen;
-import inf112.roborally.game.screens.setup.SelectSkinScreen;
-import inf112.roborally.game.screens.setup.SetupScreen;
-import inf112.roborally.game.server.ChatClient;
-import inf112.roborally.game.server.ChatServer;
-import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.*;
-import sun.awt.windows.ThemeReader;
+import inf112.roborally.game.screens.setup.SelectMapScreen;
+import inf112.roborally.game.screens.setup.SelectSkinScreen;
+import inf112.roborally.game.server.ChatClient;
+import inf112.roborally.game.server.ChatServer;
+import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 
@@ -50,7 +47,7 @@ public class RoboRallyGame extends Game {
     public SpriteBatch batch;
 
     public MenuScreen menuScreen;
-//    public SetupScreen setupScreen;
+    //    public SetupScreen setupScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
     public GameScreen gameScreen;
@@ -64,7 +61,9 @@ public class RoboRallyGame extends Game {
 
     public static boolean soundMuted;
 
-    /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
+    /**
+     * The screen that was active before setting a new screen with {@link #setScreen(Screen)}
+     */
     private Screen screenBefore;
     public ChatServer server;
     public ChatClient client;
@@ -101,17 +100,19 @@ public class RoboRallyGame extends Game {
         testScreen = new TestScreen(this);
         laserTestScreen = new LaserTestScreen(this);
 
-        setScreen(menuScreen);
+        setScreen(new BetterMenu(this));
     }
 
-    /** Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
+    /**
+     * Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
      * screen, if any.
-     *
+     * <p>
      * Saves the screen that was used before the function call.
      *
-     * @param screen may be {@code null} */
+     * @param screen may be {@code null}
+     */
     @Override
-    public void setScreen (Screen screen) {
+    public void setScreen(Screen screen) {
         this.screenBefore = getScreen();
         if (this.screen != null) this.screen.hide();
         this.screen = screen;
@@ -132,7 +133,7 @@ public class RoboRallyGame extends Game {
 
     // Create GameScreen with preset skins, map and flag positions
     public void createGameScreen() {
-        gameScreen = new GameScreen(this, 0, null, null , runTestMap);
+        gameScreen = new GameScreen(this, 0, null, null, runTestMap);
     }
 
     public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex) {
@@ -142,7 +143,7 @@ public class RoboRallyGame extends Game {
     @Override
     public void dispose() {
         System.out.println("Disposing RoboRallyGame");
-        if(screenBefore != null) {
+        if (screenBefore != null) {
             screenBefore.dispose();
         }
         batch.dispose();
@@ -154,12 +155,12 @@ public class RoboRallyGame extends Game {
 //            setupScreen.dispose();
 //        }
 
-        if(gameScreen != null) {
+        if (gameScreen != null) {
             gameScreen.dispose();
         }
     }
 
-    public void setLaunchTestMap(boolean bool){
+    public void setLaunchTestMap(boolean bool) {
         runTestMap = bool;
     }
 
@@ -174,17 +175,18 @@ public class RoboRallyGame extends Game {
     }
 
 
-    public void joinGame(String ip){
+    public void joinGame(String ip) {
         System.out.println(name + " wants to connect to " + ip);
         try {
             client = new ChatClient(ip, 8000, this);
             new Thread(client).start();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Screen getScreenBefore(){
+    public Screen getScreenBefore() {
         return this.screenBefore;
     }
 
