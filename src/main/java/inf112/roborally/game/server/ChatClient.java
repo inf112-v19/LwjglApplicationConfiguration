@@ -15,6 +15,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/*
+Akkurat nå så klarer den kun å sende Strings, Stringen blir lest ved å bli delt opp i 2, den deles ved mellomrom.
+Første del er TAG/Kodeord, den andre er selve payload
+Pga dette kan man ikke ha mellomrom i navnet sitt atm
+ */
 public class ChatClient implements Runnable{
 
     private final String host;
@@ -47,12 +52,12 @@ public class ChatClient implements Runnable{
                 e.printStackTrace();
             }
             //Under development
-            MessagePacket handshake = new MessagePacket("HANDSHAKE", new Payload(name));
-            channel.writeAndFlush(handshake);
+            channel.writeAndFlush("HANDSHAKE" + " " + name);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
             while (true) {
+
                 ProgramCard cd = null;
                 try {
                     cd = new ProgramCard(Rotate.NONE, Integer.parseInt(in.readLine()), 0);

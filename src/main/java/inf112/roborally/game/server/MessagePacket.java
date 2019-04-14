@@ -1,6 +1,8 @@
 package inf112.roborally.game.server;
 
-public class MessagePacket {
+import java.io.Serializable;
+
+public class MessagePacket implements  Serializable{
     public String tag;
     public Payload payload;
 

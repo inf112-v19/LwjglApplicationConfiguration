@@ -50,11 +50,13 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        MessagePacket packet = (MessagePacket) msg;
-        String tag = packet.tag;
-        if(tag.equals("HANDSHAKE")){
+        String packet = msg.toString();
+        String[] split = packet.split(" ");
+
+        if(split[0].equals("HANDSHAKE")){
+            System.out.println(split[1] + " has connected!");
             for (Channel channel : channels) {
-                    channel.writeAndFlush(packet.payload + " has connected!");
+                   channel.writeAndFlush(split[1] + " has connected!");
             }
         }
     }

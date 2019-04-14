@@ -49,6 +49,6 @@ public class HostServerScreen extends InputFieldScreen {
     @Override
     public void render(float v) {
         super.render(v);
-        System.out.println(game.players);
+        //System.out.println(game.players);
     }
 }
