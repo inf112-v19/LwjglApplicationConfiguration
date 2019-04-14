@@ -14,12 +14,13 @@ import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class BetterMenu extends BasicScreen {
-private final int sidePad = 40;
-private final int buttomPad = 20;
 
     public BetterMenu(final RoboRallyGame game) {
         super(game);
         back.setVisible(false);
+        int sidePad = 40;
+        int buttomPad = 20;
+
         Label label = ButtonFactory.createLabel("RoboRally", Color.WHITE);
         label.setFontScale(10);
         TextButton single = ButtonFactory.createTextButton("Single player");
@@ -38,7 +39,6 @@ private final int buttomPad = 20;
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.AIvsAI = true;
-                game.board =
             }
         });
 
