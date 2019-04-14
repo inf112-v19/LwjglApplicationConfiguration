@@ -40,7 +40,7 @@ public abstract class InputFieldScreen extends BasicScreen {
                 clicked = true;
             }
         });
-        confirm = ButtonFactory.createTextButton("Confirm");
+        confirm = ButtonFactory.createTextButton("Confirm",2);
         confirm.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

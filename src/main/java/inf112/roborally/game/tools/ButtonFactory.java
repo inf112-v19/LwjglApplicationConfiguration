@@ -58,12 +58,12 @@ public class ButtonFactory {
         return back;
     }
 
-    public static TextButton createTextButton(String text) {
+    public static TextButton createTextButton(String text, float fontScale) {
         BitmapFont font = AssMan.manager.get(AssMan.FONT_GROTESKIA);
-        font.getData().setScale(2);
         TextureRegionDrawable up = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_UP));
         TextureRegionDrawable down = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_PRESS));
         TextButton button = new TextButton(text, new TextButton.TextButtonStyle(up, down, up, font));
+        button.getLabel().setFontScale(fontScale);
         button.setTransform(true);
         button.setWidth(480);
         button.setPosition(1920 / 2f - button.getWidth() / 2f, 200);

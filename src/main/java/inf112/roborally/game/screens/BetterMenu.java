@@ -23,7 +23,7 @@ public class BetterMenu extends BasicScreen {
 
         Label label = ButtonFactory.createLabel("RoboRally", Color.WHITE);
         label.setFontScale(10);
-        TextButton single = ButtonFactory.createTextButton("Single player");
+        TextButton single = ButtonFactory.createTextButton("Single player",2);
         single.padBottom(buttomPad).padRight(sidePad).padLeft(sidePad);
         single.addListener(new ClickListener(){
             @Override
@@ -31,9 +31,9 @@ public class BetterMenu extends BasicScreen {
                 game.setScreen(new SelectSkinScreen(game));
             }
         });
-        TextButton multi = ButtonFactory.createTextButton("Multiplayer");
+        TextButton multi = ButtonFactory.createTextButton("Multiplayer", 2);
         multi.padBottom(buttomPad).padRight(sidePad).padLeft(sidePad);
-        TextButton ai = ButtonFactory.createTextButton("AI vs AI");
+        TextButton ai = ButtonFactory.createTextButton("AI vs AI", 2);
         ai.padBottom(buttomPad).padRight(sidePad).padLeft(sidePad);
         ai.addListener(new ClickListener(){
             @Override

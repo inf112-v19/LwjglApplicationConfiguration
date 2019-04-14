@@ -14,7 +14,7 @@ public class MultiplayerScreen extends BasicScreen {
 
     public MultiplayerScreen(final RoboRallyGame game) {
         super(game);
-        TextButton join = ButtonFactory.createTextButton("Join Session");
+        TextButton join = ButtonFactory.createTextButton("Join Session",2);
         join.setTransform(true);
         join.setWidth(700);
         join.setPosition(1920 / 2f - join.getWidth() / 2f, 550);
@@ -34,7 +34,7 @@ public class MultiplayerScreen extends BasicScreen {
                 dispose();
             }
         });
-        TextButton create = ButtonFactory.createTextButton("Create Session");
+        TextButton create = ButtonFactory.createTextButton("Create Session", 2);
         create.setTransform(true);
         create.setWidth(700);
         create.setPosition(1920 / 2f - create.getWidth() / 2f, 350);
