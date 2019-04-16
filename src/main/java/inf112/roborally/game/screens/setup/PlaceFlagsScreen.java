@@ -3,13 +3,16 @@ package inf112.roborally.game.screens.setup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
@@ -36,14 +39,26 @@ public class PlaceFlagsScreen implements Screen {
     private ArrayList<Position> flagPositions;
     private int flagNumber;
 
-    public PlaceFlagsScreen(final RoboRallyGame game) {
+    // Text:
+    private Label informationText;
+    private Label clickedMessage;
+    private int remainingFlags = 3;
+
+    // Create a board in the background so that we can check if the player places the flags
+    // on legal positions
+    private Board board;
+
+    public PlaceFlagsScreen(final RoboRallyGame game, Texture mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         this.mapTexture = game.selectMapScreen.getMapTexture();
         this.mapChoiceIndex = game.selectMapScreen.getMapIndex();
         flagNumber = 0;
         flagPositions = new ArrayList<>();
+
         Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2)));
+
+        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_PLACEFLAGS_BACKGROUND)));
 
         stage.addActor(background);
 
@@ -58,18 +73,30 @@ public class PlaceFlagsScreen implements Screen {
         map.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Clicked map!");
                 handleClick(x,y);
 
             }
         });
-
         stage.addActor(map);
+
+        // The text labels on the left side
+        informationText = new Label("Remaining flags: " + remainingFlags,
+                new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE));
+        informationText.setPosition(50, 1000);
+        informationText.setFontScale(2);
+
+        // The error message
+        clickedMessage = new Label("",
+                new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE));
+        clickedMessage.setPosition(1550,1010, Align.center);
+        clickedMessage.setAlignment(Align.center);
+        clickedMessage.setFontScale(2);
+
+        stage.addActor(informationText);
+        stage.addActor(clickedMessage);
     }
 
     private void handleClick(float x, float y) {
-//        System.out.printf("Inside handleclick(), x = %.2f and y = %.2f%n", x, y);
-
         // Check if invisible part around map was clicked
         if(x < tileSize || x > mapWidth - tileSize || y < tileSize || y > mapHeight - tileSize) {
             System.out.println("Pressed inside map png, but in the invisible part");
@@ -80,17 +107,19 @@ public class PlaceFlagsScreen implements Screen {
         else {
             Position clickedPos = convertMouseClickIntoMapPosition(x,y);
             if (!checkIfLegalPosition(clickedPos)) {
-                System.out.println("Cannot place a flag here, either it's a hole, " +
-                        "or a flag has already been placed here!");
+                clickedMessage.setText("Cannot place flag here");
             }
             else {
-//                System.out.printf("Position: x = %d, y = %d%n", clickedPos.getX(), clickedPos.getY());
+                clickedMessage.setText("Placed flag at x=" + clickedPos.getX() + ", y=" + clickedPos.getY());
                 flagPositions.add(clickedPos);
                 game.board.getFlags().add(new Flag(clickedPos.getX(), clickedPos.getY(), ++flagNumber));
+                remainingFlags--;
+                // Update the information
+                informationText.setText("Remaining flags: " + remainingFlags);
 
                 // If we have placed 3 flags, we are done
                 // This can be changed later if we want to add more flags
-                if(flagPositions.size() == 3) {
+                if (remainingFlags == 0) {
                     doneWithSetup();
                 }
             }
