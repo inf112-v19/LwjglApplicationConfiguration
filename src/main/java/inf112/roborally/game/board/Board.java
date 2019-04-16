@@ -1,6 +1,5 @@
 package inf112.roborally.game.board;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.RoboRallyGame;
@@ -29,13 +28,15 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 public class Board extends TiledBoard {
     private float volume = .25f;
 
-    protected List<Player> players;
-    protected ArrayList<Flag> flags;
-    protected ArrayList<LaserAnimation> lasers;
-    protected ArrayList<LaserBeam> laserGuns;
-    protected ArrayList<StartPosition> startPlates;
+    protected final List<Player> players;
+    protected final ArrayList<Flag> flags;
+    protected final ArrayList<LaserAnimation> lasers;
+    protected final ArrayList<LaserBeam> laserGuns;
+    protected final ArrayList<StartPosition> startPlates;
+    protected final RoboRallyGame game;
 
-    public Board() {
+    public Board(final RoboRallyGame game) {
+        this.game = game;
         players = Collections.synchronizedList(new ArrayList<Player>());
         flags = new ArrayList<>();
         lasers = new ArrayList<>();
@@ -98,7 +99,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             expressBeltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
+                if (!game.soundMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }
@@ -112,7 +113,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             beltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
+                if (!game.soundMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }
@@ -188,7 +189,7 @@ public class Board extends TiledBoard {
         for (Player player : players) {
             if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
-                if (!RoboRallyGame.soundMuted) {
+                if (!game.soundMuted) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
                 }
                 addAnimation(new RepairAnimation(player.position));
@@ -200,7 +201,7 @@ public class Board extends TiledBoard {
     }
 
     private void addAnimation(Animation animation) {
-        ((RoboRallyGame) Gdx.app.getApplicationListener()).gameScreen.animations.add(animation);
+        game.gameScreen.animations.add(animation);
     }
 
     public void drawGameObjects(SpriteBatch batch) {

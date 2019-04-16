@@ -12,11 +12,11 @@ import inf112.roborally.game.tools.AssMan;
 
 public class LaserTestScreen implements Screen {
     RoboRallyGame game;
-    Board board;
+    private final Board board;
 
-    public LaserTestScreen(RoboRallyGame game) {
+    public LaserTestScreen(final RoboRallyGame game) {
         this.game = game;
-        board = new Board();
+        board = new Board(game);
         board.createBoard(RoboRallyGame.LASER_TEST_MAP);
         board.findLaserGuns();
         for (int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++) {

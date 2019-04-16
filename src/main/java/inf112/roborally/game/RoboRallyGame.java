@@ -64,7 +64,7 @@ public class RoboRallyGame extends Game {
     public ChatClient client;
 
     public ArrayList<String> players;
-    public Board board;
+    public final Board board = new Board(this);
     public String name;
 
     @Override
@@ -74,7 +74,7 @@ public class RoboRallyGame extends Game {
         AssMan.manager.finishLoading();
         AIvsAI = false;
 
-        board = new Board();
+        //board = new Board(this);
 
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);
