@@ -100,7 +100,6 @@ public class Hud {
                 public void clicked(InputEvent event, float x, float y) {
                     if (!player.outOfLives()) {
                         player.getRegisters().returnCards();
-                        clearAllCards();
                         updateCards();
                     }
                 }
@@ -153,7 +152,7 @@ public class Hud {
     /**
      * Remove all program card buttons.
      */
-    public void clearAllCards() {
+    private void clearAllCards() {
         for (int i = 0; i < 4; i++) {
             for (Actor button : registerGui.getChildren()) {
                 if (button instanceof ProgramCardButton) {
