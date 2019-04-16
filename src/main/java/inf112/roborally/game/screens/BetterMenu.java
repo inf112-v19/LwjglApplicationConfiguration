@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.Board;
 import inf112.roborally.game.screens.multiplayer.MultiplayerScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.tools.ButtonFactory;
@@ -27,6 +26,13 @@ public class BetterMenu extends BasicScreen {
 
         Label label = ButtonFactory.createLabel("RoboRally", Color.WHITE);
         label.setFontScale(10);
+        TextButton quick = ButtonFactory.createTextButton("Quick Play", 2);
+        quick.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                quickPlay();
+            }
+        });
         TextButton single = ButtonFactory.createTextButton("Single player", 2);
         single.addListener(new ClickListener() {
             @Override
@@ -45,9 +51,11 @@ public class BetterMenu extends BasicScreen {
         Table menuButtons = new Table();
         menuButtons.setPosition(1920 / 2, 1080 / 2, Align.center);
         menuButtons.add(label);
-        menuButtons.row().padTop(20);
+        menuButtons.row().padTop(10);
+        menuButtons.add(quick);
+        menuButtons.row().padTop(10);
         menuButtons.add(single);
-        menuButtons.row().padTop(20);
+        menuButtons.row().padTop(10);
         menuButtons.add(multi);
 
         TextButton gui = ButtonFactory.createTextButton("GuiTest", 2);
