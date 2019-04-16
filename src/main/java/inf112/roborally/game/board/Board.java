@@ -73,6 +73,15 @@ public class Board extends TiledBoard {
         players.add(player);
     }
 
+
+    public void addPlayersToBoard(List<Player> players){
+        for(Player player : players){
+            if(player != null){
+                addPlayer(player);
+            }
+        }
+    }
+
     public void placePlayers() {
         findStartPlates();
         Collections.sort(startPlates);

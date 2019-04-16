@@ -135,9 +135,12 @@ public class RoboRallyGame extends Game {
 
     /**
      * Create a new GameScreen with chosen map, flag positions and player skin.
+     * @see SelectSkinScreen
+     * @see SelectMapScreen
+     * @see PlaceFlagsScreen
      */
     public void createCustomGameScreen() {
-        selectSkinScreen.addPlayersToBoard();
+        board.addPlayersToBoard(selectSkinScreen.getCustomPlayers());
         gameScreen = new GameScreen(this);
     }
 
@@ -150,14 +153,14 @@ public class RoboRallyGame extends Game {
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 11, 2));
         board.getFlags().add(new Flag(10, 10, 3));
-        selectSkinScreen.addPlayersToBoard();
+        board.addPlayersToBoard(selectSkinScreen.getCustomPlayers());
         board.findLaserGuns();
     }
 
     public void createTestBoard(){
         board.createBoard(TEST_MAP);
         board.getFlags().add(new Flag(1, 7, 1));
-        selectSkinScreen.addPlayersToBoard();
+        board.addPlayersToBoard(selectSkinScreen.getCustomPlayers());
         board.findLaserGuns();
         setScreen(new GameScreen(this));
     }

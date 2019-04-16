@@ -17,10 +17,10 @@ public class LaserTestScreen implements Screen {
     public LaserTestScreen(final RoboRallyGame game) {
         this.game = game;
         board = new Board(game);
-        board.createBoard(RoboRallyGame.LASER_TEST_MAP);
+        board.createBoard(game.LASER_TEST_MAP);
         board.findLaserGuns();
-        for (int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++) {
-            Player testBot = new Player("testBot" + i, AssMan.getPlayerSkins()[i], Direction.NORTH, board); //
+        for (int i = 0; i < game.MAX_PLAYERS; i++) {
+            Player testBot = new Player("testBot" + i, AssMan.getPlayerSkins()[i], Direction.NORTH, board);
             board.addPlayer(testBot);
         }
         board.placePlayers();
