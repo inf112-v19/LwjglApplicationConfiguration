@@ -1,12 +1,14 @@
 package inf112.roborally.game.server;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class ChatClientHandler extends SimpleChannelInboundHandler<String> {
+public class ChatClientHandler extends ChannelInboundHandlerAdapter {
 
-    @Override
-    protected void channelRead0(ChannelHandlerContext arg0, String arg1) throws Exception {
-        System.out.println(arg1);
-    }
+    public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
+        System.out.println(o.toString());
+        }
+
 }

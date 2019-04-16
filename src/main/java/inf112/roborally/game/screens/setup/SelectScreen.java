@@ -28,10 +28,7 @@ public abstract class SelectScreen implements Screen {
     private Boolean clicked = false;
     private final int numberOfChoices;
 
-    protected int skinChoiceIndex;
-    protected int mapChoiceIndex;
-
-    public SelectScreen(final RoboRallyGame game, SetupState setupState, final int numberOfChoices) {
+    public SelectScreen(final RoboRallyGame game, Texture[] textures, final int numberOfChoices) {
         this.game = game;
         this.numberOfChoices = numberOfChoices;
         this.stage = new Stage(game.fixedViewPort, game.batch);
@@ -59,8 +56,6 @@ public abstract class SelectScreen implements Screen {
         confirm.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                dispose();
-//                game.setScreen(game.setupScreen);
                 completeChoice();
             }
         });
@@ -78,21 +73,10 @@ public abstract class SelectScreen implements Screen {
         stage.addActor(confirm);
         stage.addActor(back);
 
-        switch (setupState) {
-            case PICKINGSKIN:
-                // Robotskins:
-                choices = new TextureRegionDrawable[numberOfChoices];
-                for (int i = 0; i < numberOfChoices; i++) {
-                    choices[i] = new TextureRegionDrawable(AssMan.getPlayerSkins()[i]);
-                }
-                break;
-            case PICKINGMAP:
-                // Maps:
-                choices = new TextureRegionDrawable[numberOfChoices];
-                for (int i = 0; i < numberOfChoices; i++) {
-                    choices[i] = new TextureRegionDrawable(AssMan.getMapChoices()[i]);
-                }
-                break;
+
+        choices = new TextureRegionDrawable[numberOfChoices];
+        for (int i = 0; i < numberOfChoices; i++) {
+            choices[i] = new TextureRegionDrawable(textures[i]);
         }
 
         choiceIndex = 0;
@@ -147,10 +131,6 @@ public abstract class SelectScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-    }
-
-    public void setSkinChoiceIndex(int skinChoiceIndex) {
-        this.skinChoiceIndex = skinChoiceIndex;
     }
 
     public abstract void completeChoice();

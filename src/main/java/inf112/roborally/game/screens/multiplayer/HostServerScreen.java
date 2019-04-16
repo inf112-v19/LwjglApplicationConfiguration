@@ -23,6 +23,7 @@ public class HostServerScreen extends InputFieldScreen {
         catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        game.joinGame("127.0.0.1"); //Replace with "ip" after
         label = new Label("Server Ip: " + ip, labelStyle);
         label.setPosition(1920 / 2, 1080 / 2, Align.center);
         label.setAlignment(Align.center);
@@ -48,6 +49,6 @@ public class HostServerScreen extends InputFieldScreen {
     @Override
     public void render(float v) {
         super.render(v);
-        System.out.println(game.players);
+        //System.out.println(game.players);
     }
 }

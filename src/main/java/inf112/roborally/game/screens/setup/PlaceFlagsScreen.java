@@ -11,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.BoardCreator;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.tools.AssMan;
@@ -33,25 +31,23 @@ public class PlaceFlagsScreen implements Screen {
     private int tileSize = 64;
 
     // Choices from the last screens
-    private Texture mapFilepath;
+    private Texture mapTexture;
     private int mapChoiceIndex;
-    private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
     private int flagNumber;
 
-    public PlaceFlagsScreen(final RoboRallyGame game, Texture mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
+    public PlaceFlagsScreen(final RoboRallyGame game) {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
-        this.mapFilepath = mapFilepath;
-        this.mapChoiceIndex = mapChoiceIndex;
-        this.robotChoiceIndex = robotChoiceIndex;
+        this.mapTexture = game.selectMapScreen.getMapTexture();
+        this.mapChoiceIndex = game.selectMapScreen.getMapIndex();
         flagNumber = 0;
         flagPositions = new ArrayList<>();
         Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2)));
 
         stage.addActor(background);
 
-        map = new Image(new TextureRegionDrawable(mapFilepath));
+        map = new Image(new TextureRegionDrawable(mapTexture));
         mapWidth = map.getWidth() * 2f;
         mapHeight = map.getHeight() * 2f;
         map.setSize(mapWidth, mapHeight);
@@ -151,8 +147,9 @@ public class PlaceFlagsScreen implements Screen {
         return new Position(x, y);
     }
 
+
     private void doneWithSetup() {
-        game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
+        game.createCustomGameScreen();
         game.setScreen(game.gameScreen);
         dispose();
     }

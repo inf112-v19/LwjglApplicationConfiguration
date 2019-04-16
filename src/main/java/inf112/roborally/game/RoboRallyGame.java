@@ -8,9 +8,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.board.Board;
+
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.*;
+
+import inf112.roborally.game.objects.Flag;
+import inf112.roborally.game.player.Player;
+import inf112.roborally.game.screens.setup.PlaceFlagsScreen;
+
 import inf112.roborally.game.screens.setup.SelectMapScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.server.ChatClient;
@@ -50,6 +56,7 @@ public class RoboRallyGame extends Game {
     //    public SetupScreen setupScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
+    public PlaceFlagsScreen placeFlagsScreen;
     public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
@@ -79,6 +86,8 @@ public class RoboRallyGame extends Game {
         AssMan.manager.finishLoading();
         AIvsAI = false;
 
+        board = new Board();
+
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);
         dynamicCamera.update();
@@ -93,6 +102,7 @@ public class RoboRallyGame extends Game {
 
         menuScreen = new MenuScreen(this);
         settingsScreen = new SettingsScreen(this);
+
         endGameScreen = new EndGameScreen(this);
         selectSkinScreen = new SelectSkinScreen(this);
         selectMapScreen = new SelectMapScreen(this);
@@ -127,17 +137,37 @@ public class RoboRallyGame extends Game {
         create();
     }
 
-//    public void createSetupScreen() {
-//        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
-//    }
 
     // Create GameScreen with preset skins, map and flag positions
-    public void createGameScreen() {
-        gameScreen = new GameScreen(this, 0, null, null, runTestMap);
+
+    /**
+     * Create a new GameScreen with preset map, flag positions and player skin.
+     */
+    public void createDefaultGameScreen() {
+        createDefaultBoard();
+        gameScreen = new GameScreen(this);
     }
 
-    public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex) {
-        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, chosenMap(mapChoiceIndex), runTestMap);
+    /**
+     * Create a new GameScreen with chosen map, flag positions and player skin.
+     */
+    public void createCustomGameScreen(){
+        selectSkinScreen.addPlayersToBoard();
+        gameScreen = new GameScreen(this);
+    }
+
+
+
+    /**
+     * Create a new board with preset board map and flag locations.
+     */
+    private void createDefaultBoard() {
+        board.createBoard(VAULT);
+        board.getFlags().add(new Flag(7, 7, 1));
+        board.getFlags().add(new Flag(11, 11, 2));
+        board.getFlags().add(new Flag(10, 10, 3));
+        selectSkinScreen.addPlayersToBoard();
+        board.findLaserGuns();
     }
 
     @Override
@@ -178,7 +208,7 @@ public class RoboRallyGame extends Game {
     public void joinGame(String ip) {
         System.out.println(name + " wants to connect to " + ip);
         try {
-            client = new ChatClient(ip, 8000, this);
+            client = new ChatClient(ip, 8000, this, name);
             new Thread(client).start();
         }
         catch (Exception e) {
@@ -197,5 +227,8 @@ public class RoboRallyGame extends Game {
     public void startServer() {
         server = new ChatServer(8000, this);
         new Thread(server).start();
+    }
+    public void setName(String name){
+        this.name = name;
     }
 }

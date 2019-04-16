@@ -15,17 +15,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+/*
+Akkurat nå så klarer den kun å sende Strings, Stringen blir lest ved å bli delt opp i 2, den deles ved mellomrom.
+Første del er TAG/Kodeord, den andre er selve payload
+Pga dette kan man ikke ha mellomrom i navnet sitt atm
+ */
 public class ChatClient implements Runnable{
 
     private final String host;
     private final int port;
     private RoboRallyGame game;
     private ArrayList<ProgramCard> chosenCards;
+    private String name;
 
-    public ChatClient(String host, int port, RoboRallyGame game) {
+    public ChatClient(String host, int port, RoboRallyGame game, String name) {
         this.host = host;
         this.port = port;
         this.game = game;
+        this.name = name;
     }
 
     @Override
@@ -44,10 +51,13 @@ public class ChatClient implements Runnable{
             catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            //Under development
+            channel.writeAndFlush("HANDSHAKE" + " " + name);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
             while (true) {
+
                 ProgramCard cd = null;
                 try {
                     cd = new ProgramCard(Rotate.NONE, Integer.parseInt(in.readLine()), 0);
