@@ -1,11 +1,7 @@
 package inf112.roborally.game.screens.setup;
 
 import inf112.roborally.game.RoboRallyGame;
-
-import inf112.roborally.game.enums.SetupState;
-
 import inf112.roborally.game.player.Player;
-
 import inf112.roborally.game.tools.AssMan;
 
 import static inf112.roborally.game.enums.Direction.NORTH;
@@ -22,7 +18,7 @@ public class SelectSkinScreen extends SelectScreen {
     @Override
     public void completeChoice() {
         skinChoiceIndex = choiceIndex; //Which skin to use
-        for(Player player : game.board.getPlayers()) {
+        for (Player player : game.board.getPlayers()) {
             player.setSkinTexture(AssMan.getPlayerSkins()[skinChoiceIndex]);
         }
 

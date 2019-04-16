@@ -2,6 +2,7 @@ package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -10,13 +11,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.screens.multiplayer.MultiplayerScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class BetterMenu extends BasicScreen {
 
+    private final RoboRallyGame game;
+
     public BetterMenu(final RoboRallyGame game) {
         super(game);
+        this.game = game;
         back.setVisible(false);
 
         Label label = ButtonFactory.createLabel("RoboRally", Color.WHITE);
@@ -25,10 +31,16 @@ public class BetterMenu extends BasicScreen {
         single.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new SelectSkinScreen(game));
+                singleplayer();
             }
         });
         TextButton multi = ButtonFactory.createTextButton("Multiplayer", 2);
+        multi.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                multiplayer();
+            }
+        });
 
         Table menuButtons = new Table();
         menuButtons.setPosition(1920 / 2, 1080 / 2, Align.center);
@@ -39,13 +51,31 @@ public class BetterMenu extends BasicScreen {
         menuButtons.add(multi);
 
         TextButton gui = ButtonFactory.createTextButton("GuiTest", 2);
+        gui.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                testScreen();
+            }
+        });
         TextButton laser = ButtonFactory.createTextButton("LaserTest", 2);
+        laser.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                laserTest();
+            }
+        });
         TextButton board = ButtonFactory.createTextButton("BoardTest", 2);
+        board.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                boardTest();
+            }
+        });
         TextButton ai = ButtonFactory.createTextButton("AI vs AI", 2);
         ai.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.AIvsAI = true;
+                aiVSai();
             }
         });
 
@@ -62,6 +92,50 @@ public class BetterMenu extends BasicScreen {
         stage.addActor(menuButtons);
     }
 
+    private void singleplayer() {
+        game.AIvsAI = false;
+        game.setScreen(new SelectSkinScreen(game));
+        dispose();
+    }
+
+    private void multiplayer() {
+        Screen s = new MultiplayerScreen(game);
+        game.setScreen(s);
+        dispose();
+    }
+
+    private void quickPlay() {
+        game.createDefaultGameScreen();
+        game.setScreen(game.gameScreen);
+        game.AIvsAI = false;
+        dispose();
+    }
+
+    private void aiVSai() {
+        game.AIvsAI = true;
+        game.createDefaultGameScreen();
+        game.setScreen(game.gameScreen);
+        dispose();
+    }
+
+    private void testScreen() {
+        game.AIvsAI = false;
+        dispose();
+        game.setScreen(game.testScreen);
+        dispose();
+    }
+
+    private void laserTest() {
+        game.AIvsAI = false;
+        game.setScreen(game.laserTestScreen);
+        dispose();
+    }
+
+    private void boardTest() {
+        game.AIvsAI = false;
+        game.createTestBoard();
+    }
+
     @Override
     protected void goToPreviousScreen() {
         // no previous screen..
@@ -69,6 +143,23 @@ public class BetterMenu extends BasicScreen {
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            dispose();
+            Gdx.app.exit();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            multiplayer();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            quickPlay();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            singleplayer();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+            testScreen();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+            laserTest();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            aiVSai();
+        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            boardTest();
+        }
     }
 }

@@ -13,8 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.SetupState;
-import inf112.roborally.game.screens.MenuScreen;
+import inf112.roborally.game.screens.BetterMenu;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.tools.ButtonFactory;
 
@@ -63,8 +62,7 @@ public abstract class SelectScreen implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.menuScreen = new MenuScreen(game);
-                game.setScreen(game.menuScreen);
+                game.setScreen(new BetterMenu(game));
             }
         });
 
