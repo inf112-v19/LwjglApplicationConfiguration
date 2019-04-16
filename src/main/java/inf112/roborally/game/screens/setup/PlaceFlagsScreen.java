@@ -167,6 +167,12 @@ public class PlaceFlagsScreen implements Screen {
             dispose();
             Gdx.app.exit();
         }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.T)){
+            game.createDefaultGameScreen();
+            game.setScreen(game.gameScreen);
+            dispose();
+        }
     }
 
     @Override
