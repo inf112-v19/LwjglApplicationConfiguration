@@ -1,5 +1,6 @@
 package inf112.roborally.game.screens.multiplayer;
 
+import com.sun.org.apache.xpath.internal.operations.Mult;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.InputFieldScreen;
 
@@ -12,6 +13,9 @@ public class NameScreen extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
+        MultiplayerScreen multiplayerScreen = new MultiplayerScreen(game);
+        game.setScreen(multiplayerScreen);
+        dispose();
     }
 
     @Override

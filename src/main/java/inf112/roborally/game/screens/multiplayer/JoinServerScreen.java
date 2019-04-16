@@ -16,8 +16,8 @@ public class JoinServerScreen extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        Screen previousScreen = new MultiplayerScreen(game);
-        game.setScreen(previousScreen);
+        Screen nameScreen = new NameScreen(game);
+        game.setScreen(nameScreen);
         dispose();
     }
 

@@ -35,8 +35,8 @@ public class HostServerScreen extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        Screen previous = new MultiplayerScreen(game);
-        game.setScreen(previous);
+        Screen nameScreen = new NameScreen(game);
+        game.setScreen(nameScreen);
         dispose();
     }
 
