@@ -129,13 +129,11 @@ public class BetterMenu extends BasicScreen {
 
     private void testScreen() {
         game.AIvsAI = false;
-        game.setScreen(game.testScreen);
         setScreen(game.testScreen);
     }
 
     private void laserTest() {
         game.AIvsAI = false;
-        game.setScreen(game.laserTestScreen);
         setScreen(game.laserTestScreen);
     }
 

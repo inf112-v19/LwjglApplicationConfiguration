@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
+import inf112.roborally.game.screens.BetterMenu;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class MultiplayerScreen extends BasicScreen {
@@ -60,7 +61,8 @@ public class MultiplayerScreen extends BasicScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        game.newGame();
+        BetterMenu menu = new BetterMenu(game);
+        game.setScreen(menu);
         dispose();
     }
 
