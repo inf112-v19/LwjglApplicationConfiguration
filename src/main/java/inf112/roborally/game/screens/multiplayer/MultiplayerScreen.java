@@ -2,7 +2,6 @@ package inf112.roborally.game.screens.multiplayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -14,7 +13,7 @@ public class MultiplayerScreen extends BasicScreen {
 
     public MultiplayerScreen(final RoboRallyGame game) {
         super(game);
-        TextButton join = ButtonFactory.createTextButton("Join Session");
+        TextButton join = ButtonFactory.createTextButton("Join Session", 2);
         join.setTransform(true);
         join.setWidth(700);
         join.setPosition(1920 / 2f - join.getWidth() / 2f, 550);
@@ -23,7 +22,7 @@ public class MultiplayerScreen extends BasicScreen {
             public void clicked(InputEvent event, float x, float y) {
 //                Screen screen = new JoinServerScreen(game, "");
 //                game.setScreen(screen);
-                game.setScreen(new NameScreen(game){
+                game.setScreen(new NameScreen(game) {
                     @Override
                     protected boolean confirmInput() {
                         game.name = text.getText();
@@ -34,7 +33,7 @@ public class MultiplayerScreen extends BasicScreen {
                 dispose();
             }
         });
-        TextButton create = ButtonFactory.createTextButton("Create Session");
+        TextButton create = ButtonFactory.createTextButton("Create Session", 2);
         create.setTransform(true);
         create.setWidth(700);
         create.setPosition(1920 / 2f - create.getWidth() / 2f, 350);
@@ -43,7 +42,7 @@ public class MultiplayerScreen extends BasicScreen {
             public void clicked(InputEvent event, float x, float y) {
 //                Screen screen = new HostServerScreen(game);
 //                game.setScreen(screen);
-                game.setScreen(new NameScreen(game){
+                game.setScreen(new NameScreen(game) {
                     @Override
                     protected boolean confirmInput() {
                         game.name = text.getText();

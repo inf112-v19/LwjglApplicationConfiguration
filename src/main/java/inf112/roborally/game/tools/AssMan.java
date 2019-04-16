@@ -349,6 +349,13 @@ public class AssMan {
         manager.load(TEXT_BUTTON_UP);
         manager.load(TEXT_BUTTON_PRESS);
         manager.load(TEXT_BUTTON_CHECKED);
+
+        manager.load(LEFT_ARROW);
+        manager.load(LEFT_ARROW_PRESS);
+        manager.load(RIGHT_ARROW);
+        manager.load(RIGHT_ARROW_PRESS);
+        manager.load(BACK);
+        manager.load(BACK_PRESS);
     }
 
 //    public static String[] getPlayerSkins() {

@@ -60,7 +60,7 @@ public class MenuScreen implements Screen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.M)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             Screen s = new MultiplayerScreen(roboRallyGame);
             roboRallyGame.setScreen(s);
         }
@@ -68,27 +68,33 @@ public class MenuScreen implements Screen {
             roboRallyGame.createDefaultGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
             roboRallyGame.AIvsAI = false;
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             roboRallyGame.AIvsAI = false;
 //            roboRallyGame.createSetupScreen();
 //            roboRallyGame.setScreen(roboRallyGame.setupScreen);
             roboRallyGame.setScreen(roboRallyGame.selectSkinScreen);
             dispose();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             roboRallyGame.AIvsAI = false;
             dispose();
             roboRallyGame.setScreen(roboRallyGame.testScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             roboRallyGame.AIvsAI = false;
             dispose();
             roboRallyGame.setScreen(roboRallyGame.laserTestScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             roboRallyGame.AIvsAI = true;
             roboRallyGame.createDefaultGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
 
             roboRallyGame.AIvsAI = false;
             roboRallyGame.setLaunchTestMap(true);
@@ -119,8 +125,7 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void dispose()
-    {
+    public void dispose() {
         System.out.println("Disposing MenuScreen");
         background.getTexture().dispose();
     }
