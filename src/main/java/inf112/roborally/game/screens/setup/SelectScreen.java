@@ -58,6 +58,7 @@ public abstract class SelectScreen implements Screen {
                 completeChoice();
             }
         });
+
         ImageButton back = ButtonFactory.createBackButton();
         back.addListener(new ClickListener() {
             @Override

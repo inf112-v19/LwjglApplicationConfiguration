@@ -15,11 +15,14 @@ public class SelectSkinScreen extends SelectScreen {
     }
 
 
+    /**
+     * {@link #choiceIndex} is the skin index for the chosen player skin.
+     */
     @Override
     public void completeChoice() {
-        skinChoiceIndex = choiceIndex; //Which skin to use
+        skinChoiceIndex = choiceIndex;
         for (Player player : game.board.getPlayers()) {
-            player.setSkinTexture(AssMan.getPlayerSkins()[skinChoiceIndex]);
+            player.setSkinTexture(AssMan.getPlayerSkins()[choiceIndex]);
         }
 
         game.setScreen(game.selectMapScreen);
@@ -27,7 +30,7 @@ public class SelectSkinScreen extends SelectScreen {
     }
 
     public void addPlayersToBoard() {
-        int index = skinChoiceIndex;
+        int index = game.selectSkinScreen.skinChoiceIndex;
         int numberOfSkins = AssMan.getPlayerSkins().length;
         for (int i = 0; i < numberOfSkins; i++) {
             if (index >= numberOfSkins) {
@@ -35,7 +38,6 @@ public class SelectSkinScreen extends SelectScreen {
             }
             Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, game.board);
             game.board.addPlayer(player);
-            System.out.println("Added player " + player);
             index++;
         }
     }

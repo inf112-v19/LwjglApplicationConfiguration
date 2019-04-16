@@ -32,7 +32,6 @@ public class PlaceFlagsScreen implements Screen {
 
     // Choices from the last screens
     private Texture mapTexture;
-    private int mapChoiceIndex;
     private ArrayList<Position> flagPositions;
     private int flagNumber;
 
@@ -40,7 +39,6 @@ public class PlaceFlagsScreen implements Screen {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         this.mapTexture = game.selectMapScreen.getMapTexture();
-        this.mapChoiceIndex = game.selectMapScreen.getMapIndex();
         flagNumber = 0;
         flagPositions = new ArrayList<>();
         Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2)));

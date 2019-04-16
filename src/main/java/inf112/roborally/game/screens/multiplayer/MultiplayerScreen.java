@@ -26,7 +26,7 @@ public class MultiplayerScreen extends BasicScreen {
                 game.setScreen(new NameScreen(game) {
                     @Override
                     protected boolean confirmInput() {
-                        game.name = text.getText();
+                        game.playerName = text.getText();
                         game.setScreen(new JoinServerScreen(game));
                         return true;
                     }
@@ -46,7 +46,7 @@ public class MultiplayerScreen extends BasicScreen {
                 game.setScreen(new NameScreen(game) {
                     @Override
                     protected boolean confirmInput() {
-                        game.name = text.getText();
+                        game.playerName = text.getText();
                         game.setScreen(new HostServerScreen(game));
                         return true;
                     }

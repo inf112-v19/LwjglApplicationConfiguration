@@ -65,7 +65,7 @@ public class RoboRallyGame extends Game {
 
     public ArrayList<String> playerNames;
     public Board board;
-    public String name;
+    public String playerName;
 
     @Override
     public void create() {
@@ -124,8 +124,6 @@ public class RoboRallyGame extends Game {
         create();
     }
 
-
-    // Create GameScreen with preset skins, map and flag positions
 
     /**
      * Create a new GameScreen with preset map, flag positions and player skin.
@@ -190,9 +188,9 @@ public class RoboRallyGame extends Game {
 
 
     public void joinGame(String ip) {
-        System.out.println(name + " wants to connect to " + ip);
+        System.out.println(playerName + " wants to connect to " + ip);
         try {
-            client = new ChatClient(ip, 8000, this, name);
+            client = new ChatClient(ip, 8000, this, playerName);
             new Thread(client).start();
         }
         catch (Exception e) {
@@ -213,7 +211,7 @@ public class RoboRallyGame extends Game {
         new Thread(server).start();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 }
