@@ -40,7 +40,7 @@ public abstract class InputFieldScreen extends BasicScreen {
                 clicked = true;
             }
         });
-        confirm = ButtonFactory.createTextButton("Confirm",2);
+        confirm = ButtonFactory.createTextButton("Confirm", 2);
         confirm.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -62,11 +62,12 @@ public abstract class InputFieldScreen extends BasicScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
         else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) confirmInput();
     }
-    protected  void setFieldVisible(boolean visible){
+
+    protected void setFieldVisible(boolean visible) {
         text.setVisible(visible);
     }
 
-    protected void setArrowsVisible(boolean visible){
+    protected void setArrowsVisible(boolean visible) {
         left.setVisible(visible);
         right.setVisible(visible);
     }

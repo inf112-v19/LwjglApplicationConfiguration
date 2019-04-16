@@ -46,23 +46,28 @@ public class SettingsScreen extends AbstractScreen {
             if (game.getScreenBefore() == game.gameScreen) {
                 game.setScreen(game.gameScreen);
                 System.out.println("Key B or Escape is pressed, going back to the GameScreen");
-            } else if (game.getScreenBefore() == game.testScreen) {
+            }
+            else if (game.getScreenBefore() == game.testScreen) {
                 game.setScreen(game.testScreen);
                 System.out.println("Key B or Escape is pressed, going back to the TestScreen");
-            } else if (game.getScreenBefore() == game.laserTestScreen) {
+            }
+            else if (game.getScreenBefore() == game.laserTestScreen) {
                 game.setScreen(game.laserTestScreen);
                 System.out.println("Key B or Escape is pressed, going back to the LaserTestScreen");
             }
 
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             if (!musicIsMuted) {
                 musicIsMuted = game.gameScreen.playMusic(false);
                 System.out.println("Muted the music from the settings screen");
-            } else {
+            }
+            else {
                 musicIsMuted = game.gameScreen.playMusic(true);
                 System.out.println("Started the music from the settings screen");
             }
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             game.setLaunchTestMap(false);
             game.newGame();
         }

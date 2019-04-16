@@ -16,8 +16,6 @@ import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
 
-import static inf112.roborally.game.enums.Direction.NORTH;
-
 
 public class GameScreen implements Screen {
 
