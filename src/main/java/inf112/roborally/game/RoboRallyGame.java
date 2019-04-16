@@ -63,18 +63,18 @@ public class RoboRallyGame extends Game {
     public ChatServer server;
     public ChatClient client;
 
-    public ArrayList<String> players;
-    public final Board board = new Board(this);
+    public ArrayList<String> playerNames;
+    public Board board;
     public String name;
 
     @Override
     public void create() {
-        players = new ArrayList<>();
+        playerNames = new ArrayList<>();
         AssMan.load();
         AssMan.manager.finishLoading();
         AIvsAI = false;
 
-        //board = new Board(this);
+        board = new Board(this);
 
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);

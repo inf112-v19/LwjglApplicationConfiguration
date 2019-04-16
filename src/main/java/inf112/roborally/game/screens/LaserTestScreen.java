@@ -11,7 +11,7 @@ import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 
 public class LaserTestScreen implements Screen {
-    RoboRallyGame game;
+    public final RoboRallyGame game;
     private final Board board;
 
     public LaserTestScreen(final RoboRallyGame game) {

@@ -92,6 +92,9 @@ public class GameLogic extends BoardLogic implements Runnable {
                 hud.updateCards();
                 hud.resetPowerDown();
                 hud.setButtonTouchable(true);
+                if(game.AIvsAI) {
+                    hud.setButtonTouchable(false);
+                }
                 hud.getPlayerStatusDisplay().clearCards();
             }
         });
