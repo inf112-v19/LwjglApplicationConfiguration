@@ -3,16 +3,14 @@ package inf112.roborally.game.screens.setup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.screens.MenuScreen;
@@ -34,26 +32,23 @@ public abstract class SelectScreen implements Screen {
         this.numberOfChoices = numberOfChoices;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         //Add the background:
-        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_SCREEN_BLACK)));
+        Image background = new Image(new TextureRegionDrawable(new Texture(AssMan.SELECT_SCREEN.fileName)));
         stage.addActor(background);
         // Create buttons
         ImageButton next = ButtonFactory.createArrowRightButton();
         next.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                nextClicked();
-//                choiceIndex = (++choiceIndex) % numberOfChoices;
-//                clicked = true;
+                choiceIndex = (++choiceIndex) % numberOfChoices;
+                clicked = true;
             }
         });
-        next.setProgrammaticChangeEvents(true);
         ImageButton previous = ButtonFactory.createArrowLeftButton();
         previous.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                previousClicked();
-//                choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
-//                clicked = true;
+                choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
+                clicked = true;
             }
         });
         ImageButton confirm = ButtonFactory.createConfirmButton();
@@ -67,7 +62,8 @@ public abstract class SelectScreen implements Screen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.newGame(); // restart the whole game if back button is clicked
+                game.menuScreen = new MenuScreen(game);
+                game.setScreen(game.menuScreen);
             }
         });
 
@@ -80,16 +76,7 @@ public abstract class SelectScreen implements Screen {
         choices = new TextureRegionDrawable[numberOfChoices];
         for (int i = 0; i < numberOfChoices; i++) {
             choices[i] = new TextureRegionDrawable(textures[i]);
-        String information = "";
         }
-
-        // Information text:
-        Label label = new Label("Select your " + information + ":",
-                new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE));
-        label.setPosition(1920 / 2, 960, Align.center);
-        label.setAlignment(Align.center);
-        label.setFontScale(4);
-        stage.addActor(label);
 
         choiceIndex = 0;
         currentChoice = new Image(choices[choiceIndex]);
@@ -111,42 +98,10 @@ public abstract class SelectScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
 
-        handleInput();
-    }
-
-    private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();
             Gdx.app.exit();
         }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            nextClicked();
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            previousClicked();
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            confirmClicked();
-        }
-
-    }
-
-    /**
-     * Instead of having the 3 next methods in their buttons, they are out here so that
-     * player can also chose with the keyboard
-     */
-    private void previousClicked() {
-        choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
-        clicked = true;
-    }
-
-    private void nextClicked() {
-        choiceIndex = (++choiceIndex) % numberOfChoices;
-        clicked = true;
-    }
-
-    private void confirmClicked() {
-        completeChoice();
     }
 
     private void update() {

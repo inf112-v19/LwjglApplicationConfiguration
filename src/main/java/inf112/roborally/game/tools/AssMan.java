@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
+import java.util.concurrent.TimeoutException;
+
 /**
  * Contains assets used by the game.
  * With AssMan you are able to load as well as dispose all of them at the same time.
@@ -119,12 +121,6 @@ public class AssMan {
     public static final AssetDescriptor<Texture> SETUP_CHECK_FLAG
             = new AssetDescriptor<>("assets/screens/setupscreen/checkflag.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> SETUP_PLACEFLAGS_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/setupscreen/placeFlags.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SETUP_SCREEN_BLACK
-            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenblack.png", Texture.class);
-
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
             = new AssetDescriptor<>("assets/cards/programregisters.png", Texture.class);
@@ -216,9 +212,11 @@ public class AssMan {
     public static final AssetDescriptor<Texture> BACK
             = new AssetDescriptor<> ("assets/buttons/back.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> BACK_PRESS
+            public static final AssetDescriptor<Texture> BACK_PRESS
             = new AssetDescriptor<> ("assets/buttons/back_press.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> SELECT_SCREEN
+            = new AssetDescriptor<>("assets/buttons/select_skin_screen.png", Texture.class);
 
     public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
             = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
@@ -302,8 +300,6 @@ public class AssMan {
         manager.load(SETUP_SELECT_SKIN_TEXT);
         manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
         manager.load(SETUP_CHECK_FLAG);
-        manager.load(SETUP_PLACEFLAGS_BACKGROUND);
-        manager.load(SETUP_SCREEN_BLACK);
 
         //Program register
         manager.load(REGISTER_PROGRAM_REGISTER);
