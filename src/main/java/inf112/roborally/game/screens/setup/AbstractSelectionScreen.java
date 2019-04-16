@@ -38,7 +38,7 @@ public abstract class AbstractSelectionScreen implements Screen {
                 index = (--index + maxIndex) % maxIndex;
             }
         });
-        confirm = ButtonFactory.createConfirmButton();
+        confirm = ButtonFactory.createTextButton("Confirm", 4);
         back = ButtonFactory.createBackButton();
         stage.addActor(next);
         stage.addActor(previous);

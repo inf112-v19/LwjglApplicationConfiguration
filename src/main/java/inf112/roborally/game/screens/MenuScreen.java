@@ -10,8 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.screens.input.NameScreen;
-import inf112.roborally.game.screens.input.ServerIpScreen;
+import inf112.roborally.game.screens.multiplayer.MultiplayerScreen;
 import inf112.roborally.game.tools.AssMan;
 
 public class MenuScreen implements Screen {
@@ -61,39 +60,45 @@ public class MenuScreen implements Screen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.M)){
-            Screen s = new ServerIpScreen(roboRallyGame);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            Screen s = new MultiplayerScreen(roboRallyGame);
             roboRallyGame.setScreen(s);
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            roboRallyGame.createGameScreen();
+            roboRallyGame.createDefaultGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
             roboRallyGame.AIvsAI = false;
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             roboRallyGame.AIvsAI = false;
 //            roboRallyGame.createSetupScreen();
 //            roboRallyGame.setScreen(roboRallyGame.setupScreen);
             roboRallyGame.setScreen(roboRallyGame.selectSkinScreen);
             dispose();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             roboRallyGame.AIvsAI = false;
             dispose();
             roboRallyGame.setScreen(roboRallyGame.testScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             roboRallyGame.AIvsAI = false;
             dispose();
             roboRallyGame.setScreen(roboRallyGame.laserTestScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             roboRallyGame.AIvsAI = true;
-            roboRallyGame.createGameScreen();
+            roboRallyGame.createDefaultGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
 
             roboRallyGame.AIvsAI = false;
             roboRallyGame.setLaunchTestMap(true);
-            roboRallyGame.createGameScreen();
+            roboRallyGame.createDefaultGameScreen();
             roboRallyGame.setScreen(roboRallyGame.gameScreen);
         }
 
@@ -120,8 +125,7 @@ public class MenuScreen implements Screen {
     }
 
     @Override
-    public void dispose()
-    {
+    public void dispose() {
         System.out.println("Disposing MenuScreen");
         background.getTexture().dispose();
     }

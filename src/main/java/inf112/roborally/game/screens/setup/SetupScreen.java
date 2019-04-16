@@ -11,8 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.screens.AbstractScreen;
 import inf112.roborally.game.tools.AssMan;
@@ -163,7 +161,7 @@ public class SetupScreen extends AbstractScreen {
     private void handleInput() {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
-            game.createGameScreen(); // Choose the standard skin index
+            game.createDefaultGameScreen(); // Choose the standard skin index
             game.setScreen(game.gameScreen);
             dispose();
         }
@@ -284,7 +282,7 @@ public class SetupScreen extends AbstractScreen {
     }
 
     private void createGameScreenFromSetup() {
-//        game.createGameScreen(robotChoiceIndex, flagPositions);
+//        game.createDefaultGameScreen(robotChoiceIndex, flagPositions);
 //        game.setScreen(game.gameScreen);
         dispose();
     }
