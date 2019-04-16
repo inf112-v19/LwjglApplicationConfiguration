@@ -100,43 +100,43 @@ public class BetterMenu extends BasicScreen {
         stage.addActor(menuButtons);
     }
 
+    public void setScreen(Screen screen){
+        game.setScreen(screen);
+        dispose();
+    }
+
     private void singleplayer() {
         game.AIvsAI = false;
-        game.setScreen(new SelectSkinScreen(game));
-        dispose();
+        setScreen(new SelectSkinScreen(game));
     }
 
     private void multiplayer() {
         Screen s = new MultiplayerScreen(game);
-        game.setScreen(s);
-        dispose();
+        setScreen(s);
     }
 
     private void quickPlay() {
         game.createDefaultGameScreen();
-        game.setScreen(game.gameScreen);
+        setScreen(game.gameScreen);
         game.AIvsAI = false;
-        dispose();
     }
 
     private void aiVSai() {
         game.AIvsAI = true;
         game.createDefaultGameScreen();
-        game.setScreen(game.gameScreen);
-        dispose();
+        setScreen(game.gameScreen);
     }
 
     private void testScreen() {
         game.AIvsAI = false;
-        dispose();
         game.setScreen(game.testScreen);
-        dispose();
+        setScreen(game.testScreen);
     }
 
     private void laserTest() {
         game.AIvsAI = false;
         game.setScreen(game.laserTestScreen);
-        dispose();
+        setScreen(game.laserTestScreen);
     }
 
     private void boardTest() {
