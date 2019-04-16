@@ -39,7 +39,7 @@ public class SelectSkinScreen extends SelectScreen {
      *
      * @return all players who should be added to the board.
      */
-    public List<Player> getCustomPlayers() {
+    public List<Player> createCustomPlayers() {
         List<Player> players = new ArrayList<>();
         int index = choiceIndex;
         int numberOfSkins = AssMan.getPlayerSkins().length;
