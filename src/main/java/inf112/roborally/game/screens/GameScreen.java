@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
-        if (!RoboRallyGame.soundMuted) {
+        if (!game.soundMuted) {
             music.play();
         }
 
@@ -143,11 +143,11 @@ public class GameScreen implements Screen {
     public boolean playMusic(boolean bool) {
         if (bool) {
             music.play();
-            RoboRallyGame.soundMuted = false;
+            game.soundMuted = false;
         }
         else {
             music.pause();
-            RoboRallyGame.soundMuted = true;
+            game.soundMuted = true;
         }
         return !bool;
     }

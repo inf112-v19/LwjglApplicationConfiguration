@@ -25,7 +25,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
             channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has joined\n");
         }
         channels.add(ctx.channel());
-        game.players.add(ctx.channel().toString());
+        game.playerNames.add(ctx.channel().toString());
     }
 
     @Override

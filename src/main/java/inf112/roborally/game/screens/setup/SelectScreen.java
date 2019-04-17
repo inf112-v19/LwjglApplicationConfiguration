@@ -58,6 +58,7 @@ public abstract class SelectScreen implements Screen {
                 completeChoice();
             }
         });
+
         ImageButton back = ButtonFactory.createBackButton();
         back.addListener(new ClickListener() {
             @Override
@@ -100,6 +101,12 @@ public abstract class SelectScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();
             Gdx.app.exit();
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.T)){
+            game.createDefaultGameScreen();
+            game.setScreen(game.gameScreen);
+            dispose();
         }
     }
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.*;
 import inf112.roborally.game.screens.setup.PlaceFlagsScreen;
 import inf112.roborally.game.screens.setup.SelectMapScreen;
@@ -19,6 +20,9 @@ import inf112.roborally.game.server.ChatServer;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static inf112.roborally.game.enums.Direction.NORTH;
 
 public class RoboRallyGame extends Game {
     //MAPS:
@@ -63,18 +67,18 @@ public class RoboRallyGame extends Game {
     public ChatServer server;
     public ChatClient client;
 
-    public ArrayList<String> players;
+    public ArrayList<String> playerNames;
     public Board board;
-    public String name;
+    public String playerName;
 
     @Override
     public void create() {
-        players = new ArrayList<>();
+        playerNames = new ArrayList<>();
         AssMan.load();
         AssMan.manager.finishLoading();
         AIvsAI = false;
 
-        board = new Board();
+        board = new Board(this);
 
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);
@@ -125,8 +129,6 @@ public class RoboRallyGame extends Game {
     }
 
 
-    // Create GameScreen with preset skins, map and flag positions
-
     /**
      * Create a new GameScreen with preset map, flag positions and player skin.
      */
@@ -136,10 +138,13 @@ public class RoboRallyGame extends Game {
     }
 
     /**
-     * Create a new GameScreen with chosen map, flag positions and player skin.
+     * Create a new GameScreen with chosen player skin, map and flag positions.
+     * @see SelectSkinScreen
+     * @see SelectMapScreen
+     * @see PlaceFlagsScreen
      */
     public void createCustomGameScreen() {
-        selectSkinScreen.addPlayersToBoard();
+        board.addPlayersToBoard(selectSkinScreen.createCustomPlayers());
         gameScreen = new GameScreen(this);
     }
 
@@ -152,14 +157,29 @@ public class RoboRallyGame extends Game {
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 11, 2));
         board.getFlags().add(new Flag(10, 10, 3));
-        selectSkinScreen.addPlayersToBoard();
+        board.addPlayersToBoard(createDefaultPlayers());
         board.findLaserGuns();
+    }
+
+    private List<Player> createDefaultPlayers(){
+        List<Player> players = new ArrayList<>();
+        int index = 0;
+        int numberOfSkins = AssMan.getPlayerSkins().length;
+        for (int i = 0; i < numberOfSkins; i++) {
+            if (index >= numberOfSkins) {
+                index = 0;
+            }
+            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board);
+            players.add(player);
+            index++;
+        }
+        return players;
     }
 
     public void createTestBoard(){
         board.createBoard(TEST_MAP);
         board.getFlags().add(new Flag(1, 7, 1));
-        selectSkinScreen.addPlayersToBoard();
+        board.addPlayersToBoard(createDefaultPlayers());
         board.findLaserGuns();
         setScreen(new GameScreen(this));
     }
@@ -190,9 +210,9 @@ public class RoboRallyGame extends Game {
 
 
     public void joinGame(String ip) {
-        System.out.println(name + " wants to connect to " + ip);
+        System.out.println(playerName + " wants to connect to " + ip);
         try {
-            client = new ChatClient(ip, 8000, this, name);
+            client = new ChatClient(ip, 8000, this, playerName);
             new Thread(client).start();
         }
         catch (Exception e) {
@@ -213,7 +233,7 @@ public class RoboRallyGame extends Game {
         new Thread(server).start();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 }

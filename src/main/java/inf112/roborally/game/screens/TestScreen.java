@@ -33,7 +33,6 @@ public class TestScreen implements Screen {
         }
 
         hud = new Hud(player, game);
-        hud.clearAllCards();
         hud.updateCards();
     }
 
@@ -81,13 +80,11 @@ public class TestScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             player.getRegisters().placeCard(0);
-            hud.clearAllCards();
             hud.updateCards();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             player.returnCards();
-            hud.clearAllCards();
             hud.updateCards();
         }
     }
