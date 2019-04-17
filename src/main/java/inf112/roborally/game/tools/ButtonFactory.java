@@ -2,6 +2,7 @@ package inf112.roborally.game.tools;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -53,7 +54,19 @@ public class ButtonFactory {
         BitmapFont font = AssMan.manager.get(AssMan.FONT_GROTESKIA);
         TextureRegionDrawable up = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_UP));
         TextureRegionDrawable down = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_BUTTON_PRESS));
-        TextButton button = new TextButton(text, new TextButton.TextButtonStyle(up, down, up, font));
+        final TextButton button = new TextButton(text, new TextButton.TextButtonStyle(up, down, up, font));
+        button.setColor(Color.BLACK);
+        button.addListener(new ClickListener() {
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                button.setColor(Color.BLACK);
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                button.setColor(Color.WHITE);
+            }
+        });
         button.setTransform(true);
         button.setSize((button.getWidth() + 50) * scale, button.getHeight() * scale);
         button.getLabel().setFontScale(scale);

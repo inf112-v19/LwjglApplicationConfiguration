@@ -23,7 +23,7 @@ public abstract class InputFieldScreen extends BasicScreen {
 
     public InputFieldScreen(RoboRallyGame game) {
         super(game);
-        BitmapFont font = AssMan.manager.get(AssMan.FONT_GROTESKIA);
+        BitmapFont font = new BitmapFont(Gdx.files.internal(AssMan.FONT_GROTESKIA.fileName));
         font.getData().setScale(4);
         TextureRegionDrawable textFieldBg = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_FIELD_BG));
         TextureRegionDrawable cursor = new TextureRegionDrawable(AssMan.manager.get(AssMan.TEXT_FIELD_CURSOR));

@@ -59,21 +59,21 @@ public class BetterMenu extends BasicScreen {
         menuButtons.add(multi);
 
         TextButton gui = ButtonFactory.createTextButton("GuiTest", 2);
-        gui.addListener(new ClickListener(){
+        gui.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 testScreen();
             }
         });
         TextButton laser = ButtonFactory.createTextButton("LaserTest", 2);
-        laser.addListener(new ClickListener(){
+        laser.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 laserTest();
             }
         });
         TextButton board = ButtonFactory.createTextButton("BoardTest", 2);
-        board.addListener(new ClickListener(){
+        board.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 boardTest();
@@ -100,7 +100,7 @@ public class BetterMenu extends BasicScreen {
         stage.addActor(menuButtons);
     }
 
-    public void setScreen(Screen screen){
+    public void setScreen(Screen screen) {
         game.setScreen(screen);
         dispose();
     }
@@ -152,19 +152,26 @@ public class BetterMenu extends BasicScreen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();
             Gdx.app.exit();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
             multiplayer();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             quickPlay();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             singleplayer();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             testScreen();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
             laserTest();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             aiVSai();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             boardTest();
         }
     }
