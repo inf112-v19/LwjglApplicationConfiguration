@@ -14,7 +14,7 @@ public class SettingsScreen extends BasicScreen {
 
     public SettingsScreen(final RoboRallyGame game) {
         super(game);
-        back.setVisible(false);
+        back.setVisible(false); // This is the back icon in the BasicScreen. We don't need it so we just hide it here.
         TextButton back = ButtonFactory.createTextButton("Back", 2);
         back.addListener(new ClickListener() {
             @Override
@@ -22,14 +22,14 @@ public class SettingsScreen extends BasicScreen {
                 goToPreviousScreen();
             }
         });
-        mute = ButtonFactory.createTextButton("Mute", 2);
-        mute.addListener(new ClickListener() {
+        mute = ButtonFactory.createTextButton("Mute", 2); // Mute needs to be a field variable because
+        mute.addListener(new ClickListener() {                  // its textfield is changed when the button is clicked.
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 muteMusic();
             }
         });
-        final TextButton exit = ButtonFactory.createTextButton("Exit Game", 2);
+        TextButton exit = ButtonFactory.createTextButton("Exit Game", 2);
         exit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -76,8 +76,7 @@ public class SettingsScreen extends BasicScreen {
             musicIsMuted = game.gameScreen.playMusic(false);
             System.out.println("Muted the music from the settings screen");
             mute.setText("Unmute");
-        }
-        else {
+        } else {
             musicIsMuted = game.gameScreen.playMusic(true);
             System.out.println("Started the music from the settings screen");
             mute.setText("Mute");

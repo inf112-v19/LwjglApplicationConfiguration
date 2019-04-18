@@ -39,7 +39,16 @@ public class Hud {
         registerGui = new Group();
         lockGui = new Group();
         handGui = new Group();
+        ImageButton settings = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_SETTINGS)));
+        settings.setPosition(1920 - settings.getWidth() - 50, 1080 - settings.getHeight() - 20);
+        settings.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(game.settingsScreen);
+            }
+        });
 
+        stage.addActor(settings);
         stage.addActor(registerGui);
         stage.addActor(lockGui);
         stage.addActor(handGui);
