@@ -27,7 +27,6 @@ public class Hud {
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
 
-    private ImageButton settingsButton;
 
     private float scale = 0.4f;
     public Hud(final Player player, final RoboRallyGame game) {
@@ -111,31 +110,17 @@ public class Hud {
         }
     }
 
-    public boolean createSettingsButton() {
-        settingsButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_SETTINGS)));
-        settingsButton.setPosition(60, 60);
-        settingsButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(game.settingsScreen);
-                Gdx.input.setInputProcessor(game.settingsScreen.stage);
-            }
-        });
-        return settingsButton != null;
-    }
-
     public void createButtons() {
-        if (createSubmitButton() && createSubmitButtonGrey() && createButtonClear() && createSettingsButton()) {
+        if (createSubmitButton() && createSubmitButtonGrey() && createButtonClear()) {
             addButtonsToStage();
         }
     }
 
     private void addButtonsToStage() {
-        if (greySubmitButton != null && submitButton != null && clearButton != null && settingsButton != null) {
+        if (greySubmitButton != null && submitButton != null && clearButton != null) {
             stage.addActor(greySubmitButton);
             stage.addActor(submitButton);
             stage.addActor(clearButton);
-            stage.addActor(settingsButton);
         }
 
     }

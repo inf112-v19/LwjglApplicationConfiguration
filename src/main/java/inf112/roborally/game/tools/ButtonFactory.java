@@ -64,7 +64,7 @@ public class ButtonFactory {
             }
         });
         button.setTransform(true);
-        button.setSize((button.getWidth() + 50) * scale, button.getHeight() * scale);
+        button.setSize(250 * scale, button.getHeight() * scale);
         button.getLabel().setFontScale(scale);
         button.setOrigin(Align.center);
         button.setPosition(1920 / 2f - button.getWidth() / 2f, 140);

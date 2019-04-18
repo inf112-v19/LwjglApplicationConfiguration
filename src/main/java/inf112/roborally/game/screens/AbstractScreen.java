@@ -70,9 +70,4 @@ public abstract class AbstractScreen implements Screen {
     public void dispose() {
         background.getTexture().dispose();
     }
-
-    public void updateBackground(String filepath) {
-        background = new Sprite(new Texture(filepath));
-    }
-
 }

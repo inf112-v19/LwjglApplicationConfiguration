@@ -21,8 +21,6 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                Screen screen = new JoinServerScreen(game, "");
-//                game.setScreen(screen);
                 game.setScreen(new NameScreen(game) {
                     @Override
                     protected boolean confirmInput() {

@@ -37,7 +37,9 @@ public abstract class BasicScreen implements Screen {
         stage.addActor(back);
     }
 
-    protected abstract void goToPreviousScreen();
+    protected void goToPreviousScreen(){
+        game.setScreen(game.getScreenBefore());
+    }
 
     @Override
     public void show() {
