@@ -13,16 +13,6 @@ import com.badlogic.gdx.utils.Align;
 
 public class ButtonFactory {
 
-    public static ClickListener soundOnTouchDown() {
-        return new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                AssMan.manager.get(AssMan.SOUND_BUTTON_CLICKED).play(0.5f);
-                return true;
-            }
-        };
-    }
-
     public static ImageButton createArrowRightButton() {
         TextureRegionDrawable buttonUp = new TextureRegionDrawable(AssMan.manager.get(AssMan.RIGHT_ARROW));
         TextureRegionDrawable buttonDown = new TextureRegionDrawable(AssMan.manager.get(AssMan.RIGHT_ARROW_PRESS));
@@ -58,6 +48,12 @@ public class ButtonFactory {
         button.setColor(Color.BLACK);
         button.addListener(new ClickListener() {
             @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                AssMan.manager.get(AssMan.SOUND_BUTTON_CLICKED).play(0.5f);
+                return true;
+            }
+
+            @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 button.setColor(Color.BLACK);
             }
@@ -72,12 +68,22 @@ public class ButtonFactory {
         button.getLabel().setFontScale(scale);
         button.setOrigin(Align.center);
         button.setPosition(1920 / 2f - button.getWidth() / 2f, 140);
-        button.addListener(soundOnTouchDown());
         button.pad(10 * scale);
+        button.setTransform(false);
         return button;
     }
 
     public static Label createLabel(String text, Color color) {
         return new Label(text, new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), color));
+    }
+
+    private static ClickListener soundOnTouchDown() {
+        return new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                AssMan.manager.get(AssMan.SOUND_BUTTON_CLICKED).play(0.5f);
+                return true;
+            }
+        };
     }
 }
