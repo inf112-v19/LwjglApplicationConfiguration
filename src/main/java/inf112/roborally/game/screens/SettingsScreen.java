@@ -9,7 +9,6 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class SettingsScreen extends BasicScreen {
-    private boolean musicIsMuted = false;
     private final TextButton mute;
 
     public SettingsScreen(final RoboRallyGame game) {
@@ -29,6 +28,7 @@ public class SettingsScreen extends BasicScreen {
                 muteMusic();
             }
         });
+        setMuteText();
         TextButton exit = ButtonFactory.createTextButton("Exit Game", 2);
         exit.addListener(new ClickListener() {
             @Override
@@ -55,6 +55,15 @@ public class SettingsScreen extends BasicScreen {
         stage.addActor(exit);
     }
 
+    private void setMuteText() {
+        if(game.soundMuted){
+            mute.setText("Unmute");
+        }
+        else{
+            mute.setText("Mute");
+        }
+    }
+
     @Override
     protected void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
@@ -72,12 +81,12 @@ public class SettingsScreen extends BasicScreen {
     }
 
     private void muteMusic() {
-        if (!musicIsMuted) {
-            musicIsMuted = game.gameScreen.playMusic(false);
+        if (!game.soundMuted) {
+            game.soundMuted = game.gameScreen.playMusic(false);
             System.out.println("Muted the music from the settings screen");
             mute.setText("Unmute");
         } else {
-            musicIsMuted = game.gameScreen.playMusic(true);
+            game.soundMuted = game.gameScreen.playMusic(true);
             System.out.println("Started the music from the settings screen");
             mute.setText("Mute");
         }
