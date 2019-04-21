@@ -144,7 +144,12 @@ public class RoboRallyGame extends Game {
      * @see PlaceFlagsScreen
      */
     public void createCustomGameScreen() {
-        board.addPlayersToBoard(selectSkinScreen.createCustomPlayers());
+        List<Player> players = createNumberOfPlayers(MAX_PLAYERS); //Todo: Get user input
+        if(players != null){
+            board.addPlayersToBoard(players);
+        }else{
+            board.addPlayersToBoard(createNumberOfPlayers(MAX_PLAYERS));
+        }
         gameScreen = new GameScreen(this);
     }
 
@@ -161,15 +166,33 @@ public class RoboRallyGame extends Game {
         board.findLaserGuns();
     }
 
+
     private List<Player> createDefaultPlayers(){
+        return createNumberOfPlayers(MAX_PLAYERS);
+    }
+
+    /**
+     * Creates a list of players. The chosen skin is set here.
+     * The players can be added to the board with {@link Board#addPlayersToBoard(List)}.
+     * May return null.
+     *
+     * @param numberOfPlayers the number of players that should be created.
+     * @return the list of players, null if {@param numberOfPlayers} is not possible to make.
+     */
+    public List<Player> createNumberOfPlayers(int numberOfPlayers){
+        if(numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS){
+            return null;
+        }
+
         List<Player> players = new ArrayList<>();
-        int index = 0;
+        int index = selectSkinScreen.getChoiceIndex();
+
         int numberOfSkins = AssMan.getPlayerSkins().length;
-        for (int i = 0; i < numberOfSkins; i++) {
-            if (index >= numberOfSkins) {
+        for(int i = 0; i < numberOfPlayers; i++){
+            if(index >= numberOfSkins){
                 index = 0;
             }
-            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board);
+            Player player = new Player("Player" + (i+1), AssMan.getPlayerSkins()[index], NORTH, board);
             players.add(player);
             index++;
         }
