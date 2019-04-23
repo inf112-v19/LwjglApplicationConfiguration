@@ -48,6 +48,15 @@ public class ButtonFactory {
         return confirm;
     }
 
+    public static ImageButton createResetButton() {
+        TextureRegionDrawable buttonUp = new TextureRegionDrawable(new Texture(AssMan.RESET.fileName));
+        TextureRegionDrawable buttonDown = new TextureRegionDrawable(new Texture(AssMan.RESET_PRESS.fileName));
+        ImageButton confirm = new ImageButton(buttonUp, buttonDown);
+        confirm.setPosition(1920 / 2f - confirm.getWidth() / 2, 100);
+        confirm.addListener(soundOnTouchDown());
+        return confirm;
+    }
+
     public static ImageButton createBackButton(){
         TextureRegionDrawable buttonUp = new TextureRegionDrawable(new Texture(AssMan.BACK.fileName));
         TextureRegionDrawable buttonDown = new TextureRegionDrawable(new Texture(AssMan.BACK_PRESS.fileName));

@@ -6,9 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -16,9 +18,9 @@ import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.board.BoardCreator;
-import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.tools.AssMan;
+import inf112.roborally.game.tools.ButtonFactory;
 
 import java.util.ArrayList;
 
@@ -50,9 +52,15 @@ public class PlaceFlagsScreen implements Screen {
     // on legal positions
     private Board board;
 
-    // Display a "check" wherever we placed a flag
-//    private TextureRegionDrawable[] visuallyShowClick;
-    private Image[] visuallyShowClick;
+    // Display wherever we placed a flag
+//    private TextureRegionDrawable[] visuallyDisplayFlag;
+    private Image[] visuallyDisplayFlag;
+    // We need an index for the flags, to get them to display right flags in the right order
+    private int currentVisuallyFlagIndex = 0;
+    private boolean allFlagsPlaced = false;
+    // Buttons for confirming or clearing the placed flags
+    private ImageButton confirm;
+    private ImageButton reset;
 
     public PlaceFlagsScreen(final RoboRallyGame game, Texture mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
         this.game = game;
@@ -79,8 +87,9 @@ public class PlaceFlagsScreen implements Screen {
         map.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                handleClick(x,y);
-
+                if(!allFlagsPlaced) {
+                    handleClick(x,y);
+                }
             }
         });
         stage.addActor(map);
@@ -98,18 +107,45 @@ public class PlaceFlagsScreen implements Screen {
         clickedMessage.setAlignment(Align.center);
         clickedMessage.setFontScale(2);
 
-        // "Checks" for when a flag is placed
-//        visuallyShowClick = new TextureRegionDrawable[remainingFlags];
-//        for (int i = 0; i < visuallyShowClick.length; i++) {
-//            visuallyShowClick[i] = new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_CHECK_FLAG));
-//        }
-        visuallyShowClick = new Image[remainingFlags];
-        for (int i = 0; i < visuallyShowClick.length; i++) {
-            visuallyShowClick[i] = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_CHECK_FLAG)));
+        visuallyDisplayFlag = new Image[remainingFlags];
+        for (int i = 0; i < visuallyDisplayFlag.length; i++) {
+//            visuallyDisplayFlag[i] = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_CHECK_FLAG)));
+            visuallyDisplayFlag[i] = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.FLAG_ATLAS).createSprite(Integer.toString(i+1))));
         }
+//        for (int i = visuallyDisplayFlag.length; i > 0; i--) {
+//            visuallyDisplayFlag[i-1] = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.FLAG_ATLAS).createSprite(Integer.toString(i))));
+//        }
 
         stage.addActor(informationText);
         stage.addActor(clickedMessage);
+
+        // Create the reset and confirm button, but don't show them yet
+        confirm = ButtonFactory.createConfirmButton();
+        // Scale
+        confirm.setSize(confirm.getWidth() * 0.5f, confirm.getHeight() * 0.5f);
+        confirm.setPosition((1920 / 2f - confirm.getWidth() / 2)  - 200, 40);
+        confirm.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                doneWithSetup();
+            }
+        });
+
+        reset = ButtonFactory.createResetButton();
+        //Scale
+        reset.setSize(reset.getWidth() * 0.5f, reset.getHeight() * 0.5f);
+        reset.setPosition((1920 / 2f - confirm.getWidth() / 2)  + 200, 40);
+        reset.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                resetFlags();
+            }
+        });
+
+        confirm.setVisible(false);
+        reset.setVisible(false);
+        stage.addActor(confirm);
+        stage.addActor(reset);
     }
 
     private void handleClick(float x, float y) {
@@ -129,7 +165,7 @@ public class PlaceFlagsScreen implements Screen {
                 clickedMessage.setText("Placed flag at x=" + clickedPos.getX() + ", y=" + clickedPos.getY());
 
                 // Place a "check" on the right position
-                Image currCheck = visuallyShowClick[remainingFlags-1];
+                Image currCheck = visuallyDisplayFlag[currentVisuallyFlagIndex++];
                 currCheck.setScale(0.1f);
                 // Set the position to clicked x plus the x value of where the map starts
                 // Same with y value
@@ -145,11 +181,19 @@ public class PlaceFlagsScreen implements Screen {
                 // If we have placed 3 flags, we are done
                 // This can be changed later if we want to add more flags
                 if (remainingFlags == 0) {
-                    doneWithSetup();
+//                    doneWithSetup();
+                    allFlagsPlaced = true;
+                    showConfirmAndReset();
+
                 }
             }
         }
 
+    }
+
+    private void showConfirmAndReset() {
+        confirm.setVisible(true);
+        reset.setVisible(true);
     }
 
     // Check if the clicked position is not either a hole or a previously clicked position
@@ -207,6 +251,28 @@ public class PlaceFlagsScreen implements Screen {
         dispose();
     }
 
+    private void resetFlags() {
+        remainingFlags += flagPositions.size();
+        currentVisuallyFlagIndex = 0;
+        flagPositions = new ArrayList<>();
+        allFlagsPlaced = false;
+        informationText.setText("Remaining flags: " + remainingFlags);
+        clickedMessage.setText("Cleared all flags");
+
+        // Remove the flag actors from the stage
+        // For each flag in the array for visually displaying flags, remove it from the stage
+        for (Image flag : visuallyDisplayFlag) {
+            for(Actor act : stage.getActors()) {
+                if(act.equals(flag)) {
+                    act.remove();
+                }
+            }
+        }
+
+        confirm.setVisible(false);
+        reset.setVisible(false);
+    }
+
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -223,6 +289,7 @@ public class PlaceFlagsScreen implements Screen {
             Gdx.app.exit();
         }
     }
+
 
     @Override
     public void resize(int width, int height) {

@@ -213,6 +213,12 @@ public class AssMan {
     public static final AssetDescriptor<Texture> CONFIRM_PRSS
             = new AssetDescriptor<>("assets/buttons/confirm_press.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> RESET
+            = new AssetDescriptor<>("assets/buttons/reset.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> RESET_PRESS
+            = new AssetDescriptor<>("assets/buttons/reset_press.png", Texture.class);
+
     public static final AssetDescriptor<Texture> BACK
             = new AssetDescriptor<> ("assets/buttons/back.png", Texture.class);
 
@@ -285,6 +291,7 @@ public class AssMan {
         manager.load(BUTTON_SUBMIT_GREY);
         manager.load(BUTTON_CLEAR);
         manager.load(BUTTON_SETTINGS);
+
 
         //Gamescreen
         manager.load(GAMESCREEN_BACKGROUND2);
