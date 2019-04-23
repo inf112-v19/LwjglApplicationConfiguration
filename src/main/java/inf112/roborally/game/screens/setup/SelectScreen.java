@@ -3,19 +3,17 @@ package inf112.roborally.game.screens.setup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.SetupState;
-import inf112.roborally.game.screens.MenuScreen;
+import inf112.roborally.game.screens.BetterMenu;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.tools.ButtonFactory;
 
@@ -38,39 +36,38 @@ public abstract class SelectScreen implements Screen {
         this.numberOfChoices = numberOfChoices;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         //Add the background:
-        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_SCREEN_BLACK)));
+        Image background = new Image(new TextureRegionDrawable(new Texture(AssMan.SELECT_SCREEN.fileName)));
         stage.addActor(background);
         // Create buttons
         ImageButton next = ButtonFactory.createArrowRightButton();
         next.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                nextClicked();
-//                choiceIndex = (++choiceIndex) % numberOfChoices;
-//                clicked = true;
+                choiceIndex = (++choiceIndex) % numberOfChoices;
+                clicked = true;
             }
         });
         ImageButton previous = ButtonFactory.createArrowLeftButton();
         previous.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                previousClicked();
-//                choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
-//                clicked = true;
+                choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
+                clicked = true;
             }
         });
-        ImageButton confirm = ButtonFactory.createConfirmButton();
+        TextButton confirm = ButtonFactory.createTextButton("Confirm", 3);
         confirm.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 completeChoice();
             }
         });
+
         ImageButton back = ButtonFactory.createBackButton();
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.newGame(); // restart the whole game if back button is clicked
+                game.setScreen(new BetterMenu(game));
             }
         });
 
@@ -118,24 +115,16 @@ public abstract class SelectScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
 
-        handleInput();
-    }
-
-    private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();
             Gdx.app.exit();
         }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            nextClicked();
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-            previousClicked();
-        }
-        else if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            confirmClicked();
-        }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.T)){
+            game.createDefaultGameScreen();
+            game.setScreen(game.gameScreen);
+            dispose();
+        }
     }
 
     /**
@@ -182,10 +171,6 @@ public abstract class SelectScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-    }
-
-    public void setSkinChoiceIndex(int skinChoiceIndex) {
-        this.skinChoiceIndex = skinChoiceIndex;
     }
 
     public abstract void completeChoice();
