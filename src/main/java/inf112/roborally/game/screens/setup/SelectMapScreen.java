@@ -2,25 +2,14 @@ package inf112.roborally.game.screens.setup;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.graphics.Texture;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.enums.SetupState;
 import inf112.roborally.game.tools.AssMan;
 
-/**
- * Screen for selecting which map to use.
- *
- * {@link #choiceIndex} is the index for which map to use.
- */
 public class SelectMapScreen extends SelectScreen {
-
-    protected Texture mapTexture;
-
-    private PlaceFlagsScreen placeFlagsScreen;
-
     public SelectMapScreen(final RoboRallyGame game) {
         super(game, AssMan.getMapChoices().length);
     }
-
 
     @Override
     protected void setChoicesBasedOnScreen() {
@@ -33,15 +22,8 @@ public class SelectMapScreen extends SelectScreen {
 
     @Override
     public void completeChoice() {
-        mapTexture = AssMan.getMapChoices()[choiceIndex];
-        game.board.createBoard(game.chosenMap(choiceIndex));
-        game.board.findLaserGuns();
-        this.placeFlagsScreen = new PlaceFlagsScreen(game);
-        game.setScreen(placeFlagsScreen);
+        mapChoiceIndex = choiceIndex;
+        game.setScreen(new PlaceFlagsScreen(game, AssMan.getMapChoices()[mapChoiceIndex], mapChoiceIndex, skinChoiceIndex));
         dispose();
-    }
-
-    public Texture getMapTexture(){
-        return mapTexture;
     }
 }

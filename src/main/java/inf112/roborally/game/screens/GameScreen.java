@@ -7,14 +7,16 @@ import com.badlogic.gdx.graphics.GL20;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
-import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.GameLogic;
+import inf112.roborally.game.board.*;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
+
+import static inf112.roborally.game.enums.Direction.NORTH;
 
 
 public class GameScreen implements Screen {
@@ -28,9 +30,18 @@ public class GameScreen implements Screen {
     private Music music;
 
 
-    public GameScreen(RoboRallyGame game) {
+    public GameScreen(RoboRallyGame game, int robotChoiceIndex, ArrayList<Position> flagPositions, String mapFilePath, boolean runTestMap) {
         this.game = game;
-        board = game.getBoard();
+        if (!runTestMap) {
+            if (flagPositions != null) {
+                board = new BoardCreator(mapFilePath, flagPositions);
+            } else {
+                board = new VaultBoard();
+            }
+        } else {
+            board = new TestBoard();
+        }
+        addPlayersToBoard(robotChoiceIndex);
         board.placePlayers();
         hud = new Hud(board.getPlayers().get(0), game);
         hud.createButtons();
@@ -39,7 +50,7 @@ public class GameScreen implements Screen {
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
-        if (!game.soundMuted) {
+        if(!RoboRallyGame.soundMuted) {
             music.play();
         }
 
@@ -52,6 +63,19 @@ public class GameScreen implements Screen {
         background = new Background(game.dynamicCamera);
         animations = new ArrayList<>();
         hud.addPlayerStatusDisplay(board.getPlayers());
+    }
+
+    private void addPlayersToBoard(int robotChoiceIndex) {
+        int index = robotChoiceIndex;
+        int n = AssMan.getPlayerSkins().length;
+        for (int i = 0; i < n; i++) {
+            if (index >= n) {
+                index = 0;
+            }
+            board.addPlayer(new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board));
+
+            index++;
+        }
     }
 
     @Override
@@ -111,7 +135,7 @@ public class GameScreen implements Screen {
             player.getBackup().getSprite().getTexture().dispose();
         }
 
-        for (Animation animation : animations) {
+        for(Animation animation : animations){
             animation.dispose();
         }
         music.dispose();
@@ -140,14 +164,13 @@ public class GameScreen implements Screen {
 
     }
 
-    public boolean playMusic(boolean bool) {
-        if (bool) {
+    public boolean playMusic(boolean bool){
+        if(bool) {
             music.play();
-            game.soundMuted = false;
-        }
-        else {
+            RoboRallyGame.soundMuted = false;
+        }else{
             music.pause();
-            game.soundMuted = true;
+            RoboRallyGame.soundMuted = true;
         }
         return !bool;
     }

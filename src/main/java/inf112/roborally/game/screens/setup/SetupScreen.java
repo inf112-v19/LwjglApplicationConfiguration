@@ -11,10 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.VaultBoard;
 import inf112.roborally.game.enums.SetupState;
-import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.AbstractScreen;
 import inf112.roborally.game.tools.AssMan;
+import inf112.roborally.game.objects.Position;
 
 import java.util.ArrayList;
 
@@ -88,8 +90,7 @@ public class SetupScreen extends AbstractScreen {
             // If i is odd, place it on the left side
             if (i % 2 != 0) {
                 skin.setPosition(x1, y);
-            }
-            else {
+            } else {
                 skin.setPosition(x2, y);
                 y = y / 2 - 100; // next time, add below
             }
@@ -108,13 +109,24 @@ public class SetupScreen extends AbstractScreen {
     }
 
     private void createMapForPlacingFlags() {
+
+        // One tile here, inn full screen, is approx. 90x90
+//        updateBackground(AssMan.SETUP_SETUP_SCREEN_PLACE_FLAGS.fileName);
+        updateBackground(AssMan.GAMESCREEN_BACKGROUND2.fileName);
         updateMapNumbers();
+
         for (int i = 3; i > 0; i--) {
             Sprite flag = new Sprite(new TextureRegion(new Texture(AssMan.FLAG_SKIN.fileName),
                     150 * (i - 1), 0, 150, 150));
             flag.setPosition(100, 200 * i);
             flags.add(flag);
         }
+
+
+//        board = new Texture(AssMan.SETUP_MAP_VAULT.fileName);
+
+//        state = SetupState.PLACINGFLAGS;
+//        state = SetupState.TESTPPLACINGFLAGS;
     }
 
 
@@ -135,7 +147,7 @@ public class SetupScreen extends AbstractScreen {
         for (Sprite check : flagCheck) {
             check.draw(batch);
         }
-        if (board != null) {
+        if(board != null) {
             batch.draw(board, screenWidth, screenHeight);
         }
 
@@ -151,7 +163,7 @@ public class SetupScreen extends AbstractScreen {
     private void handleInput() {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
-            game.createDefaultGameScreen(); // Choose the standard skin index
+            game.createGameScreen(); // Choose the standard skin index
             game.setScreen(game.gameScreen);
             dispose();
         }
@@ -159,6 +171,7 @@ public class SetupScreen extends AbstractScreen {
         // Possible to add more SetupStates
         switch (state) {
 //            case TESTPPLACINGFLAGS:
+
 
 
 //                break;
@@ -203,8 +216,7 @@ public class SetupScreen extends AbstractScreen {
                             state = SetupState.DONE;
                         }
 
-                    }
-                    else {
+                    } else {
                         System.out.println("Please click inside the map!");
                     }
                 }
@@ -272,7 +284,7 @@ public class SetupScreen extends AbstractScreen {
     }
 
     private void createGameScreenFromSetup() {
-//        game.createDefaultGameScreen(robotChoiceIndex, flagPositions);
+//        game.createGameScreen(robotChoiceIndex, flagPositions);
 //        game.setScreen(game.gameScreen);
         dispose();
     }

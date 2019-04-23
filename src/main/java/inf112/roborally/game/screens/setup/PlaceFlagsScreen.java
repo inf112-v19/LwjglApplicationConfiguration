@@ -3,6 +3,7 @@ package inf112.roborally.game.screens.setup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -13,8 +14,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.objects.Flag;
+import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.BoardCreator;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.tools.ButtonFactory;
@@ -35,9 +38,10 @@ public class PlaceFlagsScreen implements Screen {
     private int tileSize = 64;
 
     // Choices from the last screens
-    private Texture mapTexture;
+    private Texture mapFilepath;
+    private int mapChoiceIndex;
+    private int robotChoiceIndex;
     private ArrayList<Position> flagPositions;
-    private int flagNumber;
 
     // Text:
     private Label informationText;
@@ -61,10 +65,10 @@ public class PlaceFlagsScreen implements Screen {
     public PlaceFlagsScreen(final RoboRallyGame game, Texture mapFilepath, int mapChoiceIndex, int robotChoiceIndex) {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
-        this.mapTexture = game.selectMapScreen.getMapTexture();
-        flagNumber = 0;
+        this.mapFilepath = mapFilepath;
+        this.mapChoiceIndex = mapChoiceIndex;
+        this.robotChoiceIndex = robotChoiceIndex;
         flagPositions = new ArrayList<>();
-        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.GAMESCREEN_BACKGROUND2)));
 
         board = new BoardCreator(game.chosenMap(mapChoiceIndex));
 
@@ -72,7 +76,7 @@ public class PlaceFlagsScreen implements Screen {
         Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_PLACEFLAGS_BACKGROUND)));
         stage.addActor(background);
 
-        map = new Image(new TextureRegionDrawable(mapTexture));
+        map = new Image(new TextureRegionDrawable(mapFilepath));
         mapWidth = map.getWidth() * 2f;
         mapHeight = map.getHeight() * 2f;
         map.setSize(mapWidth, mapHeight);
@@ -145,8 +149,6 @@ public class PlaceFlagsScreen implements Screen {
     }
 
     private void handleClick(float x, float y) {
-//        System.out.printf("Inside handleclick(), x = %.2f and y = %.2f%n", x, y);
-
         // Check if invisible part around map was clicked
         if(x < tileSize || x > mapWidth - tileSize || y < tileSize || y > mapHeight - tileSize) {
             System.out.println("Pressed inside map png, but in the invisible part");
@@ -157,8 +159,7 @@ public class PlaceFlagsScreen implements Screen {
         else {
             Position clickedPos = convertMouseClickIntoMapPosition(x,y);
             if (!checkIfLegalPosition(clickedPos)) {
-                System.out.println("Cannot place a flag here, either it's a hole, " +
-                        "or a flag has already been placed here!");
+                clickedMessage.setText("Cannot place flag here");
             }
             else {
                 clickedMessage.setText("Placed flag at x=" + clickedPos.getX() + ", y=" + clickedPos.getY());
@@ -172,7 +173,9 @@ public class PlaceFlagsScreen implements Screen {
                 stage.addActor(currCheck);
 
                 flagPositions.add(clickedPos);
-                game.board.getFlags().add(new Flag(clickedPos.getX(), clickedPos.getY(), ++flagNumber));
+                remainingFlags--;
+                // Update the information
+                informationText.setText("Remaining flags: " + remainingFlags);
 
 
                 // If we have placed 3 flags, we are done
@@ -196,7 +199,7 @@ public class PlaceFlagsScreen implements Screen {
     // Check if the clicked position is not either a hole or a previously clicked position
     private boolean checkIfLegalPosition(Position clickedPos) {
         boolean result = true;
-        if(game.board.getFloorLayer().getCell(clickedPos.getX(), clickedPos.getY()) == null){
+        if(board.getFloorLayer().getCell(clickedPos.getX(), clickedPos.getY()) == null){
             result = false;
         }
         for(Position pos : flagPositions) {
@@ -242,9 +245,8 @@ public class PlaceFlagsScreen implements Screen {
         return new Position(x, y);
     }
 
-
     private void doneWithSetup() {
-        game.createCustomGameScreen();
+        game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
         game.setScreen(game.gameScreen);
         dispose();
     }
@@ -285,12 +287,6 @@ public class PlaceFlagsScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();
             Gdx.app.exit();
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.T)){
-            game.createDefaultGameScreen();
-            game.setScreen(game.gameScreen);
-            dispose();
         }
     }
 

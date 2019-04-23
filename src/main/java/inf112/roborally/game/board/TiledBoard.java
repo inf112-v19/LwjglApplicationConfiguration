@@ -86,4 +86,5 @@ public abstract class TiledBoard {
     public int getHeight() {
         return this.floorLayer.getHeight();
     }
+
 }

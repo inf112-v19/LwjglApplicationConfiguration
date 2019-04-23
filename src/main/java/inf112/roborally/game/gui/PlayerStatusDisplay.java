@@ -3,7 +3,6 @@ package inf112.roborally.game.gui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -131,18 +130,8 @@ public class PlayerStatusDisplay {
         System.out.println("Disposing PlayerStatusDisplay");
         font.dispose();
 
-        for(Actor card : cards.getChildren()){
-            if(card instanceof ProgramCardButton){
-                ((ProgramCardButton) card).dispose();
-            }
-        }
+        //Need to dispose cards/tab?
         cards.clear();
-
-        for(Actor cards : tab.getChildren()){
-            if(cards instanceof ProgramCardButton){
-                ((ProgramCardButton) cards).dispose();
-            }
-        }
         tab.clear();
     }
 }
