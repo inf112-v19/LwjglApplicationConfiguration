@@ -44,6 +44,7 @@ public class HandDisplay {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().placeCard(index);
+                    hud.clearAllCards();
                     hud.updateCards();
                 }
             });

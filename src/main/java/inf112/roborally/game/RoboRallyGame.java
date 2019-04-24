@@ -7,22 +7,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.roborally.game.board.Board;
-import inf112.roborally.game.gui.CameraListener;
-import inf112.roborally.game.objects.Flag;
-import inf112.roborally.game.player.Player;
-import inf112.roborally.game.screens.*;
-import inf112.roborally.game.screens.setup.PlaceFlagsScreen;
 import inf112.roborally.game.screens.setup.SelectMapScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
-import inf112.roborally.game.server.ChatClient;
-import inf112.roborally.game.server.ChatServer;
+import inf112.roborally.game.screens.setup.SetupScreen;
 import inf112.roborally.game.tools.AssMan;
+import inf112.roborally.game.gui.CameraListener;
+import inf112.roborally.game.objects.Position;
+import inf112.roborally.game.screens.*;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static inf112.roborally.game.enums.Direction.NORTH;
 
 public class RoboRallyGame extends Game {
     //MAPS:
@@ -33,6 +26,10 @@ public class RoboRallyGame extends Game {
     public static final String SPACE_BUG = "assets/maps/space_bug.tmx";
     public static final String SPACE_BUG2 = "assets/maps/space_bug2.tmx";
     public static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
+
+    //Music:
+    public static final String MAIN_THEME = AssMan.MUSIC_MAIN_THEME.fileName;
+    public static final String TEST_MUSIC = "assets/music/testMusic1.ogg";
 
     public static final int MAX_PLAYERS = 8;
 
@@ -47,10 +44,10 @@ public class RoboRallyGame extends Game {
 
     public SpriteBatch batch;
 
-    //    public SetupScreen setupScreen;
+    public MenuScreen menuScreen;
+//    public SetupScreen setupScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
-    public PlaceFlagsScreen placeFlagsScreen;
     public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
@@ -58,27 +55,19 @@ public class RoboRallyGame extends Game {
     public TestScreen testScreen;
     public LaserTestScreen laserTestScreen;
 
+    private boolean runTestMap = false;
+
     public static boolean soundMuted;
 
-    /**
-     * The screen that was active before setting a new screen with {@link #setScreen(Screen)}
-     */
+    /** The screen that was active before setting a new screen with {@link #setScreen(Screen)} */
     private Screen screenBefore;
-    public ChatServer server;
-    public ChatClient client;
 
-    public ArrayList<String> playerNames;
-    public Board board;
-    public String playerName;
 
     @Override
     public void create() {
-        playerNames = new ArrayList<>();
         AssMan.load();
         AssMan.manager.finishLoading();
         AIvsAI = false;
-
-        board = new Board(this);
 
         dynamicCamera = new OrthographicCamera();
         dynamicCamera.setToOrtho(false);
@@ -92,8 +81,8 @@ public class RoboRallyGame extends Game {
 
         batch = new SpriteBatch();
 
+        menuScreen = new MenuScreen(this);
         settingsScreen = new SettingsScreen(this);
-
         endGameScreen = new EndGameScreen(this);
         selectSkinScreen = new SelectSkinScreen(this);
         selectMapScreen = new SelectMapScreen(this);
@@ -101,19 +90,17 @@ public class RoboRallyGame extends Game {
         testScreen = new TestScreen(this);
         laserTestScreen = new LaserTestScreen(this);
 
-        setScreen(new BetterMenu(this));
+        setScreen(menuScreen);
     }
 
-    /**
-     * Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
+    /** Sets the current screen. {@link Screen#hide()} is called on any old screen, and {@link Screen#show()} is called on the new
      * screen, if any.
-     * <p>
+     *
      * Saves the screen that was used before the function call.
      *
-     * @param screen may be {@code null}
-     */
+     * @param screen may be {@code null} */
     @Override
-    public void setScreen(Screen screen) {
+    public void setScreen (Screen screen) {
         this.screenBefore = getScreen();
         if (this.screen != null) this.screen.hide();
         this.screen = screen;
@@ -128,97 +115,41 @@ public class RoboRallyGame extends Game {
         create();
     }
 
+//    public void createSetupScreen() {
+//        setupScreen = new SetupScreen(this, possibleRobotSkinFilepaths);
+//    }
 
-    /**
-     * Create a new GameScreen with preset map, flag positions and player skin.
-     */
-    public void createDefaultGameScreen() {
-        createDefaultBoard();
-        gameScreen = new GameScreen(this);
+    // Create GameScreen with preset skins, map and flag positions
+    public void createGameScreen() {
+        gameScreen = new GameScreen(this, 0, null, null , runTestMap);
     }
 
-    /**
-     * Create a new GameScreen with chosen player skin, map and flag positions.
-     * @see SelectSkinScreen
-     * @see SelectMapScreen
-     * @see PlaceFlagsScreen
-     */
-    public void createCustomGameScreen() {
-        List<Player> players = createNumberOfPlayers(MAX_PLAYERS); //Todo: Get user input
-        if(players != null){
-            board.addPlayersToBoard(players);
-        }else{
-            board.addPlayersToBoard(createNumberOfPlayers(MAX_PLAYERS));
-        }
-        gameScreen = new GameScreen(this);
-    }
-
-
-    /**
-     * Create a new board with preset board map and flag locations.
-     */
-    private void createDefaultBoard() {
-        board.createBoard(VAULT);
-        board.getFlags().add(new Flag(7, 7, 1));
-        board.getFlags().add(new Flag(11, 11, 2));
-        board.getFlags().add(new Flag(10, 10, 3));
-        board.addPlayersToBoard(createDefaultPlayers());
-        board.findLaserGuns();
-    }
-
-
-    private List<Player> createDefaultPlayers(){
-        return createNumberOfPlayers(MAX_PLAYERS);
-    }
-
-    /**
-     * Creates a list of players. The chosen skin is set here.
-     * The players can be added to the board with {@link Board#addPlayersToBoard(List)}.
-     * May return null.
-     *
-     * @param numberOfPlayers the number of players that should be created.
-     * @return the list of players, null if {@param numberOfPlayers} is not possible to make.
-     */
-    public List<Player> createNumberOfPlayers(int numberOfPlayers){
-        if(numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS){
-            return null;
-        }
-
-        List<Player> players = new ArrayList<>();
-        int index = selectSkinScreen.getChoiceIndex();
-
-        int numberOfSkins = AssMan.getPlayerSkins().length;
-        for(int i = 0; i < numberOfPlayers; i++){
-            if(index >= numberOfSkins){
-                index = 0;
-            }
-            Player player = new Player("Player" + (i+1), AssMan.getPlayerSkins()[index], NORTH, board);
-            players.add(player);
-            index++;
-        }
-        return players;
-    }
-
-    public void createTestBoard(){
-        board.createBoard(TEST_MAP);
-        board.getFlags().add(new Flag(1, 7, 1));
-        board.addPlayersToBoard(createDefaultPlayers());
-        board.findLaserGuns();
-        setScreen(new GameScreen(this));
+    public void createGameScreen(int robotChoiceIndex, ArrayList<Position> flagPositions, int mapChoiceIndex) {
+        gameScreen = new GameScreen(this, robotChoiceIndex, flagPositions, chosenMap(mapChoiceIndex), runTestMap);
     }
 
     @Override
     public void dispose() {
         System.out.println("Disposing RoboRallyGame");
-        if (screenBefore != null) {
+        if(screenBefore != null) {
             screenBefore.dispose();
         }
         batch.dispose();
         testScreen.dispose();
+        menuScreen.dispose();
         AssMan.dispose();
-        if (gameScreen != null) {
+
+//        if (setupScreen != null) {
+//            setupScreen.dispose();
+//        }
+
+        if(gameScreen != null) {
             gameScreen.dispose();
         }
+    }
+
+    public void setLaunchTestMap(boolean bool){
+        runTestMap = bool;
     }
 
     public String chosenMap(int mapIndex) {
@@ -231,32 +162,7 @@ public class RoboRallyGame extends Game {
         return mapChoices[mapIndex];
     }
 
-
-    public void joinGame(String ip) {
-        System.out.println(playerName + " wants to connect to " + ip);
-        try {
-            client = new ChatClient(ip, 8000, this, playerName);
-            new Thread(client).start();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Screen getScreenBefore() {
+    public Screen getScreenBefore(){
         return this.screenBefore;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void startServer() {
-        server = new ChatServer(8000, this);
-        new Thread(server).start();
-    }
-
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
     }
 }
