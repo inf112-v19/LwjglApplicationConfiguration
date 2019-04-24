@@ -14,8 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.SetupState;
-import inf112.roborally.game.screens.MenuScreen;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.tools.ButtonFactory;
 

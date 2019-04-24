@@ -3,8 +3,6 @@ package inf112.roborally.game.screens.setup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.SetupState;
-import inf112.roborally.game.screens.setup.SelectScreen;
 import inf112.roborally.game.tools.AssMan;
 
 public class SelectSkinScreen extends SelectScreen {

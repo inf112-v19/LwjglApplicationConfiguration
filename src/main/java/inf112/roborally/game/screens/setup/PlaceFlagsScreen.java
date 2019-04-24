@@ -112,9 +112,6 @@ public class PlaceFlagsScreen implements Screen {
 //            visuallyDisplayFlag[i] = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_CHECK_FLAG)));
             visuallyDisplayFlag[i] = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.FLAG_ATLAS).createSprite(Integer.toString(i+1))));
         }
-//        for (int i = visuallyDisplayFlag.length; i > 0; i--) {
-//            visuallyDisplayFlag[i-1] = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.FLAG_ATLAS).createSprite(Integer.toString(i))));
-//        }
 
         stage.addActor(informationText);
         stage.addActor(clickedMessage);
