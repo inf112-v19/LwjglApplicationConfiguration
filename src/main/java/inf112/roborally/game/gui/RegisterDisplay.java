@@ -180,6 +180,7 @@ public class RegisterDisplay {
                     public void clicked(InputEvent event, float x, float y) {
                         if (!registers.isLocked(index)) {
                             registers.returnCard(index);
+                            hud.clearAllCards();
                             hud.updateCards();
                         }
                     }
