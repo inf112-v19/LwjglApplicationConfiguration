@@ -1,8 +1,7 @@
 package inf112.roborally.game.screens.setup;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 
 /**
@@ -13,25 +12,20 @@ import inf112.roborally.game.tools.AssMan;
 public class SelectSkinScreen extends SelectScreen {
 
     public SelectSkinScreen(final RoboRallyGame game) {
-        super(game, AssMan.getPlayerSkins().length);
-    }
-
-    @Override
-    protected void setChoicesBasedOnScreen() {
-        choices = new TextureRegionDrawable[numberOfChoices];
-        for (int i = 0; i < numberOfChoices; i++) {
-            choices[i] = new TextureRegionDrawable(AssMan.getPlayerSkins()[i]);
-        }
-        information = "skin";
+        super(game, AssMan.getPlayerSkins(), AssMan.getPlayerSkins().length);
     }
 
     @Override
     public void completeChoice() {
-        skinChoiceIndex = choiceIndex;
+        for (Player player : game.board.getPlayers()) {
+            player.setSkinTexture(AssMan.getPlayerSkins()[choiceIndex]);
+        }
+
         game.setScreen(game.selectMapScreen);
-        // Since we are creating a new subclass of the SelectScreen abstract class, we need to
-        // update the new one with the skin choice we just picked
-        game.selectMapScreen.setSkinChoiceIndex(skinChoiceIndex);
         dispose();
+    }
+
+    public int getChoiceIndex(){
+        return choiceIndex;
     }
 }

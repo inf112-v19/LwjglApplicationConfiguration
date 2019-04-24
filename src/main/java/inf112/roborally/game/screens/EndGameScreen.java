@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.tools.AssMan;
-import inf112.roborally.game.player.Player;
 import inf112.roborally.game.objects.Position;
+import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.AssMan;
 
 public class EndGameScreen extends AbstractScreen {
 
@@ -54,7 +54,8 @@ public class EndGameScreen extends AbstractScreen {
     private void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
             game.newGame();
         }
     }
@@ -63,7 +64,7 @@ public class EndGameScreen extends AbstractScreen {
         this.winner = winner;
 
         // Set player to the proper position
-        //TODO Instead of manually input the x and y here, find a way to use width/2 and height/2 or something like that
+        //TODO Instead of manually multiplayer the x and y here, find a way to use width/2 and height/2 or something like that
         winner.moveToPosition(new Position(22, 15));
         winnerSprite = winner.getSprite();
         winnerSprite.setSize(500, 500);

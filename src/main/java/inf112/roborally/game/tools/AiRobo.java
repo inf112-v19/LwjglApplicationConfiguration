@@ -54,7 +54,7 @@ public class AiRobo {
             }
         }
 
-        while (!robo.getRegisters().isFull())
+        while (!robo.getRegisters().isFull() && robo.getHand().size() > 0)
             robo.getRegisters().placeCard(0);
     }
 
