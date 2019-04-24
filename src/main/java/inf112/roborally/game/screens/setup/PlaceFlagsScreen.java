@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -41,8 +40,6 @@ public class PlaceFlagsScreen implements Screen {
     // Choices from the last screens
     private Texture mapTexture;
     private ArrayList<Position> flagPositions;
-    private int mapChoiceIndex;
-    private int robotChoiceIndex;
 
     // Text:
     private Label informationText;
@@ -63,13 +60,10 @@ public class PlaceFlagsScreen implements Screen {
     private TextButton reset;
 
 
-//    public PlaceFlagsScreen(final RoboRallyGame game, int mapChoiceIndex, int robotChoiceIndex) {
     public PlaceFlagsScreen (final RoboRallyGame game) {
         this.game = game;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         this.mapTexture = game.selectMapScreen.getMapTexture();
-        this.mapChoiceIndex = mapChoiceIndex;
-        this.robotChoiceIndex = robotChoiceIndex;
         flagPositions = new ArrayList<>();
 
         Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_PLACEFLAGS_BACKGROUND)));
@@ -117,10 +111,7 @@ public class PlaceFlagsScreen implements Screen {
         stage.addActor(clickedMessage);
 
         // Create the reset and confirm button, but don't show them yet
-//        confirm = ButtonFactory.createConfirmButton();
         confirm = ButtonFactory.createTextButton("Confirm", 2f);
-        // Scale
-//        confirm.setSize(confirm.getWidth() * 0.5f, confirm.getHeight() * 0.5f);
         confirm.setPosition((1920 / 2f - confirm.getWidth() / 2)  - 200, 40);
         confirm.addListener(new ClickListener() {
             @Override
@@ -129,10 +120,7 @@ public class PlaceFlagsScreen implements Screen {
             }
         });
 
-//        reset = ButtonFactory.createResetButton();
         reset = ButtonFactory.createTextButton("Reset", 2f);
-        //Scale
-//        reset.setSize(reset.getWidth() * 0.5f, reset.getHeight() * 0.5f);
         reset.setPosition((1920 / 2f - confirm.getWidth() / 2)  + 200, 40);
         reset.addListener(new ClickListener() {
             @Override

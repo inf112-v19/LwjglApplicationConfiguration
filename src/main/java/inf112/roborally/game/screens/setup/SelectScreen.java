@@ -3,15 +3,18 @@ package inf112.roborally.game.screens.setup;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BetterMenu;
 import inf112.roborally.game.tools.AssMan;
@@ -32,23 +35,21 @@ public abstract class SelectScreen implements Screen {
         this.numberOfChoices = numberOfChoices;
         this.stage = new Stage(game.fixedViewPort, game.batch);
         //Add the background:
-        Image background = new Image(new TextureRegionDrawable(new Texture(AssMan.SELECT_SCREEN.fileName)));
+        Image background = new Image(new TextureRegionDrawable(AssMan.manager.get(AssMan.SETUP_BLACK_BACKGROUND)));
         stage.addActor(background);
         // Create buttons
         ImageButton next = ButtonFactory.createArrowRightButton();
         next.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                choiceIndex = (++choiceIndex) % numberOfChoices;
-                clicked = true;
+                nextClicked();
             }
         });
         ImageButton previous = ButtonFactory.createArrowLeftButton();
         previous.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
-                clicked = true;
+                previousClicked();
             }
         });
         TextButton confirm = ButtonFactory.createTextButton("Confirm", 3);
@@ -85,6 +86,18 @@ public abstract class SelectScreen implements Screen {
 
     }
 
+    // This will be used in the label to display whether we are picking skin or map
+    protected void setInformationLabel(String information) {
+        Label label = new Label("Select your " + information + ":",
+                new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE));
+        label.setPosition(1920 / 2, 960, Align.center);
+        label.setAlignment(Align.center);
+        label.setFontScale(4);
+        stage.addActor(label);
+    }
+
+
+
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -98,6 +111,10 @@ public abstract class SelectScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.draw();
 
+        handleInput();
+    }
+
+    protected void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             dispose();
             Gdx.app.exit();
@@ -108,6 +125,36 @@ public abstract class SelectScreen implements Screen {
             game.setScreen(game.gameScreen);
             dispose();
         }
+
+
+        // Make it so the player can also choose using the keyboard
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            confirmClicked();
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+            nextClicked();
+        }
+        else if(Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+            previousClicked();
+        }
+    }
+
+    /**
+     * Instead of having the 3 next methods in their buttons, they are out here so that
+     * player can also choose with the keyboard
+     */
+    private void previousClicked() {
+        choiceIndex = (numberOfChoices + --choiceIndex) % numberOfChoices;
+        clicked = true;
+    }
+
+    private void nextClicked() {
+        choiceIndex = (++choiceIndex) % numberOfChoices;
+        clicked = true;
+    }
+
+    private void confirmClicked() {
+        completeChoice();
     }
 
     private void update() {

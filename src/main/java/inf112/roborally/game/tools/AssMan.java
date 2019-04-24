@@ -121,6 +121,9 @@ public class AssMan {
     public static final AssetDescriptor<Texture> SETUP_PLACEFLAGS_BACKGROUND
             = new AssetDescriptor<>("assets/screens/setupscreen/placeFlags.png", Texture.class);
 
+    public static final AssetDescriptor<Texture> SETUP_BLACK_BACKGROUND
+            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenblack.png", Texture.class);
+
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
             = new AssetDescriptor<>("assets/cards/programregisters.png", Texture.class);
@@ -300,6 +303,7 @@ public class AssMan {
         manager.load(SETUP_SELECT_SKIN_TEXT);
         manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
         manager.load(SETUP_PLACEFLAGS_BACKGROUND);
+        manager.load(SETUP_BLACK_BACKGROUND);
 
         //Program register
         manager.load(REGISTER_PROGRAM_REGISTER);

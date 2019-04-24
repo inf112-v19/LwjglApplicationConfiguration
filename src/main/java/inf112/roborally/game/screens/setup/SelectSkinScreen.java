@@ -13,6 +13,7 @@ public class SelectSkinScreen extends SelectScreen {
 
     public SelectSkinScreen(final RoboRallyGame game) {
         super(game, AssMan.getPlayerSkins(), AssMan.getPlayerSkins().length);
+        setInformationLabel("skin");
     }
 
     @Override
