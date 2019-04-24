@@ -54,9 +54,9 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
         String[] split = packet.split(" ");
 
         if(split[0].equals("HANDSHAKE")){
-            System.out.println(split[1] + " has connected!");
+//            System.out.println(split[1] + " has connected!");
             for (Channel channel : channels) {
-                   channel.writeAndFlush(split[1] + " has connected!");
+                   channel.writeAndFlush(split[1] + " has connected!\n");
             }
         }
     }
