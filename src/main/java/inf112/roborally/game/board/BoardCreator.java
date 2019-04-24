@@ -1,5 +1,5 @@
 package inf112.roborally.game.board;
-
+/*
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * A class to replace the VaultBoard, that takes in the map as
  * a parameter
  */
+/*
 public class BoardCreator extends Board {
 
     public BoardCreator(String mapFilePath , ArrayList<Position> flagPositions) {
@@ -27,3 +28,4 @@ public class BoardCreator extends Board {
         findLaserGuns();
     }
 }
+*/
