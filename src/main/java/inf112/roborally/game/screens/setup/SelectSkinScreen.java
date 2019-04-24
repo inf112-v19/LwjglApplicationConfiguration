@@ -4,7 +4,6 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 
-
 /**
  * Screen for selecting a player skin.
  *
