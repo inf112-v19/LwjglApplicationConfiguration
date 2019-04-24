@@ -5,6 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.tools.AssMan;
 
+/**
+ * Screen for selecting a player skin.
+ *
+ * {@link #choiceIndex} is the index for the chosen player skin.
+ */
 public class SelectSkinScreen extends SelectScreen {
 
     public SelectSkinScreen(final RoboRallyGame game) {
