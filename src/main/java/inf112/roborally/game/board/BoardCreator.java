@@ -3,8 +3,7 @@ package inf112.roborally.game.board;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.objects.Position;
-import inf112.roborally.game.tools.AssMan;
-
+import inf112.roborally.game.tools.AssMan;  
 import java.util.ArrayList;
 
 /**
