@@ -2,6 +2,7 @@ package inf112.roborally.game.screens.multiplayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,8 +13,13 @@ import inf112.roborally.game.tools.ButtonFactory;
 
 public class MultiplayerScreen extends BasicScreen {
 
+    private Screen nameScreenJoin;
+    private Screen nameScreenHost;
+
     public MultiplayerScreen(final RoboRallyGame game) {
         super(game);
+        nameScreenHost = new NameScreenHost(game);
+        nameScreenJoin = new NameScreenJoin(game);
         TextButton join = ButtonFactory.createTextButton("Join Session", 2);
         join.setTransform(true);
         join.setWidth(700);
@@ -21,15 +27,7 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new NameScreen(game) {
-                    @Override
-                    protected boolean confirmInput() {
-                        game.playerName = text.getText();
-                        game.setScreen(new JoinServerScreen(game));
-                        return true;
-                    }
-                });
-                dispose();
+               game.setScreen(nameScreenJoin);
             }
         });
         TextButton create = ButtonFactory.createTextButton("Create Session", 2);
@@ -41,15 +39,7 @@ public class MultiplayerScreen extends BasicScreen {
             public void clicked(InputEvent event, float x, float y) {
 //                Screen screen = new HostServerScreen(game);
 //                game.setScreen(screen);
-                game.setScreen(new NameScreen(game) {
-                    @Override
-                    protected boolean confirmInput() {
-                        game.playerName = text.getText();
-                        game.setScreen(new HostServerScreen(game));
-                        return true;
-                    }
-                });
-                dispose();
+               game.setScreen(nameScreenHost);
             }
         });
 
@@ -61,7 +51,6 @@ public class MultiplayerScreen extends BasicScreen {
     protected void goToPreviousScreen() {
         BetterMenu menu = new BetterMenu(game);
         game.setScreen(menu);
-        dispose();
     }
 
 

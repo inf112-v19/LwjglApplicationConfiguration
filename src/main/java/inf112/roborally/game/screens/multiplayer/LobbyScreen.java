@@ -11,8 +11,11 @@ public class LobbyScreen extends InputFieldScreen {
     private String dots;
     private int timer;
 
-    public LobbyScreen(final RoboRallyGame game) {
+    private Screen previousScreen;
+
+    public LobbyScreen(final RoboRallyGame game, Screen previousScreen) {
         super(game);
+        this.previousScreen = previousScreen;
         timer = 0;
         confirm.setVisible(false);
         Label label = new Label("Connecting to server", labelStyle);
@@ -32,9 +35,7 @@ public class LobbyScreen extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        Screen screen = new JoinServerScreen(game);
-        game.setScreen(screen);
-        dispose();
+        game.setScreen(previousScreen);
     }
 
     @Override
