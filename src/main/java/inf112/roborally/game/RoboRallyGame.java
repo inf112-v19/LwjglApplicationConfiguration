@@ -49,7 +49,6 @@ public class RoboRallyGame extends Game {
 
     public SpriteBatch batch;
 
-    //    public SetupScreen setupScreen;
     public SelectNumberOfPlayersScreen selectNumberOfPlayersScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
