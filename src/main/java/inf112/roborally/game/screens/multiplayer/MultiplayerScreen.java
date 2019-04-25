@@ -13,13 +13,15 @@ import inf112.roborally.game.tools.ButtonFactory;
 
 public class MultiplayerScreen extends BasicScreen {
 
-    private Screen nameScreenJoin;
-    private Screen nameScreenHost;
+    private NameScreen nameScreen;
 
     public MultiplayerScreen(final RoboRallyGame game) {
         super(game);
-        nameScreenHost = new NameScreenHost(game);
-        nameScreenJoin = new NameScreenJoin(game);
+        this.nameScreen = new NameScreen(game);
+        final HostServerScreen hostServerScreen = new HostServerScreen(game, nameScreen);
+        final JoinServerScreen joinServerScreen = new JoinServerScreen(game, nameScreen);
+
+
         TextButton join = ButtonFactory.createTextButton("Join Session", 2);
         join.setTransform(true);
         join.setWidth(700);
@@ -27,7 +29,8 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-               game.setScreen(nameScreenJoin);
+                nameScreen.setNextScreen(joinServerScreen);
+               game.setScreen(nameScreen);
             }
         });
         TextButton create = ButtonFactory.createTextButton("Create Session", 2);
@@ -37,9 +40,8 @@ public class MultiplayerScreen extends BasicScreen {
         create.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                Screen screen = new HostServerScreen(game);
-//                game.setScreen(screen);
-               game.setScreen(nameScreenHost);
+                nameScreen.setNextScreen(hostServerScreen);
+               game.setScreen(nameScreen);
             }
         });
 
