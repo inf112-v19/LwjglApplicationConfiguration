@@ -14,6 +14,7 @@ import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.*;
 import inf112.roborally.game.screens.setup.PlaceFlagsScreen;
 import inf112.roborally.game.screens.setup.SelectMapScreen;
+import inf112.roborally.game.screens.setup.SelectNumberOfPlayersScreen;
 import inf112.roborally.game.screens.setup.SelectSkinScreen;
 import inf112.roborally.game.server.ChatClient;
 import inf112.roborally.game.server.ChatServer;
@@ -35,6 +36,7 @@ public class RoboRallyGame extends Game {
     public static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
 
     public static final int MAX_PLAYERS = 8;
+    private int numberOfChosenPlayers;
 
     public boolean AIvsAI = false;
 
@@ -48,6 +50,7 @@ public class RoboRallyGame extends Game {
     public SpriteBatch batch;
 
     //    public SetupScreen setupScreen;
+    public SelectNumberOfPlayersScreen selectNumberOfPlayersScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
     public PlaceFlagsScreen placeFlagsScreen;
@@ -95,6 +98,7 @@ public class RoboRallyGame extends Game {
         settingsScreen = new SettingsScreen(this);
 
         endGameScreen = new EndGameScreen(this);
+        selectNumberOfPlayersScreen = new SelectNumberOfPlayersScreen(this);
         selectSkinScreen = new SelectSkinScreen(this);
         selectMapScreen = new SelectMapScreen(this);
 
@@ -144,7 +148,7 @@ public class RoboRallyGame extends Game {
      * @see PlaceFlagsScreen
      */
     public void createCustomGameScreen() {
-        List<Player> players = createNumberOfPlayers(MAX_PLAYERS); //Todo: Get user input
+        List<Player> players = createNumberOfPlayers(numberOfChosenPlayers); //Todo: Get user input
         if(players != null){
             board.addPlayersToBoard(players);
         }else{
@@ -241,6 +245,10 @@ public class RoboRallyGame extends Game {
         catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void setNumberOfChosenPlayers(int numberOfChosenPlayers) {
+        this.numberOfChosenPlayers = numberOfChosenPlayers;
     }
 
     public Screen getScreenBefore() {

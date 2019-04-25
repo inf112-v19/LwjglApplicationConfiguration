@@ -108,7 +108,8 @@ public class BetterMenu extends BasicScreen {
     private void singleplayer() {
         game.AIvsAI = false;
         //Need to use the selectSkinScreen in game in order to use selected skin choices
-        setScreen(game.selectSkinScreen);
+//        setScreen(game.selectSkinScreen);
+        setScreen(game.selectNumberOfPlayersScreen);
     }
 
     private void multiplayer() {
