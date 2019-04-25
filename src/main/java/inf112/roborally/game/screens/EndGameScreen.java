@@ -66,6 +66,7 @@ public class EndGameScreen extends AbstractScreen {
         // Set player to the proper position
         //TODO Instead of manually multiplayer the x and y here, find a way to use width/2 and height/2 or something like that
         winner.moveToPosition(new Position(22, 15));
+        winner.updateSprite();
         winnerSprite = winner.getSprite();
         winnerSprite.setSize(500, 500);
     }
