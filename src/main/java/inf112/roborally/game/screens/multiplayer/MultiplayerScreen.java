@@ -18,8 +18,11 @@ public class MultiplayerScreen extends BasicScreen {
     public MultiplayerScreen(final RoboRallyGame game) {
         super(game);
         this.nameScreen = new NameScreen(game);
+
+        //--
         final HostServerScreen hostServerScreen = new HostServerScreen(game, nameScreen);
         final JoinServerScreen joinServerScreen = new JoinServerScreen(game, nameScreen);
+        //-- Created too early, need to fix
 
 
         TextButton join = ButtonFactory.createTextButton("Join Session", 2);
@@ -53,6 +56,7 @@ public class MultiplayerScreen extends BasicScreen {
     protected void goToPreviousScreen() {
         BetterMenu menu = new BetterMenu(game);
         game.setScreen(menu);
+        dispose();
     }
 
 

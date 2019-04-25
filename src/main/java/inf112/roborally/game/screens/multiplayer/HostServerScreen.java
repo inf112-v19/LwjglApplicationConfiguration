@@ -17,6 +17,7 @@ public class HostServerScreen extends InputFieldScreen {
 
     public HostServerScreen(RoboRallyGame game, Screen previousScreen) {
         super(game);
+        this.previousScreen = previousScreen;
         game.startServer();
         try {
             ip = InetAddress.getLocalHost().getHostAddress();
@@ -32,8 +33,6 @@ public class HostServerScreen extends InputFieldScreen {
         text.setVisible(false);
         confirm.setText("Start Game");
         stage.addActor(label);
-
-        this.previousScreen = previousScreen;
     }
 
     @Override
