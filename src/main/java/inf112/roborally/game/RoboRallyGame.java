@@ -12,10 +12,7 @@ import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.*;
-import inf112.roborally.game.screens.setup.PlaceFlagsScreen;
-import inf112.roborally.game.screens.setup.SelectMapScreen;
-import inf112.roborally.game.screens.setup.SelectNumberOfPlayersScreen;
-import inf112.roborally.game.screens.setup.SelectSkinScreen;
+import inf112.roborally.game.screens.setup.*;
 import inf112.roborally.game.server.ChatClient;
 import inf112.roborally.game.server.ChatServer;
 import inf112.roborally.game.tools.AssMan;
@@ -49,7 +46,7 @@ public class RoboRallyGame extends Game {
 
     public SpriteBatch batch;
 
-    public SelectNumberOfPlayersScreen selectNumberOfPlayersScreen;
+    public ImprovedSelectNumPlayers selectNumberOfPlayersScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
     public PlaceFlagsScreen placeFlagsScreen;
@@ -97,7 +94,7 @@ public class RoboRallyGame extends Game {
         settingsScreen = new SettingsScreen(this);
 
         endGameScreen = new EndGameScreen(this);
-        selectNumberOfPlayersScreen = new SelectNumberOfPlayersScreen(this);
+        selectNumberOfPlayersScreen = new ImprovedSelectNumPlayers(this);
         selectSkinScreen = new SelectSkinScreen(this);
         selectMapScreen = new SelectMapScreen(this);
 

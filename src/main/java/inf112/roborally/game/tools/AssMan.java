@@ -236,6 +236,9 @@ public class AssMan {
     public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA =
             new AssetDescriptor<>("assets/fonts/groteskia.fnt", BitmapFont.class);
 
+    public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA_ITALIC =
+            new AssetDescriptor<>("assets/fonts/groteskia_italic.fnt", BitmapFont.class);
+
     // TextFieldScreen
     public static final AssetDescriptor<Texture> TEXT_FIELD_BG
             = new AssetDescriptor<>("assets/screens/inputfieldscreen/text_field_bg.png", Texture.class);
@@ -257,6 +260,7 @@ public class AssMan {
     public static void load() {
         //Font
         manager.load(FONT_GROTESKIA);
+        manager.load(FONT_GROTESKIA_ITALIC);
         //Music
         manager.load(SOUND_PLAYER_LASER);
         manager.load(SOUND_PLAYER_REPAIR);

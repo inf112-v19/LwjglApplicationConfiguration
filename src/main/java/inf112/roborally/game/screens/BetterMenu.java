@@ -102,7 +102,7 @@ public class BetterMenu extends BasicScreen {
 
     public void setScreen(Screen screen) {
         game.setScreen(screen);
-        dispose();
+//        dispose();
     }
 
     private void singleplayer() {

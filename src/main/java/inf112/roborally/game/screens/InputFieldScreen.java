@@ -48,8 +48,19 @@ public abstract class InputFieldScreen extends BasicScreen {
             }
         });
         left = ButtonFactory.createArrowLeftButton();
+        left.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                goLeft();
+            }
+        });
         right = ButtonFactory.createArrowRightButton();
-
+        right.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                goRight();
+            }
+        });
         stage.addActor(confirm);
         stage.addActor(text);
         stage.addActor(left);
@@ -60,7 +71,18 @@ public abstract class InputFieldScreen extends BasicScreen {
 
     protected void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) Gdx.app.exit();
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) confirmInput();
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+            confirmInput();
+            AssMan.manager.get(AssMan.SOUND_BUTTON_CLICKED).play(.5f);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+            goLeft();
+            AssMan.manager.get(AssMan.SOUND_BUTTON_CLICKED).play(.5f);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+            goRight();
+            AssMan.manager.get(AssMan.SOUND_BUTTON_CLICKED).play(.5f);
+        }
     }
 
     protected void setFieldVisible(boolean visible) {
@@ -73,5 +95,13 @@ public abstract class InputFieldScreen extends BasicScreen {
     }
 
     protected abstract boolean confirmInput();
+
+    protected void goRight() {
+        // By default do nothing
+    }
+
+    protected void goLeft(){
+        // By default do nothing
+    }
 
 }
