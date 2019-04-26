@@ -109,6 +109,8 @@ public abstract class SelectScreen implements Screen {
 
         Gdx.gl.glClearColor(0 / 255f, 20 / 255f, 15 / 255f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stage.act();
         stage.draw();
 
         handleInput();
