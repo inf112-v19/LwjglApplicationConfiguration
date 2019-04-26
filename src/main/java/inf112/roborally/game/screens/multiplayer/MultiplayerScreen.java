@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
 import inf112.roborally.game.screens.BetterMenu;
+import inf112.roborally.game.screens.setup.ImprovedSelectNumPlayers;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class MultiplayerScreen extends BasicScreen {
@@ -26,13 +27,11 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new NameScreen(game) {
-                    @Override
-                    protected void confirmInput() {
-                        game.playerName = text.getText();
-                        game.setScreen(new JoinServerScreen(game, this));
-                    }
-                });
+
+                NameScreen nameScreen = new NameScreen(game);
+                Screen nextScreenForNameScreen = new JoinServerScreen(game, nameScreen);
+                nameScreen.setNextScreen(nextScreenForNameScreen);
+                game.setScreen(nameScreen);
                 dispose();
             }
         });
@@ -45,13 +44,10 @@ public class MultiplayerScreen extends BasicScreen {
             public void clicked(InputEvent event, float x, float y) {
 //                Screen screen = new HostServerScreen(game);
 //                game.setScreen(screen);
-                game.setScreen(new NameScreen(game) {
-                    @Override
-                    protected void confirmInput() {
-                        game.playerName = text.getText();
-                        game.setScreen(new HostServerScreen(game, this));
-                    }
-                });
+                NameScreen nameScreen = new NameScreen(game);
+                Screen nextScreenForNameScreen = new HostServerScreen(game,nameScreen);
+                nameScreen.setNextScreen(nextScreenForNameScreen);
+                game.setScreen(nameScreen);
                 dispose();
             }
         });

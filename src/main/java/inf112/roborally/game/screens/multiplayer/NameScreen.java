@@ -6,9 +6,15 @@ import inf112.roborally.game.screens.InputFieldScreen;
 
 public class NameScreen extends InputFieldScreen {
 
+    private Screen nextScreen;
+
     public NameScreen(RoboRallyGame game){
         super(game);
         text.setText("'Your name'");
+    }
+
+    public void setNextScreen(Screen nextScreen){
+        this.nextScreen = nextScreen;
     }
 
     @Override
@@ -23,5 +29,8 @@ public class NameScreen extends InputFieldScreen {
         if (!clicked || text.getText().length() < 3) return;
         System.out.println(text.getText());
         game.setPlayerName(text.getText());
+        if(nextScreen != null){
+            game.setScreen(nextScreen);
+        }
     }
 }
