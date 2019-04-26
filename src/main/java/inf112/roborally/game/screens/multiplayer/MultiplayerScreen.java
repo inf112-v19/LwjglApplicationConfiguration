@@ -18,7 +18,9 @@ public class MultiplayerScreen extends BasicScreen {
 
     public MultiplayerScreen(final RoboRallyGame game) {
         super(game);
-        this.nameScreen = new NameScreen(game);
+        this.nameScreen = new NameScreen(game, this);
+        final ImprovedSelectNumPlayers selectNumPlayers = new ImprovedSelectNumPlayers(game);
+        selectNumPlayers.setPreviousScreen(this);
 
         TextButton join = ButtonFactory.createTextButton("Join Session", 2);
         join.setTransform(true);
@@ -27,12 +29,10 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
-                NameScreen nameScreen = new NameScreen(game);
                 Screen nextScreenForNameScreen = new JoinServerScreen(game, nameScreen);
                 nameScreen.setNextScreen(nextScreenForNameScreen);
                 game.setScreen(nameScreen);
-                dispose();
+                //dispose();
             }
         });
         TextButton create = ButtonFactory.createTextButton("Create Session", 2);
@@ -44,11 +44,16 @@ public class MultiplayerScreen extends BasicScreen {
             public void clicked(InputEvent event, float x, float y) {
 //                Screen screen = new HostServerScreen(game);
 //                game.setScreen(screen);
-                NameScreen nameScreen = new NameScreen(game);
-                Screen nextScreenForNameScreen = new HostServerScreen(game,nameScreen);
+
+
+                nameScreen = new NameScreen(game, selectNumPlayers);
+                selectNumPlayers.setNextScreen(nameScreen);
+
+                Screen nextScreenForNameScreen = new HostServerScreen(game, nameScreen);
                 nameScreen.setNextScreen(nextScreenForNameScreen);
-                game.setScreen(nameScreen);
-                dispose();
+
+                game.setScreen(selectNumPlayers);
+                //dispose();
             }
         });
 

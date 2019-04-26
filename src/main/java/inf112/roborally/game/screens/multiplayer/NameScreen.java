@@ -7,9 +7,11 @@ import inf112.roborally.game.screens.InputFieldScreen;
 public class NameScreen extends InputFieldScreen {
 
     private Screen nextScreen;
+    private Screen previousScreen;
 
-    public NameScreen(RoboRallyGame game){
+    public NameScreen(RoboRallyGame game, Screen previousScreen){
         super(game);
+        this.previousScreen = previousScreen;
         text.setText("'Your name'");
     }
 
@@ -19,9 +21,11 @@ public class NameScreen extends InputFieldScreen {
 
     @Override
     public void goToPreviousScreen(){
-        MultiplayerScreen multiplayerScreen = new MultiplayerScreen(game);
-        game.setScreen(multiplayerScreen);
-        dispose();
+        game.setScreen(previousScreen);
+
+        //MultiplayerScreen multiplayerScreen = new MultiplayerScreen(game);
+        //game.setScreen(multiplayerScreen);
+        //dispose();
     }
 
     @Override
