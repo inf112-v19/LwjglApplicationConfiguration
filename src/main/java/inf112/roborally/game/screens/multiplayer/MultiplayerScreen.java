@@ -32,8 +32,14 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                nameScreen.setNextScreen(joinServerScreen);
-               game.setScreen(nameScreen);
+                game.setScreen(new NameScreen(game) {
+                    @Override
+                    protected void confirmInput() {
+                        game.playerName = text.getText();
+                        game.setScreen(new JoinServerScreen(game));
+                    }
+                });
+                dispose();
             }
         });
         TextButton create = ButtonFactory.createTextButton("Create Session", 2);
@@ -43,8 +49,16 @@ public class MultiplayerScreen extends BasicScreen {
         create.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                nameScreen.setNextScreen(hostServerScreen);
-               game.setScreen(nameScreen);
+//                Screen screen = new HostServerScreen(game);
+//                game.setScreen(screen);
+                game.setScreen(new NameScreen(game) {
+                    @Override
+                    protected void confirmInput() {
+                        game.playerName = text.getText();
+                        game.setScreen(new HostServerScreen(game));
+                    }
+                });
+                dispose();
             }
         });
 

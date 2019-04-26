@@ -118,8 +118,11 @@ public class AssMan {
     public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN_PLACE_FLAGS
             = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenPlaceFlags.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> SETUP_CHECK_FLAG
-            = new AssetDescriptor<>("assets/screens/setupscreen/checkflag.png", Texture.class);
+    public static final AssetDescriptor<Texture> SETUP_PLACEFLAGS_BACKGROUND
+            = new AssetDescriptor<>("assets/screens/setupscreen/placeFlags.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> SETUP_BLACK_BACKGROUND
+            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenblack.png", Texture.class);
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
@@ -233,6 +236,9 @@ public class AssMan {
     public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA =
             new AssetDescriptor<>("assets/fonts/groteskia.fnt", BitmapFont.class);
 
+    public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA_ITALIC =
+            new AssetDescriptor<>("assets/fonts/groteskia_italic.fnt", BitmapFont.class);
+
     // TextFieldScreen
     public static final AssetDescriptor<Texture> TEXT_FIELD_BG
             = new AssetDescriptor<>("assets/screens/inputfieldscreen/text_field_bg.png", Texture.class);
@@ -254,6 +260,7 @@ public class AssMan {
     public static void load() {
         //Font
         manager.load(FONT_GROTESKIA);
+        manager.load(FONT_GROTESKIA_ITALIC);
         //Music
         manager.load(SOUND_PLAYER_LASER);
         manager.load(SOUND_PLAYER_REPAIR);
@@ -299,7 +306,8 @@ public class AssMan {
         manager.load(SETUP_SETUP_SCREEN);
         manager.load(SETUP_SELECT_SKIN_TEXT);
         manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
-        manager.load(SETUP_CHECK_FLAG);
+        manager.load(SETUP_PLACEFLAGS_BACKGROUND);
+        manager.load(SETUP_BLACK_BACKGROUND);
 
         //Program register
         manager.load(REGISTER_PROGRAM_REGISTER);

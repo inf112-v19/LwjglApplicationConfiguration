@@ -17,6 +17,7 @@ public class SelectMapScreen extends SelectScreen {
 
     public SelectMapScreen(final RoboRallyGame game) {
         super(game, AssMan.getMapChoices(), AssMan.getMapChoices().length);
+        setInformationLabel("map");
     }
 
 

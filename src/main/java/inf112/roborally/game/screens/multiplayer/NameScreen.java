@@ -20,17 +20,10 @@ public class NameScreen extends InputFieldScreen {
     }
 
     @Override
-    protected boolean confirmInput() {
-        if (!clicked || text.getText().length() < 3) return false;
+    protected void confirmInput() {
+        if (!clicked || text.getText().length() < 3) return;
+        System.out.println(text.getText());
         game.setPlayerName(text.getText());
-        System.out.println("PlayerName: " + game.playerName);
-        if(nextScreen != null) {
-            game.setScreen(nextScreen);
-        }else{
-            System.out.println("nextScreen is not set");
-            return false;
-        }
-        return true;
     }
 
     @Override

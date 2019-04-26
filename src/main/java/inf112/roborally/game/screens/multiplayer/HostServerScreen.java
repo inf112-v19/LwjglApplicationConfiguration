@@ -41,9 +41,8 @@ public class HostServerScreen extends InputFieldScreen {
     }
 
     @Override
-    protected boolean confirmInput() {
+    protected void confirmInput() {
         System.out.println(game.playerName + " wants to start the game.");
-        return true;
     }
 
     @Override
