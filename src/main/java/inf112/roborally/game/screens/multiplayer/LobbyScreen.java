@@ -38,8 +38,7 @@ public class LobbyScreen extends InputFieldScreen {
     }
 
     @Override
-    protected boolean confirmInput() {
-        return false;
+    protected void confirmInput() {
     }
 
     @Override

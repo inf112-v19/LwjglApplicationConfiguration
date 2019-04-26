@@ -12,18 +12,17 @@ public class SelectNumberOfPlayersScreen extends InputFieldScreen {
     }
 
     @Override
-    protected boolean confirmInput() {
+    protected void confirmInput() {
         if(!clicked) {
             done(0);
-            return true;
+            return;
         }
         else if(!isNumericAndInScope(text.getText())) {
-            return false;
+            return;
         }
 
         int chosenNumber = Integer.parseInt(text.getText());
-        done(chosenNumber);
-        return true;
+        done(chosenNumber);;
     }
 
     private boolean isNumericAndInScope(String input) {

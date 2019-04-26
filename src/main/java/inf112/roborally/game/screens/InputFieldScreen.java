@@ -19,7 +19,8 @@ public abstract class InputFieldScreen extends BasicScreen {
     protected TextField text;
     protected boolean clicked = false;
     protected TextButton confirm;
-    protected ImageButton left, right;
+
+    private ImageButton left, right;
 
     public InputFieldScreen(RoboRallyGame game) {
         super(game);
@@ -94,7 +95,7 @@ public abstract class InputFieldScreen extends BasicScreen {
         right.setVisible(visible);
     }
 
-    protected abstract boolean confirmInput();
+    protected abstract void confirmInput();
 
     protected void goRight() {
         // By default do nothing

@@ -23,10 +23,9 @@ public class MultiplayerScreen extends BasicScreen {
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new NameScreen(game) {
                     @Override
-                    protected boolean confirmInput() {
+                    protected void confirmInput() {
                         game.playerName = text.getText();
                         game.setScreen(new JoinServerScreen(game));
-                        return true;
                     }
                 });
                 dispose();
@@ -43,10 +42,9 @@ public class MultiplayerScreen extends BasicScreen {
 //                game.setScreen(screen);
                 game.setScreen(new NameScreen(game) {
                     @Override
-                    protected boolean confirmInput() {
+                    protected void confirmInput() {
                         game.playerName = text.getText();
                         game.setScreen(new HostServerScreen(game));
-                        return true;
                     }
                 });
                 dispose();

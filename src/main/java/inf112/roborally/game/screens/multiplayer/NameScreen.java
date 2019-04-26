@@ -18,10 +18,9 @@ public class NameScreen extends InputFieldScreen {
     }
 
     @Override
-    protected boolean confirmInput() {
-        if (!clicked || text.getText().length() < 3) return false;
+    protected void confirmInput() {
+        if (!clicked || text.getText().length() < 3) return;
         System.out.println(text.getText());
         game.setPlayerName(text.getText());
-        return true;
     }
 }

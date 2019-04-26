@@ -37,10 +37,9 @@ public class ImprovedSelectNumPlayers extends InputFieldScreen {
     }
 
     @Override
-    protected boolean confirmInput() {
+    protected void confirmInput() {
         game.setNumberOfChosenPlayers(nPlayers);
         game.setScreen(game.selectSkinScreen);
-        return true;
     }
 
     @Override
