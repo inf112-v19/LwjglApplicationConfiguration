@@ -11,15 +11,12 @@ public class JoinServerScreen extends InputFieldScreen {
     private String ip;
 
     private Screen previousScreen;
-    private Screen nextScreen;
 
     public JoinServerScreen(final RoboRallyGame game, Screen previousScreen) {
         super(game);
         text.setText("'Enter server ip'");
         confirm.setText("Connect");
         this.previousScreen = previousScreen;
-        nextScreen = new LobbyScreen(game, this);
-
     }
 
     @Override
@@ -33,13 +30,13 @@ public class JoinServerScreen extends InputFieldScreen {
         ip = text.getText();
         game.joinGame(ip);
         System.out.println("Trying to connect to: " + ip);
-        Screen s = new LobbyScreen(game);
+        Screen s = new LobbyScreen(game, this);
         game.setScreen(s);
     }
 
     @Override
     public void dispose(){
         super.dispose();
-        nextScreen.dispose();
+        //dispose...
     }
 }

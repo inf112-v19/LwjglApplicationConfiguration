@@ -19,12 +19,6 @@ public class MultiplayerScreen extends BasicScreen {
         super(game);
         this.nameScreen = new NameScreen(game);
 
-        //--
-        final HostServerScreen hostServerScreen = new HostServerScreen(game, nameScreen);
-        final JoinServerScreen joinServerScreen = new JoinServerScreen(game, nameScreen);
-        //-- Created too early, need to fix
-
-
         TextButton join = ButtonFactory.createTextButton("Join Session", 2);
         join.setTransform(true);
         join.setWidth(700);
@@ -36,7 +30,7 @@ public class MultiplayerScreen extends BasicScreen {
                     @Override
                     protected void confirmInput() {
                         game.playerName = text.getText();
-                        game.setScreen(new JoinServerScreen(game));
+                        game.setScreen(new JoinServerScreen(game, this));
                     }
                 });
                 dispose();
@@ -55,7 +49,7 @@ public class MultiplayerScreen extends BasicScreen {
                     @Override
                     protected void confirmInput() {
                         game.playerName = text.getText();
-                        game.setScreen(new HostServerScreen(game));
+                        game.setScreen(new HostServerScreen(game, this));
                     }
                 });
                 dispose();
