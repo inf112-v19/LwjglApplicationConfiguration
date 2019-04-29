@@ -6,7 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.screens.BetterMenu;
 import inf112.roborally.game.screens.InputFieldScreen;
+import inf112.roborally.game.screens.multiplayer.MultiplayerScreen;
 import inf112.roborally.game.tools.AssMan;
 
 
@@ -78,6 +80,7 @@ public class ImprovedSelectNumPlayers extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        game.setScreen(previousScreen);
+        BetterMenu s = new BetterMenu(game);
+        game.setScreen(s);
     }
 }
