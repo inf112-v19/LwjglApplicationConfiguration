@@ -2,18 +2,26 @@ package inf112.roborally.game.screens.multiplayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
 import inf112.roborally.game.screens.BetterMenu;
+import inf112.roborally.game.screens.setup.ImprovedSelectNumPlayers;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class MultiplayerScreen extends BasicScreen {
 
+    private NameScreen nameScreen;
+
     public MultiplayerScreen(final RoboRallyGame game) {
         super(game);
+        this.nameScreen = new NameScreen(game, this);
+        final ImprovedSelectNumPlayers selectNumPlayers = new ImprovedSelectNumPlayers(game);
+        selectNumPlayers.setPreviousScreen(this);
+
         TextButton join = ButtonFactory.createTextButton("Join Session", 2);
         join.setTransform(true);
         join.setWidth(700);
@@ -21,14 +29,10 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new NameScreen(game) {
-                    @Override
-                    protected void confirmInput() {
-                        game.playerName = text.getText();
-                        game.setScreen(new JoinServerScreen(game));
-                    }
-                });
-                dispose();
+                Screen nextScreenForNameScreen = new JoinServerScreen(game, nameScreen);
+                nameScreen.setNextScreen(nextScreenForNameScreen);
+                game.setScreen(nameScreen);
+                //dispose();
             }
         });
         TextButton create = ButtonFactory.createTextButton("Create Session", 2);
@@ -40,14 +44,16 @@ public class MultiplayerScreen extends BasicScreen {
             public void clicked(InputEvent event, float x, float y) {
 //                Screen screen = new HostServerScreen(game);
 //                game.setScreen(screen);
-                game.setScreen(new NameScreen(game) {
-                    @Override
-                    protected void confirmInput() {
-                        game.playerName = text.getText();
-                        game.setScreen(new HostServerScreen(game));
-                    }
-                });
-                dispose();
+
+
+                nameScreen = new NameScreen(game, selectNumPlayers);
+                selectNumPlayers.setNextScreen(nameScreen);
+
+                Screen nextScreenForNameScreen = new HostServerScreen(game, nameScreen);
+                nameScreen.setNextScreen(nextScreenForNameScreen);
+
+                game.setScreen(selectNumPlayers);
+                //dispose();
             }
         });
 

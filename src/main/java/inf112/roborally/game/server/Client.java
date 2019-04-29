@@ -6,7 +6,6 @@ import inf112.roborally.game.enums.Rotate;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
@@ -20,7 +19,7 @@ Akkurat nå så klarer den kun å sende Strings, Stringen blir lest ved å bli d
 Første del er TAG/Kodeord, den andre er selve payload
 Pga dette kan man ikke ha mellomrom i navnet sitt atm
  */
-public class ChatClient implements Runnable{
+public class Client implements Runnable{
 
     private final String host;
     private final int port;
@@ -28,7 +27,7 @@ public class ChatClient implements Runnable{
     private ArrayList<ProgramCard> chosenCards;
     private String name;
 
-    public ChatClient(String host, int port, RoboRallyGame game, String name) {
+    public Client(String host, int port, RoboRallyGame game, String name) {
         this.host = host;
         this.port = port;
         this.game = game;
@@ -43,7 +42,7 @@ public class ChatClient implements Runnable{
             Bootstrap bootstrap = new Bootstrap()
                     .group(group)
                     .channel(NioSocketChannel.class)
-                    .handler(new ChatClientInit());
+                    .handler(new ClientInit());
             Channel channel = null;
             try {
                 channel = bootstrap.connect(host, port).sync().channel();
@@ -75,7 +74,7 @@ public class ChatClient implements Runnable{
     }
 /*
     public static void main(String[] args) throws Exception {
-        new ChatClient("10.111.35.178", 8000).run();
+        new Client("10.111.35.178", 8000).run();
     }
     */
 }

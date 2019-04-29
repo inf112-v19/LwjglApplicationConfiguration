@@ -8,11 +8,11 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
-public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
+public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     private final RoboRallyGame game;
 
-    public ChatServerHandler(RoboRallyGame game) {
+    public ServerHandler(RoboRallyGame game) {
         this.game = game;
     }
 
@@ -54,9 +54,9 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
         String[] split = packet.split(" ");
 
         if(split[0].equals("HANDSHAKE")){
-            System.out.println(split[1] + " has connected!");
+//            System.out.println(split[1] + " has connected!");
             for (Channel channel : channels) {
-                   channel.writeAndFlush(split[1] + " has connected!");
+                   channel.writeAndFlush(split[1] + " has connected!\n");
             }
         }
     }

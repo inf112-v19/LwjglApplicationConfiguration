@@ -13,9 +13,11 @@ import java.net.UnknownHostException;
 public class HostServerScreen extends InputFieldScreen {
     private String ip;
     private Label label;
+    private Screen previousScreen;
 
-    public HostServerScreen(RoboRallyGame game) {
+    public HostServerScreen(RoboRallyGame game, Screen previousScreen) {
         super(game);
+        this.previousScreen = previousScreen;
         game.startServer();
         try {
             ip = InetAddress.getLocalHost().getHostAddress();
@@ -23,7 +25,7 @@ public class HostServerScreen extends InputFieldScreen {
         catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        game.joinGame("127.0.0.1"); //Replace with "ip" after
+        game.joinGame(ip);
         label = new Label("Server Ip: " + ip, labelStyle);
         label.setPosition(1920 / 2, 1080 / 2, Align.center);
         label.setAlignment(Align.center);
@@ -35,9 +37,7 @@ public class HostServerScreen extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        Screen nameScreen = new NameScreen(game);
-        game.setScreen(nameScreen);
-        dispose();
+        game.setScreen(previousScreen);
     }
 
     @Override

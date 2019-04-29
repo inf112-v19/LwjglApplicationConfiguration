@@ -23,8 +23,9 @@ public class SelectSkinScreen extends SelectScreen {
         }
 
         game.setScreen(game.selectMapScreen);
-        dispose();
+        //dispose();
     }
+
 
     public int getChoiceIndex(){
         return choiceIndex;
