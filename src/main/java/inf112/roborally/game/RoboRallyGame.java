@@ -13,8 +13,8 @@ import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.*;
 import inf112.roborally.game.screens.setup.*;
-import inf112.roborally.game.server.ChatClient;
-import inf112.roborally.game.server.ChatServer;
+import inf112.roborally.game.server.Client;
+import inf112.roborally.game.server.Server;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
@@ -63,8 +63,8 @@ public class RoboRallyGame extends Game {
      * The screen that was active before setting a new screen with {@link #setScreen(Screen)}
      */
     private Screen screenBefore;
-    public ChatServer server;
-    public ChatClient client;
+    public Server server;
+    public Client client;
 
     public ArrayList<String> playerNames;
     public Board board;
@@ -235,7 +235,7 @@ public class RoboRallyGame extends Game {
     public void joinGame(String ip) {
         System.out.println(playerName + " wants to connect to " + ip);
         try {
-            client = new ChatClient(ip, 8000, this, playerName);
+            client = new Client(ip, 8000, this, playerName);
             new Thread(client).start();
         }
         catch (Exception e) {
@@ -256,7 +256,7 @@ public class RoboRallyGame extends Game {
     }
 
     public void startServer() {
-        server = new ChatServer(8000, this);
+        server = new Server(8000, this);
         new Thread(server).start();
     }
 

@@ -5,7 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class ChatClientHandler extends ChannelInboundHandlerAdapter {
+public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
         System.out.println(o.toString());

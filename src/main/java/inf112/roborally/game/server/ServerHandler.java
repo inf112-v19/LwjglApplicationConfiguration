@@ -8,11 +8,11 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
-public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
+public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     private final RoboRallyGame game;
 
-    public ChatServerHandler(RoboRallyGame game) {
+    public ServerHandler(RoboRallyGame game) {
         this.game = game;
     }
 
