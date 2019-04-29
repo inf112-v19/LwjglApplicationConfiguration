@@ -94,9 +94,9 @@ public class RoboRallyGame extends Game {
         settingsScreen = new SettingsScreen(this);
 
         endGameScreen = new EndGameScreen(this);
-        selectNumberOfPlayersScreen = new ImprovedSelectNumPlayers(this);
-        selectSkinScreen = new SelectSkinScreen(this);
         selectMapScreen = new SelectMapScreen(this);
+        selectSkinScreen = new SelectSkinScreen(this);
+        selectNumberOfPlayersScreen = new ImprovedSelectNumPlayers(this);
 
         testScreen = new TestScreen(this);
         laserTestScreen = new LaserTestScreen(this);
