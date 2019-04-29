@@ -6,11 +6,11 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class ChatClientHandler extends ChannelInboundHandlerAdapter {
+public class ClientHandler extends ChannelInboundHandlerAdapter {
 
     private final RoboRallyGame game;
 
-    public ChatClientHandler(RoboRallyGame game) {
+    public ClientHandler(RoboRallyGame game) {
         this.game = game;
     }
 

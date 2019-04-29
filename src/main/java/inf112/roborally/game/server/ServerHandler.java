@@ -8,11 +8,11 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
-public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
+public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     private final RoboRallyGame game;
 
-    public ChatServerHandler(RoboRallyGame game) {
+    public ServerHandler(RoboRallyGame game) {
         this.game = game;
     }
 
@@ -24,7 +24,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
     }
 
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx){
+    public void handlerRemoved(ChannelHandlerContext ctx) {
         Channel incoming = ctx.channel();
         for (Channel channel : channels) {
             channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has left\n");
@@ -61,12 +61,13 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
                 channel.writeAndFlush("PLAY" + split[1]);
             }
         }
-        if( split[0].equals("START")){
+        if (split[0].equals("START")) {
             for (Channel channel :
                     channels) {
                 channel.writeAndFlush("START" + split[1]);
-            }
-        }
-    }
 
+                }
+            }
+    }
 }
+
