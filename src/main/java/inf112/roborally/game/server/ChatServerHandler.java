@@ -20,12 +20,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void handlerAdded(ChannelHandlerContext ctx) {
-        Channel incoming = ctx.channel();
-        for (Channel channel : channels) {
-            channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has joined\n");
-        }
         channels.add(ctx.channel());
-        game.playerNames.add(ctx.channel().toString());
     }
 
     @Override
@@ -53,10 +48,23 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
         String packet = msg.toString();
         String[] split = packet.split(" ");
 
-        if(split[0].equals("HANDSHAKE")){
+        if (split[0].equals("HANDSHAKE")) {
             System.out.println(split[1] + " has connected!");
+            game.playerNames.add(split[1]);
             for (Channel channel : channels) {
-                   channel.writeAndFlush(split[1] + " has connected!");
+                channel.writeAndFlush(split[1] + " has connected!");
+            }
+        }
+        if (split[0].equals("PLAY")) {
+            for (Channel channel :
+                    channels) {
+                channel.writeAndFlush("PLAY" + split[1]);
+            }
+        }
+        if( split[0].equals("START")){
+            for (Channel channel :
+                    channels) {
+                channel.writeAndFlush("START" + split[1]);
             }
         }
     }

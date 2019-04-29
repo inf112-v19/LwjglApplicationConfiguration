@@ -3,6 +3,7 @@ package inf112.roborally.game.server;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.player.Player;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
@@ -14,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 /*
 Akkurat nå så klarer den kun å sende Strings, Stringen blir lest ved å bli delt opp i 2, den deles ved mellomrom.
@@ -27,6 +29,8 @@ public class ChatClient implements Runnable{
     private RoboRallyGame game;
     private ArrayList<ProgramCard> chosenCards;
     private String name;
+    private List<Player> playersConnected;
+    Channel channel;
 
     public ChatClient(String host, int port, RoboRallyGame game, String name) {
         this.host = host;
@@ -43,8 +47,8 @@ public class ChatClient implements Runnable{
             Bootstrap bootstrap = new Bootstrap()
                     .group(group)
                     .channel(NioSocketChannel.class)
-                    .handler(new ChatClientInit());
-            Channel channel = null;
+                    .handler(new ChatClientInit(game));
+             channel = null;
             try {
                 channel = bootstrap.connect(host, port).sync().channel();
             }
@@ -72,6 +76,16 @@ public class ChatClient implements Runnable{
         finally {
             group.shutdownGracefully();
         }
+    }
+    public void sendMessage(String s){
+        channel.writeAndFlush(s );
+    }
+
+    public Channel getChannel(){
+        return this.channel;
+    }
+    public List<Player> getPlayers(){
+        return playersConnected;
     }
 /*
     public static void main(String[] args) throws Exception {

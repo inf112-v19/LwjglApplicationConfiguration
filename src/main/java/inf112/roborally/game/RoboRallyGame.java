@@ -16,6 +16,7 @@ import inf112.roborally.game.screens.setup.*;
 import inf112.roborally.game.server.ChatClient;
 import inf112.roborally.game.server.ChatServer;
 import inf112.roborally.game.tools.AssMan;
+import io.netty.channel.Channel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -42,7 +42,14 @@ public class HostServerScreen extends InputFieldScreen {
 
     @Override
     protected void confirmInput() {
+        System.out.println(game.playerNames.size());
+        System.out.println(game.playerNames);
+        for (String s :
+                game.playerNames) {
+            game.client.sendMessage("START " + s);
+        }
         System.out.println(game.playerName + " wants to start the game.");
+
     }
 
     @Override
@@ -50,4 +57,5 @@ public class HostServerScreen extends InputFieldScreen {
         super.render(v);
         //System.out.println(game.players);
     }
+
 }
