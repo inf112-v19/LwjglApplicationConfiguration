@@ -10,7 +10,7 @@ import inf112.roborally.game.tools.AssMan;
 
 
 public class ImprovedSelectNumPlayers extends InputFieldScreen {
-    private final int minPlayers = 1;
+    private final int minPlayers = 2;
     private final int maxPlayers = 8;
     private Label number;
     private int nPlayers;
