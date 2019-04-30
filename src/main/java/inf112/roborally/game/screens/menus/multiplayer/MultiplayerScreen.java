@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens.multiplayer;
+package inf112.roborally.game.screens.menus.multiplayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
-import inf112.roborally.game.screens.BetterMenu;
-import inf112.roborally.game.screens.setup.ImprovedSelectNumPlayers;
+import inf112.roborally.game.screens.menus.MenuScreen;
+import inf112.roborally.game.screens.menus.setup.SelectNumPlayers;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class MultiplayerScreen extends BasicScreen {
@@ -19,7 +19,7 @@ public class MultiplayerScreen extends BasicScreen {
     public MultiplayerScreen(final RoboRallyGame game) {
         super(game);
         this.nameScreen = new NameScreen(game, this);
-        final ImprovedSelectNumPlayers selectNumPlayers = new ImprovedSelectNumPlayers(game);
+        final SelectNumPlayers selectNumPlayers = new SelectNumPlayers(game);
         selectNumPlayers.setPreviousScreen(this);
 
         TextButton join = ButtonFactory.createTextButton("Join Session", 2);
@@ -63,7 +63,7 @@ public class MultiplayerScreen extends BasicScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        BetterMenu menu = new BetterMenu(game);
+        MenuScreen menu = new MenuScreen(game);
         game.setScreen(menu);
         dispose();
     }

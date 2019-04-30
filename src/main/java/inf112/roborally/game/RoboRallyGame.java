@@ -12,11 +12,17 @@ import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.*;
+import inf112.roborally.game.screens.menus.EndGameScreen;
+import inf112.roborally.game.screens.menus.MenuScreen;
+import inf112.roborally.game.screens.menus.SettingsScreen;
+import inf112.roborally.game.screens.menus.setup.PlaceFlagsScreen;
+import inf112.roborally.game.screens.menus.setup.SelectMapScreen;
+import inf112.roborally.game.screens.menus.setup.SelectNumPlayers;
+import inf112.roborally.game.screens.menus.setup.SelectSkinScreen;
 import inf112.roborally.game.screens.setup.*;
 import inf112.roborally.game.server.Client;
 import inf112.roborally.game.server.Server;
 import inf112.roborally.game.tools.AssMan;
-import io.netty.channel.Channel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +53,7 @@ public class RoboRallyGame extends Game {
 
     public SpriteBatch batch;
 
-    public ImprovedSelectNumPlayers selectNumberOfPlayersScreen;
+    public SelectNumPlayers selectNumberOfPlayersScreen;
     public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
     public PlaceFlagsScreen placeFlagsScreen;
@@ -97,12 +103,12 @@ public class RoboRallyGame extends Game {
         endGameScreen = new EndGameScreen(this);
         selectMapScreen = new SelectMapScreen(this);
         selectSkinScreen = new SelectSkinScreen(this);
-        selectNumberOfPlayersScreen = new ImprovedSelectNumPlayers(this);
+        selectNumberOfPlayersScreen = new SelectNumPlayers(this);
 
         testScreen = new TestScreen(this);
         laserTestScreen = new LaserTestScreen(this);
 
-        setScreen(new BetterMenu(this));
+        setScreen(new MenuScreen(this));
     }
 
     /**

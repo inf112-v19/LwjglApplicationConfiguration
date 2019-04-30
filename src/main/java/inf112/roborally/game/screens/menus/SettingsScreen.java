@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens;
+package inf112.roborally.game.screens.menus;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.screens.BasicScreen;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class SettingsScreen extends BasicScreen {

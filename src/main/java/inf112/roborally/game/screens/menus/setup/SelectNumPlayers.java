@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens.setup;
+package inf112.roborally.game.screens.menus.setup;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -6,13 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.screens.BetterMenu;
+import inf112.roborally.game.screens.menus.MenuScreen;
 import inf112.roborally.game.screens.InputFieldScreen;
-import inf112.roborally.game.screens.multiplayer.MultiplayerScreen;
 import inf112.roborally.game.tools.AssMan;
 
 
-public class ImprovedSelectNumPlayers extends InputFieldScreen {
+public class SelectNumPlayers extends InputFieldScreen {
     private final int minPlayers = 2;
     private final int maxPlayers = 8;
     private Label number;
@@ -21,7 +20,7 @@ public class ImprovedSelectNumPlayers extends InputFieldScreen {
     private Screen nextScreen;
     private Screen previousScreen;
 
-    public ImprovedSelectNumPlayers(RoboRallyGame game) {
+    public SelectNumPlayers(RoboRallyGame game) {
         super(game);
         nPlayers = 4;
         text.setVisible(false);
@@ -80,7 +79,7 @@ public class ImprovedSelectNumPlayers extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        BetterMenu s = new BetterMenu(game);
+        MenuScreen s = new MenuScreen(game);
         game.setScreen(s);
     }
 }

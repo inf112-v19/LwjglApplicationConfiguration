@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens.setup;
+package inf112.roborally.game.screens.menus.setup;
 
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.player.Player;
@@ -12,18 +12,17 @@ import inf112.roborally.game.tools.AssMan;
 public class SelectSkinScreen extends SelectScreen {
 
     public SelectSkinScreen(final RoboRallyGame game) {
-        super(game, AssMan.getPlayerSkins(), AssMan.getPlayerSkins().length);
+        super(game, AssMan.getPlayerSkins());
         setInformationLabel("skin");
     }
 
     @Override
-    public void completeChoice() {
+    public void confirmInput() {
         for (Player player : game.board.getPlayers()) {
             player.setSkinTexture(AssMan.getPlayerSkins()[choiceIndex]);
         }
 
         game.setScreen(game.selectMapScreen);
-        //dispose();
     }
 
 

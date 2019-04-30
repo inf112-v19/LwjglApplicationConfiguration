@@ -49,14 +49,14 @@ public abstract class InputFieldScreen extends BasicScreen {
             }
         });
         left = ButtonFactory.createArrowLeftButton();
-        left.addListener(new ClickListener(){
+        left.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 goLeft();
             }
         });
         right = ButtonFactory.createArrowRightButton();
-        right.addListener(new ClickListener(){
+        right.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 goRight();
@@ -97,11 +97,12 @@ public abstract class InputFieldScreen extends BasicScreen {
 
     protected abstract void confirmInput();
 
+    // these are not abstract because the methods are optional
     protected void goRight() {
         // By default do nothing
     }
 
-    protected void goLeft(){
+    protected void goLeft() {
         // By default do nothing
     }
 

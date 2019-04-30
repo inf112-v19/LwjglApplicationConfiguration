@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens.setup;
+package inf112.roborally.game.screens.menus.setup;
 
 import com.badlogic.gdx.graphics.Texture;
 import inf112.roborally.game.RoboRallyGame;
@@ -16,13 +16,13 @@ public class SelectMapScreen extends SelectScreen {
     private PlaceFlagsScreen placeFlagsScreen;
 
     public SelectMapScreen(final RoboRallyGame game) {
-        super(game, AssMan.getMapChoices(), AssMan.getMapChoices().length);
+        super(game, AssMan.getMapChoices());
         setInformationLabel("map");
     }
 
 
     @Override
-    public void completeChoice() {
+    public void confirmInput() {
         mapTexture = AssMan.getMapChoices()[choiceIndex];
         game.board.createBoard(game.chosenMap(choiceIndex));
         game.board.findLaserGuns();

@@ -1,4 +1,4 @@
-package inf112.roborally.game.screens.multiplayer;
+package inf112.roborally.game.screens.menus.multiplayer;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
