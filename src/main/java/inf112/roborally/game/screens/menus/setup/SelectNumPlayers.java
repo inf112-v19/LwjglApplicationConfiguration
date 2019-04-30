@@ -40,9 +40,6 @@ public class SelectNumPlayers extends InputFieldScreen {
         t2.setPosition(1920/2, 880, Align.center);
         t2.add(label);
         stage.addActor(t2);
-
-        //Default
-        nextScreen = game.selectSkinScreen;
     }
 
 

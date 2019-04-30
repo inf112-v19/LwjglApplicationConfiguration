@@ -98,10 +98,13 @@ public class RoboRallyGame extends Game {
         batch = new SpriteBatch();
 
         settingsScreen = new SettingsScreen(this);
-
         endGameScreen = new EndGameScreen(this);
+
         selectNumberOfPlayersScreen = new SelectNumPlayers(this);
+
         selectSkinScreen = new SelectSkinScreen(this, selectNumberOfPlayersScreen);
+        selectNumberOfPlayersScreen.setNextScreen(selectSkinScreen);
+
         selectMapScreen = new SelectMapScreen(this, selectSkinScreen);
         testScreen = new TestScreen(this);
         laserTestScreen = new LaserTestScreen(this);
@@ -149,7 +152,7 @@ public class RoboRallyGame extends Game {
      * @see PlaceFlagsScreen
      */
     public void createCustomGameScreen() {
-        List<Player> players = createNumberOfPlayers(numberOfChosenPlayers); //Todo: Get user input
+        List<Player> players = createNumberOfPlayers(numberOfChosenPlayers);
         if(players != null){
             board.addPlayersToBoard(players);
         }else{
