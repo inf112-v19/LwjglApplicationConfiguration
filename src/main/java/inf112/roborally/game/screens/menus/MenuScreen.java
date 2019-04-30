@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
 import inf112.roborally.game.screens.menus.multiplayer.MultiplayerScreen;
+import inf112.roborally.game.screens.menus.multiplayer.NameScreen;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class MenuScreen extends BasicScreen {
@@ -113,7 +114,7 @@ public class MenuScreen extends BasicScreen {
     }
 
     private void multiplayer() {
-        Screen s = new MultiplayerScreen(game);
+        Screen s = new NameScreen(game, this);
         setScreen(s);
     }
 

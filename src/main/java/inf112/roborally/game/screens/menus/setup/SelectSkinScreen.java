@@ -1,5 +1,6 @@
 package inf112.roborally.game.screens.menus.setup;
 
+import com.badlogic.gdx.Screen;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
@@ -11,8 +12,11 @@ import inf112.roborally.game.tools.AssMan;
  */
 public class SelectSkinScreen extends SelectScreen {
 
-    public SelectSkinScreen(final RoboRallyGame game) {
+    private Screen previousScreen;
+
+    public SelectSkinScreen(final RoboRallyGame game, Screen previousScreen) {
         super(game, AssMan.getPlayerSkins());
+        this.previousScreen = previousScreen;
         setInformationLabel("skin");
     }
 
@@ -25,6 +29,10 @@ public class SelectSkinScreen extends SelectScreen {
         game.setScreen(game.selectMapScreen);
     }
 
+    @Override
+    public void goToPreviousScreen(){
+        game.setScreen(previousScreen);
+    }
 
     public int getChoiceIndex(){
         return choiceIndex;

@@ -1,5 +1,6 @@
 package inf112.roborally.game.screens.menus.setup;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.tools.AssMan;
@@ -15,8 +16,11 @@ public class SelectMapScreen extends SelectScreen {
 
     private PlaceFlagsScreen placeFlagsScreen;
 
-    public SelectMapScreen(final RoboRallyGame game) {
+    private Screen previousScreen;
+
+    public SelectMapScreen(final RoboRallyGame game, Screen previousScreen) {
         super(game, AssMan.getMapChoices());
+        this.previousScreen = previousScreen;
         setInformationLabel("map");
     }
 
@@ -29,6 +33,11 @@ public class SelectMapScreen extends SelectScreen {
         this.placeFlagsScreen = new PlaceFlagsScreen(game);
         game.setScreen(placeFlagsScreen);
         dispose();
+    }
+
+    @Override
+    public void goToPreviousScreen(){
+        game.setScreen(previousScreen);
     }
 
     public Texture getMapTexture(){

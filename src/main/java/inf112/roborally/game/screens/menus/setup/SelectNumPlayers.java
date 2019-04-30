@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.menus.MenuScreen;
 import inf112.roborally.game.screens.InputFieldScreen;
+import inf112.roborally.game.screens.menus.multiplayer.HostServerScreen;
 import inf112.roborally.game.tools.AssMan;
 
 
@@ -55,6 +56,10 @@ public class SelectNumPlayers extends InputFieldScreen {
         if(nextScreen != null){
             game.setScreen(nextScreen);
         }
+
+        if(nextScreen == null){
+            game.setScreen(new HostServerScreen(game, this));
+        }
     }
 
     @Override
@@ -79,7 +84,10 @@ public class SelectNumPlayers extends InputFieldScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        MenuScreen s = new MenuScreen(game);
-        game.setScreen(s);
+        if(previousScreen != null) {
+            game.setScreen(previousScreen);
+        }else{
+            game.setScreen(new MenuScreen(game));
+        }
     }
 }

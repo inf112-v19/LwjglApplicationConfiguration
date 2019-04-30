@@ -19,7 +19,6 @@ import inf112.roborally.game.screens.menus.setup.PlaceFlagsScreen;
 import inf112.roborally.game.screens.menus.setup.SelectMapScreen;
 import inf112.roborally.game.screens.menus.setup.SelectNumPlayers;
 import inf112.roborally.game.screens.menus.setup.SelectSkinScreen;
-import inf112.roborally.game.screens.setup.*;
 import inf112.roborally.game.server.Client;
 import inf112.roborally.game.server.Server;
 import inf112.roborally.game.tools.AssMan;
@@ -101,10 +100,9 @@ public class RoboRallyGame extends Game {
         settingsScreen = new SettingsScreen(this);
 
         endGameScreen = new EndGameScreen(this);
-        selectMapScreen = new SelectMapScreen(this);
-        selectSkinScreen = new SelectSkinScreen(this);
         selectNumberOfPlayersScreen = new SelectNumPlayers(this);
-
+        selectSkinScreen = new SelectSkinScreen(this, selectNumberOfPlayersScreen);
+        selectMapScreen = new SelectMapScreen(this, selectSkinScreen);
         testScreen = new TestScreen(this);
         laserTestScreen = new LaserTestScreen(this);
 

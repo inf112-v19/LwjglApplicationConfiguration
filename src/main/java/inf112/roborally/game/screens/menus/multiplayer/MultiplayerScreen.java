@@ -14,13 +14,14 @@ import inf112.roborally.game.tools.ButtonFactory;
 
 public class MultiplayerScreen extends BasicScreen {
 
-    private NameScreen nameScreen;
+    private Screen previousScreen;
 
-    public MultiplayerScreen(final RoboRallyGame game) {
+    public MultiplayerScreen(final RoboRallyGame game, Screen previousScreen) {
         super(game);
-        this.nameScreen = new NameScreen(game, this);
+        this.previousScreen = previousScreen;
         final SelectNumPlayers selectNumPlayers = new SelectNumPlayers(game);
         selectNumPlayers.setPreviousScreen(this);
+        final Screen joinServerScreen = new JoinServerScreen(game, this);
 
         TextButton join = ButtonFactory.createTextButton("Join Session", 2);
         join.setTransform(true);
@@ -29,9 +30,7 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Screen nextScreenForNameScreen = new JoinServerScreen(game, nameScreen);
-                nameScreen.setNextScreen(nextScreenForNameScreen);
-                game.setScreen(nameScreen);
+                game.setScreen(joinServerScreen);
                 //dispose();
             }
         });
@@ -42,17 +41,8 @@ public class MultiplayerScreen extends BasicScreen {
         create.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                Screen screen = new HostServerScreen(game);
-//                game.setScreen(screen);
-
-
-                nameScreen = new NameScreen(game, selectNumPlayers);
-                selectNumPlayers.setNextScreen(nameScreen);
-
-                Screen nextScreenForNameScreen = new HostServerScreen(game, nameScreen);
-                nameScreen.setNextScreen(nextScreenForNameScreen);
-
                 game.setScreen(selectNumPlayers);
+                selectNumPlayers.setNextScreen(null); //Setting to null instead of creating the HostServerScreen here.
                 //dispose();
             }
         });
@@ -63,9 +53,8 @@ public class MultiplayerScreen extends BasicScreen {
 
     @Override
     protected void goToPreviousScreen() {
-        MenuScreen menu = new MenuScreen(game);
-        game.setScreen(menu);
-        dispose();
+        game.setScreen(previousScreen);
+        //dispose();
     }
 
 
