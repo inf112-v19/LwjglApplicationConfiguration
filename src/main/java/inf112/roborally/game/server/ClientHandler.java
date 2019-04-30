@@ -16,7 +16,21 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         this.game = game;
     }
 
+/*
+The format for sending messages is:
+First word = Header
 
+HEADER = Start
+Second word = NAME of player to add to list
+
+HEADER = CARD
+Second word = NAME of player that played the card
+THIRD WORD = ROTATE of card
+FOURTH WORD = MOVE DISTANCE of card
+FIFTH WORD = PRIORITY of card
+
+
+ */
 
     @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
@@ -34,6 +48,9 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         }
         else if(header.equals("CARD")){
+            String name = split[1];
+            ProgramCard card = generateCard(split[2], split[3], split[4]);
+
 
         }
         else {
