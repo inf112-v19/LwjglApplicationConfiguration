@@ -46,28 +46,20 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         String packet = msg.toString();
-        String[] split = packet.split(" ");
+        String[] split = packet.split(" ", 2);
+        String header = split[0];
 
-        if (split[0].equals("HANDSHAKE")) {
+        if (header.equals("HANDSHAKE")) {
             System.out.println(split[1] + " has connected!");
             game.playerNames.add(split[1]);
             for (Channel channel : channels) {
                 channel.writeAndFlush(split[1] + " has connected!");
             }
-        }
-        if (split[0].equals("PLAY")) {
+        } else {
             for (Channel channel :
                     channels) {
-                channel.writeAndFlush("PLAY" + split[1]);
+                channel.writeAndFlush(split[0] + " " + split[1]);
             }
         }
-        if (split[0].equals("START")) {
-            for (Channel channel :
-                    channels) {
-                channel.writeAndFlush("START" + split[1]);
-
-                }
-            }
     }
 }
-
