@@ -11,7 +11,7 @@ public class NameScreen extends InputFieldScreen {
     public NameScreen(RoboRallyGame game, Screen previousScreen){
         super(game);
         this.previousScreen = previousScreen;
-        text.setText("'Your name'");
+        text.setText("'Enter name'");
     }
 
     @Override
@@ -23,7 +23,6 @@ public class NameScreen extends InputFieldScreen {
     @Override
     protected void confirmInput() {
         if (!clicked || text.getText().length() < 3) return;
-        System.out.println(text.getText());
         game.setPlayerName(text.getText());
 
         MultiplayerScreen nextScreen = new MultiplayerScreen(game, this);

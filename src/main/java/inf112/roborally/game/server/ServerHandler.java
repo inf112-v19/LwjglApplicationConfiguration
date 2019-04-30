@@ -50,15 +50,15 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
         String header = split[0];
 
         if (header.equals("HANDSHAKE")) {
-            System.out.println(split[1] + " has connected!");
+            System.out.println("[SERVER] " + split[1] + " has connected!");
             game.playerNames.add(split[1]);
             for (Channel channel : channels) {
-                channel.writeAndFlush(split[1] + " has connected!");
+                channel.writeAndFlush(split[1] + " has connected!"+ "\r\n");
             }
         } else {
             for (Channel channel :
                     channels) {
-                channel.writeAndFlush(split[0] + " " + split[1]);
+                channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
             }
         }
     }

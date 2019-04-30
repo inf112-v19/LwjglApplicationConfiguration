@@ -16,16 +16,24 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
         this.game = game;
     }
 
+
+
+    @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
         String packet = o.toString();
         String[] split = packet.split(" ");
         String header = split[0];
 
         if (header.equals("START")) {
-            game.playerNames.add(split[1]);
-            System.out.println("123");
+            String name = split[1];
+            if(!game.playerNames.contains(name)){
+                game.playerNames.add(split[1]);
+                System.out.println(game.playerNames.size());
+                System.out.println(game.playerNames);
+            }
+
         }
-        if(header.equals("CARD")){
+        else if(header.equals("CARD")){
 
         }
         else {
@@ -34,6 +42,11 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
 
     }
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx){
+        ctx.flush();
+    }
+
     public ProgramCard generateCard(String rotate, String move, String prio){
             Rotate rotation = toRotate(rotate);
             int moveDist = Integer.parseInt(move);

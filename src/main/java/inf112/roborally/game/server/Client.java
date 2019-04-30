@@ -42,7 +42,7 @@ public class Client implements Runnable{
     public void run() {
         EventLoopGroup group = new NioEventLoopGroup();
 
-        try {
+            try{
             Bootstrap bootstrap = new Bootstrap()
                     .group(group)
                     .channel(NioSocketChannel.class)
@@ -78,7 +78,7 @@ public class Client implements Runnable{
         }
     }
     public void sendMessage(String s){
-        channel.writeAndFlush(s );
+        channel.writeAndFlush(s + "\r\n");
     }
 
     public Channel getChannel(){
