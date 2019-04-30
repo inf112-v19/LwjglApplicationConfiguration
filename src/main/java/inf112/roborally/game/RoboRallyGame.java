@@ -11,7 +11,9 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
-import inf112.roborally.game.screens.*;
+import inf112.roborally.game.screens.GameScreen;
+import inf112.roborally.game.screens.LaserTestScreen;
+import inf112.roborally.game.screens.TestScreen;
 import inf112.roborally.game.screens.menus.EndGameScreen;
 import inf112.roborally.game.screens.menus.MenuScreen;
 import inf112.roborally.game.screens.menus.SettingsScreen;
@@ -147,6 +149,7 @@ public class RoboRallyGame extends Game {
 
     /**
      * Create a new GameScreen with chosen player skin, map and flag positions.
+     *
      * @see SelectSkinScreen
      * @see SelectMapScreen
      * @see PlaceFlagsScreen
@@ -155,7 +158,8 @@ public class RoboRallyGame extends Game {
         List<Player> players = createNumberOfPlayers(numberOfChosenPlayers);
         if(players != null){
             board.addPlayersToBoard(players);
-        }else{
+        }
+        else {
             board.addPlayersToBoard(createNumberOfPlayers(MAX_PLAYERS));
         }
         gameScreen = new GameScreen(this);
@@ -175,7 +179,7 @@ public class RoboRallyGame extends Game {
     }
 
 
-    private List<Player> createDefaultPlayers(){
+    private List<Player> createDefaultPlayers() {
         return createNumberOfPlayers(MAX_PLAYERS);
     }
 
@@ -187,8 +191,8 @@ public class RoboRallyGame extends Game {
      * @param numberOfPlayers the number of players that should be created.
      * @return the list of players, null if {@param numberOfPlayers} is not possible to make.
      */
-    public List<Player> createNumberOfPlayers(int numberOfPlayers){
-        if(numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS){
+    public List<Player> createNumberOfPlayers(int numberOfPlayers) {
+        if (numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS) {
             return null;
         }
 
@@ -196,18 +200,18 @@ public class RoboRallyGame extends Game {
         int index = selectSkinScreen.getChoiceIndex();
 
         int numberOfSkins = AssMan.getPlayerSkins().length;
-        for(int i = 0; i < numberOfPlayers; i++){
-            if(index >= numberOfSkins){
+        for (int i = 0; i < numberOfPlayers; i++) {
+            if (index >= numberOfSkins) {
                 index = 0;
             }
-            Player player = new Player("Player" + (i+1), AssMan.getPlayerSkins()[index], NORTH, board);
+            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board);
             players.add(player);
             index++;
         }
         return players;
     }
 
-    public void createTestBoard(){
+    public void createTestBoard() {
         board.createBoard(TEST_MAP);
         board.getFlags().add(new Flag(1, 7, 1));
         board.addPlayersToBoard(createDefaultPlayers());
