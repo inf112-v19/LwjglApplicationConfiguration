@@ -41,7 +41,7 @@ public class RoboRallyGame extends Game {
     public static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
 
     public static final int MAX_PLAYERS = 8;
-    private int numberOfChosenPlayers;
+    public int numberOfChosenPlayers;
 
     public boolean AIvsAI = false;
 
@@ -190,7 +190,7 @@ public class RoboRallyGame extends Game {
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 11, 2));
         board.getFlags().add(new Flag(10, 10, 3));
-        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(numberOfChosenPlayers));
+        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
 //        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(playerNames.size()));
         board.findLaserGuns();
     }
@@ -228,13 +228,14 @@ public class RoboRallyGame extends Game {
         return players;
     }
 
-    public List<Player> createNumberOfPlayersFromMultiplayer(int numberOfPlayers) {
-        if (numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS) {
+    public List<Player> createNumberOfPlayersFromMultiplayer() {
+        if (numberOfChosenPlayers < 1 || numberOfChosenPlayers > MAX_PLAYERS) {
             return null;
         }
 
         List<Player> players = new ArrayList<>();
-        for(int i = 0; i < numberOfPlayers; i++) {
+
+        for(int i = 0; i < numberOfChosenPlayers; i++) {
 
             if(i < playerNames.size()) {
                 players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board, this));
