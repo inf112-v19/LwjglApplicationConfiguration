@@ -8,7 +8,9 @@ import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.BoardLogic;
 import inf112.roborally.game.board.GameLogic;
+import inf112.roborally.game.board.MultiplayerLogic;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
@@ -22,6 +24,7 @@ public class GameScreen implements Screen {
     private final RoboRallyGame game;
     private final Hud hud;
     private final GameLogic gameLogic;
+    private final MultiplayerLogic multiplayerLogic;
     private final Board board;
     public ArrayList<Animation> animations;
     private Background background;
@@ -37,7 +40,15 @@ public class GameScreen implements Screen {
         hud = new Hud(board.getThisPlayer(), game);
         hud.createButtons();
         System.out.println(game.fixedCamera.position);
-        gameLogic = new GameLogic(board, hud, game);
+
+        if(game.multiPlayer) {
+            multiplayerLogic = new MultiplayerLogic(board, hud, game);
+            gameLogic = null;
+        }
+        else {
+            gameLogic = new GameLogic(board, hud, game);
+            multiplayerLogic = null;
+        }
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
@@ -97,8 +108,14 @@ public class GameScreen implements Screen {
     private void update() {
         game.cameraListener.updateZoom();
         background.update(game.dynamicCamera);
-        gameLogic.handleInput();
-        gameLogic.update();
+        if(gameLogic != null) {
+            gameLogic.handleInput();
+            gameLogic.update();
+        }
+        if (multiplayerLogic != null) {
+            multiplayerLogic.handleInput();
+            multiplayerLogic.update();
+        }
     }
 
 
