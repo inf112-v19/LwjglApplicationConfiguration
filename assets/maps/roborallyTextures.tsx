@@ -108,7 +108,7 @@
  </tile>
  <tile id="21">
   <properties>
-   <property name="Floor" value="MARKING"/>
+   <property name="Hole" value=""/>
   </properties>
  </tile>
  <tile id="22">
