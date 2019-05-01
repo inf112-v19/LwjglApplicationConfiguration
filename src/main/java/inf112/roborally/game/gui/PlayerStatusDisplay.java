@@ -37,7 +37,8 @@ public class PlayerStatusDisplay {
         }
         statusTab = new Image(AssMan.manager.get(AssMan.STATUS_DISPLAY_ROBOTS));
         statusTab.setY(138 * 7 - 138 * (players.size() - 1));
-        statusTab.addListener(new ClickListener() {
+        tab.addActor(statusTab);
+        tab.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (hidden) tab.setPosition(0, 0);
@@ -45,7 +46,6 @@ public class PlayerStatusDisplay {
                 hidden = !hidden;
             }
         });
-        tab.addActor(statusTab);
         tab.addActor(cards);
         for (int i = 0; i < otherPlayers.size(); i++)
             statuses.add(new PlayerStatus(i));
