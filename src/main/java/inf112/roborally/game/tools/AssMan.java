@@ -47,9 +47,6 @@ public class AssMan {
     public static final AssetDescriptor<Texture> PLAYER_CLAPTRAP_3000
             = new AssetDescriptor<>("assets/robots/claptrap3000.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> PLAYER_TVBOT
-            = new AssetDescriptor<>("assets/robots/tvBot.png", Texture.class);
-
     public static final AssetDescriptor<Texture> PLAYER_NURSE_BOT
             = new AssetDescriptor<>("assets/robots/NUR53_CP.png", Texture.class);
 
@@ -98,29 +95,9 @@ public class AssMan {
     public static final AssetDescriptor<Texture> GAMESCREEN_CLOUDS
             = new AssetDescriptor<>("assets/screens/gamescreen/clouds.png", Texture.class);
 
-    //EndGameScreen
-    public static final AssetDescriptor<Texture> ENDGAME_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/endgamescreen/endgamebackground.png", Texture.class);
-
-    //Settings
-    public static final AssetDescriptor<Texture> SETTINGS_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/settingsscreen/settingsbackground.png", Texture.class);
-
     //SetupScreen
-    public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN
-            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreen.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SETUP_SELECT_SKIN_TEXT
-            = new AssetDescriptor<>("assets/screens/setupscreen/selectskintext.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN_PLACE_FLAGS
-            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenPlaceFlags.png", Texture.class);
-
     public static final AssetDescriptor<Texture> SETUP_PLACEFLAGS_BACKGROUND
             = new AssetDescriptor<>("assets/screens/setupscreen/placeFlags.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SETUP_BLACK_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenblack.png", Texture.class);
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
@@ -151,22 +128,9 @@ public class AssMan {
     public static final AssetDescriptor<Texture> BACKUP
             = new AssetDescriptor<>("assets/objects/backup.png", Texture.class);
 
-    //Repair
-    public static final AssetDescriptor<Texture> REPAIRSITE_BACKGROUND
-            = new AssetDescriptor<>("assets/objects/repairsite.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REPAIRSITE_REPAIR_ANIMATION
             = new AssetDescriptor<>("assets/animations/wrench.png", Texture.class);
-
-    //MenuScreen class
-    public static final AssetDescriptor<Texture> MENUSCREEN_TITLESCREEN
-            = new AssetDescriptor<>("assets/screens/menuscreen/titlescreen.jpg", Texture.class);
-
-    public static final AssetDescriptor<Texture> MENUSCREEN_CHOICES
-            = new AssetDescriptor<>("assets/screens/menuscreen/menuchoices.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> MENUSCREEN_PRESS_ENTER_WHITE
-            = new AssetDescriptor<>("assets/screens/menuscreen/pressEnterWhite.png", Texture.class);
 
     //TestScreen class
     public static final AssetDescriptor<Texture> TESTSCREEN_BACKGROUND
@@ -229,7 +193,6 @@ public class AssMan {
     public static final AssetDescriptor<Texture> TEXT_BUTTON_CHECKED
             = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_checked.png", Texture.class);
 
-
     @SuppressWarnings("Duplicates")
     public static void load() {
         //Font
@@ -247,7 +210,6 @@ public class AssMan {
         manager.load(PLAYER_CLAPTRAP_REFINED);
         manager.load(PLAYER_BUTLER_REFINED);
         manager.load(PLAYER_CLAPTRAP_3000);
-        manager.load(PLAYER_TVBOT);
         manager.load(PLAYER_CAPTAIN_BOT);
         manager.load(PLAYER_COP_BOT);
         manager.load(PLAYER_NURSE_BOT);
@@ -270,18 +232,8 @@ public class AssMan {
         manager.load(GAMESCREEN_GRID2);
         manager.load(GAMESCREEN_CLOUDS);
 
-        //Endgame
-        manager.load(ENDGAME_BACKGROUND);
-
-        //Settings
-        manager.load(SETTINGS_BACKGROUND);
-
         //setup
-        manager.load(SETUP_SETUP_SCREEN);
-        manager.load(SETUP_SELECT_SKIN_TEXT);
-        manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
         manager.load(SETUP_PLACEFLAGS_BACKGROUND);
-        manager.load(SETUP_BLACK_BACKGROUND);
 
         //Program register
         manager.load(REGISTER_PROGRAM_REGISTER);
@@ -298,11 +250,6 @@ public class AssMan {
 
         //Repair animation
         manager.load(REPAIRSITE_REPAIR_ANIMATION);
-
-        //Menuscreen
-        manager.load(MENUSCREEN_TITLESCREEN);
-        manager.load(MENUSCREEN_PRESS_ENTER_WHITE);
-        manager.load(MENUSCREEN_CHOICES);
 
         //Testscreen
         manager.load(TESTSCREEN_BACKGROUND);
