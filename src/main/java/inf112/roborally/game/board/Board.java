@@ -150,8 +150,7 @@ public class Board extends TiledBoard {
 
     private void beltsMove(Player player) {
         TiledMapTileLayer.Cell currentCell = beltLayer.getCell(player.getX(), player.getY());
-        if (cellContainsKey(currentCell, "Normal") || cellContainsKey(currentCell, "Express")) {
-
+        if (player.isOnBelt(beltLayer)) {
             Direction beltDir = Direction.valueOf(getValue(currentCell));
             if (!player.canGo(beltDir, wallLayer) || player.crashWithRobot(beltDir, this)) return;
 
