@@ -316,12 +316,12 @@ public class RoboRallyGame extends Game {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
+
     public void giveCardToPlayer(String player, ProgramCard card){
         for (Player play :
                 board.players) {
             if (play.getName().equals(player)) {
-                play.toPlay.add(card);
-                System.out.println(play.getName() + " = " + play.toPlay);
+                play.getHand().getCardsInHand().add(card);
             }
         }
     }

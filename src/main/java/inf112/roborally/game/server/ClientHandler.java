@@ -79,7 +79,12 @@ FIFTH WORD = PRIORITY of card
             }
             case "RECEIVE_CARDS":{
                 String name = split[1];
-                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+                System.out.println("Name: " + name);
+                String rotate = split[2];
+                System.out.println("Rotate: " + rotate);
+                String move = split[3];
+                String priority = split[4];
+                ProgramCard card = new ProgramCard(rotate, move, priority);
                 game.giveCardToPlayer(name, card);
 
             }
