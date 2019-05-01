@@ -77,6 +77,11 @@ FIFTH WORD = PRIORITY of card
                 game.multiPlayer = true;
                 break;
             }
+            case "RECEIVE_CARDS":{
+                String name = split[1];
+                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+
+            }
             case "SET_NUMBER_OF_PLAYERS":
                 System.out.println(split[1]);
                 game.setNumberOfChosenPlayers(Integer.parseInt(split[1]));
