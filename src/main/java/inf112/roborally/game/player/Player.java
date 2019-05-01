@@ -40,12 +40,10 @@ public class Player extends MovableGameObject implements Comparable {
     private PlayerHand hand;
 
     private Texture skinTexture;
-    private RoboRallyGame game;
 
-    public Player(String name, Texture skin, Direction direction, Board board, RoboRallyGame game) {
+    public Player(String name, Texture skin, Direction direction, Board board) {
         this(0, 0);
         this.name = name;
-        this.game = game;
         makeSprite(skin);
         this.board = board;
         setDirection(direction);
@@ -68,7 +66,7 @@ public class Player extends MovableGameObject implements Comparable {
         nFlags = 1;
         playerState = OPERATIONAL;
         hand = new PlayerHand(this);
-        registers = new ProgramRegisters(this, this.game);
+        registers = new ProgramRegisters(this);
         backup = new Backup(this);
         laserCannon = new LaserCannon(this);
     }
@@ -357,7 +355,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public Player createTestPilot() {
-        Player testPilot = new Player("testPilot", sprite.getTexture(), getDirection(), board, this.game);
+        Player testPilot = new Player("testPilot", sprite.getTexture(), getDirection(), board);
         testPilot.move(getX(), getY());
         return testPilot;
     }

@@ -11,6 +11,7 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.screens.GameScreen;
 import inf112.roborally.game.screens.LaserTestScreen;
 import inf112.roborally.game.screens.TestScreen;
@@ -74,7 +75,7 @@ public class RoboRallyGame extends Game {
      */
     private Screen screenBefore;
     public Server server;
-    public Client client;
+    public  Client client;
 
     public ArrayList<String> playerNames;
     public Board board;
@@ -221,7 +222,7 @@ public class RoboRallyGame extends Game {
             if (index >= numberOfSkins) {
                 index = 0;
             }
-            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board, this);
+            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board);
             players.add(player);
             index++;
         }
@@ -238,10 +239,10 @@ public class RoboRallyGame extends Game {
         for(int i = 0; i < numberOfChosenPlayers; i++) {
 
             if(i < playerNames.size()) {
-                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board, this));
+                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
             }
             else {
-                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board, this);
+                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board);
                 players.add(player);
             }
         }
@@ -311,5 +312,11 @@ public class RoboRallyGame extends Game {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+    public void sendMessage(String s){
+        client.sendMessage(s);
+    }
+    public String toStr(ProgramCard card){
+        return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
     }
 }
