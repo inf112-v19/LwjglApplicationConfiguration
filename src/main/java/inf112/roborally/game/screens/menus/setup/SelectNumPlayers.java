@@ -50,7 +50,6 @@ public class SelectNumPlayers extends InputFieldScreen {
     @Override
     protected void confirmInput() {
         game.setNumberOfChosenPlayers(nPlayers);
-        game.client.sendMessage("SET_NUMBER_OF_PLAYERS " + nPlayers);
         if(nextScreen != null){
             game.setScreen(nextScreen);
         }
