@@ -70,6 +70,10 @@ FIFTH WORD = PRIORITY of card
                 ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
                 break;
             }
+            case "MULTI":{
+                game.multiPlayer = true;
+                break;
+            }
             default:
                 System.out.println(packet);
                 break;

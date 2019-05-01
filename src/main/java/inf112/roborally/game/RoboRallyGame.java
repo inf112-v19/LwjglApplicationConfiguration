@@ -44,6 +44,7 @@ public class RoboRallyGame extends Game {
     private int numberOfChosenPlayers;
 
     public boolean AIvsAI = false;
+    public boolean multiPlayer = false;
 
     public OrthographicCamera dynamicCamera;
     public Viewport dynamicViewPort;

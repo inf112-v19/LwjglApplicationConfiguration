@@ -43,6 +43,8 @@ public class HostServerScreen extends InputFieldScreen {
     @Override
     protected void confirmInput() {
         int id = 0;
+        game.multiPlayer = true;
+        game.client.sendMessage("MULTI " + "True");
         System.out.println("[SERVER] Connected players " + game.playerNames);
         game.client.sendMessage("LIST " + game.playerNames.size());
         for (String s :
