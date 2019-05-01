@@ -78,7 +78,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                         reshuffleDeck();
                     }
                     for (Channel channel : channels) {
-                        channel.writeAndFlush("RECEIVE_CARDS " + cardlimitAndName[1] + " " + card + "\r\n");
+                        channel.writeAndFlush("RECEIVE_CARDS " + cardlimitAndName[1] + " " + card + "\r\n"); //TODO: FIX!
                     }
                 }
                 break;

@@ -84,7 +84,6 @@ FIFTH WORD = PRIORITY of card
             }
             case "RECEIVE_CARDS":{
                 String name = split[1];
-                System.out.println("Name: " + name);
                 String rotate = split[2];
                 System.out.println("Rotate: " + rotate);
                 String move = split[3];
@@ -94,8 +93,9 @@ FIFTH WORD = PRIORITY of card
 
             }
             case "SET_NUMBER_OF_PLAYERS":
-                System.out.println(split[1]);
-                game.setNumberOfChosenPlayers(Integer.parseInt(split[1]));
+                Integer numPlayers = Integer.parseInt(split[1]);
+                System.out.println("Number of players: " + numPlayers);
+                game.setNumberOfChosenPlayers(numPlayers);
                 break;
 
             default:
