@@ -155,8 +155,4 @@ public class ProgramRegisters implements IProgramRegisters {
         return NUMBER_OF_REGISTERS - unlockedRegisters;
     }
 
-
-    public String toStr(ProgramCard card){
-        return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
-    }
 }

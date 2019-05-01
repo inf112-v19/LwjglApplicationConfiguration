@@ -85,7 +85,7 @@ public class BoardLogic {
         state = PICKING_CARDS;
     }
 
-    private void respawnRobots() {
+    protected void respawnRobots() {
         for (Player player : players) {
             if (player.isDestroyed()) {
                 if (player.outOfLives()) player.setPlayerState(PlayerState.GAME_OVER);
@@ -109,7 +109,7 @@ public class BoardLogic {
         }
     }
 
-    private void powerUpRobots() {
+    protected void powerUpRobots() {
         for (Player player : players) {
             player.powerUp();
         }
@@ -243,7 +243,7 @@ public class BoardLogic {
         }
     }
 
-    private void retrieveCardsFromPlayer(Player player) {
+    protected void retrieveCardsFromPlayer(Player player) {
         ArrayList<ProgramCard> playerCards = player.returnCards();
         while (!playerCards.isEmpty()) {
             returnedProgramCards.push(playerCards.remove(0));
