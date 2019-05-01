@@ -70,7 +70,6 @@ public class ProgramRegisters implements IProgramRegisters {
         if (registers[phase] == null || !player.isOperational()) return;
         ProgramCard programCard = registers[phase];
 
-
         if (programCard.isRotate()) {
             player.rotate(programCard.getRotate());
         } else if (programCard.getMoveDistance() == -1) {

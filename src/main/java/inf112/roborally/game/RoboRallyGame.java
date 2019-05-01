@@ -318,5 +318,15 @@ public class RoboRallyGame extends Game {
     }
     public String toStr(ProgramCard card){
         return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
+
+    public void giveCardToPlayer(String player, ProgramCard card){
+        for (Player play :
+                board.players) {
+            if (play.getName().equals(player)) {
+                play.toPlay.add(card);
+                System.out.println(play.toPlay);
+            }
+        }
+
     }
 }

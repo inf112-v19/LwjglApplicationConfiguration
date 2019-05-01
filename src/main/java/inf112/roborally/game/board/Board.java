@@ -28,7 +28,9 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 public class Board extends TiledBoard {
     private float volume = .25f;
 
-    protected final List<Player> players;
+    protected Player thisPlayer;
+    protected int thisPlayerIndex;
+    public List<Player> players;
     protected final ArrayList<Flag> flags;
     protected final ArrayList<LaserAnimation> lasers;
     protected final ArrayList<LaserBeam> laserGuns;
@@ -249,6 +251,23 @@ public class Board extends TiledBoard {
     public List<Player> getPlayers() {
         return this.players;
     }
+
+    public void setThisPlayer() {
+        int playerIndex = 0;
+        for(Player player : players) {
+            if(player.getName().equals(game.playerName)) {
+                this.thisPlayer = player;
+            }
+            else {
+                playerIndex++;
+            }
+        }
+        this.thisPlayerIndex = playerIndex;
+    }
+
+    public int getThisPlayerIndex() { return this.thisPlayerIndex; }
+
+    public Player getThisPlayer() { return this.thisPlayer; }
 
     public ArrayList<LaserBeam> getLaserGuns() {
         return laserGuns;

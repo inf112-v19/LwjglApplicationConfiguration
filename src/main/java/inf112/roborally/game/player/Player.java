@@ -38,6 +38,7 @@ public class Player extends MovableGameObject implements Comparable {
     private boolean debugging;
     private ProgramRegisters registers;
     private PlayerHand hand;
+    public ArrayList<ProgramCard> toPlay;
 
     private Texture skinTexture;
 
@@ -53,6 +54,7 @@ public class Player extends MovableGameObject implements Comparable {
         phase = 0;
         debugging = false;
         skinTexture = AssMan.getPlayerSkins()[0];
+        toPlay = new ArrayList<>(5);
     }
 
     /**
