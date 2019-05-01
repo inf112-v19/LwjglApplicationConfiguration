@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.ArrayList;
@@ -36,6 +36,7 @@ public class PlayerStatusDisplay {
             if (!maybeOther.equals(player)) otherPlayers.add(maybeOther);
         }
         statusTab = new Image(AssMan.manager.get(AssMan.STATUS_DISPLAY_ROBOTS));
+        statusTab.setY(138 * 7 - 138 * (players.size() - 1));
         statusTab.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -127,19 +128,19 @@ public class PlayerStatusDisplay {
         }
     }
 
-    public void dispose(){
+    public void dispose() {
         System.out.println("Disposing PlayerStatusDisplay");
         font.dispose();
 
-        for(Actor card : cards.getChildren()){
-            if(card instanceof ProgramCardButton){
+        for (Actor card : cards.getChildren()) {
+            if (card instanceof ProgramCardButton) {
                 ((ProgramCardButton) card).dispose();
             }
         }
         cards.clear();
 
-        for(Actor cards : tab.getChildren()){
-            if(cards instanceof ProgramCardButton){
+        for (Actor cards : tab.getChildren()) {
+            if (cards instanceof ProgramCardButton) {
                 ((ProgramCardButton) cards).dispose();
             }
         }
