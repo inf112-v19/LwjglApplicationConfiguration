@@ -3,6 +3,7 @@ package inf112.roborally.game.server;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.objects.Position;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -52,6 +53,9 @@ FIFTH WORD = PRIORITY of card
             ProgramCard card = generateCard(split[2], split[3], split[4]);
 
 
+        }
+        else if(header.equals("POS")){
+            System.out.println(split[1]);
         }
         else {
             System.out.println(packet);
