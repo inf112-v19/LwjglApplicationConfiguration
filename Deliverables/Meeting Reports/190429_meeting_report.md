@@ -14,4 +14,4 @@
 - Ingen
 
 ### Resultat fra møtet:
-- 
+- Oppnådde måla for dagen
