@@ -11,6 +11,7 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.screens.GameScreen;
 import inf112.roborally.game.screens.LaserTestScreen;
 import inf112.roborally.game.screens.TestScreen;
@@ -311,5 +312,14 @@ public class RoboRallyGame extends Game {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+    public void giveCardToPlayer(String player, ProgramCard card){
+        for (Player play :
+                board.players) {
+            if (play.getName().equals(player)) {
+                play.toPlay.add(card);
+                System.out.println(play.toPlay);
+            }
+        }
     }
 }

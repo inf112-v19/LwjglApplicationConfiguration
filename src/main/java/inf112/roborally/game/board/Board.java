@@ -30,7 +30,7 @@ public class Board extends TiledBoard {
 
     protected Player thisPlayer;
     protected int thisPlayerIndex;
-    protected final List<Player> players;
+    public List<Player> players;
     protected final ArrayList<Flag> flags;
     protected final ArrayList<LaserAnimation> lasers;
     protected final ArrayList<LaserBeam> laserGuns;
