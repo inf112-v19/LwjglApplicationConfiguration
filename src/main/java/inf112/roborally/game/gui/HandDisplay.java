@@ -2,7 +2,7 @@ package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.Player;
 
 /**

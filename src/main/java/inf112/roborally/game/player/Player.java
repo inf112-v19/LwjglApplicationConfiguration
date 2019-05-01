@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.objects.LaserCannon;

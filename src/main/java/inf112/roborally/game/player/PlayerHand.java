@@ -1,7 +1,5 @@
 package inf112.roborally.game.player;
 
-import inf112.roborally.game.board.ProgramCard;
-
 import java.util.ArrayList;
 
 public class PlayerHand {
