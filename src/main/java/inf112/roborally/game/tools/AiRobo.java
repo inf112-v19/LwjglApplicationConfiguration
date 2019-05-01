@@ -5,7 +5,6 @@ import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class AiRobo {
 
@@ -19,76 +18,67 @@ public class AiRobo {
     }
 
     private static ArrayList<ProgramCard> combinationUtil(ArrayList<ProgramCard> arr, ArrayList<ProgramCard> data, int start,
-                                                          int end, int index, int r)
-    {
-        // Current combination is ready to be printed, print it
-        if (index == r)
-        {
-            for (int j=0; j<r; j++)
-                System.out.print(data.get(j)+" ");
-            System.out.println("");
+                                                          int end, int index, int r) {
+        if (index == r) {
+            for (int j = 0; j < r; j++)
+                System.out.print(data.get(j) + " ");
+            System.out.println();
             return null;
         }
-
-        // replace index with all possible elements. The condition
-        // "end-i+1 >= r-index" makes sure that including one element
-        // at index will make a combination with remaining elements
-        // at remaining positions
-        for (int i=start; i<=end && end-i+1 >= r-index; i++)
-        {
+        for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
             data.add(index, arr.get(i));
-            combinationUtil(arr, data, i+1, end, index+1, r);
+            combinationUtil(arr, data, i + 1, end, index + 1, r);
         }
-        return arr;
+        return data;
     }
 
-    private static void smartAI(Player robo) {
+    private static ArrayList<ProgramCard> getAllPossibleCombinations(Player robo) {
         int r = robo.getRegisters().getNumUnlockedRegisters();
         ArrayList<ProgramCard> arr = robo.getHand().getCardsInHand();
         int n = arr.size();
         ArrayList<ProgramCard> data = new ArrayList<>();
-        ArrayList<ProgramCard> allPossibleCombinations = combinationUtil(arr, data, 0, n-1, 0, r);
-
-        assert allPossibleCombinations != null;
-        for(ProgramCard i: allPossibleCombinations) {
-            System.out.println(i);
-        }
+        return combinationUtil(arr, data, 0, n - 1, 0, r);
     }
 
     private static void moveTestPilot(Player robo) {
-        smartAI(robo);
         if (robo.getRegisters().isFull()) return;
 
-        Player testPilot = robo.createTestPilot();
-        Player successfulTestPilot = robo.createTestPilot();
-
-        for (int i = 0; i < robo.getHand().size(); i++) {
-            ProgramCard card = robo.getHand().getCard(i);
-            testPilot.rotate(card.getRotate());
-            testPilot.move(card.getMoveDistance());
-            if (!testPilot.isDestroyed()
-                    && shorterDistToFlag(successfulTestPilot, testPilot)) {
-                robo.getRegisters().placeCard(i);
-                successfulTestPilot = testPilot.createTestPilot();
-            } else {
-                testPilot = successfulTestPilot.createTestPilot();
-            }
-        }
-
-        for (int i = 0; i < robo.getHand().size(); i++) {
-            ProgramCard card = robo.getHand().getCard(i);
-            testPilot.rotate(card.getRotate());
-            testPilot.move(card.getMoveDistance());
-            if (!testPilot.isDestroyed()) {
-                robo.getRegisters().placeCard(i);
-                successfulTestPilot = testPilot.createTestPilot();
-            } else {
-                testPilot = successfulTestPilot.createTestPilot();
-            }
-        }
+        smartAI(robo);
 
         while (!robo.getRegisters().isFull())
             robo.getRegisters().placeCard(0);
+    }
+
+    private static void smartAI(Player robo) {
+        Player successfulTestPilot = robo.createTestPilot();
+        ArrayList<ProgramCard> list = getAllPossibleCombinations(robo);
+        ArrayList<ProgramCard> bestList = new ArrayList<>();
+
+        for(int i = 0; i < list.size(); i++) {
+            Player testPilot = robo.createTestPilot();
+            ArrayList<ProgramCard> l = new ArrayList<>();
+
+            for (int k = 0; k < robo.getRegisters().getNumUnlockedRegisters(); k++) {
+                ProgramCard card = list.get(k);
+                testPilot.rotate(card.getRotate());
+                testPilot.move(card.getMoveDistance());
+                l.add(card);
+            }
+            if(shorterDistToFlag(successfulTestPilot, testPilot)) {
+                successfulTestPilot = testPilot;
+                bestList = l;
+            }
+        }
+        if(shorterDistToFlag(robo, successfulTestPilot)) {
+
+            for(int i = 0; i < bestList.size(); i++) {
+                if(robo.getHand().getCard(i).equals(bestList.get(i))) {
+                    robo.getRegisters().placeCard(i);
+                }
+            }
+
+        }
+
     }
 
     private static boolean shorterDistToFlag(Player robo, Player testPilot) {
