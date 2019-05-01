@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-import java.util.concurrent.TimeoutException;
-
 /**
  * Contains assets used by the game.
  * With AssMan you are able to load as well as dispose all of them at the same time.
@@ -149,18 +147,6 @@ public class AssMan {
     public static final AssetDescriptor<Texture> POWER_DOWN_PRESSED
             = new AssetDescriptor<>("assets/buttons/powerdown_active.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> REGISTER_SUBMIT
-            = new AssetDescriptor<>("assets/buttons/submit.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> REGISTER_SUBMIT_PRESS
-            = new AssetDescriptor<>("assets/buttons/submit_press.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> REGISTER_CLEAR
-            = new AssetDescriptor<>("assets/buttons/clear.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> REGISTER_CLEAR_PRESS
-            = new AssetDescriptor<>("assets/buttons/clear_press.png", Texture.class);
-
     //Backup
     public static final AssetDescriptor<Texture> BACKUP
             = new AssetDescriptor<>("assets/objects/backup.png", Texture.class);
@@ -187,13 +173,10 @@ public class AssMan {
             = new AssetDescriptor<>("assets/screens/testscreen/testscreen.png", Texture.class);
 
     //Flag object
-    public static final AssetDescriptor<Texture> FLAG_SKIN
-            = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
-
-    // Buttons:
     public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
             = new AssetDescriptor<>("assets/flags/flags.atlas", TextureAtlas.class);
 
+    // Buttons:
     public static final AssetDescriptor<Texture> RIGHT_ARROW
             = new AssetDescriptor<>("assets/buttons/right_arrow.png", Texture.class);
 
@@ -206,20 +189,11 @@ public class AssMan {
     public static final AssetDescriptor<Texture> LEFT_ARROW_PRESS
             = new AssetDescriptor<>("assets/buttons/left_arrow_press.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> CONFIRM
-            = new AssetDescriptor<>("assets/buttons/confirm.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> CONFIRM_PRSS
-            = new AssetDescriptor<>("assets/buttons/confirm_press.png", Texture.class);
-
     public static final AssetDescriptor<Texture> BACK
-            = new AssetDescriptor<> ("assets/buttons/back.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/back.png", Texture.class);
 
-            public static final AssetDescriptor<Texture> BACK_PRESS
-            = new AssetDescriptor<> ("assets/buttons/back_press.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SELECT_SCREEN
-            = new AssetDescriptor<>("assets/buttons/select_skin_screen.png", Texture.class);
+    public static final AssetDescriptor<Texture> BACK_PRESS
+            = new AssetDescriptor<>("assets/buttons/back_press.png", Texture.class);
 
     public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
             = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
@@ -315,10 +289,6 @@ public class AssMan {
         manager.load(REGISTER_LIFE_TOKEN);
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
-        manager.load(REGISTER_SUBMIT);
-        manager.load(REGISTER_SUBMIT_PRESS);
-        manager.load(REGISTER_CLEAR);
-        manager.load(REGISTER_CLEAR_PRESS);
         manager.load(POWER_DOWN);
         manager.load(POWER_DOWN_PRESS);
         manager.load(POWER_DOWN_PRESSED);
@@ -326,8 +296,7 @@ public class AssMan {
         //Backup
         manager.load(BACKUP);
 
-        //Repair site
-        manager.load(REPAIRSITE_BACKGROUND);
+        //Repair animation
         manager.load(REPAIRSITE_REPAIR_ANIMATION);
 
         //Menuscreen
@@ -339,7 +308,6 @@ public class AssMan {
         manager.load(TESTSCREEN_BACKGROUND);
 
         //Flag
-        manager.load(FLAG_SKIN);
         manager.load(FLAG_ATLAS);
 
         //Program card
