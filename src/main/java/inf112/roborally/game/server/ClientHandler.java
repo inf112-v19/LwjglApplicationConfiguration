@@ -2,7 +2,6 @@ package inf112.roborally.game.server;
 
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.player.ProgramCard;
-import inf112.roborally.game.enums.Rotate;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -39,51 +38,24 @@ FIFTH WORD = PRIORITY of card
         if (header.equals("START")) {
             String name = split[1];
             int id = Integer.parseInt(split[2]);
-            if(!game.playerNames.contains(name)){
+            if (!game.playerNames.contains(name)) {
                 game.playerNames.set(id, name);
                 System.out.println(game.playerNames);
 
             }
 
         }
-        else if(header.equals("CARD")){
+        else if (header.equals("CARD")) {
             String name = split[1];
-            ProgramCard card = generateCard(split[2], split[3], split[4]);
+            ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
         }
         else {
             System.out.println(packet);
         }
-
-
     }
+
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx){
+    public void channelReadComplete(ChannelHandlerContext ctx) {
         ctx.flush();
-    }
-
-    public ProgramCard generateCard(String rotate, String move, String prio){
-            Rotate rotation = toRotate(rotate);
-            int moveDist = Integer.parseInt(move);
-            int priority = Integer.parseInt(prio);
-
-            return new ProgramCard(rotation,moveDist,priority);
-
-    }
-    public Rotate toRotate(String rotate){
-        if(rotate.equals("NONE")){
-            return Rotate.NONE;
-        }
-        else if(rotate.equals("LEFT")){
-            return Rotate.LEFT;
-        }
-        else if(rotate.equals("RIGHT")){
-            return Rotate.RIGHT;
-        }
-        else if(rotate.equals("UTURN")){
-            return Rotate.UTURN;
-        }
-        else{
-            return null;
-        }
     }
 }
