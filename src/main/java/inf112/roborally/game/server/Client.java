@@ -61,7 +61,6 @@ public class Client implements Runnable{
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-            channel.writeAndFlush(new Position(10, 10));
 
             while (true) {
 

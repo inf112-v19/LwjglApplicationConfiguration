@@ -26,8 +26,8 @@ public class ClientInit extends ChannelInitializer<SocketChannel> {
         ChannelPipeline pipeline = arg0.pipeline();
 
         pipeline.addLast("framer", new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
-        pipeline.addLast("decoder", new ObjectDecoder(ClassResolvers.weakCachingResolver(null)));
-        pipeline.addLast("encoder", new ObjectEncoder());
+        pipeline.addLast("decoder", new StringDecoder());
+        pipeline.addLast("encoder", new StringEncoder());
         pipeline.addLast("handler", new ClientHandler(game));
     }
 }

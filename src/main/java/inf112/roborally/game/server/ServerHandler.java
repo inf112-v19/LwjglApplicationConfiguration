@@ -46,12 +46,13 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-
+/*
         if(msg instanceof Position){
             System.out.println("POSITION");
 
         }
         else {
+        */
             String packet = msg.toString();
             String[] split = packet.split(" ", 2);
             String header = split[0];
@@ -71,7 +72,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
             }
         }
-    }
+
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         cause.printStackTrace();
