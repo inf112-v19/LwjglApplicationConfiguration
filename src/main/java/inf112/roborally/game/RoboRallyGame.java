@@ -148,6 +148,11 @@ public class RoboRallyGame extends Game {
         gameScreen = new GameScreen(this);
     }
 
+    public void createDefaultGameScreenForMultiplayer() {
+        createDefaultMultiplayerBoard();
+        gameScreen = new GameScreen(this);
+    }
+
     /**
      * Create a new GameScreen with chosen player skin, map and flag positions.
      *
@@ -176,6 +181,16 @@ public class RoboRallyGame extends Game {
         board.getFlags().add(new Flag(11, 11, 2));
         board.getFlags().add(new Flag(10, 10, 3));
         board.addPlayersToBoard(createDefaultPlayers());
+        board.findLaserGuns();
+    }
+
+    private void createDefaultMultiplayerBoard() {
+        board.createBoard(VAULT);
+        board.getFlags().add(new Flag(7, 7, 1));
+        board.getFlags().add(new Flag(11, 11, 2));
+        board.getFlags().add(new Flag(10, 10, 3));
+        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(numberOfChosenPlayers));
+//        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(playerNames.size()));
         board.findLaserGuns();
     }
 
@@ -219,7 +234,13 @@ public class RoboRallyGame extends Game {
 
         List<Player> players = new ArrayList<>();
         for(int i = 0; i < numberOfPlayers; i++) {
-            players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
+            if(i < playerNames.size()) {
+                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
+            }
+            else {
+                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board);
+                players.add(player);
+            }
         }
         return players;
     }

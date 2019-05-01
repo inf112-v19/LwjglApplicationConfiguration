@@ -59,7 +59,8 @@ FIFTH WORD = PRIORITY of card
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.createDefaultGameScreen();
+//                        game.createDefaultGameScreen();
+                        game.createDefaultGameScreenForMultiplayer();
                         game.setScreen(game.gameScreen);
                     }
                 });
