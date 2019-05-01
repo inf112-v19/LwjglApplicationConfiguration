@@ -211,6 +211,18 @@ public class RoboRallyGame extends Game {
         return players;
     }
 
+    public List<Player> createNumberOfPlayersFromMultiplayer(int numberOfPlayers) {
+        if (numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS) {
+            return null;
+        }
+
+        List<Player> players = new ArrayList<>();
+        for(int i = 0; i < numberOfPlayers; i++) {
+            players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
+        }
+        return players;
+    }
+
     public void createTestBoard() {
         board.createBoard(TEST_MAP);
         board.getFlags().add(new Flag(1, 7, 1));
