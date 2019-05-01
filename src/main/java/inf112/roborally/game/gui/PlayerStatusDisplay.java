@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.tools.AssMan;
@@ -73,21 +74,26 @@ public class PlayerStatusDisplay {
         private ArrayList<Image> lives;
         private Label damageNumber;
         private float x, y;
+        private Image targetFlag;
 
         public PlayerStatus(int index) {
             this.player = otherPlayers.get(index);
             int size = 256;
             int height = 384;
+            // add the skin of the current robot and adjust its position on the display board
+            // robotSkin is used as an anchor point for the rest of the items
             Image robotSkin = new Image(new TextureRegion(player.getSprite().getTexture(), size * 2, 0, size, height));
             robotSkin.setSize(84, 113);
             x = 75;
             y = 1080 - robotSkin.getHeight() - (robotSkin.getHeight() + 24.5f) * index;
             robotSkin.setPosition(x, y);
+            tab.addActor(robotSkin);
+            // add damage tokens
             Image damageToken = new Image(AssMan.manager.get(AssMan.REGISTER_DAMAGE_TOKEN));
             damageToken.setPosition(robotSkin.getX() + 70, robotSkin.getY() + 15);
             damageToken.setSize(32, 32);
-            tab.addActor(robotSkin);
             tab.addActor(damageToken);
+            // add life tokens:
             lives = new ArrayList<>();
             for (int i = 0; i < 3; i++) {
                 Image img = new Image(AssMan.manager.get(AssMan.REGISTER_LIFE_TOKEN));
@@ -96,14 +102,21 @@ public class PlayerStatusDisplay {
                 lives.add(img);
                 tab.addActor(img);
             }
+            // add name label:
             Label name = new Label(player.getName(), new Label.LabelStyle(font, Color.WHITE));
             name.setFontScale(1);
             name.setPosition(robotSkin.getX() + 100, robotSkin.getY() + 56);
             tab.addActor(name);
+            // add damage number:
             damageNumber = new Label("x" + player.getDamage(), new Label.LabelStyle(font, Color.BLACK));
             damageNumber.setFontScale(1.3f);
             damageNumber.setPosition(damageToken.getX() + damageToken.getWidth() + 3, damageToken.getY());
             tab.addActor(damageNumber);
+            // add the current target flag
+            targetFlag = new Image(AssMan.getFlagAtlasRegion(player.getTargetFlag()));
+            targetFlag.setScale(.18f);
+            targetFlag.setPosition(robotSkin.getX() + robotSkin.getWidth() + 58, robotSkin.getY() - 20);
+            tab.addActor(targetFlag);
         }
 
         public void update() {
@@ -111,6 +124,7 @@ public class PlayerStatusDisplay {
             for (int i = 0; i < 3; i++) {
                 lives.get(i).setVisible(player.getLives() > i);
             }
+            targetFlag.setDrawable(new TextureRegionDrawable(AssMan.getFlagAtlasRegion(player.getTargetFlag())));
         }
 
         public void addCard(int phase) {
