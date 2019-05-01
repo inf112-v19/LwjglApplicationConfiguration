@@ -10,75 +10,52 @@ public class AiRobo {
 
     public static void makeDecisionsForRobos(ArrayList<Player> aiRobos) {
         for (Player robo : aiRobos) {
-            if (robo.outOfLives()) return;
-            moveTestPilot(robo);
-            robo.wantsToPowerDown = wantsToPowerDown(robo);
-            robo.setPlayerState(PlayerState.READY);
+            makeDecisions(robo);
         }
     }
 
-    private static ArrayList<ProgramCard> combinationUtil(ArrayList<ProgramCard> arr, ArrayList<ProgramCard> data, int start,
-                                                          int end, int index, int r) {
-        if (index == r) {
-            for (int j = 0; j < r; j++)
-                System.out.print(data.get(j) + " ");
-            System.out.println();
-            return null;
-        }
-        for (int i = start; i <= end && end - i + 1 >= r - index; i++) {
-            data.add(index, arr.get(i));
-            combinationUtil(arr, data, i + 1, end, index + 1, r);
-        }
-        return data;
-    }
+    private static void makeDecisions(Player robo) {
+        if (robo.outOfLives()) return;
 
-    private static ArrayList<ProgramCard> getAllPossibleCombinations(Player robo) {
-        int r = robo.getRegisters().getNumUnlockedRegisters();
-        ArrayList<ProgramCard> arr = robo.getHand().getCardsInHand();
-        int n = arr.size();
-        ArrayList<ProgramCard> data = new ArrayList<>();
-        return combinationUtil(arr, data, 0, n - 1, 0, r);
+        moveTestPilot(robo);
+
+        robo.wantsToPowerDown = wantsToPowerDown(robo);
+        robo.setPlayerState(PlayerState.READY);
     }
 
     private static void moveTestPilot(Player robo) {
         if (robo.getRegisters().isFull()) return;
 
-        smartAI(robo);
-
-        while (!robo.getRegisters().isFull())
-            robo.getRegisters().placeCard(0);
-    }
-
-    private static void smartAI(Player robo) {
+        Player testPilot = robo.createTestPilot();
         Player successfulTestPilot = robo.createTestPilot();
-        ArrayList<ProgramCard> list = getAllPossibleCombinations(robo);
-        ArrayList<ProgramCard> bestList = new ArrayList<>();
 
-        for(int i = 0; i < list.size(); i++) {
-            Player testPilot = robo.createTestPilot();
-            ArrayList<ProgramCard> l = new ArrayList<>();
-
-            for (int k = 0; k < robo.getRegisters().getNumUnlockedRegisters(); k++) {
-                ProgramCard card = list.get(k);
-                testPilot.rotate(card.getRotate());
-                testPilot.move(card.getMoveDistance());
-                l.add(card);
-            }
-            if(shorterDistToFlag(successfulTestPilot, testPilot)) {
-                successfulTestPilot = testPilot;
-                bestList = l;
+        for (int i = 0; i < robo.getHand().size(); i++) {
+            ProgramCard card = robo.getHand().getCard(i);
+            testPilot.rotate(card.getRotate());
+            testPilot.move(card.getMoveDistance());
+            if (!testPilot.isDestroyed()
+                    && shorterDistToFlag(successfulTestPilot, testPilot)) {
+                robo.getRegisters().placeCard(i);
+                successfulTestPilot = testPilot.createTestPilot();
+            } else {
+                testPilot = successfulTestPilot.createTestPilot();
             }
         }
-        if(shorterDistToFlag(robo, successfulTestPilot)) {
 
-            for(int i = 0; i < bestList.size(); i++) {
-                if(robo.getHand().getCard(i).equals(bestList.get(i))) {
-                    robo.getRegisters().placeCard(i);
-                }
+        for (int i = 0; i < robo.getHand().size(); i++) {
+            ProgramCard card = robo.getHand().getCard(i);
+            testPilot.rotate(card.getRotate());
+            testPilot.move(card.getMoveDistance());
+            if (!testPilot.isDestroyed()) {
+                robo.getRegisters().placeCard(i);
+                successfulTestPilot = testPilot.createTestPilot();
+            } else {
+                testPilot = successfulTestPilot.createTestPilot();
             }
-
         }
 
+        while (!robo.getRegisters().isFull() && robo.getHand().size() > 0)
+            robo.getRegisters().placeCard(0);
     }
 
     private static boolean shorterDistToFlag(Player robo, Player testPilot) {
