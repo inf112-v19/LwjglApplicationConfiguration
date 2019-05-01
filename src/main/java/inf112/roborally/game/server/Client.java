@@ -84,6 +84,10 @@ public class Client implements Runnable{
         channel.writeAndFlush(s + "\r\n");
     }
 
+    public void sendObject(Object o){
+        channel.writeAndFlush(o + "\r\n");
+    }
+
     public Channel getChannel(){
         return this.channel;
     }
