@@ -74,13 +74,13 @@ public class AssMan {
 
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
-            = new AssetDescriptor<>("assets/cards/buttonSubmit.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/buttonSubmit.png", Texture.class);
 
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT_GREY
-            = new AssetDescriptor<>("assets/cards/buttonSubmitGrey.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/buttonSubmitGrey.png", Texture.class);
 
     public static final AssetDescriptor<Texture> BUTTON_CLEAR
-            = new AssetDescriptor<>("assets/cards/buttonClear.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/buttonClear.png", Texture.class);
 
     public static final AssetDescriptor<Texture> BUTTON_SETTINGS
             = new AssetDescriptor<>("assets/img/settingsbtn.png", Texture.class);
@@ -101,28 +101,28 @@ public class AssMan {
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
-            = new AssetDescriptor<>("assets/cards/programregisters.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/programregisters.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_DAMAGE_TOKEN
-            = new AssetDescriptor<>("assets/cards/tokens/damageToken.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/tokens/damageToken.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_LIFE_TOKEN
-            = new AssetDescriptor<>("assets/cards/tokens/lifeToken.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/tokens/lifeToken.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_WIRES
-            = new AssetDescriptor<>("assets/cards/wires.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/wires.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_LOCK_TOKEN
-            = new AssetDescriptor<>("assets/cards/tokens/lockToken.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/tokens/lockToken.png", Texture.class);
 
     public static final AssetDescriptor<Texture> POWER_DOWN
-            = new AssetDescriptor<>("assets/buttons/powerdown.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/powerdown.png", Texture.class);
 
     public static final AssetDescriptor<Texture> POWER_DOWN_PRESS
-            = new AssetDescriptor<>("assets/buttons/powerdown_press.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/powerdown_press.png", Texture.class);
 
     public static final AssetDescriptor<Texture> POWER_DOWN_PRESSED
-            = new AssetDescriptor<>("assets/buttons/powerdown_active.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/powerdown_active.png", Texture.class);
 
     //Backup
     public static final AssetDescriptor<Texture> BACKUP
@@ -168,7 +168,7 @@ public class AssMan {
 
     //Status display for robots
     public static final AssetDescriptor<Texture> STATUS_DISPLAY_ROBOTS =
-            new AssetDescriptor<>("assets/register/robot_status_display.png", Texture.class);
+            new AssetDescriptor<>("assets/gui/robot_status_display.png", Texture.class);
 
     // Font
     public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA =
