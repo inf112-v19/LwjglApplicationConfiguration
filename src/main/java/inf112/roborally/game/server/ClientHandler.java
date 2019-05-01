@@ -60,6 +60,7 @@ FIFTH WORD = PRIORITY of card
                     @Override
                     public void run() {
 //                        game.createDefaultGameScreen();
+                        System.out.printf("Number of players = %d%n", game.numberOfChosenPlayers);
                         game.createDefaultGameScreenForMultiplayer();
                         game.setScreen(game.gameScreen);
                     }
@@ -75,6 +76,10 @@ FIFTH WORD = PRIORITY of card
                 game.multiPlayer = true;
                 break;
             }
+            case "SET_NUMBER_OF_PLAYERS":
+                game.setNumberOfChosenPlayers(Integer.parseInt(split[1]));
+                break;
+
             default:
                 System.out.println(packet);
                 break;

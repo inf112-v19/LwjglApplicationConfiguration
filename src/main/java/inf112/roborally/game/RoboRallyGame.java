@@ -41,7 +41,7 @@ public class RoboRallyGame extends Game {
     public static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
 
     public static final int MAX_PLAYERS = 8;
-    private int numberOfChosenPlayers;
+    public int numberOfChosenPlayers;
 
     public boolean AIvsAI = false;
     public boolean multiPlayer = false;
