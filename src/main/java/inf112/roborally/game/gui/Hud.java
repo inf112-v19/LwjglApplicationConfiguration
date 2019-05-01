@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.tools.AssMan;
 
 import java.util.List;
@@ -74,6 +75,13 @@ public class Hud {
                     if (player.getRegisters().isFull() && !player.outOfLives()) {
                         player.setPlayerState(PlayerState.READY);
                         setButtonTouchable(false);
+                        if(RoboRallyGame.multiPlayer) {
+                            for (ProgramCard card :
+                                    player.getRegisters().getAllCards()) {
+                                game.client.sendMessage("CARD " + game.playerName + " " + game.toStr(card));
+                            }
+                        }
+
                     }
                 }
             });

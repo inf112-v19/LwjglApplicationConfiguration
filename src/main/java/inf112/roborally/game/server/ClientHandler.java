@@ -70,6 +70,7 @@ FIFTH WORD = PRIORITY of card
             case "CARD": {
                 String name = split[1];
                 ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+                game.giveCardToPlayer(name, card);
                 break;
             }
             case "MULTI":{
