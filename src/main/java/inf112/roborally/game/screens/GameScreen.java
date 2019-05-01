@@ -41,17 +41,14 @@ public class GameScreen implements Screen {
         hud.createButtons();
         System.out.println(game.fixedCamera.position);
 
-//        if(game.multiPlayer) {
-//            multiplayerLogic = new MultiplayerLogic(board, hud, game);
-//            gameLogic = null;
-//        }
-//        else {
-//            gameLogic = new GameLogic(board, hud, game);
-//            multiplayerLogic = null;
-//        }
-
-        gameLogic = new GameLogic(board, hud, game);
-        multiplayerLogic = null;
+        if(game.multiPlayer) {
+            multiplayerLogic = new MultiplayerLogic(board, hud, game);
+            gameLogic = null;
+        }
+        else {
+            gameLogic = new GameLogic(board, hud, game);
+            multiplayerLogic = null;
+        }
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
