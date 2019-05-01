@@ -35,29 +35,32 @@ FIFTH WORD = PRIORITY of card
         String[] split = packet.split(" ");
         String header = split[0];
 
-        if(header.equals("LIST")){
-            int size = Integer.parseInt(split[1]);
-            while(game.playerNames.size() < size){
-                game.playerNames.add("temp");
+        switch (header) {
+            case "LIST":
+                int size = Integer.parseInt(split[1]);
+                while (game.playerNames.size() < size) {
+                    game.playerNames.add("temp");
+                }
+                break;
+            case "START": {
+                String name = split[1];
+                int id = Integer.parseInt(split[2]);
+                if (!game.playerNames.contains(name)) {
+                    game.playerNames.set(id, name);
+                    System.out.println(game.playerNames);
+
+                }
+
+                break;
             }
-        }
-
-       else if (header.equals("START")) {
-            String name = split[1];
-            int id = Integer.parseInt(split[2]);
-            if (!game.playerNames.contains(name)) {
-                game.playerNames.set(id, name);
-                System.out.println(game.playerNames);
-
+            case "CARD": {
+                String name = split[1];
+                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+                break;
             }
-
-        }
-        else if (header.equals("CARD")) {
-            String name = split[1];
-            ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
-        }
-        else {
-            System.out.println(packet);
+            default:
+                System.out.println(packet);
+                break;
         }
     }
 
