@@ -10,8 +10,7 @@ import inf112.roborally.game.player.ProgramCard;
 
 import java.util.ArrayList;
 
-import static inf112.roborally.game.enums.GameState.BOARD_MOVES;
-import static inf112.roborally.game.enums.GameState.GAME_OVER;
+import static inf112.roborally.game.enums.GameState.*;
 
 public class MultiplayerLogic extends BoardLogic implements Runnable {
     private final Hud hud;
@@ -77,7 +76,8 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         // Get new cards from the server
         game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
 
-
+        System.out.println("Players choosing cards. Players alive: " + players.size());
+        state = PICKING_CARDS;
 
         Gdx.app.postRunnable(new Runnable() {
             @Override

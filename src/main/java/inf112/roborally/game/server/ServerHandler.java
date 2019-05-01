@@ -74,11 +74,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 int cardLimit = Integer.parseInt(cardlimitAndName[0]);
                 for (int i = 0; i < cardLimit; i++) {
                     String card = stackOfProgramCards.pop().toString();
-
+                    if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
+                        reshuffleDeck();
+                    }
                     for (Channel channel : channels) {
-                        if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
-                            reshuffleDeck();
-                        }
                         channel.writeAndFlush("RECEIVE_CARDS " + cardlimitAndName[1] + " " + card + "\r\n");
                     }
                 }
