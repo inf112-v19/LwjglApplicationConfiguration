@@ -3,6 +3,7 @@ package inf112.roborally.game.server;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.player.Player;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -59,6 +60,8 @@ public class Client implements Runnable{
             channel.writeAndFlush("HANDSHAKE" + " " + name);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+            channel.writeAndFlush(new Position(10, 10));
 
             while (true) {
 

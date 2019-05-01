@@ -40,10 +40,11 @@ FIFTH WORD = PRIORITY of card
 
         if (header.equals("START")) {
             String name = split[1];
+            int id = Integer.parseInt(split[2]);
             if(!game.playerNames.contains(name)){
-                game.playerNames.add(split[1]);
-                System.out.println(game.playerNames.size());
+                game.playerNames.set(id, name);
                 System.out.println(game.playerNames);
+
             }
 
         }

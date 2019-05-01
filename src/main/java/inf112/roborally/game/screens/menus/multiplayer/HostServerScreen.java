@@ -42,10 +42,12 @@ public class HostServerScreen extends InputFieldScreen {
 
     @Override
     protected void confirmInput() {
+        int id = 1;
         System.out.println("[SERVER] Connected players " + game.playerNames);
         for (String s :
                 game.playerNames) {
-            game.client.sendMessage("START " + s);
+            game.client.sendMessage("START " + s + " " + id);
+            id++;
         }
         System.out.println(game.playerName + " wants to start the game.");
 

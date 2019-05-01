@@ -1,6 +1,7 @@
 package inf112.roborally.game.server;
 
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.objects.Position;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -45,21 +46,34 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        String packet = msg.toString();
-        String[] split = packet.split(" ", 2);
-        String header = split[0];
 
-        if (header.equals("HANDSHAKE")) {
-            System.out.println("[SERVER] " + split[1] + " has connected!");
-            game.playerNames.add(split[1]);
-            for (Channel channel : channels) {
-                channel.writeAndFlush(split[1] + " has connected!"+ "\r\n");
-            }
-        } else {
-            for (Channel channel :
-                    channels) {
-                channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
+        if(msg instanceof Position){
+            System.out.println("POSITION");
+
+        }
+        else {
+            String packet = msg.toString();
+            String[] split = packet.split(" ", 2);
+            String header = split[0];
+
+            if (header.equals("HANDSHAKE")) {
+                System.out.println("[SERVER] " + split[1] + " has connected!");
+                game.playerNames.add(split[1]);
+
+                for (Channel channel : channels) {
+                    channel.writeAndFlush(split[1] + " has connected!" + "\r\n");
+                }
+
+            } else {
+                for (Channel channel :
+                        channels) {
+                    channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
+                }
             }
         }
+    }
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+        cause.printStackTrace();
     }
 }

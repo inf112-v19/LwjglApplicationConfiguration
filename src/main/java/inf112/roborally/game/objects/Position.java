@@ -3,10 +3,12 @@ package inf112.roborally.game.objects;
 
 import inf112.roborally.game.enums.Direction;
 
+import java.io.Serializable;
+
 /**
  * Position is an x and a y value
  */
-public class Position {
+public class Position implements Serializable {
     private int x;
     private int y;
 
