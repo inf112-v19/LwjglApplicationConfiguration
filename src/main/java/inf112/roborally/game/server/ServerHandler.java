@@ -73,11 +73,12 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 String[] cardlimitAndName = split[1].split(" ");
                 int numbers = Integer.parseInt(cardlimitAndName[0]);
                 for (int i = 0; i < numbers; i++) {
+                    for (Channel channel : channels) {
+                        System.out.printf("Gonna send this card: %s%n", stackOfProgramCards.peek().toString());
+                        channel.writeAndFlush("RECEIVE_CARDS " + cardlimitAndName[1] + " " + stackOfProgramCards.pop().toString() + "\r\n");
+                    }
                     if (stackOfProgramCards.isEmpty()) { // in case the game drags on and we run out of cards - Morten
                         reshuffleDeck();
-                    }
-                    for (Channel channel : channels) {
-                        channel.writeAndFlush("RECEIVE_CARDS " + cardlimitAndName[1] + " " + stackOfProgramCards.pop().toString() + "\r\n");
                     }
                 }
                 break;

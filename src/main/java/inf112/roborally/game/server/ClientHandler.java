@@ -37,6 +37,11 @@ FIFTH WORD = PRIORITY of card
         String[] split = packet.split(" ");
         String header = split[0];
 
+        System.out.println("Split in ClientHandler");
+        for(String s : split) {
+            System.out.print(s + " ");
+        }
+
         switch (header) {
             case "LIST":
                 int size = Integer.parseInt(split[1]);
