@@ -70,8 +70,14 @@ FIFTH WORD = PRIORITY of card
             case "CARD": {
                 String name = split[1];
                 ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
-                System.out.println(o.toString());
-                break;
+                if(game.playerName.equals(name)){
+                    System.out.println(o.toString());
+                    break;
+                }
+                else{
+                    System.out.println(o.toString());
+                    break;
+                }
             }
             case "MULTI":{
                 game.multiPlayer = true;
