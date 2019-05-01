@@ -51,6 +51,7 @@ public class HostServerScreen extends InputFieldScreen {
             id++;
         }
         System.out.println(game.playerName + " wants to start the game.");
+        game.client.sendMessage("SET_MAP ");
 
     }
 

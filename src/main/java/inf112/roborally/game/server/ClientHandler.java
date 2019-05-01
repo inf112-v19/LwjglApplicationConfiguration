@@ -1,6 +1,8 @@
 package inf112.roborally.game.server;
 
+import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.enums.Rotate;
 import io.netty.channel.ChannelHandlerContext;
@@ -56,6 +58,15 @@ FIFTH WORD = PRIORITY of card
         else if(header.equals("CARD")){
             String name = split[1];
             ProgramCard card = generateCard(split[2], split[3], split[4]);
+        }
+        else if(header.equals("SET_MAP")){
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    game.createDefaultGameScreen();
+                    game.setScreen(game.gameScreen);
+                }
+            });
         }
         else {
             System.out.println(packet);

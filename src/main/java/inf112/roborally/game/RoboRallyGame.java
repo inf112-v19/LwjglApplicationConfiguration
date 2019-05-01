@@ -179,7 +179,7 @@ public class RoboRallyGame extends Game {
     }
 
 
-    private List<Player> createDefaultPlayers() {
+    public List<Player> createDefaultPlayers() {
         return createNumberOfPlayers(MAX_PLAYERS);
     }
 
