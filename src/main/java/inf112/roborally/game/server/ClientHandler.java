@@ -77,6 +77,7 @@ FIFTH WORD = PRIORITY of card
                 break;
             }
             case "SET_NUMBER_OF_PLAYERS":
+                System.out.println(split[1]);
                 game.setNumberOfChosenPlayers(Integer.parseInt(split[1]));
                 break;
 

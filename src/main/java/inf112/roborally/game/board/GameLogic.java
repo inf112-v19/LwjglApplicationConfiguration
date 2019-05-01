@@ -15,6 +15,7 @@ public class GameLogic extends BoardLogic implements Runnable {
     private Board board;
     private RoboRallyGame game;
     private Player player1;
+    private int playerIndex; // The index on the list for your player
 
 
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
@@ -24,11 +25,17 @@ public class GameLogic extends BoardLogic implements Runnable {
         this.hud = hud;
 //        player1 = players.get(0);
         // Set the name to match the current player
-        for(Player player : players) {
-            if(player.getName().equals(game.playerName)) {
-                player1 = player;
-            }
-        }
+        player1 = board.getThisPlayer();
+
+//        playerIndex = 0;
+//        for(Player player : players) {
+//            if(player.getName().equals(game.playerName)) {
+//                player1 = player;
+//            }
+//            else {
+//                playerIndex++;
+//            }
+//        }
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
