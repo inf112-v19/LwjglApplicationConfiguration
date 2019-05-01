@@ -30,6 +30,12 @@ public class ProgramCard implements Comparable {
         this.priority = priority;
     }
 
+    public ProgramCard(String rotate, String move, String priority){
+        this.rotate = Rotate.valueOf(rotate);
+        this.moveDistance = Integer.parseInt(move);
+        this.priority = Integer.parseInt(priority);
+    }
+
     public static Stack<ProgramCard> makeProgramCardDeck() {
         Stack<ProgramCard> cardStack = new Stack<>();
         // Adding cards that rotate:
@@ -110,12 +116,7 @@ public class ProgramCard implements Comparable {
 
     @Override
     public String toString() {
-        String result;
-        if (rotate != Rotate.NONE)
-            result = "Rotate: ";
-        else
-            result = "Move: ";
-        return result + identify() + " Priority: " + priority;
+        return rotate.toString() + " " + moveDistance + " " + priority;
     }
 
     private String identify() {

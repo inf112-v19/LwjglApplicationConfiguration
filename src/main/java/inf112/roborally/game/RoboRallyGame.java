@@ -76,7 +76,7 @@ public class RoboRallyGame extends Game {
 
     public ArrayList<String> playerNames;
     public Board board;
-    public String playerName;
+    public String playerName = "Player1"; // Default
 
     @Override
     public void create() {
@@ -207,6 +207,18 @@ public class RoboRallyGame extends Game {
             Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board);
             players.add(player);
             index++;
+        }
+        return players;
+    }
+
+    public List<Player> createNumberOfPlayersFromMultiplayer(int numberOfPlayers) {
+        if (numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS) {
+            return null;
+        }
+
+        List<Player> players = new ArrayList<>();
+        for(int i = 0; i < numberOfPlayers; i++) {
+            players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
         }
         return players;
     }

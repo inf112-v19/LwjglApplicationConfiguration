@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.ProgramCard;
-import inf112.roborally.game.enums.Rotate;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -38,70 +37,47 @@ FIFTH WORD = PRIORITY of card
         String[] split = packet.split(" ");
         String header = split[0];
 
-        if(header.equals("LIST")){
-            int size = Integer.parseInt(split[1]);
-            while(game.playerNames.size() < size){
-                game.playerNames.add("temp");
-            }
-        }
-
-       else if (header.equals("START")) {
-            String name = split[1];
-            int id = Integer.parseInt(split[2]);
-            if(!game.playerNames.contains(name)){
-                game.playerNames.set(id, name);
-                System.out.println(game.playerNames);
-
-            }
-
-        }
-        else if(header.equals("CARD")){
-            String name = split[1];
-            ProgramCard card = generateCard(split[2], split[3], split[4]);
-        }
-        else if(header.equals("SET_MAP")){
-            Gdx.app.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    game.createDefaultGameScreen();
-                    game.setScreen(game.gameScreen);
+        switch (header) {
+            case "LIST":
+                int size = Integer.parseInt(split[1]);
+                while (game.playerNames.size() < size) {
+                    game.playerNames.add("temp");
                 }
-            });
-        }
-        else {
-            System.out.println(packet);
-        }
+                break;
+            case "START": {
+                String name = split[1];
+                int id = Integer.parseInt(split[2]);
+                if (!game.playerNames.contains(name)) {
+                    game.playerNames.set(id, name);
+                    System.out.println(game.playerNames);
 
+                }
 
+                break;
+            }
+            case "SET_MAP":{
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.createDefaultGameScreen();
+                        game.setScreen(game.gameScreen);
+                    }
+                });
+                break;
+            }
+            case "CARD": {
+                String name = split[1];
+                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+                break;
+            }
+            default:
+                System.out.println(packet);
+                break;
+        }
     }
+
     @Override
-    public void channelReadComplete(ChannelHandlerContext ctx){
+    public void channelReadComplete(ChannelHandlerContext ctx) {
         ctx.flush();
-    }
-
-    public ProgramCard generateCard(String rotate, String move, String prio){
-            Rotate rotation = toRotate(rotate);
-            int moveDist = Integer.parseInt(move);
-            int priority = Integer.parseInt(prio);
-
-            return new ProgramCard(rotation,moveDist,priority);
-
-    }
-    public Rotate toRotate(String rotate){
-        if(rotate.equals("NONE")){
-            return Rotate.NONE;
-        }
-        else if(rotate.equals("LEFT")){
-            return Rotate.LEFT;
-        }
-        else if(rotate.equals("RIGHT")){
-            return Rotate.RIGHT;
-        }
-        else if(rotate.equals("UTURN")){
-            return Rotate.UTURN;
-        }
-        else{
-            return null;
-        }
     }
 }
