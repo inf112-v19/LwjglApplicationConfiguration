@@ -180,7 +180,7 @@ public class RoboRallyGame extends Game {
         board.createBoard(VAULT);
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 11, 2));
-        board.getFlags().add(new Flag(10, 10, 3));
+        board.getFlags().add(new Flag(12, 12, 3));
         board.addPlayersToBoard(createDefaultPlayers());
         board.findLaserGuns();
     }
@@ -189,7 +189,7 @@ public class RoboRallyGame extends Game {
         board.createBoard(VAULT);
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 11, 2));
-        board.getFlags().add(new Flag(10, 10, 3));
+        board.getFlags().add(new Flag(12, 12, 3));
         board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
 //        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(playerNames.size()));
         board.findLaserGuns();

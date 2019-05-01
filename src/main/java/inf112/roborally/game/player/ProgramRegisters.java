@@ -15,11 +15,10 @@ public class ProgramRegisters implements IProgramRegisters {
     private RoboRallyGame game;
 
 
-    public ProgramRegisters(Player player, RoboRallyGame game) {
+    public ProgramRegisters(Player player) {
         this.player = player;
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
-        this.game = game;
     }
 
     /**
@@ -72,9 +71,6 @@ public class ProgramRegisters implements IProgramRegisters {
         if (registers[phase] == null || !player.isOperational()) return;
         ProgramCard programCard = registers[phase];
 
-//        if(RoboRallyGame.multiPlayer){
-//            game.client.sendMessage("CARD " + game.playerName + " " + toStr(programCard));
-//        }
         if (programCard.isRotate()) {
             player.rotate(programCard.getRotate());
         } else if (programCard.getMoveDistance() == -1) {
