@@ -80,6 +80,9 @@ public class Hud {
                                     player.getRegisters().getAllCards()) {
                                 game.client.sendMessage("CARD " + game.playerName + " " + game.toStr(card));
                             }
+                            //Remove all cards from hand and register
+                            player.getRegisters().returnCards();
+                            player.getHand().removeAllCards();
                         }
 
                     }
