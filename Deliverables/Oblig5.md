@@ -8,9 +8,9 @@
    - In the very beginning we were not very structured and organised. We started with our our own branches, and named them after who
    were using it, and not by what feature we were working on. After the first assignment we adjusted this, and started naming them after which features we
    implementing. This made it much easier for us to know what the others were working on, and it gave us the opportunity to easily access
-   the different branches to make small changes and to help each others.
+   the different branches to make small changes and to help each other with problems.
    - One of the things that have worked very well is the attendance on our group meetings. Everyone on the group has showed up to almost 
-   every meeting, both the mandatory and whenever we met up otherwise
+   every meeting, both the mandatory and whenever we met up otherwise.
    - 
    - One of the most important things we have learned is how to collaborate and communicate with a team on a project. Our abilities to work together as a team has been
    significantly improved throughout the project. This is the first time for anyone on the group to be working together with 
