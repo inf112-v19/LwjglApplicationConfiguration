@@ -76,7 +76,7 @@ public class RoboRallyGame extends Game {
 
     public ArrayList<String> playerNames;
     public Board board;
-    public String playerName;
+    public String playerName = "Player1"; // Default
 
     @Override
     public void create() {
@@ -179,7 +179,7 @@ public class RoboRallyGame extends Game {
     }
 
 
-    private List<Player> createDefaultPlayers() {
+    public List<Player> createDefaultPlayers() {
         return createNumberOfPlayers(MAX_PLAYERS);
     }
 

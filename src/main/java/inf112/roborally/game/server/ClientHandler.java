@@ -1,6 +1,8 @@
 package inf112.roborally.game.server;
 
+import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -35,29 +37,42 @@ FIFTH WORD = PRIORITY of card
         String[] split = packet.split(" ");
         String header = split[0];
 
-        if(header.equals("LIST")){
-            int size = Integer.parseInt(split[1]);
-            while(game.playerNames.size() < size){
-                game.playerNames.add("temp");
+        switch (header) {
+            case "LIST":
+                int size = Integer.parseInt(split[1]);
+                while (game.playerNames.size() < size) {
+                    game.playerNames.add("temp");
+                }
+                break;
+            case "START": {
+                String name = split[1];
+                int id = Integer.parseInt(split[2]);
+                if (!game.playerNames.contains(name)) {
+                    game.playerNames.set(id, name);
+                    System.out.println(game.playerNames);
+
+                }
+
+                break;
             }
-        }
-
-       else if (header.equals("START")) {
-            String name = split[1];
-            int id = Integer.parseInt(split[2]);
-            if (!game.playerNames.contains(name)) {
-                game.playerNames.set(id, name);
-                System.out.println(game.playerNames);
-
+            case "SET_MAP":{
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.createDefaultGameScreen();
+                        game.setScreen(game.gameScreen);
+                    }
+                });
+                break;
             }
-
-        }
-        else if (header.equals("CARD")) {
-            String name = split[1];
-            ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
-        }
-        else {
-            System.out.println(packet);
+            case "CARD": {
+                String name = split[1];
+                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+                break;
+            }
+            default:
+                System.out.println(packet);
+                break;
         }
     }
 
