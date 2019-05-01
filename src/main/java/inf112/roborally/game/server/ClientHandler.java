@@ -1,13 +1,10 @@
 package inf112.roborally.game.server;
 
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.objects.Position;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.SimpleChannelInboundHandler;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 

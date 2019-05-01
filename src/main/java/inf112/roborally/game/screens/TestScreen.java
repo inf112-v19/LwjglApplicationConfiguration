@@ -6,7 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;

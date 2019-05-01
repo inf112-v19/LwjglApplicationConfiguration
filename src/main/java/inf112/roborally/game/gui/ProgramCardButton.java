@@ -2,7 +2,7 @@ package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.player.ProgramCard;
 
 /**
  * Visual program card.

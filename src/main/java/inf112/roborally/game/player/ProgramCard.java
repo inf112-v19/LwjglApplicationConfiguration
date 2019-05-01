@@ -1,6 +1,5 @@
-package inf112.roborally.game.board;
+package inf112.roborally.game.player;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import inf112.roborally.game.enums.Rotate;

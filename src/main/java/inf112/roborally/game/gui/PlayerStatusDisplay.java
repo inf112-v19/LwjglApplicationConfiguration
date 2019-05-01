@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
 

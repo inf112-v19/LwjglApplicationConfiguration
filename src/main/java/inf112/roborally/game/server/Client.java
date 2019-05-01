@@ -1,7 +1,7 @@
 package inf112.roborally.game.server;
 
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.board.ProgramCard;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.player.Player;
