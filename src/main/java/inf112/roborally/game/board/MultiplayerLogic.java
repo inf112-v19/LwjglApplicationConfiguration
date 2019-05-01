@@ -10,6 +10,9 @@ import inf112.roborally.game.player.ProgramCard;
 
 import java.util.ArrayList;
 
+import static inf112.roborally.game.enums.GameState.BOARD_MOVES;
+import static inf112.roborally.game.enums.GameState.GAME_OVER;
+
 public class MultiplayerLogic extends BoardLogic implements Runnable {
     private final Hud hud;
 
@@ -72,6 +75,9 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
 
         // Get new cards from the server
+        game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
+
+
 
         Gdx.app.postRunnable(new Runnable() {
             @Override
@@ -120,4 +126,18 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
         super.doPhase();
     }
+
+    @Override
+    protected Player checkIfAPlayerHasWon() {
+        for(Player player : players) {
+            if (player.hasWon()) {
+                System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
+                state = GAME_OVER;
+                return player;
+            }
+        }
+        state = BOARD_MOVES;
+        return null;
+    }
+
 }
