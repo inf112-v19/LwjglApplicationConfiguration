@@ -10,17 +10,24 @@ public class AiRobo {
 
     public static void makeDecisionsForRobos(ArrayList<Player> aiRobos) {
         for (Player robo : aiRobos) {
-            makeDecisions(robo);
+            if (robo.outOfLives()) return;
+            moveTestPilot(robo);
+            robo.wantsToPowerDown = wantsToPowerDown(robo);
+            robo.setPlayerState(PlayerState.READY);
         }
     }
 
-    private static void makeDecisions(Player robo) {
-        if (robo.outOfLives()) return;
+    private static void smartAI(Player robo) {
+        int x = robo.getHand().size();
 
-        moveTestPilot(robo);
+        for(int i = 0; i < x*(x-1)*(x-2)*(x-3)*(x-4); i++) {
+            Player testPilot = robo.createTestPilot();
+            Player succsessfulTestPilot = robo.createTestPilot();
 
-        robo.wantsToPowerDown = wantsToPowerDown(robo);
-        robo.setPlayerState(PlayerState.READY);
+            for(int k = 0; k < x; k++) {
+
+            }
+        }
     }
 
     private static void moveTestPilot(Player robo) {
