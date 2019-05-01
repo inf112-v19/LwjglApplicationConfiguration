@@ -44,7 +44,8 @@ public class RoboRallyGame extends Game {
     private int numberOfChosenPlayers;
 
     public boolean AIvsAI = false;
-    public boolean multiPlayer = false;
+
+    public static boolean multiPlayer = false;
 
     public OrthographicCamera dynamicCamera;
     public Viewport dynamicViewPort;
@@ -220,7 +221,7 @@ public class RoboRallyGame extends Game {
             if (index >= numberOfSkins) {
                 index = 0;
             }
-            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board);
+            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board, this);
             players.add(player);
             index++;
         }
@@ -234,11 +235,12 @@ public class RoboRallyGame extends Game {
 
         List<Player> players = new ArrayList<>();
         for(int i = 0; i < numberOfPlayers; i++) {
+
             if(i < playerNames.size()) {
-                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
+                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board, this));
             }
             else {
-                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board);
+                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board, this);
                 players.add(player);
             }
         }

@@ -1,5 +1,7 @@
 package inf112.roborally.game.player;
 
+import inf112.roborally.game.RoboRallyGame;
+
 import java.util.ArrayList;
 
 public class ProgramRegisters implements IProgramRegisters {
@@ -10,12 +12,14 @@ public class ProgramRegisters implements IProgramRegisters {
 
     private int unlockedRegisters;
     private ProgramCard[] registers;
+    private RoboRallyGame game;
 
 
-    public ProgramRegisters(Player player) {
+    public ProgramRegisters(Player player, RoboRallyGame game) {
         this.player = player;
         registers = new ProgramCard[NUMBER_OF_REGISTERS];
         unlockedRegisters = NUMBER_OF_REGISTERS;
+        this.game = game;
     }
 
     /**
@@ -67,6 +71,10 @@ public class ProgramRegisters implements IProgramRegisters {
     public void executeCard(int phase) {
         if (registers[phase] == null || !player.isOperational()) return;
         ProgramCard programCard = registers[phase];
+
+        if(RoboRallyGame.multiPlayer){
+            game.client.sendMessage("CARD " + game.playerName + " " + toStr(programCard));
+        }
         if (programCard.isRotate()) {
             player.rotate(programCard.getRotate());
         } else if (programCard.getMoveDistance() == -1) {
@@ -149,5 +157,10 @@ public class ProgramRegisters implements IProgramRegisters {
 
     public int getNumLockedRegisters() {
         return NUMBER_OF_REGISTERS - unlockedRegisters;
+    }
+
+
+    public String toStr(ProgramCard card){
+        return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
     }
 }

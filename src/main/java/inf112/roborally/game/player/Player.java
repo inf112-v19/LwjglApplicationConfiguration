@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
@@ -39,10 +40,12 @@ public class Player extends MovableGameObject implements Comparable {
     private PlayerHand hand;
 
     private Texture skinTexture;
+    private RoboRallyGame game;
 
-    public Player(String name, Texture skin, Direction direction, Board board) {
+    public Player(String name, Texture skin, Direction direction, Board board, RoboRallyGame game) {
         this(0, 0);
         this.name = name;
+        this.game = game;
         makeSprite(skin);
         this.board = board;
         setDirection(direction);
@@ -65,7 +68,7 @@ public class Player extends MovableGameObject implements Comparable {
         nFlags = 1;
         playerState = OPERATIONAL;
         hand = new PlayerHand(this);
-        registers = new ProgramRegisters(this);
+        registers = new ProgramRegisters(this, this.game);
         backup = new Backup(this);
         laserCannon = new LaserCannon(this);
     }
@@ -354,7 +357,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public Player createTestPilot() {
-        Player testPilot = new Player("testPilot", sprite.getTexture(), getDirection(), board);
+        Player testPilot = new Player("testPilot", sprite.getTexture(), getDirection(), board, this.game);
         testPilot.move(getX(), getY());
         return testPilot;
     }

@@ -20,7 +20,7 @@ public class LaserTestScreen implements Screen {
         board.createBoard(game.LASER_TEST_MAP);
         board.findLaserGuns();
         for (int i = 0; i < game.MAX_PLAYERS; i++) {
-            Player testBot = new Player("testBot" + i, AssMan.getPlayerSkins()[i], Direction.NORTH, board);
+            Player testBot = new Player("testBot" + i, AssMan.getPlayerSkins()[i], Direction.NORTH, board, game);
             board.addPlayer(testBot);
         }
         board.placePlayers();
