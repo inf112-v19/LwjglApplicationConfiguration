@@ -108,7 +108,7 @@
  </tile>
  <tile id="21">
   <properties>
-   <property name="Floor" value="MARKING"/>
+   <property name="Hole" value=""/>
   </properties>
  </tile>
  <tile id="22">
@@ -295,6 +295,11 @@
  <tile id="57">
   <properties>
    <property name="Gyro" value="LEFT"/>
+  </properties>
+ </tile>
+ <tile id="58">
+  <properties>
+   <property name="Hole" value=""/>
   </properties>
  </tile>
  <tile id="59">

@@ -47,9 +47,6 @@ public class AssMan {
     public static final AssetDescriptor<Texture> PLAYER_CLAPTRAP_3000
             = new AssetDescriptor<>("assets/robots/claptrap3000.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> PLAYER_TVBOT
-            = new AssetDescriptor<>("assets/robots/tvBot.png", Texture.class);
-
     public static final AssetDescriptor<Texture> PLAYER_NURSE_BOT
             = new AssetDescriptor<>("assets/robots/NUR53_CP.png", Texture.class);
 
@@ -77,120 +74,72 @@ public class AssMan {
 
     //Hud buttons
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT
-            = new AssetDescriptor<>("assets/cards/buttonSubmit.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/buttonSubmit.png", Texture.class);
 
     public static final AssetDescriptor<Texture> BUTTON_SUBMIT_GREY
-            = new AssetDescriptor<>("assets/cards/buttonSubmitGrey.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/buttonSubmitGrey.png", Texture.class);
 
     public static final AssetDescriptor<Texture> BUTTON_CLEAR
-            = new AssetDescriptor<>("assets/cards/buttonClear.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/buttons/buttonClear.png", Texture.class);
 
     public static final AssetDescriptor<Texture> BUTTON_SETTINGS
-            = new AssetDescriptor<>("assets/img/settingsbtn.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/settingsbtn.png", Texture.class);
 
     //GameScreen
-    public static final AssetDescriptor<Texture> GAMESCREEN_BACKGROUND2
-            = new AssetDescriptor<>("assets/screens/gamescreen/background2.png", Texture.class);
+    public static final AssetDescriptor<Texture> GAME_BACKGROUND
+            = new AssetDescriptor<>("assets/img/background.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> GAMESCREEN_GRID2
-            = new AssetDescriptor<>("assets/screens/gamescreen/grid2.png", Texture.class);
+    public static final AssetDescriptor<Texture> GAME_GRID
+            = new AssetDescriptor<>("assets/img/grid.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> GAMESCREEN_CLOUDS
-            = new AssetDescriptor<>("assets/screens/gamescreen/clouds.png", Texture.class);
-
-    //EndGameScreen
-    public static final AssetDescriptor<Texture> ENDGAME_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/endgamescreen/endgamebackground.png", Texture.class);
-
-    //Settings
-    public static final AssetDescriptor<Texture> SETTINGS_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/settingsscreen/settingsbackground.png", Texture.class);
+    public static final AssetDescriptor<Texture> GAME_CLOUDS
+            = new AssetDescriptor<>("assets/img/clouds.png", Texture.class);
 
     //SetupScreen
-    public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN
-            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreen.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SETUP_SELECT_SKIN_TEXT
-            = new AssetDescriptor<>("assets/screens/setupscreen/selectskintext.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SETUP_SETUP_SCREEN_PLACE_FLAGS
-            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenPlaceFlags.png", Texture.class);
-
     public static final AssetDescriptor<Texture> SETUP_PLACEFLAGS_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/setupscreen/placeFlags.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SETUP_BLACK_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/setupscreen/setupscreenblack.png", Texture.class);
+            = new AssetDescriptor<>("assets/img/placeFlags.png", Texture.class);
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
-            = new AssetDescriptor<>("assets/cards/programregisters.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/programregisters.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_DAMAGE_TOKEN
-            = new AssetDescriptor<>("assets/cards/tokens/damageToken.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/tokens/damageToken.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_LIFE_TOKEN
-            = new AssetDescriptor<>("assets/cards/tokens/lifeToken.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/tokens/lifeToken.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_WIRES
-            = new AssetDescriptor<>("assets/cards/wires.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/wires.png", Texture.class);
 
     public static final AssetDescriptor<Texture> REGISTER_LOCK_TOKEN
-            = new AssetDescriptor<>("assets/cards/tokens/lockToken.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> POWER_DOWN
-            = new AssetDescriptor<>("assets/buttons/powerdown.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> POWER_DOWN_PRESS
-            = new AssetDescriptor<>("assets/buttons/powerdown_press.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> POWER_DOWN_PRESSED
-            = new AssetDescriptor<>("assets/buttons/powerdown_active.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> REGISTER_SUBMIT
-            = new AssetDescriptor<>("assets/buttons/submit.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> REGISTER_SUBMIT_PRESS
-            = new AssetDescriptor<>("assets/buttons/submit_press.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> REGISTER_CLEAR
-            = new AssetDescriptor<>("assets/buttons/clear.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> REGISTER_CLEAR_PRESS
-            = new AssetDescriptor<>("assets/buttons/clear_press.png", Texture.class);
+            = new AssetDescriptor<>("assets/gui/tokens/lockToken.png", Texture.class);
 
     //Backup
     public static final AssetDescriptor<Texture> BACKUP
             = new AssetDescriptor<>("assets/objects/backup.png", Texture.class);
 
-    //Repair
-    public static final AssetDescriptor<Texture> REPAIRSITE_BACKGROUND
-            = new AssetDescriptor<>("assets/objects/repairsite.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> REPAIRSITE_REPAIR_ANIMATION
+    public static final AssetDescriptor<Texture> REPAIR_ANIMATION
             = new AssetDescriptor<>("assets/animations/wrench.png", Texture.class);
 
-    //MenuScreen class
-    public static final AssetDescriptor<Texture> MENUSCREEN_TITLESCREEN
-            = new AssetDescriptor<>("assets/screens/menuscreen/titlescreen.jpg", Texture.class);
-
-    public static final AssetDescriptor<Texture> MENUSCREEN_CHOICES
-            = new AssetDescriptor<>("assets/screens/menuscreen/menuchoices.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> MENUSCREEN_PRESS_ENTER_WHITE
-            = new AssetDescriptor<>("assets/screens/menuscreen/pressEnterWhite.png", Texture.class);
-
     //TestScreen class
-    public static final AssetDescriptor<Texture> TESTSCREEN_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/testscreen/testscreen.png", Texture.class);
+    public static final AssetDescriptor<Texture> TEST_BACKGROUND
+            = new AssetDescriptor<>("assets/img/testscreen.png", Texture.class);
 
     //Flag object
-    public static final AssetDescriptor<Texture> FLAG_SKIN
-            = new AssetDescriptor<>("assets/objects/flags.png", Texture.class);
+    public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
+            = new AssetDescriptor<>("assets/objects/flags/flags.atlas", TextureAtlas.class);
 
     // Buttons:
-    public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
-            = new AssetDescriptor<>("assets/flags/flags.atlas", TextureAtlas.class);
+    public static final AssetDescriptor<Texture> POWER_DOWN
+            = new AssetDescriptor<>("assets/gui/buttons/powerdown.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> POWER_DOWN_PRESS
+            = new AssetDescriptor<>("assets/gui/buttons/powerdown_press.png", Texture.class);
+
+    public static final AssetDescriptor<Texture> POWER_DOWN_PRESSED
+            = new AssetDescriptor<>("assets/gui/buttons/powerdown_active.png", Texture.class);
 
     public static final AssetDescriptor<Texture> RIGHT_ARROW
             = new AssetDescriptor<>("assets/buttons/right_arrow.png", Texture.class);
@@ -204,23 +153,14 @@ public class AssMan {
     public static final AssetDescriptor<Texture> LEFT_ARROW_PRESS
             = new AssetDescriptor<>("assets/buttons/left_arrow_press.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> CONFIRM
-            = new AssetDescriptor<>("assets/buttons/confirm.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> CONFIRM_PRSS
-            = new AssetDescriptor<>("assets/buttons/confirm_press.png", Texture.class);
-
     public static final AssetDescriptor<Texture> BACK
-            = new AssetDescriptor<> ("assets/buttons/back.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/back.png", Texture.class);
 
-            public static final AssetDescriptor<Texture> BACK_PRESS
-            = new AssetDescriptor<> ("assets/buttons/back_press.png", Texture.class);
-
-    public static final AssetDescriptor<Texture> SELECT_SCREEN
-            = new AssetDescriptor<>("assets/buttons/select_skin_screen.png", Texture.class);
+    public static final AssetDescriptor<Texture> BACK_PRESS
+            = new AssetDescriptor<>("assets/buttons/back_press.png", Texture.class);
 
     public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
-            = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
+            = new AssetDescriptor<>("assets/gui/cards/imageButton.atlas", TextureAtlas.class);
 
     //Laser
     public static final AssetDescriptor<TextureAtlas> LASER_ATLAS
@@ -228,7 +168,7 @@ public class AssMan {
 
     //Status display for robots
     public static final AssetDescriptor<Texture> STATUS_DISPLAY_ROBOTS =
-            new AssetDescriptor<>("assets/register/robot_status_display.png", Texture.class);
+            new AssetDescriptor<>("assets/gui/robot_status_display.png", Texture.class);
 
     // Font
     public static final AssetDescriptor<BitmapFont> FONT_GROTESKIA =
@@ -239,20 +179,19 @@ public class AssMan {
 
     // TextFieldScreen
     public static final AssetDescriptor<Texture> TEXT_FIELD_BG
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/text_field_bg.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/inputfield/text_field_bg.png", Texture.class);
 
     public static final AssetDescriptor<Texture> TEXT_FIELD_CURSOR
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/cursor.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/inputfield/cursor.png", Texture.class);
 
     public static final AssetDescriptor<Texture> TEXT_BUTTON_UP
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/button.png", Texture.class);
 
     public static final AssetDescriptor<Texture> TEXT_BUTTON_PRESS
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_press.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/button_press.png", Texture.class);
 
     public static final AssetDescriptor<Texture> TEXT_BUTTON_CHECKED
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_checked.png", Texture.class);
-
+            = new AssetDescriptor<>("assets/buttons/button_checked.png", Texture.class);
 
     @SuppressWarnings("Duplicates")
     public static void load() {
@@ -271,7 +210,6 @@ public class AssMan {
         manager.load(PLAYER_CLAPTRAP_REFINED);
         manager.load(PLAYER_BUTLER_REFINED);
         manager.load(PLAYER_CLAPTRAP_3000);
-        manager.load(PLAYER_TVBOT);
         manager.load(PLAYER_CAPTAIN_BOT);
         manager.load(PLAYER_COP_BOT);
         manager.load(PLAYER_NURSE_BOT);
@@ -290,22 +228,12 @@ public class AssMan {
         manager.load(BUTTON_SETTINGS);
 
         //Gamescreen
-        manager.load(GAMESCREEN_BACKGROUND2);
-        manager.load(GAMESCREEN_GRID2);
-        manager.load(GAMESCREEN_CLOUDS);
-
-        //Endgame
-        manager.load(ENDGAME_BACKGROUND);
-
-        //Settings
-        manager.load(SETTINGS_BACKGROUND);
+        manager.load(GAME_BACKGROUND);
+        manager.load(GAME_GRID);
+        manager.load(GAME_CLOUDS);
 
         //setup
-        manager.load(SETUP_SETUP_SCREEN);
-        manager.load(SETUP_SELECT_SKIN_TEXT);
-        manager.load(SETUP_SETUP_SCREEN_PLACE_FLAGS);
         manager.load(SETUP_PLACEFLAGS_BACKGROUND);
-        manager.load(SETUP_BLACK_BACKGROUND);
 
         //Program register
         manager.load(REGISTER_PROGRAM_REGISTER);
@@ -313,10 +241,6 @@ public class AssMan {
         manager.load(REGISTER_LIFE_TOKEN);
         manager.load(REGISTER_WIRES);
         manager.load(REGISTER_LOCK_TOKEN);
-        manager.load(REGISTER_SUBMIT);
-        manager.load(REGISTER_SUBMIT_PRESS);
-        manager.load(REGISTER_CLEAR);
-        manager.load(REGISTER_CLEAR_PRESS);
         manager.load(POWER_DOWN);
         manager.load(POWER_DOWN_PRESS);
         manager.load(POWER_DOWN_PRESSED);
@@ -324,20 +248,13 @@ public class AssMan {
         //Backup
         manager.load(BACKUP);
 
-        //Repair site
-        manager.load(REPAIRSITE_BACKGROUND);
-        manager.load(REPAIRSITE_REPAIR_ANIMATION);
-
-        //Menuscreen
-        manager.load(MENUSCREEN_TITLESCREEN);
-        manager.load(MENUSCREEN_PRESS_ENTER_WHITE);
-        manager.load(MENUSCREEN_CHOICES);
+        //Repair animation
+        manager.load(REPAIR_ANIMATION);
 
         //Testscreen
-        manager.load(TESTSCREEN_BACKGROUND);
+        manager.load(TEST_BACKGROUND);
 
         //Flag
-        manager.load(FLAG_SKIN);
         manager.load(FLAG_ATLAS);
 
         //Program card

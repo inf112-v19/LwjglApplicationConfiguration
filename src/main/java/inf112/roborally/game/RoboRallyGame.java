@@ -75,7 +75,7 @@ public class RoboRallyGame extends Game {
      */
     private Screen screenBefore;
     public Server server;
-    public  Client client;
+    public Client client;
 
     public ArrayList<String> playerNames;
     public Board board;
@@ -164,7 +164,7 @@ public class RoboRallyGame extends Game {
      */
     public void createCustomGameScreen() {
         List<Player> players = createNumberOfPlayers(numberOfChosenPlayers);
-        if(players != null){
+        if (players != null) {
             board.addPlayersToBoard(players);
         }
         else {
@@ -236,9 +236,9 @@ public class RoboRallyGame extends Game {
 
         List<Player> players = new ArrayList<>();
 
-        for(int i = 0; i < numberOfChosenPlayers; i++) {
+        for (int i = 0; i < numberOfChosenPlayers; i++) {
 
-            if(i < playerNames.size()) {
+            if (i < playerNames.size()) {
                 players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
             }
             else {
@@ -313,13 +313,16 @@ public class RoboRallyGame extends Game {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
-    public void sendMessage(String s){
+
+    public void sendMessage(String s) {
         client.sendMessage(s);
     }
-    public String toStr(ProgramCard card){
-        return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
 
-    public void giveCardToPlayer(String player, ProgramCard card){
+    public String toStr(ProgramCard card) {
+        return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
+    }
+
+    public void giveCardToPlayer(String player, ProgramCard card) {
         for (Player play :
                 board.players) {
             if (play.getName().equals(player)) {
