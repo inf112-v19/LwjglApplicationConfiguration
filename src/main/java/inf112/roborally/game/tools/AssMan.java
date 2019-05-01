@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
-import java.util.concurrent.TimeoutException;
-
 /**
  * Contains assets used by the game.
  * With AssMan you are able to load as well as dispose all of them at the same time.
@@ -388,6 +386,10 @@ public class AssMan {
         skins[7] = manager.get(PLAYER_NURSE_BOT);
 
         return skins;
+    }
+
+    public static TextureAtlas.AtlasRegion getFlagAtlasRegion(int flagN){
+        return manager.get(FLAG_ATLAS).findRegion(Integer.toString(flagN));
     }
 
     public static void dispose() {
