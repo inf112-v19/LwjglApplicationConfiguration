@@ -62,8 +62,6 @@ public class GameLogic extends BoardLogic implements Runnable {
 
     public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
         } else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
             game.endGameScreen.addWinner(player1);

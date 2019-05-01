@@ -67,10 +67,10 @@ public class SettingsScreen extends BasicScreen {
 
     @Override
     protected void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             goToPreviousScreen();
         }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
             exitGame();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
