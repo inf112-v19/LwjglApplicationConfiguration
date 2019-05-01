@@ -76,6 +76,10 @@ FIFTH WORD = PRIORITY of card
                 game.multiPlayer = true;
                 break;
             }
+            case "SET_NUMBER_OF_PLAYERS":
+                game.setNumberOfChosenPlayers(Integer.parseInt(split[1]));
+                break;
+
             default:
                 System.out.println(packet);
                 break;
