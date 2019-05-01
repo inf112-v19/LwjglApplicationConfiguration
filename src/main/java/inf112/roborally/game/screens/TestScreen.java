@@ -24,7 +24,7 @@ public class TestScreen implements Screen {
     public TestScreen(RoboRallyGame game) {
         this.game = game;
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        background = new Sprite(AssMan.manager.get(AssMan.TESTSCREEN_BACKGROUND));
+        background = new Sprite(AssMan.manager.get(AssMan.TEST_BACKGROUND));
 
         player = new Player(0, 0, 1);
         stack = ProgramCard.makeProgramCardDeck();

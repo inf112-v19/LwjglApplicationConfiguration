@@ -86,13 +86,13 @@ public class AssMan {
             = new AssetDescriptor<>("assets/buttons/settingsbtn.png", Texture.class);
 
     //GameScreen
-    public static final AssetDescriptor<Texture> GAMESCREEN_BACKGROUND2
+    public static final AssetDescriptor<Texture> GAME_BACKGROUND
             = new AssetDescriptor<>("assets/img/background.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> GAMESCREEN_GRID2
+    public static final AssetDescriptor<Texture> GAME_GRID
             = new AssetDescriptor<>("assets/img/grid.png", Texture.class);
 
-    public static final AssetDescriptor<Texture> GAMESCREEN_CLOUDS
+    public static final AssetDescriptor<Texture> GAME_CLOUDS
             = new AssetDescriptor<>("assets/img/clouds.png", Texture.class);
 
     //SetupScreen
@@ -115,6 +115,23 @@ public class AssMan {
     public static final AssetDescriptor<Texture> REGISTER_LOCK_TOKEN
             = new AssetDescriptor<>("assets/gui/tokens/lockToken.png", Texture.class);
 
+    //Backup
+    public static final AssetDescriptor<Texture> BACKUP
+            = new AssetDescriptor<>("assets/objects/backup.png", Texture.class);
+
+
+    public static final AssetDescriptor<Texture> REPAIR_ANIMATION
+            = new AssetDescriptor<>("assets/animations/wrench.png", Texture.class);
+
+    //TestScreen class
+    public static final AssetDescriptor<Texture> TEST_BACKGROUND
+            = new AssetDescriptor<>("assets/img/testscreen.png", Texture.class);
+
+    //Flag object
+    public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
+            = new AssetDescriptor<>("assets/objects/flags/flags.atlas", TextureAtlas.class);
+
+    // Buttons:
     public static final AssetDescriptor<Texture> POWER_DOWN
             = new AssetDescriptor<>("assets/gui/buttons/powerdown.png", Texture.class);
 
@@ -124,23 +141,6 @@ public class AssMan {
     public static final AssetDescriptor<Texture> POWER_DOWN_PRESSED
             = new AssetDescriptor<>("assets/gui/buttons/powerdown_active.png", Texture.class);
 
-    //Backup
-    public static final AssetDescriptor<Texture> BACKUP
-            = new AssetDescriptor<>("assets/objects/backup.png", Texture.class);
-
-
-    public static final AssetDescriptor<Texture> REPAIRSITE_REPAIR_ANIMATION
-            = new AssetDescriptor<>("assets/animations/wrench.png", Texture.class);
-
-    //TestScreen class
-    public static final AssetDescriptor<Texture> TESTSCREEN_BACKGROUND
-            = new AssetDescriptor<>("assets/img/testscreen.png", Texture.class);
-
-    //Flag object
-    public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
-            = new AssetDescriptor<>("assets/objects/flags/flags.atlas", TextureAtlas.class);
-
-    // Buttons:
     public static final AssetDescriptor<Texture> RIGHT_ARROW
             = new AssetDescriptor<>("assets/buttons/right_arrow.png", Texture.class);
 
@@ -228,9 +228,9 @@ public class AssMan {
         manager.load(BUTTON_SETTINGS);
 
         //Gamescreen
-        manager.load(GAMESCREEN_BACKGROUND2);
-        manager.load(GAMESCREEN_GRID2);
-        manager.load(GAMESCREEN_CLOUDS);
+        manager.load(GAME_BACKGROUND);
+        manager.load(GAME_GRID);
+        manager.load(GAME_CLOUDS);
 
         //setup
         manager.load(SETUP_PLACEFLAGS_BACKGROUND);
@@ -249,10 +249,10 @@ public class AssMan {
         manager.load(BACKUP);
 
         //Repair animation
-        manager.load(REPAIRSITE_REPAIR_ANIMATION);
+        manager.load(REPAIR_ANIMATION);
 
         //Testscreen
-        manager.load(TESTSCREEN_BACKGROUND);
+        manager.load(TEST_BACKGROUND);
 
         //Flag
         manager.load(FLAG_ATLAS);
