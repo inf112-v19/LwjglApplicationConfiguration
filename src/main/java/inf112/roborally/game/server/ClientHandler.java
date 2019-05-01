@@ -51,11 +51,6 @@ FIFTH WORD = PRIORITY of card
         else if(header.equals("CARD")){
             String name = split[1];
             ProgramCard card = generateCard(split[2], split[3], split[4]);
-
-
-        }
-        else if(header.equals("POS")){
-            System.out.println(split[1]);
         }
         else {
             System.out.println(packet);

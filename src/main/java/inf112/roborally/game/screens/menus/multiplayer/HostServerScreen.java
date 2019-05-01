@@ -4,7 +4,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.InputFieldScreen;
 
 import java.net.InetAddress;
@@ -47,8 +46,6 @@ public class HostServerScreen extends InputFieldScreen {
         for (String s :
                 game.playerNames) {
             game.client.sendMessage("START " + s);
-            Position pos = new Position(2,2);
-            game.client.sendObject("POS " + pos.getX());
         }
         System.out.println(game.playerName + " wants to start the game.");
 

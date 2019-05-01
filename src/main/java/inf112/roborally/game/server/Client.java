@@ -3,7 +3,6 @@ package inf112.roborally.game.server;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.ProgramCard;
 import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.player.Player;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -58,10 +57,6 @@ public class Client implements Runnable{
             }
             //Under development
             channel.writeAndFlush("HANDSHAKE" + " " + name);
-            Position pos = new Position(2,4);
-            channel.writeAndFlush("POS " + pos + "\r\n");
-            channel.writeAndFlush("POS " + pos.getX() + "\r\n");
-            channel.writeAndFlush("POS " + pos.getY() + "\r\n");
 
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
