@@ -5,6 +5,7 @@ import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AiRobo {
 
@@ -17,20 +18,45 @@ public class AiRobo {
         }
     }
 
+    private static ArrayList<ProgramCard> combinationUtil(ArrayList<ProgramCard> arr, ArrayList<ProgramCard> data, int start,
+                                                          int end, int index, int r)
+    {
+        // Current combination is ready to be printed, print it
+        if (index == r)
+        {
+            for (int j=0; j<r; j++)
+                System.out.print(data.get(j)+" ");
+            System.out.println("");
+            return null;
+        }
+
+        // replace index with all possible elements. The condition
+        // "end-i+1 >= r-index" makes sure that including one element
+        // at index will make a combination with remaining elements
+        // at remaining positions
+        for (int i=start; i<=end && end-i+1 >= r-index; i++)
+        {
+            data.add(index, arr.get(i));
+            combinationUtil(arr, data, i+1, end, index+1, r);
+        }
+        return arr;
+    }
+
     private static void smartAI(Player robo) {
-        int x = robo.getHand().size();
+        int r = robo.getRegisters().getNumUnlockedRegisters();
+        ArrayList<ProgramCard> arr = robo.getHand().getCardsInHand();
+        int n = arr.size();
+        ArrayList<ProgramCard> data = new ArrayList<>();
+        ArrayList<ProgramCard> allPossibleCombinations = combinationUtil(arr, data, 0, n-1, 0, r);
 
-        for(int i = 0; i < x*(x-1)*(x-2)*(x-3)*(x-4); i++) {
-            Player testPilot = robo.createTestPilot();
-            Player succsessfulTestPilot = robo.createTestPilot();
-
-            for(int k = 0; k < x; k++) {
-
-            }
+        assert allPossibleCombinations != null;
+        for(ProgramCard i: allPossibleCombinations) {
+            System.out.println(i);
         }
     }
 
     private static void moveTestPilot(Player robo) {
+        smartAI(robo);
         if (robo.getRegisters().isFull()) return;
 
         Player testPilot = robo.createTestPilot();
