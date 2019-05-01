@@ -297,6 +297,11 @@
    <property name="Gyro" value="LEFT"/>
   </properties>
  </tile>
+ <tile id="58">
+  <properties>
+   <property name="Hole" value=""/>
+  </properties>
+ </tile>
  <tile id="59">
   <properties>
    <property name="Laser" value="NORTH"/>

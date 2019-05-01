@@ -63,7 +63,8 @@ public class MovableGameObject extends GameObject {
     }
 
     public boolean isOffTheBoard(TiledMapTileLayer floorLayer) {
-        return floorLayer.getCell(getX(), getY()) == null;
+        TiledMapTileLayer.Cell currentCell = floorLayer.getCell(getX(),getY());
+        return currentCell == null || cellContainsKey(currentCell, "Hole");
     }
 
     public boolean isOnRepair(TiledMapTileLayer floorLayer) {
