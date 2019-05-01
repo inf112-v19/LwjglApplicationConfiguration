@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
@@ -37,6 +38,7 @@ public class Player extends MovableGameObject implements Comparable {
     private boolean debugging;
     private ProgramRegisters registers;
     private PlayerHand hand;
+    public ArrayList<ProgramCard> toPlay;
 
     private Texture skinTexture;
 
@@ -52,6 +54,7 @@ public class Player extends MovableGameObject implements Comparable {
         phase = 0;
         debugging = false;
         skinTexture = AssMan.getPlayerSkins()[0];
+        toPlay = new ArrayList<>(5);
     }
 
     /**

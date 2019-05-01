@@ -11,6 +11,7 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.screens.GameScreen;
 import inf112.roborally.game.screens.LaserTestScreen;
 import inf112.roborally.game.screens.TestScreen;
@@ -41,10 +42,11 @@ public class RoboRallyGame extends Game {
     public static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
 
     public static final int MAX_PLAYERS = 8;
-    private int numberOfChosenPlayers;
+    public int numberOfChosenPlayers;
 
     public boolean AIvsAI = false;
-    public boolean multiPlayer = false;
+
+    public static boolean multiPlayer = false;
 
     public OrthographicCamera dynamicCamera;
     public Viewport dynamicViewPort;
@@ -73,7 +75,7 @@ public class RoboRallyGame extends Game {
      */
     private Screen screenBefore;
     public Server server;
-    public Client client;
+    public  Client client;
 
     public ArrayList<String> playerNames;
     public Board board;
@@ -148,6 +150,11 @@ public class RoboRallyGame extends Game {
         gameScreen = new GameScreen(this);
     }
 
+    public void createDefaultGameScreenForMultiplayer() {
+        createDefaultMultiplayerBoard();
+        gameScreen = new GameScreen(this);
+    }
+
     /**
      * Create a new GameScreen with chosen player skin, map and flag positions.
      *
@@ -176,6 +183,16 @@ public class RoboRallyGame extends Game {
         board.getFlags().add(new Flag(11, 11, 2));
         board.getFlags().add(new Flag(10, 10, 3));
         board.addPlayersToBoard(createDefaultPlayers());
+        board.findLaserGuns();
+    }
+
+    private void createDefaultMultiplayerBoard() {
+        board.createBoard(VAULT);
+        board.getFlags().add(new Flag(7, 7, 1));
+        board.getFlags().add(new Flag(11, 11, 2));
+        board.getFlags().add(new Flag(10, 10, 3));
+        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
+//        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(playerNames.size()));
         board.findLaserGuns();
     }
 
@@ -212,14 +229,22 @@ public class RoboRallyGame extends Game {
         return players;
     }
 
-    public List<Player> createNumberOfPlayersFromMultiplayer(int numberOfPlayers) {
-        if (numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS) {
+    public List<Player> createNumberOfPlayersFromMultiplayer() {
+        if (numberOfChosenPlayers < 1 || numberOfChosenPlayers > MAX_PLAYERS) {
             return null;
         }
 
         List<Player> players = new ArrayList<>();
-        for(int i = 0; i < numberOfPlayers; i++) {
-            players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
+
+        for(int i = 0; i < numberOfChosenPlayers; i++) {
+
+            if(i < playerNames.size()) {
+                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
+            }
+            else {
+                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board);
+                players.add(player);
+            }
         }
         return players;
     }
@@ -287,5 +312,21 @@ public class RoboRallyGame extends Game {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+    public void sendMessage(String s){
+        client.sendMessage(s);
+    }
+    public String toStr(ProgramCard card){
+        return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
+
+    public void giveCardToPlayer(String player, ProgramCard card){
+        for (Player play :
+                board.players) {
+            if (play.getName().equals(player)) {
+                play.toPlay.add(card);
+                System.out.println(play.toPlay);
+            }
+        }
+
     }
 }

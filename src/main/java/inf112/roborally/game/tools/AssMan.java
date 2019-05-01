@@ -305,6 +305,10 @@ public class AssMan {
         return skins;
     }
 
+    public static TextureAtlas.AtlasRegion getFlagAtlasRegion(int flagN){
+        return manager.get(FLAG_ATLAS).findRegion(Integer.toString(flagN));
+    }
+
     public static void dispose() {
         System.out.println("Disposing asset manager");
         manager.clear();

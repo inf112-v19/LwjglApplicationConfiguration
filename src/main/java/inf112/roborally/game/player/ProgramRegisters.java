@@ -1,5 +1,7 @@
 package inf112.roborally.game.player;
 
+import inf112.roborally.game.RoboRallyGame;
+
 import java.util.ArrayList;
 
 public class ProgramRegisters implements IProgramRegisters {
@@ -67,6 +69,7 @@ public class ProgramRegisters implements IProgramRegisters {
     public void executeCard(int phase) {
         if (registers[phase] == null || !player.isOperational()) return;
         ProgramCard programCard = registers[phase];
+
         if (programCard.isRotate()) {
             player.rotate(programCard.getRotate());
         } else if (programCard.getMoveDistance() == -1) {
@@ -150,4 +153,5 @@ public class ProgramRegisters implements IProgramRegisters {
     public int getNumLockedRegisters() {
         return NUMBER_OF_REGISTERS - unlockedRegisters;
     }
+
 }

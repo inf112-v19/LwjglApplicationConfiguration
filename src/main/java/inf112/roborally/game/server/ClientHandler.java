@@ -59,7 +59,9 @@ FIFTH WORD = PRIORITY of card
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.createDefaultGameScreen();
+//                        game.createDefaultGameScreen();
+                        System.out.printf("Number of players = %d%n", game.numberOfChosenPlayers);
+                        game.createDefaultGameScreenForMultiplayer();
                         game.setScreen(game.gameScreen);
                     }
                 });
@@ -68,12 +70,20 @@ FIFTH WORD = PRIORITY of card
             case "CARD": {
                 String name = split[1];
                 ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+
+                game.giveCardToPlayer(name, card);
                 break;
+
             }
             case "MULTI":{
                 game.multiPlayer = true;
                 break;
             }
+            case "SET_NUMBER_OF_PLAYERS":
+                System.out.println(split[1]);
+                game.setNumberOfChosenPlayers(Integer.parseInt(split[1]));
+                break;
+
             default:
                 System.out.println(packet);
                 break;
