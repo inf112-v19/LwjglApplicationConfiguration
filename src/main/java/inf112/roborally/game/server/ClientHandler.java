@@ -36,7 +36,14 @@ FIFTH WORD = PRIORITY of card
         String[] split = packet.split(" ");
         String header = split[0];
 
-        if (header.equals("START")) {
+        if(header.equals("LIST")){
+            int size = Integer.parseInt(split[1]);
+            while(game.playerNames.size() < size){
+                game.playerNames.add("temp");
+            }
+        }
+
+       else if (header.equals("START")) {
             String name = split[1];
             int id = Integer.parseInt(split[2]);
             if(!game.playerNames.contains(name)){
