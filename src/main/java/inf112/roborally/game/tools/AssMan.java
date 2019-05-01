@@ -83,21 +83,21 @@ public class AssMan {
             = new AssetDescriptor<>("assets/gui/buttons/buttonClear.png", Texture.class);
 
     public static final AssetDescriptor<Texture> BUTTON_SETTINGS
-            = new AssetDescriptor<>("assets/img/settingsbtn.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/settingsbtn.png", Texture.class);
 
     //GameScreen
     public static final AssetDescriptor<Texture> GAMESCREEN_BACKGROUND2
-            = new AssetDescriptor<>("assets/screens/gamescreen/background2.png", Texture.class);
+            = new AssetDescriptor<>("assets/img/background.png", Texture.class);
 
     public static final AssetDescriptor<Texture> GAMESCREEN_GRID2
-            = new AssetDescriptor<>("assets/screens/gamescreen/grid2.png", Texture.class);
+            = new AssetDescriptor<>("assets/img/grid.png", Texture.class);
 
     public static final AssetDescriptor<Texture> GAMESCREEN_CLOUDS
-            = new AssetDescriptor<>("assets/screens/gamescreen/clouds.png", Texture.class);
+            = new AssetDescriptor<>("assets/img/clouds.png", Texture.class);
 
     //SetupScreen
     public static final AssetDescriptor<Texture> SETUP_PLACEFLAGS_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/setupscreen/placeFlags.png", Texture.class);
+            = new AssetDescriptor<>("assets/img/placeFlags.png", Texture.class);
 
     //Register display
     public static final AssetDescriptor<Texture> REGISTER_PROGRAM_REGISTER
@@ -134,11 +134,11 @@ public class AssMan {
 
     //TestScreen class
     public static final AssetDescriptor<Texture> TESTSCREEN_BACKGROUND
-            = new AssetDescriptor<>("assets/screens/testscreen/testscreen.png", Texture.class);
+            = new AssetDescriptor<>("assets/img/testscreen.png", Texture.class);
 
     //Flag object
     public static final AssetDescriptor<TextureAtlas> FLAG_ATLAS
-            = new AssetDescriptor<>("assets/flags/flags.atlas", TextureAtlas.class);
+            = new AssetDescriptor<>("assets/objects/flags/flags.atlas", TextureAtlas.class);
 
     // Buttons:
     public static final AssetDescriptor<Texture> RIGHT_ARROW
@@ -160,7 +160,7 @@ public class AssMan {
             = new AssetDescriptor<>("assets/buttons/back_press.png", Texture.class);
 
     public static final AssetDescriptor<TextureAtlas> PROGRAM_CARD_ATLAS
-            = new AssetDescriptor<>("assets/cards/imageButton.atlas", TextureAtlas.class);
+            = new AssetDescriptor<>("assets/gui/cards/imageButton.atlas", TextureAtlas.class);
 
     //Laser
     public static final AssetDescriptor<TextureAtlas> LASER_ATLAS
@@ -179,19 +179,19 @@ public class AssMan {
 
     // TextFieldScreen
     public static final AssetDescriptor<Texture> TEXT_FIELD_BG
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/text_field_bg.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/inputfield/text_field_bg.png", Texture.class);
 
     public static final AssetDescriptor<Texture> TEXT_FIELD_CURSOR
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/cursor.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/inputfield/cursor.png", Texture.class);
 
     public static final AssetDescriptor<Texture> TEXT_BUTTON_UP
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/button.png", Texture.class);
 
     public static final AssetDescriptor<Texture> TEXT_BUTTON_PRESS
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_press.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/button_press.png", Texture.class);
 
     public static final AssetDescriptor<Texture> TEXT_BUTTON_CHECKED
-            = new AssetDescriptor<>("assets/screens/inputfieldscreen/button_checked.png", Texture.class);
+            = new AssetDescriptor<>("assets/buttons/button_checked.png", Texture.class);
 
     @SuppressWarnings("Duplicates")
     public static void load() {
