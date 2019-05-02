@@ -29,6 +29,7 @@ public class RegisterDisplay {
     private ArrayList<Image> lockTokens;
     private ArrayList<TextureRegionDrawable> wireTextures;
     private ImageButton powerDown;
+    private Image flag;
 
     /**
      * Draws the program register of a given player.
@@ -46,6 +47,15 @@ public class RegisterDisplay {
         addWires();
         addLockTokens(lockGui); // Locks needs to be updated on top of the cards
         addPowerDown();
+        // add skin
+        Image skin = new Image(player.getFrontRegion());
+        skin.setPosition(programBoard.getX() - skin.getWidth() - 10, -skin.getHeight() * 0.3f);
+        registerGui.addActor(skin);
+        // add flag
+        flag = new Image(AssMan.getFlagAtlasRegion(player.getTargetFlag()));
+        flag.setPosition(skin.getX() - 20, -10);
+        flag.setScale(.4f);
+        registerGui.addActor(flag);
     }
 
     private void addPowerDown() {
@@ -139,6 +149,11 @@ public class RegisterDisplay {
         updateLocks();
         updateDamageTokens();
         updateLifeTokens();
+        updateFlag();
+    }
+
+    private void updateFlag() {
+        flag.setDrawable(new TextureRegionDrawable(AssMan.getFlagAtlasRegion(player.getTargetFlag())));
     }
 
     private void updateWires() {
