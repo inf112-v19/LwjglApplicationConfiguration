@@ -43,7 +43,7 @@ public class PlayerStatusDisplay {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (hidden) tab.setPosition(0, 0);
-                else tab.setPosition(60 - statusTab.getWidth(), 0);
+                else tab.setPosition(33 - statusTab.getWidth(), 0);
                 hidden = !hidden;
             }
         });
