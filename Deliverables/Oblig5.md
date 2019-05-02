@@ -24,6 +24,17 @@
    some fierce conflicts have arisen that has been time-consuming to solve. <br/>
    We have solved this by more often merging other branches into dev, 
    so it is easier to have an overview of what is and has been worked on.
+   - What we are most satisfied with in the game is the graphics. 
+   It is very different from the other groups, with its colorful and slightly childish design. 
+   It's similar to the kind of graphics one can find in mobile games, 
+   and helps stress down the players, even though the stress level can be high 
+   when their robots are running out of lives.
+   - If we were to further develop the project, the first priority would be to improve 
+   the multiplayer functionality. Having the opportunity to play over the Internet, 
+   and not just over the LAN, would be a nice addition to our game. <br/>
+   With this in place, option cards would be the next on the list, 
+   along with other functionality such as statistics in the game, 
+   kill cam and animate the lasers that are being shot out.
    - One of the most important things we have learned is how to collaborate 
    and communicate with a team on a project. Our abilities to work together as a team has been
    significantly improved throughout the project. This is the first time for anyone 
@@ -34,12 +45,6 @@
    and we rarely dared to push changes without having heard with the rest of the group.
    if this was a decent thing to change. Later, we have gained better self-confidence in this area, 
    and the whole group has greatly improved their knowledge of git. 
-   - If we were to further develop the project, the first priority would be to improve 
-   the multiplayer functionality. Having the opportunity to play over the Internet, 
-   and not just over the LAN, would be a nice addition to our game. <br/>
-   With this in place, option cards would be the next on the list, 
-   along with other functionality such as statistics in the game, 
-   kill cam and animate the lasers that are being shot out.
 
 
 ## Part 2: Requirements
