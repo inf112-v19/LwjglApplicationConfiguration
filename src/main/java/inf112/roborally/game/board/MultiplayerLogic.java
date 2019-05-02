@@ -88,6 +88,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         for (Player player : players) {
             if (!player.isPoweredDown() && !player.equals(thisPlayer)) {
                 player.getHand().removeAllCards();
+                player.getRegisters().returnCards();
             }
         }
 
@@ -177,7 +178,8 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                 }
                 else {
                     // place in register of other player:
-                    player.getRegisters().placeCard(card);
+//                    player.getRegisters().placeCard(card);
+                    player.getHand().getCardsInHand().add(card);
                 }
                 return;
             }
