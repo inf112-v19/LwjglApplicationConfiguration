@@ -39,7 +39,7 @@ FIFTH WORD = PRIORITY of card
     @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
         String packet = o.toString();
-        System.out.println("Packet in ClientHandler: " + packet);
+//        System.out.println("Packet in ClientHandler: " + packet);
         String[] split = packet.split(" ");
         String header = split[0];
 
