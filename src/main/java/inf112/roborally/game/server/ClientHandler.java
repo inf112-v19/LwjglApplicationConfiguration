@@ -82,11 +82,13 @@ FIFTH WORD = PRIORITY of card
 
                 ProgramCard card;
                 String name = "";
+                ArrayList<ProgramCard> allCards = new ArrayList<>();
                 for(int i = 1; i < split.length-3; i+=3) {
                     name = split[i]; // Name will be same for all cards
                     card = new ProgramCard(split[i+1], split[i+2], split[i+3].split("!")[0]);
-                    game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
+                    allCards.add(card);
                 }
+                game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, allCards);
                 break;
             }
             case "ALL_READY":

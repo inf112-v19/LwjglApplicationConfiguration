@@ -184,6 +184,26 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
     }
 
+    public void receiveCardFromServer(String name, ArrayList<ProgramCard> allCards) {
+        for (Player player : board.players) {
+            if (player.getName().equals(name)) {
+                if (name.equals(game.playerName)) {
+                    // add to hand of this player:
+                    for(ProgramCard card : allCards) {
+                        player.getHand().getCardsInHand().add(card);
+                    }
+                }
+                else {
+                    // place in register of other player:
+                    for(ProgramCard card : allCards) {
+                        player.getRegisters().placeCard(card);
+                    }
+                }
+                return;
+            }
+        }
+    }
+
     @Override
     public void setToRound() {
         for (Player player : players) {
