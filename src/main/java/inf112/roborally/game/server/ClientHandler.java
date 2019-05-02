@@ -139,6 +139,7 @@ FIFTH WORD = PRIORITY of card
                         Player leaver = game.gameScreen.getBoard().players.get(i);
                         leaver.killPlayer();
                         game.gameScreen.getBoard().players.remove(i);
+                        game.gameScreen.getMultiplayerLogic().removeDeadRobots();
 
                     }
                 }
