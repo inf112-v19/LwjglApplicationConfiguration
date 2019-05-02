@@ -35,16 +35,6 @@ public abstract class TiledBoard {
         mapRenderer.render();
     }
 
-    /**
-     * Use this when rendering a specific layer(like walls) on top of sprites.
-     * MUST CALL {@link SpriteBatch#begin()} BEFORE THIS!!
-     *
-     * @param layer
-     */
-    public void renderLayer(TiledMapTileLayer layer) {
-        mapRenderer.renderTileLayer(layer);
-    }
-
     protected void createLayers() {
         beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
