@@ -164,7 +164,7 @@ public class RoboRallyGame extends Game {
      */
     public void createCustomGameScreen() {
         List<Player> players = createNumberOfPlayers(numberOfChosenPlayers);
-        if(players != null){
+        if (players != null) {
             board.addPlayersToBoard(players);
         }
         else {
@@ -246,7 +246,7 @@ public class RoboRallyGame extends Game {
 //                players.add(player);
 //            }
 //        }
-        for(int i = 0; i < playerNames.size(); i++) {
+        for (int i = 0; i < playerNames.size(); i++) {
             players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board, this));
         }
         return players;
@@ -317,14 +317,19 @@ public class RoboRallyGame extends Game {
         this.playerName = playerName;
     }
 
-    public void giveCardToPlayer(String player, ProgramCard card){
-        for (Player play : board.players) {
-            if (play.getName().equals(player)) {
-                play.getHand().getCardsInHand().add(card);
+    public void receiveCardFromServer(String name, ProgramCard card) {
+        for (Player player : board.players) {
+            if (player.getName().equals(name)) {
+                if (name.equals(this.playerName)) {
+                    // add to hand of this player:
+                    player.getHand().getCardsInHand().add(card);
+                } else {
+                    // place in register of other player:
+                    player.getRegisters().placeCard(card);
+                }
+                return;
             }
         }
     }
-    public String toStr(ProgramCard card){
-        return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
-    }
+
 }

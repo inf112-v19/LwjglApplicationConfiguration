@@ -77,7 +77,7 @@ public class Hud {
                         setButtonTouchable(false);
                         if(RoboRallyGame.multiPlayer) {
                             for (ProgramCard card : player.getRegisters().getAllCards()) {
-                                game.client.sendMessage("CARD " + game.playerName + " " + game.toStr(card));
+                                game.client.sendMessage("CARD " + game.playerName + " " + card.toString());
                             }
                             game.client.sendMessage("READY " + game.playerName);
                         }

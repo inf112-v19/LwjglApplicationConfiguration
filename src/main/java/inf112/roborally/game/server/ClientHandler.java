@@ -2,7 +2,6 @@ package inf112.roborally.game.server;
 
 import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -70,7 +69,7 @@ FIFTH WORD = PRIORITY of card
             case "CARD": {
                 String name = split[1];
                 ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
-                game.giveCardToPlayer(name, card);
+                game.receiveCardFromServer(name, card);
                 break;
             }
             case "MULTI":{
@@ -83,7 +82,7 @@ FIFTH WORD = PRIORITY of card
                 String move = split[3];
                 String priority = split[4];
                 ProgramCard card = new ProgramCard(rotate, move, priority);
-                game.giveCardToPlayer(name, card);
+                game.receiveCardFromServer(name, card);
                 game.gameScreen.getHud().updateCards();
                 break;
 
