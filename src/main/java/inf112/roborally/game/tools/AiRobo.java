@@ -16,9 +16,7 @@ public class AiRobo {
 
     private static void makeDecisions(Player robo) {
         if (robo.outOfLives()) return;
-
         moveTestPilot(robo);
-
         robo.wantsToPowerDown = wantsToPowerDown(robo);
         robo.setPlayerState(PlayerState.READY);
     }
