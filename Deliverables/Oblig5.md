@@ -15,7 +15,7 @@
    After the first assignment we adjusted this, and started naming them after which features we
    were implementing. This made it much easier for us to know what the others were working on, 
    and it gave us the opportunity to easily access
-   the different branches to make small changes and to help each other with problems.
+   the different branches to make small changes and help each other out with problems.
    - One of the things that have worked very well is the attendance on our group meetings. 
    The whole group has showed up to almost every meeting, 
    both the mandatory ones and whenever we met up otherwise.
@@ -27,7 +27,7 @@
    - What we are most satisfied with in the game is the graphics. 
    It is very different from the other groups, with its colorful and slightly childish design. 
    It's similar to the kind of graphics one can find in mobile games, 
-   and helps stress down the players, even though the stress level can be high 
+   and helps reduce stress for the players, even though the stress level can be high 
    when their robots are running out of lives.
    - If we were to further develop the project, the first priority would be to improve 
    the multiplayer functionality. Having the opportunity to play over the Internet, 
@@ -37,13 +37,13 @@
    kill cam and animate the lasers that are being shot out.
    - One of the most important things we have learned is how to collaborate 
    and communicate with a team on a project. Our abilities to work together as a team has been
-   significantly improved throughout the project. This is the first time for anyone 
-   on the group to be working together with other people on a project as big as this one, 
-   so we all learned a lot about how to coordinate and work together with each other. <br/>
+   significantly improved throughout the project. This is the first time for everyone 
+   on the group, to be working on a project as big as this with other people.
+   We all learned a lot about how to coordinate and work together with each other. <br/>
    Another important thing we have learned, is how to use a version-control system 
    like git when working in a group. In the beginning, we were not so sure how this tool worked, 
-   and we rarely dared to push changes without having heard with the rest of the group.
-   if this was a decent thing to change. Later, we have gained better self-confidence in this area, 
+   and we rarely dared to push changes without having talked to the rest of the group.
+   Later, we have gained better self-confidence in this area, 
    and the whole group has greatly improved their knowledge of git. 
 
 
