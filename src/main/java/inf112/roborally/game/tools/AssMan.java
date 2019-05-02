@@ -47,6 +47,10 @@ public class AssMan {
     public static final AssetDescriptor<Texture> MENU_BACKGROUND
             = new AssetDescriptor<>("assets/img/menuScreen.png", Texture.class);
 
+    //LobbyScreen
+    public static final AssetDescriptor<Texture> LOBBY_BACKGROUND
+            = new AssetDescriptor<>("assets/img/lobby.png", Texture.class);
+
     //GameScreen
     public static final AssetDescriptor<Texture> GAME_BACKGROUND
             = new AssetDescriptor<>("assets/img/background.png", Texture.class);
@@ -185,6 +189,9 @@ public class AssMan {
 
         //MENU
         manager.load(MENU_BACKGROUND);
+
+        //Lobby
+        manager.load(LOBBY_BACKGROUND);
 
         //Gamescreen
         manager.load(GAME_BACKGROUND);

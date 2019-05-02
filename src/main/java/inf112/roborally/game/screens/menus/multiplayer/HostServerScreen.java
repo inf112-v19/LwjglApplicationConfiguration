@@ -1,10 +1,12 @@
 package inf112.roborally.game.screens.menus.multiplayer;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.InputFieldScreen;
+import inf112.roborally.game.tools.AssMan;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -17,6 +19,7 @@ public class HostServerScreen extends InputFieldScreen {
 
     public HostServerScreen(RoboRallyGame game, Screen previousScreen) {
         super(game);
+        background.addActor(new Image(AssMan.manager.get(AssMan.LOBBY_BACKGROUND)));
         this.previousScreen = previousScreen;
         game.startServer();
         try {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -21,11 +22,13 @@ public abstract class BasicScreen implements Screen {
     protected final Stage stage;
     protected final Label.LabelStyle labelStyle;
     protected ImageButton back;
+    protected Group background;
 
     public BasicScreen(RoboRallyGame game) {
         this.game = game;
         stage = new Stage(game.fixedViewPort, game.batch);
         labelStyle = new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE);
+        background = new Group();
         back = ButtonFactory.createBackButton();
         back.addListener(new ClickListener() {
             @Override
@@ -34,6 +37,7 @@ public abstract class BasicScreen implements Screen {
             }
         });
 
+        stage.addActor(background);
         stage.addActor(back);
     }
 
