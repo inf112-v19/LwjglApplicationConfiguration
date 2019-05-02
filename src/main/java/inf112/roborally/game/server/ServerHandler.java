@@ -61,7 +61,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         String packet = msg.toString();
-        System.out.println("Packet: " + packet);
+//        System.out.println("Packet: " + packet);
         String[] split = packet.split(" ", 2);
         String header = split[0];
 
@@ -102,7 +102,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                     ProgramCard card = new ProgramCard(oneCardInformation[1], oneCardInformation[2], oneCardInformation[3].trim());
                     returnedProgramCards.add(card);
                 }
-                System.out.printf("Added %d cards to the returnedProgramCards on server%n", cardSplit.length);
+//                System.out.printf("Added %d cards to the returnedProgramCards on server%n", cardSplit.length);
 
 //                System.out.println("In serverhandler, saved split before sending:\n" + saveSplit1);
                 for (Channel channel :
