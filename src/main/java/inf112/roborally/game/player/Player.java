@@ -365,4 +365,8 @@ public class Player extends MovableGameObject implements Comparable {
     public Position getTargetFlagPos() {
         return board.getFlags().get(targetFlag-1).position;
     }
+
+    public void killPlayer() {
+        lives = 0;
+    }
 }

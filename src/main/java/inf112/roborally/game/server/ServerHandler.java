@@ -14,18 +14,19 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import static java.util.Collections.shuffle;
-
+@SuppressWarnings("Duplicates")
 public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     private final RoboRallyGame game;
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
-    private int readyPlayers;
+    protected HashMap<Channel, String> connectedPlayers;
 
     public ServerHandler(RoboRallyGame game) {
         this.game = game;
         stackOfProgramCards = ProgramCard.makeProgramCardDeck();
         returnedProgramCards = new Stack<>();
+        connectedPlayers = new HashMap<>();
     }
 
     public static final ChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
@@ -39,7 +40,9 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     public void handlerRemoved(ChannelHandlerContext ctx) {
         Channel incoming = ctx.channel();
         for (Channel channel : channels) {
-            channel.writeAndFlush("[SERVER] -  " + incoming.remoteAddress() + "has left\n");
+            if(channel != incoming) {
+                channel.writeAndFlush("LEFT " + connectedPlayers.get(incoming) + "\r\n" );
+            }
         }
         channels.remove(ctx.channel());
     }
@@ -66,6 +69,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
             case "HANDSHAKE":
                 System.out.println("[SERVER] " + split[1] + " has connected!");
                 game.playerNames.add(split[1]);
+                connectedPlayers.put(ctx.channel(), split[1]);
 
                 for (Channel channel : channels) {
                     channel.writeAndFlush(split[1] + " has connected!" + "\r\n");
