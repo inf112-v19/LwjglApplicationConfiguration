@@ -85,8 +85,8 @@ public class Hud {
 //                            game.client.sendMessage("CARD " + game.playerName + " " + card.toString());
                             }
                             allCards.deleteCharAt(allCards.length()-1); // Remove the last !
-                            System.out.println("Allcards:");
-                            System.out.println(allCards.toString());
+//                            System.out.println("Allcards:");
+//                            System.out.println(allCards.toString());
                             game.client.sendMessage(allCards.toString());
 
 

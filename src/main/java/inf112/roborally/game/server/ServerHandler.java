@@ -20,7 +20,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     private final RoboRallyGame game;
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
-    int readyPlayers;
+    private int readyPlayers;
 
     public ServerHandler(RoboRallyGame game) {
         this.game = game;
@@ -88,10 +88,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
             case "CARD":
                 String saveSplit1 = split[1];
                 String[] cardSplit = split[1].split("!"); // Split on newline
-                System.out.println("CardSplit in server:");
-                for (String s : cardSplit) {
-                    System.out.println(s + " ");
-                }
+//                System.out.println("CardSplit in server:");
+//                for (String s : cardSplit) {
+//                    System.out.println(s + " ");
+//                }
 
                 for(int i = 0; i < cardSplit.length; i++) {
                     String[] oneCardInformation = cardSplit[i].split(" ");
@@ -100,7 +100,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
                 System.out.printf("Added %d cards to the returnedProgramCards on server%n", cardSplit.length);
 
-                System.out.println("In serverhandler, saved split before sending:\n" + saveSplit1);
+//                System.out.println("In serverhandler, saved split before sending:\n" + saveSplit1);
                 for (Channel channel :
                         channels) {
                     channel.writeAndFlush(split[0] + " " + saveSplit1 + "\r\n");
@@ -117,13 +117,17 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     }
 
     private void ready() {
-        readyPlayers++;
-        if(readyPlayers >= game.playerNames.size()){
+        game.readyPlayers++;
+        System.out.println("One more player is ready");
+        System.out.println("readyplayers size = " + game.readyPlayers);
+        System.out.println("Playernames size = " + game.playerNames.size());
+        if(game.readyPlayers == game.playerNames.size()){
+            System.out.println("ALL PLAYERS ARE READY");
             for (Channel channel :
                     channels) {
                 channel.writeAndFlush("ALL_READY PAYLOAD\r\n");
             }
-            readyPlayers = 0;
+            game.readyPlayers = 0;
         }
     }
 
