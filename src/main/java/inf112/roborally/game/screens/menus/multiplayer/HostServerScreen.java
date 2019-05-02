@@ -44,6 +44,9 @@ public class HostServerScreen extends InputFieldScreen {
 
     @Override
     protected void confirmInput() {
+        if(game.client.getChannel() == null){
+            return;
+        }
         int id = 0;
         game.multiPlayer = true;
         System.out.println("ConfirmInput(). Number of Chosen players = " + game.numberOfChosenPlayers);

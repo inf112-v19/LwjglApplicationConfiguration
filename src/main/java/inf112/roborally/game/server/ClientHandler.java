@@ -99,8 +99,8 @@ FIFTH WORD = PRIORITY of card
             case "MULTI":
                 game.multiPlayer = true;
                 break;
-            case "RECEIVE_CARDS":{
-                System.out.println("RECEIVE_CARDS! " + split[1]);
+            case "RECEIVE_CARD":{
+                System.out.println("RECEIVE_CARD! " + split[1]);
                 final String name = split[1];
                 Rotate rotate = Rotate.valueOf(split[2]);
                 int move = Integer.parseInt(split[3]);

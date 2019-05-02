@@ -58,6 +58,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         String packet = msg.toString();
+        System.out.println("Packet: " + packet);
         String[] split = packet.split(" ", 2);
         String header = split[0];
 
@@ -80,11 +81,12 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                         reshuffleDeck();
                     }
                     for (Channel channel : channels) {
-                        channel.writeAndFlush("RECEIVE_CARDS " + name + " " + card + "\r\n");
+                        channel.writeAndFlush("RECEIVE_CARD " + name + " " + card + "\r\n");
                     }
                 }
                 break;
             case "CARD":
+<<<<<<< HEAD
                 String saveSplit1 = split[1];
                 String[] cardSplit = split[1].split("\\r?\\n"); // Split on newline
 
@@ -95,12 +97,21 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
                 System.out.printf("Added %d cards to the returnedProgramCards on server%n", cardSplit.length);
                 readyPlayers++;
+=======
+                String[] cardSplit = split[1].split(" ");
+                System.out.println(cardSplit[1] + " " + cardSplit[2] + " "  + cardSplit[3]);
+                ProgramCard card = new ProgramCard(cardSplit[1], cardSplit[2], cardSplit[3]);
+                returnedProgramCards.add(card);
+>>>>>>> 927cc19bc71a7dbb739c081c516f4030646e8a81
 
                 System.out.println("In serverhandler, saved split before sending:\n" + saveSplit1);
                 for (Channel channel :
                         channels) {
                     channel.writeAndFlush(header + " " + saveSplit1 + "\r\n");
                 }
+                break;
+            case "READY":
+                readyPlayers++;
                 if(readyPlayers >= game.playerNames.size()){
                     for (Channel channel :
                             channels) {
