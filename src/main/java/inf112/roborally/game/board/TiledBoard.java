@@ -2,7 +2,6 @@ package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -11,36 +10,31 @@ import inf112.roborally.game.RoboRallyGame;
 
 public abstract class TiledBoard {
 
-    protected TiledMap map;
-    protected TmxMapLoader loader;
-    protected OrthogonalTiledMapRenderer mapRenderer;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer mapRenderer;
 
-    protected TiledMapTileLayer floorLayer;
-    protected TiledMapTileLayer beltLayer;
-    protected TiledMapTileLayer laserLayer;
-    protected TiledMapTileLayer wallLayer;
-    protected TiledMapTileLayer startLayer;
+    TiledMapTileLayer floorLayer;
+    TiledMapTileLayer beltLayer;
+    TiledMapTileLayer laserLayer;
+    TiledMapTileLayer wallLayer;
+    TiledMapTileLayer startLayer;
 
     public void createBoard(String mapPath) {
-        loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
         parameters.flipY = true;
-        map = loader.load(mapPath, parameters);
-        mapRenderer = new OrthogonalTiledMapRenderer(map, ((RoboRallyGame) Gdx.app.getApplicationListener()).batch);
-        createLayers();
-    }
-
-    public void render(OrthographicCamera camera) {
-        mapRenderer.setView(camera);
-        mapRenderer.render();
-    }
-
-    protected void createLayers() {
+        map = new TmxMapLoader().load(mapPath, parameters);
         beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
         floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
         laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("walls");
         startLayer = (TiledMapTileLayer) map.getLayers().get("start");
+
+        mapRenderer = new OrthogonalTiledMapRenderer(map, ((RoboRallyGame) Gdx.app.getApplicationListener()).batch);
+    }
+
+    public void render(OrthographicCamera camera) {
+        mapRenderer.setView(camera);
+        mapRenderer.render();
     }
 
     public void dispose() {
