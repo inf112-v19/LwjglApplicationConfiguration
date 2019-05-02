@@ -37,11 +37,6 @@ FIFTH WORD = PRIORITY of card
         String[] split = packet.split(" ");
         String header = split[0];
 
-        System.out.println("Split in ClientHandler");
-        for(String s : split) {
-            System.out.print(s + " ");
-        }
-
         switch (header) {
             case "LIST":
                 int size = Integer.parseInt(split[1]);
@@ -85,11 +80,12 @@ FIFTH WORD = PRIORITY of card
             case "RECEIVE_CARDS":{
                 String name = split[1];
                 String rotate = split[2];
-                System.out.println("Rotate: " + rotate);
                 String move = split[3];
                 String priority = split[4];
                 ProgramCard card = new ProgramCard(rotate, move, priority);
                 game.giveCardToPlayer(name, card);
+                game.gameScreen.getHud().updateCards();
+                break;
 
             }
             case "SET_NUMBER_OF_PLAYERS":
@@ -101,6 +97,7 @@ FIFTH WORD = PRIORITY of card
             default:
                 System.out.println(packet);
                 break;
+
         }
     }
 

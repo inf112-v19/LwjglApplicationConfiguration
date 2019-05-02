@@ -46,7 +46,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, String msg) throws Exception {
         Channel incoming = channelHandlerContext.channel();
-        System.out.println(msg);
         for (Channel channel : channels) {
             if (channel != incoming)
                 channel.writeAndFlush("[" + incoming.remoteAddress() + "] " + msg + "\n");
@@ -71,6 +70,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 break;
             case "REQUEST_CARDS":
                 String[] cardlimitAndName = split[1].split(" ");
+                String name = cardlimitAndName[1].trim();
                 int cardLimit = Integer.parseInt(cardlimitAndName[0]);
                 for (int i = 0; i < cardLimit; i++) {
                     String card = stackOfProgramCards.pop().toString();
@@ -78,7 +78,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                         reshuffleDeck();
                     }
                     for (Channel channel : channels) {
-                        channel.writeAndFlush("RECEIVE_CARDS " + cardlimitAndName[1] + " " + card + "\r\n"); //TODO: FIX!
+                        channel.writeAndFlush("RECEIVE_CARDS " + name + " " + card + "\r\n");
                     }
                 }
                 break;
@@ -95,7 +95,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                         channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
                 }
-
                 break;
         }
     }
