@@ -60,6 +60,7 @@ public class RoboRallyGame extends Game {
     public Server server;
     public Client client;
     public ArrayList<String> playerNames;
+    public int readyPlayers; // To be used in multiplayer
     public Board board;
     public String playerName = "Player1"; // Default
     private SelectSkinScreen selectSkinScreen;
@@ -167,7 +168,7 @@ public class RoboRallyGame extends Game {
         board.createBoard(VAULT);
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 11, 2));
-        board.getFlags().add(new Flag(10, 10, 3));
+        board.getFlags().add(new Flag(12, 12, 3));
         board.addPlayersToBoard(createDefaultPlayers());
         board.findLaserGuns();
     }
@@ -175,8 +176,8 @@ public class RoboRallyGame extends Game {
     private void createDefaultMultiplayerBoard() {
         board.createBoard(VAULT);
         board.getFlags().add(new Flag(7, 7, 1));
-        board.getFlags().add(new Flag(11, 11, 2));
-        board.getFlags().add(new Flag(10, 10, 3));
+        board.getFlags().add(new Flag(11, 10, 2));
+        board.getFlags().add(new Flag(12, 12, 3));
         board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
 //        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(playerNames.size()));
         board.findLaserGuns();
@@ -221,14 +222,18 @@ public class RoboRallyGame extends Game {
 
         List<Player> players = new ArrayList<>();
 
-        for (int i = 0; i < numberOfChosenPlayers; i++) {
-
-            if (i < playerNames.size()) {
-                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
-            } else {
-                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board);
-                players.add(player);
-            }
+//        for(int i = 0; i < numberOfChosenPlayers; i++) {
+//
+//            if(i < playerNames.size()) {
+//                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board, this));
+//            }
+//            else {
+//                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board, this);
+//                players.add(player);
+//            }
+//        }
+        for (int i = 0; i < playerNames.size(); i++) {
+            players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board, this));
         }
         return players;
     }
@@ -294,19 +299,5 @@ public class RoboRallyGame extends Game {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
-    }
-
-    public String toStr(ProgramCard card) {
-        return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
-    }
-
-    public void giveCardToPlayer(String player, ProgramCard card) {
-        for (Player play :
-                board.players) {
-            if (play.getName().equals(player)) {
-                play.toPlay.add(card);
-                System.out.println(play.toPlay);
-            }
-        }
     }
 }

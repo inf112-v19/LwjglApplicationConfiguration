@@ -19,6 +19,17 @@ public class ProgramRegisters implements IProgramRegisters {
         unlockedRegisters = NUMBER_OF_REGISTERS;
     }
 
+    public int placeCard(ProgramCard card){
+        for (int i = 0; i < unlockedRegisters; i++) {
+            if (registers[i] == null) {
+                registers[i] = card;
+                return i;
+            }
+        }
+        System.out.println("Registers are full");
+        return -1;
+    }
+
     /**
      * Picks a card from from the player hand and puts it into the register.
      *
@@ -141,4 +152,9 @@ public class ProgramRegisters implements IProgramRegisters {
     public int getNumUnlockedRegisters() {
         return unlockedRegisters;
     }
+
+    public int getNumLockedRegisters() {
+        return NUMBER_OF_REGISTERS - unlockedRegisters;
+    }
+
 }

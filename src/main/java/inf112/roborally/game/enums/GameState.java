@@ -5,5 +5,6 @@ public enum GameState {
     ROUND,
     PICKING_CARDS,
     GAME_OVER,
-    BOARD_MOVES
+    BOARD_MOVES,
+    WAITINGFORONLINEPLAYERS
 }

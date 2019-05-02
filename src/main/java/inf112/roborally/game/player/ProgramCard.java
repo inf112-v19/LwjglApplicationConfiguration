@@ -34,6 +34,7 @@ public class ProgramCard implements Comparable {
         this.rotate = Rotate.valueOf(rotate);
         this.moveDistance = Integer.parseInt(move);
         this.priority = Integer.parseInt(priority);
+
     }
 
     public static Stack<ProgramCard> makeProgramCardDeck() {

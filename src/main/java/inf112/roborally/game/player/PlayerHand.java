@@ -49,5 +49,9 @@ public class PlayerHand {
     public ProgramCard getCard(int cardPos) {
         return cardsInHand.get(cardPos);
     }
+
+    public void removeAllCards() {
+        cardsInHand.clear();
+    }
 }
 

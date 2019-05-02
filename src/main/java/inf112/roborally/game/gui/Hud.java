@@ -54,6 +54,7 @@ public class Hud {
         stage.addActor(handGui);
 
         handDisplay = new HandDisplay(player, this);
+        System.out.println("Player: " + player + ". RegisterGui: " + registerGui + ". LockGui: " + lockGui);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
     }
 
@@ -73,11 +74,21 @@ public class Hud {
                     if (player.getRegisters().isFull() && !player.outOfLives()) {
                         player.setPlayerState(PlayerState.READY);
                         setButtonTouchable(false);
-                        if (RoboRallyGame.multiPlayer) {
-                            for (ProgramCard card :
-                                    player.getRegisters().getAllCards()) {
-                                game.client.sendMessage("CARD " + game.playerName + " " + game.toStr(card));
+                        if(RoboRallyGame.multiPlayer) {
+                            StringBuilder allCards = new StringBuilder();
+                            allCards.append("CARD ");
+                            for (ProgramCard card : player.getRegisters().getAllCards()) {
+                                allCards.append(game.playerName + " " + card.toString());
+                                allCards.append("!");
+//                            game.client.sendMessage("CARD " + game.playerName + " " + card.toString());
                             }
+                            allCards.deleteCharAt(allCards.length()-1); // Remove the last !
+//                            System.out.println("Allcards:");
+//                            System.out.println(allCards.toString());
+                            game.client.sendMessage(allCards.toString());
+
+
+//                            game.client.sendMessage("READY " + game.playerName);
                         }
                     }
                 }
@@ -192,7 +203,12 @@ public class Hud {
         return playerStatusDisplay;
     }
 
-    public void dispose() {
+    public HandDisplay getHandDisplay(){
+        return handDisplay;
+    }
+
+
+    public void dispose(){
         stage.dispose();
         if (playerStatusDisplay != null) {
             playerStatusDisplay.dispose();

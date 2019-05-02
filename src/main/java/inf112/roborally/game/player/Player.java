@@ -37,11 +37,14 @@ public class Player extends MovableGameObject implements Comparable {
     private boolean debugging;
     private ProgramRegisters registers;
     private PlayerHand hand;
-    private Texture skinTexture;
 
-    public Player(String name, Texture skin, Direction direction, Board board) {
+    private Texture skinTexture;
+    private RoboRallyGame game;
+
+    public Player(String name, Texture skin, Direction direction, Board board, RoboRallyGame game) {
         this(0, 0);
         this.name = name;
+        this.game = game;
         makeSprite(skin);
         this.board = board;
         setDirection(direction);
@@ -51,7 +54,6 @@ public class Player extends MovableGameObject implements Comparable {
         phase = 0;
         debugging = false;
         skinTexture = AssMan.getPlayerSkins()[0];
-        toPlay = new ArrayList<>(5);
     }
 
     /**
@@ -161,6 +163,10 @@ public class Player extends MovableGameObject implements Comparable {
         playerState = POWERED_DOWN;
         System.out.println(name + " powers down");
         wantsToPowerDown = false;
+        if(RoboRallyGame.multiPlayer) {
+            game.client.sendMessage("POWER_DOWN " + getName());
+
+        }
     }
 
     public void powerUp() {
@@ -359,5 +365,9 @@ public class Player extends MovableGameObject implements Comparable {
 
     public Position getTargetFlagPos() {
         return board.getFlags().get(targetFlag - 1).position;
+    }
+
+    public void killPlayer() {
+        lives = 0;
     }
 }
