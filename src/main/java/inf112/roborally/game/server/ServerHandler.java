@@ -90,20 +90,21 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 System.out.println(cardSplit[1] + " " + cardSplit[2] + " "  + cardSplit[3]);
                 ProgramCard card = new ProgramCard(cardSplit[1], cardSplit[2], cardSplit[3]);
                 returnedProgramCards.add(card);
-                readyPlayers++;
 
                 for (Channel channel :
                         channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
                 }
+                break;
+            case "READY":
+                readyPlayers++;
                 if(readyPlayers >= game.playerNames.size()){
                     for (Channel channel :
                             channels) {
                         channel.writeAndFlush("ALL_READY PAYLOAD\r\n");
                     }
-                        readyPlayers = 0;
+                    readyPlayers = 0;
                 }
-                break;
             default:
                 for (Channel channel :
                         channels) {
