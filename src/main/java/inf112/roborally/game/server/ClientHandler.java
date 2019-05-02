@@ -84,6 +84,7 @@ FIFTH WORD = PRIORITY of card
                 String priority = split[4];
                 ProgramCard card = new ProgramCard(rotate, move, priority);
                 game.giveCardToPlayer(name, card);
+                game.gameScreen.getHud().updateCards();
                 break;
 
             }

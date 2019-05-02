@@ -180,6 +180,10 @@ public class GameScreen implements Screen {
     public Board getBoard() {
         return board;
     }
+
+    public Hud getHud(){
+        return hud;
+    }
 }
 
 
