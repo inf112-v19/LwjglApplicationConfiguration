@@ -16,9 +16,7 @@ public class AiRobo {
 
     private static void makeDecisions(Player robo) {
         if (robo.outOfLives()) return;
-
         moveTestPilot(robo);
-
         robo.wantsToPowerDown = wantsToPowerDown(robo);
         robo.setPlayerState(PlayerState.READY);
     }
@@ -35,18 +33,6 @@ public class AiRobo {
             testPilot.move(card.getMoveDistance());
             if (!testPilot.isDestroyed()
                     && shorterDistToFlag(successfulTestPilot, testPilot)) {
-                robo.getRegisters().placeCard(i);
-                successfulTestPilot = testPilot.createTestPilot();
-            } else {
-                testPilot = successfulTestPilot.createTestPilot();
-            }
-        }
-
-        for (int i = 0; i < robo.getHand().size(); i++) {
-            ProgramCard card = robo.getHand().getCard(i);
-            testPilot.rotate(card.getRotate());
-            testPilot.move(card.getMoveDistance());
-            if (!testPilot.isDestroyed()) {
                 robo.getRegisters().placeCard(i);
                 successfulTestPilot = testPilot.createTestPilot();
             } else {
