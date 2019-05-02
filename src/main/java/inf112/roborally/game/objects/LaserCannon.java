@@ -13,8 +13,8 @@ public class LaserCannon extends MovableGameObject {
         this.gunOwner = player;
     }
 
-    public boolean fire(Board board) {
-        if(!gunOwner.isOperational()) return false;
+    public void fire(Board board) {
+        if (!gunOwner.isOperational()) return;
 
         correctPositionBeforeFire();
         while (this.canGo(this.getDirection(), board.getWallLayer())) {
@@ -23,20 +23,19 @@ public class LaserCannon extends MovableGameObject {
                 if (this.position.equals(target.position)) {
                     target.takeDamage();
                     System.out.println(gunOwner.getName() + " shoots " + target.getName());
-                    return true;
+                    return;
                 }
             }
             if (outOfBounds(board)) {
                 break;
             }
         }
-        return false;
     }
 
     /**
      * For testing only! this method can fire through walls
      */
-    public void fire(ArrayList<Player> targets) {
+    void fire(ArrayList<Player> targets) {
         correctPositionBeforeFire();
         while (getX() >= 0 && getX() < 10 && getY() >= 0 && getY() < 10) {
             this.moveInDirection(this.getDirection());
