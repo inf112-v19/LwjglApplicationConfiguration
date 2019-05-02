@@ -30,10 +30,16 @@ public class ProgramCard implements Comparable {
         this.priority = priority;
     }
 
-    public ProgramCard(String rotate, String move, String priority){
-        this.rotate = Rotate.valueOf(rotate);
-        this.moveDistance = Integer.parseInt(move);
-        this.priority = Integer.parseInt(priority);
+    public ProgramCard(String rotate, String move, String priority) {
+        try {
+            this.rotate = Rotate.valueOf(rotate);
+            this.moveDistance = Integer.parseInt(move);
+            this.priority = Integer.parseInt(priority);
+        }
+        catch (IllegalArgumentException e){
+            throw new IllegalArgumentException("Illegal argument(s) in 2nd ProgramCard constructor");
+        }
+
     }
 
     public static Stack<ProgramCard> makeProgramCardDeck() {
