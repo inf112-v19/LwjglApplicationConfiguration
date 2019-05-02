@@ -24,7 +24,6 @@
    some fierce conflicts have arisen that has been time-consuming to solve. <br/>
    We have solved this by more often merging other branches into dev, 
    so it is easier to have an overview of what is and has been worked on.
-   - 
    - One of the most important things we have learned is how to collaborate 
    and communicate with a team on a project. Our abilities to work together as a team has been
    significantly improved throughout the project. This is the first time for anyone 
@@ -35,23 +34,20 @@
    and we rarely dared to push changes without having heard with the rest of the group.
    if this was a decent thing to change. Later, we have gained better self-confidence in this area, 
    and the whole group has greatly improved their knowledge of git. 
-- Design
- - "Homemade"
- - **POWER DOWN BUTTON**
- - Animations (laser)
- - Sound effects
- - Class diagram
- - wiki
- 
- - 
+   - If we were to further develop the project, the first priority would be to improve 
+   the multiplayer functionality. Having the opportunity to play over the Internet, 
+   and not just over the LAN, would be a nice addition to our game. <br/>
+   With this in place, option cards would be the next on the list, 
+   along with other functionality such as statistics in the game, 
+   kill cam and animate the lasers that are being shot out.
 
 
 ## Part 2: Requirements
-- We have finished everything on the list, except option cards, multiplayer and a "smart" AI.
+   - We have finished everything on the list, although the multiplayer is not completely working.
 The reason we chose to finish the other requirements on the list, is because we found them more important, and as a core part of the game.
- - To see tasks completed this iteration, check the "Done in Mandatory 4" column on the GitHub project board.
+   - To see tasks completed this iteration, check the "Done in Mandatory 5" column on the GitHub project board.
 
 
     
 ## Part 3: Code
-- See README.md for a step by step guide on how to run the program.
+   - See README.md for a step by step guide on how to run the program.
