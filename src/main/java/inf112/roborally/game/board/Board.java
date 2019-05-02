@@ -206,7 +206,7 @@ public class Board extends TiledBoard {
                 addAnimation(new RepairAnimation(player.position));
             }
             if (player.isOnOption(floorLayer)) {
-                System.out.println("Give option card to player!");
+                //System.out.println("Give option card to player!");
             }
         }
     }

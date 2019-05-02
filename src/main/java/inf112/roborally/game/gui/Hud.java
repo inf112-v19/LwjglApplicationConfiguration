@@ -201,6 +201,11 @@ public class Hud {
         return playerStatusDisplay;
     }
 
+    public HandDisplay getHandDisplay(){
+        return handDisplay;
+    }
+
+
     public void dispose(){
         stage.dispose();
         if(playerStatusDisplay != null) {
