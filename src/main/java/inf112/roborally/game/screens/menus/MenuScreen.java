@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -14,6 +15,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
 import inf112.roborally.game.screens.menus.multiplayer.MultiplayerScreen;
 import inf112.roborally.game.screens.menus.multiplayer.NameScreen;
+import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.tools.ButtonFactory;
 
 public class MenuScreen extends BasicScreen {
@@ -24,9 +26,8 @@ public class MenuScreen extends BasicScreen {
         super(game);
         this.game = game;
         back.setVisible(false);
+        stage.addActor(new Image(AssMan.manager.get(AssMan.MENU_BACKGROUND)));
 
-        Label label = ButtonFactory.createLabel("RoboRally", Color.WHITE);
-        label.setFontScale(10);
         TextButton quick = ButtonFactory.createTextButton("Quick Play", 2);
         quick.addListener(new ClickListener() {
             @Override
@@ -50,8 +51,7 @@ public class MenuScreen extends BasicScreen {
         });
 
         Table menuButtons = new Table();
-        menuButtons.setPosition(1920 / 2, 1080 / 2, Align.center);
-        menuButtons.add(label);
+        menuButtons.setPosition(1920 / 2, 450, Align.center);
         menuButtons.row().padTop(10);
         menuButtons.add(quick);
         menuButtons.row().padTop(10);

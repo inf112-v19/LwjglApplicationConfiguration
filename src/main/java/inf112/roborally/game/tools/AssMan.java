@@ -42,6 +42,11 @@ public class AssMan {
             = new AssetDescriptor<>("assets/gui/buttons/buttonClear.png", Texture.class);
     public static final AssetDescriptor<Texture> BUTTON_SETTINGS
             = new AssetDescriptor<>("assets/buttons/settingsbtn.png", Texture.class);
+
+    //MenuScreen
+    public static final AssetDescriptor<Texture> MENU_BACKGROUND
+            = new AssetDescriptor<>("assets/img/menuScreen.png", Texture.class);
+
     //GameScreen
     public static final AssetDescriptor<Texture> GAME_BACKGROUND
             = new AssetDescriptor<>("assets/img/background.png", Texture.class);
@@ -177,6 +182,9 @@ public class AssMan {
         manager.load(BUTTON_SUBMIT_GREY);
         manager.load(BUTTON_CLEAR);
         manager.load(BUTTON_SETTINGS);
+
+        //MENU
+        manager.load(MENU_BACKGROUND);
 
         //Gamescreen
         manager.load(GAME_BACKGROUND);
