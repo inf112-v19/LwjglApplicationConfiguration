@@ -38,6 +38,7 @@ public class PlayerStatusDisplay {
         }
         statusTab = new Image(AssMan.manager.get(AssMan.STATUS_DISPLAY_ROBOTS));
         statusTab.setY(138 * 7 - 138 * (players.size() - 1));
+        statusTab.setColor(statusTab.getColor().r, statusTab.getColor().g, statusTab.getColor().b, .8f);
         tab.addActor(statusTab);
         tab.addListener(new ClickListener() {
             @Override
@@ -89,6 +90,7 @@ public class PlayerStatusDisplay {
     }
 
     private class PlayerStatus {
+        private final Image robotSkin;
         private Player player;
         private ArrayList<Image> lives;
         private Label damageNumber;
@@ -101,7 +103,7 @@ public class PlayerStatusDisplay {
             int height = 384;
             // add the skin of the current robot and adjust its position on the display board
             // robotSkin is used as an anchor point for the rest of the items
-            Image robotSkin = new Image(new TextureRegion(player.getSprite().getTexture(), size * 2, 0, size, height));
+            robotSkin = new Image(new TextureRegion(player.getSprite().getTexture(), size * 2, 0, size, height));
             robotSkin.setSize(84, 113);
             x = 75;
             y = 1080 - robotSkin.getHeight() - (robotSkin.getHeight() + 24.5f) * index;
@@ -144,6 +146,11 @@ public class PlayerStatusDisplay {
                 lives.get(i).setVisible(player.getLives() > i);
             }
             targetFlag.setDrawable(new TextureRegionDrawable(AssMan.getFlagAtlasRegion(player.getTargetFlag())));
+            if (player.outOfLives() || player.isDestroyed()) {
+                robotSkin.setColor(robotSkin.getColor().r, robotSkin.getColor().g, robotSkin.getColor().b, .5f);
+            } else {
+                robotSkin.setColor(robotSkin.getColor().r, robotSkin.getColor().g, robotSkin.getColor().b, 1);
+            }
         }
 
         void addCard(int phase) {

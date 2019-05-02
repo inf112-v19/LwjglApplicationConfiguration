@@ -73,6 +73,7 @@ public class RegisterDisplay {
         programBoard.setPosition(1920 / 2, programBoard.getHeight() / 2, Align.center);
         registerGui.addActor(programBoard);
         h = programBoard.getHeight();
+        programBoard.setColor(programBoard.getColor().r, programBoard.getColor().g, programBoard.getColor().b, .8f);
     }
 
     private void addDamageTokens() {
