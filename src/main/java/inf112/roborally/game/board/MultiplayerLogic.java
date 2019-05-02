@@ -185,18 +185,25 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
     }
 
     public void receiveCardFromServer(String name, ArrayList<ProgramCard> allCards) {
+        System.out.println("Inside receiveCardFromServer");
         for (Player player : board.players) {
+            System.out.println("STEP1");
+            System.out.println("Player name: " + player.getName() + ", parameter name: " + name);
             if (player.getName().equals(name)) {
+                System.out.println("STEP2");
                 if (name.equals(game.playerName)) {
                     // add to hand of this player:
                     for(ProgramCard card : allCards) {
                         player.getHand().getCardsInHand().add(card);
+                        System.out.println("STEP3");
+//                        System.out.printf("Added the card %s to my own hand%n", card.toString());
                     }
                 }
                 else {
                     // place in register of other player:
                     for(ProgramCard card : allCards) {
                         player.getRegisters().placeCard(card);
+                        System.out.printf("Added the card %s to player %s´s register%n", card.toString(), player.getName());
                     }
                 }
                 return;
