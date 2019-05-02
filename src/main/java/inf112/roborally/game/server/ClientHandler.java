@@ -87,14 +87,16 @@ FIFTH WORD = PRIORITY of card
                 break;
 
             }
-            case "SET_NUMBER_OF_PLAYERS": {
-                game.setNumberOfChosenPlayers(Integer.parseInt(split[1]));
+            case "SET_NUMBER_OF_PLAYERS":
+                Integer numPlayers = Integer.parseInt(split[1]);
+                System.out.println("Number of players: " + numPlayers);
+                game.setNumberOfChosenPlayers(numPlayers);
                 break;
-            }
-            default: {
+
+            default:
                 System.out.println(packet);
                 break;
-            }
+
         }
     }
 
