@@ -316,20 +316,4 @@ public class RoboRallyGame extends Game {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
-
-    public void receiveCardFromServer(String name, ProgramCard card) {
-        for (Player player : board.players) {
-            if (player.getName().equals(name)) {
-                if (name.equals(this.playerName)) {
-                    // add to hand of this player:
-                    player.getHand().getCardsInHand().add(card);
-                } else {
-                    // place in register of other player:
-                    player.getRegisters().placeCard(card);
-                }
-                return;
-            }
-        }
-    }
-
 }

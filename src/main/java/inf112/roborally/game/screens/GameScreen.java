@@ -184,6 +184,10 @@ public class GameScreen implements Screen {
     public Hud getHud(){
         return hud;
     }
+
+    public MultiplayerLogic getMultiplayerLogic(){
+        return multiplayerLogic;
+    }
 }
 
 
