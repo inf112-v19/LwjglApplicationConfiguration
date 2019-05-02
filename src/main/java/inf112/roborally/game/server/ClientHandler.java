@@ -124,7 +124,6 @@ FIFTH WORD = PRIORITY of card
                 }
                 break;
 
-
             case "SET_NUMBER_OF_PLAYERS": {
                 Integer numPlayers = Integer.parseInt(split[1]);
                 System.out.println("Number of players: " + numPlayers);
@@ -136,8 +135,10 @@ FIFTH WORD = PRIORITY of card
 
                 for (int i = 0; i < game.gameScreen.getBoard().players.size(); i++) {
                     if(game.gameScreen.getBoard().players.get(i).getName().equals(split[1])){
-                        game.gameScreen.getBoard().players.get(i).killPlayer();
-                        //TODO: Remove leavers from gamelogic
+                        Player leaver = game.gameScreen.getBoard().players.get(i);
+                        leaver.killPlayer();
+                        game.gameScreen.getBoard().players.remove(i);
+
                     }
                 }
                 break;
