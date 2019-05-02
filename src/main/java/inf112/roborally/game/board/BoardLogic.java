@@ -40,7 +40,7 @@ public class BoardLogic {
         returnedProgramCards = new Stack<>();
     }
 
-    public void executeLogic() {
+    void executeLogic() {
         switch (state) {
             case BETWEEN_ROUNDS:
                 doBeforeRound();
@@ -61,9 +61,8 @@ public class BoardLogic {
         }
     }
 
-    public void aiRobosReady() {
-
-    }
+    //This method is being overwritten by GameLogic class
+    public void aiRobosReady() {}
 
 
     protected void doBeforeRound() {
@@ -115,7 +114,7 @@ public class BoardLogic {
         }
     }
 
-    protected void powerDownRobots() {
+    private void powerDownRobots() {
         for (Player player : players) {
             player.powerDown();
         }
@@ -128,7 +127,7 @@ public class BoardLogic {
         return true;
     }
 
-    public void checkIfReady() {
+    private void checkIfReady() {
         if (allPlayersReady()) {
             for (Player player : players) {
                 if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
@@ -198,7 +197,7 @@ public class BoardLogic {
         System.out.println("Cleaning board");
     }
 
-    protected Player checkIfAPlayerHasWon() {
+    Player checkIfAPlayerHasWon() {
         if (players.size() == 1) {
             System.out.printf("%s just won the game by outliving their opponents!!%n", players.get(0).getName());
             state = GAME_OVER;
@@ -260,7 +259,7 @@ public class BoardLogic {
         shuffle(stackOfProgramCards);
     }
 
-    public GameState getState() {
+    GameState getState() {
         return state;
     }
 }

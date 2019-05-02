@@ -63,14 +63,6 @@ public abstract class TiledBoard {
         return laserLayer;
     }
 
-    public TiledMapTileLayer getStartLayer() {
-        return startLayer;
-    }
-
-    public TiledMapTileLayer getBeltLayer() {
-        return beltLayer;
-    }
-
     public TiledMapTileLayer getWallLayer() {
         return this.wallLayer;
     }

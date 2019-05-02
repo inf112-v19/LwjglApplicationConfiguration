@@ -74,7 +74,6 @@ public class Board extends TiledBoard {
         players.add(player);
     }
 
-
     public void addPlayersToBoard(List<Player> players) {
         for (Player player : players) {
             if (player != null) {
@@ -95,7 +94,7 @@ public class Board extends TiledBoard {
         }
     }
 
-    public void boardMoves() {
+    void boardMoves() {
         expressBeltsMovePlayers();
         beltsMovePlayers();
         lasersFire();
@@ -164,7 +163,6 @@ public class Board extends TiledBoard {
             player.rotate(Rotate.valueOf(i.next().toString()));
         }
 
-        // Gyros rotate
         if (cellContainsKey(currentCell, "Gyro")) {
             player.rotate(Rotate.valueOf(getValue(currentCell)));
         }
@@ -193,8 +191,7 @@ public class Board extends TiledBoard {
         }
     }
 
-
-    public void cleanUp() {
+    void cleanUp() {
         for (Player player : players) {
             if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
@@ -225,7 +222,7 @@ public class Board extends TiledBoard {
             beam.draw(batch);
     }
 
-    public void drawBackup(SpriteBatch batch) {
+    private void drawBackup(SpriteBatch batch) {
         for (Player player : players) {
             player.getBackup().getSprite().draw(batch);
         }
@@ -262,18 +259,9 @@ public class Board extends TiledBoard {
         this.thisPlayerIndex = playerIndex;
     }
 
-    public int getThisPlayerIndex() {
-        return this.thisPlayerIndex;
-    }
-
     public Player getThisPlayer() {
         return this.thisPlayer;
     }
-
-    public ArrayList<LaserBeam> getLaserGuns() {
-        return laserGuns;
-    }
-
 
     public void dispose() {
         System.out.println("Disposing board");
