@@ -164,6 +164,10 @@ public class Player extends MovableGameObject implements Comparable {
         playerState = POWERED_DOWN;
         System.out.println(name + " powers down");
         wantsToPowerDown = false;
+        if(RoboRallyGame.multiPlayer) {
+            game.client.sendMessage("POWER_DOWN " + getName());
+
+        }
     }
 
     public void powerUp() {

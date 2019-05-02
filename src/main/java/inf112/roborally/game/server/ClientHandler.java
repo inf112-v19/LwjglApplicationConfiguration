@@ -5,6 +5,7 @@ import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.board.MultiplayerLogic;
 import inf112.roborally.game.objects.Flag;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -114,6 +115,15 @@ FIFTH WORD = PRIORITY of card
                 });
                 break;
             }
+            case "POWER_DOWN":
+                String nameOfSender = split[1];
+                for(Player player : game.getBoard().players) {
+                    if(player.getName().equals(nameOfSender)) {
+                        player.powerDown();
+                    }
+                }
+                break;
+
 
             case "SET_NUMBER_OF_PLAYERS": {
                 Integer numPlayers = Integer.parseInt(split[1]);
