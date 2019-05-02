@@ -1,7 +1,9 @@
 package inf112.roborally.game.server;
 
 import com.badlogic.gdx.Gdx;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.ChannelHandlerContext;
@@ -78,22 +80,29 @@ FIFTH WORD = PRIORITY of card
                 break;
             }
             case "RECEIVE_CARDS":{
-                String name = split[1];
-                String rotate = split[2];
-                String move = split[3];
-                String priority = split[4];
-                ProgramCard card = new ProgramCard(rotate, move, priority);
-                game.giveCardToPlayer(name, card);
-                game.gameScreen.getHud().getHandDisplay().updateCardsInHand(game.gameScreen.getHud());
+                System.out.println("RECEIVE_CARDS! " + split[1]);
+                final String name = split[1];
+                Rotate rotate = Rotate.valueOf(split[2]);
+                int move = Integer.parseInt(split[3]);
+                int priority = Integer.parseInt(split[4]);
+                final ProgramCard card = new ProgramCard(rotate, move, priority);
+                Gdx.app.postRunnable(new Runnable() {
+                    @Override
+                    public void run() {
+                        game.giveCardToPlayer(name, card);
+                        game.gameScreen.getHud().updateCards();
+                        game.gameScreen.getHud().getHandDisplay().updateCardsInHand(game.gameScreen.getHud());
+                    }
+                });
                 break;
-
             }
-            case "SET_NUMBER_OF_PLAYERS":
+
+            case "SET_NUMBER_OF_PLAYERS": {
                 Integer numPlayers = Integer.parseInt(split[1]);
                 System.out.println("Number of players: " + numPlayers);
                 game.setNumberOfChosenPlayers(numPlayers);
                 break;
-
+            }
             default:
                 System.out.println(packet);
                 break;

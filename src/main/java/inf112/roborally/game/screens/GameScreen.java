@@ -36,6 +36,7 @@ public class GameScreen implements Screen {
         board = game.getBoard();
         board.placePlayers();
         board.setThisPlayer();
+        System.out.println("PLAYER: " + board.getThisPlayer());
 //        hud = new Hud(board.getPlayers().get(0), game);
         hud = new Hud(board.getThisPlayer(), game);
         hud.createButtons();

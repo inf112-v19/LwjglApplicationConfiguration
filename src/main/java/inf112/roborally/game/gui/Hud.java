@@ -56,6 +56,7 @@ public class Hud {
 
 
         handDisplay = new HandDisplay(player, this);
+        System.out.println("Player: " + player + ". RegisterGui: " + registerGui + ". LockGui: " + lockGui);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
     }
 
