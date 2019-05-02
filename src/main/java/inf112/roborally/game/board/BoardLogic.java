@@ -127,7 +127,7 @@ public class BoardLogic {
         return true;
     }
 
-    private void checkIfReady() {
+    public void checkIfReady() {
         if (allPlayersReady()) {
             for (Player player : players) {
                 if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
@@ -197,7 +197,7 @@ public class BoardLogic {
         System.out.println("Cleaning board");
     }
 
-    Player checkIfAPlayerHasWon() {
+    protected Player checkIfAPlayerHasWon() {
         if (players.size() == 1) {
             System.out.printf("%s just won the game by outliving their opponents!!%n", players.get(0).getName());
             state = GAME_OVER;
@@ -259,7 +259,7 @@ public class BoardLogic {
         shuffle(stackOfProgramCards);
     }
 
-    GameState getState() {
+    public GameState getState() {
         return state;
     }
 }
