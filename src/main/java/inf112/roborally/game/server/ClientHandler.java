@@ -71,7 +71,7 @@ FIFTH WORD = PRIORITY of card
             case "CARD": {
                 String name = split[1];
                 ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
-                game.giveCardToPlayer(name, card);
+                game.receiveCardFromServer(name, card);
                 break;
             }
             case "MULTI":{
@@ -84,7 +84,7 @@ FIFTH WORD = PRIORITY of card
                 String move = split[3];
                 String priority = split[4];
                 ProgramCard card = new ProgramCard(rotate, move, priority);
-                game.giveCardToPlayer(name, card);
+                game.receiveCardFromServer(name, card);
                 game.gameScreen.getHud().updateCards();
                 break;
 
