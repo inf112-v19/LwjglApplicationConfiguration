@@ -87,31 +87,25 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 break;
             case "CARD":
                 String saveSplit1 = split[1];
-                String[] cardSplit = split[1].split("\\r?\\n"); // Split on newline
+                String[] cardSplit = split[1].split("!"); // Split on newline
+                System.out.println("CardSplit in server:");
+                for (String s : cardSplit) {
+                    System.out.println(s + " ");
+                }
 
                 for(int i = 0; i < cardSplit.length; i++) {
                     String[] oneCardInformation = cardSplit[i].split(" ");
-                    ProgramCard card = new ProgramCard(oneCardInformation[1], oneCardInformation[2], oneCardInformation[3]);
+                    ProgramCard card = new ProgramCard(oneCardInformation[1], oneCardInformation[2], oneCardInformation[3].trim());
                     returnedProgramCards.add(card);
                 }
                 System.out.printf("Added %d cards to the returnedProgramCards on server%n", cardSplit.length);
-                readyPlayers++;
 
                 System.out.println("In serverhandler, saved split before sending:\n" + saveSplit1);
                 for (Channel channel :
                         channels) {
-                    channel.writeAndFlush(header + " " + saveSplit1 + "\r\n");
+                    channel.writeAndFlush(split[0] + " " + saveSplit1 + "\r\n");
                 }
-                break;
-            case "READY":
-                readyPlayers++;
-                if(readyPlayers >= game.playerNames.size()){
-                    for (Channel channel :
-                            channels) {
-                        channel.writeAndFlush("ALL_READY PAYLOAD\r\n");
-                    }
-                    readyPlayers = 0;
-                }
+                ready();
                 break;
             default:
                 for (Channel channel :
@@ -121,6 +115,18 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 break;
         }
     }
+
+    private void ready() {
+        readyPlayers++;
+        if(readyPlayers >= game.playerNames.size()){
+            for (Channel channel :
+                    channels) {
+                channel.writeAndFlush("ALL_READY PAYLOAD\r\n");
+            }
+            readyPlayers = 0;
+        }
+    }
+
     private void reshuffleDeck() {
         while (!returnedProgramCards.empty())
             stackOfProgramCards.push(returnedProgramCards.pop());

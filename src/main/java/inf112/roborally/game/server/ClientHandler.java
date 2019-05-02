@@ -38,6 +38,7 @@ FIFTH WORD = PRIORITY of card
     @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
         String packet = o.toString();
+        System.out.println("Packet in ClientHandler: " + packet);
         String[] split = packet.split(" ");
         String header = split[0];
 
@@ -76,19 +77,14 @@ FIFTH WORD = PRIORITY of card
 //                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
 //                game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
 
-//                System.out.println("In ClientHandler, CARD, print split[1]:\n" + split[1]);
-                String[] cardSplit = split[1].split("\\r?\\n"); // Split on newline
-                System.out.println("cardsplit:");
-                for(String s : cardSplit) {
-                    System.out.print(s + " ");
-                }
-                System.out.println("-------");
+//                System.out.println("In ClientHandler, CARD, print split[1]:\n" + split[1])
+                String[] cardSplit = split[1].split("!"); // Split on newline
 
                 ProgramCard card;
-                for(int i = 0; i < cardSplit.length; i++) {
-                    String[] oneCardInformation = cardSplit[i].split(" ");
-                    String name = oneCardInformation[0];
-                    card = new ProgramCard(oneCardInformation[1], oneCardInformation[2], oneCardInformation[3]);
+                String name = "";
+                for(int i = 1; i < split.length-3; i+=3) {
+                    name = split[i]; // Name will be same for all cards
+                    card = new ProgramCard(split[i+1], split[i+2], split[i+3].split("!")[0]);
                     game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
                 }
                 break;

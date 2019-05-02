@@ -81,14 +81,16 @@ public class Hud {
                             allCards.append("CARD ");
                             for (ProgramCard card : player.getRegisters().getAllCards()) {
                                 allCards.append(game.playerName + " " + card.toString());
-                                allCards.append("\n");
+                                allCards.append("!");
 //                            game.client.sendMessage("CARD " + game.playerName + " " + card.toString());
                             }
+                            allCards.deleteCharAt(allCards.length()-1); // Remove the last !
                             System.out.println("Allcards:");
                             System.out.println(allCards.toString());
                             game.client.sendMessage(allCards.toString());
 
-                            game.client.sendMessage("READY " + game.playerName);
+
+//                            game.client.sendMessage("READY " + game.playerName);
                         }
                     }
                 }
