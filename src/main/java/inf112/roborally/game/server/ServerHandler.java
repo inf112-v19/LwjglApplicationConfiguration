@@ -85,7 +85,9 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
                 break;
             case "CARD":
-                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+                String[] cardSplit = split[1].split(" ");
+                System.out.println(cardSplit[1] + " " + cardSplit[2] + " "  + cardSplit[3]);
+                ProgramCard card = new ProgramCard(cardSplit[1], cardSplit[2], cardSplit[3]);
                 returnedProgramCards.add(card);
                 readyPlayers++;
 
