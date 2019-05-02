@@ -47,7 +47,7 @@ public class BoardLogic {
                 break;
             case PICKING_CARDS:
                 aiRobosReady();
-                checkIfReady();
+                setToRound();
                 break;
             case ROUND:
                 doPhase();
@@ -128,7 +128,7 @@ public class BoardLogic {
         return true;
     }
 
-    public void checkIfReady() {
+    public void setToRound() {
         if (allPlayersReady()) {
             for (Player player : players) {
                 if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed

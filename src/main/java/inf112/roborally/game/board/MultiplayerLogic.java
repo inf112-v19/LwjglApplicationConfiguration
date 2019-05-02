@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
@@ -28,20 +29,36 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
 
     }
 
-    @Override
-    public void run() {
-        while (state != GameState.GAME_OVER) update();
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                endGame();
-            }
-        });
-    }
 
     public void update() {
         updatePlayers();
         executeLogic();
+    }
+
+    @Override
+    public void executeLogic() {
+        switch (state) {
+            case BETWEEN_ROUNDS:
+                doBeforeRound();
+                break;
+            case PICKING_CARDS:
+                if(thisPlayer.isReady()) {
+                    state = WAITINGFORONLINEPLAYERS;
+                }
+                break;
+            case WAITINGFORONLINEPLAYERS:
+                // Picking cards or waiting for other players
+                break;
+            case ROUND:
+                doPhase();
+                break;
+            case BOARD_MOVES:
+                boardMoves();
+                break;
+            case GAME_OVER:
+                endGame();
+                break;
+        }
     }
 
     public void handleInput() {
@@ -138,6 +155,17 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
         state = BOARD_MOVES;
         return null;
+    }
+
+    @Override
+    public void run() {
+        while (state != GameState.GAME_OVER) update();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                endGame();
+            }
+        });
     }
 
 }

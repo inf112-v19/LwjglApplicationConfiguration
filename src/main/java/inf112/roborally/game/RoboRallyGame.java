@@ -318,8 +318,7 @@ public class RoboRallyGame extends Game {
     }
 
     public void giveCardToPlayer(String player, ProgramCard card){
-        for (Player play :
-                board.players) {
+        for (Player play : board.players) {
             if (play.getName().equals(player)) {
                 play.getHand().getCardsInHand().add(card);
             }
