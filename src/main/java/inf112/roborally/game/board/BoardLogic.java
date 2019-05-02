@@ -40,7 +40,7 @@ public class BoardLogic {
         returnedProgramCards = new Stack<>();
     }
 
-    public void executeLogic() {
+    void executeLogic() {
         switch (state) {
             case BETWEEN_ROUNDS:
                 doBeforeRound();
@@ -61,9 +61,8 @@ public class BoardLogic {
         }
     }
 
-    public void aiRobosReady() {
-
-    }
+    //This method is being overwritten by GameLogic class
+    public void aiRobosReady() {}
 
 
     protected void doBeforeRound() {
@@ -115,7 +114,7 @@ public class BoardLogic {
         }
     }
 
-    protected void powerDownRobots() {
+    private void powerDownRobots() {
         for (Player player : players) {
             player.powerDown();
         }

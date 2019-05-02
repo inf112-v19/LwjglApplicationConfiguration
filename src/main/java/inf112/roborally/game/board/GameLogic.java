@@ -11,32 +11,16 @@ import inf112.roborally.game.tools.AiRobo;
 
 public class GameLogic extends BoardLogic implements Runnable {
     private final Hud hud;
-
     private Board board;
     private RoboRallyGame game;
     private Player player1;
-    private int playerIndex; // The index on the list for your player
-
 
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
         super(board.getPlayers());
         this.game = game;
         this.board = board;
         this.hud = hud;
-//        player1 = players.get(0);
-        // Set the name to match the current player
         player1 = board.getThisPlayer();
-
-//        playerIndex = 0;
-//        for(Player player : players) {
-//            if(player.getName().equals(game.playerName)) {
-//                player1 = player;
-//            }
-//            else {
-//                playerIndex++;
-//            }
-//        }
-        //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 
     @Override
@@ -101,7 +85,7 @@ public class GameLogic extends BoardLogic implements Runnable {
                 hud.updateCards();
                 hud.resetPowerDown();
                 hud.setButtonTouchable(true);
-                if(game.AIvsAI) {
+                if (game.AIvsAI) {
                     hud.setButtonTouchable(false);
                 }
                 hud.getPlayerStatusDisplay().clearCards();
@@ -138,7 +122,7 @@ public class GameLogic extends BoardLogic implements Runnable {
     }
 
     @Override
-    protected void doPhase(){
+    protected void doPhase() {
         if (phase < 5) {
             hud.getPlayerStatusDisplay().clearCards();
             hud.getPlayerStatusDisplay().addCards(phase);
@@ -146,4 +130,3 @@ public class GameLogic extends BoardLogic implements Runnable {
         super.doPhase();
     }
 }
-

@@ -16,20 +16,18 @@ import java.util.List;
 public class Hud {
 
     private final RoboRallyGame game;
-    public Group registerGui; // All register elements except locks
-    public Group lockGui; // Lock are register elements, but need a separate group so the can be drawn on top of cards
-    public Group handGui; // Cards in player hand. Needs a separate so the cards can be hidden during phases.
+    public Stage stage;
+    Group registerGui; // All register elements except locks
+    Group handGui; // Cards in player hand. Needs a separate so the cards can be hidden during phases.
     private HandDisplay handDisplay;
     private RegisterDisplay registerDisplay;
     private PlayerStatusDisplay playerStatusDisplay;
-    public Stage stage;
     private Player player;
     private ImageButton submitButton;
     private ImageButton greySubmitButton;
     private ImageButton clearButton;
-
-
     private float scale = 0.4f;
+
     public Hud(final Player player, final RoboRallyGame game) {
         this.player = player;
         this.game = game;
@@ -38,7 +36,8 @@ public class Hud {
         stage.addListener(game.cameraListener);
 
         registerGui = new Group();
-        lockGui = new Group();
+        // Lock are register elements, but need a separate group so the can be drawn on top of cards
+        Group lockGui = new Group();
         handGui = new Group();
         ImageButton settings = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_SETTINGS)));
         settings.setPosition(1920 - settings.getWidth() - 50, 1080 - settings.getHeight() - 20);
@@ -54,7 +53,6 @@ public class Hud {
         stage.addActor(lockGui);
         stage.addActor(handGui);
 
-
         handDisplay = new HandDisplay(player, this);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
     }
@@ -64,7 +62,7 @@ public class Hud {
     }
 
 
-    public boolean createSubmitButton() {
+    private boolean createSubmitButton() {
         if (AssMan.manager.isLoaded(AssMan.BUTTON_SUBMIT.fileName)) {
             submitButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_SUBMIT)));
             submitButton.setSize(submitButton.getWidth() * scale, submitButton.getHeight() * scale);
@@ -75,7 +73,7 @@ public class Hud {
                     if (player.getRegisters().isFull() && !player.outOfLives()) {
                         player.setPlayerState(PlayerState.READY);
                         setButtonTouchable(false);
-                        if(RoboRallyGame.multiPlayer) {
+                        if (RoboRallyGame.multiPlayer) {
                             for (ProgramCard card :
                                     player.getRegisters().getAllCards()) {
                                 game.client.sendMessage("CARD " + game.playerName + " " + game.toStr(card));
@@ -85,27 +83,24 @@ public class Hud {
                 }
             });
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-
-    public boolean createSubmitButtonGrey() {
+    private boolean createSubmitButtonGrey() {
         if (AssMan.manager.isLoaded(AssMan.BUTTON_SUBMIT_GREY.fileName)) {
             greySubmitButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_SUBMIT_GREY)));
             greySubmitButton.setSize(submitButton.getWidth(), submitButton.getHeight());
             greySubmitButton.setPosition(submitButton.getX(), submitButton.getY());
             greySubmitButton.addListener(new ClickListener());
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
-    public boolean createButtonClear() {
+    private boolean createButtonClear() {
         if (AssMan.manager.isLoaded(AssMan.BUTTON_CLEAR.fileName)) {
             clearButton = new ImageButton(new TextureRegionDrawable(AssMan.manager.get(AssMan.BUTTON_CLEAR)));
             clearButton.setSize(clearButton.getWidth() * scale, clearButton.getHeight() * scale);
@@ -120,8 +115,7 @@ public class Hud {
                 }
             });
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -138,7 +132,6 @@ public class Hud {
             stage.addActor(submitButton);
             stage.addActor(clearButton);
         }
-
     }
 
     public void draw() {
@@ -146,7 +139,6 @@ public class Hud {
         submitButton.setVisible(player.getRegisters().isFull());
         greySubmitButton.setVisible(!submitButton.isVisible());
         registerDisplay.update();
-
         stage.draw();
     }
 
@@ -157,7 +149,7 @@ public class Hud {
         for (int i = 0; i < 4; i++) {
             for (Actor button : registerGui.getChildren()) {
                 if (button instanceof ProgramCardButton) {
-                   ((ProgramCardButton) button).dispose();
+                    ((ProgramCardButton) button).dispose();
                     button.remove();
                 }
             }
@@ -185,8 +177,7 @@ public class Hud {
             registerDisplay.getPowerDown().setTouchable(Touchable.enabled);
             submitButton.setTouchable(Touchable.enabled);
             clearButton.setTouchable(Touchable.enabled);
-        }
-        else {
+        } else {
             registerDisplay.getPowerDown().setTouchable(Touchable.disabled);
             submitButton.setTouchable(Touchable.disabled);
             clearButton.setTouchable(Touchable.disabled);
@@ -201,9 +192,9 @@ public class Hud {
         return playerStatusDisplay;
     }
 
-    public void dispose(){
+    public void dispose() {
         stage.dispose();
-        if(playerStatusDisplay != null) {
+        if (playerStatusDisplay != null) {
             playerStatusDisplay.dispose();
         }
     }

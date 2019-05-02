@@ -25,11 +25,11 @@ public class LaserAnimation {
         animation = new Animation<>(FRAME_DURATION, regions);
     }
 
-    public TextureRegion getRegion() {
+    protected TextureRegion getRegion() {
         return animation.getKeyFrame(stateTimer++, true);
     }
 
-    public void playSound() {
+    protected void playSound() {
         sound.play();
     }
 

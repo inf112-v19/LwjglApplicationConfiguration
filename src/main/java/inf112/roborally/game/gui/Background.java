@@ -53,5 +53,4 @@ public class Background {
         clouds.getTexture().dispose();
     }
 
-
 }

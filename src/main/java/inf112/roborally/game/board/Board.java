@@ -26,16 +26,15 @@ import static inf112.roborally.game.tools.TiledTools.getValue;
 
 @SuppressWarnings("Duplicates")
 public class Board extends TiledBoard {
-    private float volume = .25f;
-
-    protected Player thisPlayer;
-    protected int thisPlayerIndex;
-    public List<Player> players;
     protected final ArrayList<Flag> flags;
     protected final ArrayList<LaserAnimation> lasers;
     protected final ArrayList<LaserBeam> laserGuns;
     protected final ArrayList<StartPosition> startPlates;
     protected final RoboRallyGame game;
+    public List<Player> players;
+    protected Player thisPlayer;
+    protected int thisPlayerIndex;
+    private float volume = .25f;
 
     public Board(final RoboRallyGame game) {
         this.game = game;
@@ -69,16 +68,15 @@ public class Board extends TiledBoard {
     }
 
     public void addPlayer(Player player) {
-        if(player == null){
+        if (player == null) {
             return;
         }
         players.add(player);
     }
 
-
-    public void addPlayersToBoard(List<Player> players){
-        for(Player player : players){
-            if(player != null){
+    public void addPlayersToBoard(List<Player> players) {
+        for (Player player : players) {
+            if (player != null) {
                 addPlayer(player);
             }
         }
@@ -96,7 +94,7 @@ public class Board extends TiledBoard {
         }
     }
 
-    public void boardMoves() {
+    void boardMoves() {
         expressBeltsMovePlayers();
         beltsMovePlayers();
         lasersFire();
@@ -110,7 +108,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             expressBeltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!game.soundMuted && !player.hasScreamed()) {
+                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }
@@ -124,7 +122,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             beltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!game.soundMuted && !player.hasScreamed()) {
+                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }
@@ -165,7 +163,6 @@ public class Board extends TiledBoard {
             player.rotate(Rotate.valueOf(i.next().toString()));
         }
 
-        // Gyros rotate
         if (cellContainsKey(currentCell, "Gyro")) {
             player.rotate(Rotate.valueOf(getValue(currentCell)));
         }
@@ -194,12 +191,11 @@ public class Board extends TiledBoard {
         }
     }
 
-
-    public void cleanUp() {
+    void cleanUp() {
         for (Player player : players) {
             if ((player.isOnRepair(floorLayer) || player.isOnOption(floorLayer)) && player.getDamage() > 0) {
                 player.repairOneDamage();
-                if (!game.soundMuted) {
+                if (!RoboRallyGame.soundMuted) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_REPAIR).play(volume);
                 }
                 addAnimation(new RepairAnimation(player.position));
@@ -226,7 +222,7 @@ public class Board extends TiledBoard {
             beam.draw(batch);
     }
 
-    public void drawBackup(SpriteBatch batch) {
+    private void drawBackup(SpriteBatch batch) {
         for (Player player : players) {
             player.getBackup().getSprite().draw(batch);
         }
@@ -253,25 +249,19 @@ public class Board extends TiledBoard {
 
     public void setThisPlayer() {
         int playerIndex = 0;
-        for(Player player : players) {
-            if(player.getName().equals(game.playerName)) {
+        for (Player player : players) {
+            if (player.getName().equals(game.playerName)) {
                 this.thisPlayer = player;
-            }
-            else {
+            } else {
                 playerIndex++;
             }
         }
         this.thisPlayerIndex = playerIndex;
     }
 
-    public int getThisPlayerIndex() { return this.thisPlayerIndex; }
-
-    public Player getThisPlayer() { return this.thisPlayer; }
-
-    public ArrayList<LaserBeam> getLaserGuns() {
-        return laserGuns;
+    public Player getThisPlayer() {
+        return this.thisPlayer;
     }
-
 
     public void dispose() {
         System.out.println("Disposing board");
@@ -280,13 +270,13 @@ public class Board extends TiledBoard {
         for (Flag flag : flags) {
             flag.dispose();
         }
-        for(LaserAnimation beam : laserGuns){
+        for (LaserAnimation beam : laserGuns) {
             beam.dispose();
         }
-        for(LaserAnimation laser : lasers){
+        for (LaserAnimation laser : lasers) {
             laser.dispose();
         }
-        for(Player player : players){
+        for (Player player : players) {
             player.dispose();
         }
     }

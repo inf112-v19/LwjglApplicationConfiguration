@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.ProgramRegisters;
 import inf112.roborally.game.tools.AssMan;
 
@@ -54,7 +54,7 @@ public class RegisterDisplay {
         TextureRegionDrawable pressed = new TextureRegionDrawable(AssMan.manager.get(AssMan.POWER_DOWN_PRESSED));
         powerDown = new ImageButton(normal, press, pressed);
         int pdSize = 160;
-        powerDown.setSize(pdSize  * scale, pdSize * scale);
+        powerDown.setSize(pdSize * scale, pdSize * scale);
         powerDown.setPosition(programBoard.getX() + 180 * scale, 380 * scale, Align.center);
         powerDown.addListener(new ClickListener() {
             @Override
@@ -163,8 +163,7 @@ public class RegisterDisplay {
         }
     }
 
-
-    public void drawCardsInProgramRegister(final Hud hud) {
+    void drawCardsInProgramRegister(final Hud hud) {
         for (int i = 0; i < ProgramRegisters.NUMBER_OF_REGISTERS; i++) {
             ProgramCard card = player.getRegisters().getCard(i);
             if (card != null) {
@@ -190,7 +189,7 @@ public class RegisterDisplay {
         }
     }
 
-    public ImageButton getPowerDown(){
+    ImageButton getPowerDown() {
         return powerDown;
     }
 }

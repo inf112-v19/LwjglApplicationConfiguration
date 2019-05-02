@@ -9,13 +9,12 @@ import inf112.roborally.game.player.ProgramCard;
  */
 public class ProgramCardButton extends ImageTextButton {
 
-    ProgramCard card;
-    private Label label;
+    private ProgramCard card;
 
-    public ProgramCardButton(ProgramCard card) {
+    ProgramCardButton(ProgramCard card) {
         super("", card.getStyle());
         this.card = card;
-        label = getLabel();
+        Label label = getLabel();
         label.setText(card.getPriority() + "");
         label.setFontScale(2.7f);
         setLabel(label);

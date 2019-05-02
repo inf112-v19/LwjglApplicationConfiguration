@@ -69,6 +69,25 @@ public class PlayerStatusDisplay {
         cards.clear();
     }
 
+    public void dispose() {
+        System.out.println("Disposing PlayerStatusDisplay");
+        font.dispose();
+
+        for (Actor card : cards.getChildren()) {
+            if (card instanceof ProgramCardButton) {
+                ((ProgramCardButton) card).dispose();
+            }
+        }
+        cards.clear();
+
+        for (Actor cards : tab.getChildren()) {
+            if (cards instanceof ProgramCardButton) {
+                ((ProgramCardButton) cards).dispose();
+            }
+        }
+        tab.clear();
+    }
+
     private class PlayerStatus {
         private Player player;
         private ArrayList<Image> lives;
@@ -76,7 +95,7 @@ public class PlayerStatusDisplay {
         private float x, y;
         private Image targetFlag;
 
-        public PlayerStatus(int index) {
+        PlayerStatus(int index) {
             this.player = otherPlayers.get(index);
             int size = 256;
             int height = 384;
@@ -127,7 +146,7 @@ public class PlayerStatusDisplay {
             targetFlag.setDrawable(new TextureRegionDrawable(AssMan.getFlagAtlasRegion(player.getTargetFlag())));
         }
 
-        public void addCard(int phase) {
+        void addCard(int phase) {
             if (!player.isOperational()) return;
 
             ProgramCard card = player.getRegisters().getCard(phase);
@@ -140,24 +159,5 @@ public class PlayerStatusDisplay {
             but.setPosition(40, y);
             cards.addActor(but);
         }
-    }
-
-    public void dispose() {
-        System.out.println("Disposing PlayerStatusDisplay");
-        font.dispose();
-
-        for (Actor card : cards.getChildren()) {
-            if (card instanceof ProgramCardButton) {
-                ((ProgramCardButton) card).dispose();
-            }
-        }
-        cards.clear();
-
-        for (Actor cards : tab.getChildren()) {
-            if (cards instanceof ProgramCardButton) {
-                ((ProgramCardButton) cards).dispose();
-            }
-        }
-        tab.clear();
     }
 }
