@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.roborally.game.Main;
-import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
@@ -22,7 +21,7 @@ public class Player extends MovableGameObject implements Comparable {
     private static final int MAX_LIVES = 3;
 
     public boolean wantsToPowerDown;
-
+    public ArrayList<ProgramCard> toPlay;
     private PlayerState playerState;
     private LaserCannon laserCannon;
     private String name;
@@ -38,8 +37,6 @@ public class Player extends MovableGameObject implements Comparable {
     private boolean debugging;
     private ProgramRegisters registers;
     private PlayerHand hand;
-    public ArrayList<ProgramCard> toPlay;
-
     private Texture skinTexture;
 
     public Player(String name, Texture skin, Direction direction, Board board) {
@@ -83,7 +80,7 @@ public class Player extends MovableGameObject implements Comparable {
         debugging = true;
     }
 
-    public void makeSprite(Texture skin) {
+    private void makeSprite(Texture skin) {
         sprite = new Sprite(skin);
         regions = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -167,7 +164,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void powerUp() {
-        if (!isPoweredDown()) return;
+        if (isPoweredDown()) return;
 
         repairAllDamage();
         playerState = OPERATIONAL;
@@ -228,7 +225,6 @@ public class Player extends MovableGameObject implements Comparable {
         lives--;
     }
 
-
     public boolean outOfLives() {
         return lives < 1;
     }
@@ -246,17 +242,16 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public boolean isPoweredDown() {
-        return playerState == POWERED_DOWN;
+        return playerState != POWERED_DOWN;
     }
 
     public boolean hasScreamed() {
-        return this.screamed;
+        return !this.screamed;
     }
 
     public boolean hasWon() {
         return targetFlag > nFlags;
     }
-
 
     @Override
     public boolean equals(Object other) {
@@ -284,7 +279,7 @@ public class Player extends MovableGameObject implements Comparable {
         this.phase = phase;
     }
 
-    public void setSkinTexture(Texture skinTexture){
+    public void setSkinTexture(Texture skinTexture) {
         this.skinTexture = skinTexture;
     }
 
@@ -338,7 +333,7 @@ public class Player extends MovableGameObject implements Comparable {
         this.playerState = playerState;
     }
 
-    public int getMaxDamage() {
+    int getMaxDamage() {
         return MAX_DAMAGE;
     }
 
@@ -363,6 +358,6 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public Position getTargetFlagPos() {
-        return board.getFlags().get(targetFlag-1).position;
+        return board.getFlags().get(targetFlag - 1).position;
     }
 }

@@ -21,11 +21,11 @@ public class PlayerHand {
         cardsInHand.add(programCard);
     }
 
-    public boolean isFull() {
+    boolean isFull() {
         return cardsInHand.size() >= player.getCardLimit();
     }
 
-    public ProgramCard removeCard(int cardPos) {
+    ProgramCard removeCard(int cardPos) {
         if (cardPos < 0 || cardPos >= cardsInHand.size()) {
             throw new IndexOutOfBoundsException("Trying to remove index: " + cardPos
                     + ", but number of cards in hand: " + cardsInHand.size());
@@ -38,7 +38,7 @@ public class PlayerHand {
         return list;
     }
 
-    public ArrayList<ProgramCard> getCardsInHand() {
+    ArrayList<ProgramCard> getCardsInHand() {
         return cardsInHand;
     }
 

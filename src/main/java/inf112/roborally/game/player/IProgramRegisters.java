@@ -4,16 +4,17 @@ public interface IProgramRegisters {
 
     /**
      * Places a card in the next available slot.
-     * @return if the card was placed, return the index, if not, return -1.
+     *
      */
-    int placeCard(int index);
+    void placeCard(int index);
 
     /**
      * get a card from specified slot.
+     *
      * @param index
      * @return
      */
-     ProgramCard getCard(int index);
+    ProgramCard getCard(int index);
 
 
     /**
@@ -28,6 +29,7 @@ public interface IProgramRegisters {
 
     /**
      * checks if a slot is locked
+     *
      * @param index
      * @return
      */

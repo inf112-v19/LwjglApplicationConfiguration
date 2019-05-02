@@ -30,7 +30,7 @@ public class ProgramCard implements Comparable {
         this.priority = priority;
     }
 
-    public ProgramCard(String rotate, String move, String priority){
+    public ProgramCard(String rotate, String move, String priority) {
         this.rotate = Rotate.valueOf(rotate);
         this.moveDistance = Integer.parseInt(move);
         this.priority = Integer.parseInt(priority);
@@ -69,16 +69,6 @@ public class ProgramCard implements Comparable {
         }
         Collections.shuffle(cardStack);
         return cardStack;
-    }
-
-    // FOR TESTING ONLY
-    // Create a deck of cards with only turn cards, so we can test some things happening after a round
-    public static Stack<ProgramCard> makeTestProgramCardDeck() {
-        Stack<ProgramCard> testCardStack = new Stack<>();
-        for (int i = 1; i < 27; i++) {
-            testCardStack.push(new ProgramCard(Rotate.RIGHT, 0, i));
-        }
-        return testCardStack;
     }
 
     public void setUpSkin() {
@@ -122,8 +112,7 @@ public class ProgramCard implements Comparable {
     private String identify() {
         if (rotate != Rotate.NONE) { // rotation card
             return rotate.toString();
-        }
-        else { // move card
+        } else { // move card
             return Integer.toString(moveDistance);
         }
     }

@@ -1,8 +1,7 @@
 package inf112.roborally.game.player;
 
-import inf112.roborally.game.RoboRallyGame;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ProgramRegisters implements IProgramRegisters {
     public static final int NUMBER_OF_REGISTERS = 5;
@@ -24,13 +23,12 @@ public class ProgramRegisters implements IProgramRegisters {
      * Picks a card from from the player hand and puts it into the register.
      *
      * @param cardPosition the position of the card in hand
-     * @return index at which it is stored if adding a card to the register was successful, -1 if not.
      */
     @Override
-    public int placeCard(int cardPosition) {
+    public void placeCard(int cardPosition) {
         if (cardPosition < 0 || cardPosition >= player.getHand().size()) {
             throw new IndexOutOfBoundsException(
-                            "Card position: "
+                    "Card position: "
                             + cardPosition
                             + "\n Number of cards in hand: "
                             + player.getHand().size()
@@ -45,11 +43,10 @@ public class ProgramRegisters implements IProgramRegisters {
         for (int i = 0; i < unlockedRegisters; i++) {
             if (registers[i] == null) {
                 registers[i] = player.getHand().removeCard(cardPosition);
-                return i;
+                return;
             }
         }
         System.out.println("Registers are full");
-        return -1;
     }
 
     public boolean isFull() {
@@ -104,7 +101,6 @@ public class ProgramRegisters implements IProgramRegisters {
 
     /**
      * Return cards from registers into player hand. Only returns cards from unlocked registers.
-     *
      */
     public void returnCards() {
         for (int i = 0; i < player.getRegisters().getNumUnlockedRegisters(); i++) {
@@ -118,7 +114,7 @@ public class ProgramRegisters implements IProgramRegisters {
     /**
      * Remove a specific card from one of the registers and put it back into the hand.
      *
-     * @param index  which register to remove from.
+     * @param index which register to remove from.
      */
     public void returnCard(int index) {
         if (index < 0 || index > registers.length) {
@@ -139,19 +135,10 @@ public class ProgramRegisters implements IProgramRegisters {
      * @return All cards in the register
      */
     public ArrayList<ProgramCard> getAllCards() {
-        ArrayList<ProgramCard> list = new ArrayList<>();
-        for (ProgramCard pc : registers) {
-            list.add(pc);
-        }
-        return list;
+        return new ArrayList<>(Arrays.asList(registers));
     }
 
     public int getNumUnlockedRegisters() {
         return unlockedRegisters;
     }
-
-    public int getNumLockedRegisters() {
-        return NUMBER_OF_REGISTERS - unlockedRegisters;
-    }
-
 }
