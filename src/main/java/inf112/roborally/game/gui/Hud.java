@@ -77,9 +77,17 @@ public class Hud {
                         player.setPlayerState(PlayerState.READY);
                         setButtonTouchable(false);
                         if(RoboRallyGame.multiPlayer) {
+                            StringBuilder allCards = new StringBuilder();
+                            allCards.append("CARD ");
                             for (ProgramCard card : player.getRegisters().getAllCards()) {
-                                game.client.sendMessage("CARD " + game.playerName + " " + card.toString());
+                                allCards.append(game.playerName + " " + card.toString());
+                                allCards.append("\n");
+//                            game.client.sendMessage("CARD " + game.playerName + " " + card.toString());
                             }
+                            System.out.println("Allcards:");
+                            System.out.println(allCards.toString());
+                            game.client.sendMessage(allCards.toString());
+
                             game.client.sendMessage("READY " + game.playerName);
                         }
                     }

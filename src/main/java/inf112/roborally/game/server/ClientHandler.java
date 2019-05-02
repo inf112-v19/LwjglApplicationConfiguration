@@ -1,7 +1,6 @@
 package inf112.roborally.game.server;
 
 import com.badlogic.gdx.Gdx;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.board.MultiplayerLogic;
@@ -9,6 +8,8 @@ import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+
+import java.util.ArrayList;
 
 public class ClientHandler extends ChannelInboundHandlerAdapter {
 
@@ -71,9 +72,25 @@ FIFTH WORD = PRIORITY of card
                 break;
             }
             case "CARD": {
-                String name = split[1];
-                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
-                game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
+//                String name = split[1];
+//                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+//                game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
+
+//                System.out.println("In ClientHandler, CARD, print split[1]:\n" + split[1]);
+                String[] cardSplit = split[1].split("\\r?\\n"); // Split on newline
+                System.out.println("cardsplit:");
+                for(String s : cardSplit) {
+                    System.out.print(s + " ");
+                }
+                System.out.println("-------");
+
+                ProgramCard card;
+                for(int i = 0; i < cardSplit.length; i++) {
+                    String[] oneCardInformation = cardSplit[i].split(" ");
+                    String name = oneCardInformation[0];
+                    card = new ProgramCard(oneCardInformation[1], oneCardInformation[2], oneCardInformation[3]);
+                    game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
+                }
                 break;
             }
             case "ALL_READY":

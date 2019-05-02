@@ -9,6 +9,8 @@ import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 
+import java.util.ArrayList;
+
 import static inf112.roborally.game.enums.GameState.*;
 
 public class MultiplayerLogic extends BoardLogic implements Runnable {
