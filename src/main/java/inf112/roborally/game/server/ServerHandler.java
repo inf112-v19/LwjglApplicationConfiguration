@@ -105,6 +105,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                     }
                     readyPlayers = 0;
                 }
+                break;
             default:
                 for (Channel channel :
                         channels) {
