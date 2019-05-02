@@ -7,8 +7,8 @@ import inf112.roborally.game.objects.Position;
 
 
 public class RepairAnimation extends Animation {
-    float rotation;
-    float direction;
+    private float rotation;
+    private float direction;
 
     public RepairAnimation(Position position) {
         super(position);
