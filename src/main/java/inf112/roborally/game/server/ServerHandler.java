@@ -58,6 +58,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         String packet = msg.toString();
+        System.out.println("Packet: " + packet);
         String[] split = packet.split(" ", 2);
         String header = split[0];
 
@@ -80,7 +81,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                         reshuffleDeck();
                     }
                     for (Channel channel : channels) {
-                        channel.writeAndFlush("RECEIVE_CARDS " + name + " " + card + "\r\n");
+                        channel.writeAndFlush("RECEIVE_CARD " + name + " " + card + "\r\n");
                     }
                 }
                 break;
