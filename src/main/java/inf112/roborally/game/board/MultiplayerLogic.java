@@ -9,8 +9,6 @@ import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 
-import java.util.ArrayList;
-
 import static inf112.roborally.game.enums.GameState.*;
 
 public class MultiplayerLogic extends BoardLogic implements Runnable {
@@ -42,7 +40,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
-                if(thisPlayer.isReady()) {
+                if (thisPlayer.isReady()) {
                     state = WAITINGFORONLINEPLAYERS;
                 }
                 break;
@@ -64,7 +62,8 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
     public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
         }
     }
@@ -84,15 +83,14 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         retrieveCardsFromPlayer(thisPlayer);
 
 
-        for(Player player : players) {
-            if(!player.isPoweredDown() && !player.equals(thisPlayer)) {
+        for (Player player : players) {
+            if (!player.isPoweredDown() && !player.equals(thisPlayer)) {
                 player.getHand().removeAllCards();
             }
         }
 
         // Get new cards from the server
         game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
-
         System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
 
@@ -146,7 +144,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
 
     @Override
     protected Player checkIfAPlayerHasWon() {
-        for(Player player : players) {
+        for (Player player : players) {
             if (player.hasWon()) {
                 System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
                 state = GAME_OVER;
@@ -174,7 +172,8 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                 if (name.equals(game.playerName)) {
                     // add to hand of this player:
                     player.getHand().getCardsInHand().add(card);
-                } else {
+                }
+                else {
                     // place in register of other player:
                     player.getRegisters().placeCard(card);
                 }
@@ -183,4 +182,12 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
     }
 
+    @Override
+    public void setToRound() {
+        for (Player player : players) {
+            if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
+                player.setPlayerState(PlayerState.OPERATIONAL);
+        }
+        state = ROUND;
+    }
 }
