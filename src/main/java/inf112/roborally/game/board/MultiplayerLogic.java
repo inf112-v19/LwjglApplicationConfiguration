@@ -1,5 +1,6 @@
 package inf112.roborally.game.board;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
@@ -42,7 +43,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
-                if(thisPlayer.isReady()) {
+                if (thisPlayer.isReady()) {
                     state = WAITINGFORONLINEPLAYERS;
                 }
                 break;
@@ -84,8 +85,8 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         retrieveCardsFromPlayer(thisPlayer);
 
 
-        for(Player player : players) {
-            if(!player.isPoweredDown() && !player.equals(thisPlayer)) {
+        for (Player player : players) {
+            if (!player.isPoweredDown() && !player.equals(thisPlayer)) {
                 player.getHand().removeAllCards();
             }
         }
@@ -146,7 +147,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
 
     @Override
     protected Player checkIfAPlayerHasWon() {
-        for(Player player : players) {
+        for (Player player : players) {
             if (player.hasWon()) {
                 System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
                 state = GAME_OVER;
@@ -166,6 +167,15 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                 endGame();
             }
         });
+    }
+
+    @Override
+    public void setToRound() {
+        for (Player player : players) {
+            if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
+                player.setPlayerState(PlayerState.OPERATIONAL);
+        }
+        state = ROUND;
     }
 
 }
