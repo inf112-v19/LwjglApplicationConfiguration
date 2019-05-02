@@ -173,7 +173,7 @@ public class Hud {
     }
 
     public void setButtonTouchable(boolean canTouch) {
-        if (canTouch && !player.isPoweredDown()) {
+        if (canTouch && player.isPoweredDown()) {
             registerDisplay.getPowerDown().setTouchable(Touchable.enabled);
             submitButton.setTouchable(Touchable.enabled);
             clearButton.setTouchable(Touchable.enabled);

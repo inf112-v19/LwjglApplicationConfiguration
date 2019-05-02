@@ -73,7 +73,7 @@ public class BoardLogic {
         powerDownRobots();
 
         for (Player player : players) {
-            if (!player.isPoweredDown()) {
+            if (player.isPoweredDown()) {
                 retrieveCardsFromPlayer(player);
             }
             if (!player.outOfLives() && player.isOperational()) {

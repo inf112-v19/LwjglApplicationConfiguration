@@ -35,7 +35,7 @@ public class MovableGameObject extends GameObject {
         super.updateSprite();
     }
 
-    public void loadVisualRepresentation() {
+    protected void loadVisualRepresentation() {
         sprite.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
         sprite.setOriginCenter();
@@ -56,14 +56,13 @@ public class MovableGameObject extends GameObject {
      * Rotates the object - visually too.
      *
      * @param rotateDir which direction the player should rotate.
-     * @return the new direction the player is facing.
      */
     public void rotate(Rotate rotateDir) {
         setDirection(direction.rotate(rotateDir));
     }
 
     public boolean isOffTheBoard(TiledMapTileLayer floorLayer) {
-        TiledMapTileLayer.Cell currentCell = floorLayer.getCell(getX(),getY());
+        TiledMapTileLayer.Cell currentCell = floorLayer.getCell(getX(), getY());
         return currentCell == null || cellContainsKey(currentCell, "Hole");
     }
 
@@ -93,23 +92,22 @@ public class MovableGameObject extends GameObject {
         if (!cellContainsKey(currentCell, "Wall")) {
             return true;
         }
-        return !blockedByWall(currentCell, direction);
+        return blockedByWall(currentCell, direction);
     }
 
     private boolean canEnter(Direction direction, TiledMapTileLayer wallLayer) {
         Position nextPosition = new Position(getX(), getY()).moveInDirection(direction);
-        // check if out of bounds
 
         TiledMapTileLayer.Cell nextCell = wallLayer.getCell(nextPosition.getX(), nextPosition.getY());
         if (!cellContainsKey(nextCell, "Wall")) {
             return true;
         }
-        return !blockedByWall(nextCell, direction.getOppositeDirection());
+        return blockedByWall(nextCell, direction.getOppositeDirection());
     }
 
 
     private boolean blockedByWall(TiledMapTileLayer.Cell cell, Direction direction) {
-        return TiledTools.splitValuesBySpace(cell).contains(direction.toString());
+        return !TiledTools.splitValuesBySpace(cell).contains(direction.toString());
     }
 
     public boolean crashWithRobot(Direction direction, Board board) {
@@ -124,7 +122,7 @@ public class MovableGameObject extends GameObject {
         return false;
     }
 
-    public boolean canPush(Direction direction, Board board) {
+    protected boolean canPush(Direction direction, Board board) {
         if (this instanceof Player && ((Player) this).getName().equals("testPilot")) return true;
 
         Position nextPos = new Position(getX(), getY());
@@ -142,7 +140,7 @@ public class MovableGameObject extends GameObject {
         return true;
     }
 
-    public boolean outOfBounds(Board board) {
+    boolean outOfBounds(Board board) {
         return this.getX() < 0 || this.getX() > board.getWidth()
                 || this.getY() < 0 || this.getY() > board.getHeight();
     }
@@ -155,6 +153,4 @@ public class MovableGameObject extends GameObject {
         this.direction = direction;
         rotationDegree = direction.getRotationDegree();
     }
-
-
 }

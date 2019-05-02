@@ -108,7 +108,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             expressBeltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
+                if (!RoboRallyGame.soundMuted && player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }
@@ -122,7 +122,7 @@ public class Board extends TiledBoard {
             if (player == null) continue;
             beltsMove(player);
             if (player.isOffTheBoard(floorLayer)) {
-                if (!RoboRallyGame.soundMuted && !player.hasScreamed()) {
+                if (!RoboRallyGame.soundMuted && player.hasScreamed()) {
                     AssMan.manager.get(AssMan.SOUND_PLAYER_WILHELM_SCREAM).play(volume);
                     player.setScreamed(true);
                 }

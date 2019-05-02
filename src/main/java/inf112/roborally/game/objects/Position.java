@@ -17,7 +17,7 @@ public class Position implements Serializable {
         this.y = y;
     }
 
-    public Position moveInDirection(Direction dir) {
+    Position moveInDirection(Direction dir) {
         switch (dir) {
             case NORTH:
                 setY(getY() + 1);
@@ -61,7 +61,7 @@ public class Position implements Serializable {
         y = position.getY();
     }
 
-    public Position copy(){
+    Position copy() {
         return new Position(x, y);
     }
 
