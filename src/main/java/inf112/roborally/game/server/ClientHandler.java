@@ -125,7 +125,7 @@ FIFTH WORD = PRIORITY of card
                 System.out.println(split[1] + " has left the game");
 
                 for (int i = 0; i < game.gameScreen.getBoard().players.size(); i++) {
-                    if(game.gameScreen.getBoard().players.get(i).equals(split[1])){
+                    if(game.gameScreen.getBoard().players.get(i).getName().equals(split[1])){
                         game.gameScreen.getBoard().players.get(i).killPlayer();
                         //TODO: Remove leavers from gamelogic
                     }
