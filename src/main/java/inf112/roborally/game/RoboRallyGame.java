@@ -32,54 +32,41 @@ import java.util.List;
 import static inf112.roborally.game.enums.Direction.NORTH;
 
 public class RoboRallyGame extends Game {
-    //MAPS:
-    public static final String VAULT = "assets/maps/vault.tmx";
-    public static final String SPIRAL_MARATHON = "assets/maps/spiralmarathon.tmx";
-    public static final String TEST_MAP = "assets/maps/testMap.tmx";
     public static final String LASER_TEST_MAP = "assets/maps/lasertest.tmx";
-    public static final String SPACE_BUG = "assets/maps/space_bug.tmx";
-    public static final String SPACE_BUG2 = "assets/maps/space_bug2.tmx";
-    public static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
-
     public static final int MAX_PLAYERS = 8;
-    public int numberOfChosenPlayers;
-
-    public boolean AIvsAI = false;
-
+    //MAPS:
+    private static final String VAULT = "assets/maps/vault.tmx";
+    private static final String TEST_MAP = "assets/maps/testMap.tmx";
+    private static final String SPACE_BUG = "assets/maps/space_bug.tmx";
+    private static final String SPACE_BUG2 = "assets/maps/space_bug2.tmx";
+    private static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
     public static boolean multiPlayer = false;
-
+    public static boolean soundMuted;
+    public int numberOfChosenPlayers;
+    public boolean AIvsAI = false;
     public OrthographicCamera dynamicCamera;
     public Viewport dynamicViewPort;
     public CameraListener cameraListener;
-
     public OrthographicCamera fixedCamera; //the position of this camera should never change!
     public FitViewport fixedViewPort;
-
     public SpriteBatch batch;
-
     public SelectNumPlayers selectNumberOfPlayersScreen;
-    public SelectSkinScreen selectSkinScreen;
     public SelectMapScreen selectMapScreen;
-    public PlaceFlagsScreen placeFlagsScreen;
     public GameScreen gameScreen;
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
-
     public TestScreen testScreen;
     public LaserTestScreen laserTestScreen;
-
-    public static boolean soundMuted;
-
+    public Server server;
+    public Client client;
+    public ArrayList<String> playerNames;
+    public Board board;
+    public String playerName = "Player1"; // Default
+    private SelectSkinScreen selectSkinScreen;
     /**
      * The screen that was active before setting a new screen with {@link #setScreen(Screen)}
      */
     private Screen screenBefore;
-    public Server server;
-    public Client client;
-
-    public ArrayList<String> playerNames;
-    public Board board;
-    public String playerName = "Player1"; // Default
 
     @Override
     public void create() {
@@ -166,8 +153,7 @@ public class RoboRallyGame extends Game {
         List<Player> players = createNumberOfPlayers(numberOfChosenPlayers);
         if (players != null) {
             board.addPlayersToBoard(players);
-        }
-        else {
+        } else {
             board.addPlayersToBoard(createNumberOfPlayers(MAX_PLAYERS));
         }
         gameScreen = new GameScreen(this);
@@ -196,8 +182,7 @@ public class RoboRallyGame extends Game {
         board.findLaserGuns();
     }
 
-
-    public List<Player> createDefaultPlayers() {
+    private List<Player> createDefaultPlayers() {
         return createNumberOfPlayers(MAX_PLAYERS);
     }
 
@@ -209,7 +194,7 @@ public class RoboRallyGame extends Game {
      * @param numberOfPlayers the number of players that should be created.
      * @return the list of players, null if {@param numberOfPlayers} is not possible to make.
      */
-    public List<Player> createNumberOfPlayers(int numberOfPlayers) {
+    private List<Player> createNumberOfPlayers(int numberOfPlayers) {
         if (numberOfPlayers < 1 || numberOfPlayers > MAX_PLAYERS) {
             return null;
         }
@@ -229,7 +214,7 @@ public class RoboRallyGame extends Game {
         return players;
     }
 
-    public List<Player> createNumberOfPlayersFromMultiplayer() {
+    private List<Player> createNumberOfPlayersFromMultiplayer() {
         if (numberOfChosenPlayers < 1 || numberOfChosenPlayers > MAX_PLAYERS) {
             return null;
         }
@@ -240,8 +225,7 @@ public class RoboRallyGame extends Game {
 
             if (i < playerNames.size()) {
                 players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board));
-            }
-            else {
+            } else {
                 Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board);
                 players.add(player);
             }
@@ -281,14 +265,12 @@ public class RoboRallyGame extends Game {
         return mapChoices[mapIndex];
     }
 
-
     public void joinGame(String ip) {
         System.out.println(playerName + " wants to connect to " + ip);
         try {
             client = new Client(ip, 8000, this, playerName);
             new Thread(client).start();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -314,10 +296,6 @@ public class RoboRallyGame extends Game {
         this.playerName = playerName;
     }
 
-    public void sendMessage(String s) {
-        client.sendMessage(s);
-    }
-
     public String toStr(ProgramCard card) {
         return card.getRotate().toString() + " " + card.getMoveDistance() + " " + card.getPriority();
     }
@@ -330,6 +308,5 @@ public class RoboRallyGame extends Game {
                 System.out.println(play.toPlay);
             }
         }
-
     }
 }
