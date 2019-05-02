@@ -40,18 +40,6 @@ public class AiRobo {
             }
         }
 
-        for (int i = 0; i < robo.getHand().size(); i++) {
-            ProgramCard card = robo.getHand().getCard(i);
-            testPilot.rotate(card.getRotate());
-            testPilot.move(card.getMoveDistance());
-            if (!testPilot.isDestroyed()) {
-                robo.getRegisters().placeCard(i);
-                successfulTestPilot = testPilot.createTestPilot();
-            } else {
-                testPilot = successfulTestPilot.createTestPilot();
-            }
-        }
-
         while (!robo.getRegisters().isFull() && robo.getHand().size() > 0)
             robo.getRegisters().placeCard(0);
     }
