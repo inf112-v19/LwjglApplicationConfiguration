@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
-
-import java.util.ArrayList;
 
 import static inf112.roborally.game.enums.GameState.*;
 
@@ -28,26 +27,43 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
 
     }
 
-    @Override
-    public void run() {
-        while (state != GameState.GAME_OVER) update();
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                endGame();
-            }
-        });
-    }
 
     public void update() {
         updatePlayers();
         executeLogic();
     }
 
+    @Override
+    public void executeLogic() {
+        switch (state) {
+            case BETWEEN_ROUNDS:
+                doBeforeRound();
+                break;
+            case PICKING_CARDS:
+                if (thisPlayer.isReady()) {
+                    state = WAITINGFORONLINEPLAYERS;
+                }
+                break;
+            case WAITINGFORONLINEPLAYERS:
+                // Picking cards or waiting for other players
+                break;
+            case ROUND:
+                doPhase();
+                break;
+            case BOARD_MOVES:
+                boardMoves();
+                break;
+            case GAME_OVER:
+                endGame();
+                break;
+        }
+    }
+
     public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             game.setScreen(game.settingsScreen);
         }
     }
@@ -67,15 +83,14 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         retrieveCardsFromPlayer(thisPlayer);
 
 
-        for(Player player : players) {
-            if(!player.isPoweredDown() && !player.equals(thisPlayer)) {
+        for (Player player : players) {
+            if (!player.isPoweredDown() && !player.equals(thisPlayer)) {
                 player.getHand().removeAllCards();
             }
         }
 
         // Get new cards from the server
         game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
-
         System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
 
@@ -129,7 +144,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
 
     @Override
     protected Player checkIfAPlayerHasWon() {
-        for(Player player : players) {
+        for (Player player : players) {
             if (player.hasWon()) {
                 System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
                 state = GAME_OVER;
@@ -140,4 +155,39 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         return null;
     }
 
+    @Override
+    public void run() {
+        while (state != GameState.GAME_OVER) update();
+        Gdx.app.postRunnable(new Runnable() {
+            @Override
+            public void run() {
+                endGame();
+            }
+        });
+    }
+
+    public void receiveCardFromServer(String name, ProgramCard card) {
+        for (Player player : board.players) {
+            if (player.getName().equals(name)) {
+                if (name.equals(game.playerName)) {
+                    // add to hand of this player:
+                    player.getHand().getCardsInHand().add(card);
+                }
+                else {
+                    // place in register of other player:
+                    player.getRegisters().placeCard(card);
+                }
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void setToRound() {
+        for (Player player : players) {
+            if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
+                player.setPlayerState(PlayerState.OPERATIONAL);
+        }
+        state = ROUND;
+    }
 }

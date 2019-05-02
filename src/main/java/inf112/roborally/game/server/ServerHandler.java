@@ -10,6 +10,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
+import java.util.HashMap;
 import java.util.Stack;
 
 import static java.util.Collections.shuffle;
@@ -19,6 +20,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     private final RoboRallyGame game;
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
+    int readyPlayers;
 
     public ServerHandler(RoboRallyGame game) {
         this.game = game;
@@ -83,11 +85,22 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
                 break;
             case "CARD":
-                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
+                String[] cardSplit = split[1].split(" ");
+                System.out.println(cardSplit[1] + " " + cardSplit[2] + " "  + cardSplit[3]);
+                ProgramCard card = new ProgramCard(cardSplit[1], cardSplit[2], cardSplit[3]);
                 returnedProgramCards.add(card);
+                readyPlayers++;
+
                 for (Channel channel :
                         channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
+                }
+                if(readyPlayers >= game.playerNames.size()){
+                    for (Channel channel :
+                            channels) {
+                        channel.writeAndFlush("ALL_READY PAYLOAD\r\n");
+                    }
+                        readyPlayers = 0;
                 }
                 break;
             default:

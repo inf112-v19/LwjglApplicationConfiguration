@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.board.MultiplayerLogic;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.ChannelHandlerContext;
@@ -72,13 +73,15 @@ FIFTH WORD = PRIORITY of card
             case "CARD": {
                 String name = split[1];
                 ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
-                game.giveCardToPlayer(name, card);
+                game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
                 break;
             }
-            case "MULTI":{
+            case "ALL_READY":
+                game.gameScreen.getMultiplayerLogic().setToRound();
+                break;
+            case "MULTI":
                 game.multiPlayer = true;
                 break;
-            }
             case "RECEIVE_CARDS":{
                 System.out.println("RECEIVE_CARDS! " + split[1]);
                 final String name = split[1];
@@ -89,7 +92,7 @@ FIFTH WORD = PRIORITY of card
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.giveCardToPlayer(name, card);
+                        game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
                         game.gameScreen.getHud().updateCards();
                         game.gameScreen.getHud().getHandDisplay().updateCardsInHand(game.gameScreen.getHud());
                     }

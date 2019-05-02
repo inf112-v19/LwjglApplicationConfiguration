@@ -23,19 +23,8 @@ public class GameLogic extends BoardLogic implements Runnable {
         this.game = game;
         this.board = board;
         this.hud = hud;
-//        player1 = players.get(0);
-        // Set the name to match the current player
         player1 = board.getThisPlayer();
 
-//        playerIndex = 0;
-//        for(Player player : players) {
-//            if(player.getName().equals(game.playerName)) {
-//                player1 = player;
-//            }
-//            else {
-//                playerIndex++;
-//            }
-//        }
         //TODO: Player choosing which direction to face needs to happen when the game initially starts.
     }
 

@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramCard;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +47,7 @@ public class BoardLogic {
                 break;
             case PICKING_CARDS:
                 aiRobosReady();
-                checkIfReady();
+                setToRound();
                 break;
             case ROUND:
                 doPhase();
@@ -97,7 +97,7 @@ public class BoardLogic {
     public void removeDeadRobots() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            if(players.size() == 1){
+            if (players.size() == 1) {
                 endGame();
                 return;
             }
@@ -128,7 +128,7 @@ public class BoardLogic {
         return true;
     }
 
-    public void checkIfReady() {
+    public void setToRound() {
         if (allPlayersReady()) {
             for (Player player : players) {
                 if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
@@ -151,7 +151,7 @@ public class BoardLogic {
         executeCards();
         checkIfAPlayerHasWon();
         phase++;
-        if(!players.isEmpty() && players.get(0).isDebuggingActive()) return;
+        if (!players.isEmpty() && players.get(0).isDebuggingActive()) return;
 
         if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
             sleepThread(100);
