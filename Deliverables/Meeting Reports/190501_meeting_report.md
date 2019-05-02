@@ -1,6 +1,6 @@
-# Møtereferat 11.april
+# Møtereferat 1.mai
 ## Mål for møtet:
- - Bli ferdig med LAN - funksjonalitet
+ - Forbedre LAN-funksjonalitet
 
 ### Oppmøte:
 - Morten
@@ -13,3 +13,4 @@
 - Ingen
 
 ### Resultat fra møtet:
+- Forbedret LAN-funksjonalitet
