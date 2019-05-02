@@ -208,7 +208,7 @@ public class RoboRallyGame extends Game {
             if (index >= numberOfSkins) {
                 index = 0;
             }
-            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board);
+            Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[index], NORTH, board, this);
             players.add(player);
             index++;
         }

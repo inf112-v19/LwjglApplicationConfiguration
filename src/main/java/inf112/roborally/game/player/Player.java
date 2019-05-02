@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.roborally.game.Main;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.PlayerState;
@@ -358,7 +359,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public Player createTestPilot() {
-        Player testPilot = new Player("testPilot", sprite.getTexture(), getDirection(), board);
+        Player testPilot = new Player("testPilot", sprite.getTexture(), getDirection(), board, game);
         testPilot.move(getX(), getY());
         return testPilot;
     }

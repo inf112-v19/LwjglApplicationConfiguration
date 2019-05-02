@@ -38,7 +38,7 @@ public class PlayerHand {
         return list;
     }
 
-    ArrayList<ProgramCard> getCardsInHand() {
+    public ArrayList<ProgramCard> getCardsInHand() {
         return cardsInHand;
     }
 

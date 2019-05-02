@@ -114,7 +114,7 @@ public class BoardLogic {
         }
     }
 
-    private void powerDownRobots() {
+    protected void powerDownRobots() {
         for (Player player : players) {
             player.powerDown();
         }

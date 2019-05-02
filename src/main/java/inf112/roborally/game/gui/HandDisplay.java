@@ -25,7 +25,7 @@ public class HandDisplay {
      *
      * @param hud where it's being drawn
      */
-    void updateCardsInHand(final Hud hud) {
+    public void updateCardsInHand(final Hud hud) {
         float scale = 0.5f;
         int j = 0;
         posX = 1250;
