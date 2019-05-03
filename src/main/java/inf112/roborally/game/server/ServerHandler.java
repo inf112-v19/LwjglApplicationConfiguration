@@ -137,7 +137,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
         System.out.println("One more player is ready");
         System.out.println("readyplayers size = " + game.readyPlayers);
         System.out.println("Players from start size = " + game.playersFromStart);
-        if(game.readyPlayers == game.playersFromStart){
+        if(game.readyPlayers >= game.playersFromStart){
             System.out.println("ALL PLAYERS ARE READY");
             for (Channel channel :
                     channels) {
