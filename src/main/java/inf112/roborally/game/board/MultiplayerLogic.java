@@ -1,7 +1,6 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
@@ -168,8 +167,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                 if (name.equals(game.playerName)) {
                     // add to hand of this player:
                     player.getHand().getCardsInHand().add(card);
-                }
-                else {
+                } else {
                     // add the hand of another player
                     player.getHand().getCardsInHand().add(card);
                 }
@@ -186,13 +184,12 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
             if (player.getName().equals(name)) {
                 if (name.equals(game.playerName)) {
                     // add to hand of this player:
-                    for(ProgramCard card : allCards) {
+                    for (ProgramCard card : allCards) {
                         player.getHand().getCardsInHand().add(card);
                     }
-                }
-                else {
+                } else {
                     // place in register of other player:
-                    for(ProgramCard card : allCards) {
+                    for (ProgramCard card : allCards) {
                         player.getRegisters().placeCard(card);
                         System.out.printf("Added the card %s to player %s´s register%n", card.toString(), player.getName());
                     }
@@ -206,12 +203,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
     public void setToRound() {
         for (Player player : players) {
             if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
-                if (player.wantsToPowerDown) {
-                    player.setPlayerState(PlayerState.POWERED_DOWN);
-                    player.wantsToPowerDown = false;
-                } else {
-                    player.setPlayerState(PlayerState.OPERATIONAL);
-                }
+                player.setPlayerState(PlayerState.OPERATIONAL);
         }
         state = ROUND;
     }

@@ -69,8 +69,8 @@ public class BoardLogic {
         System.out.println("Set up before round");
         cleanBoard();
         respawnRobots();
-        powerUpRobots();
         powerDownRobots();
+        powerUpRobots();
 
         for (Player player : players) {
             if (player.isPoweredDown()) {
