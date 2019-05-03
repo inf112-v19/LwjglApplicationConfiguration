@@ -14,6 +14,7 @@ import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.ProgramRegisters;
 import inf112.roborally.game.tools.AssMan;
+import inf112.roborally.game.tools.ImageTool;
 
 import java.util.ArrayList;
 
@@ -63,7 +64,7 @@ public class RegisterDisplay {
     private void addPlayerSkin() {
         Image skin = new Image(player.getFrontRegion());
         skin.setPosition(programBoard.getX() - skin.getWidth() - 10, -skin.getHeight() * 0.3f);
-        skin.setColor(skin.getColor().r, skin.getColor().g, skin.getColor().b, .8f);
+        ImageTool.setAlpha(skin, .8f);
         registerGui.addActor(skin);
     }
 
@@ -95,7 +96,7 @@ public class RegisterDisplay {
         programBoard.setPosition(1920 / 2, programBoard.getHeight() / 2, Align.center);
         registerGui.addActor(programBoard);
         h = programBoard.getHeight();
-        programBoard.setColor(programBoard.getColor().r, programBoard.getColor().g, programBoard.getColor().b, .8f);
+        ImageTool.setAlpha(programBoard, .8f);
     }
 
     private void addDamageTokens() {
