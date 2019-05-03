@@ -139,16 +139,14 @@ FIFTH WORD = PRIORITY of card
                 game.setNumberOfChosenPlayers(numPlayers);
                 break;
             }
-            case "LEFT":
+            case "DIED":
                 System.out.println(split[1] + " has died the game");
                 game.playersInGame--;
                 removePlayer(split[1]);
                 break;
             case "REMOVED":
                 System.out.println(split[1] + " has left the game");
-//                game.playersInGame--;
                 removePlayer(split[1]);
-//                game.client.sendMessage("UPDATEREADY PAYLOAD");
                 break;
             default:
                 System.out.println(packet);

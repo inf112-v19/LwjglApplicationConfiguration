@@ -119,8 +119,8 @@ public class BoardLogic {
                 players.remove(player);
                 aiBots.remove(player);
                 if(RoboRallyGame.multiPlayer && player.getName().equals(game.playerName)){
-                    System.out.println("PLAYER REMOVED FROM THE GAME, AND LEFT CALLED");
-                    game.client.sendMessage("LEFT " +  player.getName());
+                    System.out.println("PLAYER REMOVED FROM THE GAME, AND DIED CALLED");
+                    game.client.sendMessage("DIED " +  player.getName());
                 }
             }
         }

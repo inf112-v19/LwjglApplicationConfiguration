@@ -37,14 +37,15 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void handlerRemoved(ChannelHandlerContext ctx) {
+        System.out.println("HandlerRemoved called");
         Channel incoming = ctx.channel();
         for (Channel channel : channels) {
             if(channel != incoming) {
                 channel.writeAndFlush("REMOVED " + connectedPlayers.get(incoming) + "\r\n" );
-                game.playersInGame--;
-                ready();
             }
         }
+        game.playersInGame--;
+        checkIfReadyOnly();
         channels.remove(ctx.channel());
     }
 
@@ -129,6 +130,17 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     private void ready() {
         game.readyPlayers++;
         System.out.println("One more player is ready");
+        System.out.printf("%d out of %d players are ready%n", game.readyPlayers, game.playersInGame);
+        if(game.readyPlayers >= game.playersInGame) {
+            System.out.println("ALL PLAYERS ARE READY");
+            for (Channel channel : channels) {
+                channel.writeAndFlush("ALL_READY PAYLOAD\r\n");
+            }
+            game.readyPlayers = 0;
+        }
+    }
+
+    private void checkIfReadyOnly() {
         System.out.printf("%d out of %d players are ready%n", game.readyPlayers, game.playersInGame);
         if(game.readyPlayers >= game.playersInGame) {
             System.out.println("ALL PLAYERS ARE READY");
