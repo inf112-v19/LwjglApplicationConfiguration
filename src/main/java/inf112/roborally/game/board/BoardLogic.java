@@ -86,7 +86,7 @@ public class BoardLogic {
         powerDownRobots();
 
         for (Player player : players) {
-            if (!player.isPoweredDown()) {
+            if (player.isPoweredDown()) {
                 retrieveCardsFromPlayer(player);
             }
             if (!player.outOfLives() && player.isOperational()) {
@@ -113,7 +113,8 @@ public class BoardLogic {
             if (players.size() == 1) {
                 endGame();
                 return;
-            } else if (player.getPlayerState() == PlayerState.GAME_OVER) {
+            }
+            else if (player.getPlayerState() == PlayerState.GAME_OVER) {
                 System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
@@ -139,7 +140,7 @@ public class BoardLogic {
 
     private boolean allPlayersReady() {
         for (Player player : players) {
-            if (!player.isReady() || player.isPoweredDown()) return false;
+            if (!player.isReady()) return false;
         }
         return true;
     }
