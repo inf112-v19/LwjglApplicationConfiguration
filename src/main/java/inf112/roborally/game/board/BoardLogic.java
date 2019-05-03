@@ -99,9 +99,10 @@ public class BoardLogic {
 
     protected void respawnRobots() {
         for (Player player : players) {
-            if (player.isDestroyed() && player.outOfLives()) {
-                player.setPlayerState(PlayerState.GAME_OVER);
-            } else player.respawn();
+            if (player.isDestroyed()) {
+                if (player.outOfLives()) player.setPlayerState(PlayerState.GAME_OVER);
+                else player.respawn();
+            }
         }
     }
 
