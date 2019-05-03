@@ -138,19 +138,6 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
     }
 
     @Override
-    protected Player checkIfAPlayerHasWon() {
-        for (Player player : players) {
-            if (player.hasWon()) {
-                System.out.printf("%s just won the game by collecting all the flags!!%n", player.getName());
-                state = GAME_OVER;
-                return player;
-            }
-        }
-        state = BOARD_MOVES;
-        return null;
-    }
-
-    @Override
     public void run() {
         while (state != GameState.GAME_OVER) update();
         Gdx.app.postRunnable(new Runnable() {
