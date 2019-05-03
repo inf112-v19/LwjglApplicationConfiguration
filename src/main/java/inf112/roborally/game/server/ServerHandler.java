@@ -115,11 +115,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
                 ready();
                 break;
-            case "READY_AFTER_LEAVER":
-                ready();
-
-                break;
-
             default:
                 for (Channel channel : channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
@@ -131,8 +126,8 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     private void ready() {
         game.readyPlayers++;
         System.out.println("One more player is ready");
-        System.out.printf("%d out of %d players are ready%n", game.readyPlayers, game.playerNames.size());
-        if(game.readyPlayers == game.playerNames.size()) {
+        System.out.printf("%d out of %d players are ready%n", game.readyPlayers, game.playersInGame);
+        if(game.readyPlayers >= game.playersInGame) {
             System.out.println("ALL PLAYERS ARE READY");
             for (Channel channel : channels) {
                 channel.writeAndFlush("ALL_READY PAYLOAD\r\n");

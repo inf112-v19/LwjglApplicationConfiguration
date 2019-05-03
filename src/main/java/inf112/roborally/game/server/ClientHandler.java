@@ -131,7 +131,7 @@ FIFTH WORD = PRIORITY of card
                 break;
             }
             case "LEFT":
-                System.out.println(split[1] + " has left the game");
+                System.out.println(split[1] + " has died/left the game");
                 game.playersInGame--;
 
                 for (int i = 0; i < game.gameScreen.getBoard().players.size(); i++) {
