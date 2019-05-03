@@ -182,20 +182,22 @@ public class RoboRallyGame extends Game {
      */
     private void createDefaultBoard() {
         board.createBoard(VAULT);
-        board.getFlags().add(new Flag(7, 7, 1));
-        board.getFlags().add(new Flag(11, 10, 2));
-        board.getFlags().add(new Flag(12, 12, 3));
+        createFlags();
         board.addPlayersToBoard(createDefaultPlayers());
         board.findLaserGuns();
     }
 
     private void createDefaultMultiplayerBoard() {
         board.createBoard(VAULT);
+        createFlags();
+        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
+        board.findLaserGuns();
+    }
+
+    public void createFlags(){
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 10, 2));
         board.getFlags().add(new Flag(13, 1, 3));
-        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
-        board.findLaserGuns();
     }
 
     private List<Player> createDefaultPlayers() {

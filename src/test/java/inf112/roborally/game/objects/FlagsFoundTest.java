@@ -12,18 +12,9 @@ import static org.junit.Assert.*;
  */
 public class FlagsFoundTest {
     private Player player;
-//    private ArrayList<Flag> flags;
-    // Not sure if board should be setup every time, so I set it up here
-//    private Board board = new Board("assets/gameboard/vault.tmx");
-
 
     @Before
     public void setup() {
-//        flags = new ArrayList<>();
-//        flags.add(new Flag(1, 10, 1));
-//        flags.add(new Flag(1, 2, 2));
-//        flags.add(new Flag(6, 10, 3));
-
         player = new Player(0,0, 3);
 
     }
