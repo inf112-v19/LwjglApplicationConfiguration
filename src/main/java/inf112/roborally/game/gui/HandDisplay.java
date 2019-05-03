@@ -22,14 +22,12 @@ public class HandDisplay {
 
     /**
      * Draws all cards in the player hand.
-     *
-     * @param hud where it's being drawn
      */
     public void updateCardButtons() {
         float scale = 0.5f;
         int j = 0;
         posX = 1250;
-        posY = 200;
+        posY = 172;
 
         for (int i = 0; i < player.getHand().size(); i++) {
             ProgramCard card = player.getHand().getCard(i);
