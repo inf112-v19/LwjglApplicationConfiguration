@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Contains assets used by the game.
@@ -50,6 +51,9 @@ public class AssMan {
     //LobbyScreen
     public static final AssetDescriptor<Texture> LOBBY_BACKGROUND
             = new AssetDescriptor<>("assets/img/lobby.png", Texture.class);
+
+    public static final AssetDescriptor<TextureAtlas> LOBBY_ANIMATION
+            = new AssetDescriptor<>("assets/img/lobbyAnimation/waitingForPlayersToJoin.atlas", TextureAtlas.class);
 
     //GameScreen
     public static final AssetDescriptor<Texture> GAME_BACKGROUND
@@ -152,6 +156,7 @@ public class AssMan {
             = new AssetDescriptor<>("assets/maps/around_the_world.png", Texture.class);
     private static final AssetDescriptor<Texture> TEXT_BUTTON_CHECKED
             = new AssetDescriptor<>("assets/buttons/button_checked.png", Texture.class);
+    public static TextureRegionDrawable getWaitingForPlayersAtlas;
 
     @SuppressWarnings("Duplicates")
     public static void load() {
@@ -192,6 +197,7 @@ public class AssMan {
 
         //Lobby
         manager.load(LOBBY_BACKGROUND);
+        manager.load(LOBBY_ANIMATION);
 
         //Gamescreen
         manager.load(GAME_BACKGROUND);
