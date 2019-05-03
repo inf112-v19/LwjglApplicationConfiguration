@@ -222,7 +222,7 @@ public class BoardLogic {
     }
 
 
-    protected void updatePlayers() {
+    public void updatePlayers() {
         for (Player player : players) {
             player.updateSprite();
         }

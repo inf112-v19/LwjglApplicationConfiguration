@@ -25,7 +25,7 @@ public class HandDisplay {
      *
      * @param hud where it's being drawn
      */
-    public void updateCardsInHand(final Hud hud) {
+    public void updateCardButtons() {
         float scale = 0.5f;
         int j = 0;
         posX = 1250;
@@ -44,7 +44,7 @@ public class HandDisplay {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().placeCard(index);
-                    hud.updateCards();
+                    hud.updateCardButtons();
                 }
             });
 

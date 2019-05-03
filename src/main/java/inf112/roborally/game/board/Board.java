@@ -94,7 +94,7 @@ public class Board extends TiledBoard {
         }
     }
 
-    void boardMoves() {
+    public void boardMoves() {
         expressBeltsMovePlayers();
         beltsMovePlayers();
         lasersFire();
@@ -250,8 +250,10 @@ public class Board extends TiledBoard {
     public void setThisPlayer() {
         int playerIndex = 0;
         for (Player player : players) {
+            System.out.println("Game.playerName: " + game.playerName);
             if (player.getName().equals(game.playerName)) {
                 this.thisPlayer = player;
+                System.out.println("THIS PLAYER: " + this.thisPlayer);
             } else {
                 playerIndex++;
             }

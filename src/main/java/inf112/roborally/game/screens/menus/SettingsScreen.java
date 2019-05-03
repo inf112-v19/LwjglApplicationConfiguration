@@ -19,6 +19,10 @@ public class SettingsScreen extends BasicScreen {
         back.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(game.multiPlayer){
+                    game.playerName = game.DEFAULT_PLAYER_NAME;
+                    game.multiPlayer = false;
+                }
                 goToPreviousScreen();
             }
         });
@@ -41,6 +45,11 @@ public class SettingsScreen extends BasicScreen {
         menu.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(game.multiPlayer){
+                    game.server.shutDown();
+                    game.playerName = game.DEFAULT_PLAYER_NAME;
+                    game.multiPlayer = false;
+                }
                 game.newGame();
             }
         });

@@ -113,6 +113,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
                 ready();
                 break;
+            case "READY_AFTER_LEAVER":
+                ready();
+
+                break;
 
             default:
                 for (Channel channel : channels) {
