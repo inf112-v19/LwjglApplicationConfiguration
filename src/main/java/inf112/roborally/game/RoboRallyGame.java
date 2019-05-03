@@ -144,7 +144,7 @@ public class RoboRallyGame extends Game {
     }
 
     public void newGame() {
-        dispose();
+//        dispose(); // <- this causes (interrupted by signal 6: SIGABRT) on macs for some reason.
         create();
     }
 
