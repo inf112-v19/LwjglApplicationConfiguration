@@ -48,9 +48,10 @@
 
 
 ## Part 2: Requirements
-   - We have finished everything on the list, although the multiplayer is not completely working.
-The reason we chose to finish the other requirements on the list, is because we found them more important, and as a core part of the game.
-   - To see tasks completed this iteration, check the "Done in Mandatory 5" column on the GitHub project board.
+   - We have finished everything on the list. The reason we chose to implement these features, 
+   is because we found them important and as a core part of the game, as well as we had time to do it.
+   - To see tasks completed this iteration, check the "Done in Mandatory 5" column 
+   on the GitHub project board.
 
 
     
