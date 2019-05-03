@@ -118,6 +118,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
                 ready();
                 break;
+            case "READY_AFTER_LEAVER":
+                ready();
+
+                break;
 
             default:
                 for (Channel channel :
@@ -132,8 +136,8 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
         game.readyPlayers++;
         System.out.println("One more player is ready");
         System.out.println("readyplayers size = " + game.readyPlayers);
-        System.out.println("Playernames size = " + game.playerNames.size());
-        if(game.readyPlayers == game.playerNames.size()){
+        System.out.println("Players from start size = " + game.playersFromStart);
+        if(game.readyPlayers == game.playersFromStart){
             System.out.println("ALL PLAYERS ARE READY");
             for (Channel channel :
                     channels) {
