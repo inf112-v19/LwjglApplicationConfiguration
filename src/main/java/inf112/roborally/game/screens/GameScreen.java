@@ -1,6 +1,7 @@
 package inf112.roborally.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,9 +9,9 @@ import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.BoardLogic;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.MultiplayerLogic;
+import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Background;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
@@ -42,7 +43,7 @@ public class GameScreen implements Screen {
         hud.createButtons();
         System.out.println(game.fixedCamera.position);
 
-        if(game.multiPlayer) {
+        if (game.multiPlayer) {
             multiplayerLogic = new MultiplayerLogic(board, hud, game);
             gameLogic = null;
         }
@@ -77,6 +78,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         update();
+        handleInput();
         float r = 10 / 255f;
         float g = 10 / 255f;
         float b = 10 / 255f;
@@ -92,7 +94,7 @@ public class GameScreen implements Screen {
 
         game.batch.setProjectionMatrix(game.dynamicCamera.combined);
 
-        if(gameLogic != null) {
+        if (gameLogic != null) {
             gameLogic.removeDeadRobots();
         }
         game.batch.begin();
@@ -108,15 +110,44 @@ public class GameScreen implements Screen {
         hud.draw();
     }
 
+    private void handleInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            game.setScreen(game.settingsScreen);
+        }
+        // if we are playing a normal game, return here..
+        if (!game.testing) return;
+
+
+        boolean updatePlayer = true;
+        Player player1 = board.getThisPlayer();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            player1.move(1);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            player1.rotate(Rotate.LEFT);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            player1.rotate(Rotate.RIGHT);
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
+            player1.reverse();
+        }
+        else {
+            updatePlayer = false;
+        }
+        if (updatePlayer) {
+            board.boardMoves();
+            gameLogic.updatePlayers();
+        }
+    }
+
     private void update() {
         game.cameraListener.updateZoom();
         background.update(game.dynamicCamera);
-        if(gameLogic != null) {
-            gameLogic.handleInput();
+        if (gameLogic != null) {
             gameLogic.update();
         }
         if (multiplayerLogic != null) {
-            multiplayerLogic.handleInput();
             multiplayerLogic.update();
         }
     }
@@ -182,11 +213,11 @@ public class GameScreen implements Screen {
         return board;
     }
 
-    public Hud getHud(){
+    public Hud getHud() {
         return hud;
     }
 
-    public MultiplayerLogic getMultiplayerLogic(){
+    public MultiplayerLogic getMultiplayerLogic() {
         return multiplayerLogic;
     }
 }

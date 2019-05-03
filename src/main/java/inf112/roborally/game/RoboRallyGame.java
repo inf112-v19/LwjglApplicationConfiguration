@@ -11,7 +11,6 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
-import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.screens.GameScreen;
 import inf112.roborally.game.screens.LaserTestScreen;
 import inf112.roborally.game.screens.TestScreen;
@@ -63,6 +62,7 @@ public class RoboRallyGame extends Game {
     public int readyPlayers; // To be used in multiplayer
     public Board board;
     public String playerName = "Player1"; // Default
+    public boolean testing;
     private SelectSkinScreen selectSkinScreen;
     /**
      * The screen that was active before setting a new screen with {@link #setScreen(Screen)}
@@ -71,6 +71,7 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void create() {
+        testing = false;
         playerNames = new ArrayList<>();
         AssMan.load();
         AssMan.manager.finishLoading();
@@ -167,7 +168,7 @@ public class RoboRallyGame extends Game {
     private void createDefaultBoard() {
         board.createBoard(VAULT);
         board.getFlags().add(new Flag(7, 7, 1));
-        board.getFlags().add(new Flag(11, 11, 2));
+        board.getFlags().add(new Flag(11, 10, 2));
         board.getFlags().add(new Flag(12, 12, 3));
         board.addPlayersToBoard(createDefaultPlayers());
         board.findLaserGuns();
@@ -275,7 +276,8 @@ public class RoboRallyGame extends Game {
         try {
             client = new Client(ip, 8000, this, playerName);
             new Thread(client).start();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

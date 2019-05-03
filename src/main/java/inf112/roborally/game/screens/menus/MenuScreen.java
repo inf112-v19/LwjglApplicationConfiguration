@@ -142,6 +142,7 @@ public class MenuScreen extends BasicScreen {
 
     private void boardTest() {
         game.AIvsAI = false;
+        game.testing = true;
         game.createTestBoard();
     }
 

@@ -94,7 +94,7 @@ public class Board extends TiledBoard {
         }
     }
 
-    void boardMoves() {
+    public void boardMoves() {
         expressBeltsMovePlayers();
         beltsMovePlayers();
         lasersFire();

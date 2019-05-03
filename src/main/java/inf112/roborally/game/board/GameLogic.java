@@ -44,38 +44,6 @@ public class GameLogic extends BoardLogic implements Runnable {
         AiRobo.makeDecisionsForRobos(aiBots);
     }
 
-    public void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            game.setScreen(game.settingsScreen);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            game.endGameScreen.addWinner(player1);
-            game.setScreen(game.endGameScreen);
-        }
-
-        if (Gdx.input.isKeyPressed(Input.Keys.R)) {
-            player1.getRegisters().returnCards();
-            hud.updateCardButtons();
-        }
-
-        boolean updatePlayer = true;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
-            player1.move(1);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
-            player1.rotate(Rotate.LEFT);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
-            player1.rotate(Rotate.RIGHT);
-        } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
-            player1.reverse();
-        } else {
-            updatePlayer = false;
-        }
-        if (updatePlayer) {
-            board.boardMoves();
-            updatePlayers();
-        }
-    }
-
     @Override
     public void doBeforeRound() {
         super.doBeforeRound();
