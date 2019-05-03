@@ -33,6 +33,8 @@ import static inf112.roborally.game.enums.Direction.NORTH;
 public class RoboRallyGame extends Game {
     public static final String LASER_TEST_MAP = "assets/maps/lasertest.tmx";
     public static final int MAX_PLAYERS = 8;
+    public static final String DEFAULT_PLAYER_NAME = "Player1";
+
     //MAPS:
     private static final String VAULT = "assets/maps/vault.tmx";
     private static final String TEST_MAP = "assets/maps/testMap.tmx";
@@ -61,7 +63,8 @@ public class RoboRallyGame extends Game {
     public ArrayList<String> playerNames;
     public int readyPlayers; // To be used in multiplayer
     public Board board;
-    public String playerName = "Player1"; // Default
+
+    public String playerName = DEFAULT_PLAYER_NAME;
     public boolean testing;
     private SelectSkinScreen selectSkinScreen;
     /**
@@ -180,7 +183,6 @@ public class RoboRallyGame extends Game {
         board.getFlags().add(new Flag(11, 10, 2));
         board.getFlags().add(new Flag(12, 12, 3));
         board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
-//        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(playerNames.size()));
         board.findLaserGuns();
     }
 
