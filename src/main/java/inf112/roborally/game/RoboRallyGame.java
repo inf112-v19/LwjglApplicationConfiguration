@@ -77,8 +77,16 @@ public class RoboRallyGame extends Game {
      */
     private Screen screenBefore;
 
+
+    public void removeMultiplayerSettings(){
+        playerName = DEFAULT_PLAYER_NAME;
+        multiPlayer = false;
+    }
     @Override
     public void create() {
+        if(multiPlayer){
+            removeMultiplayerSettings();
+        }
         testing = false;
         playerNames = new ArrayList<>();
         AssMan.load();
