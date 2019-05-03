@@ -40,9 +40,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
         Channel incoming = ctx.channel();
         for (Channel channel : channels) {
             if(channel != incoming) {
-                channel.writeAndFlush("REMOVED " + connectedPlayers.get(incoming) + "\r\n" );
-                game.playersInGame--;
-                ready();
+                channel.writeAndFlush("LEFT " + connectedPlayers.get(incoming) + "\r\n" );
             }
         }
         channels.remove(ctx.channel());
@@ -113,9 +111,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 for (Channel channel : channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
                 }
-                ready();
-                break;
-            case "UPDATEREADY ":
                 ready();
                 break;
             default:

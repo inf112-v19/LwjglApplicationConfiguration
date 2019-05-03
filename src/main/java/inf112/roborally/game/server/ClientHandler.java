@@ -141,31 +141,24 @@ FIFTH WORD = PRIORITY of card
                 break;
             }
             case "LEFT":
-                System.out.println(split[1] + " has died the game");
+                System.out.println(split[1] + " has died/left the game");
                 game.playersInGame--;
-                removePlayer(split[1]);
-                break;
-            case "REMOVED":
-                System.out.println(split[1] + " has left the game");
-//                game.playersInGame--;
-                removePlayer(split[1]);
-//                game.client.sendMessage("UPDATEREADY PAYLOAD");
+
+                for (int i = 0; i < game.gameScreen.getBoard().players.size(); i++) {
+
+                    if(game.gameScreen.getBoard().players.get(i).getName().equals(split[1])){
+                        Player leaver = game.gameScreen.getBoard().players.get(i);
+                        leaver.killPlayer();
+                        game.gameScreen.getBoard().players.remove(i);
+                        break;
+
+                    }
+                }
                 break;
             default:
                 System.out.println(packet);
                 break;
 
-        }
-    }
-
-    private void removePlayer(String name) {
-        for (int i = 0; i < game.gameScreen.getBoard().players.size(); i++) {
-            if(game.gameScreen.getBoard().players.get(i).getName().equals(name)){
-                Player leaver = game.gameScreen.getBoard().players.get(i);
-                leaver.killPlayer();
-                game.gameScreen.getBoard().players.remove(i);
-                break;
-            }
         }
     }
     @Override
