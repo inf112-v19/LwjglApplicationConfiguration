@@ -3,7 +3,12 @@
 ## Part 1: Project and project structure
    - The team think that the choices we've made has worked out great. 
    We have had some problems concerning the implementation of multiplayer, 
-   but after working hard to solve this issue we achieved a great finished product.
+   but after working hard to solve this issue we achieved a great finished product.<br/>
+   At the end of the project, the last week or so, our commits messages became very short and a little bit messy.
+   This is because we were all working on and trying to figure out how to play over a local network. This lead to a lot 
+   of small or even tiny commits, just so we could get each others small updates. We figured it was worth mentioning,
+   since the quality of commits dropped significantly the last few days. Luckily, it was all worth it in the end, because
+   we managed to get the multiplayer function up and running.
    - The group dynamics has so far been great. We have different kinds of expertise, 
    which enables us to do certain tasks better.
    - The communication in our group has been great. 
