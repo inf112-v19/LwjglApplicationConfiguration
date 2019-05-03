@@ -92,28 +92,23 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
             case "CARD":
                 String saveSplit1 = split[1];
                 String[] cardSplit = split[1].split("!"); // Split on newline
-//                System.out.println("CardSplit in server:");
-//                for (String s : cardSplit) {
-//                    System.out.println(s + " ");
-//                }
 
                 for(int i = 0; i < cardSplit.length; i++) {
                     String[] oneCardInformation = cardSplit[i].split(" ");
-                    ProgramCard card = new ProgramCard(oneCardInformation[1], oneCardInformation[2], oneCardInformation[3].trim());
+                    String rotate = oneCardInformation[1];
+                    String move = oneCardInformation[2];
+                    String priority = oneCardInformation[3].trim(); // This needs to be trimmed it comes with a newline
+                    ProgramCard card = new ProgramCard(rotate, move, priority);
                     returnedProgramCards.add(card);
                 }
-//                System.out.printf("Added %d cards to the returnedProgramCards on server%n", cardSplit.length);
 
-//                System.out.println("In serverhandler, saved split before sending:\n" + saveSplit1);
-                for (Channel channel :
-                        channels) {
+                for (Channel channel : channels) {
                     channel.writeAndFlush(split[0] + " " + saveSplit1 + "\r\n");
                 }
-                ready();
+                ready(); // Since a player has received his cards, set another player to ready
                 break;
             case "POWER_DOWN":
-                for (Channel channel :
-                        channels) {
+                for (Channel channel : channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
                 }
                 ready();
@@ -124,8 +119,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 break;
 
             default:
-                for (Channel channel :
-                        channels) {
+                for (Channel channel : channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
                 }
                 break;
@@ -135,12 +129,10 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
     private void ready() {
         game.readyPlayers++;
         System.out.println("One more player is ready");
-        System.out.println("readyplayers size = " + game.readyPlayers);
-        System.out.println("Players from start size = " + game.playersFromStart);
-        if(game.readyPlayers >= game.playersFromStart){
+        System.out.printf("%d out of %d players are ready%n", game.readyPlayers, game.playerNames.size());
+        if(game.readyPlayers == game.playerNames.size()) {
             System.out.println("ALL PLAYERS ARE READY");
-            for (Channel channel :
-                    channels) {
+            for (Channel channel : channels) {
                 channel.writeAndFlush("ALL_READY PAYLOAD\r\n");
             }
             game.readyPlayers = 0;
