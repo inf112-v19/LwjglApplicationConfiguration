@@ -109,7 +109,7 @@ FIFTH WORD = PRIORITY of card
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
+                        game.gameScreen.getMultiplayerLogic().receiveCardsFromServer(name, card);
                         game.gameScreen.getHud().updateCardButtons();
                         game.gameScreen.getHud().getHandDisplay().updateCardButtons();
                     }
