@@ -34,6 +34,7 @@ When running, you will first be taken to the main menu screen. Here you have som
 - Click start game when you see all players are connected
 - If you click JOIN, enter the IP given on the host screen
 - The screen will change and display "Waiting for players", when you are connected to server
+- Wait for server host to start game
 
 ### How to test
 We have junit tests that make sure code is not broken when implementing new features. The menus screen also has some options for testing:
