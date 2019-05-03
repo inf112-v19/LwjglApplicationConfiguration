@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
@@ -146,6 +147,13 @@ public class Hud {
         greySubmitButton.setVisible(!submitButton.isVisible());
         clearButton.setVisible(!player.getRegisters().isEmpty() && (!player.isReady() || !player.isPoweredDown()));
         registerDisplay.update();
+
+        // hide buttons if in a round:
+        if (game.gameScreen.getBoardLogic().getState() != GameState.PICKING_CARDS){
+            submitButton.setVisible(false);
+            greySubmitButton.setVisible(false);
+            clearButton.setVisible(false);
+        }
 
         stage.draw();
     }

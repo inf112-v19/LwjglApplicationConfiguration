@@ -9,6 +9,7 @@ import inf112.roborally.game.Main;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.Board;
+import inf112.roborally.game.board.BoardLogic;
 import inf112.roborally.game.board.GameLogic;
 import inf112.roborally.game.board.MultiplayerLogic;
 import inf112.roborally.game.enums.Rotate;
@@ -218,8 +219,11 @@ public class GameScreen implements Screen {
         return hud;
     }
 
-    public MultiplayerLogic getMultiplayerLogic() {
-        return multiplayerLogic;
+    public BoardLogic getBoardLogic() {
+        if (RoboRallyGame.multiPlayer) {
+            return multiplayerLogic;
+        }
+        return gameLogic;
     }
 }
 
