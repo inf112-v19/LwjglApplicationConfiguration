@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="18" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="34" nextobjectid="1">
  <tileset firstgid="1" source="roborallyTextures.tsx"/>
- <layer id="26" name="floor" width="18" height="14" locked="1">
+ <layer id="26" name="floor" width="18" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYKAeYETCHGh8YjA+c5Rx6MEmTg/3wLAWlcyhlnuQ3YXLbaS6hxxzBmt8DTVzlBmoCwDeRAJj
+   eJxjYKAeYETCHGh8YjA+c5SBmB+LHmU0Pj+d3ANzixYOvfwkmkOpe9CxFh63oZvDTyB8iDUHPb6Q/cePJo4sRoq/KA0ffOFNyD38OMzhx4Kp5S9lBuoCAFsCA18=
   </data>
  </layer>
  <layer id="27" name="belts" width="18" height="14" locked="1">
