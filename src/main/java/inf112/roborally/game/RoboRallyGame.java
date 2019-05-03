@@ -240,16 +240,6 @@ public class RoboRallyGame extends Game {
 
         List<Player> players = new ArrayList<>();
 
-//        for(int i = 0; i < numberOfChosenPlayers; i++) {
-//
-//            if(i < playerNames.size()) {
-//                players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board, this));
-//            }
-//            else {
-//                Player player = new Player("Player" + (i + 1), AssMan.getPlayerSkins()[i], NORTH, board, this);
-//                players.add(player);
-//            }
-//        }
         for (int i = 0; i < playerNames.size(); i++) {
             players.add(new Player(playerNames.get(i), AssMan.getPlayerSkins()[i], NORTH, board, this));
         }

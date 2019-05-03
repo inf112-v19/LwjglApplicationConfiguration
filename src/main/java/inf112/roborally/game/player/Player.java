@@ -244,7 +244,7 @@ public class Player extends MovableGameObject implements Comparable {
     public boolean isDestroyed() {
         return playerState == DESTROYED;
     }
-    public boolean isGameover(){
+    public boolean isGameOver(){
         return playerState == GAME_OVER;
     }
 
