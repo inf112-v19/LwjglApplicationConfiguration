@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class BoardLogicTest {
     BoardLogic boardLogic;
     ArrayList<Player> players;
@@ -67,22 +66,18 @@ public class BoardLogicTest {
                 player.setPlayerState(PlayerState.READY);
             }
 
-            for (int i = 0; i < 5; i++) {
+            for(int phase = 0; phase < 5; phase++) {
                 boardLogic.executeLogic();
                 assertEquals(GameState.ROUND, boardLogic.getState());
-                for (Player player : players) {
-                    assertEquals(player.getPlayerState(), PlayerState.OPERATIONAL);
-                }
+                boardLogic.executeLogic();
+                boardLogic.executeLogic();
+                boardLogic.executeLogic();
                 boardLogic.executeLogic();
                 assertEquals(GameState.BOARD_MOVES, boardLogic.getState());
-
             }
+            boardLogic.executeLogic();
+            boardLogic.executeLogic();
 
-            boardLogic.executeLogic();
-            assertEquals(GameState.ROUND, boardLogic.getState()); //it goes to ROUND but the only thing that happens this round
-                                                                //is GameState getting set to BETWEEN ROUNDS. fix this
-            boardLogic.executeLogic();
-            assertEquals(GameState.BETWEEN_ROUNDS, boardLogic.getState());
         }
     }
 }
