@@ -110,23 +110,6 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 ready(); // Since a player has received his cards, set another player to ready
                 break;
             case "POWER_DOWN":
-                String nameOfSender = split[1];
-                for(Player player : game.getBoard().players) {
-                    if(player.getName().equals(nameOfSender)) {
-                        player.wantsToPowerDown = true;
-                    }
-                }
-                for (Channel channel : channels) {
-                    channel.writeAndFlush(split[0] + " " + nameOfSender + "\r\n");
-                }
-                ready();
-                break;
-            case "POWER_UP":
-                for(Player player : game.getBoard().players) {
-                    if(player.getName().equals(split[1])) {
-                        player.wantsToPowerDown = false;
-                    }
-                }
                 for (Channel channel : channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
                 }

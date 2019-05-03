@@ -123,14 +123,6 @@ FIFTH WORD = PRIORITY of card
                     }
                 }
                 break;
-            case "POWER_UP":
-                for(Player player : game.getBoard().players) {
-                    if(player.getName().equals(split[1])) {
-                        player.wantsToPowerDown = false;
-                    }
-                }
-                break;
-
 
             case "SET_NUMBER_OF_PLAYERS": {
                 Integer numPlayers = Integer.parseInt(split[1]);
