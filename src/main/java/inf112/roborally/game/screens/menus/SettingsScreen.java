@@ -20,8 +20,7 @@ public class SettingsScreen extends BasicScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(game.multiPlayer){
-                    game.playerName = game.DEFAULT_PLAYER_NAME;
-                    game.multiPlayer = false;
+                  game.removeMultiplayerSettings();
                 }
                 goToPreviousScreen();
             }
@@ -46,9 +45,10 @@ public class SettingsScreen extends BasicScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(game.multiPlayer){
-                    game.server.shutDown();
-                    game.playerName = game.DEFAULT_PLAYER_NAME;
-                    game.multiPlayer = false;
+                    if(game.server != null) {
+                        game.server.shutDown();
+                    }
+                    game.removeMultiplayerSettings();
                 }
                 game.newGame();
             }
