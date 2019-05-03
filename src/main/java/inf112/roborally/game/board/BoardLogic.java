@@ -152,7 +152,6 @@ public class BoardLogic {
 
     protected void doPhase() {
         if (!sorted) sortPlayersByPriority();
-        System.out.println("timer: " + timeElapsed);
         if (phase >= 5) {
             phase = 0;
             state = BETWEEN_ROUNDS;
@@ -161,7 +160,6 @@ public class BoardLogic {
         }
 
         if (++timeElapsed > timeBetweenPlayers) {
-            System.out.println("executing card for robot in index: " + executionIndex);
             executeCards();
             timeElapsed = 0;
         }
