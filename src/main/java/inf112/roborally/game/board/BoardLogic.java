@@ -120,7 +120,7 @@ public class BoardLogic {
                 players.remove(player);
                 aiBots.remove(player);
                 if(RoboRallyGame.multiPlayer){
-                    game.playersInGame--;
+                    game.client.sendMessage("LEFT " +  player.getName());
                 }
             }
         }

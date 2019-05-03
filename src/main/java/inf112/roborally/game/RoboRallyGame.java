@@ -66,6 +66,7 @@ public class RoboRallyGame extends Game {
     public int playersInGame;
     public int readyPlayers; // To be used in multiplayer
     public boolean connectedToServer;
+    public ArrayList<String> deadPlayers;
 
     public Board board;
 
@@ -89,6 +90,7 @@ public class RoboRallyGame extends Game {
         }
         testing = false;
         playerNames = new ArrayList<>();
+        deadPlayers = new ArrayList<>();
         AssMan.load();
         AssMan.manager.finishLoading();
         AIvsAI = false;
