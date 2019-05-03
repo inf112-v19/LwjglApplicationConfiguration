@@ -260,13 +260,13 @@ public class AssMan {
     public static Texture[] getPlayerSkins() {
         Texture[] skins = new Texture[8];
         skins[0] = manager.get(PLAYER_CLAPTRAP_REFINED);
-        skins[1] = manager.get(PLAYER_BUTLER_REFINED);
-        skins[2] = manager.get(PLAYER_CAPTAIN_BOT);
+        skins[1] = manager.get(PLAYER_COP_BOT);
+        skins[2] = manager.get(PLAYER_CLAPTRAP_3000);
         skins[3] = manager.get(PLAYER_BARTENDER_CLAPTRAP);
-        skins[4] = manager.get(PLAYER_CLAPTRAP_3000);
-        skins[5] = manager.get(PLAYER_COP_BOT);
+        skins[4] = manager.get(PLAYER_NURSE_BOT);
+        skins[5] = manager.get(PLAYER_BUTLER_REFINED);
         skins[6] = manager.get(PLAYER_WIZARD_BOT);
-        skins[7] = manager.get(PLAYER_NURSE_BOT);
+        skins[7] = manager.get(PLAYER_CAPTAIN_BOT);
 
         return skins;
     }
