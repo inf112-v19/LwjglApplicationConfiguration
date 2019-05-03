@@ -150,3 +150,5 @@ Pressing 'T' instead of choosing skin and flag locations should start the game w
 ## Known bugs
 - Currently throws "WARNING: An illegal reflective access operation has occurred", 
   when the java version used is >8. This has no effect on function or performance, and is just a warning.
+- MP - Players cant resume game if leaver leaves after players have already submitted cards.
+- Game freezes if the host leaves.
