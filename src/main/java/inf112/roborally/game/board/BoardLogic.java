@@ -117,7 +117,8 @@ public class BoardLogic {
                 System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
-                if(RoboRallyGame.multiPlayer){
+                if(RoboRallyGame.multiPlayer && player.getName().equals(game.playerName)){
+                    System.out.println("PLAYER REMOVED FROM THE GAME, AND LEFT CALLED");
                     game.client.sendMessage("LEFT " +  player.getName());
                 }
             }
