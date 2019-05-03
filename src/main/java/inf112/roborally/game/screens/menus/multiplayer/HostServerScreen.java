@@ -50,7 +50,8 @@ public class HostServerScreen extends InputFieldScreen {
         stage.addActor(label);
         stage.addActor(connectedPlayers);
 
-        System.out.printf("Done with the constructor in HostServerScreen, number of players from game: %d%n", game.numberOfChosenPlayers);
+        System.out.printf("Done with the constructor in HostServerScreen, " +
+                "number of players from game: %d%n", game.numberOfChosenPlayers);
     }
 
     @Override
@@ -65,7 +66,6 @@ public class HostServerScreen extends InputFieldScreen {
         }
         int id = 0;
         game.multiPlayer = true;
-        System.out.println("ConfirmInput(). Number of Chosen players = " + game.playerNames.size());
         game.client.sendMessage("SET_NUMBER_OF_PLAYERS " + game.playerNames.size());
         game.client.sendMessage("MULTI " + "True");
         System.out.println("[SERVER] Connected players " + game.playerNames);
