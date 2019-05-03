@@ -212,8 +212,9 @@ public class Board extends TiledBoard {
 
     public void drawGameObjects(SpriteBatch batch) {
         drawBackup(batch);
-        drawList(players, batch);
         drawLasers(batch);
+        renderWalls();
+        drawList(players, batch);
         drawList(flags, batch);
     }
 

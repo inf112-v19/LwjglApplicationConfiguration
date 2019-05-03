@@ -37,6 +37,10 @@ public abstract class TiledBoard {
         mapRenderer.render();
     }
 
+    public void renderWalls() {
+        mapRenderer.renderTileLayer(wallLayer);
+    }
+
     public void dispose() {
         System.out.println("Disposing TiledBoard");
         map.dispose();
