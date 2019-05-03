@@ -45,7 +45,7 @@ public class MultiplayerScreen extends BasicScreen {
                 game.setScreen(new HostServerScreen(game,thisScreen));
 //                game.setScreen(selectNumPlayers);
 //                selectNumPlayers.setNextScreen(null); //Setting to null instead of creating the HostServerScreen here.
-                dispose();
+                //dispose();
             }
         });
 
