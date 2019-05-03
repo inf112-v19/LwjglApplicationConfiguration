@@ -36,6 +36,9 @@ When running, you will first be taken to the main menu screen. Here you have som
 - The screen will change and display "Waiting for players" when you are connected to server
 - Wait for server host to start game
 
+NOTE:
+- After collecting all flags , the winner screen doesnt appear the round after. Everyone needs to submit cards.
+
 ### How to test
 We have junit tests that make sure code is not broken when implementing new features. The menus screen also has some options for testing:
 - Pressing 'T' or clicking the gui test button will take you to the GUI test screen.
