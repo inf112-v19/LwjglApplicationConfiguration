@@ -12,6 +12,9 @@ public class Server implements Runnable{
     private final int port;
     private final RoboRallyGame game;
     public Dealer dealer;
+    EventLoopGroup bossGroup;
+    EventLoopGroup workerGroup;
+    ServerBootstrap bootstrap;
 
     public Server(int port, RoboRallyGame game) {
         this.port = port;
@@ -21,13 +24,13 @@ public class Server implements Runnable{
     @Override
     public void run() {
         System.out.println("Starting game server..");
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        bossGroup = new NioEventLoopGroup();
+        workerGroup = new NioEventLoopGroup();
 
         dealer = new Dealer(this.game, this);
 
         try {
-            ServerBootstrap bootstrap = new ServerBootstrap()
+             bootstrap = new ServerBootstrap()
                     .group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .childHandler(new ServerInit(game)).childOption(ChannelOption.AUTO_READ, true);
@@ -42,9 +45,14 @@ public class Server implements Runnable{
 
         }
         finally {
-            bossGroup.shutdownGracefully();
-            workerGroup.shutdownGracefully();
+            shutDown();
         }
+    }
+
+    public void shutDown(){
+        System.out.println("Shutting down server");
+        bossGroup.shutdownGracefully();
+        workerGroup.shutdownGracefully();
     }
 /*
     public static void main(String[] args) throws InterruptedException, SocketException {
