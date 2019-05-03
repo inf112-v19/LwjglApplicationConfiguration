@@ -33,7 +33,7 @@ public class PlaceFlagsScreen extends BasicScreen {
     // Text:
     private Label informationText;
     private Label clickedMessage;
-    private int remainingFlags = 3;
+    private int remainingFlags = 8;
 
     // Create a board in the background so that we can check if the player places the flags
     // on legal positions
@@ -153,13 +153,12 @@ public class PlaceFlagsScreen extends BasicScreen {
                 // Update the information
                 informationText.setText("Remaining flags: " + remainingFlags);
 
+                showConfirmAndReset();
+
                 // If we have placed 3 flags, we are done
                 // This can be changed later if we want to add more flags
                 if (remainingFlags == 0) {
-//                    doneWithSetup();
                     allFlagsPlaced = true;
-                    showConfirmAndReset();
-
                 }
             }
         }
@@ -221,7 +220,6 @@ public class PlaceFlagsScreen extends BasicScreen {
             game.board.getFlags().add(new Flag(pos.getX(), pos.getY(), flagNumber++));
         }
         game.createCustomGameScreen();
-        // game.createGameScreen(robotChoiceIndex, flagPositions, mapChoiceIndex);
         game.setScreen(game.gameScreen);
         dispose();
     }
