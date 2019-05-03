@@ -178,6 +178,9 @@ public class Player extends MovableGameObject implements Comparable {
         repairAllDamage();
         playerState = OPERATIONAL;
         System.out.println(name + " powers up");
+        if (RoboRallyGame.multiPlayer) {
+            game.client.sendMessage("POWER_UP " + getName());
+        }
     }
 
     /**

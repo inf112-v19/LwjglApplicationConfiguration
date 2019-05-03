@@ -2,6 +2,7 @@ package inf112.roborally.game.server;
 
 import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
@@ -119,12 +120,19 @@ FIFTH WORD = PRIORITY of card
             case "POWER_DOWN":
                 String nameOfSender = split[1];
                 for(Player player : game.getBoard().players) {
-                    if(player.getName().equals(nameOfSender)) {
+                    if(player.getName().equals(nameOfSender) && player.getPlayerState().equals(PlayerState.OPERATIONAL)) {
                         player.wantsToPowerDown = true;
                     }
                 }
                 break;
-
+            case "POWER_UP":
+                nameOfSender = split[1];
+                for(Player player : game.getBoard().players) {
+                    if(player.getName().equals(nameOfSender) && player.getPlayerState().equals(PlayerState.POWERED_DOWN)) {
+                        player.wantsToPowerDown = false;
+                    }
+                }
+                break;
             case "SET_NUMBER_OF_PLAYERS": {
                 Integer numPlayers = Integer.parseInt(split[1]);
                 System.out.println("Number of players: " + numPlayers);
