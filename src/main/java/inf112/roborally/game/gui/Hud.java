@@ -140,6 +140,15 @@ public class Hud {
     }
 
     public void draw() {
+        // dont draw buttons for AI:
+        if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI){
+            greySubmitButton.setVisible(false);
+            submitButton.setVisible(false);
+            clearButton.setVisible(false);
+            stage.draw();
+            return;
+        }
+
         // update before draw
         if (playerStatusDisplay != null) playerStatusDisplay.update();
         submitButton.setVisible(player.getRegisters().isFull() && (!player.isReady() || !player.isPoweredDown()));

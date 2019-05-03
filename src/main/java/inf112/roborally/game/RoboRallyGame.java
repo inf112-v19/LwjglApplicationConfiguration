@@ -12,7 +12,6 @@ import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.GameScreen;
-import inf112.roborally.game.screens.LaserTestScreen;
 import inf112.roborally.game.screens.TestScreen;
 import inf112.roborally.game.screens.menus.EndGameScreen;
 import inf112.roborally.game.screens.menus.MenuScreen;
@@ -58,7 +57,6 @@ public class RoboRallyGame extends Game {
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
     public TestScreen testScreen;
-    public LaserTestScreen laserTestScreen;
 
     public Server server;
     public Client client;
@@ -119,7 +117,6 @@ public class RoboRallyGame extends Game {
 
         selectMapScreen = new SelectMapScreen(this, selectSkinScreen);
         testScreen = new TestScreen(this);
-        laserTestScreen = new LaserTestScreen(this);
 
         setScreen(new MenuScreen(this));
     }
@@ -185,20 +182,22 @@ public class RoboRallyGame extends Game {
      */
     private void createDefaultBoard() {
         board.createBoard(VAULT);
-        board.getFlags().add(new Flag(7, 7, 1));
-        board.getFlags().add(new Flag(11, 10, 2));
-        board.getFlags().add(new Flag(12, 12, 3));
+        createFlags();
         board.addPlayersToBoard(createDefaultPlayers());
         board.findLaserGuns();
     }
 
     private void createDefaultMultiplayerBoard() {
         board.createBoard(VAULT);
+        createFlags();
+        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
+        board.findLaserGuns();
+    }
+
+    public void createFlags(){
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 10, 2));
         board.getFlags().add(new Flag(13, 1, 3));
-        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
-        board.findLaserGuns();
     }
 
     private List<Player> createDefaultPlayers() {

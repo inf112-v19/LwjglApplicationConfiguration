@@ -1,8 +1,6 @@
 package inf112.roborally.game.player;
 
 import inf112.roborally.game.enums.Direction;
-import inf112.roborally.game.player.Backup;
-import inf112.roborally.game.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,8 +58,6 @@ public class BackupTest {
             player.respawn();
         }
         assertEquals(0, player.getLives());
-//        player.respawn();
-//        assertNotEquals(player.position, backup.position);
     }
 
     @Test
