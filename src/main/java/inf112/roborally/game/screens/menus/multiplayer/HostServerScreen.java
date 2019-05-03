@@ -52,13 +52,12 @@ public class HostServerScreen extends InputFieldScreen {
         }
         int id = 0;
         game.multiPlayer = true;
-        System.out.println("ConfirmInput(). Number of Chosen players = " + game.numberOfChosenPlayers);
-        game.client.sendMessage("SET_NUMBER_OF_PLAYERS " + game.numberOfChosenPlayers);
+        System.out.println("ConfirmInput(). Number of Chosen players = " + game.playerNames.size());
+        game.client.sendMessage("SET_NUMBER_OF_PLAYERS " + game.playerNames.size());
         game.client.sendMessage("MULTI " + "True");
         System.out.println("[SERVER] Connected players " + game.playerNames);
         game.client.sendMessage("LIST " + game.playerNames.size());
-        for (String s :
-                game.playerNames) {
+        for (String s : game.playerNames) {
             game.client.sendMessage("START " + s + " " + id);
             id++;
         }

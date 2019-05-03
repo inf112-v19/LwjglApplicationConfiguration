@@ -15,6 +15,7 @@ import inf112.roborally.game.tools.ButtonFactory;
 public class MultiplayerScreen extends BasicScreen {
 
     private Screen previousScreen;
+    private Screen thisScreen = this; // So we can send this screen in the button
 
     public MultiplayerScreen(final RoboRallyGame game, Screen previousScreen) {
         super(game);
@@ -41,9 +42,10 @@ public class MultiplayerScreen extends BasicScreen {
         create.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(selectNumPlayers);
-                selectNumPlayers.setNextScreen(null); //Setting to null instead of creating the HostServerScreen here.
-                //dispose();
+                game.setScreen(new HostServerScreen(game,thisScreen));
+//                game.setScreen(selectNumPlayers);
+//                selectNumPlayers.setNextScreen(null); //Setting to null instead of creating the HostServerScreen here.
+                dispose();
             }
         });
 
