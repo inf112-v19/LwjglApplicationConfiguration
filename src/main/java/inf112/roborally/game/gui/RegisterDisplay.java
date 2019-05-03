@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.ProgramRegisters;
@@ -59,6 +60,9 @@ public class RegisterDisplay {
         powerDown.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(RoboRallyGame.multiPlayer){
+                    return;
+                }
                 player.wantsToPowerDown = !player.wantsToPowerDown;
                 if (player.wantsToPowerDown) System.out.println(player.getName() + " wants to power down");
                 else System.out.println(player.getName() + " changed his/her mind about powering down");
