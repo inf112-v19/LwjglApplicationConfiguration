@@ -41,7 +41,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
-                if (thisPlayer.isReady()) {
+                if (thisPlayer.isReady() || thisPlayer.isPoweredDown()) {
                     state = WAITINGFORONLINEPLAYERS;
                 }
                 break;

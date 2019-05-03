@@ -173,7 +173,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public void powerUp() {
-        if (isPoweredDown()) return;
+        if (!isPoweredDown()) return;
 
         repairAllDamage();
         playerState = OPERATIONAL;
@@ -249,7 +249,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public boolean isReady() {
-        return playerState == POWERED_DOWN || playerState == READY;
+        return playerState == READY;
     }
 
     public boolean isOperational() {
@@ -257,7 +257,7 @@ public class Player extends MovableGameObject implements Comparable {
     }
 
     public boolean isPoweredDown() {
-        return playerState != POWERED_DOWN;
+        return playerState == POWERED_DOWN;
     }
 
     public boolean hasScreamed() {

@@ -148,9 +148,9 @@ public class Hud {
     public void draw() {
         // update before draw
         if (playerStatusDisplay != null) playerStatusDisplay.update();
-        submitButton.setVisible(player.getRegisters().isFull() && !player.isReady());
+        submitButton.setVisible(player.getRegisters().isFull() && (!player.isReady() || !player.isPoweredDown()));
         greySubmitButton.setVisible(!submitButton.isVisible());
-        clearButton.setVisible(!player.getRegisters().isEmpty() && !player.isReady());
+        clearButton.setVisible(!player.getRegisters().isEmpty() && (!player.isReady() || !player.isPoweredDown()));
         registerDisplay.update();
 
         stage.draw();
@@ -184,7 +184,7 @@ public class Hud {
     }
 
     public void setButtonTouchable(boolean canTouch) {
-        if (canTouch && player.isPoweredDown()) {
+        if (canTouch && !player.isPoweredDown()) {
             registerDisplay.getPowerDown().setTouchable(Touchable.enabled);
             submitButton.setTouchable(Touchable.enabled);
             clearButton.setTouchable(Touchable.enabled);
