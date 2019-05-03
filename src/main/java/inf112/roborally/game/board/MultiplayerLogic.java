@@ -84,9 +84,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
 
         // Request new cards from the server
-        if (!thisPlayer.isPoweredDown()) { // Might need to remove -------------------------
-            game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
-        }
+        game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
         state = PICKING_CARDS;
 
         Gdx.app.postRunnable(new Runnable() {
