@@ -7,20 +7,20 @@ import com.badlogic.gdx.graphics.GL20;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.AssMan;
 
 public class LaserTestScreen implements Screen {
-    RoboRallyGame game;
-    Board board;
+    public final RoboRallyGame game;
+    private final Board board;
 
-    public LaserTestScreen(RoboRallyGame game) {
+    public LaserTestScreen(final RoboRallyGame game) {
         this.game = game;
-        board = new Board();
-        board.createBoard(RoboRallyGame.LASER_TEST_MAP);
-        board.findLasers();
-
-        for (int i = 0; i < RoboRallyGame.MAX_PLAYERS; i++) {
-            Player testBot = new Player("testBot" + i, "assets/robot/claptrapRefined.png", Direction.NORTH, board);
+        board = new Board(game);
+        board.createBoard(game.LASER_TEST_MAP);
+        board.findLaserGuns();
+        for (int i = 0; i < game.MAX_PLAYERS; i++) {
+            Player testBot = new Player("testBot" + i, AssMan.getPlayerSkins()[i], Direction.NORTH, board, game);
             board.addPlayer(testBot);
         }
         board.placePlayers();
@@ -69,10 +69,10 @@ public class LaserTestScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         board.render(game.dynamicCamera);
-
         game.batch.setProjectionMatrix(game.dynamicCamera.combined);
         game.batch.begin();
         board.drawGameObjects(game.batch);
+        board.drawLasers(game.batch);
         game.batch.end();
     }
 
@@ -80,12 +80,6 @@ public class LaserTestScreen implements Screen {
         for (Player rob : board.getPlayers()) {
             rob.setDirection(dir);
             rob.updateSprite();
-        }
-    }
-
-    private void allRobotsFire() {
-        for (Player robot : board.getPlayers()) {
-            robot.getLaserCannon().fire(board);
         }
     }
 
@@ -117,6 +111,6 @@ public class LaserTestScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        board.dispose();
     }
 }

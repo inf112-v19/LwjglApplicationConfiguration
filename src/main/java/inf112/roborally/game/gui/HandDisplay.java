@@ -2,8 +2,9 @@ package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import inf112.roborally.game.board.ProgramCard;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.PlayerHand;
+import inf112.roborally.game.player.ProgramCard;
 
 /**
  * A class for drawing all the cards that are in the player hand.
@@ -21,15 +22,13 @@ public class HandDisplay {
     }
 
     /**
-     * Draws all cards in the player hand.
-     *
-     * @param hud where it's being drawn
+     * Draws all cards in {@link PlayerHand}.
      */
-    public void updateCardsInHand(final Hud hud) {
+    public void updateCardButtons() {
         float scale = 0.5f;
         int j = 0;
         posX = 1250;
-        posY = 200;
+        posY = 172;
 
         for (int i = 0; i < player.getHand().size(); i++) {
             ProgramCard card = player.getHand().getCard(i);
@@ -44,8 +43,7 @@ public class HandDisplay {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     player.getRegisters().placeCard(index);
-                    hud.clearAllCards();
-                    hud.updateCards();
+                    hud.updateCardButtons();
                 }
             });
 

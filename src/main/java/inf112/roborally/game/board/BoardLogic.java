@@ -4,10 +4,12 @@ import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
-import inf112.roborally.game.objects.Player;
+import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.ProgramCard;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import static inf112.roborally.game.enums.GameState.*;
@@ -16,19 +18,28 @@ import static java.util.Collections.shuffle;
 @SuppressWarnings("Duplicates")
 public class BoardLogic {
 
+    private final int timeBetweenPlayers;
     protected int phase;
     protected GameState state;
-
-    protected ArrayList<Player> players;
+    protected List<Player> players;
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
-    private ArrayList<Player> aiBots;
+    protected ArrayList<Player> aiBots;
+    private int timeElapsed = 0;
+    private int executionIndex;
+    private boolean sorted;
+    private RoboRallyGame game;
 
-    public BoardLogic(ArrayList<Player> players) {
+    public BoardLogic(List<Player> players, RoboRallyGame game) {
         this.players = players;
+        this.game = game;
         aiBots = new ArrayList<>();
-        if (players.get(0).isDebuggingActive() || ((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
+        if (players.get(0).isDebuggingActive() || ((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI) {
             aiBots.add(players.get(0));
+            timeBetweenPlayers = 1;
+        } else {
+            timeBetweenPlayers = 10;
+        }
         for (int i = 1; i < players.size(); i++)
             aiBots.add(players.get(i));
 
@@ -38,14 +49,14 @@ public class BoardLogic {
         returnedProgramCards = new Stack<>();
     }
 
-    public void executeLogic() {
+    void executeLogic() {
         switch (state) {
             case BETWEEN_ROUNDS:
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
-                aiRobotsChooseCards();
-                checkIfReady();
+                aiRobosReady();
+                setToRound();
                 break;
             case ROUND:
                 doPhase();
@@ -55,8 +66,17 @@ public class BoardLogic {
                 break;
             case GAME_OVER:
                 endGame();
+                break;
         }
     }
+
+
+    /**
+     * Overwritten in {@link GameLogic}
+     */
+    public void aiRobosReady() {
+    }
+
 
     protected void doBeforeRound() {
         System.out.println("Set up before round");
@@ -66,18 +86,19 @@ public class BoardLogic {
         powerDownRobots();
 
         for (Player player : players) {
-            if (!player.isPoweredDown()) {
+            if (player.isPoweredDown()) {
                 retrieveCardsFromPlayer(player);
             }
             if (!player.outOfLives() && player.isOperational()) {
                 giveCardsToPlayer(player);
             }
         }
-        System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
+        executionIndex = 0;
+        sorted = false;
     }
 
-    private void respawnRobots() {
+    protected void respawnRobots() {
         for (Player player : players) {
             if (player.isDestroyed()) {
                 if (player.outOfLives()) player.setPlayerState(PlayerState.GAME_OVER);
@@ -89,15 +110,23 @@ public class BoardLogic {
     public void removeDeadRobots() {
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
-            if (player.getPlayerState() == PlayerState.GAME_OVER) {
+            if (players.size() == 1) {
+                endGame();
+                return;
+            }
+            else if (player.getPlayerState() == PlayerState.GAME_OVER) {
                 System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
+                if(RoboRallyGame.multiPlayer && player.getName().equals(game.playerName)){
+                    System.out.println("PLAYER REMOVED FROM THE GAME, AND DIED CALLED");
+                    game.client.sendMessage("DIED " +  player.getName());
+                }
             }
         }
     }
 
-    private void powerUpRobots() {
+    protected void powerUpRobots() {
         for (Player player : players) {
             player.powerUp();
         }
@@ -116,7 +145,7 @@ public class BoardLogic {
         return true;
     }
 
-    public void checkIfReady() {
+    public void setToRound() {
         if (allPlayersReady()) {
             for (Player player : players) {
                 if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
@@ -127,6 +156,7 @@ public class BoardLogic {
     }
 
     protected void doPhase() {
+        if (!sorted) sortPlayersByPriority();
         if (phase >= 5) {
             phase = 0;
             state = BETWEEN_ROUNDS;
@@ -134,27 +164,17 @@ public class BoardLogic {
             return;
         }
 
-        System.out.println("Executing phase " + phase);
-        sortPlayersByPriority();
-        executeCards();
+        if (++timeElapsed > timeBetweenPlayers) {
+            executeCards();
+            timeElapsed = 0;
+        }
         checkIfAPlayerHasWon();
-        phase++;
-        if(!players.isEmpty() && players.get(0).isDebuggingActive()) return;
 
-        if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
-            sleepThread(100);
-        else
-            sleepThread(500);
-    }
 
-    private void sleepThread(int millis) {
-        if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
-            try {
-                Thread.sleep(millis);
-            }
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        if (executionIndex == players.size()) {
+            state = BOARD_MOVES;
+            executionIndex = 0;
+            phase++;
         }
     }
 
@@ -164,18 +184,15 @@ public class BoardLogic {
         }
         try {
             Collections.sort(players);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new NullPointerException("AIRobots: " + aiBots.size() + "\n Players: " + players.size());
         }
+        sorted = true;
     }
 
     private void executeCards() {
-        for (Player player : players) {
-            player.getRegisters().executeCard(phase);
-            updatePlayers();
-//            sleepThread();
-        }
+        players.get(executionIndex++).getRegisters().executeCard(phase);
+        updatePlayers();
     }
 
     protected void boardMoves() {
@@ -201,7 +218,6 @@ public class BoardLogic {
                 return player;
             }
         }
-        state = BOARD_MOVES;
         return null;
     }
 
@@ -212,14 +228,14 @@ public class BoardLogic {
     }
 
 
-    protected void updatePlayers() {
+    public void updatePlayers() {
         for (Player player : players) {
             player.updateSprite();
         }
     }
 
     /**
-     * Gives the player as many cards as allowed from the stack of program cards.*
+     * Gives the player as many cards as allowed from the stack of program cards.
      *
      * @param player which player to give program cards to.
      */
@@ -232,20 +248,10 @@ public class BoardLogic {
         }
     }
 
-    private void retrieveCardsFromPlayer(Player player) {
+    protected void retrieveCardsFromPlayer(Player player) {
         ArrayList<ProgramCard> playerCards = player.returnCards();
         while (!playerCards.isEmpty()) {
             returnedProgramCards.push(playerCards.remove(0));
-        }
-    }
-
-    private void aiRobotsChooseCards() {
-        for (Player ai : aiBots) {
-            if (ai.outOfLives()) continue;
-            while (!ai.getRegisters().isFull()) {
-                ai.getRegisters().placeCard(0);
-            }
-            ai.setPlayerState(PlayerState.READY);
         }
     }
 

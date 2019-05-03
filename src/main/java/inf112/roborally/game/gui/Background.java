@@ -1,12 +1,13 @@
 package inf112.roborally.game.gui;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.roborally.game.screens.GameScreen;
+import inf112.roborally.game.tools.AssMan;
 
 /**
- * Background for the main game (GameScreen).
+ * Background for the main game {@link GameScreen}
  */
 public class Background {
     private Sprite clouds;
@@ -15,20 +16,19 @@ public class Background {
     private float originalCameraX, originalCameraY;
     private float gridX, gridY;
     private float cloudX, cloudY;
-    private float cloudW, cloudH;
 
     public Background(OrthographicCamera camera) {
         originalCameraX = camera.position.x;
         originalCameraY = camera.position.y;
 
-        background = new Sprite(new Texture(AssMan.GAMESCREEN_BACKGROUND2.fileName));
+        background = new Sprite(AssMan.manager.get(AssMan.GAME_BACKGROUND));
 
-        grid = new Sprite(new Texture(AssMan.GAMESCREEN_GRID2.fileName));
+        grid = new Sprite(AssMan.manager.get(AssMan.GAME_GRID));
         grid.setSize(background.getWidth() * 1.4f, background.getHeight() * 1.4f);
         gridX = -grid.getWidth() / 10;
         gridY = -grid.getHeight() / 10;
 
-        clouds = new Sprite(new Texture(AssMan.GAMESCREEN_CLOUDS.fileName));
+        clouds = new Sprite(AssMan.manager.get(AssMan.GAME_CLOUDS));
         clouds.setSize(background.getWidth() * 1.4f, background.getHeight() * 1.4f);
         clouds.setOriginCenter();
         cloudX = clouds.getOriginX() - 200;
@@ -50,7 +50,7 @@ public class Background {
         System.out.println("Disposing background");
         background.getTexture().dispose();
         grid.getTexture().dispose();
+        clouds.getTexture().dispose();
     }
-
 
 }

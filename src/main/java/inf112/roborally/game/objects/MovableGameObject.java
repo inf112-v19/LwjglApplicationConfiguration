@@ -4,14 +4,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import inf112.roborally.game.Main;
 import inf112.roborally.game.board.Board;
-import inf112.roborally.game.board.TiledTools;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.enums.Rotate;
+import inf112.roborally.game.player.Player;
+import inf112.roborally.game.tools.TiledTools;
 
-import static inf112.roborally.game.board.TiledTools.cellContainsKey;
-import static inf112.roborally.game.board.TiledTools.getValue;
+import static inf112.roborally.game.tools.TiledTools.cellContainsKey;
+import static inf112.roborally.game.tools.TiledTools.getValue;
 
-public abstract class MovableGameObject extends GameObject {
+public class MovableGameObject extends GameObject {
     protected int rotationDegree;
     private Direction direction;
 
@@ -22,8 +23,8 @@ public abstract class MovableGameObject extends GameObject {
      * @param x position x
      * @param y position y
      */
-    public MovableGameObject(int x, int y, String filePath) {
-        super(x, y, filePath);
+    public MovableGameObject(int x, int y) {
+        super(x, y);
         direction = Direction.SOUTH;
         rotationDegree = direction.getRotationDegree();
     }
@@ -34,7 +35,7 @@ public abstract class MovableGameObject extends GameObject {
         super.updateSprite();
     }
 
-    public void loadVisualRepresentation() {
+    protected void loadVisualRepresentation() {
         sprite.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         sprite.setSize(Main.PIXELS_PER_TILE, Main.PIXELS_PER_TILE);
         sprite.setOriginCenter();
@@ -55,14 +56,14 @@ public abstract class MovableGameObject extends GameObject {
      * Rotates the object - visually too.
      *
      * @param rotateDir which direction the player should rotate.
-     * @return the new direction the player is facing.
      */
     public void rotate(Rotate rotateDir) {
         setDirection(direction.rotate(rotateDir));
     }
 
     public boolean isOffTheBoard(TiledMapTileLayer floorLayer) {
-        return floorLayer.getCell(getX(), getY()) == null;
+        TiledMapTileLayer.Cell currentCell = floorLayer.getCell(getX(), getY());
+        return currentCell == null || cellContainsKey(currentCell, "Hole");
     }
 
     public boolean isOnRepair(TiledMapTileLayer floorLayer) {
@@ -91,28 +92,26 @@ public abstract class MovableGameObject extends GameObject {
         if (!cellContainsKey(currentCell, "Wall")) {
             return true;
         }
-        return !blockedByWall(currentCell, direction);
+        return blockedByWall(currentCell, direction);
     }
 
     private boolean canEnter(Direction direction, TiledMapTileLayer wallLayer) {
         Position nextPosition = new Position(getX(), getY()).moveInDirection(direction);
-        // check if out of bounds
 
         TiledMapTileLayer.Cell nextCell = wallLayer.getCell(nextPosition.getX(), nextPosition.getY());
         if (!cellContainsKey(nextCell, "Wall")) {
             return true;
         }
-        return !blockedByWall(nextCell, direction.getOppositeDirection());
+        return blockedByWall(nextCell, direction.getOppositeDirection());
     }
 
 
     private boolean blockedByWall(TiledMapTileLayer.Cell cell, Direction direction) {
-        return TiledTools.splitValuesBySpace(cell).contains(direction.toString());
+        return !TiledTools.splitValuesBySpace(cell).contains(direction.toString());
     }
 
     public boolean crashWithRobot(Direction direction, Board board) {
-        Position nextPos = new Position(getX(), getY());
-        nextPos.moveInDirection(direction);
+        Position nextPos = this.position.copy().moveInDirection(direction);
         for (Player other : board.getPlayers()) {
             if (this.equals(other)) continue;
 
@@ -123,7 +122,9 @@ public abstract class MovableGameObject extends GameObject {
         return false;
     }
 
-    public boolean canPush(Direction direction, Board board) {
+    protected boolean canPush(Direction direction, Board board) {
+        if (this instanceof Player && ((Player) this).getName().equals("testPilot")) return true;
+
         Position nextPos = new Position(getX(), getY());
         nextPos.moveInDirection(direction);
         for (Player other : board.getPlayers()) {
@@ -139,7 +140,7 @@ public abstract class MovableGameObject extends GameObject {
         return true;
     }
 
-    public boolean outOfBounds(Board board) {
+    boolean outOfBounds(Board board) {
         return this.getX() < 0 || this.getX() > board.getWidth()
                 || this.getY() < 0 || this.getY() > board.getHeight();
     }
@@ -152,6 +153,4 @@ public abstract class MovableGameObject extends GameObject {
         this.direction = direction;
         rotationDegree = direction.getRotationDegree();
     }
-
-
 }

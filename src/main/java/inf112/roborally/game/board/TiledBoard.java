@@ -10,23 +10,26 @@ import inf112.roborally.game.RoboRallyGame;
 
 public abstract class TiledBoard {
 
-    protected TiledMap map;
-    protected TmxMapLoader loader;
-    protected OrthogonalTiledMapRenderer mapRenderer;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer mapRenderer;
 
-    protected TiledMapTileLayer floorLayer;
-    protected TiledMapTileLayer beltLayer;
-    protected TiledMapTileLayer laserLayer;
-    protected TiledMapTileLayer wallLayer;
-    protected TiledMapTileLayer startLayer;
+    TiledMapTileLayer floorLayer;
+    TiledMapTileLayer beltLayer;
+    TiledMapTileLayer laserLayer;
+    TiledMapTileLayer wallLayer;
+    TiledMapTileLayer startLayer;
 
     public void createBoard(String mapPath) {
-        loader = new TmxMapLoader();
         TmxMapLoader.Parameters parameters = new TmxMapLoader.Parameters();
         parameters.flipY = true;
-        map = loader.load(mapPath, parameters);
+        map = new TmxMapLoader().load(mapPath, parameters);
+        beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
+        floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
+        laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");
+        wallLayer = (TiledMapTileLayer) map.getLayers().get("walls");
+        startLayer = (TiledMapTileLayer) map.getLayers().get("start");
+
         mapRenderer = new OrthogonalTiledMapRenderer(map, ((RoboRallyGame) Gdx.app.getApplicationListener()).batch);
-        createLayers();
     }
 
     public void render(OrthographicCamera camera) {
@@ -34,40 +37,18 @@ public abstract class TiledBoard {
         mapRenderer.render();
     }
 
-    /**
-     * Use this when rendering a specific layer(like walls) on top of sprites.
-     * MUST CALL BATCH BEGIN BEFORE THIS!!
-     *
-     * @param layer
-     */
-    public void renderLayer(TiledMapTileLayer layer) {
-        mapRenderer.renderTileLayer(layer);
-    }
-
-    protected void createLayers() {
-        beltLayer = (TiledMapTileLayer) map.getLayers().get("belts");
-        floorLayer = (TiledMapTileLayer) map.getLayers().get("floor");
-        laserLayer = (TiledMapTileLayer) map.getLayers().get("lasers");
-        wallLayer = (TiledMapTileLayer) map.getLayers().get("walls");
-        startLayer = (TiledMapTileLayer) map.getLayers().get("start");
+    public void renderWalls() {
+        mapRenderer.renderTileLayer(wallLayer);
     }
 
     public void dispose() {
-        System.out.println("Disposing board");
+        System.out.println("Disposing TiledBoard");
         map.dispose();
-
+        mapRenderer.dispose();
     }
 
     public TiledMapTileLayer getLaserLayer() {
         return laserLayer;
-    }
-
-    public TiledMapTileLayer getStartLayer() {
-        return startLayer;
-    }
-
-    public TiledMapTileLayer getBeltLayer() {
-        return beltLayer;
     }
 
     public TiledMapTileLayer getWallLayer() {
@@ -85,5 +66,4 @@ public abstract class TiledBoard {
     public int getHeight() {
         return this.floorLayer.getHeight();
     }
-
 }

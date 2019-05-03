@@ -3,10 +3,12 @@ package inf112.roborally.game.objects;
 
 import inf112.roborally.game.enums.Direction;
 
+import java.io.Serializable;
+
 /**
  * Position is an x and a y value
  */
-public class Position {
+public class Position implements Serializable {
     private int x;
     private int y;
 
@@ -15,7 +17,7 @@ public class Position {
         this.y = y;
     }
 
-    public Position moveInDirection(Direction dir) {
+    Position moveInDirection(Direction dir) {
         switch (dir) {
             case NORTH:
                 setY(getY() + 1);
@@ -59,10 +61,13 @@ public class Position {
         y = position.getY();
     }
 
+    Position copy() {
+        return new Position(x, y);
+    }
+
     @Override
     public boolean equals(Object other) {
         Position that = (Position) other;
         return this.x == that.x && this.y == that.y;
-
     }
 }

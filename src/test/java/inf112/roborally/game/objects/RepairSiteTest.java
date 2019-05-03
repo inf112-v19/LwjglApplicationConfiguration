@@ -1,5 +1,6 @@
 package inf112.roborally.game.objects;
 
+import inf112.roborally.game.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,8 +15,6 @@ public class RepairSiteTest {
     @Before
     public void setup() {
         player = new Player(0, 0, 1);
-//        repairSites = new ArrayList<>();
-//        repairSites.add(new RepairSite(0, 0));
         // Oof, player takes one damage before each test
         player.takeDamage();
     }
@@ -65,7 +64,4 @@ public class RepairSiteTest {
         player.takeDamage();
         assertEquals(2, player.getDamage());
     }
-
-
-
 }

@@ -1,0 +1,62 @@
+
+player_skin_sheet.png
+size: 1024,4096
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+B34RD_TP
+  rotate: false
+  xy: 0, 386
+  size: 1024, 384
+  orig: 1024, 384
+  offset: 0, 0
+  index: -1
+CU5TM-TP
+  rotate: false
+  xy: 0, 772
+  size: 1024, 384
+  orig: 1024, 384
+  offset: 0, 0
+  index: -1
+EMPR_TP
+  rotate: false
+  xy: 0, 1158
+  size: 1024, 384
+  orig: 1024, 384
+  offset: 0, 0
+  index: -1
+NUR53_CP
+  rotate: false
+  xy: 0, 1544
+  size: 1024, 384
+  orig: 1024, 384
+  offset: 0, 0
+  index: -1
+bartenderclaptrap
+  rotate: false
+  xy: 0, 1930
+  size: 1024, 384
+  orig: 1024, 384
+  offset: 0, 0
+  index: -1
+butlerRefined
+  rotate: false
+  xy: 0, 2316
+  size: 1024, 384
+  orig: 1024, 384
+  offset: 0, 0
+  index: -1
+claptrap3000
+  rotate: false
+  xy: 0, 2702
+  size: 1024, 384
+  orig: 1024, 384
+  offset: 0, 0
+  index: -1
+claptrapRefined
+  rotate: false
+  xy: 0, 3088
+  size: 1024, 384
+  orig: 1024, 384
+  offset: 0, 0
+  index: -1
