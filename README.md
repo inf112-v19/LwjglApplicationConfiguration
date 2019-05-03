@@ -33,7 +33,7 @@ When running, you will first be taken to the main menu screen. Here you have som
 - If you click HOST, you will enter a lobby screen where you can see connected players and your own IP(Make sure you have a valid IP, see "known bugs" under)
 - Click start game when you see all players are connected
 - If you click JOIN, enter the IP given on the host screen
-- The screen will change and display "Waiting for players", when you are connected to server
+- The screen will change and display "Waiting for players" when you are connected to server
 - Wait for server host to start game
 
 ### How to test
@@ -160,6 +160,5 @@ Pressing 'T' instead of choosing skin and flag locations should start the game w
 ## Known bugs
 - Currently throws "WARNING: An illegal reflective access operation has occurred", 
   when the java version used is >8. This has no effect on function or performance, and is just a warning.
-- MP - Players cant resume game if leaver leaves after players have already submitted cards.
 - Game freezes if the host leaves.
 - If you get an IP NOT leading with 10.111.xxx.xxx , you cannot HOST the game. On our team the Mac users could host without issues, but windows users could not. 
