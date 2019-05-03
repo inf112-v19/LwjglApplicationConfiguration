@@ -2,7 +2,6 @@ package inf112.roborally.game.screens.menus.multiplayer;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -49,8 +48,11 @@ public class LobbyScreen extends InputFieldScreen {
         for (int j = 1; j < 6; j++) {
             regions.add(AssMan.manager.get(AssMan.LOBBY_ANIMATION).findRegion(Integer.toString(j)));
         }
-        animation = new Animation<>(10, regions);
-        waitingForPlayers = new Image();
+        animation = new Animation<>(20, regions);
+        waitingForPlayers = new Image(animation.getKeyFrame(timer, true));
+        waitingForPlayers.setSize(
+                waitingForPlayers.getWidth() * 1.2f, waitingForPlayers.getHeight() * 1.2f);
+        waitingForPlayers.setPosition(1920 / 2, 1080 / 2, Align.center);
         waitingForPlayers.setVisible(false);
         stage.addActor(waitingForPlayers);
     }

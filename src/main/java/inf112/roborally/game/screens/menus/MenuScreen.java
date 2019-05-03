@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
+import inf112.roborally.game.screens.InputFieldScreen;
+import inf112.roborally.game.screens.menus.multiplayer.LobbyScreen;
 import inf112.roborally.game.screens.menus.multiplayer.MultiplayerScreen;
 import inf112.roborally.game.screens.menus.multiplayer.NameScreen;
 import inf112.roborally.game.tools.AssMan;
@@ -177,6 +179,9 @@ public class MenuScreen extends BasicScreen {
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             boardTest();
+        }
+        else if (Gdx.input.isKeyJustPressed(Input.Keys.O)){
+            setScreen(new LobbyScreen(game, this));
         }
     }
 }
