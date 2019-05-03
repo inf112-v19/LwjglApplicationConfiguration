@@ -60,9 +60,6 @@ public class RegisterDisplay {
         powerDown.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(RoboRallyGame.multiPlayer){
-                    return;
-                }
                 player.wantsToPowerDown = !player.wantsToPowerDown;
                 if (player.wantsToPowerDown) System.out.println(player.getName() + " wants to power down");
                 else System.out.println(player.getName() + " changed his/her mind about powering down");

@@ -54,7 +54,7 @@ public class Hud {
         stage.addActor(handGui);
 
         handDisplay = new HandDisplay(player, this);
-        System.out.println("Player: " + player + ". RegisterGui: " + registerGui + ". LockGui: " + lockGui);
+        System.out.println("Player: " + player);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
     }
 
