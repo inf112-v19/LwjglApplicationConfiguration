@@ -149,7 +149,7 @@ public class Hud {
         registerDisplay.update();
 
         // hide buttons if in a round:
-        if (game.gameScreen.getBoardLogic().getState() != GameState.PICKING_CARDS){
+        if (game.gameScreen != null && game.gameScreen.getBoardLogic().getState() != GameState.PICKING_CARDS){
             submitButton.setVisible(false);
             greySubmitButton.setVisible(false);
             clearButton.setVisible(false);
