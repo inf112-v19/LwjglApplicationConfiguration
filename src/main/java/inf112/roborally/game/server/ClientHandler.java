@@ -151,6 +151,11 @@ FIFTH WORD = PRIORITY of card
 
         }
     }
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("Host disconnected");
+        ctx.close();
+    }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
