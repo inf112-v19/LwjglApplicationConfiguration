@@ -20,7 +20,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
     private Player thisPlayer;
 
     public MultiplayerLogic(Board board, Hud hud, RoboRallyGame game) {
-        super(board.getPlayers());
+        super(board.getPlayers(), game);
         this.game = game;
         this.board = board;
         this.hud = hud;
@@ -68,6 +68,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         respawnRobots();
         powerUpRobots();
         powerDownRobots();
+        removeDeadRobots();
 
         // Return the cards from this player only
         // Adds the retrieved cards into the stack returnedProgramCards in

@@ -1,5 +1,6 @@
 package inf112.roborally.game.board;
 
+import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
 import inf112.roborally.game.player.Player;
@@ -26,7 +27,7 @@ public class BoardLogicTest {
         players = new ArrayList<>();
         players.add(player2);
         players.add(player1);
-        boardLogic = new BoardLogic(players);
+        boardLogic = new BoardLogic(players, new RoboRallyGame());
     }
 
     @Test

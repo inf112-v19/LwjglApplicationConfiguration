@@ -2,7 +2,6 @@ package inf112.roborally.game.server;
 
 import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.ChannelHandlerContext;
@@ -60,7 +59,7 @@ FIFTH WORD = PRIORITY of card
                     System.out.println(game.playerNames);
 
                 }
-                game.playersFromStart = game.playerNames.size();
+                game.playersInGame = game.playerNames.size();
 
                 break;
             }
@@ -141,7 +140,7 @@ FIFTH WORD = PRIORITY of card
             }
             case "LEFT":
                 System.out.println(split[1] + " has left the game");
-                game.playersFromStart--;
+                game.playersInGame--;
 
                 for (int i = 0; i < game.gameScreen.getBoard().players.size(); i++) {
 

@@ -16,7 +16,7 @@ public class GameLogic extends BoardLogic implements Runnable {
     private Player player1;
 
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
-        super(board.getPlayers());
+        super(board.getPlayers(), game);
         this.game = game;
         this.board = board;
         this.hud = hud;
