@@ -120,7 +120,7 @@ FIFTH WORD = PRIORITY of card
             case "POWER_DOWN":
                 String nameOfSender = split[1];
                 for(Player player : game.getBoard().players) {
-                    if(player.getName().equals(nameOfSender) && player.getPlayerState().equals(PlayerState.OPERATIONAL)) {
+                    if(player.getName().equals(nameOfSender) && player.getPlayerState().equals(PlayerState.OPERATIONAL) && !player.getName().equals(game.getBoard().getThisPlayer().getName())) {
                         player.powerDown();
                     }
                 }
@@ -128,7 +128,7 @@ FIFTH WORD = PRIORITY of card
             case "POWER_UP":
                 nameOfSender = split[1];
                 for(Player player : game.getBoard().players) {
-                    if(player.getName().equals(nameOfSender) && player.getPlayerState().equals(PlayerState.POWERED_DOWN)) {
+                    if(player.getName().equals(nameOfSender) && player.getPlayerState().equals(PlayerState.POWERED_DOWN)&& !player.getName().equals(game.getBoard().getThisPlayer().getName())) {
                         player.powerUp();
                     }
                 }
