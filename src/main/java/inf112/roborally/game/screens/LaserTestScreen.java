@@ -5,10 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.animations.Animation;
 import inf112.roborally.game.board.Board;
 import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AssMan;
+
+import java.util.ArrayList;
 
 public class LaserTestScreen implements Screen {
     public final RoboRallyGame game;
@@ -71,7 +74,7 @@ public class LaserTestScreen implements Screen {
         board.render(game.dynamicCamera);
         game.batch.setProjectionMatrix(game.dynamicCamera.combined);
         game.batch.begin();
-        board.drawGameObjects(game.batch);
+        board.drawGameObjects(game.batch, new ArrayList<Animation>());
         board.drawLasers(game.batch);
         game.batch.end();
     }

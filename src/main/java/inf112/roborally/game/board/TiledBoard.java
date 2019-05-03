@@ -2,6 +2,7 @@ package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -35,6 +36,29 @@ public abstract class TiledBoard {
     public void render(OrthographicCamera camera) {
         mapRenderer.setView(camera);
         mapRenderer.render();
+    }
+
+
+
+    void drawWalls(Batch batch){
+        for (int x = 0; x < floorLayer.getWidth(); x++) {
+            for (int y = 0; y < floorLayer.getHeight(); y++) {
+                TiledMapTileLayer.Cell cell = wallLayer.getCell(x, y);
+                if (cell != null) {
+                    batch.draw(cell.getTile().getTextureRegion(), x * 32, y * 32);
+                }
+            }
+        }
+    }
+    void drawTallerWalls(Batch batch){
+        for (int x = 0; x < floorLayer.getWidth(); x++) {
+            for (int y = 0; y < floorLayer.getHeight(); y++) {
+                TiledMapTileLayer.Cell cell = wallLayer.getCell(x, y);
+                if (cell != null) {
+                    batch.draw(cell.getTile().getTextureRegion(), x * 32, y * 32 + 4);
+                }
+            }
+        }
     }
 
     public void dispose() {

@@ -200,9 +200,6 @@ public class Board extends TiledBoard {
                 }
                 addAnimation(new RepairAnimation(player.position));
             }
-            if (player.isOnOption(floorLayer)) {
-                //System.out.println("Give option card to player!");
-            }
         }
     }
 
@@ -210,11 +207,20 @@ public class Board extends TiledBoard {
         game.gameScreen.animations.add(animation);
     }
 
-    public void drawGameObjects(SpriteBatch batch) {
-        drawBackup(batch);
-        drawList(players, batch);
+    public void drawGameObjects(SpriteBatch batch, ArrayList<Animation> animations) {
         drawLasers(batch);
+        drawWalls(batch);
+        drawBackup(batch);
+        drawTallerWalls(batch);
+        drawList(players, batch);
+        for (int i = 0; i < animations.size(); i++) {
+            animations.get(i).draw(game.batch);
+            if (animations.get(i).hasFinished()) {
+                animations.remove(i--);
+            }
+        }
         drawList(flags, batch);
+
     }
 
     public void drawLasers(SpriteBatch batch) {
