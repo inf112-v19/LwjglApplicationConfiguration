@@ -41,6 +41,7 @@ public class RoboRallyGame extends Game {
     private static final String SPACE_BUG = "assets/maps/space_bug.tmx";
     private static final String SPACE_BUG2 = "assets/maps/space_bug2.tmx";
     private static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
+
     public static boolean multiPlayer = false;
     public static boolean soundMuted;
     public int numberOfChosenPlayers;
@@ -58,11 +59,14 @@ public class RoboRallyGame extends Game {
     public EndGameScreen endGameScreen;
     public TestScreen testScreen;
     public LaserTestScreen laserTestScreen;
+
     public Server server;
     public Client client;
     public ArrayList<String> playerNames;
     public int playersFromStart;
     public int readyPlayers; // To be used in multiplayer
+    public boolean connectedToServer;
+
     public Board board;
 
     public String playerName = DEFAULT_PLAYER_NAME;
