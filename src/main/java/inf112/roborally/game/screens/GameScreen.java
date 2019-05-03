@@ -54,6 +54,7 @@ public class GameScreen implements Screen {
 
         // Music
         music = AssMan.manager.get(AssMan.MUSIC_MAIN_THEME);
+        music.setLooping(true);
         if (!game.soundMuted) {
             music.play();
         }
