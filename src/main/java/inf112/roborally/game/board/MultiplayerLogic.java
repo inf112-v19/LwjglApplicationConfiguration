@@ -1,7 +1,6 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.GameState;
 import inf112.roborally.game.enums.PlayerState;
@@ -84,7 +83,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
             }
         }
 
-        // Get new cards from the server
+        // Request new cards from the server
         game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
         System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
@@ -161,14 +160,14 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         });
     }
 
-    public void receiveCardFromServer(String name, ProgramCard card) {
+    // To be used when receiving only one card
+    public void receiveCardsFromServer(String name, ProgramCard card) {
         for (Player player : board.players) {
             if (player.getName().equals(name)) {
                 if (name.equals(game.playerName)) {
                     // add to hand of this player:
                     player.getHand().getCardsInHand().add(card);
-                }
-                else {
+                } else {
                     // add the hand of another player
                     player.getHand().getCardsInHand().add(card);
                 }
@@ -177,20 +176,20 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
     }
 
-    public void receiveCardFromServer(String name, ArrayList<ProgramCard> allCards) {
-        System.out.println("Inside receiveCardFromServer");
+    // To be used when receiving multiple cards at the time
+    public void receiveCardsFromServer(String name, ArrayList<ProgramCard> allCards) {
+        System.out.println("Inside receiveCardsFromServer");
         System.out.println("Parameter name: " + name);
         for (Player player : board.players) {
             if (player.getName().equals(name)) {
                 if (name.equals(game.playerName)) {
                     // add to hand of this player:
-                    for(ProgramCard card : allCards) {
+                    for (ProgramCard card : allCards) {
                         player.getHand().getCardsInHand().add(card);
                     }
-                }
-                else {
+                } else {
                     // place in register of other player:
-                    for(ProgramCard card : allCards) {
+                    for (ProgramCard card : allCards) {
                         player.getRegisters().placeCard(card);
                         System.out.printf("Added the card %s to player %s´s register%n", card.toString(), player.getName());
                     }

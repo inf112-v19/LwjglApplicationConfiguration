@@ -42,6 +42,10 @@ FIFTH WORD = PRIORITY of card
         String header = split[0];
 
         switch (header) {
+            case "HANDSHAKE":
+            game.connectedToServer = true;
+                System.out.println("CLIENT HANDSHAKE");
+            break;
             case "LIST":
                 int size = Integer.parseInt(split[1]);
                 while (game.playerNames.size() < size) {
@@ -56,6 +60,7 @@ FIFTH WORD = PRIORITY of card
                     System.out.println(game.playerNames);
 
                 }
+                game.playersFromStart = game.playerNames.size();
 
                 break;
             }
@@ -72,24 +77,21 @@ FIFTH WORD = PRIORITY of card
                 break;
             }
             case "CARD": {
-//                String name = split[1];
-//                ProgramCard card = new ProgramCard(split[2], split[3], split[4]);
-//                game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
-
-//                System.out.println("In ClientHandler, CARD, print split[1]:\n" + split[1])
-                String[] cardSplit = split[1].split("!"); // Split on newline
+                String[] cardSplit = split[1].split("!"); // Split on the character "!"
 
                 ProgramCard card;
                 String name = "";
                 ArrayList<ProgramCard> allCards = new ArrayList<>();
                 for(int i = 1; i < split.length-3; i+=3) {
                     name = split[i]; // Name will be same for all cards
-                    card = new ProgramCard(split[i+1], split[i+2], split[i+3].split("!")[0]);
+                    String rotate = split[i+1];
+                    String move = split[i+2];
+                    String priority = split[i+3].split("!")[0];
+                    card = new ProgramCard(rotate, move, priority);
                     allCards.add(card);
                 }
-                game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name.split("!")[1], allCards);
+                game.gameScreen.getMultiplayerLogic().receiveCardsFromServer(name.split("!")[1], allCards);
                 break;
-
             }
             case "ALL_READY":
                 game.gameScreen.getMultiplayerLogic().setToRound();
@@ -98,16 +100,16 @@ FIFTH WORD = PRIORITY of card
                 game.multiPlayer = true;
                 break;
             case "RECEIVE_CARD":{
-                System.out.println("RECEIVE_CARD! " + split[1]);
+//                System.out.println("RECEIVE_CARD! " + split[1]);
                 final String name = split[1];
-                Rotate rotate = Rotate.valueOf(split[2]);
-                int move = Integer.parseInt(split[3]);
-                int priority = Integer.parseInt(split[4]);
+                String rotate = split[2];
+                String move = split[3];
+                String priority = split[4];
                 final ProgramCard card = new ProgramCard(rotate, move, priority);
                 Gdx.app.postRunnable(new Runnable() {
                     @Override
                     public void run() {
-                        game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
+                        game.gameScreen.getMultiplayerLogic().receiveCardsFromServer(name, card);
                         game.gameScreen.getHud().updateCardButtons();
                         game.gameScreen.getHud().getHandDisplay().updateCardButtons();
                     }
@@ -121,8 +123,15 @@ FIFTH WORD = PRIORITY of card
                         player.wantsToPowerDown = true;
                     }
                 }
-
                 break;
+            case "POWER_UP":
+                for(Player player : game.getBoard().players) {
+                    if(player.getName().equals(split[1])) {
+                        player.wantsToPowerDown = false;
+                    }
+                }
+                break;
+
 
             case "SET_NUMBER_OF_PLAYERS": {
                 Integer numPlayers = Integer.parseInt(split[1]);
@@ -132,13 +141,15 @@ FIFTH WORD = PRIORITY of card
             }
             case "LEFT":
                 System.out.println(split[1] + " has left the game");
+                game.playersFromStart--;
 
                 for (int i = 0; i < game.gameScreen.getBoard().players.size(); i++) {
+
                     if(game.gameScreen.getBoard().players.get(i).getName().equals(split[1])){
                         Player leaver = game.gameScreen.getBoard().players.get(i);
                         leaver.killPlayer();
                         game.gameScreen.getBoard().players.remove(i);
-                        game.gameScreen.getMultiplayerLogic().removeDeadRobots();
+                        break;
 
                     }
                 }

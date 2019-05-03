@@ -166,10 +166,10 @@ public class Player extends MovableGameObject implements Comparable {
 
         playerState = POWERED_DOWN;
         System.out.println(name + " powers down");
-        wantsToPowerDown = false;
         if (RoboRallyGame.multiPlayer) {
             game.client.sendMessage("POWER_DOWN " + getName());
-
+        } else {
+            wantsToPowerDown = false;
         }
     }
 
@@ -179,6 +179,11 @@ public class Player extends MovableGameObject implements Comparable {
         repairAllDamage();
         playerState = OPERATIONAL;
         System.out.println(name + " powers up");
+        wantsToPowerDown = false;
+
+        if (RoboRallyGame.multiPlayer) {
+            game.client.sendMessage("POWER_UP " + getName());
+        }
     }
 
     /**
@@ -241,6 +246,9 @@ public class Player extends MovableGameObject implements Comparable {
 
     public boolean isDestroyed() {
         return playerState == DESTROYED;
+    }
+    public boolean isGameover(){
+        return playerState == GAME_OVER;
     }
 
     public boolean isReady() {
@@ -378,5 +386,6 @@ public class Player extends MovableGameObject implements Comparable {
 
     public void killPlayer() {
         lives = 0;
+        setPlayerState(GAME_OVER);
     }
 }
