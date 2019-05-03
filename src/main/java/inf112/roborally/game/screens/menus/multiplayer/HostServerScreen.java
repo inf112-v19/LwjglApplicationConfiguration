@@ -15,6 +15,9 @@ import java.net.UnknownHostException;
 public class HostServerScreen extends InputFieldScreen {
     private String ip;
     private Label label;
+    private Label connectedPlayers;
+    private int currentConnected = 1;
+    private StringBuilder playerNamesBuilder;
     private Screen previousScreen;
 
     public HostServerScreen(RoboRallyGame game, Screen previousScreen) {
@@ -33,9 +36,19 @@ public class HostServerScreen extends InputFieldScreen {
         label.setPosition(1920 / 2, 1080 / 2, Align.center);
         label.setAlignment(Align.center);
         label.setFontScale(2);
+        connectedPlayers = new Label("", labelStyle);
+        connectedPlayers.setPosition(1920 / 2, 400, Align.center);
+        connectedPlayers.setAlignment(Align.center);
+        connectedPlayers.setFontScale(2);
+
+        playerNamesBuilder = new StringBuilder();
+        playerNamesBuilder.append("\n"); // Start on a new line inside the label
+        playerNamesBuilder.append(game.playerName);
+
         text.setVisible(false);
         confirm.setText("Start Game");
         stage.addActor(label);
+        stage.addActor(connectedPlayers);
 
         System.out.printf("Done with the constructor in HostServerScreen, number of players from game: %d%n", game.numberOfChosenPlayers);
     }
@@ -69,7 +82,17 @@ public class HostServerScreen extends InputFieldScreen {
     @Override
     public void render(float v) {
         super.render(v);
-        //System.out.println(game.players);
+        handleTextUpdate();
+    }
+
+    private void handleTextUpdate() {
+        int totalConnected = game.playerNames.size();
+        if(totalConnected > currentConnected) {
+            playerNamesBuilder.append(", ");
+            playerNamesBuilder.append(game.playerNames.get(totalConnected-1));
+            currentConnected++;
+        }
+        connectedPlayers.setText("Connected players: " + game.playerNames.size() + playerNamesBuilder.toString());
     }
 
 }
