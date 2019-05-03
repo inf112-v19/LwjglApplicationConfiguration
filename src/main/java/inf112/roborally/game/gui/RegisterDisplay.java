@@ -22,19 +22,20 @@ public class RegisterDisplay {
     private float h;
     private Player player;
     private ProgramRegisters registers;
+
     private Image programBoard;
     private Image wires;
+    private Image flag;
     private ArrayList<Image> damageTokens;
     private ArrayList<Image> lifeTokens;
     private ArrayList<Image> lockTokens;
     private ArrayList<TextureRegionDrawable> wireTextures;
     private ImageButton powerDown;
-    private Image flag;
 
     /**
-     * Draws the program register of a given player.
-     * Shows cards in the players register slots. If a register is locked a small lock icon will appear.
-     * It also shows lives, damage taken and the power button.
+     * Draws the program register of a given player. Shows cards in the
+     * players register slots. If a register is locked a small lock icon will
+     * appear. It also shows lives, damage taken and the power button.
      */
     public RegisterDisplay(Player player, Group registerGui, Group lockGui) {
         this.player = player;
@@ -45,17 +46,24 @@ public class RegisterDisplay {
         addDamageTokens();
         addLifeTokens();
         addWires();
-        addLockTokens(lockGui); // Locks needs to be updated on top of the cards
+        addLockTokens(lockGui); // Locks needs to be on top of the cards
         addPowerDown();
-        // add skin
-        Image skin = new Image(player.getFrontRegion());
-        skin.setPosition(programBoard.getX() - skin.getWidth() - 10, -skin.getHeight() * 0.3f);
-        registerGui.addActor(skin);
-        // add flag
+        addPlayerSkin();
+        addTargetFlag();
+    }
+
+    private void addTargetFlag() {
         flag = new Image(AssMan.getFlagAtlasRegion(player.getTargetFlag()));
-        flag.setPosition(skin.getX() - 20, -10);
+        flag.setPosition(448 - 20, -10);
         flag.setScale(.4f);
         registerGui.addActor(flag);
+    }
+
+    private void addPlayerSkin() {
+        Image skin = new Image(player.getFrontRegion());
+        skin.setPosition(programBoard.getX() - skin.getWidth() - 10, -skin.getHeight() * 0.3f);
+        skin.setColor(skin.getColor().r, skin.getColor().g, skin.getColor().b, .8f);
+        registerGui.addActor(skin);
     }
 
     private void addPowerDown() {
@@ -125,7 +133,8 @@ public class RegisterDisplay {
         Texture texture = AssMan.manager.get(AssMan.REGISTER_WIRES);
         wireTextures = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            wireTextures.add(new TextureRegionDrawable(new TextureRegion(texture, 0, 481 * i, 1024, 481)));
+            wireTextures.add(new TextureRegionDrawable(
+                    new TextureRegion(texture, 0, 481 * i, 1024, 481)));
         }
         wires.setDrawable(wireTextures.get(0));
     }
@@ -145,35 +154,15 @@ public class RegisterDisplay {
     }
 
     public void update() {
-        updateWires();
-        updateLocks();
-        updateDamageTokens();
-        updateLifeTokens();
-        updateFlag();
-    }
-
-    private void updateFlag() {
         flag.setDrawable(new TextureRegionDrawable(AssMan.getFlagAtlasRegion(player.getTargetFlag())));
-    }
-
-    private void updateWires() {
         int wireIndex = (5 - registers.getNumUnlockedRegisters()) % wireTextures.size();
         wires.setDrawable(wireTextures.get(wireIndex));
-    }
-
-    private void updateLifeTokens() {
         for (int i = 0; i < lifeTokens.size(); i++) {
             lifeTokens.get(i).setVisible(player.getLives() >= 3 - i);
         }
-    }
-
-    private void updateDamageTokens() {
         for (int i = 0; i < damageTokens.size(); i++) {
             damageTokens.get(i).setVisible(player.getDamage() > i);
         }
-    }
-
-    private void updateLocks() {
         for (int i = 0; i < lockTokens.size(); i++) {
             lockTokens.get(4 - i).setVisible(player.getRegisters().isLocked(i));
         }
@@ -195,12 +184,11 @@ public class RegisterDisplay {
                     public void clicked(InputEvent event, float x, float y) {
                         if (!registers.isLocked(index)) {
                             registers.returnCard(index);
-                            hud.updateCards();
+                            hud.updateCardButtons();
                         }
                     }
                 });
-
-                hud.registerGui.addActor(cardInRegisterButton);
+                registerGui.addActor(cardInRegisterButton);
             }
         }
     }

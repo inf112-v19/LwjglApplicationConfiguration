@@ -19,7 +19,7 @@ public class ProgramRegisters implements IProgramRegisters {
         unlockedRegisters = NUMBER_OF_REGISTERS;
     }
 
-    public int placeCard(ProgramCard card){
+    public int placeCard(ProgramCard card) {
         for (int i = 0; i < unlockedRegisters; i++) {
             if (registers[i] == null) {
                 registers[i] = card;
@@ -157,4 +157,10 @@ public class ProgramRegisters implements IProgramRegisters {
         return NUMBER_OF_REGISTERS - unlockedRegisters;
     }
 
+    public boolean isEmpty() {
+        for (ProgramCard register : registers) {
+            if (register != null) return false;
+        }
+        return true;
+    }
 }

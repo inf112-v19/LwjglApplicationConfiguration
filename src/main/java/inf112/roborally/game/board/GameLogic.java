@@ -54,7 +54,7 @@ public class GameLogic extends BoardLogic implements Runnable {
 
         if (Gdx.input.isKeyPressed(Input.Keys.R)) {
             player1.getRegisters().returnCards();
-            hud.updateCards();
+            hud.updateCardButtons();
         }
 
         boolean updatePlayer = true;
@@ -82,7 +82,7 @@ public class GameLogic extends BoardLogic implements Runnable {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                hud.updateCards();
+                hud.updateCardButtons();
                 hud.resetPowerDown();
                 hud.setButtonTouchable(true);
                 if (game.AIvsAI) {

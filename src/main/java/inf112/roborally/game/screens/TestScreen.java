@@ -34,7 +34,7 @@ public class TestScreen implements Screen {
         }
 
         hud = new Hud(player, game);
-        hud.updateCards();
+        hud.updateCardButtons();
     }
 
     @Override
@@ -81,12 +81,12 @@ public class TestScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             player.getRegisters().placeCard(0);
-            hud.updateCards();
+            hud.updateCardButtons();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             player.returnCards();
-            hud.updateCards();
+            hud.updateCardButtons();
         }
     }
 
