@@ -86,9 +86,11 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
 
 
         for (Player player : players) {
-            if (!player.isPoweredDown() && !player.equals(thisPlayer)) {
-                player.getHand().removeAllCards();
+//            if (!player.isPoweredDown() && !player.equals(thisPlayer)) {
+            if (!player.equals(thisPlayer)) {
                 player.getRegisters().returnCards();
+                player.getHand().removeAllCards();
+                System.out.println("Cleared the register for player " + player.getName());
             }
         }
 
@@ -186,7 +188,8 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
     }
 
     public void receiveCardFromServer(String name, ArrayList<ProgramCard> allCards) {
-//        System.out.println("Inside receiveCardFromServer");
+        System.out.println("Inside receiveCardFromServer");
+        System.out.println("Parameter name: " + name);
         for (Player player : board.players) {
             if (player.getName().equals(name)) {
                 if (name.equals(game.playerName)) {
