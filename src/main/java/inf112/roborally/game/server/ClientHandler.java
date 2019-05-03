@@ -3,8 +3,6 @@ package inf112.roborally.game.server;
 import com.badlogic.gdx.Gdx;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.enums.Rotate;
-import inf112.roborally.game.board.MultiplayerLogic;
-import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.ChannelHandlerContext;
@@ -110,8 +108,8 @@ FIFTH WORD = PRIORITY of card
                     @Override
                     public void run() {
                         game.gameScreen.getMultiplayerLogic().receiveCardFromServer(name, card);
-                        game.gameScreen.getHud().updateCards();
-                        game.gameScreen.getHud().getHandDisplay().updateCardsInHand(game.gameScreen.getHud());
+                        game.gameScreen.getHud().updateCardButtons();
+                        game.gameScreen.getHud().getHandDisplay().updateCardButtons();
                     }
                 });
                 break;

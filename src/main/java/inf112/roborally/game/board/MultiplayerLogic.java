@@ -101,7 +101,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         Gdx.app.postRunnable(new Runnable() {
             @Override
             public void run() {
-                hud.updateCards();
+                hud.updateCardButtons();
                 hud.resetPowerDown();
                 hud.setButtonTouchable(true);
                 hud.getPlayerStatusDisplay().clearCards();

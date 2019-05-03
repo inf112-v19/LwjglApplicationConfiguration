@@ -121,7 +121,7 @@ public class Hud {
                 public void clicked(InputEvent event, float x, float y) {
                     if (!player.outOfLives()) {
                         player.getRegisters().returnCards();
-                        updateCards();
+                        updateCardButtons();
                     }
                 }
             });
@@ -146,17 +146,17 @@ public class Hud {
     }
 
     public void draw() {
+        // update before draw
         if (playerStatusDisplay != null) playerStatusDisplay.update();
-        submitButton.setVisible(player.getRegisters().isFull());
+        submitButton.setVisible(player.getRegisters().isFull() && !player.isReady());
         greySubmitButton.setVisible(!submitButton.isVisible());
+        clearButton.setVisible(!player.getRegisters().isEmpty() && !player.isReady());
         registerDisplay.update();
+
         stage.draw();
     }
 
-    /**
-     * Remove all program card buttons.
-     */
-    private void clearAllCards() {
+    private void clearAllCardButtons() {
         for (int i = 0; i < 4; i++) {
             for (Actor button : registerGui.getChildren()) {
                 if (button instanceof ProgramCardButton) {
@@ -177,9 +177,9 @@ public class Hud {
      * Updates program cards in hand and program cards in register visually.
      */
     @SuppressWarnings("Duplicates")
-    public void updateCards() {
-        clearAllCards();
-        handDisplay.updateCardsInHand(this);
+    public void updateCardButtons() {
+        clearAllCardButtons();
+        handDisplay.updateCardButtons();
         registerDisplay.drawCardsInProgramRegister(this);
     }
 
