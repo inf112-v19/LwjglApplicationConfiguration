@@ -28,16 +28,18 @@ When running, you will first be taken to the main menu screen. Here you have som
 
 ### Multiplayer
 - Click multiplayer
-- Enter name when prompted
+- Enter name when prompted (DO NOT CHOOSE SAME NAMES)
 - Choose to either join or host a game
-- If you click HOST, you will enter a lobby screen where you can see connected players and your own IP(Make sure you have a valid IP, see "known bugs" under)
+- If you click "CREATE SESSION", you will enter a lobby screen where you can see connected players and your own IP(Make sure you have a valid IP, see "known bugs" under)
 - Click start game when you see all players are connected
-- If you click JOIN, enter the IP given on the host screen
+- If you click "JOIN SESSION", enter the IP given on the host screen
 - The screen will change and display "Waiting for players" when you are connected to server
 - Wait for server host to start game
 
 NOTE:
 - After collecting all flags , the winner screen doesnt appear the round after. Everyone needs to submit cards.
+- There is a max limit of 8 players.
+- If you there is only one player in the game, the player will instantly
 
 ### How to test
 We have junit tests that make sure code is not broken when implementing new features. The menus screen also has some options for testing:
@@ -165,3 +167,4 @@ Pressing 'T' instead of choosing skin and flag locations should start the game w
   when the java version used is >8. This has no effect on function or performance, and is just a warning.
 - Game freezes if the host leaves.
 - If you get an IP NOT leading with 10.111.xxx.xxx , you cannot HOST the game. On our team the Mac users could host without issues, but windows users could not. 
+- If you click "CREATE SESSION" and press the back button, and then click "CREATE SESSION" again, you will get a bind exception
