@@ -68,13 +68,6 @@ public class MenuScreen extends BasicScreen {
                 testScreen();
             }
         });
-        TextButton laser = ButtonFactory.createTextButton("LaserTest", 2);
-        laser.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                laserTest();
-            }
-        });
         TextButton board = ButtonFactory.createTextButton("BoardTest", 2);
         board.addListener(new ClickListener() {
             @Override
@@ -94,7 +87,6 @@ public class MenuScreen extends BasicScreen {
         debuggingButtons.setPosition(1920 / 2,
                 (ai.getHeight() + ai.getPadBottom() + ai.getPadTop()) / 2, Align.center);
         debuggingButtons.add(gui);
-        debuggingButtons.add(laser);
         debuggingButtons.add(ai);
         debuggingButtons.add(board);
 
@@ -137,11 +129,6 @@ public class MenuScreen extends BasicScreen {
         setScreen(game.testScreen);
     }
 
-    private void laserTest() {
-        game.AIvsAI = false;
-        setScreen(game.laserTestScreen);
-    }
-
     private void boardTest() {
         game.AIvsAI = false;
         game.testing = true;
@@ -170,9 +157,6 @@ public class MenuScreen extends BasicScreen {
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             testScreen();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-            laserTest();
         }
         else if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             aiVSai();

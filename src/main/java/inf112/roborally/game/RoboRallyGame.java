@@ -12,7 +12,6 @@ import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.screens.GameScreen;
-import inf112.roborally.game.screens.LaserTestScreen;
 import inf112.roborally.game.screens.TestScreen;
 import inf112.roborally.game.screens.menus.EndGameScreen;
 import inf112.roborally.game.screens.menus.MenuScreen;
@@ -58,7 +57,6 @@ public class RoboRallyGame extends Game {
     public SettingsScreen settingsScreen;
     public EndGameScreen endGameScreen;
     public TestScreen testScreen;
-    public LaserTestScreen laserTestScreen;
 
     public Server server;
     public Client client;
@@ -119,7 +117,6 @@ public class RoboRallyGame extends Game {
 
         selectMapScreen = new SelectMapScreen(this, selectSkinScreen);
         testScreen = new TestScreen(this);
-        laserTestScreen = new LaserTestScreen(this);
 
         setScreen(new MenuScreen(this));
     }
