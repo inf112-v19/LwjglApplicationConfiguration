@@ -80,7 +80,6 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
             if (!player.equals(thisPlayer)) {
                 player.getHand().removeAllCards();
                 player.getRegisters().returnCards();
-                System.out.println("Cleared the register for player " + player.getName());
             }
         }
 
@@ -88,7 +87,6 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         if (!thisPlayer.isPoweredDown()) {
             game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
         }
-        System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
 
         Gdx.app.postRunnable(new Runnable() {
@@ -168,8 +166,6 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
 
     // To be used when receiving multiple cards at the time
     public void receiveCardsFromServer(String name, ArrayList<ProgramCard> allCards) {
-        System.out.println("Inside receiveCardsFromServer");
-        System.out.println("Parameter name: " + name);
         for (Player player : board.players) {
             if (player.getName().equals(name)) {
                 if (name.equals(game.playerName)) {
@@ -181,7 +177,6 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                     // place in register of other player:
                     for (ProgramCard card : allCards) {
                         player.getRegisters().placeCard(card);
-                        System.out.printf("Added the card %s to player %s´s register%n", card.toString(), player.getName());
                     }
                 }
                 return;

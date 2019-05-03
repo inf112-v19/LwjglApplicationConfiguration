@@ -13,6 +13,9 @@ public class Flag extends GameObject {
         updateSprite();
     }
 
+    /**
+     * Separate from the constructor so that test will still work.
+     */
     private void setupTextureAtlas() {
         sprite = AssMan.manager.get(AssMan.FLAG_ATLAS).createSprite(Integer.toString(flagNumber));
         int PPM = Main.PIXELS_PER_TILE;

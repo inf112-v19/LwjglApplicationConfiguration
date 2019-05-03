@@ -54,17 +54,4 @@ public class Server implements Runnable{
         bossGroup.shutdownGracefully();
         workerGroup.shutdownGracefully();
     }
-/*
-    public static void main(String[] args) throws InterruptedException, SocketException {
-        Enumeration<NetworkInterface> a = NetworkInterface.getNetworkInterfaces();
-        while (a.hasMoreElements()){
-            Enumeration<InetAddress> b = a.nextElement().getInetAddresses();
-            while (b.hasMoreElements()){
-                System.out.println(b.nextElement());
-            }
-            System.out.println();
-        }
-        new Server(8000).run();
-    }
-    */
 }

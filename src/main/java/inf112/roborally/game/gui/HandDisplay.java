@@ -3,6 +3,7 @@ package inf112.roborally.game.gui;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.player.Player;
+import inf112.roborally.game.player.PlayerHand;
 import inf112.roborally.game.player.ProgramCard;
 
 /**
@@ -21,7 +22,7 @@ public class HandDisplay {
     }
 
     /**
-     * Draws all cards in the player hand.
+     * Draws all cards in {@link PlayerHand}.
      */
     public void updateCardButtons() {
         float scale = 0.5f;

@@ -23,7 +23,7 @@ public class PlayerHandTest {
     @Test
     public void returnCardsRemovesAllCards() {
         for (int i = 0; i < 9; i++) hand.receiveCard(card);
-        hand.returnCards(new ArrayList<ProgramCard>());
+        hand.removeAllCards();
         assertEquals(0, hand.size());
         assertEquals(false, hand.isFull());
     }

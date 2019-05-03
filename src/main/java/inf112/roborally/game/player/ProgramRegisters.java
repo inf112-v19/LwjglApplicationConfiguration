@@ -153,10 +153,6 @@ public class ProgramRegisters implements IProgramRegisters {
         return unlockedRegisters;
     }
 
-    public int getNumLockedRegisters() {
-        return NUMBER_OF_REGISTERS - unlockedRegisters;
-    }
-
     public boolean isEmpty() {
         for (ProgramCard register : registers) {
             if (register != null) return false;

@@ -73,10 +73,6 @@ public class ButtonFactory {
         return button;
     }
 
-    public static Label createLabel(String text, Color color) {
-        return new Label(text, new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), color));
-    }
-
     private static ClickListener soundOnTouchDown() {
         return new ClickListener() {
             @Override

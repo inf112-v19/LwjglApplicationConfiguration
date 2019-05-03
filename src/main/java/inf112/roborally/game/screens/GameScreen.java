@@ -38,8 +38,6 @@ public class GameScreen implements Screen {
         board = game.getBoard();
         board.placePlayers();
         board.setThisPlayer();
-        System.out.println("PLAYER: " + board.getThisPlayer());
-//        hud = new Hud(board.getPlayers().get(0), game);
         hud = new Hud(board.getThisPlayer(), game);
         hud.createButtons();
         System.out.println(game.fixedCamera.position);
@@ -116,7 +114,7 @@ public class GameScreen implements Screen {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             game.setScreen(game.settingsScreen);
         }
-        // if we are playing a normal game, return here..
+        // if we are playing a normal game, return here
         if (!game.testing) return;
 
 
@@ -157,7 +155,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        System.out.println("Disposing GameScreen");
         background.dispose();
 
         board.dispose();
@@ -205,10 +202,6 @@ public class GameScreen implements Screen {
             game.soundMuted = true;
         }
         return !bool;
-    }
-
-    public Music getMusic() {
-        return music;
     }
 
     public Board getBoard() {

@@ -14,7 +14,6 @@ import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.tools.ImageTool;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +71,6 @@ public class PlayerStatusDisplay {
     }
 
     public void dispose() {
-        System.out.println("Disposing PlayerStatusDisplay");
         font.dispose();
 
         for (Actor card : cards.getChildren()) {

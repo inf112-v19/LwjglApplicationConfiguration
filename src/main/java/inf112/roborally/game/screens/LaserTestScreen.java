@@ -83,12 +83,6 @@ public class LaserTestScreen implements Screen {
         }
     }
 
-    private void allRobotsFire() {
-        for (Player robot : board.getPlayers()) {
-            robot.getLaserCannon().fire(board);
-        }
-    }
-
     private void updateAllRobots() {
         for (Player p : board.getPlayers()) {
             p.updateSprite();
@@ -117,7 +111,6 @@ public class LaserTestScreen implements Screen {
 
     @Override
     public void dispose() {
-        System.out.println("Disposing LaserTestScreen");
         board.dispose();
     }
 }

@@ -282,7 +282,6 @@ public class AssMan {
     }
 
     public static void dispose() {
-        System.out.println("Disposing asset manager");
         manager.clear();
     }
 }
