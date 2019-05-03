@@ -3,10 +3,11 @@ package inf112.roborally.game.gui;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.roborally.game.screens.GameScreen;
 import inf112.roborally.game.tools.AssMan;
 
 /**
- * Background for the main game (GameScreen).
+ * Background for the main game {@link GameScreen}
  */
 public class Background {
     private Sprite clouds;
@@ -15,7 +16,6 @@ public class Background {
     private float originalCameraX, originalCameraY;
     private float gridX, gridY;
     private float cloudX, cloudY;
-    private float cloudW, cloudH;
 
     public Background(OrthographicCamera camera) {
         originalCameraX = camera.position.x;

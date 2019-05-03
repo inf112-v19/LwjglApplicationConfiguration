@@ -55,7 +55,6 @@ public class Hud {
         stage.addActor(handGui);
 
         handDisplay = new HandDisplay(player, this);
-        System.out.println("Player: " + player);
         registerDisplay = new RegisterDisplay(player, registerGui, lockGui);
     }
 
@@ -176,7 +175,7 @@ public class Hud {
     }
 
     /**
-     * Updates program cards in hand and program cards in register visually.
+     * Updates program cards in {@link Hud#handDisplay} and program cards in {@link Hud#registerDisplay} visually.
      */
     @SuppressWarnings("Duplicates")
     public void updateCardButtons() {

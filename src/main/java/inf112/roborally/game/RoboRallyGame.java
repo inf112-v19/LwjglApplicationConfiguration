@@ -253,7 +253,6 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void dispose() {
-        System.out.println("Disposing RoboRallyGame");
         if (screenBefore != null) {
             screenBefore.dispose();
         }

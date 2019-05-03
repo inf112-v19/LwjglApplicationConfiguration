@@ -93,11 +93,9 @@ public class SettingsScreen extends BasicScreen {
     private void muteMusic() {
         if (!game.soundMuted) {
             game.soundMuted = game.gameScreen.playMusic(false);
-            System.out.println("Muted the music from the settings screen");
             mute.setText("Unmute");
         } else {
             game.soundMuted = game.gameScreen.playMusic(true);
-            System.out.println("Started the music from the settings screen");
             mute.setText("Mute");
         }
     }

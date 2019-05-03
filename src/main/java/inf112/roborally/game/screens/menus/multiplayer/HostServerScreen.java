@@ -49,9 +49,6 @@ public class HostServerScreen extends InputFieldScreen {
         confirm.setText("Start Game");
         stage.addActor(label);
         stage.addActor(connectedPlayers);
-
-        System.out.printf("Done with the constructor in HostServerScreen, " +
-                "number of players from game: %d%n", game.numberOfChosenPlayers);
     }
 
     @Override

@@ -17,7 +17,7 @@ import inf112.roborally.game.tools.AssMan;
 
 public class EndGameScreen extends BasicScreen {
 
-    private Label winnerLable;
+    private Label winnerLabel;
     private Player winner;
     private Sprite winnerSprite;
     private int rotateTimer;
@@ -25,9 +25,9 @@ public class EndGameScreen extends BasicScreen {
     public EndGameScreen(RoboRallyGame game) {
         super(game);
         rotateTimer = 0;
-        winnerLable = new Label("", labelStyle);
+        winnerLabel = new Label("", labelStyle);
         Table table = new Table();
-        table.add(winnerLable);
+        table.add(winnerLabel);
         table.setPosition(1920/2,1080/2, Align.center);
         stage.addActor(table);
         back.setVisible(false);
@@ -70,13 +70,11 @@ public class EndGameScreen extends BasicScreen {
         this.winner = winner;
 
         // Set player to the proper position
-        //TODO Instead of manually multiplayer the x and y here, find a way to use width/2 and height/2 or..
         winner.moveToPosition(new Position(22, 15));
         winner.updateSprite();
         winnerSprite = winner.getSprite();
         winnerSprite.setSize(500, 500);
 
-        // Add label
         Label label = new Label("WINNER!",
                 new Label.LabelStyle(AssMan.manager.get(AssMan.FONT_GROTESKIA), Color.WHITE));
         label.setPosition(1920 / 2, 350, Align.center);

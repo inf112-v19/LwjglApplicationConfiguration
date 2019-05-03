@@ -70,7 +70,10 @@ public class BoardLogic {
         }
     }
 
-    //This method is being overwritten by GameLogic class
+
+    /**
+     * Overwritten in {@link GameLogic}
+     */
     public void aiRobosReady() {
     }
 
@@ -90,7 +93,6 @@ public class BoardLogic {
                 giveCardsToPlayer(player);
             }
         }
-        System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
         executionIndex = 0;
         sorted = false;
@@ -161,7 +163,6 @@ public class BoardLogic {
         }
 
         if (++timeElapsed > timeBetweenPlayers) {
-            System.out.println(players.get(executionIndex).getName() + " is executing phase " + phase);
             executeCards();
             timeElapsed = 0;
         }
@@ -172,25 +173,6 @@ public class BoardLogic {
             state = BOARD_MOVES;
             executionIndex = 0;
             phase++;
-
-//            if (!players.isEmpty() && players.get(0).isDebuggingActive())
-//                return;
-//
-//            if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
-//                sleepThread(100);
-//            else
-//                sleepThread(500);
-
-        }
-    }
-
-    private void sleepThread(int millis) {
-        if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
-            try {
-                Thread.sleep(millis);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -251,7 +233,7 @@ public class BoardLogic {
     }
 
     /**
-     * Gives the player as many cards as allowed from the stack of program cards.*
+     * Gives the player as many cards as allowed from the stack of program cards.
      *
      * @param player which player to give program cards to.
      */

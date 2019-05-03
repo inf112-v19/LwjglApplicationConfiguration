@@ -5,7 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import inf112.roborally.game.player.ProgramCard;
 
 /**
- * Visual program card.
+ * A visual representation of the Program Card.
+ * Shows which type it is and its priority.
  */
 public class ProgramCardButton extends ImageTextButton {
 

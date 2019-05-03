@@ -33,11 +33,6 @@ public class PlayerHand {
         return cardsInHand.remove(cardPos);
     }
 
-    public ArrayList<ProgramCard> returnCards(ArrayList<ProgramCard> list) {
-        while (!cardsInHand.isEmpty()) list.add(cardsInHand.remove(0));
-        return list;
-    }
-
     public ArrayList<ProgramCard> getCardsInHand() {
         return cardsInHand;
     }

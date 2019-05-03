@@ -17,7 +17,6 @@ public class NameScreen extends InputFieldScreen {
     @Override
     public void goToPreviousScreen(){
         game.setScreen(previousScreen);
-        //dispose();
     }
 
     @Override

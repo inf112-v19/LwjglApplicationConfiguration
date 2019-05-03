@@ -8,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
-import inf112.roborally.game.screens.menus.MenuScreen;
 import inf112.roborally.game.screens.menus.setup.SelectNumPlayers;
 import inf112.roborally.game.tools.ButtonFactory;
 

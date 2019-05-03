@@ -3,19 +3,14 @@ package inf112.roborally.game.screens.menus;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.screens.BasicScreen;
-import inf112.roborally.game.screens.InputFieldScreen;
-import inf112.roborally.game.screens.menus.multiplayer.LobbyScreen;
-import inf112.roborally.game.screens.menus.multiplayer.MultiplayerScreen;
 import inf112.roborally.game.screens.menus.multiplayer.NameScreen;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.tools.ButtonFactory;
@@ -97,13 +92,10 @@ public class MenuScreen extends BasicScreen {
 
     public void setScreen(Screen screen) {
         game.setScreen(screen);
-//        dispose();
     }
 
     private void singleplayer() {
         game.AIvsAI = false;
-        //Need to use the selectSkinScreen in game in order to use selected skin choices
-//        setScreen(game.selectSkinScreen);
         setScreen(game.selectNumberOfPlayersScreen);
     }
 
