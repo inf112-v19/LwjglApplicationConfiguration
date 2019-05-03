@@ -85,9 +85,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
 
         // Request new cards from the server
-        if(!thisPlayer.getPlayerState().equals(PlayerState.POWERED_DOWN)) {
-            game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
-        }
+        game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
         System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
 

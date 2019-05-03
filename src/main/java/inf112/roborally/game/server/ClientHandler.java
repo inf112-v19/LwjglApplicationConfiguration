@@ -121,7 +121,7 @@ FIFTH WORD = PRIORITY of card
                 String nameOfSender = split[1];
                 for(Player player : game.getBoard().players) {
                     if(player.getName().equals(nameOfSender) && player.getPlayerState().equals(PlayerState.OPERATIONAL)) {
-                        player.wantsToPowerDown = true;
+                        player.powerDown();
                     }
                 }
                 break;
@@ -129,7 +129,7 @@ FIFTH WORD = PRIORITY of card
                 nameOfSender = split[1];
                 for(Player player : game.getBoard().players) {
                     if(player.getName().equals(nameOfSender) && player.getPlayerState().equals(PlayerState.POWERED_DOWN)) {
-                        player.wantsToPowerDown = false;
+                        player.powerUp();
                     }
                 }
                 break;

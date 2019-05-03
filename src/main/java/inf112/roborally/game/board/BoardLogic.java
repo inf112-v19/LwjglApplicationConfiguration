@@ -80,8 +80,8 @@ public class BoardLogic {
         System.out.println("Set up before round");
         cleanBoard();
         respawnRobots();
-        powerDownRobots();
         powerUpRobots();
+        powerDownRobots();
 
         for (Player player : players) {
             if (!player.isPoweredDown()) {
