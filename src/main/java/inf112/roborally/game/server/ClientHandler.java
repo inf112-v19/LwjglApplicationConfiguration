@@ -42,6 +42,10 @@ FIFTH WORD = PRIORITY of card
         String header = split[0];
 
         switch (header) {
+            case "HANDSHAKE":
+            game.connectedToServer = true;
+                System.out.println("CLIENT HANDSHAKE");
+            break;
             case "LIST":
                 int size = Integer.parseInt(split[1]);
                 while (game.playerNames.size() < size) {

@@ -70,6 +70,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 System.out.println("[SERVER] " + split[1] + " has connected!");
                 game.playerNames.add(split[1]);
                 connectedPlayers.put(ctx.channel(), split[1]);
+                ctx.channel().writeAndFlush("HANDSHAKE SERVER");
 
                 for (Channel channel : channels) {
                     channel.writeAndFlush(split[1] + " has connected!" + "\r\n");
