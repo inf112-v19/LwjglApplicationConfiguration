@@ -30,9 +30,11 @@ public class BoardLogic {
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
     protected ArrayList<Player> aiBots;
+    private RoboRallyGame game;
 
-    public BoardLogic(List<Player> players) {
+    public BoardLogic(List<Player> players, RoboRallyGame game) {
         this.players = players;
+        this.game = game;
         aiBots = new ArrayList<>();
         if (players.get(0).isDebuggingActive() || ((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI) {
             aiBots.add(players.get(0));
@@ -117,6 +119,9 @@ public class BoardLogic {
                 System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
+                if(RoboRallyGame.multiPlayer){
+                    game.playersInGame--;
+                }
             }
         }
     }
@@ -152,7 +157,6 @@ public class BoardLogic {
 
     protected void doPhase() {
         if (!sorted) sortPlayersByPriority();
-        System.out.println("timer: " + timeElapsed);
         if (phase >= 5) {
             phase = 0;
             state = BETWEEN_ROUNDS;
@@ -161,7 +165,6 @@ public class BoardLogic {
         }
 
         if (++timeElapsed > timeBetweenPlayers) {
-            System.out.println("executing card for robot in index: " + executionIndex);
             executeCards();
             timeElapsed = 0;
         }

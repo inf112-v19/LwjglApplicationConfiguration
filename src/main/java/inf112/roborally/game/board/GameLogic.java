@@ -11,7 +11,7 @@ public class GameLogic extends BoardLogic {
     private RoboRallyGame game;
 
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
-        super(board.getPlayers());
+        super(board.getPlayers(), game);
         this.game = game;
         this.board = board;
         this.hud = hud;
