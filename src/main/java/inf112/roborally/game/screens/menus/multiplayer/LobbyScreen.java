@@ -25,7 +25,6 @@ public class LobbyScreen extends InputFieldScreen {
 
     public LobbyScreen(final RoboRallyGame game, Screen previousScreen) {
         super(game);
-        background.addActor(new Image(AssMan.manager.get(AssMan.LOBBY_BACKGROUND)));
         this.previousScreen = previousScreen;
         timer = 0;
         connected = false;
@@ -69,8 +68,8 @@ public class LobbyScreen extends InputFieldScreen {
     @Override
     public void render(float v) {
         if (!connected) {
-            waitingToConnect();
             checkIfConnected();
+            waitingToConnect();
         }
 
         waitingForPlayers.setDrawable(new TextureRegionDrawable(animation.getKeyFrame(animationTimer++, true)));
@@ -80,10 +79,9 @@ public class LobbyScreen extends InputFieldScreen {
     private void checkIfConnected() {
         if (game.connectedToServer) {
             connected = true;
-            background.setVisible(true);
             waitingForPlayers.setVisible(true);
-            waiting.setText("");
-            connectingToServer.setText("Connected!");
+            waiting.setVisible(false);
+            connectingToServer.setVisible(false);
         }
     }
 

@@ -180,8 +180,5 @@ public class MenuScreen extends BasicScreen {
         else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
             boardTest();
         }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.O)){
-            setScreen(new LobbyScreen(game, this));
-        }
     }
 }
