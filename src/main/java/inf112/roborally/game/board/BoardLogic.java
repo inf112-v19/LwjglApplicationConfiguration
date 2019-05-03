@@ -61,7 +61,6 @@ public class BoardLogic {
                 setToRound();
                 break;
             case ROUND:
-                System.out.println("Executing phase " + phase);
                 doPhase();
                 break;
             case BOARD_MOVES:
@@ -82,8 +81,8 @@ public class BoardLogic {
         System.out.println("Set up before round");
         cleanBoard();
         respawnRobots();
-        powerDownRobots();
         powerUpRobots();
+        powerDownRobots();
 
         for (Player player : players) {
             if (player.isPoweredDown()) {
@@ -165,6 +164,7 @@ public class BoardLogic {
         }
 
         if (++timeElapsed > timeBetweenPlayers) {
+            System.out.println(players.get(executionIndex).getName() + " is executing phase " + phase);
             executeCards();
             timeElapsed = 0;
         }
