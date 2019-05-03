@@ -86,10 +86,9 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
 
 
         for (Player player : players) {
-//            if (!player.isPoweredDown() && !player.equals(thisPlayer)) {
-            if (!player.equals(thisPlayer)) {
-                player.getRegisters().returnCards();
+            if (!player.isPoweredDown() && !player.equals(thisPlayer)) {
                 player.getHand().removeAllCards();
+                player.getRegisters().returnCards();
                 System.out.println("Cleared the register for player " + player.getName());
             }
         }
