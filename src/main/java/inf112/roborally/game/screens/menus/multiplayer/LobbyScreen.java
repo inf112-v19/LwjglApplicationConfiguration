@@ -10,8 +10,10 @@ import inf112.roborally.game.tools.AssMan;
 
 public class LobbyScreen extends InputFieldScreen {
     private Label waiting;
+    private Label connectingToServer;
     private String dots;
     private int timer;
+    private boolean connected;
     private Label waitingForPlayers1;
     private Label waitingForPlayers2;
     private Label waitingForPlayers3;
@@ -24,17 +26,18 @@ public class LobbyScreen extends InputFieldScreen {
         background.addActor(new Image(AssMan.manager.get(AssMan.LOBBY_BACKGROUND)));
         this.previousScreen = previousScreen;
         timer = 0;
+        connected = false;
         confirm.setVisible(false);
-        Label label = new Label("Connecting to server", labelStyle);
-        label.setPosition(1920 / 2, 1080 / 2 + 50, Align.center);
-        label.setAlignment(Align.center);
-        label.setFontScale(2);
+        connectingToServer = new Label("Connecting to server", labelStyle);
+        connectingToServer.setPosition(1920 / 2, 1080 / 2 + 50, Align.center);
+        connectingToServer.setAlignment(Align.center);
+        connectingToServer.setFontScale(2);
         waiting = new Label(dots, labelStyle);
         waiting.setPosition(1920 / 2f, 1080 / 2f - 50, Align.center);
         waiting.setAlignment(Align.center);
         waiting.setFontScale(2.5f);
 
-        stage.addActor(label);
+        stage.addActor(connectingToServer);
         stage.addActor(waiting);
 
         setFieldVisible(false);
@@ -73,8 +76,20 @@ public class LobbyScreen extends InputFieldScreen {
 
     @Override
     public void render(float v) {
-        waitingToConnect();
+        if(!connected) {
+            waitingToConnect();
+            checkIfConnected();
+        }
         super.render(v);
+    }
+
+    private void checkIfConnected() {
+        if(game.connectedToServer) {
+            connected = true;
+            background.setVisible(true);
+            waiting.setText("");
+            connectingToServer.setText("Connected!");
+        }
     }
 
     private void waitingToConnect() {
