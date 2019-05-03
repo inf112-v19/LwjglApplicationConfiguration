@@ -110,6 +110,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 ready(); // Since a player has received his cards, set another player to ready
                 break;
             case "POWER_DOWN":
+            case "POWER_UP":
                 for (Channel channel : channels) {
                     channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
                 }
