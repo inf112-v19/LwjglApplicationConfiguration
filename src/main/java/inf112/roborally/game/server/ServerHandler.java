@@ -111,6 +111,14 @@ public class ServerHandler extends SimpleChannelInboundHandler<String> {
                 }
                 ready();
                 break;
+            case "POWER_DOWN":
+                for (Channel channel :
+                        channels) {
+                    channel.writeAndFlush(split[0] + " " + split[1] + "\r\n");
+                }
+                ready();
+                break;
+
             default:
                 for (Channel channel :
                         channels) {
