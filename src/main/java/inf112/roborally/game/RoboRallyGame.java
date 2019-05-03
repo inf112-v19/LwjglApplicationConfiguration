@@ -11,7 +11,6 @@ import inf112.roborally.game.board.Board;
 import inf112.roborally.game.gui.CameraListener;
 import inf112.roborally.game.objects.Flag;
 import inf112.roborally.game.player.Player;
-import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.screens.GameScreen;
 import inf112.roborally.game.screens.LaserTestScreen;
 import inf112.roborally.game.screens.TestScreen;
@@ -34,12 +33,15 @@ import static inf112.roborally.game.enums.Direction.NORTH;
 public class RoboRallyGame extends Game {
     public static final String LASER_TEST_MAP = "assets/maps/lasertest.tmx";
     public static final int MAX_PLAYERS = 8;
+    public static final String DEFAULT_PLAYER_NAME = "Player1";
+
     //MAPS:
     private static final String VAULT = "assets/maps/vault.tmx";
     private static final String TEST_MAP = "assets/maps/testMap.tmx";
     private static final String SPACE_BUG = "assets/maps/space_bug.tmx";
     private static final String SPACE_BUG2 = "assets/maps/space_bug2.tmx";
     private static final String AROUND_THE_WORLD = "assets/maps/around_the_world.tmx";
+
     public static boolean multiPlayer = false;
     public static boolean soundMuted;
     public int numberOfChosenPlayers;
@@ -57,12 +59,18 @@ public class RoboRallyGame extends Game {
     public EndGameScreen endGameScreen;
     public TestScreen testScreen;
     public LaserTestScreen laserTestScreen;
+
     public Server server;
     public Client client;
     public ArrayList<String> playerNames;
+    public int playersFromStart;
     public int readyPlayers; // To be used in multiplayer
+    public boolean connectedToServer;
+
     public Board board;
-    public String playerName = "Player1"; // Default
+
+    public String playerName = DEFAULT_PLAYER_NAME;
+    public boolean testing;
     private SelectSkinScreen selectSkinScreen;
     /**
      * The screen that was active before setting a new screen with {@link #setScreen(Screen)}
@@ -71,6 +79,7 @@ public class RoboRallyGame extends Game {
 
     @Override
     public void create() {
+        testing = false;
         playerNames = new ArrayList<>();
         AssMan.load();
         AssMan.manager.finishLoading();
@@ -167,7 +176,7 @@ public class RoboRallyGame extends Game {
     private void createDefaultBoard() {
         board.createBoard(VAULT);
         board.getFlags().add(new Flag(7, 7, 1));
-        board.getFlags().add(new Flag(11, 11, 2));
+        board.getFlags().add(new Flag(11, 10, 2));
         board.getFlags().add(new Flag(12, 12, 3));
         board.addPlayersToBoard(createDefaultPlayers());
         board.findLaserGuns();
@@ -179,7 +188,6 @@ public class RoboRallyGame extends Game {
         board.getFlags().add(new Flag(11, 10, 2));
         board.getFlags().add(new Flag(12, 12, 3));
         board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
-//        board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer(playerNames.size()));
         board.findLaserGuns();
     }
 
@@ -275,7 +283,8 @@ public class RoboRallyGame extends Game {
         try {
             client = new Client(ip, 8000, this, playerName);
             new Thread(client).start();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -61,15 +61,6 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
     }
 
-    public void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            game.setScreen(game.settingsScreen);
-        }
-    }
-
     @Override
     public void doBeforeRound() {
 //        super.doBeforeRound();
@@ -93,7 +84,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
             }
         }
 
-        // Get new cards from the server
+        // Request new cards from the server
         game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
         System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
@@ -170,7 +161,8 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         });
     }
 
-    public void receiveCardFromServer(String name, ProgramCard card) {
+    // To be used when receiving only one card
+    public void receiveCardsFromServer(String name, ProgramCard card) {
         for (Player player : board.players) {
             if (player.getName().equals(name)) {
                 if (name.equals(game.playerName)) {
@@ -186,8 +178,9 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
     }
 
-    public void receiveCardFromServer(String name, ArrayList<ProgramCard> allCards) {
-        System.out.println("Inside receiveCardFromServer");
+    // To be used when receiving multiple cards at the time
+    public void receiveCardsFromServer(String name, ArrayList<ProgramCard> allCards) {
+        System.out.println("Inside receiveCardsFromServer");
         System.out.println("Parameter name: " + name);
         for (Player player : board.players) {
             if (player.getName().equals(name)) {
