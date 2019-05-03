@@ -41,7 +41,7 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
                 doBeforeRound();
                 break;
             case PICKING_CARDS:
-                if (thisPlayer.isReady()) {
+                if (thisPlayer.isReady() || thisPlayer.isPoweredDown()) {
                     state = WAITINGFORONLINEPLAYERS;
                 }
                 break;
@@ -85,7 +85,9 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
 
         // Request new cards from the server
-        game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
+        if (!thisPlayer.isPoweredDown()) {
+            game.client.sendMessage("REQUEST_CARDS " + thisPlayer.getCardLimit() + " " + thisPlayer.getName());
+        }
         System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
 

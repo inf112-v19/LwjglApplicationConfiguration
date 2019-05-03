@@ -19,17 +19,15 @@ import static java.util.Collections.shuffle;
 public class BoardLogic {
 
     private final int timeBetweenPlayers;
-    private int timeElapsed = 0;
-    private int executionIndex;
-    private boolean sorted;
-
     protected int phase;
     protected GameState state;
-
     protected List<Player> players;
     protected Stack<ProgramCard> returnedProgramCards;
     protected Stack<ProgramCard> stackOfProgramCards;
     protected ArrayList<Player> aiBots;
+    private int timeElapsed = 0;
+    private int executionIndex;
+    private boolean sorted;
     private RoboRallyGame game;
 
     public BoardLogic(List<Player> players, RoboRallyGame game) {
@@ -85,7 +83,7 @@ public class BoardLogic {
         powerDownRobots();
 
         for (Player player : players) {
-            if (player.isPoweredDown()) {
+            if (!player.isPoweredDown()) {
                 retrieveCardsFromPlayer(player);
             }
             if (!player.outOfLives() && player.isOperational()) {
@@ -113,8 +111,7 @@ public class BoardLogic {
             if (players.size() == 1) {
                 endGame();
                 return;
-            }
-            else if (player.getPlayerState() == PlayerState.GAME_OVER) {
+            } else if (player.getPlayerState() == PlayerState.GAME_OVER) {
                 System.out.println(player.getName() + " was removed.");
                 players.remove(player);
                 aiBots.remove(player);
@@ -139,7 +136,7 @@ public class BoardLogic {
 
     private boolean allPlayersReady() {
         for (Player player : players) {
-            if (!player.isReady()) return false;
+            if (!player.isReady() || player.isPoweredDown()) return false;
         }
         return true;
     }
@@ -191,8 +188,7 @@ public class BoardLogic {
         if (players.size() > 0 && !players.get(0).isDebuggingActive()) {
             try {
                 Thread.sleep(millis);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -204,8 +200,7 @@ public class BoardLogic {
         }
         try {
             Collections.sort(players);
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             throw new NullPointerException("AIRobots: " + aiBots.size() + "\n Players: " + players.size());
         }
         sorted = true;
