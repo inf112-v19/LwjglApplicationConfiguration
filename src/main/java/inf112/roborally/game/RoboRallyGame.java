@@ -61,6 +61,7 @@ public class RoboRallyGame extends Game {
     public Server server;
     public Client client;
     public ArrayList<String> playerNames;
+    public int playersFromStart;
     public int readyPlayers; // To be used in multiplayer
     public Board board;
 

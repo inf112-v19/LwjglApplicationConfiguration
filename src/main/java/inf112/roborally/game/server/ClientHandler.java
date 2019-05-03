@@ -56,6 +56,7 @@ FIFTH WORD = PRIORITY of card
                     System.out.println(game.playerNames);
 
                 }
+                game.playersFromStart = game.playerNames.size();
 
                 break;
             }
@@ -132,13 +133,15 @@ FIFTH WORD = PRIORITY of card
             }
             case "LEFT":
                 System.out.println(split[1] + " has left the game");
+                game.playersFromStart--;
 
                 for (int i = 0; i < game.gameScreen.getBoard().players.size(); i++) {
+
                     if(game.gameScreen.getBoard().players.get(i).getName().equals(split[1])){
                         Player leaver = game.gameScreen.getBoard().players.get(i);
                         leaver.killPlayer();
                         game.gameScreen.getBoard().players.remove(i);
-                        game.gameScreen.getMultiplayerLogic().removeDeadRobots();
+                        break;
 
                     }
                 }
