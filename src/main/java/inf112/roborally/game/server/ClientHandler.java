@@ -58,7 +58,6 @@ FIFTH WORD = PRIORITY of card
                 int id = Integer.parseInt(split[2]);
                 if (!game.playerNames.contains(name)) {
                     game.playerNames.set(id, name);
-                    System.out.println(game.playerNames);
 
                 }
                 game.playersInGame = game.playerNames.size();

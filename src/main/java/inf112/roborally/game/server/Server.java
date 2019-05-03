@@ -11,7 +11,6 @@ public class Server implements Runnable{
 
     private final int port;
     private final RoboRallyGame game;
-    public Dealer dealer;
     EventLoopGroup bossGroup;
     EventLoopGroup workerGroup;
     ServerBootstrap bootstrap;
@@ -26,8 +25,6 @@ public class Server implements Runnable{
         System.out.println("Starting game server..");
         bossGroup = new NioEventLoopGroup();
         workerGroup = new NioEventLoopGroup();
-
-        dealer = new Dealer(this.game, this);
 
         try {
              bootstrap = new ServerBootstrap()
