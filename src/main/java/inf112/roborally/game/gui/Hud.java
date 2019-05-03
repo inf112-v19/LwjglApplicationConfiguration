@@ -151,9 +151,9 @@ public class Hud {
 
         // update before draw
         if (playerStatusDisplay != null) playerStatusDisplay.update();
-        submitButton.setVisible(player.getRegisters().isFull() && (!player.isReady() || !player.isPoweredDown()));
+        submitButton.setVisible(player.getRegisters().isFull() && !player.isReady());
         greySubmitButton.setVisible(!submitButton.isVisible());
-        clearButton.setVisible(!player.getRegisters().isEmpty() && (!player.isReady() || !player.isPoweredDown()));
+        clearButton.setVisible(!player.getRegisters().isEmpty() && !player.isReady());
         registerDisplay.update();
 
         // hide buttons if in a round:
@@ -194,7 +194,7 @@ public class Hud {
     }
 
     public void setButtonTouchable(boolean canTouch) {
-        if (canTouch && !player.isPoweredDown()) {
+        if (canTouch && player.isPoweredDown()) {
             registerDisplay.getPowerDown().setTouchable(Touchable.enabled);
             submitButton.setTouchable(Touchable.enabled);
             clearButton.setTouchable(Touchable.enabled);

@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="roborallyTextures.tsx"/>
  <layer id="26" name="floor" width="18" height="14">
   <data encoding="base64" compression="zlib">
-   eJytkkEKwCAMBPXWW279QG/9Qv//rypkISwxrLSBAQ06JMbW/gsbdOcYXGEPLMkBRCfP6vzKq3iexMG56DEneoxQ6kFe6Yudigf521HqQV+xD6zZo86LPdkb7Xh6y+ur5m7kmezMnf+zMiOlr+pO5Tk/MuMFy7cGNw==
+   eJytkkEKwCAMBPXWW279gLd+wf//qwpZCEuUlTYwoEGHxFjKf2GD6lyDFvbAkhxAVPKszq+8iqcnDs5FjznRY4RSD/JKX+xUPMg/jlIP+op9YM0edV7syd7oxFNLXt9u7kaeycnc+T8rM1L62t1hWvDcH5nxAtZXBlk=
   </data>
  </layer>
  <layer id="27" name="belts" width="18" height="14">
