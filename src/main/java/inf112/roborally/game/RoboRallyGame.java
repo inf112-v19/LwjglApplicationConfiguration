@@ -196,7 +196,7 @@ public class RoboRallyGame extends Game {
         board.createBoard(VAULT);
         board.getFlags().add(new Flag(7, 7, 1));
         board.getFlags().add(new Flag(11, 10, 2));
-        board.getFlags().add(new Flag(12, 12, 3));
+        board.getFlags().add(new Flag(13, 1, 3));
         board.addPlayersToBoard(createNumberOfPlayersFromMultiplayer());
         board.findLaserGuns();
     }
