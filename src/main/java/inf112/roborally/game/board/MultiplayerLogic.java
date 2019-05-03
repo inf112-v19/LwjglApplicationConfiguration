@@ -61,15 +61,6 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
         }
     }
 
-    public void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            Gdx.app.exit();
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-            game.setScreen(game.settingsScreen);
-        }
-    }
-
     @Override
     public void doBeforeRound() {
 //        super.doBeforeRound();
