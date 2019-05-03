@@ -28,11 +28,10 @@ When running, you will first be taken to the main menu screen. Here you have som
 
 ### How to test
 We have junit tests that make sure code is not broken when implementing new features. The menus screen also has some options for testing:
-- Pressing 'T' will take you to the GUI test screen.
-- Pressing 'L' will take you to the laser test screen.
-- Pressing 'A' will do the same as QuickPlay, but all the robots are 
+- Pressing 'T' or clicking the gui test button will take you to the GUI test screen.
+- Pressing 'A' or clicking the ai vs ai button will do the same as QuickPlay, but all the robots are 
 controlled by AI and you can sit back, relax, and watch the mayhem.
-- Pressing 'B' will take you to a testBoard where you can move around to make sure the board interacts how it should with the player.
+- Pressing 'B' or clicking the board test button will take you to a testBoard where you can move around to make sure the board interacts how it should with the player.
 
 ### GUI - How to do testing for the TestScreen:
 When running Main.java you will get prompted to 'PRESS ENTER'. Hitting 'T' instead will launch a test
@@ -43,9 +42,6 @@ As instructed on the test screen, pressing 'S' will add a card to the register. 
 the robot take one damage. Pressing 'R' should empty all the registers, returning all non-locked cards to the hand.
 Clicking on the clear button should do the same as pressing 'R'. Clicking on a specific card in the register should 
 remove it from the register and return it to the player hand as long as it is not locked.
-
-### LaserTestScreen - How to
-If you pressed 'L' in the menu screen you will be taken here. Press 'W','A','S', or 'D' to rotate the robots in the cardinal directions. Press 'Enter' to fire all laser (lasers on the board and robot lasers). Text is printed to the screen to tell you if robots got hit or not.
 
 ##### How to test that locked cards in the register do not return:
   1. Fill up all five registers by pressing 'S' five times.
