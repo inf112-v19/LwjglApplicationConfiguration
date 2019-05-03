@@ -21,11 +21,10 @@ You can also move the screen by dragging anywhere on the map.
 ### How to run
 To run the game, run Main.java and follow the instructions.
 
-When running, you will first be taken to the menu screen. Here you have some options:
-- To play the game normally either press 'Enter' for a quick game 
-where your skin has already been selected and flags have been placed.
-- Or press 'S' to select your desired skin and place flags where ever 
-your heart desires. There is no option for multiplayer (yet).
+When running, you will first be taken to the main menu screen. Here you have some options:
+- **Quick Play:** Quickly start a game with default setup.
+- **Singleplayer:** Set up your own game by choosing number of players, pick your own skin, select map and place flags.
+- **Multiplayer:** Start a multiplayer game (lan) where you can either host or join someone elses session.
 
 ### How to test
 We have junit tests that make sure code is not broken when implementing new features. The menus screen also has some options for testing:
