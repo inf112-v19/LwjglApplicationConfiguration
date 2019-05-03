@@ -50,11 +50,13 @@ public class Player extends MovableGameObject implements Comparable {
         this.board = board;
         setDirection(direction);
         loadVisualRepresentation();
-        nFlags = board.getFlags().size();
+        if (board != null) nFlags = board.getFlags().size();
+        else nFlags = 1;
         backup.setupSprite();
         phase = 0;
         debugging = false;
         skinTexture = AssMan.getPlayerSkins()[0];
+        updateSprite();
     }
 
     /**
@@ -147,7 +149,8 @@ public class Player extends MovableGameObject implements Comparable {
             System.out.println(name + " is out of the game");
             playerState = GAME_OVER;
             return false;
-        } else {
+        }
+        else {
             System.out.println(name + " was respawned!");
             repairAllDamage();
             if (backup != null) {
@@ -164,7 +167,7 @@ public class Player extends MovableGameObject implements Comparable {
         playerState = POWERED_DOWN;
         System.out.println(name + " powers down");
         wantsToPowerDown = false;
-        if(RoboRallyGame.multiPlayer) {
+        if (RoboRallyGame.multiPlayer) {
             game.client.sendMessage("POWER_DOWN " + getName());
 
         }
@@ -337,7 +340,8 @@ public class Player extends MovableGameObject implements Comparable {
         if (this.playerState == GAME_OVER) {
             System.out.println("Can not set player state when player state is: " + playerState);
             return;
-        } else if (this.playerState == DESTROYED) {
+        }
+        else if (this.playerState == DESTROYED) {
             System.out.println("Only respawn method can change the state of a destroyed robot");
         }
         this.playerState = playerState;
@@ -369,6 +373,10 @@ public class Player extends MovableGameObject implements Comparable {
 
     public Position getTargetFlagPos() {
         return board.getFlags().get(targetFlag - 1).position;
+    }
+
+    public TextureRegion getFrontRegion() {
+        return new TextureRegion(getSprite().getTexture(), 32 * 8 * 2, 0, 32 * 8, 48 * 8);
     }
 
     public void killPlayer() {

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.roborally.game.RoboRallyGame;
+import inf112.roborally.game.enums.Direction;
 import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.gui.Hud;
 import inf112.roborally.game.player.Player;
@@ -26,14 +27,14 @@ public class TestScreen implements Screen {
         game.fixedViewPort.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         background = new Sprite(AssMan.manager.get(AssMan.TEST_BACKGROUND));
 
-        player = new Player(0, 0, 1);
+        player = new Player("player", AssMan.getPlayerSkins()[0], Direction.SOUTH, null, null);
         stack = ProgramCard.makeProgramCardDeck();
         for (int i = 0; i < player.getCardLimit(); i++) {
             player.getHand().receiveCard(stack.pop());
         }
 
         hud = new Hud(player, game);
-        hud.updateCards();
+        hud.updateCardButtons();
     }
 
     @Override
@@ -80,12 +81,12 @@ public class TestScreen implements Screen {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
             player.getRegisters().placeCard(0);
-            hud.updateCards();
+            hud.updateCardButtons();
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             player.returnCards();
-            hud.updateCards();
+            hud.updateCardButtons();
         }
     }
 

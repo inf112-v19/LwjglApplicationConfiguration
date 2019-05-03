@@ -18,6 +18,7 @@ import inf112.roborally.game.objects.Position;
 import inf112.roborally.game.screens.BasicScreen;
 import inf112.roborally.game.tools.AssMan;
 import inf112.roborally.game.tools.ButtonFactory;
+import inf112.roborally.game.tools.TiledTools;
 
 import java.util.ArrayList;
 
@@ -171,18 +172,17 @@ public class PlaceFlagsScreen extends BasicScreen {
 
     // Check if the clicked position is not either a hole or a previously clicked position
     private boolean checkIfLegalPosition(Position clickedPos) {
-        boolean result = true;
-        if (game.board.getFloorLayer().getCell(clickedPos.getX(), clickedPos.getY()) == null) {
-            result = false;
+        if (!TiledTools.cellContainsKey(game.board.getFloorLayer().getCell(
+                clickedPos.getX(), clickedPos.getY()), "Floor")){
+            return false;
         }
         for (Position pos : flagPositions) {
             if (clickedPos.equals(pos)) {
-                result = false;
-                break;
+                return false;
             }
         }
 
-        return result;
+        return true;
     }
 
     private Position convertMouseClickIntoMapPosition(float mouseX, float mouseY) {

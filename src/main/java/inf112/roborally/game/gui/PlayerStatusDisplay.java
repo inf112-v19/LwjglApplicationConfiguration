@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.tools.AssMan;
+import inf112.roborally.game.tools.ImageTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class PlayerStatusDisplay {
         }
         statusTab = new Image(AssMan.manager.get(AssMan.STATUS_DISPLAY_ROBOTS));
         statusTab.setY(138 * 7 - 138 * (players.size() - 1));
-        statusTab.setColor(statusTab.getColor().r, statusTab.getColor().g, statusTab.getColor().b, .8f);
+        ImageTool.setAlpha(statusTab, .8f);
         tab.addActor(statusTab);
         tab.addListener(new ClickListener() {
             @Override
@@ -147,9 +148,9 @@ public class PlayerStatusDisplay {
             }
             targetFlag.setDrawable(new TextureRegionDrawable(AssMan.getFlagAtlasRegion(player.getTargetFlag())));
             if (player.outOfLives() || player.isDestroyed()) {
-                robotSkin.setColor(robotSkin.getColor().r, robotSkin.getColor().g, robotSkin.getColor().b, .5f);
+                ImageTool.setAlpha(robotSkin, .5f);
             } else {
-                robotSkin.setColor(robotSkin.getColor().r, robotSkin.getColor().g, robotSkin.getColor().b, 1);
+                ImageTool.setAlpha(robotSkin, 1);
             }
         }
 

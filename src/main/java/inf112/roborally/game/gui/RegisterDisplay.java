@@ -14,6 +14,7 @@ import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import inf112.roborally.game.player.ProgramRegisters;
 import inf112.roborally.game.tools.AssMan;
+import inf112.roborally.game.tools.ImageTool;
 
 import java.util.ArrayList;
 
@@ -23,8 +24,10 @@ public class RegisterDisplay {
     private float h;
     private Player player;
     private ProgramRegisters registers;
+
     private Image programBoard;
     private Image wires;
+    private Image flag;
     private ArrayList<Image> damageTokens;
     private ArrayList<Image> lifeTokens;
     private ArrayList<Image> lockTokens;
@@ -32,9 +35,9 @@ public class RegisterDisplay {
     private ImageButton powerDown;
 
     /**
-     * Draws the program register of a given player.
-     * Shows cards in the players register slots. If a register is locked a small lock icon will appear.
-     * It also shows lives, damage taken and the power button.
+     * Draws the program register of a given player. Shows cards in the
+     * players register slots. If a register is locked a small lock icon will
+     * appear. It also shows lives, damage taken and the power button.
      */
     public RegisterDisplay(Player player, Group registerGui, Group lockGui) {
         this.player = player;
@@ -45,8 +48,24 @@ public class RegisterDisplay {
         addDamageTokens();
         addLifeTokens();
         addWires();
-        addLockTokens(lockGui); // Locks needs to be updated on top of the cards
+        addLockTokens(lockGui); // Locks needs to be on top of the cards
         addPowerDown();
+        addPlayerSkin();
+        addTargetFlag();
+    }
+
+    private void addTargetFlag() {
+        flag = new Image(AssMan.getFlagAtlasRegion(player.getTargetFlag()));
+        flag.setPosition(448 - 20, -10);
+        flag.setScale(.4f);
+        registerGui.addActor(flag);
+    }
+
+    private void addPlayerSkin() {
+        Image skin = new Image(player.getFrontRegion());
+        skin.setPosition(programBoard.getX() - skin.getWidth() - 10, -skin.getHeight() * 0.3f);
+        ImageTool.setAlpha(skin, .8f);
+        registerGui.addActor(skin);
     }
 
     private void addPowerDown() {
@@ -60,9 +79,6 @@ public class RegisterDisplay {
         powerDown.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(RoboRallyGame.multiPlayer){
-                    return;
-                }
                 player.wantsToPowerDown = !player.wantsToPowerDown;
                 if (player.wantsToPowerDown) System.out.println(player.getName() + " wants to power down");
                 else System.out.println(player.getName() + " changed his/her mind about powering down");
@@ -77,7 +93,7 @@ public class RegisterDisplay {
         programBoard.setPosition(1920 / 2, programBoard.getHeight() / 2, Align.center);
         registerGui.addActor(programBoard);
         h = programBoard.getHeight();
-        programBoard.setColor(programBoard.getColor().r, programBoard.getColor().g, programBoard.getColor().b, .8f);
+        ImageTool.setAlpha(programBoard, .8f);
     }
 
     private void addDamageTokens() {
@@ -119,7 +135,8 @@ public class RegisterDisplay {
         Texture texture = AssMan.manager.get(AssMan.REGISTER_WIRES);
         wireTextures = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
-            wireTextures.add(new TextureRegionDrawable(new TextureRegion(texture, 0, 481 * i, 1024, 481)));
+            wireTextures.add(new TextureRegionDrawable(
+                    new TextureRegion(texture, 0, 481 * i, 1024, 481)));
         }
         wires.setDrawable(wireTextures.get(0));
     }
@@ -139,30 +156,15 @@ public class RegisterDisplay {
     }
 
     public void update() {
-        updateWires();
-        updateLocks();
-        updateDamageTokens();
-        updateLifeTokens();
-    }
-
-    private void updateWires() {
+        flag.setDrawable(new TextureRegionDrawable(AssMan.getFlagAtlasRegion(player.getTargetFlag())));
         int wireIndex = (5 - registers.getNumUnlockedRegisters()) % wireTextures.size();
         wires.setDrawable(wireTextures.get(wireIndex));
-    }
-
-    private void updateLifeTokens() {
         for (int i = 0; i < lifeTokens.size(); i++) {
             lifeTokens.get(i).setVisible(player.getLives() >= 3 - i);
         }
-    }
-
-    private void updateDamageTokens() {
         for (int i = 0; i < damageTokens.size(); i++) {
             damageTokens.get(i).setVisible(player.getDamage() > i);
         }
-    }
-
-    private void updateLocks() {
         for (int i = 0; i < lockTokens.size(); i++) {
             lockTokens.get(4 - i).setVisible(player.getRegisters().isLocked(i));
         }
@@ -184,12 +186,11 @@ public class RegisterDisplay {
                     public void clicked(InputEvent event, float x, float y) {
                         if (!registers.isLocked(index)) {
                             registers.returnCard(index);
-                            hud.updateCards();
+                            hud.updateCardButtons();
                         }
                     }
                 });
-
-                hud.registerGui.addActor(cardInRegisterButton);
+                registerGui.addActor(cardInRegisterButton);
             }
         }
     }
