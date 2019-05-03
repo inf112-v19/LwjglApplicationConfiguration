@@ -121,7 +121,6 @@ FIFTH WORD = PRIORITY of card
                         player.wantsToPowerDown = true;
                     }
                 }
-
                 break;
 
             case "SET_NUMBER_OF_PLAYERS": {

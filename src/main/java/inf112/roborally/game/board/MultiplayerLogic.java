@@ -213,7 +213,12 @@ public class MultiplayerLogic extends BoardLogic implements Runnable {
     public void setToRound() {
         for (Player player : players) {
             if (player.getPlayerState() == PlayerState.READY) //true if submit button is pressed
-                player.setPlayerState(PlayerState.OPERATIONAL);
+                if (player.wantsToPowerDown) {
+                    player.setPlayerState(PlayerState.POWERED_DOWN);
+                    player.wantsToPowerDown = false;
+                } else {
+                    player.setPlayerState(PlayerState.OPERATIONAL);
+                }
         }
         state = ROUND;
     }

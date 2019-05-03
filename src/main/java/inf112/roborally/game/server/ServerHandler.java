@@ -2,6 +2,7 @@ package inf112.roborally.game.server;
 
 import inf112.roborally.game.RoboRallyGame;
 import inf112.roborally.game.objects.Position;
+import inf112.roborally.game.player.Player;
 import inf112.roborally.game.player.ProgramCard;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
