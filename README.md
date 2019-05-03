@@ -5,7 +5,7 @@ Group 5.1
 [![Build Status](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration.png)](https://travis-ci.com/inf112-v19/LwjglApplicationConfiguration)
 
 # INF112 RoboRally game
-Much more than a simple skeleton with libgdx.
+Used to be a simple skeleton with libgdx.
 
 #### How to play
 Choose a card by clicking on one of the cards to the right. These are the cards you currently have in your hand.
