@@ -18,6 +18,11 @@ import static java.util.Collections.shuffle;
 @SuppressWarnings("Duplicates")
 public class BoardLogic {
 
+    private final int timeBetweenPlayers;
+    private int timeElapsed = 0;
+    private int executionIndex;
+    private boolean sorted;
+
     protected int phase;
     protected GameState state;
 
@@ -29,8 +34,12 @@ public class BoardLogic {
     public BoardLogic(List<Player> players) {
         this.players = players;
         aiBots = new ArrayList<>();
-        if (players.get(0).isDebuggingActive() || ((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
+        if (players.get(0).isDebuggingActive() || ((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI) {
             aiBots.add(players.get(0));
+            timeBetweenPlayers = 1;
+        } else {
+            timeBetweenPlayers = 10;
+        }
         for (int i = 1; i < players.size(); i++)
             aiBots.add(players.get(i));
 
@@ -50,6 +59,7 @@ public class BoardLogic {
                 setToRound();
                 break;
             case ROUND:
+                System.out.println("Executing phase " + phase);
                 doPhase();
                 break;
             case BOARD_MOVES:
@@ -62,7 +72,8 @@ public class BoardLogic {
     }
 
     //This method is being overwritten by GameLogic class
-    public void aiRobosReady() {}
+    public void aiRobosReady() {
+    }
 
 
     protected void doBeforeRound() {
@@ -82,6 +93,8 @@ public class BoardLogic {
         }
         System.out.println("Players choosing cards. Players alive: " + players.size());
         state = PICKING_CARDS;
+        executionIndex = 0;
+        sorted = false;
     }
 
     protected void respawnRobots() {
@@ -138,6 +151,8 @@ public class BoardLogic {
     }
 
     protected void doPhase() {
+        if (!sorted) sortPlayersByPriority();
+        System.out.println("timer: " + timeElapsed);
         if (phase >= 5) {
             phase = 0;
             state = BETWEEN_ROUNDS;
@@ -145,17 +160,28 @@ public class BoardLogic {
             return;
         }
 
-        System.out.println("Executing phase " + phase);
-        sortPlayersByPriority();
-        executeCards();
+        if (++timeElapsed > timeBetweenPlayers) {
+            System.out.println("executing card for robot in index: " + executionIndex);
+            executeCards();
+            timeElapsed = 0;
+        }
         checkIfAPlayerHasWon();
-        phase++;
-        if (!players.isEmpty() && players.get(0).isDebuggingActive()) return;
 
-        if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
-            sleepThread(100);
-        else
-            sleepThread(500);
+
+        if (executionIndex == players.size()) {
+            state = BOARD_MOVES;
+            executionIndex = 0;
+            phase++;
+
+//            if (!players.isEmpty() && players.get(0).isDebuggingActive())
+//                return;
+//
+//            if (((RoboRallyGame) Gdx.app.getApplicationListener()).AIvsAI)
+//                sleepThread(100);
+//            else
+//                sleepThread(500);
+
+        }
     }
 
     private void sleepThread(int millis) {
@@ -179,13 +205,12 @@ public class BoardLogic {
         catch (NullPointerException e) {
             throw new NullPointerException("AIRobots: " + aiBots.size() + "\n Players: " + players.size());
         }
+        sorted = true;
     }
 
     private void executeCards() {
-        for (Player player : players) {
-            player.getRegisters().executeCard(phase);
-            updatePlayers();
-        }
+        players.get(executionIndex++).getRegisters().executeCard(phase);
+        updatePlayers();
     }
 
     protected void boardMoves() {
@@ -211,7 +236,6 @@ public class BoardLogic {
                 return player;
             }
         }
-        state = BOARD_MOVES;
         return null;
     }
 

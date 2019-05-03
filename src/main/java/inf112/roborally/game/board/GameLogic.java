@@ -1,37 +1,20 @@
 package inf112.roborally.game.board;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import inf112.roborally.game.RoboRallyGame;
-import inf112.roborally.game.enums.GameState;
-import inf112.roborally.game.enums.Rotate;
 import inf112.roborally.game.gui.Hud;
-import inf112.roborally.game.player.Player;
 import inf112.roborally.game.tools.AiRobo;
 
-public class GameLogic extends BoardLogic implements Runnable {
+public class GameLogic extends BoardLogic {
     private final Hud hud;
     private Board board;
     private RoboRallyGame game;
-    private Player player1;
 
     public GameLogic(Board board, Hud hud, RoboRallyGame game) {
         super(board.getPlayers());
         this.game = game;
         this.board = board;
         this.hud = hud;
-        player1 = board.getThisPlayer();
-    }
-
-    @Override
-    public void run() {
-        while (state != GameState.GAME_OVER) update();
-        Gdx.app.postRunnable(new Runnable() {
-            @Override
-            public void run() {
-                endGame();
-            }
-        });
     }
 
     public void update() {
