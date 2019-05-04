@@ -153,7 +153,7 @@ public class PlayerStatusDisplay {
         }
 
         void addCard(int phase) {
-            if (!player.isOperational() || player.isGameOver() || player.isPoweredDown()) return;
+            if (!player.isOperational() || player.isGameOver()) return;
 
             ProgramCard card = player.getRegisters().getCard(phase);
             card.setUpSkin();
