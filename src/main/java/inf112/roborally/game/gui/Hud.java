@@ -163,7 +163,9 @@ public class Hud {
             clearButton.setVisible(false);
         }
 
-        stage.draw();
+        if(game.gameScreen.getBoardLogic().getState() != GameState.GAME_OVER) {
+            stage.draw();
+        }
     }
 
     private void clearAllCardButtons() {
