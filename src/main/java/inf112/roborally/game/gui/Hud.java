@@ -163,6 +163,12 @@ public class Hud {
             clearButton.setVisible(false);
         }
 
+        //To make GuiTest and BoardTest work
+        if(game.gameScreen == null){
+            stage.draw();
+            return;
+        }
+
         if(game.gameScreen.getBoardLogic().getState() != GameState.GAME_OVER) {
             stage.draw();
         }
