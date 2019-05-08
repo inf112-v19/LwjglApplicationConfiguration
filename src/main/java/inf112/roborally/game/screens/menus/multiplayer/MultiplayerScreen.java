@@ -30,6 +30,7 @@ public class MultiplayerScreen extends BasicScreen {
         join.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                game.multiPlayer = true;
                 game.setScreen(joinServerScreen);
             }
         });
@@ -40,6 +41,7 @@ public class MultiplayerScreen extends BasicScreen {
         create.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                game.multiPlayer = true;
                 game.setScreen(new HostServerScreen(game,thisScreen));
             }
         });
@@ -50,6 +52,7 @@ public class MultiplayerScreen extends BasicScreen {
 
     @Override
     protected void goToPreviousScreen() {
+        game.removeMultiplayerSettings();
         game.setScreen(previousScreen);
     }
 
